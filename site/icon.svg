@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <rect width="96" height="96" rx="14" fill="#b03a26"/>
+  <rect x="7" y="7" width="82" height="82" rx="9" fill="none" stroke="#f6f1e6" stroke-width="3"/>
+  <text x="48" y="44" font-family="Songti SC, STSong, Noto Serif SC, serif" font-size="34" font-weight="700" fill="#f6f1e6" text-anchor="middle">文</text>
+  <text x="48" y="80" font-family="Songti SC, STSong, Noto Serif SC, serif" font-size="34" font-weight="700" fill="#f6f1e6" text-anchor="middle">钞</text>
+</svg>

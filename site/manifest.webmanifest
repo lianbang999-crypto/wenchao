@@ -1,0 +1,12 @@
+{
+  "name": "印光法师文钞 · 文白对照",
+  "short_name": "印光文钞",
+  "description": "印光法师文钞全七册文白对照阅读",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f1e6",
+  "theme_color": "#f6f1e6",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

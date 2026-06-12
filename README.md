@@ -1,6 +1,6 @@
 # 印光法师文钞 · 文白对照
 
-这是一个静态阅读站点，站点入口在 `site/index.html`，部署产物目录为 `site/`。
+这是一个静态阅读站点，项目别名 `wenchao` / `yinguangfashiwenchao`，站点入口在 `site/index.html`，部署产物目录为 `site/`。
 
 ## 本地预览
 

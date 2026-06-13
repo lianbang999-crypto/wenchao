@@ -3,8 +3,13 @@
    纯前端、无构建：books.json 目录树 + articles/{id}.json 按篇懒加载
    =================================================================== */
 
+import { openShareCard } from './share.js';
+
 const $ = (s) => document.querySelector(s);
 const CFG = window.WENCHAO_CONFIG || {};
+/* 深链基址：用于二维码/复制链接，扫码直达原文（可定位到段） */
+const SITE = location.origin + location.pathname.replace(/index\.html$/, '');
+const deepLink = (id, p) => SITE + '#/a/' + id + (p != null ? '?p=' + p : '');
 
 /* ---------- 持久化偏好 ---------- */
 const store = {
@@ -18,6 +23,31 @@ const prefs = {
 };
 const progress = store.get('progress', {});   // {id: {pct, t}}
 let lastRead = store.get('lastRead', null);   // {id, title}
+let marks = store.get('marks', []);           // 收藏：[{id, title, t}]
+const highlights = store.get('hl', {});       // 划线：{id: [{p, text, t}]}
+
+const isMarked = (id) => marks.some((m) => m.id === id);
+function toggleMark(id, title) {
+  if (isMarked(id)) marks = marks.filter((m) => m.id !== id);
+  else marks = [{ id, title, t: Date.now() }, ...marks];
+  store.set('marks', marks);
+  refreshMineBadge();
+  return isMarked(id);
+}
+function addHighlight(id, p, text) {
+  const list = highlights[id] || (highlights[id] = []);
+  if (list.some((h) => h.p === p && h.text === text)) return;
+  list.push({ p, text, t: Date.now() });
+  store.set('hl', highlights);
+  refreshMineBadge();
+}
+function removeHighlight(id, p, text) {
+  if (!highlights[id]) return;
+  highlights[id] = highlights[id].filter((h) => !(h.p === p && h.text === text));
+  if (!highlights[id].length) delete highlights[id];
+  store.set('hl', highlights);
+  refreshMineBadge();
+}
 
 /* ---------- 全局状态 ---------- */
 let books = [];          // 目录树
@@ -30,13 +60,15 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 /* 卷名缩写：「增广印光法师文钞卷第一」→「卷第一」 */
 const shortJuan = (j) => j.replace(/^(增广)?印光法师文钞(续编|三编)?/, '') || j;
 
+const THEME_COLOR = { paper: '#f6f1e6', night: '#171310', eink: '#ffffff' };
 function applyPrefs() {
   document.documentElement.style.setProperty('--fs', prefs.fs + 'px');
-  document.documentElement.dataset.theme = prefs.theme === 'night' ? 'night' : '';
-  document.querySelector('meta[name=theme-color]')
-    .setAttribute('content', prefs.theme === 'night' ? '#171310' : '#f6f1e6');
-  $('#theme-paper').classList.toggle('on', prefs.theme !== 'night');
-  $('#theme-night').classList.toggle('on', prefs.theme === 'night');
+  const t = ['night', 'eink'].includes(prefs.theme) ? prefs.theme : 'paper';
+  document.documentElement.dataset.theme = t === 'paper' ? '' : t;
+  document.querySelector('meta[name=theme-color]').setAttribute('content', THEME_COLOR[t]);
+  $('#theme-paper').classList.toggle('on', t === 'paper');
+  $('#theme-night').classList.toggle('on', t === 'night');
+  $('#theme-eink').classList.toggle('on', t === 'eink');
 }
 
 /* ---------- 抽屉 ---------- */
@@ -207,10 +239,14 @@ $('#nav-search').addEventListener('input', (e) => renderTree(e.target.value));
 
 /* ---------- 路由 ---------- */
 window.addEventListener('hashchange', route);
+let pendingPara = null;   // 深链定位的段落序号
 async function route() {
-  const m = location.hash.match(/^#\/a\/([\w-]+)/);
   closeDrawers();
+  const h = location.hash;
+  if (/^#\/me\b/.test(h)) { renderMine(); return; }
+  const m = h.match(/^#\/a\/([\w-]+)(?:\?p=(\d+))?/);
   if (!m) { renderHome(); return; }
+  pendingPara = m[2] != null ? parseInt(m[2], 10) : null;
   await renderArticle(m[1]);
 }
 
@@ -235,6 +271,11 @@ function renderHome() {
         <span class="vol-count">${count} 篇</span>
       </button>`;
   }).join('');
+  const hlCount = Object.values(highlights).reduce((n, a) => n + (a ? a.length : 0), 0);
+  const mineEntry = `<button class="mine-entry" data-go="me">
+         <span class="me-label">我的　<small>收藏 ${marks.length} · 划线 ${hlCount}</small></span>
+         <span class="me-go">›</span>
+       </button>`;
   $('#reader').innerHTML = `
     <div class="home">
       <div class="home-hero">
@@ -243,6 +284,7 @@ function renderHome() {
         <span class="seal" aria-hidden="true">文钞</span>
       </div>
       ${resume}
+      ${mineEntry}
       <h2>${books.length} 部 · 共 ${total} 篇</h2>
       ${vols}
       <p class="home-note">底本为《印光法师文钞》增广、续编、三编及三编补之文白对照本。文言原文与白话译文逐篇对照排录；正文中带朱点之词语，点按可查名相注释。<br>愿见闻者，同沾法益。</p>
@@ -250,6 +292,8 @@ function renderHome() {
   paintProgress();
   const rc = $('.resume-card');
   if (rc) rc.onclick = () => { location.hash = '#/a/' + rc.dataset.id; };
+  const me = $('.mine-entry');
+  if (me) me.onclick = () => { location.hash = '#/me'; };
   document.querySelectorAll('.vol-card').forEach((b) => {
     b.onclick = () => {
       openDrawer('L');
@@ -323,16 +367,16 @@ async function renderArticle(id) {
   const crumb = [art.volumeName, shortJuan(art.juan || ''), art.category, art.translator]
     .filter(Boolean).join(' · ');
 
-  let body = '';
+  let body = '', pIdx = 0;
   for (const seg of art.segments) {
     const paired = !art.plain && seg.trans.length === seg.orig.length && seg.orig.length > 0;
     if (art.plain) {
-      body += seg.orig.map((p) => `<p class="p-orig" style="text-indent:0">${esc(p)}</p>`).join('');
+      body += seg.orig.map((p) => `<p class="p-orig" data-p="${pIdx++}" style="text-indent:0">${esc(p)}</p>`).join('');
       continue;
     }
     if (paired) {
       for (let i = 0; i < seg.orig.length; i++) {
-        body += `<div class="para-pair">
+        body += `<div class="para-pair" data-p="${pIdx++}">
           <p class="p-orig">${addRefs(markTerms(seg.orig[i], termNotes, seen), hasNotes)}</p>
           <p class="p-trans">${addRefs(esc(seg.trans[i]), hasNotes)}</p>
         </div>`;
@@ -344,11 +388,11 @@ async function renderArticle(id) {
       const both = seg.orig.length && seg.trans.length;
       if (seg.orig.length) {
         if (both) body += '<div class="block-label">原 文</div>';
-        body += seg.orig.map((p) => `<p class="p-orig">${addRefs(markTerms(p, termNotes, seen), hasNotes)}</p>`).join('');
+        body += seg.orig.map((p) => `<p class="p-orig" data-p="${pIdx++}">${addRefs(markTerms(p, termNotes, seen), hasNotes)}</p>`).join('');
       }
       if (seg.trans.length) {
         if (both) body += '<div class="block-label">白 话</div>';
-        body += seg.trans.map((p) => `<p class="p-trans">${addRefs(esc(p), hasNotes)}</p>`).join('');
+        body += seg.trans.map((p) => `<p class="p-trans" data-p="${pIdx++}">${addRefs(esc(p), hasNotes)}</p>`).join('');
       }
       if (seg.src) body += segSrcHtml(seg);
     }
@@ -395,6 +439,10 @@ async function renderArticle(id) {
         <div class="art-crumb">${esc(crumb)}</div>
         <h1 class="art-title">${esc(art.title)}</h1>
         <div class="rule"></div>
+        <div class="art-actions">
+          <button class="art-act" id="act-mark">${isMarked(id) ? '★ 已收藏' : '☆ 收藏'}</button>
+          <button class="art-act" id="act-share">分享此篇</button>
+        </div>
       </header>
       ${art.summary ? `<div class="art-summary"><b>提 要</b>${esc(art.summary)}</div>` : ''}
       <article class="art-body" data-mode="${hasTrans ? prefs.mode : 'orig'}">${body}</article>
@@ -436,8 +484,33 @@ async function renderArticle(id) {
     b.onclick = () => { location.hash = '#/a/' + b.dataset.go; };
   });
 
-  // 搜索跳转：高亮全文命中并定位首处；否则恢复阅读进度
-  if (pendingFind) {
+  // 恢复本篇划线
+  applyHighlights(reader.querySelector('.art-body'), id);
+
+  // 收藏 / 分享此篇
+  const markBtn = $('#act-mark');
+  if (markBtn) {
+    markBtn.classList.toggle('on', isMarked(id));
+    markBtn.onclick = () => {
+      const on = toggleMark(id, art.title);
+      markBtn.textContent = on ? '★ 已收藏' : '☆ 收藏';
+      markBtn.classList.toggle('on', on);
+    };
+  }
+  const shareBtn = $('#act-share');
+  if (shareBtn) shareBtn.onclick = () =>
+    openShareCard({ text: articleTeaser(art), source: art.title, url: deepLink(id) });
+
+  // 选段工具条：划线 / 分享 / 复制
+  bindSelection(reader.querySelector('.art-body'), id);
+
+  // 定位优先级：深链段落 → 搜索命中 → 阅读进度
+  if (pendingPara != null) {
+    const el = reader.querySelector(`[data-p="${pendingPara}"]`);
+    pendingPara = null;
+    if (el) { el.scrollIntoView({ block: 'center' }); pulse(el); }
+    else scrollTo(0, 0);
+  } else if (pendingFind) {
     const first = markInRoot(reader.querySelector('.reader-inner'), pendingFind);
     pendingFind = '';
     if (first) first.scrollIntoView({ block: 'center' });
@@ -488,11 +561,196 @@ function closeSheet() { sheet.hidden = true; sheetBd.hidden = true; }
 sheetBd.onclick = closeSheet;
 sheet.onclick = (e) => { if (e.target === sheet) closeSheet(); };
 
+/* ---------- 收藏 / 划线 / 分享 ---------- */
+/* 整篇分享卡的引文：优先提要，其次首段原文/白话 */
+function articleTeaser(art) {
+  if (art.summary) return art.summary;
+  for (const s of art.segments) if (s.orig && s.orig.length) return s.orig[0];
+  for (const s of art.segments) if (s.trans && s.trans.length) return s.trans[0];
+  return art.title;
+}
+/* 深链命中段落：短暂高亮 */
+function pulse(el) {
+  el.classList.add('pulse');
+  setTimeout(() => el.classList.remove('pulse'), 1700);
+}
+/* 在节点内把 kw 包成 <mark class=cls>（首层文本节点，忽略已在 mark 内的） */
+function wrapText(root, kw, cls) {
+  if (!root || !kw) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) if (n.nodeValue.includes(kw)) nodes.push(n);
+  for (const node of nodes) {
+    if (node.parentNode.closest && node.parentNode.closest('mark')) continue;
+    const frag = document.createDocumentFragment();
+    const parts = node.nodeValue.split(kw);
+    parts.forEach((p, i) => {
+      if (p) frag.appendChild(document.createTextNode(p));
+      if (i < parts.length - 1) {
+        const m = document.createElement('mark');
+        m.className = cls;
+        m.textContent = kw;
+        frag.appendChild(m);
+      }
+    });
+    node.parentNode.replaceChild(frag, node);
+  }
+}
+function applyHighlights(root, id) {
+  const list = highlights[id];
+  if (!root || !list) return;
+  for (const h of list) {
+    const para = root.querySelector(`[data-p="${h.p}"]`);
+    if (para) wrapText(para, h.text, 'hl');
+  }
+}
+
+/* 浮动工具条：选段（划线/分享/复制）与点击划线（取消/分享） */
+let floatBar = null, barCtx = null;
+function ensureBar() {
+  if (floatBar) return floatBar;
+  floatBar = document.createElement('div');
+  floatBar.className = 'sel-bar';
+  floatBar.hidden = true;
+  document.body.appendChild(floatBar);
+  floatBar.addEventListener('mousedown', (e) => e.preventDefault());  // 保住选区
+  floatBar.addEventListener('click', onBarClick);
+  return floatBar;
+}
+function hideBar() { if (floatBar) floatBar.hidden = true; barCtx = null; }
+function showBar(rect, btns, ctx) {
+  ensureBar();
+  barCtx = ctx;
+  floatBar.innerHTML = btns.map((b) => `<button data-act="${b.act}">${b.label}</button>`).join('');
+  floatBar.hidden = false;
+  const bw = floatBar.offsetWidth, bh = floatBar.offsetHeight;
+  let x = rect.left + rect.width / 2 - bw / 2;
+  x = Math.max(8, Math.min(x, innerWidth - bw - 8));
+  let y = rect.top - bh - 10;
+  if (y < 62) y = rect.bottom + 10;
+  floatBar.style.left = x + 'px';
+  floatBar.style.top = y + 'px';
+}
+function onBarClick(e) {
+  const act = e.target.dataset && e.target.dataset.act;
+  if (!act || !barCtx) return;
+  const { id, p, text } = barCtx;
+  if (act === 'hl') {
+    addHighlight(id, p, text);
+    const root = $('#reader .art-body');
+    if (root && p != null) wrapText(root.querySelector(`[data-p="${p}"]`), text, 'hl');
+    getSelection().removeAllRanges();
+  } else if (act === 'unhl') {
+    removeHighlight(id, p, text);
+    if (barCtx.el) barCtx.el.replaceWith(document.createTextNode(barCtx.el.textContent));
+  } else if (act === 'share') {
+    openShareCard({ text, source: current ? current.title : '', url: deepLink(id, p) });
+  } else if (act === 'copy') {
+    const payload = text + '\n——' + (current ? current.title : '') + '\n' + deepLink(id, p);
+    if (navigator.clipboard) navigator.clipboard.writeText(payload).catch(() => {});
+    getSelection().removeAllRanges();
+  }
+  hideBar();
+}
+function bindSelection(root, id) {
+  if (!root) return;
+  const onUp = () => {
+    const sel = getSelection();
+    if (!sel || sel.isCollapsed) return;
+    const text = sel.toString().trim();
+    if (text.length < 2 || !root.contains(sel.anchorNode)) return;
+    const node = sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement;
+    const paraEl = node.closest('[data-p]');
+    const p = paraEl ? +paraEl.dataset.p : null;
+    const rect = sel.getRangeAt(0).getBoundingClientRect();
+    showBar(rect, [{ act: 'hl', label: '划线' }, { act: 'share', label: '分享' }, { act: 'copy', label: '复制' }], { id, p, text });
+  };
+  root.addEventListener('mouseup', () => setTimeout(onUp, 10));
+  root.addEventListener('touchend', () => setTimeout(onUp, 10));
+  root.addEventListener('click', (e) => {
+    const hl = e.target.closest && e.target.closest('mark.hl');
+    if (!hl) return;
+    const paraEl = hl.closest('[data-p]');
+    const p = paraEl ? +paraEl.dataset.p : null;
+    showBar(hl.getBoundingClientRect(),
+      [{ act: 'unhl', label: '取消划线' }, { act: 'share', label: '分享' }],
+      { id, p, text: hl.textContent, el: hl });
+  });
+}
+document.addEventListener('selectionchange', () => {
+  const s = getSelection();
+  if (floatBar && !floatBar.hidden && barCtx && !barCtx.el && (!s || s.isCollapsed)) hideBar();
+});
+document.addEventListener('click', (e) => {
+  if (floatBar && !floatBar.hidden && barCtx && barCtx.el &&
+      !floatBar.contains(e.target) && !(e.target.closest && e.target.closest('mark.hl'))) hideBar();
+});
+addEventListener('scroll', () => { if (floatBar && !floatBar.hidden) hideBar(); }, { passive: true });
+
+/* ---------- 我的：收藏 + 划线 ---------- */
+function mineCount() {
+  const hl = Object.values(highlights).reduce((n, a) => n + (a ? a.length : 0), 0);
+  return { marks: marks.length, hl };
+}
+function refreshMineBadge() {
+  const el = $('#dm-go');
+  if (!el) return;
+  const c = mineCount();
+  el.textContent = (c.marks + c.hl) ? `${c.marks} · ${c.hl}` : '›';
+}
+function renderMine() {
+  current = null;
+  $('#topbar-title').textContent = '我的';
+  $('#ai-context').textContent = '未在阅读篇目';
+  const titleOf = (id) => {
+    const it = flat.find((x) => x.id === id);
+    return it ? it.title : id;
+  };
+  const markHtml = marks.length
+    ? marks.map((m) => `<button class="mine-item" data-id="${m.id}">
+         <span class="mi-title">${esc(m.title)}</span>
+         <span class="mi-go">读 ›</span>
+       </button>`).join('')
+    : '<p class="mine-empty">还没有收藏。阅读时点篇名下方「☆ 收藏」即可。</p>';
+  const hlIds = Object.keys(highlights).filter((id) => highlights[id] && highlights[id].length);
+  const hlHtml = hlIds.length
+    ? hlIds.map((id) => `
+        <div class="mine-hlgroup">
+          <button class="mine-hlhead" data-id="${id}">${esc(titleOf(id))}</button>
+          ${highlights[id].map((h) => `
+            <button class="mine-hl" data-id="${id}" data-p="${h.p}">
+              <span class="quote">${esc(h.text)}</span>
+            </button>`).join('')}
+        </div>`).join('')
+    : '<p class="mine-empty">还没有划线。阅读时选中原文或白话，点「划线」即可标记。</p>';
+  $('#reader').innerHTML = `
+    <div class="home mine">
+      <div class="mine-head">
+        <button class="mine-back" id="mine-back">‹ 返回</button>
+        <h1>我 的</h1>
+      </div>
+      <h2>收 藏 · ${marks.length}</h2>
+      <div class="mine-list">${markHtml}</div>
+      <h2>划 线 · ${hlIds.reduce((n, id) => n + highlights[id].length, 0)}</h2>
+      <div class="mine-list">${hlHtml}</div>
+    </div>`;
+  $('#mine-back').onclick = () => { location.hash = ''; };
+  $('#reader').querySelectorAll('.mine-item, .mine-hlhead').forEach((b) => {
+    b.onclick = () => { location.hash = '#/a/' + b.dataset.id; };
+  });
+  $('#reader').querySelectorAll('.mine-hl').forEach((b) => {
+    b.onclick = () => { location.hash = '#/a/' + b.dataset.id + '?p=' + b.dataset.p; };
+  });
+}
+
 /* ---------- 偏好控件 ---------- */
 $('#font-inc').onclick = () => { prefs.fs = Math.min(24, prefs.fs + 1); store.set('fs', prefs.fs); applyPrefs(); };
 $('#font-dec').onclick = () => { prefs.fs = Math.max(14, prefs.fs - 1); store.set('fs', prefs.fs); applyPrefs(); };
-$('#theme-paper').onclick = () => { prefs.theme = 'paper'; store.set('theme', prefs.theme); applyPrefs(); };
-$('#theme-night').onclick = () => { prefs.theme = 'night'; store.set('theme', prefs.theme); applyPrefs(); };
+const setTheme = (t) => { prefs.theme = t; store.set('theme', t); applyPrefs(); };
+$('#theme-paper').onclick = () => setTheme('paper');
+$('#theme-night').onclick = () => setTheme('night');
+$('#theme-eink').onclick = () => setTheme('eink');
 
 /* ---------- AI 助读 ---------- */
 const aiLog = $('#ai-log');
@@ -568,6 +826,8 @@ async function boot() {
         for (const it of c.items)
           flat.push({ ...it, volName: vol.name });
   $('#nav-stats').textContent = `${books.length} 部 · ${flat.length} 篇 · 文白对照`;
+  $('#drawer-mine').onclick = () => { location.hash = '#/me'; closeDrawers(); };
+  refreshMineBadge();
   renderTree();
   route();
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost'))

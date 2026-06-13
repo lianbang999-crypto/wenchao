@@ -19,6 +19,12 @@ npx wrangler login
 npx wrangler pages deploy site --project-name=wenchao
 ```
 
+`main` 分支已配置 GitHub Actions 自动部署到现有 Cloudflare Pages 项目 `wenchao`。
+仓库需要配置以下 GitHub Actions Secrets：
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
 如果使用 GitHub 连接 Cloudflare Pages：
 
 - Build command 留空

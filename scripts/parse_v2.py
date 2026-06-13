@@ -247,6 +247,96 @@ def parse_volume(vol):
             else:
                 anomalies.append(f"[{title}] 标题内嵌未识别行: {extra}")
 
+        # 无粗体文章（如三编补"序跋疏"以后、续编个别序）：底本以
+        # 空行分组、组内前半原文后半白话。偶数组对半切分，并以"的"字
+        # 密度验证后半确为白话；不合者整组按白话并记入报告。
+        # 注：结构行/注释区头/注释条目的粗体不算内容粗体
+        def content_bold(i):
+            p2 = paras[i]
+            t2 = p2.text.strip()
+            if not t2 or marker_kind(cfg, t2) or NOTE_RE.match(t2):
+                return False
+            if re.sub(r'[\s　]+', '', t2) in ('【注释】', '注释', '【注：】', '注：', '【注】'):
+                return False
+            return para_bold(p2)
+
+        has_bold = any(content_bold(i) for i in range(s + 1, e))
+        if not has_bold:
+            segments = []
+            groups, g = [], []
+            for i in range(s + 1, e):
+                if in_skip(i):
+                    continue
+                text = paras[i].text.strip()
+                if not text:
+                    if g:
+                        groups.append(g)
+                        g = []
+                    continue
+                if marker_kind(cfg, text):
+                    continue
+                m = NOTE_RE.match(text)
+                if m:
+                    if g:
+                        groups.append(g)
+                        g = []
+                    groups.append(('note', int(m.group(1)), m.group(2).strip()))
+                    continue
+                g.append(text)
+            if g:
+                groups.append(g)
+
+            # 白话虚词密度（文言近零；避开文言常用的"了"，如"了生死"）
+            MARKERS = ('的', '这', '吗', '呢', '啊', '们', '您',
+                       '已经', '因为', '所以', '就是', '什么')
+
+            def score(ps):
+                if isinstance(ps, str):
+                    ps = [ps]
+                total = sum(len(x) for x in ps) or 1
+                return sum(x.count(m) for x in ps for m in MARKERS) / total
+
+            n_pair = n_fallback = 0
+            for grp in groups:
+                if isinstance(grp, tuple):
+                    segments.append({"n": grp[1], "note": grp[2]})
+                    continue
+                n = len(grp)
+                if n >= 2 and n % 2 == 0:
+                    ev, od = grp[0::2], grp[1::2]
+                    # 交替式（原白原白…）：奇数位显著更白话
+                    if score(od) >= 0.006 and score(od) > 2 * score(ev):
+                        for o, t in zip(ev, od):
+                            segments.append({"o": o, "t": t})
+                        n_pair += 1
+                        continue
+                    # 对半式（前半原文后半白话）
+                    h = n // 2
+                    if score(grp[h:]) >= 0.006 and score(grp[h:]) > 2 * score(grp[:h]):
+                        segments.append({"os": grp[:h], "ts": grp[h:]})
+                        n_pair += 1
+                        continue
+                # 不成对：逐段归类——显式"译文："前缀与年月落款优先，
+                # 其余按虚词密度（对联/偈→原文，前言类→白话）
+                for x in grp:
+                    if x.startswith(('译文：', '译文:')) or re.match(r'^\d{4}年|^[（(]?民国|^[一-鿿]{2,6}弟子$', x):
+                        segments.append({"t": x})
+                    else:
+                        segments.append({"t": x} if score(x) >= 0.006 else {"o": x})
+                n_fallback += 1
+            if n_pair or n_fallback:
+                anomalies.append(f"[{title}] 无粗体·空行配对：成对{n_pair}组，逐段归类{n_fallback}组")
+            part = cfg["front_part"]
+            for mi, mt in body_marks:
+                if mi < s:
+                    part = mt
+            articles.append({
+                "id": f"{art_no:03d}", "title": title, "translator": translator,
+                "summary": "", "part": part, "segments": segments,
+                "_range": (s, e),
+            })
+            continue
+
         summary = ""
         segments = []
         obuf, tbuf = [], []

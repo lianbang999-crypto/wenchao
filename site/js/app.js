@@ -290,6 +290,13 @@ function addRefs(html, hasNotes) {
   return html.replace(/\[(\d{1,3})\]/g, '<sup class="note-ref" data-n="$1">$1</sup>');
 }
 
+/* 条目出处行：已链接的（嘉言录→文钞）可点跳转 */
+function segSrcHtml(seg) {
+  return seg.srcId
+    ? `<button class="seg-src linked" data-go="${seg.srcId}">${esc(seg.src)}</button>`
+    : `<div class="seg-src">${esc(seg.src)}</div>`;
+}
+
 async function renderArticle(id) {
   const reader = $('#reader');
   reader.innerHTML = '<p class="loading">展 卷 …</p>';
@@ -330,6 +337,7 @@ async function renderArticle(id) {
           <p class="p-trans">${addRefs(esc(seg.trans[i]), hasNotes)}</p>
         </div>`;
       }
+      if (seg.src) body += segSrcHtml(seg);
     } else {
       // 段数不等：按原文块/白话块分组呈现（不强行配对，忠于底本）。
       // 仅当两侧都有内容时才显示块标签；单侧段组直接连排
@@ -342,6 +350,7 @@ async function renderArticle(id) {
         if (both) body += '<div class="block-label">白 话</div>';
         body += seg.trans.map((p) => `<p class="p-trans">${addRefs(esc(p), hasNotes)}</p>`).join('');
       }
+      if (seg.src) body += segSrcHtml(seg);
     }
   }
 
@@ -352,6 +361,15 @@ async function renderArticle(id) {
            ${n.term ? `<span class="note-term">【${esc(n.term)}】</span>` : ''}
            ${esc(n.text)}
          </p>`).join('')}</section>`
+    : '';
+
+  // 反向链接：本篇被嘉言录选录（文钞篇 → 嘉言录条目）
+  const backHtml = (art.backrefs && art.backrefs.length)
+    ? `<section class="backrefs"><h3>入选《嘉言录》</h3>${art.backrefs.map((r) =>
+        `<button class="backref" data-go="${r.a}">
+           <span class="br-arrow">❖</span>${esc(r.t)}
+           ${r.n > 1 ? `<span class="br-n">${r.n} 则</span>` : ''}
+         </button>`).join('')}</section>`
     : '';
 
   // 上一篇 / 下一篇
@@ -381,6 +399,7 @@ async function renderArticle(id) {
       ${art.summary ? `<div class="art-summary"><b>提 要</b>${esc(art.summary)}</div>` : ''}
       <article class="art-body" data-mode="${hasTrans ? prefs.mode : 'orig'}">${body}</article>
       ${notesHtml}
+      ${backHtml}
       ${navHtml}
     </div>`;
 
@@ -411,6 +430,10 @@ async function renderArticle(id) {
   });
   reader.querySelectorAll('.art-nav button').forEach((b) => {
     b.onclick = () => { location.hash = '#/a/' + b.dataset.id; };
+  });
+  // 双链跳转：出处（嘉言录→文钞）与反向链接（文钞→嘉言录）
+  reader.querySelectorAll('.seg-src.linked, .backref').forEach((b) => {
+    b.onclick = () => { location.hash = '#/a/' + b.dataset.go; };
   });
 
   // 搜索跳转：高亮全文命中并定位首处；否则恢复阅读进度

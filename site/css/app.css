@@ -278,6 +278,45 @@ sup.note-ref {
 }
 sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
 
+/* 条目出处（嘉言录：所引文钞篇目） */
+.seg-src {
+  display: block; width: 100%; text-align: right; margin: -.5em 0 1.4em;
+  font-family: var(--kai); font-size: calc(var(--fs) - 4px);
+  color: var(--ink-3); letter-spacing: .03em;
+  background: none; border: 0; padding: 0;
+}
+.seg-src::before { content: "—— "; }
+.seg-src.linked {
+  cursor: pointer; color: var(--cinnabar);
+  border-bottom: 1px dotted transparent;
+}
+.seg-src.linked::after { content: " ↗"; font-size: .85em; opacity: .7; }
+.seg-src.linked:active { opacity: .6; }
+.art-body[data-mode="orig"] .seg-src { margin-top: .2em; }
+
+/* 反向链接：本篇入选《嘉言录》 */
+.backrefs {
+  margin: 2.2em 0 0; padding: 1em 0 0;
+  border-top: 1px solid var(--line);
+}
+.backrefs h3 {
+  font-size: 14px; letter-spacing: .3em; color: var(--ink-3);
+  font-weight: 600; margin: 0 0 .8em;
+}
+.backref {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  margin: 0 0 8px; padding: 9px 12px;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--paper-2); color: var(--ink-2);
+  font-family: var(--kai); font-size: calc(var(--fs) - 2px);
+}
+.backref:active { border-color: var(--cinnabar); color: var(--cinnabar); }
+.backref .br-arrow { color: var(--cinnabar); margin-right: 8px; }
+.backref .br-n {
+  float: right; font-size: 11.5px; color: var(--ink-3);
+  font-family: var(--serif); margin-top: 2px;
+}
+
 /* 名相词条 */
 .term {
   border: 0; background: none; padding: 0; cursor: pointer;

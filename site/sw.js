@@ -1,6 +1,6 @@
 /* 离线缓存：一律网络优先、写穿缓存；离线时回退缓存。
    读过的篇目离线可重读，数据更新后在线立即生效。 */
-const VER = 'wc-v2';
+const VER = 'wc-v3';
 const SHELL = ['./', 'index.html', 'css/app.css', 'js/app.js', 'config.js', 'icon.svg', 'data/books.json'];
 
 self.addEventListener('install', (e) => {

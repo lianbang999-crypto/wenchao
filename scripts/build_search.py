@@ -30,6 +30,8 @@ def main():
         for s in a['segments']:
             parts.extend(s['orig'])
             parts.extend(s['trans'])
+            if s.get('src'):
+                parts.append(s['src'])
             for n in s['notes']:
                 parts.append((f"【{n['term']}】" if n['term'] else '') + n['text'])
         if a.get('summary'):

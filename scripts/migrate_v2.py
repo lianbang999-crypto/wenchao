@@ -29,18 +29,20 @@ OUT = os.path.join(PROJ, 'site', 'data')
 # 各册在主项目中的标识与陈列名（00 先行，01-07 提取完成后照此扩充）
 VOLS = {
     '00': {'id': 'jx', 'name': '白话精选读本', 'group': '印光法师文钞白话精选读本', 'pos': 0},
-    '01': {'id': 'zg1', 'name': '增广文钞 · 上册', 'group': '增广印光法师文钞', 'pos': 1},
-    '02': {'id': 'zg2', 'name': '增广文钞 · 下册', 'group': '增广印光法师文钞', 'pos': 2},
-    '03': {'id': 'xb1', 'name': '续编 · 上册', 'group': '印光法师文钞续编', 'pos': 3},
-    '04': {'id': 'xb2', 'name': '续编 · 下册', 'group': '印光法师文钞续编', 'pos': 4},
-    '05': {'id': 'sb1', 'name': '三编 · 上册', 'group': '印光法师文钞三编', 'pos': 5},
-    '06': {'id': 'sb2', 'name': '三编 · 下册', 'group': '印光法师文钞三编', 'pos': 6},
-    '07': {'id': 'sbu', 'name': '三编补', 'group': '印光法师文钞三编', 'pos': 7},
+    'jy': {'id': 'jy', 'name': '嘉言录', 'group': '印光法师嘉言录 · 十编主题分类', 'pos': 1},
+    'jh': {'id': 'jh', 'name': '菁华录', 'group': '文钞菁华录 · 精要 333 则文白对照', 'pos': 2},
+    '01': {'id': 'zg1', 'name': '增广文钞 · 上册', 'group': '增广印光法师文钞', 'pos': 3},
+    '02': {'id': 'zg2', 'name': '增广文钞 · 下册', 'group': '增广印光法师文钞', 'pos': 4},
+    '03': {'id': 'xb1', 'name': '续编 · 上册', 'group': '印光法师文钞续编', 'pos': 5},
+    '04': {'id': 'xb2', 'name': '续编 · 下册', 'group': '印光法师文钞续编', 'pos': 6},
+    '05': {'id': 'sb1', 'name': '三编 · 上册', 'group': '印光法师文钞三编', 'pos': 7},
+    '06': {'id': 'sb2', 'name': '三编 · 下册', 'group': '印光法师文钞三编', 'pos': 8},
+    '07': {'id': 'sbu', 'name': '三编补', 'group': '印光法师文钞三编', 'pos': 9},
 }
 
 NOTE_TERM_RE = re.compile(r'^【([^】]{1,24})】\s*(.*)$', re.S)
 # 底本中的"【注释】"节标题行：结构性装饰，前端自带注释区头，迁移时剔除
-NOTE_HEADER = {'【注释】', '注释', '【注释】：', '注释：'}
+NOTE_HEADER = {'【注释】', '注释', '【注释】：', '注释：', '【注：】', '注：', '【注】'}
 
 
 def is_note_header(s):
@@ -107,7 +109,10 @@ def convert_segments(src_segs, report, title):
             flush()  # 注释块结束后再有正文 → 新段组
         if 'os' in g:
             flush()
-            out.append({'orig': list(g['os']), 'trans': list(g['ts']), 'notes': []})
+            seg = {'orig': list(g['os']), 'trans': list(g['ts']), 'notes': []}
+            if g.get('src'):
+                seg['src'] = g['src']  # 条目出处（嘉言录：所引文钞篇目）
+            out.append(seg)
             continue
         if 'o' in g and 't' in g:
             if kind not in (None, 'paired'):

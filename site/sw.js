@@ -1,7 +1,7 @@
 /* 离线缓存：一律网络优先、写穿缓存；离线时回退缓存。
    读过的篇目离线可重读，数据更新后在线立即生效。 */
-const VER = 'wc-v4';
-const SHELL = ['./', 'index.html', 'css/app.css', 'js/app.js', 'js/share.js', 'js/qrcode.js', 'config.js', 'icon.svg', 'data/books.json'];
+const VER = 'wc-v3';
+const SHELL = ['./', 'index.html', 'css/app.css', 'js/app.js', 'config.js', 'icon.svg', 'data/books.json'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(VER).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

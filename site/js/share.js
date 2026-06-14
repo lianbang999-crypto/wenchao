@@ -10,6 +10,9 @@
   var CFG = window.WENCHAO_CONFIG || {};
   var MAX = CFG.shareMaxChars || 800;
   var SERIF = '"Noto Serif SC","Songti SC","STSong","Source Han Serif SC",serif';
+  // CJK 避头尾：不可行首 / 不可行尾 字符
+  var FORBID_START = '。，、；：！？）」』】》〕…·.,!?;:)]}％%”’';
+  var FORBID_END = '（「『【《〔“‘([{';
 
   var picked = null;     // { text, id, title, pIndex }
   var lastBlob = null, lastUrl = '', lastText = '';
@@ -139,17 +142,19 @@
 
   /* ---------- 画「素简卡」：所选文字 + 出处（《书》篇）+ 裸二维码 ---------- */
   function drawCard(text, src, url) {
-    var W = 1080, M = 96, TW = W - M * 2;
-    var paper = '#f6f1e6', ink = '#322a1e', ink2 = '#6d5f49';
-    var bodyFS = 41, LH = Math.round(bodyFS * 1.9), srcFS = 30, qrS = 168;
-    var topPad = 96, srcGap = 50, qrGap = 56, botPad = 84;
+    var W = 1080, M = 100, TW = W - M * 2, FI = 44;   // 宽 / 文字边距 / 界栏内框
+    var paper = '#f6f1e6', ink = '#322a1e', ink2 = '#6d5f49', line = '#d9cdb2';
+    var bodyFS = 41, LH = Math.round(bodyFS * 1.9), paraGap = Math.round(bodyFS * 0.7);
+    var srcFS = 30, qrS = 168, topPad = 104, qrGap = 58, botPad = 92;
 
     var probe = document.createElement('canvas').getContext('2d');
     probe.font = bodyFS + 'px ' + SERIF;
     var lines = layout(probe, text, TW, bodyFS);
+    var nGap = 0; for (var k = 0; k < lines.length; k++) if (lines[k].newPara) nGap++;
 
-    var bodyH = lines.length * LH;
-    var sy = topPad + bodyH + srcGap + srcFS;        // 出处基线
+    var bodyH = lines.length * LH + nGap * paraGap;
+    var ruleY = topPad + bodyH + 32;                  // 出处前短分隔
+    var sy = ruleY + 30 + srcFS;                      // 出处基线
     var qy = sy + qrGap;                              // 二维码顶
     var H = Math.round(qy + qrS + botPad);
     var DPR = Math.min(window.devicePixelRatio || 1, H > 4200 ? 1.5 : 2);
@@ -161,15 +166,22 @@
     ctx.textBaseline = 'alphabetic';
 
     ctx.fillStyle = paper; ctx.fillRect(0, 0, W, H);
+    // 极淡内框界栏（素简之质感，非装饰）
+    ctx.strokeStyle = line; ctx.lineWidth = 1.5;
+    ctx.strokeRect(FI, FI, W - FI * 2, H - FI * 2);
 
-    // 正文（左对齐，每段首行缩进二字）
+    // 正文（左对齐，每段首行缩进二字，段间留白；折行已避头尾）
     ctx.fillStyle = ink; ctx.textAlign = 'left'; ctx.font = bodyFS + 'px ' + SERIF;
     var y = topPad + bodyFS;
     for (var i = 0; i < lines.length; i++) {
-      ctx.fillText(lines[i].t, M + (lines[i].indent ? bodyFS * 2 : 0), y);
+      if (lines[i].newPara) y += paraGap;
+      ctx.fillText(lines[i].t, M + (lines[i].first ? bodyFS * 2 : 0), y);
       y += LH;
     }
 
+    // 出处前短分隔（右对齐短线）
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(W - M - 66, ruleY); ctx.lineTo(W - M, ruleY); ctx.stroke();
     // 出处（右对齐落款）
     ctx.textAlign = 'right'; ctx.fillStyle = ink2; ctx.font = srcFS + 'px ' + SERIF;
     ctx.fillText(ellipsize(ctx, '——' + (src || '印光法师文钞'), TW), W - M, sy);
@@ -179,21 +191,34 @@
     return canvas;
   }
 
-  // 把文本按宽度折行，保留段落（\n）、标记每段首行（缩进用）
+  // 折行：保留段落（\n）、首行缩进、避头尾（行首禁标点、行尾禁开括号）
   function layout(ctx, text, maxW, fs) {
     var out = [], paras = text.split('\n');
     for (var p = 0; p < paras.length; p++) {
       var s = paras[p].trim();
       if (!s) continue;
-      var ln = '', first = true;
+      var ln = '', lineNo = 0, np = out.length > 0;   // np：非首段，其首行加段距
       for (var i = 0; i < s.length; i++) {
-        var test = ln + s[i];
-        var avail = maxW - (first ? fs * 2 : 0);
-        if (ln && ctx.measureText(test).width > avail) {
-          out.push({ t: ln, indent: first }); ln = s[i]; first = false;
-        } else { ln = test; }
+        var ch = s[i];
+        var avail = maxW - (lineNo === 0 ? fs * 2 : 0);
+        if (ln && ctx.measureText(ln + ch).width > avail) {
+          if (FORBID_START.indexOf(ch) >= 0) {
+            ln += ch;                                  // 行首禁则：标点悬挂行尾
+          } else {
+            var last = ln.charAt(ln.length - 1);
+            if (FORBID_END.indexOf(last) >= 0 && ln.length > 1) {
+              out.push({ t: ln.slice(0, -1), first: lineNo === 0, newPara: lineNo === 0 && np });
+              lineNo++; ln = last + ch;                // 行尾禁则：开括号挪到下一行
+            } else {
+              out.push({ t: ln, first: lineNo === 0, newPara: lineNo === 0 && np });
+              lineNo++; ln = ch;
+            }
+          }
+        } else {
+          ln += ch;
+        }
       }
-      if (ln) out.push({ t: ln, indent: first });
+      if (ln) out.push({ t: ln, first: lineNo === 0, newPara: lineNo === 0 && np });
     }
     return out;
   }

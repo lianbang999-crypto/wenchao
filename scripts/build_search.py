@@ -34,6 +34,8 @@ def main():
                 parts.append(s['src'])
             for n in s['notes']:
                 parts.append((f"【{n['term']}】" if n['term'] else '') + n['text'])
+        for sec in a.get('xuandu', []):       # 《文钞》选读篇目也纳入检索
+            parts.extend(it['t'] for it in sec['items'])
         if a.get('summary'):
             parts.insert(0, a['summary'])
         out.append({'i': aid, 'v': vol_name, 't': a['title'], 'x': '\n'.join(parts)})

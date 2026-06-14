@@ -87,9 +87,67 @@ def merge_plain(lines):
     return paras
 
 
+def parse_xuandu_list(lines):
+    """把篇目行（保留空格）切成分组：按「（以上 X）」标记归组，◎ 标"尤要"。
+    返回 [{'sec':'卷一·书一','items':[{'t':篇名,'m':是否◎}, …]}, …]"""
+    sections, cur = [], []
+
+    def add(seg):
+        seg = seg.strip()
+        if not seg:
+            return
+        marked = seg.startswith('◎')      # ◎ 只标紧跟的首篇（同行其余为另起篇目）
+        seg = seg.lstrip('◎').strip()
+        first = True
+        for nm in re.split(r'\s+', seg):
+            nm = nm.strip()
+            if nm:
+                cur.append({'t': nm, 'm': marked and first})
+                first = False
+
+    for line in lines:
+        while True:
+            mm = re.search(r'（以上\s*([^）]*)）', line)
+            if not mm:
+                break
+            add(line[:mm.start()])
+            sec = re.sub(r'\s+', '', mm.group(1)).replace('.', '·')
+            sections.append({'sec': sec, 'items': cur})
+            cur = []
+            line = line[mm.end():]
+        add(line)
+    if cur:
+        sections.append({'sec': '其他', 'items': cur})
+    return sections
+
+
+def build_xuandu(raw_lines):
+    """从 docx 原始段落（保留空格）重建《印光法师文钞》选读：序文 + 分组篇目。
+    返回 (序文str, sections)。"""
+    start = next((i for i, t in enumerate(raw_lines)
+                  if t.startswith('《印光法师文钞》选读')), None)
+    if start is None:
+        return '', []
+    end = next((i for i in range(start + 1, len(raw_lines))
+                if raw_lines[i] == '一、赞净土超胜'), len(raw_lines))
+    preface, list_lines, in_list = [], [], False
+    for i in range(start + 1, end):
+        t = raw_lines[i]
+        if not t or t.startswith('《印光法师文钞》选读') or is_junk(tidy(t), 'Normal'):
+            continue
+        if not in_list:
+            preface.append(t)
+            if '圆净谨志' in t:
+                in_list = True
+            continue
+        list_lines.append(t)
+    return tidy(''.join(preface)), parse_xuandu_list(list_lines)
+
+
 def main():
     d = docx.Document(SRC)
     paras = [(tidy(p.text.strip()), p.style.name) for p in d.paragraphs]
+    raw_lines = [p.text.strip() for p in d.paragraphs]   # 保留空格：选读篇目按空格切分用
 
     # 正文起点：「嘉言录封面题词」且其后 6 段内出现【原文】
     body_start = None
@@ -289,7 +347,14 @@ def main():
         idx += 1
         aid = f'{idx:03d}'
         segs = []
-        plain = a['plain'] if a.get('raw') else merge_plain(a['plain'])
+        xuandu = None
+        if a['title'].startswith('《印光法师文钞》选读'):
+            # 选读：序文单独成段，篇目清单结构化（分组 + ◎ + 待链接），不走 raw 列表
+            preface, sections = build_xuandu(raw_lines)
+            plain = [preface] if preface else []
+            xuandu = sections
+        else:
+            plain = a['plain'] if a.get('raw') else merge_plain(a['plain'])
         for p in plain:
             segs.append({'o': p})
         for e in a['entries']:
@@ -303,6 +368,8 @@ def main():
             segs.append(seg)
         art = {'id': aid, 'title': a['title'], 'translator': '', 'summary': '',
                'part': a['part'], 'segments': segs}
+        if xuandu is not None:
+            art['xuandu'] = xuandu
         with open(os.path.join(OUT, 'articles', aid + '.json'), 'w', encoding='utf-8') as f:
             json.dump(art, f, ensure_ascii=False, separators=(',', ':'))
         if not parts or parts[-1]['title'] != (a['part'] or '其他'):

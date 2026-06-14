@@ -24,7 +24,8 @@ JUAN_VOL = {'卷一': 'zg1', '卷二': 'zg1', '卷三': 'zg2', '卷四': 'zg2'}
 
 
 def norm(s):
-    return re.sub(r'[\s　]+', '', s)
+    # 去空白与书名号/引号（增广篇名不用《》，去掉可让"《X》序"匹配"X序"）
+    return re.sub(r'[\s　《》「」『』〈〉]+', '', s)
 
 
 def strip_parens(s):
@@ -62,14 +63,9 @@ def main():
                     loose_map[b['id']].setdefault(loose(norm(it['title'])), it['id'])
                     loose_map[b['id']].setdefault(loose(norm(strip_parens(it['title']))), it['id'])
 
-    def resolve(src):
-        parts = src.split('·')
-        if len(parts) < 3:
-            return None
-        vol = JUAN_VOL.get(norm(parts[0]))
-        if not vol:
-            return None
-        t = norm('·'.join(parts[2:]))
+    def lookup(vol, t):
+        """在某册（zg1/zg2）篇名索引里容错匹配题名 → id"""
+        t = norm(t)
         m = title_map[vol]
         for cand in (t, norm(strip_parens(t))):
             if cand in m:
@@ -93,6 +89,15 @@ def main():
                 return v
         return None
 
+    def resolve(src):
+        parts = src.split('·')
+        if len(parts) < 3:
+            return None
+        vol = JUAN_VOL.get(norm(parts[0]))
+        if not vol:
+            return None
+        return lookup(vol, '·'.join(parts[2:]))
+
     # 跨册回落索引（全站所有篇目的宽松题名 → id 列表）
     all_loose = defaultdict(list)
     for b in books:
@@ -100,6 +105,20 @@ def main():
             for c in j['cats']:
                 for it in c['items']:
                     all_loose[loose(norm(it['title']))].append(it['id'])
+
+    # 选读篇目 → 文钞链接：书信在增广上册(zg1)，论/疏/序/记/杂著在下册(zg2)
+    SEC_VOL = {'卷一·书一': 'zg1', '卷二·书二': 'zg1'}
+
+    def resolve_name(name, sec):
+        base = re.sub(r'其[一二三四五六七八九十、，\s]+$', '', name).strip()
+        primary = SEC_VOL.get(sec, 'zg2')
+        for vol in (primary, 'zg2' if primary == 'zg1' else 'zg1'):
+            rid = lookup(vol, base)
+            if rid:
+                return rid
+        # 全站唯一宽松匹配回落；不唯一则不链（宁缺毋滥，不妄链）
+        cands = list(dict.fromkeys(all_loose.get(loose(norm(base)), [])))
+        return cands[0] if len(cands) == 1 else None
 
     def art_text(aid):
         a = json.load(open(os.path.join(DATA, 'articles', aid + '.json'), encoding='utf-8'))
@@ -120,11 +139,24 @@ def main():
     resolved = unresolved = 0
     cross = []
     missing = Counter()
+    xd_hit = xd_miss = 0
     jy_files = sorted(f for f in os.listdir(os.path.join(DATA, 'articles')) if f.startswith('jy-'))
     for fn in jy_files:
         path = os.path.join(DATA, 'articles', fn)
         art = json.load(open(path, encoding='utf-8'))
         changed = False
+        # 选读篇目 → 增广/续/三编 链接（组级：一名多封链首篇；歧义/无配留纯文字）
+        for sec in art.get('xuandu', []):
+            for it in sec['items']:
+                rid = resolve_name(it['t'], sec['sec'])
+                if it.get('aid') != rid:
+                    changed = True
+                if rid:
+                    it['aid'] = rid
+                    xd_hit += 1
+                else:
+                    it.pop('aid', None)
+                    xd_miss += 1
         for seg in art['segments']:
             src = seg.get('src')
             if not src:
@@ -175,6 +207,7 @@ def main():
         for s, n in missing.most_common(20):
             print(f'  x{n} {s}')
     print(f'反向链接：{n_back} 篇文钞文章已标注被嘉言录引用')
+    print(f'选读篇目链接：{xd_hit} 条 → 文钞，{xd_miss} 条未匹配（保留纯文字）')
 
 
 if __name__ == '__main__':

@@ -411,6 +411,16 @@ async function renderArticle(id) {
         <button class="seg" data-m="trans">白话</button>
       </div>` : '';
 
+  // 《文钞》选读：圆净所列初机必读篇目，分组呈现，可链接者点按直达文钞原篇
+  const xuanduHtml = (art.xuandu && art.xuandu.length)
+    ? `<div class="xuandu">${art.xuandu.map((sec) =>
+        `<h3 class="xd-sec">${esc(sec.sec)}</h3>` +
+        sec.items.map((it) => it.aid
+          ? `<button class="xd-link${it.m ? ' xd-mark' : ''}" data-id="${esc(it.aid)}">${esc(it.t)}</button>`
+          : `<span class="xd-item${it.m ? ' xd-mark' : ''}">${esc(it.t)}</span>`).join('')
+      ).join('')}</div>`
+    : '';
+
   reader.innerHTML = `<div class="reader-inner">
       ${modeBar}
       <header class="art-head">
@@ -420,6 +430,7 @@ async function renderArticle(id) {
       </header>
       ${art.summary ? `<div class="art-summary"><b>提 要</b>${esc(art.summary)}</div>` : ''}
       <article class="art-body" data-mode="${hasTrans ? prefs.mode : 'orig'}">${body}</article>
+      ${xuanduHtml}
       ${notesHtml}
       ${backHtml}
       ${navHtml}
@@ -442,6 +453,10 @@ async function renderArticle(id) {
       reader.querySelectorAll('.mode-bar .seg').forEach((x) =>
         x.classList.toggle('on', x === b));
     };
+  });
+  // 选读篇目 → 跳转文钞原篇
+  reader.querySelectorAll('.xd-link').forEach((b) => {
+    b.onclick = () => { location.hash = '#/a/' + b.dataset.id; };
   });
   // 注释词条弹卡
   reader.querySelectorAll('.term').forEach((b) => {

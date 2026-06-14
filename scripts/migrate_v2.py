@@ -28,8 +28,8 @@ OUT = os.path.join(PROJ, 'site', 'data')
 
 # 各册在主项目中的标识与陈列名（00 先行，01-07 提取完成后照此扩充）
 VOLS = {
-    '00': {'id': 'jx', 'name': '白话精选读本', 'group': '印光法师文钞白话精选读本', 'pos': 0},
-    'jy': {'id': 'jy', 'name': '嘉言录', 'group': '印光法师嘉言录 · 十编主题分类', 'pos': 1},
+    '00': {'id': 'jx', 'name': '白话精选读本', 'group': '印光法师文钞白话精选读本', 'pos': 1},
+    'jy': {'id': 'jy', 'name': '嘉言录', 'group': '印光法师嘉言录 · 十编主题分类', 'pos': 0},
     '01': {'id': 'zg1', 'name': '增广文钞 · 上册', 'group': '增广印光法师文钞', 'pos': 2},
     '02': {'id': 'zg2', 'name': '增广文钞 · 下册', 'group': '增广印光法师文钞', 'pos': 3},
     '03': {'id': 'xb1', 'name': '续编 · 上册', 'group': '印光法师文钞续编', 'pos': 4},
@@ -176,6 +176,8 @@ def migrate(vol):
                 'segments': segs,
                 'anomalies': [],
             }
+            if src.get('xuandu'):     # 《文钞》选读篇目（结构化清单，待 link_src 补链接）
+                art['xuandu'] = src['xuandu']
             with open(os.path.join(OUT, 'articles', new_id + '.json'), 'w', encoding='utf-8') as f:
                 json.dump(art, f, ensure_ascii=False)
 

@@ -173,6 +173,11 @@ function renderTree(filter) {
   tree.innerHTML = books.map((vol) => {
     const count = vol.juans.reduce((n, j) => n + j.cats.reduce((m, c) => m + c.items.length, 0), 0);
     const juans = vol.juans.map((j) => {
+      const items = j.cats.reduce((a, c) => a.concat(c.items), []);
+      // 单篇且篇名即卷名 → 直接成项，免去"展开只见同名一篇"的冗余
+      if (items.length === 1 && items[0].title === j.name) {
+        return navItemHtml(items[0], false, true);
+      }
       const cats = j.cats.map((c) =>
         (c.name && c.name !== '正文' ? `<div class="nav-cat-label">${esc(c.name)}</div>` : '') +
         c.items.map((it) => navItemHtml(it)).join('')
@@ -183,11 +188,14 @@ function renderTree(filter) {
   }).join('');
   bindNavItems(tree);
 }
-const navItemHtml = (it, withVol) => {
+// 目录显示用篇名：去掉卷首长标题尾部的编者注「（附录于后）」，正文页仍用全名
+const navTitle = (t) => t.replace(/（附录于后）$/, '');
+const navItemHtml = (it, withVol, asJuan) => {
   const visited = progress[it.id] ? ' visited' : '';
   const active = current && current.id === it.id ? ' active' : '';
+  const juan = asJuan ? ' nav-juan-leaf' : '';
   const sub = withVol ? `<small style="color:var(--ink-3)"> · ${esc(it.volName || '')}</small>` : '';
-  return `<button class="nav-item${visited}${active}" data-id="${it.id}">${esc(it.title)}${sub}</button>`;
+  return `<button class="nav-item${juan}${visited}${active}" data-id="${it.id}">${esc(navTitle(it.title))}${sub}</button>`;
 };
 function bindNavItems(root) {
   root.querySelectorAll('.nav-item').forEach((b) => {
@@ -212,6 +220,20 @@ async function route() {
   closeDrawers();
   if (!m) { renderHome(); return; }
   await renderArticle(m[1]);
+  // 分享二维码深链：?p=N 定位到所引段落
+  const pm = location.hash.match(/[?&]p=(\d+)/);
+  if (pm) scrollToPara(+pm[1]);
+}
+// 滚动到正文第 n 段并短暂高亮（与 share.js paraIndexOf 同口径）
+function scrollToPara(n) {
+  const body = document.querySelector('#reader .art-body');
+  if (!body) return;
+  const ps = body.querySelectorAll('p.p-orig, p.p-trans');
+  const el = ps[n];
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('para-flash');
+  setTimeout(() => el.classList.remove('para-flash'), 2400);
 }
 
 /* ---------- 首页 ---------- */
@@ -402,6 +424,13 @@ async function renderArticle(id) {
       ${backHtml}
       ${navHtml}
     </div>`;
+
+  // 供分享卡读取：书名（系列正名，去掉「 · 十编主题分类」等副标题）+ 篇名
+  const _bk = books.find((b) => b.id === art.volume) || {};
+  window.__wcShare = {
+    book: ((_bk.group || art.volumeName || '').split(/\s*·\s*/)[0] || '').trim(),
+    title: art.title || '',
+  };
 
   // 模式切换
   reader.querySelectorAll('.mode-bar .seg').forEach((b) => {

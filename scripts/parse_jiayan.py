@@ -19,8 +19,9 @@ import re
 
 import docx
 
-SRC = '/Users/bincai/Downloads/印光法师文钞word/嘉言录菁华录等/03印光法师嘉言录白话（东林寺文库）2023.11.26.docx'
 PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC = os.path.join(PROJ, '印祖文钞', '嘉言录菁华录等',
+                   '03印光法师嘉言录白话（东林寺文库）2023.11.26.docx')
 OUT = os.path.join(PROJ, 'build', 'jy')
 REPORT = os.path.join(PROJ, 'build', 'reports', 'report_jy.txt')
 
@@ -44,6 +45,8 @@ RE_JUNK = [
     re.compile(r'^0\d{2,3}-\d{6,8}$'),     # 版权页电话
     re.compile(r'^[\w.]+@[\w.]+$'),        # 版权页邮箱
     re.compile(r'^庐山东林寺官方平台$'),
+    # 页眉页脚：整行仅「页码装饰 + 书名 + 白话」（含无"·"的页脚，如 "6  印光法师嘉言录 白话"）
+    re.compile(r'^[·\d\s]*印光法师嘉言录\s*白话[·\d\s]*$'),
 ]
 
 
@@ -53,15 +56,35 @@ def is_junk(t, style):
     return False
 
 
-RE_CJK_GAP = re.compile(
-    r'(?<=[一-鿿　-〿＀-￯])[ \t ]+'
-    r'(?=[一-鿿　-〿＀-￯])')
+# 边界字符：汉字 + 中文标点 + 全角符号 + 中英文弯引号（引号旁的排版空格也清除）
+_CJKB = '一-鿿　-〿＀-￯‘’“”〝〞'
+RE_CJK_GAP = re.compile('(?<=[' + _CJKB + '])[ \t\xa0　]+(?=[' + _CJKB + '])')
+# 段首编号：把被物理换行拆散的整理类正文按编号项重新分段（含 1. / 一、/（一）/(1) 等）
+RE_PARA_START = re.compile(
+    r'^\s*(\d+\s*[.．、]|[①-⑩]|[一二三四五六七八九十]+\s*[、.]|[（(][一二三四五六七八九十\d]{1,3}[）)])')
 
 
 def tidy(s):
     """清除汉字（含中文标点）之间的排版空格——东林本 PDF 转档遗留，
     非内容空白；对账忽略空白，不影响逐字一致性。"""
     return RE_CJK_GAP.sub('', s)
+
+
+def merge_plain(lines):
+    """把被 PDF 物理换行拆散的 plain 段落重新拼回完整段落。
+    编号/序号行（1. / 一、/（一）)另起一段；纯标题短行（如"一、极乐世界的音声特质"，
+    短且无尾标点）独立成段、其后正文另起；其余续接上一段。
+    仅整理版式换行，不增删一字；对账走独立流水，不受影响。"""
+    paras = []
+    after_head = False     # 上一行是独立小标题 → 本行另起，不并入标题
+    for ln in lines:
+        head = bool(RE_PARA_START.match(ln)) and len(ln) <= 16 and not re.search(r'[。！？，、；：]$', ln)
+        if not paras or RE_PARA_START.match(ln) or after_head:
+            paras.append(ln)
+        else:
+            paras[-1] += ln
+        after_head = head
+    return paras
 
 
 def main():
@@ -115,6 +138,23 @@ def main():
             part = new_part
         cur = {'title': title, 'part': part, 'plain': [], 'entries': []}
         entry, side = None, 'o'
+
+    def origin_follows(idx, limit=6):
+        """其后 limit 个非空段内是否紧跟【原文】——用以判定真小品标题，
+        与选读清单里以「序/记」结尾的文钞篇名（其后无【原文】）区分。"""
+        seen = 0
+        for j in range(idx + 1, len(paras)):
+            tj, sj = paras[j]
+            if not tj or is_junk(tj, sj):
+                continue
+            if tj in BIAN or tj.startswith('【译文】'):
+                return False    # 已进入十编正文，此处【原文】不属于卷首小品
+            if tj.startswith('【原文】'):
+                return True
+            seen += 1
+            if seen >= limit:
+                break
+        return False
 
     if epigraph:
         cur = {'title': '印光法师语', 'part': '卷首', 'plain': epigraph, 'entries': []}
@@ -191,13 +231,22 @@ def main():
             if rest:
                 entry['ts'].append(rest)
             continue
+        # 卷首「《印光法师文钞》选读（附录于后）」：推荐篇目清单，整篇按原样列出
+        # （否则其下数十条文钞篇名会被并入上一篇译文，且「…序/记」结尾的篇名会被误判为独立小品）
+        if part == '卷首' and t.startswith('《印光法师文钞》选读'):
+            new_article(t)
+            cur['raw'] = True       # 篇目清单逐行保留，不做段落合并
+            continue
         # 书首/书尾的小品标题：短行、无标点、具题名特征（会先冲洗未结条目）
+        # 卷首小品须紧随【原文】，方与选读清单中的「…序/记」篇名区分开
         no_punct = len(t) <= 24 and st == 'Normal' and not re.search(r'[。，；：？！】]', t)
         is_front_title = (part == '卷首' and no_punct
-                          and re.search(r'(题词|序|跋|语|记)$', t))
+                          and re.search(r'(题词|序|跋|语|记)$', t)
+                          and origin_follows(i))
+        # 附录小品标题须具题名特征；不再把「一、二、…」当独立篇——
+        # 它们是附录文章（如「念佛的心态与音声」）内部的小节标题，应归入该篇
         is_appendix_title = (part in ('附录', '增附') and no_punct
-                             and (re.match(r'^[一二三四五六七八九十]、', t)
-                                  or re.search(r'(后记|题词|序|跋)$', t)))
+                             and re.search(r'(后记|题词|序|跋)$', t))
         if is_front_title or is_appendix_title:
             new_article(t, new_part='附录' if is_appendix_title else None)
             continue
@@ -240,10 +289,15 @@ def main():
         idx += 1
         aid = f'{idx:03d}'
         segs = []
-        for p in a['plain']:
+        plain = a['plain'] if a.get('raw') else merge_plain(a['plain'])
+        for p in plain:
             segs.append({'o': p})
         for e in a['entries']:
-            seg = {'os': e['os'], 'ts': e['ts']}
+            # 每条原文/译文各自被 PDF 物理换行拆成多段，在此各合回一整段，
+            # 使原文与译文 1:1 等长 → 前端逐句对照（修复"没有对齐"）
+            o = ''.join(e['os']).strip()
+            t2 = ''.join(e['ts']).strip()
+            seg = {'os': [o] if o else [], 'ts': [t2] if t2 else []}
             if e.get('src'):
                 seg['src'] = e['src']
             segs.append(seg)
@@ -254,8 +308,8 @@ def main():
         if not parts or parts[-1]['title'] != (a['part'] or '其他'):
             parts.append({'title': a['part'] or '其他', 'articles': []})
         parts[-1]['articles'].append({'id': aid, 'title': a['title'], 'summary': ''})
-        n_pair = sum(1 for e in a['entries'] if len(e['os']) == len(e['ts']))
-        report.append(f"{aid} {a['title'][:20]:<22} 条目{len(a['entries']):>3}（等长{n_pair}） 前置段{len(a['plain'])}  [{a['part']}]")
+        n_pair = sum(1 for e in a['entries'] if ''.join(e['os']).strip() and ''.join(e['ts']).strip())
+        report.append(f"{aid} {a['title'][:20]:<22} 条目{len(a['entries']):>3}（对照{n_pair}） 前置段{len(plain)}  [{a['part']}]")
     index = {'id': 'jy', 'title': '印光法师嘉言录（白话）', 'parts': parts, 'count': len(articles)}
     with open(os.path.join(OUT, 'index.json'), 'w', encoding='utf-8') as f:
         json.dump(index, f, ensure_ascii=False, separators=(',', ':'))

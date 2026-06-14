@@ -154,7 +154,55 @@ button { font-family: inherit; color: inherit; }
   border-left: 2px solid var(--cinnabar); padding-left: 38px;
 }
 .nav-item.visited:not(.active)::after { content: "·"; color: var(--cinnabar); margin-left: 4px; }
+/* 单篇编：与可展开编同级，文字对齐其标题、无三角 */
+.nav-item.nav-juan-leaf { padding-left: 41px; font-size: 13.5px; color: var(--ink-2); }
+.nav-item.nav-juan-leaf.active { padding-left: 39px; }
 .nav-empty { padding: 24px 16px; color: var(--ink-3); font-size: 13.5px; text-align: center; }
+
+/* ---------- 分享：底部操作条 + 卡片弹层 ---------- */
+.share-bar {
+  position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 50;
+  display: flex; align-items: center; gap: 12px; max-width: 92vw;
+  margin-bottom: calc(14px + env(safe-area-inset-bottom));
+  padding: 9px 10px 9px 18px; background: var(--paper);
+  border: 1px solid var(--line); border-radius: 999px;
+  box-shadow: 0 6px 24px rgba(40, 28, 12, .22);
+}
+.share-bar[hidden] { display: none; }
+.sb-count { font-size: 13.5px; color: var(--ink-2); white-space: nowrap; }
+.sb-make {
+  border: 0; background: var(--cinnabar); color: #fff; font-size: 14.5px;
+  padding: 8px 18px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+}
+.sb-x { border: 0; background: none; color: var(--ink-3); font-size: 20px; line-height: 1; cursor: pointer; padding: 4px 8px; }
+
+.share-modal { position: fixed; inset: 0; z-index: 60; display: flex; }
+.share-modal[hidden] { display: none; }
+.sm-mask { position: absolute; inset: 0; background: rgba(20, 16, 10, .62); }
+.sm-panel {
+  position: relative; margin: auto; max-width: min(440px, 92vw); max-height: 94vh;
+  display: flex; flex-direction: column; gap: 12px; padding: 16px;
+}
+/* 弹层 chrome 恒处深色遮罩之上，用固定浅色，不随「墨夜」主题变暗 */
+.sm-tip { text-align: center; color: #ece3d0; font-size: 14px; letter-spacing: .04em; }
+.sm-imgwrap {
+  overflow-y: auto; -webkit-overflow-scrolling: touch; border-radius: 8px;
+  box-shadow: 0 12px 44px rgba(0, 0, 0, .45);
+}
+.sm-img { display: block; width: 100%; height: auto; }
+.sm-acts { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.sm-acts button {
+  border: 0; border-radius: 999px; padding: 9px 16px; font-size: 14px; cursor: pointer;
+  background: #f0ead9; color: #322a1e;
+}
+.sm-acts .sm-primary { background: var(--cinnabar); color: #fff; }
+.sm-close { align-self: center; border: 0; background: none; color: #ece3d0; font-size: 14px; cursor: pointer; padding: 4px 14px; text-decoration: underline; }
+
+.para-flash { border-radius: 4px; animation: paraFlash 2.4s ease; }
+@keyframes paraFlash {
+  0%, 100% { background: transparent; }
+  12%, 45% { background: var(--cinnabar-soft); }
+}
 
 /* 全文检索 */
 .ft-btn {

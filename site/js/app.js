@@ -240,7 +240,7 @@ function scrollToPara(n) {
 function renderHome() {
   current = null;
   $('#topbar-title').textContent = '印光法师文钞';
-  $('#ai-context').textContent = '未在阅读篇目';
+  $('#ai-context').textContent = '基于印光法师文钞全集';
   const total = flat.length;
   const resume = lastRead && progress[lastRead.id]
     ? `<button class="resume-card" data-id="${lastRead.id}">
@@ -330,7 +330,7 @@ async function renderArticle(id) {
   }
   current = art;
   $('#topbar-title').textContent = art.title;
-  $('#ai-context').textContent = '当前阅读：' + art.title;
+  $('#ai-context').textContent = '基于印光法师文钞全集';
 
   // 本篇全部注释（带词条的参与正文标记）
   const allNotes = [];
@@ -541,11 +541,20 @@ $('#theme-night').onclick = () => { prefs.theme = 'night'; store.set('theme', pr
 /* ---------- AI 助读 ---------- */
 const aiLog = $('#ai-log');
 const aiHistory = [];
-function aiAppend(role, text, cite) {
+function aiAppend(role, text, cite, sources) {
   const div = document.createElement('div');
   div.className = 'ai-msg ' + (role === 'user' ? 'user' : 'bot');
-  div.innerHTML = esc(text).replace(/\n/g, '<br>') +
-    (cite ? `<cite>${esc(cite)}</cite>` : '');
+  let html = esc(text).replace(/\n/g, '<br>');
+  if (sources && sources.length) {     // 出处篇目：可点跳转（溯源）
+    html += '<div class="ai-src"><span>参见</span>' + sources.map((s) =>
+      `<button class="ai-src-link" data-id="${esc(s.id)}">《${esc(s.title)}》</button>`).join('') + '</div>';
+  } else if (cite) {
+    html += `<cite>${esc(cite)}</cite>`;
+  }
+  div.innerHTML = html;
+  div.querySelectorAll('.ai-src-link').forEach((b) => {
+    b.onclick = () => { location.hash = '#/a/' + b.dataset.id; closeDrawers(); };
+  });
   aiLog.appendChild(div);
   aiLog.scrollTop = aiLog.scrollHeight;
 }
@@ -554,7 +563,7 @@ async function aiAsk(q) {
   aiHistory.push({ role: 'user', content: q });
   if (!CFG.aiEndpoint) {
     aiAppend('bot',
-      'AI 服务尚未接入。\n部署时需在 config.js 中配置 aiEndpoint（指向你的 Cloudflare Worker 代理），即可基于当前篇目原文进行解读与答疑。',
+      'AI 服务尚未接入。\n配置 config.js 的 aiEndpoint（指向 Cloudflare Worker 知识库代理）后，即可就印光法师文钞全集提问。',
       '当前为本地预览模式');
     return;
   }
@@ -572,7 +581,7 @@ async function aiAsk(q) {
     });
     const data = await res.json();
     placeholder.remove();
-    aiAppend('bot', data.reply || '（无回复）', data.cite || '');
+    aiAppend('bot', data.reply || '（无回复）', data.cite || '', data.sources);
     aiHistory.push({ role: 'assistant', content: data.reply || '' });
   } catch {
     placeholder.remove();
@@ -587,7 +596,7 @@ $('#ai-form').onsubmit = (e) => {
   aiAsk(v);
 };
 document.querySelectorAll('#ai-chips .chip-btn').forEach((b) => {
-  b.onclick = () => aiAsk((current ? `关于《${current.title}》：` : '') + b.dataset.q);
+  b.onclick = () => aiAsk(b.dataset.q);    // 全库问答，不绑当前篇
 });
 
 /* ---------- 启动 ---------- */

@@ -217,6 +217,15 @@ button { font-family: inherit; color: inherit; }
 .xd-mark::before { content: "◎ "; color: var(--cinnabar); font-weight: 600; }
 .xd-item.xd-mark::before { color: var(--ink-3); }
 
+/* AI 回答的出处篇目（可点溯源） */
+.ai-src { margin-top: 9px; display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+.ai-src > span { font-size: 12px; color: var(--ink-3); }
+.ai-src-link {
+  border: 0; background: var(--cinnabar-soft); color: var(--cinnabar); cursor: pointer;
+  font-size: 12.5px; padding: 3px 10px; border-radius: 999px; font-family: var(--serif);
+}
+.ai-src-link:hover { text-decoration: underline; }
+
 .para-flash { border-radius: 4px; animation: paraFlash 2.4s ease; }
 @keyframes paraFlash {
   0%, 100% { background: transparent; }

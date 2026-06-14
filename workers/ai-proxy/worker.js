@@ -1,16 +1,17 @@
-/* 印光法师文钞 · AI 助读代理（DeepSeek）
+/* 印光法师文钞 · 知识库问答（基于全文钞的 NotebookLM）
  *
- * 作用：前端只调用本代理，DeepSeek 密钥仅存于 Worker Secret（DEEPSEEK_API_KEY），
- *       绝不下发到浏览器。代理取「本篇原文+白话」作依据，注入价值观约束的 system prompt，
- *       再转调 DeepSeek，返回 { reply, cite }。
+ * 架构（全在 Cloudflare）：
+ *   建库(一次)：/index 批量抓全站文章 → 切段 → Workers AI(bge-m3) 向量 → 存入 Vectorize
+ *   提问：问题 → 向量 → Vectorize 检索最相关段 → DeepSeek 据此作答(标出处·限字数)
+ *   缓存：① 向量库本身(建一次长期用) ② 答案缓存(同问秒回,KV) ③ DeepSeek 前缀自动缓存
  *
- * 前端契约：POST { articleId, title, messages:[{role,content}…] } → { reply, cite }
+ * 前端契约：POST { messages:[{role,content}…], articleId? } → { reply, cite, sources:[{id,title}] }
  *
- * 部署：
- *   cd workers/ai-proxy
- *   npx wrangler deploy
- *   npx wrangler secret put DEEPSEEK_API_KEY      # 交互输入密钥，不写入任何文件
- *   （可选护额度）创建并绑定 KV：见 wrangler.toml 注释
+ * 绑定(见 wrangler.toml)：AI(Workers AI)、VEC(Vectorize)、RL(KV 限流+答案缓存)
+ * 密钥(Secret)：DEEPSEEK_API_KEY、INDEX_SECRET(保护 /index)
+ *
+ * 建库：部署后调用（分批，循环到 done:true）
+ *   curl -X POST "https://<worker>/index?cursor=0" -H "X-Index-Secret: <INDEX_SECRET>"
  */
 
 const ALLOW_ORIGINS = [
@@ -19,17 +20,16 @@ const ALLOW_ORIGINS = [
   'http://localhost:4188',
   'http://127.0.0.1:4188',
 ];
-const SITE_BASE = 'https://wenchao.foyue.org';  // 取本篇原文作依据（站点须已上线）
-const MODEL = 'deepseek-chat';                  // V3：快而省，适合据文答疑
-const MAX_CTX_CHARS = 6000;                     // 注入原文上限（控成本）
-const DAILY_LIMIT = 60;                         // 每 IP 每日提问上限（护额度，需绑定 KV）
-
-const SYSTEM = `你是「印光法师文钞」白话学习平台的助读员，协助读者理解印光大师的净土教诲。务必遵守：
-1. 只依据【本篇提供的原文与白话】作答，不臆造、不杜撰、不夸大；本篇未涉及者，明说「本篇未及」，并建议查阅原文或请教善知识。
-2. 引用大师原话须标明出自本篇，尽量用原文，不改一字。
-3. 不扮演佛菩萨或祖师口吻，不自称证悟，不预言吉凶、不轻下因果定论。
-4. 持净土正见，不贬抑正法、不掺杂外道邪说；白话只为辅助理解，义理以大师原文为准。
-5. 语气恭敬、平实、简明。`;
+const SITE_BASE = 'https://wenchao.foyue.org';
+const EMBED_MODEL = '@cf/baai/bge-m3';   // 多语种向量(含古今汉语)，1024 维
+const CHAT_MODEL = 'deepseek-chat';
+const TOP_K = 8;                          // 检索段数
+const ANSWER_CHARS = 500;                 // 回复字数上限(软引导)
+const MAX_TOKENS = 700;                   // 回复 token 硬上限(约 500 汉字)
+const CACHE_TTL = 7 * 86400;              // 答案缓存 7 天
+const DAILY_LIMIT = 60;                   // 每 IP 每日提问上限
+const INDEX_BATCH = 25;                   // 每次 /index 处理的文章数
+const META_TEXT_MAX = 900;               // 存入向量库的段落文本上限
 
 function cors(origin) {
   const allow = ALLOW_ORIGINS.includes(origin) ? origin : ALLOW_ORIGINS[0];
@@ -40,24 +40,150 @@ function cors(origin) {
     'Access-Control-Max-Age': '86400',
   };
 }
+const json = (obj, status, headers) =>
+  new Response(JSON.stringify(obj), { status: status || 200, headers });
 
-async function fetchArticle(articleId) {
-  if (!articleId) return '';
-  try {
-    const r = await fetch(`${SITE_BASE}/data/articles/${articleId}.json`);
-    if (!r.ok) return '';
-    const a = await r.json();
-    const orig = [], trans = [];
-    for (const s of a.segments || []) {
-      (s.orig || []).forEach((p) => orig.push(p));
-      (s.trans || []).forEach((p) => trans.push(p));
-    }
-    let ctx = `《${a.title}》\n【原文】\n${orig.join('\n')}`;
-    if (trans.length) ctx += `\n【白话】\n${trans.join('\n')}`;
-    return ctx.slice(0, MAX_CTX_CHARS);
-  } catch {
-    return '';
+async function sha256(s) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+async function embed(env, texts) {
+  const r = await env.AI.run(EMBED_MODEL, { text: texts });
+  return r.data;   // [[...1024], …]
+}
+
+/* ---------- 建库：把一篇切成「原文(+白话)」段块 ---------- */
+function chunksOf(art) {
+  const out = [];
+  (art.segments || []).forEach((s, i) => {
+    const orig = (s.orig || []).join('');
+    const trans = (s.trans || []).join('');
+    const plain = s.o || '';
+    const body = orig || plain;
+    if (!body) return;
+    let text = body;
+    if (trans) text += '\n（白话）' + trans;
+    out.push({
+      id: `${art.id}#${i}`,
+      text: text.slice(0, META_TEXT_MAX),
+      meta: { aid: art.id, title: art.title || '', vol: art.volumeName || '', seg: i },
+    });
+  });
+  return out;
+}
+
+async function handleIndex(req, env, url, headers) {
+  const indexSecret = req.headers.get('X-Index-Secret') ||
+    (req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
+  if (!env.INDEX_SECRET || indexSecret !== env.INDEX_SECRET) {
+    return json({ error: 'forbidden' }, 403, headers);
   }
+  const cursor = parseInt(url.searchParams.get('cursor') || '0', 10);
+  const books = await (await fetch(`${SITE_BASE}/data/books.json`)).json();
+  const ids = [];
+  for (const b of books)
+    for (const j of b.juans)
+      for (const c of j.cats)
+        for (const it of c.items) ids.push(it.id);
+
+  const batch = ids.slice(cursor, cursor + INDEX_BATCH);
+  let chunks = [];
+  for (const id of batch) {
+    try {
+      const a = await (await fetch(`${SITE_BASE}/data/articles/${id}.json`)).json();
+      chunks = chunks.concat(chunksOf(a));
+    } catch { /* 跳过取不到的篇 */ }
+  }
+  // 分小批向量化并写入(bge-m3 单次建议 ≤ ~100 条)
+  let n = 0;
+  for (let i = 0; i < chunks.length; i += 50) {
+    const part = chunks.slice(i, i + 50);
+    const vecs = await embed(env, part.map((c) => c.text));
+    await env.VEC.upsert(part.map((c, k) => ({
+      id: c.id, values: vecs[k], metadata: { ...c.meta, text: c.text },
+    })));
+    n += part.length;
+  }
+  const next = cursor + INDEX_BATCH;
+  return json({ ok: true, indexedArticles: batch.length, chunks: n,
+    cursor: next, done: next >= ids.length, total: ids.length }, 200, headers);
+}
+
+/* ---------- 提问：检索 + DeepSeek ---------- */
+async function handleAsk(req, env, headers) {
+  if (!env.DEEPSEEK_API_KEY) return json({ reply: '服务未配置密钥。' }, 500, headers);
+
+  // 限流
+  if (env.RL) {
+    const ip = req.headers.get('CF-Connecting-IP') || 'anon';
+    const key = `d:${new Date().toISOString().slice(0, 10)}:${ip}`;
+    const c = parseInt((await env.RL.get(key)) || '0', 10);
+    if (c >= DAILY_LIMIT) return json({ reply: '今日提问已达上限，请明日再来。阿弥陀佛。' }, 429, headers);
+    await env.RL.put(key, String(c + 1), { expirationTtl: 90000 });
+  }
+
+  let body;
+  try { body = await req.json(); } catch { body = null; }
+  const msgs = body && Array.isArray(body.messages)
+    ? body.messages.filter((m) => m && m.role && typeof m.content === 'string').slice(-6) : [];
+  const question = msgs.length ? msgs[msgs.length - 1].content : '';
+  if (!question.trim()) return json({ reply: '请输入问题。' }, 400, headers);
+
+  // 答案缓存（同问秒回）
+  const ckey = 'a:' + (await sha256(question.trim()));
+  if (env.RL) {
+    const hit = await env.RL.get(ckey);
+    if (hit) return json(JSON.parse(hit), 200, headers);
+  }
+
+  // 检索
+  let matches = [];
+  try {
+    const [qv] = await embed(env, [question]);
+    const res = await env.VEC.query(qv, { topK: TOP_K, returnMetadata: 'all' });
+    matches = res.matches || [];
+  } catch { /* 检索失败则裸答（仍受系统提示约束） */ }
+
+  const ctxBlocks = [], srcMap = new Map();
+  matches.forEach((m, i) => {
+    const md = m.metadata || {};
+    ctxBlocks.push(`【资料${i + 1}·《${md.title || ''}》】${md.text || ''}`);
+    if (md.aid && !srcMap.has(md.aid)) srcMap.set(md.aid, md.title || '');
+  });
+  const sources = [...srcMap].slice(0, 6).map(([id, title]) => ({ id, title }));
+  const context = ctxBlocks.join('\n\n') || '（未检索到相关资料）';
+
+  const system = `你是「印光法师文钞」知识库助手，依据检索到的文钞资料回答净土学修问题。务必：
+1. 只依据下面【资料】作答；资料里有的如实答、可引用原文；资料里没有或问题与文钞/净土无关，就说「文钞中未见相关开示」，不要编造。
+2. 不扮演佛菩萨或祖师口吻，不预言吉凶、不轻下因果定论；语气恭敬平实。
+3. 简明扼要，控制在约 ${ANSWER_CHARS} 字以内。
+
+【资料】
+${context}`;
+
+  let ds;
+  try {
+    ds = await fetch('https://api.deepseek.com/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
+      body: JSON.stringify({
+        model: CHAT_MODEL,
+        messages: [{ role: 'system', content: system }, ...msgs],
+        temperature: 0.3,
+        max_tokens: MAX_TOKENS,
+        stream: false,
+      }),
+    });
+  } catch { return json({ reply: '上游服务连接失败，请稍后重试。' }, 502, headers); }
+  if (!ds.ok) return json({ reply: '上游服务繁忙，请稍后重试。' }, 502, headers);
+
+  const data = await ds.json();
+  const reply = ((data.choices && data.choices[0] && data.choices[0].message
+    && data.choices[0].message.content) || '').trim() || '（无回复）';
+  const cite = sources.length ? '参见：' + sources.map((s) => `《${s.title}》`).join('、') : '仅供参考，义理以大师原文为准';
+  const payload = { reply, cite, sources };
+  if (env.RL) await env.RL.put(ckey, JSON.stringify(payload), { expirationTtl: CACHE_TTL });
+  return json(payload, 200, headers);
 }
 
 export default {
@@ -66,62 +192,8 @@ export default {
     const headers = { 'Content-Type': 'application/json', ...cors(origin) };
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors(origin) });
     if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers });
-    if (!env.DEEPSEEK_API_KEY) {
-      return new Response(JSON.stringify({ reply: '服务未配置密钥。' }), { status: 500, headers });
-    }
-
-    // 限流：每 IP 每日上限（绑定 KV「RL」后生效；未绑定则跳过）
-    if (env.RL) {
-      const ip = req.headers.get('CF-Connecting-IP') || 'anon';
-      const key = `d:${new Date().toISOString().slice(0, 10)}:${ip}`;
-      const n = parseInt((await env.RL.get(key)) || '0', 10);
-      if (n >= DAILY_LIMIT) {
-        return new Response(JSON.stringify({ reply: '今日提问已达上限，请明日再来。阿弥陀佛。' }),
-          { status: 429, headers });
-      }
-      await env.RL.put(key, String(n + 1), { expirationTtl: 90000 });
-    }
-
-    let body;
-    try { body = await req.json(); } catch { body = null; }
-    const msgs = body && Array.isArray(body.messages)
-      ? body.messages.filter((m) => m && m.role && typeof m.content === 'string').slice(-8)
-      : [];
-    if (!msgs.length) {
-      return new Response(JSON.stringify({ reply: '请输入问题。' }), { status: 400, headers });
-    }
-
-    const ctx = await fetchArticle(body.articleId);
-    const system = SYSTEM + (ctx ? `\n\n——本篇内容如下，请据此作答——\n${ctx}` : '');
-
-    let ds;
-    try {
-      ds = await fetch('https://api.deepseek.com/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${env.DEEPSEEK_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: MODEL,
-          messages: [{ role: 'system', content: system }, ...msgs],
-          temperature: 0.3,   // 低温保真，少臆造
-          max_tokens: 1200,
-          stream: false,
-        }),
-      });
-    } catch {
-      return new Response(JSON.stringify({ reply: '上游服务连接失败，请稍后重试。' }),
-        { status: 502, headers });
-    }
-    if (!ds.ok) {
-      return new Response(JSON.stringify({ reply: '上游服务繁忙，请稍后重试。' }),
-        { status: 502, headers });
-    }
-    const data = await ds.json();
-    const reply = (data.choices && data.choices[0] && data.choices[0].message
-      && data.choices[0].message.content || '').trim() || '（无回复）';
-    const cite = body.title ? `依据《${body.title}》原文 · 仅供参考` : '仅供参考，义理以大师原文为准';
-    return new Response(JSON.stringify({ reply, cite }), { headers });
+    const url = new URL(req.url);
+    if (url.pathname === '/index') return handleIndex(req, env, url, headers);
+    return handleAsk(req, env, headers);
   },
 };

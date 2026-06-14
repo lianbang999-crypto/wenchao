@@ -5,8 +5,21 @@ compatibility_date = "2026-06-14"
 # 密钥务必用 Secret 设置，切勿写在此文件或任何仓库文件里：
 #   npx wrangler secret put DEEPSEEK_API_KEY
 #
-# 护额度限流：每 IP 每日上限由 worker.js 的 DAILY_LIMIT 控制。
+# 限流 + 答案缓存（同一个 KV）。每 IP 每日上限由 worker.js 的 DAILY_LIMIT 控制。
 #   npx wrangler kv namespace create RL
 [[kv_namespaces]]
 binding = "RL"
 id = "b96813bac7164eb8b31e843bca933825"
+
+# Workers AI：问题/段落向量化（bge-m3）
+[ai]
+binding = "AI"
+
+# Vectorize：文钞知识库向量库。先创建（维度 1024 对应 bge-m3，余弦相似度）：
+#   npx wrangler vectorize create wenchao-kb --dimensions=1024 --metric=cosine
+[[vectorize]]
+binding = "VEC"
+index_name = "wenchao-kb"
+
+# 还需设置保护建库接口的密钥（交互输入，不入文件；调用时放 X-Index-Secret 请求头）：
+#   npx wrangler secret put INDEX_SECRET

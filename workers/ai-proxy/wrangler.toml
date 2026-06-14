@@ -1,0 +1,12 @@
+name = "wenchao-ai"
+main = "worker.js"
+compatibility_date = "2026-06-14"
+
+# 密钥务必用 Secret 设置，切勿写在此文件或任何仓库文件里：
+#   npx wrangler secret put DEEPSEEK_API_KEY
+#
+# 护额度限流：每 IP 每日上限由 worker.js 的 DAILY_LIMIT 控制。
+#   npx wrangler kv namespace create RL
+[[kv_namespaces]]
+binding = "RL"
+id = "b96813bac7164eb8b31e843bca933825"

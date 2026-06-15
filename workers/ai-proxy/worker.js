@@ -337,16 +337,20 @@ if(S)load();else login();
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
-    if (req.method === 'GET' && url.pathname === '/admin') {
+    const apiPrefix = '/api/ai';
+    const pathname = url.pathname.startsWith(apiPrefix)
+      ? (url.pathname.slice(apiPrefix.length) || '/')
+      : url.pathname;
+    if (req.method === 'GET' && pathname === '/admin') {
       return new Response(ADMIN_HTML, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
     const origin = req.headers.get('Origin') || '';
     const headers = { 'Content-Type': 'application/json', ...cors(origin) };
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors(origin) });
     if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers });
-    if (url.pathname === '/index') return handleIndex(req, env, url, headers);
-    if (url.pathname === '/feedback') return handleFeedback(req, env, headers);
-    if (url.pathname === '/admin/data') return handleAdminData(req, env, headers);
+    if (pathname === '/index') return handleIndex(req, env, url, headers);
+    if (pathname === '/feedback') return handleFeedback(req, env, headers);
+    if (pathname === '/admin/data') return handleAdminData(req, env, headers);
     return handleAsk(req, env, headers);
   },
 };

@@ -5,7 +5,7 @@ window.WENCHAO_CONFIG = {
        'https://wenchao-ai.<你的子域>.workers.dev'
      （或为 Worker 配同源路由 wenchao.foyue.org/api/* 后填 '/api/ai'，免跨域）
      留空则前端显示"待接入"提示。约定：POST { articleId, title, messages } → { reply, cite }。 */
-  aiEndpoint: 'https://wenchao-ai.2569331267.workers.dev',
+  aiEndpoint: '/api/ai',
 
   /* 分享卡二维码/链接的站点基址（线上正式域名）。留空则取当前页面地址。 */
   shareBase: 'https://wenchao.foyue.org',

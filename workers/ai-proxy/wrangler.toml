@@ -1,6 +1,10 @@
 name = "wenchao-ai"
 main = "worker.js"
 compatibility_date = "2026-06-14"
+workers_dev = true
+routes = [
+  { pattern = "wenchao.foyue.org/api/ai*", zone_name = "foyue.org" }
+]
 
 # 密钥务必用 Secret 设置，切勿写在此文件或任何仓库文件里：
 #   npx wrangler secret put DEEPSEEK_API_KEY

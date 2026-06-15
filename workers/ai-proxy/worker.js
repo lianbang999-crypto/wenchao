@@ -135,13 +135,22 @@ async function handleAsk(req, env, headers) {
   try { body = await req.json(); } catch { body = null; }
   const msgs = body && Array.isArray(body.messages)
     ? body.messages.filter((m) => m && m.role && typeof m.content === 'string').slice(-6) : [];
-  const question = msgs.length ? msgs[msgs.length - 1].content : '';
-  if (!question.trim()) return json({ reply: '请输入问题。' }, 400, headers);
+  const userMsgs = msgs.filter((m) => m.role === 'user');
+  const lastU = userMsgs.length ? userMsgs[userMsgs.length - 1].content : '';
+  if (!lastU.trim()) return json({ reply: '请输入问题。' }, 400, headers);
+  // ② 多轮追问：指代/短问/承上时，并入上一问做检索（否则"出处呢""再展开"会检索不到）
+  const prevU = userMsgs.length > 1 ? userMsgs[userMsgs.length - 2].content : '';
+  let retrievalQ = lastU;
+  if (prevU && (lastU.length < 12 ||
+      /它|他|她|这|那|上(面|述|文)|继续|再|还有|为什[么麽]|怎[么样]|出处|展开|具体|详细|例子|呢[？?]?$/.test(lastU))) {
+    retrievalQ = prevU + '。' + lastU;
+  }
 
-  // 答案缓存（同问命中则复用，连出处一起；省一次检索）
-  const ckey = 'a:' + (await sha256(question.trim()));
+  // 答案缓存：仅单轮问答（多轮依赖上下文，不缓存以免串味）
+  const cacheable = userMsgs.length === 1;
+  const ckey = 'a:' + (await sha256(retrievalQ.trim()));
   let cached = null;
-  if (env.RL) {
+  if (cacheable && env.RL) {
     const hit = await env.RL.get(ckey);
     if (hit) { try { cached = JSON.parse(hit); } catch {} }
   }
@@ -154,10 +163,20 @@ async function handleAsk(req, env, headers) {
   } else {
     let matches = [];
     try {
-      const [qv] = await embed(env, [question]);
-      const res = await env.VEC.query(qv, { topK: TOP_K, returnMetadata: 'all' });
+      const [qv] = await embed(env, [retrievalQ]);
+      const res = await env.VEC.query(qv, { topK: TOP_K * 2, returnMetadata: 'all' });
       matches = res.matches || [];
     } catch { /* 检索失败则裸答 */ }
+    // ① 去重：原文近似相同的（如精选读本与文钞重出）只保留一条，凑足 TOP_K
+    const seen = new Set(), uniq = [];
+    for (const m of matches) {
+      const orig = (((m.metadata && m.metadata.text) || '').split('\n（白话）')[0]).replace(/\s/g, '');
+      const key = orig.slice(0, 40);
+      if (!key || seen.has(key)) continue;
+      seen.add(key); uniq.push(m);
+      if (uniq.length >= TOP_K) break;
+    }
+    matches = uniq;
     const ctxBlocks = [], srcMap = new Map();
     matches.forEach((m, i) => {
       const md = m.metadata || {};
@@ -226,7 +245,7 @@ ${context}`;
           }
         }
       } catch { if (!full) send({ type: 'delta', text: '上游服务连接失败，请稍后重试。' }); }
-      if (env.RL && full) {
+      if (cacheable && env.RL && full) {
         await env.RL.put(ckey, JSON.stringify({ reply: full, cite, sources, passages }), { expirationTtl: CACHE_TTL });
       }
       send({ type: 'done' });

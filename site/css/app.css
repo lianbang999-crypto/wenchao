@@ -239,13 +239,17 @@ button { font-family: inherit; color: inherit; }
   background: var(--cinnabar-soft); color: var(--ink-2);
   font-size: 13.5px; line-height: 1.85;
 }
-/* AI 回答反馈 */
-.ai-fb { margin-top: 10px; display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink-3); }
+/* AI 回答反馈（图标按钮） */
+.ai-fb { margin-top: 10px; display: flex; align-items: center; gap: 8px; }
 .ai-fb-btn {
-  border: 1px solid var(--line); background: none; color: var(--ink-2); cursor: pointer;
-  font-size: 12.5px; padding: 3px 12px; border-radius: 999px; font-family: var(--serif);
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; padding: 0; border-radius: 50%;
+  border: 1px solid var(--line); background: none; color: var(--ink-3); cursor: pointer;
+  transition: color .15s, border-color .15s;
 }
-.ai-fb-btn:hover { border-color: var(--cinnabar); color: var(--cinnabar); }
+.ai-fb-btn:hover { color: var(--cinnabar); border-color: var(--cinnabar); }
+.ai-fb-btn.ok { color: #3a6b2e; border-color: #3a6b2e; }
+.ai-fb-thx { font-size: 12.5px; color: var(--ink-3); }
 .cite-text {
   white-space: pre-wrap; line-height: 1.95; font-family: var(--kai);
   max-height: 56vh; overflow-y: auto;
@@ -512,6 +516,7 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
 .ai-msg.bot strong { font-weight: 600; color: var(--ink); }
 /* 思考中：三点动效 */
 .ai-loading { display: flex; gap: 5px; align-items: center; }
+.ai-loading i { font-style: normal; color: var(--ink-3); font-size: 13px; margin-right: 4px; }
 .ai-loading span {
   width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3);
   animation: aiDot 1s infinite ease-in-out;

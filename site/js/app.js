@@ -624,6 +624,8 @@ function aiWelcome() {
   div.textContent = '南无阿弥陀佛。可就《印光法师文钞》全集随心提问——念佛、信愿、因果、临终助念等皆可。回答据大师原文，并附可点出处；义理以原文为准。可点上方常见问题，或在下方输入。';
   aiLog.appendChild(div);
 }
+let aiAbort = null;
+const aiSendBtn = () => $('.ai-send');
 async function aiAsk(q) {
   aiAppend('user', q);
   aiHistory.push({ role: 'user', content: q });
@@ -634,28 +636,45 @@ async function aiAsk(q) {
   }
   const placeholder = document.createElement('div');
   placeholder.className = 'ai-msg bot ai-loading';
-  placeholder.innerHTML = '<span></span><span></span><span></span>';
+  placeholder.innerHTML = '<i>正在查阅文钞</i><span></span><span></span><span></span>';
   aiLog.appendChild(placeholder);
   aiLog.scrollTop = aiLog.scrollHeight;
+
+  let passages = null, full = '', div = null, lastPaint = 0;
+  const ensureDiv = () => {
+    if (!div) {
+      if (placeholder.parentNode) placeholder.remove();
+      div = document.createElement('div'); div.className = 'ai-msg bot';
+      aiLog.appendChild(div);
+    }
+    return div;
+  };
+  const paint = () => {                       // 边流式边排版（Markdown + 角标）
+    const d = ensureDiv();
+    d.innerHTML = aiFormat(full, passages);
+    d.querySelectorAll('.ai-cite').forEach((b) => {
+      const p = passages && passages[+b.dataset.n - 1];
+      b.onclick = () => showCitation(p); citeHover(b, p);
+    });
+    aiLog.scrollTop = aiLog.scrollHeight;
+  };
+  const onMsg = (m) => {
+    if (m.type === 'meta') passages = m.passages;
+    else if (m.type === 'delta') {
+      full += m.text;
+      const t = Date.now();
+      if (t - lastPaint > 120) { lastPaint = t; paint(); }   // 节流，避免每字重排
+    }
+  };
+
+  aiAbort = new AbortController();
+  const sb = aiSendBtn(); if (sb) sb.textContent = '停止';
+  let failed = false;
   try {
     const res = await fetch(CFG.aiEndpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: aiHistory.slice(-8) }),
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: aiHistory.slice(-8) }), signal: aiAbort.signal,
     });
-    let passages = null, full = '', div = null;
-    const ensureDiv = () => {
-      if (!div) {
-        if (placeholder.parentNode) placeholder.remove();
-        div = document.createElement('div'); div.className = 'ai-msg bot';
-        aiLog.appendChild(div);
-      }
-      return div;
-    };
-    const onMsg = (m) => {
-      if (m.type === 'meta') passages = m.passages;
-      else if (m.type === 'delta') { full += m.text; ensureDiv().textContent = full; aiLog.scrollTop = aiLog.scrollHeight; }
-    };
     if (res.body && res.body.getReader) {          // 流式（打字机）
       const reader = res.body.getReader(), dec = new TextDecoder();
       let buf = '';
@@ -672,29 +691,56 @@ async function aiAsk(q) {
     } else {                                        // 不支持流式：整体读取
       (await res.text()).split('\n').forEach((l) => { if (l.trim()) try { onMsg(JSON.parse(l)); } catch {} });
     }
-    if (placeholder.parentNode) placeholder.remove();
-    const d = ensureDiv();
-    d.innerHTML = aiFormat(full || '（无回复）', passages);   // 收尾：Markdown + 角标
-    d.querySelectorAll('.ai-cite').forEach((b) => {
-      const p = passages && passages[+b.dataset.n - 1];
-      b.onclick = () => showCitation(p); citeHover(b, p);
-    });
-    aiHistory.push({ role: 'assistant', content: full });
-    if (full) aiFeedback(d, q, full);
-  } catch {
-    if (placeholder.parentNode) placeholder.remove();
-    aiAppend('bot', '请求失败，请稍后重试。');
+  } catch (err) {
+    if (!(err && err.name === 'AbortError')) {     // 非"停止"才算失败
+      failed = true;
+      if (placeholder.parentNode) placeholder.remove();
+      aiAppend('bot', '请求失败，请稍后重试。');
+    }
+  } finally {
+    aiAbort = null;
+    const b = aiSendBtn(); if (b) b.textContent = '发送';
   }
+  if (failed) return;
+  if (placeholder.parentNode) placeholder.remove();
+  if (!full) full = '（无回复）';
+  paint();   // 收尾：完整排版（"停止"则保留已生成部分）
+  aiHistory.push({ role: 'assistant', content: full });
+  if (full !== '（无回复）') aiFeedback(ensureDiv(), q, full);
 }
-// 反馈闭环：有帮助 / 需更正 → 存后端，供日后善知识审核沉淀
+function copyText(t) {
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).catch(() => execCopy(t));
+  else execCopy(t);
+}
+function execCopy(t) {
+  const ta = document.createElement('textarea');
+  ta.value = t; ta.style.position = 'fixed'; ta.style.top = '-1000px';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+}
+// 反馈闭环：有帮助 / 需更正 → 存后端，供日后善知识审核沉淀；+ 复制
 function aiFeedback(el, question, reply) {
   const bar = document.createElement('div');
   bar.className = 'ai-fb';
   bar.innerHTML = '<span>这条回答</span>' +
-    '<button class="ai-fb-btn" data-v="up">有帮助</button>' +
-    '<button class="ai-fb-btn" data-v="down">需更正</button>';
+    '<button class="ai-fb-btn" data-v="up" type="button" title="有帮助" aria-label="有帮助">✓</button>' +
+    '<button class="ai-fb-btn" data-v="down" type="button" title="需更正" aria-label="需更正">!</button>' +
+    '<button class="ai-fb-btn ai-copy" type="button" title="复制回答" aria-label="复制回答">⧉</button>';
   el.appendChild(bar);
-  bar.querySelectorAll('.ai-fb-btn').forEach((b) => {
+  const cp = bar.querySelector('.ai-copy');
+  cp.onclick = () => {
+    copyText(reply);
+    cp.classList.add('ok');
+    cp.textContent = '✓';
+    cp.title = '已复制';
+    setTimeout(() => {
+      cp.classList.remove('ok');
+      cp.textContent = '⧉';
+      cp.title = '复制回答';
+    }, 1200);
+  };
+  bar.querySelectorAll('[data-v]').forEach((b) => {
     b.onclick = () => {
       fetch(CFG.aiEndpoint.replace(/\/$/, '') + '/feedback', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -704,13 +750,25 @@ function aiFeedback(el, question, reply) {
     };
   });
 }
+const aiText = $('#ai-text');
 $('#ai-form').onsubmit = (e) => {
   e.preventDefault();
-  const v = $('#ai-text').value.trim();
+  if (aiAbort) { aiAbort.abort(); return; }     // 生成中 → 停止
+  const v = aiText.value.trim();
   if (!v) return;
-  $('#ai-text').value = '';
+  aiText.value = ''; aiText.style.height = 'auto';
   aiAsk(v);
 };
+aiText.addEventListener('keydown', (e) => {     // 回车发送；Shift+Enter 换行；输入法编辑中不发
+  if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && e.keyCode !== 229) {
+    e.preventDefault();
+    if (aiText.value.trim() && !aiAbort) $('#ai-form').dispatchEvent(new Event('submit', { cancelable: true }));
+  }
+});
+aiText.addEventListener('input', () => {        // 自适应高度
+  aiText.style.height = 'auto';
+  aiText.style.height = Math.min(aiText.scrollHeight, 120) + 'px';
+});
 document.querySelectorAll('#ai-chips .chip-btn').forEach((b) => {
   b.onclick = () => aiAsk(b.dataset.q);    // 全库问答，不绑当前篇
 });

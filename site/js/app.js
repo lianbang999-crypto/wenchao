@@ -541,52 +541,168 @@ $('#theme-night').onclick = () => { prefs.theme = 'night'; store.set('theme', pr
 /* ---------- AI 助读 ---------- */
 const aiLog = $('#ai-log');
 const aiHistory = [];
-function aiAppend(role, text, cite, sources) {
+function aiAppend(role, text, passages) {
   const div = document.createElement('div');
   div.className = 'ai-msg ' + (role === 'user' ? 'user' : 'bot');
-  let html = esc(text).replace(/\n/g, '<br>');
-  if (sources && sources.length) {     // 出处篇目：可点跳转（溯源）
-    html += '<div class="ai-src"><span>参见</span>' + sources.map((s) =>
-      `<button class="ai-src-link" data-id="${esc(s.id)}">《${esc(s.title)}》</button>`).join('') + '</div>';
-  } else if (cite) {
-    html += `<cite>${esc(cite)}</cite>`;
+  if (role === 'user') {
+    div.textContent = text;
+  } else {
+    div.innerHTML = aiFormat(text, passages);
+    div.querySelectorAll('.ai-cite').forEach((b) => {
+      const p = passages[+b.dataset.n - 1];
+      b.onclick = () => showCitation(p);
+      citeHover(b, p);
+    });
   }
-  div.innerHTML = html;
-  div.querySelectorAll('.ai-src-link').forEach((b) => {
-    b.onclick = () => { location.hash = '#/a/' + b.dataset.id; closeDrawers(); };
-  });
   aiLog.appendChild(div);
   aiLog.scrollTop = aiLog.scrollHeight;
+  return div;
+}
+// 轻量 Markdown（粗体 / 有序·无序列表 / 段落）+ 行内角标 [n]
+function aiFormat(text, passages) {
+  let t = esc(text).replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+  let html = '', list = '';
+  const close = () => { if (list) { html += '</' + list + '>'; list = ''; } };
+  for (const raw of t.split('\n')) {
+    const ln = raw.trim();
+    if (!ln) continue;   // 空行跳过即可，勿关闭列表（否则每项各成一个 ol、序号都回到1）
+    let m;
+    if ((m = ln.match(/^(\d+)[.、)]\s*(.+)$/))) {
+      if (list !== 'ol') { close(); html += '<ol>'; list = 'ol'; }
+      html += '<li>' + m[2] + '</li>';
+    } else if ((m = ln.match(/^[-*●·•]\s+(.+)$/))) {
+      if (list !== 'ul') { close(); html += '<ul>'; list = 'ul'; }
+      html += '<li>' + m[1] + '</li>';
+    } else {
+      close(); html += '<p>' + ln + '</p>';
+    }
+  }
+  close();
+  if (passages && passages.length) {
+    html = html.replace(/\[(\d{1,2})\]/g, (mm, n) =>
+      passages[+n - 1] ? '<button class="ai-cite" data-n="' + n + '">' + n + '</button>' : mm);
+  }
+  return html;
+}
+// 点角标 → 底部弹卡显示出处原文 + 阅读全篇（统一只显原文，白话在「阅读全篇」里）
+function showCitation(p) {
+  if (!p) return;
+  const orig = (p.text || '').split('\n（白话）')[0];
+  $('#sheet-body').innerHTML =
+    `<h4>《${esc(p.title || '')}》<span class="note-n">出处原文</span></h4>` +
+    `<p class="cite-text">${esc(orig)}</p>` +
+    (p.aid ? `<button class="sheet-goto" data-id="${esc(p.aid)}">阅读全篇 ›</button>` : '');
+  $('#sheet').hidden = false;
+  $('#sheet-backdrop').hidden = false;
+  const g = $('#sheet-body .sheet-goto');
+  if (g) g.onclick = () => {
+    $('#sheet').hidden = true; $('#sheet-backdrop').hidden = true;
+    location.hash = '#/a/' + g.dataset.id; closeDrawers();
+  };
+}
+// 角标 hover 预览（仅桌面；触屏走点击弹卡）
+let aiTip;
+const canHover = () => window.matchMedia && matchMedia('(hover: hover)').matches;
+function citeHover(btn, p) {
+  if (!p || !canHover()) return;
+  btn.addEventListener('mouseenter', () => {
+    if (!aiTip) { aiTip = document.createElement('div'); aiTip.className = 'ai-tip'; document.body.appendChild(aiTip); }
+    const orig = (p.text || '').split('\n（白话）')[0];
+    aiTip.innerHTML = `<b>《${esc(p.title || '')}》</b>${esc(orig.slice(0, 80))}${orig.length > 80 ? '…' : ''}`;
+    aiTip.hidden = false;
+    const r = btn.getBoundingClientRect();
+    aiTip.style.left = Math.max(8, Math.min(r.left, innerWidth - aiTip.offsetWidth - 12)) + 'px';
+    aiTip.style.top = (r.bottom + 6) + 'px';
+  });
+  btn.addEventListener('mouseleave', () => { if (aiTip) aiTip.hidden = true; });
+}
+// 首次进入的欢迎引导语（仅展示，不计入对话历史）
+function aiWelcome() {
+  if (aiLog.children.length) return;
+  const div = document.createElement('div');
+  div.className = 'ai-welcome';
+  div.textContent = '南无阿弥陀佛。可就《印光法师文钞》全集随心提问——念佛、信愿、因果、临终助念等皆可。回答据大师原文，并附可点出处；义理以原文为准。可点上方常见问题，或在下方输入。';
+  aiLog.appendChild(div);
 }
 async function aiAsk(q) {
   aiAppend('user', q);
   aiHistory.push({ role: 'user', content: q });
   if (!CFG.aiEndpoint) {
     aiAppend('bot',
-      'AI 服务尚未接入。\n配置 config.js 的 aiEndpoint（指向 Cloudflare Worker 知识库代理）后，即可就印光法师文钞全集提问。',
-      '当前为本地预览模式');
+      'AI 服务尚未接入。配置 config.js 的 aiEndpoint（指向 Cloudflare Worker 知识库代理）后，即可就印光法师文钞全集提问。');
     return;
   }
-  aiAppend('bot', '思考中…');
-  const placeholder = aiLog.lastChild;
+  const placeholder = document.createElement('div');
+  placeholder.className = 'ai-msg bot ai-loading';
+  placeholder.innerHTML = '<span></span><span></span><span></span>';
+  aiLog.appendChild(placeholder);
+  aiLog.scrollTop = aiLog.scrollHeight;
   try {
     const res = await fetch(CFG.aiEndpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        articleId: current ? current.id : null,
-        title: current ? current.title : null,
-        messages: aiHistory.slice(-8),
-      }),
+      body: JSON.stringify({ messages: aiHistory.slice(-8) }),
     });
-    const data = await res.json();
-    placeholder.remove();
-    aiAppend('bot', data.reply || '（无回复）', data.cite || '', data.sources);
-    aiHistory.push({ role: 'assistant', content: data.reply || '' });
+    let passages = null, full = '', div = null;
+    const ensureDiv = () => {
+      if (!div) {
+        if (placeholder.parentNode) placeholder.remove();
+        div = document.createElement('div'); div.className = 'ai-msg bot';
+        aiLog.appendChild(div);
+      }
+      return div;
+    };
+    const onMsg = (m) => {
+      if (m.type === 'meta') passages = m.passages;
+      else if (m.type === 'delta') { full += m.text; ensureDiv().textContent = full; aiLog.scrollTop = aiLog.scrollHeight; }
+    };
+    if (res.body && res.body.getReader) {          // 流式（打字机）
+      const reader = res.body.getReader(), dec = new TextDecoder();
+      let buf = '';
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        let nl;
+        while ((nl = buf.indexOf('\n')) >= 0) {
+          const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
+          if (line) try { onMsg(JSON.parse(line)); } catch { /* 半行 */ }
+        }
+      }
+    } else {                                        // 不支持流式：整体读取
+      (await res.text()).split('\n').forEach((l) => { if (l.trim()) try { onMsg(JSON.parse(l)); } catch {} });
+    }
+    if (placeholder.parentNode) placeholder.remove();
+    const d = ensureDiv();
+    d.innerHTML = aiFormat(full || '（无回复）', passages);   // 收尾：Markdown + 角标
+    d.querySelectorAll('.ai-cite').forEach((b) => {
+      const p = passages && passages[+b.dataset.n - 1];
+      b.onclick = () => showCitation(p); citeHover(b, p);
+    });
+    aiHistory.push({ role: 'assistant', content: full });
+    if (full) aiFeedback(d, q, full);
   } catch {
-    placeholder.remove();
+    if (placeholder.parentNode) placeholder.remove();
     aiAppend('bot', '请求失败，请稍后重试。');
   }
+}
+// 反馈闭环：有帮助 / 需更正 → 存后端，供日后善知识审核沉淀
+function aiFeedback(el, question, reply) {
+  const bar = document.createElement('div');
+  bar.className = 'ai-fb';
+  bar.innerHTML = '<span>这条回答</span>' +
+    '<button class="ai-fb-btn" data-v="up">有帮助</button>' +
+    '<button class="ai-fb-btn" data-v="down">需更正</button>';
+  el.appendChild(bar);
+  bar.querySelectorAll('.ai-fb-btn').forEach((b) => {
+    b.onclick = () => {
+      fetch(CFG.aiEndpoint.replace(/\/$/, '') + '/feedback', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ vote: b.dataset.v, question, reply }),
+      }).catch(() => {});
+      bar.innerHTML = '<span>感谢您的反馈，南无阿弥陀佛。</span>';
+    };
+  });
 }
 $('#ai-form').onsubmit = (e) => {
   e.preventDefault();
@@ -598,6 +714,7 @@ $('#ai-form').onsubmit = (e) => {
 document.querySelectorAll('#ai-chips .chip-btn').forEach((b) => {
   b.onclick = () => aiAsk(b.dataset.q);    // 全库问答，不绑当前篇
 });
+aiWelcome();
 
 /* ---------- 启动 ---------- */
 async function boot() {

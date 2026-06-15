@@ -52,22 +52,31 @@ async function embed(env, texts) {
   return r.data;   // [[...1024], …]
 }
 
-/* ---------- 建库：把一篇切成「原文(+白话)」段块 ---------- */
+/* ---------- 建库：把一篇按自然段切成「原文(+白话)」段块 ----------
+ * migrate 常把整篇并成一个 segment（orig[]/trans[] 各含多段），故须按段拆，
+ * 否则长文钞只剩一块且被截断、检索会漏。 */
 function chunksOf(art) {
   const out = [];
-  (art.segments || []).forEach((s, i) => {
-    const orig = (s.orig || []).join('');
-    const trans = (s.trans || []).join('');
-    const plain = s.o || '';
-    const body = orig || plain;
-    if (!body) return;
-    let text = body;
-    if (trans) text += '\n（白话）' + trans;
+  let idx = 0;
+  const push = (text) => {
+    text = (text || '').trim();
+    if (!text) return;
     out.push({
-      id: `${art.id}#${i}`,
+      id: `${art.id}#${idx}`,
       text: text.slice(0, META_TEXT_MAX),
-      meta: { aid: art.id, title: art.title || '', vol: art.volumeName || '', seg: i },
+      meta: { aid: art.id, title: art.title || '', vol: art.volumeName || '', seg: idx },
     });
+    idx++;
+  };
+  (art.segments || []).forEach((s) => {
+    const O = s.orig || (s.o ? [s.o] : []);
+    const T = s.trans || [];
+    if (O.length && O.length === T.length) {        // 对齐：逐段原文+白话成一块
+      for (let i = 0; i < O.length; i++) push(O[i] + (T[i] ? '\n（白话）' + T[i] : ''));
+    } else {                                        // 不齐：原文段、白话段各自成块
+      O.forEach((p) => push(p));
+      T.forEach((p) => push('（白话）' + p));
+    }
   });
   return out;
 }
@@ -129,61 +138,120 @@ async function handleAsk(req, env, headers) {
   const question = msgs.length ? msgs[msgs.length - 1].content : '';
   if (!question.trim()) return json({ reply: '请输入问题。' }, 400, headers);
 
-  // 答案缓存（同问秒回）
+  // 答案缓存（同问命中则复用，连出处一起；省一次检索）
   const ckey = 'a:' + (await sha256(question.trim()));
+  let cached = null;
   if (env.RL) {
     const hit = await env.RL.get(ckey);
-    if (hit) return json(JSON.parse(hit), 200, headers);
+    if (hit) { try { cached = JSON.parse(hit); } catch {} }
   }
+  const useCache = !!(cached && cached.reply && Array.isArray(cached.passages));
 
-  // 检索
-  let matches = [];
-  try {
-    const [qv] = await embed(env, [question]);
-    const res = await env.VEC.query(qv, { topK: TOP_K, returnMetadata: 'all' });
-    matches = res.matches || [];
-  } catch { /* 检索失败则裸答（仍受系统提示约束） */ }
-
-  const ctxBlocks = [], srcMap = new Map();
-  matches.forEach((m, i) => {
-    const md = m.metadata || {};
-    ctxBlocks.push(`【资料${i + 1}·《${md.title || ''}》】${md.text || ''}`);
-    if (md.aid && !srcMap.has(md.aid)) srcMap.set(md.aid, md.title || '');
-  });
-  const sources = [...srcMap].slice(0, 6).map(([id, title]) => ({ id, title }));
-  const context = ctxBlocks.join('\n\n') || '（未检索到相关资料）';
-
-  const system = `你是「印光法师文钞」知识库助手，依据检索到的文钞资料回答净土学修问题。务必：
-1. 只依据下面【资料】作答；资料里有的如实答、可引用原文；资料里没有或问题与文钞/净土无关，就说「文钞中未见相关开示」，不要编造。
-2. 不扮演佛菩萨或祖师口吻，不预言吉凶、不轻下因果定论；语气恭敬平实。
-3. 简明扼要，控制在约 ${ANSWER_CHARS} 字以内。
+  // 检索（缓存命中则复用其 passages/sources）
+  let passages = [], sources = [], system = '';
+  if (useCache) {
+    passages = cached.passages; sources = cached.sources || [];
+  } else {
+    let matches = [];
+    try {
+      const [qv] = await embed(env, [question]);
+      const res = await env.VEC.query(qv, { topK: TOP_K, returnMetadata: 'all' });
+      matches = res.matches || [];
+    } catch { /* 检索失败则裸答 */ }
+    const ctxBlocks = [], srcMap = new Map();
+    matches.forEach((m, i) => {
+      const md = m.metadata || {};
+      const n = i + 1;
+      ctxBlocks.push(`【${n}】《${md.title || ''}》\n${md.text || ''}`);
+      passages.push({ n, aid: md.aid || '', title: md.title || '', text: md.text || '' });
+      if (md.aid && !srcMap.has(md.aid)) srcMap.set(md.aid, md.title || '');
+    });
+    sources = [...srcMap].slice(0, 8).map(([id, title]) => ({ id, title }));
+    const context = ctxBlocks.join('\n\n') || '（未检索到相关资料）';
+    system = `你是「印光法师文钞」知识库助手。下面【资料】是依用户问题检索到的文钞段落，各以【n】编号。务必：
+1. 只依据这些资料作答，不引入资料以外的说法、不自行发挥；资料未涵盖或问题与文钞/净土无关，就说「文钞中未见相关开示」，绝不编造。
+2. 每个论断后用方括号标出所依据的资料编号，如 [1] 或 [2][5]，以便读者点开核对原文；可直接引用大师原文并加引号。
+3. 不扮演佛菩萨或祖师口吻，不预言吉凶、不轻下因果定论；语气恭敬平实。
+4. 简明扼要，控制在约 ${ANSWER_CHARS} 字以内。
 
 【资料】
 ${context}`;
+  }
+  const cite = sources.length ? '参见：' + sources.map((s) => `《${s.title}》`).join('、') : '回答仅供参考，请核对《文钞》原文';
 
-  let ds;
-  try {
-    ds = await fetch('https://api.deepseek.com/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
-      body: JSON.stringify({
-        model: CHAT_MODEL,
-        messages: [{ role: 'system', content: system }, ...msgs],
-        temperature: 0.3,
-        max_tokens: MAX_TOKENS,
-        stream: false,
-      }),
-    });
-  } catch { return json({ reply: '上游服务连接失败，请稍后重试。' }, 502, headers); }
-  if (!ds.ok) return json({ reply: '上游服务繁忙，请稍后重试。' }, 502, headers);
+  // ---- 流式输出（ndjson 逐行：meta / delta / done）----
+  const enc = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      const send = (o) => controller.enqueue(enc.encode(JSON.stringify(o) + '\n'));
+      send({ type: 'meta', passages, sources, cite });
+      if (useCache) {
+        send({ type: 'delta', text: cached.reply });
+        send({ type: 'done' });
+        controller.close();
+        return;
+      }
+      let full = '';
+      try {
+        const ds = await fetch('https://api.deepseek.com/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
+          body: JSON.stringify({
+            model: CHAT_MODEL,
+            messages: [{ role: 'system', content: system }, ...msgs],
+            temperature: 0.3, max_tokens: MAX_TOKENS, stream: true,
+          }),
+        });
+        if (!ds.ok || !ds.body) {
+          send({ type: 'delta', text: '上游服务繁忙，请稍后重试。' });
+          send({ type: 'done' }); controller.close(); return;
+        }
+        const reader = ds.body.getReader(), dec = new TextDecoder();
+        let buf = '';
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buf += dec.decode(value, { stream: true });
+          let nl;
+          while ((nl = buf.indexOf('\n')) >= 0) {
+            const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
+            if (!line.startsWith('data:')) continue;
+            const d = line.slice(5).trim();
+            if (d === '[DONE]') continue;
+            try {
+              const j = JSON.parse(d);
+              const t = (j.choices && j.choices[0] && j.choices[0].delta && j.choices[0].delta.content) || '';
+              if (t) { full += t; send({ type: 'delta', text: t }); }
+            } catch { /* 跳过半行 */ }
+          }
+        }
+      } catch { if (!full) send({ type: 'delta', text: '上游服务连接失败，请稍后重试。' }); }
+      if (env.RL && full) {
+        await env.RL.put(ckey, JSON.stringify({ reply: full, cite, sources, passages }), { expirationTtl: CACHE_TTL });
+      }
+      send({ type: 'done' });
+      controller.close();
+    },
+  });
+  return new Response(stream, { headers: { ...headers, 'Content-Type': 'application/x-ndjson; charset=utf-8' } });
+}
 
-  const data = await ds.json();
-  const reply = ((data.choices && data.choices[0] && data.choices[0].message
-    && data.choices[0].message.content) || '').trim() || '（无回复）';
-  const cite = sources.length ? '参见：' + sources.map((s) => `《${s.title}》`).join('、') : '仅供参考，义理以大师原文为准';
-  const payload = { reply, cite, sources };
-  if (env.RL) await env.RL.put(ckey, JSON.stringify(payload), { expirationTtl: CACHE_TTL });
-  return json(payload, 200, headers);
+/* ---------- 反馈闭环：有帮助 / 需更正 → 存 KV，供日后人工审核沉淀 ---------- */
+async function handleFeedback(req, env, headers) {
+  let b;
+  try { b = await req.json(); } catch { b = null; }
+  const vote = b && (b.vote === 'up' ? 'up' : b.vote === 'down' ? 'down' : null);
+  if (!vote || !b.question) return json({ ok: false }, 400, headers);
+  if (env.RL) {
+    const key = 'fb:' + Date.now() + ':' + Math.random().toString(36).slice(2, 8);
+    await env.RL.put(key, JSON.stringify({
+      q: String(b.question).slice(0, 300), vote,
+      note: String(b.note || '').slice(0, 500),
+      a: String(b.reply || '').slice(0, 600),
+      t: new Date().toISOString(),
+    }), { expirationTtl: 400 * 86400 });
+  }
+  return json({ ok: true }, 200, headers);
 }
 
 export default {
@@ -194,6 +262,7 @@ export default {
     if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers });
     const url = new URL(req.url);
     if (url.pathname === '/index') return handleIndex(req, env, url, headers);
+    if (url.pathname === '/feedback') return handleFeedback(req, env, headers);
     return handleAsk(req, env, headers);
   },
 };

@@ -16,6 +16,7 @@
 
 const ALLOW_ORIGINS = [
   'https://wenchao.foyue.org',
+  'https://www.wenchao.foyue.org',
   'https://wenchao.pages.dev',
   'http://localhost:4188',
   'http://127.0.0.1:4188',

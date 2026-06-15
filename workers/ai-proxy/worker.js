@@ -254,15 +254,79 @@ async function handleFeedback(req, env, headers) {
   return json({ ok: true }, 200, headers);
 }
 
+/* ---------- 管理后台：审阅反馈（口令 = INDEX_SECRET）---------- */
+async function handleAdminData(req, env, headers) {
+  const secret = req.headers.get('X-Admin-Secret') || '';
+  if (!env.INDEX_SECRET || secret !== env.INDEX_SECRET) return json({ error: 'forbidden' }, 403, headers);
+  if (!env.RL) return json({ stats: { up: 0, down: 0, total: 0 }, items: [], kb: null }, 200, headers);
+  const list = await env.RL.list({ prefix: 'fb:', limit: 1000 });
+  const keys = list.keys.map((k) => k.name).sort().slice(-150).reverse();   // 最近 150 条
+  const items = []; let up = 0, down = 0;
+  for (const k of keys) {
+    const v = await env.RL.get(k);
+    if (!v) continue;
+    let o; try { o = JSON.parse(v); } catch { continue; }
+    if (o.vote === 'up') up++; else if (o.vote === 'down') down++;
+    items.push(o);
+  }
+  let kb = null;
+  try { const d = await env.VEC.describe(); kb = d.vectorsCount != null ? d.vectorsCount : (d.vectorCount != null ? d.vectorCount : null); } catch { /* 可选 */ }
+  return json({ stats: { up, down, total: up + down }, items, kb }, 200, headers);
+}
+
+const ADMIN_HTML = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>问文钞 · 管理后台</title>
+<style>
+:root{--paper:#f6f1e6;--ink:#322a1e;--ink2:#6d5f49;--ink3:#a3937a;--line:#d9cdb2;--cinnabar:#b03a26;--soft:rgba(176,58,38,.1)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.7 "Noto Serif SC",serif;padding:18px;max-width:880px;margin:0 auto}
+h1{font-size:20px;margin:6px 0 2px}.sub{color:var(--ink3);font-size:13px;margin-bottom:16px}
+.login{display:flex;gap:8px;margin:24px 0}input{flex:1;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;font:15px serif}
+button{border:0;background:var(--cinnabar);color:#fff;padding:9px 18px;border-radius:8px;cursor:pointer;font-size:14px}
+.stats{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:8px 0 14px;color:var(--ink2);font-size:14px}.stats b{color:var(--cinnabar)}
+.filters{display:flex;gap:8px;margin-bottom:12px}.filters button{background:#fff;color:var(--ink2);border:1px solid var(--line)}.filters button.on{background:var(--cinnabar);color:#fff;border-color:var(--cinnabar)}
+.item{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0;background:#fff}.item.down{border-color:var(--cinnabar);background:var(--soft)}
+.vote{font-size:12px;padding:2px 9px;border-radius:999px;margin-right:8px}.vote.up{background:#e7efe0;color:#3a6b2e}.vote.down{background:var(--soft);color:var(--cinnabar)}
+.q{font-weight:600;margin:5px 0}.note{color:var(--cinnabar);font-size:13.5px;margin:4px 0}.a{color:var(--ink2);font-size:13px;white-space:pre-wrap;max-height:5em;overflow:auto;border-top:1px dashed var(--line);padding-top:6px;margin-top:6px}
+.t{color:var(--ink3);font-size:12px}.empty{color:var(--ink3);text-align:center;padding:48px}
+</style></head><body>
+<h1>问文钞 · 管理后台</h1><div class="sub">用户反馈审阅 · 为「精选问答」沉淀打底</div>
+<div id="app"></div>
+<script>
+(function(){
+var S=sessionStorage.getItem('wc_admin')||'',items=[],filter='all',kb=null,st={};
+var app=document.getElementById('app');
+function esc(s){return (s||'').replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+function login(msg){app.innerHTML='<div class="login"><input id="pw" type="password" placeholder="管理口令"><button id="go">进入</button></div>'+(msg?'<div class="sub" style="color:var(--cinnabar)">'+msg+'</div>':'');document.getElementById('go').onclick=enter;document.getElementById('pw').onkeydown=function(e){if(e.key==='Enter')enter()}}
+function enter(){S=document.getElementById('pw').value.trim();sessionStorage.setItem('wc_admin',S);load()}
+function load(){app.innerHTML='<div class="empty">载入中…</div>';fetch('/admin/data',{method:'POST',headers:{'X-Admin-Secret':S}}).then(function(r){if(r.status===403)throw 'forbidden';return r.json()}).then(function(d){items=d.items||[];st=d.stats||{};kb=d.kb;render()}).catch(function(e){sessionStorage.removeItem('wc_admin');login(e==='forbidden'?'口令有误':'载入失败，请重试')})}
+function render(){
+var rows=items.filter(function(it){return filter==='all'||it.vote===filter});
+var h='<div class="stats"><span>有帮助 <b>'+(st.up||0)+'</b></span><span>需更正 <b>'+(st.down||0)+'</b></span><span>共 <b>'+(st.total||0)+'</b> 条</span>'+(kb!=null?'<span>知识库 <b>'+kb+'</b> 段</span>':'')+'<span style="margin-left:auto"><button id="rf" style="background:#fff;color:var(--ink2);border:1px solid var(--line)">刷新</button></span></div>';
+h+='<div class="filters"><button data-f="all" class="'+(filter==='all'?'on':'')+'">全部</button><button data-f="down" class="'+(filter==='down'?'on':'')+'">需更正</button><button data-f="up" class="'+(filter==='up'?'on':'')+'">有帮助</button></div>';
+if(!rows.length)h+='<div class="empty">暂无反馈</div>';
+rows.forEach(function(it){h+='<div class="item '+(it.vote==='down'?'down':'')+'"><span class="vote '+(it.vote||'')+'">'+(it.vote==='up'?'有帮助':'需更正')+'</span><span class="t">'+esc((it.t||'').replace('T',' ').slice(0,16))+'</span><div class="q">'+esc(it.q)+'</div>'+(it.note?'<div class="note">更正：'+esc(it.note)+'</div>':'')+(it.a?'<div class="a">'+esc(it.a)+'</div>':'')+'</div>'});
+app.innerHTML=h;
+document.getElementById('rf').onclick=load;
+Array.prototype.forEach.call(document.querySelectorAll('.filters button'),function(b){b.onclick=function(){filter=b.getAttribute('data-f');render()}});
+}
+if(S)load();else login();
+})();
+</script></body></html>`;
+
 export default {
   async fetch(req, env) {
+    const url = new URL(req.url);
+    if (req.method === 'GET' && url.pathname === '/admin') {
+      return new Response(ADMIN_HTML, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+    }
     const origin = req.headers.get('Origin') || '';
     const headers = { 'Content-Type': 'application/json', ...cors(origin) };
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors(origin) });
     if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers });
-    const url = new URL(req.url);
     if (url.pathname === '/index') return handleIndex(req, env, url, headers);
     if (url.pathname === '/feedback') return handleFeedback(req, env, headers);
+    if (url.pathname === '/admin/data') return handleAdminData(req, env, headers);
     return handleAsk(req, env, headers);
   },
 };

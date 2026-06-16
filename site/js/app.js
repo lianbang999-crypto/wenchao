@@ -665,7 +665,7 @@ function aiFormat(text, passages) {
   }
   return html;
 }
-// 点角标 → 底部弹卡显示出处原文 + 阅读全篇（统一只显原文，白话在「阅读全篇」里）
+// 点角标 → 底部弹卡显示出处原文 + 阅读原文（统一只显原文，白话在「阅读原文」里）
 function citationExcerpt(p) {
   const t = (p && p.text) || '';
   const orig = (t.split('\n（白话）')[0] || '').trim();
@@ -675,11 +675,10 @@ function showCitation(p) {
   if (!p) return;
   const excerpt = citationExcerpt(p);
   const url = p.url || (p.aid ? articleHref(p.aid, p.pIndex) : '');
-  const label = p.pIndex !== undefined && p.pIndex !== null && p.pIndex !== '' ? '定位段落' : '阅读全篇';
   $('#sheet-body').innerHTML =
     `<h4>《${esc(p.title || '')}》<span class="note-n">出处摘录</span></h4>` +
     `<p class="cite-text">${esc(excerpt)}</p>` +
-    (p.aid ? `<button class="sheet-goto" data-id="${esc(p.aid)}" data-p="${p.pIndex ?? ''}" data-url="${esc(url)}">${label} ›</button>` : '');
+    (p.aid ? `<button class="sheet-goto" data-id="${esc(p.aid)}" data-p="${p.pIndex ?? ''}" data-url="${esc(url)}">阅读原文 ›</button>` : '');
   $('#sheet').hidden = false;
   $('#sheet-backdrop').hidden = false;
   const g = $('#sheet-body .sheet-goto');

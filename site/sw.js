@@ -1,7 +1,7 @@
 /* 离线缓存：一律网络优先、写穿缓存；离线时回退缓存。
    读过的篇目离线可重读，数据更新后在线立即生效。 */
-const VER = 'wc-v25';
-const SHELL = ['./', 'index.html', 'css/app.css?v=20260616-ai-panel', 'js/app.js?v=20260616-ai-panel', 'js/qrcode.js', 'js/share.js?v=20260616-select-debounce', 'js/opencc.js?v=20260616-ai-v2', 'config.js?v=20260616-ai-panel', 'icon.svg', 'data/books.json'];
+const VER = 'wc-v26';
+const SHELL = ['./', 'index.html', 'css/app.css?v=20260616-ai-panel', 'js/app.js?v=20260616-ai-cite-label', 'js/qrcode.js', 'js/share.js?v=20260616-select-debounce', 'js/opencc.js?v=20260616-ai-v2', 'config.js?v=20260616-ai-panel', 'icon.svg', 'data/books.json'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(VER).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

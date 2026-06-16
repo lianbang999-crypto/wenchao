@@ -563,14 +563,14 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
 /* 载入态 */
 .loading { padding: 80px 0; text-align: center; color: var(--ink-3); letter-spacing: .3em; font-size: 13px; }
 
-/* ---------------- 平板/桌面：三栏常驻 ---------------- */
+/* ---------------- 平板/桌面：左侧目录常驻，AI 默认隐藏 ---------------- */
 @media (min-width: 1180px) {
   .drawer-left { transform: none; box-shadow: none; }
-  .drawer-right { transform: none; box-shadow: none; }
-  .drawer-right:not(.open) { display: flex; }
-  body[data-wide] .reader { margin-left: 340px; margin-right: 340px; max-width: none; }
+  .drawer-right { transform: translateX(102%); box-shadow: none; }
+  body[data-wide] .reader { margin-left: 340px; margin-right: 0; max-width: none; }
   body[data-wide] .reader .reader-inner, body[data-wide] .home { max-width: var(--reader-w); margin: 0 auto; }
-  body[data-wide] .topbar { left: 340px; right: 340px; }
+  body[data-wide] .topbar { left: 340px; right: 0; }
   .overlay { display: none; }
-  #btn-nav, #btn-ai, #btn-ai-close { visibility: hidden; }
+  #btn-nav { visibility: hidden; }
+  #btn-ai, #btn-ai-close { visibility: visible; }
 }

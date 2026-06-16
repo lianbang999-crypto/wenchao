@@ -67,7 +67,7 @@ const drawerL = $('#drawer-left'), drawerR = $('#drawer-right'), overlay = $('#o
 const isWide = () => matchMedia('(min-width: 1180px)').matches;
 
 function openDrawer(side) {
-  if (isWide()) return;
+  if (isWide() && side === 'L') return;
   (side === 'L' ? drawerL : drawerR).classList.add('open');
   overlay.hidden = false;
   requestAnimationFrame(() => overlay.classList.add('show'));

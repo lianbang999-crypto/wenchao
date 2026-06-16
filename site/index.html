@@ -15,7 +15,7 @@
      苹果设备命中本地楷体，不会产生下载 -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
-<link rel="stylesheet" href="css/app.css?v=20260614-ai10">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai12">
 </head>
 <body>
 
@@ -59,6 +59,13 @@
         <button class="chip-btn" id="theme-night">墨夜</button>
       </span>
     </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
   </div>
 </nav>
 
@@ -69,6 +76,9 @@
       <strong>问文钞</strong>
       <small id="ai-context">基于印光法师文钞全集</small>
     </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
     <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
       <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
     </button>
@@ -99,9 +109,9 @@
   <div class="sheet-body" id="sheet-body"></div>
 </section>
 
-<script src="config.js?v=20260614-ai10"></script>
+<script src="config.js?v=20260614-ai12"></script>
 <script src="js/qrcode.js"></script>
-<script type="module" src="js/app.js?v=20260614-ai10"></script>
-<script src="js/share.js?v=20260614-ai10"></script>
+<script type="module" src="js/app.js?v=20260614-ai12"></script>
+<script src="js/share.js?v=20260614-ai12"></script>
 </body>
 </html>

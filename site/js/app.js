@@ -15,6 +15,7 @@ const prefs = {
   fs: store.get('fs', 17),
   theme: store.get('theme', 'paper'),
   mode: store.get('mode', 'both'),     // orig | trans | both
+  trad: store.get('trad', false),      // 繁体显示（OpenCC 简→繁，仅显示层）
 };
 const progress = store.get('progress', {});   // {id: {pct, t}}
 let lastRead = store.get('lastRead', null);   // {id, title}
@@ -37,6 +38,8 @@ function applyPrefs() {
     .setAttribute('content', prefs.theme === 'night' ? '#171310' : '#f6f1e6');
   $('#theme-paper').classList.toggle('on', prefs.theme !== 'night');
   $('#theme-night').classList.toggle('on', prefs.theme === 'night');
+  if ($('#cc-simp')) $('#cc-simp').classList.toggle('on', !prefs.trad);
+  if ($('#cc-trad')) $('#cc-trad').classList.toggle('on', prefs.trad);
 }
 
 /* ---------- 抽屉 ---------- */
@@ -54,6 +57,7 @@ function closeDrawers() {
   drawerR.classList.remove('open');
   overlay.classList.remove('show');
   setTimeout(() => { overlay.hidden = true; }, 280);
+  if (window.speechSynthesis) window.speechSynthesis.cancel();   // 关面板即停朗读
 }
 $('#btn-nav').onclick = () => openDrawer('L');
 $('#btn-ai').onclick = () => openDrawer('R');
@@ -167,7 +171,8 @@ function renderTree(filter) {
         ? hits.map((it) => navItemHtml(it, true)).join('')
         : '<p class="nav-empty">无此篇名，可试全文搜索</p>');
     bindNavItems(tree);
-    $('#ft-go').onclick = () => fullSearch(kw);
+    maybeTradify(tree);
+    $("#ft-go").onclick = () => fullSearch(kw);
     return;
   }
   tree.innerHTML = books.map((vol) => {
@@ -187,6 +192,7 @@ function renderTree(filter) {
     return `<details class="nav-vol" data-vol="${vol.id}"><summary><span class="tri"></span>${esc(vol.name)}<span class="count">${count}篇</span></summary>${juans}</details>`;
   }).join('');
   bindNavItems(tree);
+  maybeTradify(tree);
 }
 // 目录显示用篇名：去掉卷首长标题尾部的编者注「（附录于后）」，正文页仍用全名
 const navTitle = (t) => t.replace(/（附录于后）$/, '');
@@ -218,8 +224,9 @@ window.addEventListener('hashchange', route);
 async function route() {
   const m = location.hash.match(/^#\/a\/([\w-]+)/);
   closeDrawers();
-  if (!m) { renderHome(); return; }
+  if (!m) { renderHome(); maybeTradify($('#reader')); return; }
   await renderArticle(m[1]);
+  maybeTradify($('#reader'));     // 繁体模式：正文渲染后转换
   // 分享二维码深链：?p=N 定位到所引段落
   const pm = location.hash.match(/[?&]p=(\d+)/);
   if (pm) scrollToPara(+pm[1]);
@@ -538,6 +545,46 @@ $('#font-dec').onclick = () => { prefs.fs = Math.max(14, prefs.fs - 1); store.se
 $('#theme-paper').onclick = () => { prefs.theme = 'paper'; store.set('theme', prefs.theme); applyPrefs(); };
 $('#theme-night').onclick = () => { prefs.theme = 'night'; store.set('theme', prefs.theme); applyPrefs(); };
 
+/* ---------- 简繁转换（OpenCC 自托管，懒加载；仅显示层，不改底本数据）---------- */
+let _conv = null;
+function loadOpenCC() {
+  if (_conv) return Promise.resolve(_conv);
+  return new Promise((resolve) => {
+    const s = document.createElement('script');
+    s.src = 'js/opencc.js?v=20260614-ai12';
+    s.onload = () => {
+      try {
+        const c = OpenCC.Converter({ from: 'cn', to: 'tw' });
+        _conv = (t) => c(t).replace(/唸/g, '念');   // 佛教保留"念佛"，不作"唸"
+      } catch (e) { _conv = (t) => t; }
+      resolve(_conv);
+    };
+    s.onerror = () => { _conv = (t) => t; resolve(_conv); };
+    document.head.appendChild(s);
+  });
+}
+function tradify(root) {                 // 把元素内文本节点 简→繁（不碰标签/属性）
+  if (!_conv || !root) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: (n) => (n.nodeValue && /[一-鿿]/.test(n.nodeValue)
+      && !(n.parentNode && /^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName)))
+      ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT,
+  });
+  const ns = []; let n; while ((n = w.nextNode())) ns.push(n);
+  ns.forEach((t) => { t.nodeValue = _conv(t.nodeValue); });
+}
+function maybeTradify(el) { if (prefs.trad && _conv && el) tradify(el); }
+function setTrad(on) {
+  prefs.trad = on; store.set('trad', on); applyPrefs();
+  if (on) {
+    loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); tradify($('#ai-log')); });
+  } else {
+    route(); renderTree($('#nav-search').value);   // 从简体源重渲染（无损还原）
+  }
+}
+if ($('#cc-simp')) $('#cc-simp').onclick = () => setTrad(false);
+if ($('#cc-trad')) $('#cc-trad').onclick = () => setTrad(true);
+
 /* ---------- AI 助读 ---------- */
 const aiLog = $('#ai-log');
 const aiHistory = [];
@@ -602,7 +649,8 @@ function showCitation(p) {
 }
 // 角标 hover 预览（仅桌面；触屏走点击弹卡）
 let aiTip;
-const canHover = () => window.matchMedia && matchMedia('(hover: hover)').matches;
+// 仅"有真鼠标"的桌面启用 hover 预览；手机/触屏一律走点按弹卡
+const canHover = () => window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
 function citeHover(btn, p) {
   if (!p || !canHover()) return;
   btn.addEventListener('mouseenter', () => {
@@ -652,6 +700,7 @@ async function aiAsk(q) {
   const paint = () => {                       // 边流式边排版（Markdown + 角标）
     const d = ensureDiv();
     d.innerHTML = aiFormat(full, passages);
+    maybeTradify(d);
     d.querySelectorAll('.ai-cite').forEach((b) => {
       const p = passages && passages[+b.dataset.n - 1];
       b.onclick = () => showCitation(p); citeHover(b, p);
@@ -720,23 +769,55 @@ function execCopy(t) {
   document.body.removeChild(ta);
 }
 // 反馈闭环：有帮助 / 需更正 → 存后端，供日后善知识审核沉淀；+ 复制
+const FB_ICON = {
+  up: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>',
+  down: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  check: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  speak: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4z"/><path d="M16 9a3.5 3.5 0 0 1 0 6M19 6.5a7 7 0 0 1 0 11"/></svg>',
+  stop: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2.5"/></svg>',
+};
+// 朗读：浏览器免费 TTS（speechSynthesis）；佛教高频词读音替换（仅朗读用，不改显示）
+const PRON = [['南无', '南摩'], ['南無', '南摩'], ['般若', '波惹'], ['伽蓝', '茄蓝'], ['阿弥陀', '婀弥陀'], ['比丘', '笔丘'], ['迦叶', '迦摄']];
+function speakable(t) {
+  t = t.replace(/\[\d{1,2}\]/g, '').replace(/\*\*/g, '')
+    .replace(/^\s*\d+[.、)]\s*/gm, '').replace(/^\s*[-*•●]\s*/gm, '');
+  PRON.forEach(([a, b]) => { t = t.split(a).join(b); });
+  return t;
+}
+function aiSpeak(text, btn) {
+  const synth = window.speechSynthesis;
+  if (!synth) { btn.title = '此设备暂不支持朗读'; return; }
+  if (btn.classList.contains('on')) { synth.cancel(); return; }   // 再点=停止
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(speakable(text));
+  u.lang = 'zh-CN'; u.rate = 0.95;
+  const v = (synth.getVoices() || []).find((x) => /zh|chinese|中文|普通话/i.test((x.lang || '') + (x.name || '')));
+  if (v) u.voice = v;
+  btn.classList.add('on'); btn.innerHTML = FB_ICON.stop; btn.title = '停止朗读';
+  u.onend = u.onerror = () => { btn.classList.remove('on'); btn.innerHTML = FB_ICON.speak; btn.title = '朗读'; };
+  synth.speak(u);
+}
 function aiFeedback(el, question, reply) {
   const bar = document.createElement('div');
   bar.className = 'ai-fb';
-  bar.innerHTML = '<span>这条回答</span>' +
-    '<button class="ai-fb-btn" data-v="up" type="button" title="有帮助" aria-label="有帮助">✓</button>' +
-    '<button class="ai-fb-btn" data-v="down" type="button" title="需更正" aria-label="需更正">!</button>' +
-    '<button class="ai-fb-btn ai-copy" type="button" title="复制回答" aria-label="复制回答">⧉</button>';
+  bar.innerHTML =
+    '<button class="ai-fb-btn ai-speak" type="button" title="朗读" aria-label="朗读">' + FB_ICON.speak + '</button>' +
+    '<button class="ai-fb-btn ai-copy" type="button" title="复制回答" aria-label="复制回答">' + FB_ICON.copy + '</button>' +
+    '<span class="ai-fb-gap"></span>' +
+    '<button class="ai-fb-btn" data-v="up" type="button" title="有帮助" aria-label="有帮助">' + FB_ICON.up + '</button>' +
+    '<button class="ai-fb-btn" data-v="down" type="button" title="需更正" aria-label="需更正">' + FB_ICON.down + '</button>';
   el.appendChild(bar);
+  bar.querySelector('.ai-speak').onclick = function () { aiSpeak(reply, this); };
   const cp = bar.querySelector('.ai-copy');
   cp.onclick = () => {
     copyText(reply);
     cp.classList.add('ok');
-    cp.textContent = '✓';
+    cp.innerHTML = FB_ICON.check;
     cp.title = '已复制';
     setTimeout(() => {
       cp.classList.remove('ok');
-      cp.textContent = '⧉';
+      cp.innerHTML = FB_ICON.copy;
       cp.title = '复制回答';
     }, 1200);
   };
@@ -772,6 +853,14 @@ aiText.addEventListener('input', () => {        // 自适应高度
 document.querySelectorAll('#ai-chips .chip-btn').forEach((b) => {
   b.onclick = () => aiAsk(b.dataset.q);    // 全库问答，不绑当前篇
 });
+const aiNewBtn = $('#btn-ai-new');
+if (aiNewBtn) aiNewBtn.onclick = () => {     // 新对话：清空重来
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  if (aiAbort) aiAbort.abort();
+  aiHistory.length = 0;
+  aiLog.innerHTML = '';
+  aiWelcome();
+};
 aiWelcome();
 
 /* ---------- 启动 ---------- */
@@ -797,7 +886,8 @@ async function boot() {
           flat.push({ ...it, volName: vol.name });
   $('#nav-stats').textContent = `${books.length} 部 · ${flat.length} 篇 · 文白对照`;
   renderTree();
-  route();
+  await route();
+  if (prefs.trad) loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); });
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost'))
     navigator.serviceWorker.register('sw.js').catch(() => {});
 }

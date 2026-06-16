@@ -145,7 +145,8 @@
     var W = 1080, M = 100, TW = W - M * 2, FI = 44;   // 宽 / 文字边距 / 界栏内框
     var paper = '#f6f1e6', ink = '#322a1e', ink2 = '#6d5f49', line = '#d9cdb2';
     var bodyFS = 41, LH = Math.round(bodyFS * 1.9), paraGap = Math.round(bodyFS * 0.7);
-    var srcFS = 30, qrS = 168, topPad = 104, qrGap = 58, botPad = 92;
+    var srcFS = 30, qrS = 168, topPad = 104, qrGap = 58, botPad = 64;
+    var capFS = 26, capGap = 26;   // 二维码下说明文字
 
     var probe = document.createElement('canvas').getContext('2d');
     probe.font = bodyFS + 'px ' + SERIF;
@@ -156,7 +157,7 @@
     var ruleY = topPad + bodyH + 32;                  // 出处前短分隔
     var sy = ruleY + 30 + srcFS;                      // 出处基线
     var qy = sy + qrGap;                              // 二维码顶
-    var H = Math.round(qy + qrS + botPad);
+    var H = Math.round(qy + qrS + capGap + capFS + botPad);
     var DPR = Math.min(window.devicePixelRatio || 1, H > 4200 ? 1.5 : 2);
 
     var canvas = document.createElement('canvas');
@@ -186,8 +187,10 @@
     ctx.textAlign = 'right'; ctx.fillStyle = ink2; ctx.font = srcFS + 'px ' + SERIF;
     ctx.fillText(ellipsize(ctx, '——' + (src || '印光法师文钞'), TW), W - M, sy);
 
-    // 二维码（居中，裸码，无文字）
+    // 二维码（居中）+ 下方说明：查询原文出处
     drawQR(ctx, url, (W - qrS) / 2, qy, qrS);
+    ctx.textAlign = 'center'; ctx.fillStyle = ink2; ctx.font = capFS + 'px ' + SERIF;
+    ctx.fillText('查询《文钞》原文出处', W / 2, qy + qrS + capGap + capFS);
     return canvas;
   }
 

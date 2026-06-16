@@ -249,9 +249,20 @@ button { font-family: inherit; color: inherit; }
 }
 .ai-fb-btn:hover { color: var(--cinnabar); border-color: var(--cinnabar); }
 .ai-fb-btn.ok { color: #3a6b2e; border-color: #3a6b2e; }
+.ai-fb-btn.on { color: var(--cinnabar); border-color: var(--cinnabar); }
+.ai-fb-gap { flex: 1; }
+.ai-fb-label { font-size: 12.5px; color: var(--ink-3); margin-right: 2px; }
 .ai-fb-thx { font-size: 12.5px; color: var(--ink-3); }
+
+/* 问文钞：独立全屏形态 */
+.drawer-right { width: 100%; max-width: 100%; left: 0; }
+.drawer-right > .drawer-head,
+.drawer-right > .ai-chips,
+.drawer-right > .ai-log,
+.drawer-right > .ai-input,
+.drawer-right > .ai-disclaimer { width: 100%; max-width: 760px; margin-left: auto; margin-right: auto; }
 .cite-text {
-  white-space: pre-wrap; line-height: 1.95; font-family: var(--kai);
+  white-space: pre-wrap; line-height: 1.95; font-family: var(--serif);
   max-height: 56vh; overflow-y: auto;
 }
 .sheet-goto {

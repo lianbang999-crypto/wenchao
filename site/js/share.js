@@ -65,25 +65,46 @@
     $('.sb-x', bar).addEventListener('click', hideBar);
   }
   function showBar() { ensureBar(); bar.hidden = false; }
-  function hideBar() { if (bar) bar.hidden = true; }
+  function hideBar() {
+    if (bar) bar.hidden = true;
+    lastSelKey = '';
+  }
 
   /* ---------- 选区监听 ---------- */
-  var timer;
-  function onSelChange() { clearTimeout(timer); timer = setTimeout(evalSelection, 180); }
+  var timer, lastSelKey = '';
+  function selectionKey(id, pIndex, text) {
+    return [
+      id,
+      pIndex == null ? '' : pIndex,
+      clen(text),
+      text.replace(/\s+/g, ' ').slice(0, 80),
+      text.replace(/\s+/g, ' ').slice(-40),
+    ].join('|');
+  }
+  function scheduleSelectionEval(delay) {
+    clearTimeout(timer);
+    timer = setTimeout(evalSelection, delay || 220);
+  }
+  function onSelChange() { scheduleSelectionEval(220); }
   function evalSelection() {
-    if (!curId()) { hideBar(); return; }   // 仅在阅读页
+    var id = curId();
+    if (!id) { hideBar(); return; }   // 仅在阅读页
     var sel = window.getSelection();
     if (!sel || sel.isCollapsed || !sel.rangeCount) { hideBar(); return; }
     var text = sel.toString();
     if (!text || !clen(text)) { hideBar(); return; }
     var body = $('.art-body', reader());
-    if (!body || (!body.contains(sel.anchorNode) && !body.contains(sel.focusNode))) { hideBar(); return; }
+    if (!body || !body.contains(sel.anchorNode) || !body.contains(sel.focusNode)) { hideBar(); return; }
     var n = clen(text);
+    var pIndex = paraIndexOf(sel.anchorNode);
+    var key = selectionKey(id, pIndex, text);
+    if (key === lastSelKey && bar && !bar.hidden) return;
+    lastSelKey = key;
     var meta = window.__wcShare || {};
     picked = {
-      text: text, id: curId(),
+      text: text, id: id,
       title: meta.title || curTitle(), book: meta.book || '',
-      pIndex: paraIndexOf(sel.anchorNode),
+      pIndex: pIndex,
     };
     ensureBar();
     barCount.textContent = '已选 ' + n + ' 字' + (n > MAX ? '（取前 ' + MAX + ' 字）' : '');
@@ -310,6 +331,8 @@
 
   /* ---------- 初始化 ---------- */
   document.addEventListener('selectionchange', onSelChange);
+  document.addEventListener('pointerup', function () { scheduleSelectionEval(90); });
+  document.addEventListener('touchend', function () { scheduleSelectionEval(140); }, { passive: true });
   window.addEventListener('popstate', function () { hideBar(); closeModal(); });
   window.addEventListener('hashchange', function () { hideBar(); closeModal(); });
   document.addEventListener('keydown', function (e) {

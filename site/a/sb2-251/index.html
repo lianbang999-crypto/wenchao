@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>因果实证序 · 印光法师文钞</title>
+<meta name="description" content="因果者，世出世间圣人，平治天下，度脱众生之大权也。孔子之赞周易也。最初即曰，积善之家，必有余庆。积不善之家，必有余殃。此语依表面看，是说庆殃及于子孙。依实际论，其庆殃之归于本人者，当更大于子孙者多多也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-251/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="因果实证序 · 印光法师文钞">
+<meta property="og:description" content="因果者，世出世间圣人，平治天下，度脱众生之大权也。孔子之赞周易也。最初即曰，积善之家，必有余庆。积不善之家，必有余殃。此语依表面看，是说庆殃及于子孙。依实际论，其庆殃之归于本人者，当更大于子孙者多多也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-251/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">因果实证序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">因果者，世出世间圣人，平治天下，度脱众生之大权也。孔子之赞周易也。最初即曰，积善之家，必有余庆。积不善之家，必有余殃。此语依表面看，是说庆殃及于子孙。依实际论，其庆殃之归于本人者，当更大于子孙者多多也。</p><p class="p-trans">因果，是世间、出世间圣人，治理天下，度脱众生的大方便之法。孔子赞说《周易》。在最初的坤卦中就说：“积修善行的家族，必然留有余庆。积累恶行的家族，必然留有余殃。”这句话从表面上看，是说庆祥祸殃余留给子孙。依实际来说，其中的庆祥祸殃，归于本人的，应当比留给子孙的多得多。</p></div>
+<div class="para-pair"><p class="p-orig">箕子之陈洪范也，末后方曰向用五福，威用六极。用，以也。极，穷困苦荼也。五福六极，实示前生之善恶因，及现生之善恶果也。儒经说前因现果，现因后果。孔子箕子此二语，最为明显。佛经说三世因果，最为详悉。撮要说之，则曰欲知前世因，今生受者是。欲知来世果，今生作者是。</p><p class="p-trans">箕子向周武王陈述《尚书·洪范·九畴》，最后才说：“修德得五种幸福（来引导人行善），悖逆道德得六种困苦（来警戒人为恶）。”用，以的意思。极，就是穷困苦荼。五福六极，实际上显示的是前生的善恶之因，以及现生的善恶之果。儒经中说前因现果，现因后果。孔子、箕子的这二句话，是最为明显的。佛经中说三世因果，最为详细全面。撮略大要来说，就是：欲知前世因，今生受者是。欲知来世果，今生作者是。</p></div>
+<div class="para-pair"><p class="p-orig">人每谓现生所享受苦乐吉凶者为命，谓天所命令，不知乃自己前生所作善恶之果报耳。天岂有厚于彼，而薄于此之命令乎。故感应篇云，祸福无门，唯人自召。善恶之报，如影随形。果知此理，则上不怨天，下不尤人。兢兢业业，恐惧修省。</p><p class="p-trans">人们常常认为现生所享受的苦乐吉凶是命，认为是上天的命令，却不知道这是自己前生所作的善恶果报罢了。上天哪里会有厚待那个人，而薄待这个人的命令呢？所以《太上感应篇》中说：“祸福无门，唯人自召。善恶之报，如影随形。”果真知道了这个道理，那么就上不怨恨上天，下不责怪他人。兢兢业业，恐畏戒惧、修身反省。</p></div>
+<div class="para-pair"><p class="p-orig">格除自心私欲之物，则自心本具之正知发现。由兹罔念作狂者，咸得克念作圣矣。此就儒教所说因果，尚有如此之大利益。况佛教人修戒定慧，断贪瞋痴，诸恶莫作，众善奉行。初则断尽世间烦惑，了生脱死，超凡入圣。次则渐渐进修，以至真穷惑尽，慧满福圆。彻证自心，成菩提道。咸皆不出因果之外。</p><p class="p-trans">格除自心私欲之物，那么自心本来具有的正知便会显现。因此亡失正念成为狂愚的人，全都得以克制邪念成为圣人了。这是就儒教所说的因果，尚且有如此的大利益。何况佛陀教人修习戒定慧，断除贪瞋痴，诸恶莫作，众善奉行。最初可以断尽世间烦惑，了生脱死，超凡入圣。其次可以渐渐进修，以至真穷惑尽，福慧圆满。彻证自心，成菩提道。全都不能超出因果之外。</p></div>
+<div class="para-pair"><p class="p-orig">故曰，因果者，世出世间圣人，平治天下，度脱众生之大权也。宋儒谓佛说三世因果，六道轮回，乃为骗愚夫愚妇奉彼教之根据，实无其事。且人死形既朽灭，神亦飘散，纵有锉斫舂磨，将何所施。又神已散矣，令谁受生。破斥因果，令人无所畏惧，无所希求。则善无以劝，恶无以惩。以善恶均无因果，尧桀同归于尽。</p><p class="p-trans">所以说：因果，是世间、出世间圣人，治理天下，度脱众生的大方便法。宋儒认为佛说的三世因果，六道轮回，是欺骗愚夫愚妇信奉佛教的根据，实际上没有这回事。而且人死之后，身形既已腐朽毁灭，神识也就飘散无存，纵然有地狱的锉斫舂磨，将向谁来施用呢？另外，神识已经飘散了，令谁来受生。他们破斥因果道理，令人们无所畏惧，无所希求。那么行善无法加以劝导，作恶无法施以惩罚。因为行善作恶都没有因果，圣尧暴桀同样归于没有了。</p></div>
+<div class="para-pair"><p class="p-orig">无远大志向者，谁肯孳孳为善，兢兢戒恶，以求身后之虚名乎。破斥因果轮回，误认格物致知。徒以诚意正心，尽谊尽分，为觉世牖民，明道致治之法。而不知以格自心私欲之物，致自心本具正知，示前生现世，现生后世，因果报应为敦督。</p><p class="p-trans">没有远大志向的人，谁肯不断努力行善，小心谨慎戒恶，以求身后的虚名呢？他们破斥因果轮回，误认“格物致知”的意思。徒然以诚意正心，尽道谊，尽本分，作为觉悟世间，诱导人民，阐明大道，治理天下的方法。而不知道以格除自心私欲之物，开启自心本具的正知，显示前生现世，现生后世，因果报应作为敦勉督促。</p></div>
+<div class="para-pair"><p class="p-orig">何异决堤而冀水不横流，废食而冀民不饿死，何可得乎。幸人各具可以为尧舜可以作佛之心。不幸而教之不得其法。则不免为乡人为众生，莫能返本还原也。</p><p class="p-trans">何异于决开堤坝却希望洪水不要到处横流，废除饮食却希望人民不要饿死，怎么可能得到呢？所幸的是，每个人各自具有可以成为尧舜圣人，可以作佛的这个心。不幸的是，教导大众，没有得到正确的方法。就不免成为乡人、众生，不能返本还原啊！</p></div>
+<div class="para-pair"><p class="p-orig">永嘉周群铮自幼至弱冠后，不知因果，已成罔念作狂之势。自民国初从乡先哲及善知识闻佛法，知因果，冀为克念作圣之徒。不禁自愍愍他，自伤伤他，以见闻确切之因果事迹，录成一帙，名曰因果实证。将欲排印，以期人各知因识果，超凡入圣，祈为序引。遂书此以明其大致云。（民国二十八年己卯孟夏）</p><p class="p-trans">浙江永嘉的周群铮居士，从幼年到二十岁以后，不知道因果的道理，已经成为亡失正念变成狂愚之人的势态。自从民国初年，从乡人先辈贤士以及善知识处听闻佛法，知道了因果的道理，希望成为克制邪念来作圣贤的人。不禁自己悯伤，怜悯他人，自己伤叹，伤叹他人，将见闻确切的因果事迹，辑录成一册，名为《因果实证》。将要排印，以期人人都知道因果的道理，超凡入圣，请我写序。于是写下这些，以阐明其中的大致。（民国二十八年&lt;1939&gt;己卯孟夏&lt;四月&gt;）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【牖民】</span>诱导人民。《诗·大雅·板》：“天之牖民，如埙如篪。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

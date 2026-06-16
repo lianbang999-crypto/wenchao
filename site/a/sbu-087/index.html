@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复洪无我居士书 · 印光法师文钞</title>
+<meta name="description" content="昨接手书，知由自修净业，并令八十二岁老母往生西方，实为能事其亲者。若以此利益，普劝一切眷属，及诸同仁，则其利溥矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-087/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复洪无我居士书 · 印光法师文钞">
+<meta property="og:description" content="昨接手书，知由自修净业，并令八十二岁老母往生西方，实为能事其亲者。若以此利益，普劝一切眷属，及诸同仁，则其利溥矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-087/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复洪无我居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接手书，知由自修净业，并令八十二岁老母往生西方，实为能事其亲者。若以此利益，普劝一切眷属，及诸同仁，则其利溥矣。</p><p class="p-trans">昨天接到信，知道由于你自己专修净业，并且令八十二岁的老母亲往生西方，实在是善能事奉父母的人。如果以此利益，普劝一切眷属，以及诸位同仁，那么这个利益就广大了。</p></div>
+<div class="para-pair"><p class="p-orig">光乃粥饭庸僧，于禅教律密均无所知，唯知净土法门，为我佛一代法门中之特别法门。汝既不愿做大通家，故适相契合。然文钞已看过，此外别无可说。况近来目力衰极，不能多书。</p><p class="p-trans">我是一个只会喝粥吃饭的庸僧，对于禅、教、律、密各宗都一无所知，只知道净土法门，是我佛一代法门中的特别法门。你既然不愿意做大通家，所以正好与之相契合。然而你已经看过了《文钞》，除此之外再没有其他可说的了。何况我近来视力衰弱到极点，不能多写。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝取法名为智导，谓以深明净土法门之智，普导一切人同出此五浊恶世，同登彼四德莲邦也。今将前年上海息灾法会开示录，与云南郑德纯之念佛恳词寄来。</p><p class="p-trans">现今为你取法名为智导，就是以深明净土法门的智慧，普遍劝导一切人同出这个五浊恶世，同登那个四德（常乐我净）的极乐莲邦。现在将前年在上海讲的《息灾法会开示录》，与云南郑德纯的《念佛恳词》寄来。</p></div>
+<div class="para-pair"><p class="p-orig">开示录有毒乳杀儿之广告，为古今未发明之一大事。初令印六万册，已钉出者发送将半。去年后邮路不通，游民习勤所被炸，凡钉好未发出之书，均成灰烬，光之损失当在二千上下。</p><p class="p-trans">《开示录》中有毒乳杀儿的广告，是古今没有阐发显明的一件大事。最初令人印了六万册，已装钉好的书发送了将近一半。去年之后，邮路不通，上海游民习勤所被炸，凡是钉好后没有发出的书，全都烧成了灰烬，我的损失当在二千元上下。</p></div>
+<div class="para-pair"><p class="p-orig">此外还有物犹如此，及所印单张均在内。念佛恳词后附初机先导，内有一函遍复，颇有关系，当详阅而随机说之。开示录后之治疟疾方，灵极，宜为一切人说，治无不愈。</p><p class="p-trans">此外还有《物犹如此》，以及所印的单张都包括在内。《念佛恳词》后面附有《初机先导》，其中有《一函遍复》，很重要，应当仔细阅读，随机为人讲说。《开示录》后面的治疟疾方，非常灵验，应该为一切人讲说，没有治不好的。</p></div>
+<div class="para-pair"><p class="p-orig">汝洋拾元，当作印文钞续编之费。大约明年夏，当可出书，为汝寄几包以结缘。此次比前之派头各别，仿佛是劝世文，然于人生与死之二事，及敦伦尽分，篇篇说之，以期全国悉注意焉。</p><p class="p-trans">你的十元钱，当作印《文钞续编》的费用。大约明年夏天，应当可以出书，寄几包给你，以结法缘。这次与以前的风格不同，仿佛是劝世文，然而对于人的生与死这两件事，以及敦伦尽分（敦笃伦常、恪尽己分），篇篇都有说明，以期全国人民都来注意。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

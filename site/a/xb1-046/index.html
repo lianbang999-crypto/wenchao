@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>致罗世芳居士书（民国二十年） · 印光法师文钞</title>
+<meta name="description" content="八月间，了愿大师自福州来，言及居士富室子弟，年甫及冠，不于声色货利撄心，颇好佛法。惜其未遇真实知识，祈与汝书，并将所有流通要书寄去，当可得其门路，光诺之。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-046/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="致罗世芳居士书（民国二十年） · 印光法师文钞">
+<meta property="og:description" content="八月间，了愿大师自福州来，言及居士富室子弟，年甫及冠，不于声色货利撄心，颇好佛法。惜其未遇真实知识，祈与汝书，并将所有流通要书寄去，当可得其门路，光诺之。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-046/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">致罗世芳居士书（民国二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">八月间，了愿大师自福州来，言及居士富室子弟，年甫及冠，不于声色货利撄心，颇好佛法。惜其未遇真实知识，祈与汝书，并将所有流通要书寄去，当可得其门路，光诺之。</p><p class="p-trans">八月间，了愿大师从福州来，说到居士你是富家子弟，年纪刚刚二十岁，心却不被声色货利所扰，非常爱好佛法。可惜没有遇到真正的善知识，于是请我给你写信，并将所有流通的重要书籍给你寄过去，应该能使你得到佛法的门路，我答应了。</p></div>
+<div class="para-pair"><p class="p-orig">继思人未有字来，我即寄信与书去，人或疑我为攀缘，是以未寄。近彼由上海来，言汝与彼信，说光未与汝书，又复再祈寄书，故不得不与汝书也。</p><p class="p-trans">继而又想到，别人没有写信来，我就寄信寄书过去，他人或许怀疑我是攀缘，所以就没有寄。最近，了愿法师从上海来，说到你写给他的信中，说我没有给你写信，又再请我寄书，所以不得不给你写信。</p></div>
+<div class="para-pair"><p class="p-orig">福州皈依者，当有三四十人，光绝不无事与彼书，亦不募彼作功德也。唯罗铿端，屡屡请书，间有信札来往。此外均只祈皈依，复函叮嘱而已。</p><p class="p-trans">福州皈依的人，应当有三、四十人，我绝对不会没有事就给他们写信，也不向他们募缘作功德。只有罗铿端，多次请书，时不时有书信来往。此外都只是来信请求皈依，回信叮嘱而已。</p></div>
+<div class="para-pair"><p class="p-orig">人之成德立业，端在少年能立志与否。汝生长富室，宜将富贵习气，尽情摆脱，方有学道了生死分。否则，声色货利，燕朋邪友，乘间而入。虽欲希圣希贤，学佛学祖，不可得也。</p><p class="p-trans">一个人的成德立业，开端在少年之时能不能立志。你生长在富贵之家，应该将富贵的习气，完全摆脱，才有学道了生死的份。否则，声色货利，燕朋邪友，乘机而入。即使想要仰慕效法圣贤，学习佛陀祖师，也不可能了。</p></div>
+<div class="para-pair"><p class="p-orig">欲学佛法，先须尽己职分。不能敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，纵学佛法，亦难得大益，以心地未能良善故也。果能如上所说，是名善人。如地基坚固，万丈高楼，任意建筑，决无倾颓。</p><p class="p-trans">想要学习佛法，先必须竭尽自己的职责本分。不能敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，纵然学习佛法，也很难得到大的利益，因为心地不能良善的缘故啊！果真能够如上面所说，这样的人名为善人。就像地基坚固，则万丈高楼，可以随意建筑，绝对没有倾颓的危险。</p></div>
+<div class="para-pair"><p class="p-orig">末世众生，根机陋劣，欲以自力悟明心性，断尽烦惑，以了生死，千无一得。当依净土法门，信愿念佛，求生西方，则仗佛慈力，带业往生，是为万修万人去之最直捷稳当法门。</p><p class="p-trans">末法时代的众生，根机浅陋卑劣，想要以自己的力量悟明心性，断尽烦惑，来了生死，一千个人中也没有一个。所以应当依照净土法门，信愿念佛，求生西方，便可仗佛慈力，带业往生，这才是万修万人去的最直捷稳当的法门。</p></div>
+<div class="para-pair"><p class="p-orig">必须先要将此法门之所以然，了然于心。若有余力，再去研参一切经论，各种法门，均可为此法门之助。倘此法门未知所以，便随意研究其他经论，并亲近各宗知识，则于做大通家，及种未来善根，则诚有之。若欲现生了生脱死，恐梦也梦不著。</p><p class="p-trans">必须先要将这个法门的所以然，了然明白于心。如果有多余的精力，再去研参一切经论。各种法门，都可以作为这个法门的辅助。倘若对于这个法门还不知道所以然，便随意地研究其他经论，并亲近各宗的善知识，则对于做大通家，以及种下未来的善根，确实是有益的。但如果想要现生了生脱死，恐怕梦也梦不到。</p></div>
+<div class="para-pair"><p class="p-orig">光一向直心直口，只期有益于人，亦不怕人谓我无知无识，只知念佛，故于有缘者，皆如是与彼说之。汝虽不相识，然以了愿师再三祈求，故亦与汝说之。</p><p class="p-trans">我一向直心直口，只期望有益于他人，也不怕别人说我无知无识，只知道念佛，所以对于有缘的人，都是如此对他们说。你我虽然不相识，然而因为了愿法师再三的祈求，所以也对你说说。</p></div>
+<div class="para-pair"><p class="p-orig">今令弘化社，将所流通之书，与汝各寄一分。汝肯看，则存以自看。否则，送有学问能恭敬者看，亦甚好，非强汝以必看也。如或欲请以送人，亦可向弘化社请。</p><p class="p-trans">现今令弘化社，将所流通的书，给你各寄一分。你肯看，就留着自己看。否则，送给有学问，能恭敬书的人看，也很好，不是强迫你必须看。如果想要请书送人，也可以向弘化社请。</p></div>
+<div class="para-pair"><p class="p-orig">此弘化社所请于外之书，但算纸及印工之价，一切缴用，均不派于其中。如不知，当问铿端，自可悉知。</p><p class="p-trans">这些另外从弘化社所请的书，只算纸张以及印工的价钱，一切其他的费用，都不加在其中。如果有不知道的，问问罗铿端，自然就全都清楚了。</p></div>
+<div class="para-pair"><p class="p-orig">近来灾祸莫测，果能志心念佛，并念观音，决定可以逢凶化吉。祈以此与一切人说之，则其利大矣。</p><p class="p-trans">近来灾祸莫测，果真能够志心念佛，以及念观世音菩萨，决定可以逢凶化吉。请将这个话对一切人宣说，那么这个利益就大了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【声色货利】</span>货：指钱财；利：指私利。贪恋歌舞、女色、钱财、私利。泛指寻欢作乐和要钱等行径。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【撄心】</span>扰乱心神。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>丹阳金台寺募结同生西方万人缘序 · 印光法师文钞</title>
+<meta name="description" content="大觉世尊，愍诸众生迷背自心，轮回六道。久经长劫，无救无归。受诸苦荼，莫之能出。由是兴无缘慈，运同体悲。示生世间，成等正觉。说法四十九年，谈经三百余会。其间教随机异，法以缘殊。大小偏圆权实顿渐，各就机缘令得利益。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-239/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="丹阳金台寺募结同生西方万人缘序 · 印光法师文钞">
+<meta property="og:description" content="大觉世尊，愍诸众生迷背自心，轮回六道。久经长劫，无救无归。受诸苦荼，莫之能出。由是兴无缘慈，运同体悲。示生世间，成等正觉。说法四十九年，谈经三百余会。其间教随机异，法以缘殊。大小偏圆权实顿渐，各就机缘令得利益。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-239/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">丹阳金台寺募结同生西方万人缘序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大觉世尊，愍诸众生迷背自心，轮回六道。久经长劫，无救无归。受诸苦荼，莫之能出。由是兴无缘慈，运同体悲。示生世间，成等正觉。说法四十九年，谈经三百余会。其间教随机异，法以缘殊。大小偏圆权实顿渐，各就机缘令得利益。</p><p class="p-trans">大觉世尊，怜愍一切众生迷惑背离自心，轮回六道。久经长劫，没有救护、没有依归。遭受诸多痛苦荼毒，不能出离。因此兴无缘大慈，运同体大悲。示生于世间，成等正觉。说法四十九年，谈经三百余会。其间教随众生根机而有差异，法因种种因缘而有不同。大乘、小乘，偏教、圆教，权法、实法、顿法、渐法，各各就众生的机缘，令他们得到利益。</p></div>
+<div class="para-pair"><p class="p-orig">于中求其三根普被，利钝全收。下手易而成功高，用力少而得效速。不断惑业，得预海会。即此一生，定出轮回者。无如信愿念佛，求生西方之殊胜超绝也。以故华严法华等诸大乘经。文殊普贤等诸大菩萨。马鸣龙树等诸大祖师。悉皆极力赞叹，普劝修持。</p><p class="p-trans">在这当中，寻求三根普被，利钝全收。下手容易而成功高妙，用力较少而得效迅速。不断烦恼惑业，得预莲池海会。就在这一生，决定出离轮回的教法。没有像信愿念佛，求生西方那样的殊胜超绝啊！所以，《华严经》、《法华经》等诸大乘经。文殊、普贤等诸大菩萨。马鸣、龙树等诸大祖师。全都极力赞叹净土，普劝众生修持。</p></div>
+<div class="para-pair"><p class="p-orig">迨至大教东流，远公大师隐居庐山，创开莲社，宏通此法。最初结社之时，高僧巨儒之预会者，凡百二十三人。若终公之世，三十余年之内，其入莲社而念佛名，蒙接引而得往生者，则多难胜数也。</p><p class="p-trans">等到佛教东来，慧远大师隐居庐山，创建莲社，宏扬流通这一法门。最初结莲社的时候，高僧大儒参与莲会的，共一百二十三人。如果就慧远大师的一生来算，三十多年之内，加入莲社而称念佛名，蒙佛接引而得往生的人，就多得难以计算了啊！</p></div>
+<div class="para-pair"><p class="p-orig">自兹厥后，代有高人，宏扬莲宗，导利含识。至宋太真二宗之世，省常法师住持浙之西湖昭庆寺，慕庐山之遗风，结净行之莲社。而王文正公旦，首先皈依，为之倡导。凡宰辅伯牧，学士大夫，称弟子而入社者，亦百二十余人。其沙门则有数千，而士庶则难计焉。</p><p class="p-trans">从此以后，历代都有高人，宏扬净土宗，引导利益众生。到了宋太宗、真宗的时候，省常法师（注1）住持浙江杭州西湖的昭庆寺，仰慕庐山莲社的遗风，结净行莲社。而文正公王旦（注2），首先皈依，为此倡导。凡是辅政大臣、地方长官，学士、大夫，称弟子而加入莲社的，也有一百二十多人。其中沙门就有几千人，而普通百姓就难以计算了。</p></div>
+<div class="para-pair"><p class="p-orig">后有潞公文彦博者，历仕仁英神哲四朝，出入将相五十余年，官至太师，封潞国公。平生笃信佛法，晚年向道益力。专心念佛，未尝少懈。与净严法师于京师结十万人求生净土会，一时士大夫多从其化。寿至九十二，念佛而逝。有颂之者曰，知君胆气大如天，愿结西方十万缘，不为自身求活计，大家齐上渡头船。</p><p class="p-trans">后来有潞国公文彦博（注3），经历宋仁宗、英宗、神宗、哲宗四朝，出将入相五十余年，官至太师，封为潞国公。一生深信佛法，晚年修道更加努力。专心念佛，没有一丝懈怠。与净严法师在京城结十万人求生净土会，一时之间，士大夫大多随从他的教化。活到九十二岁，念佛而逝。有赞颂他的人说：“知君胆气大如天，愿结西方十万缘，不为自身求活计，大家齐上渡头船。”</p></div>
+<div class="para-pair"><p class="p-orig">金台寺者，丹阳之胜地，净土之道场也。初为道观，乃晋谌母修炼飞升之地。宋改仙台观，自宋至清，兴替不一。至咸丰间，一经兵燹，悉成焦土。逮同治中，宝林大师与同志四人云游至此，遂结茅以居。渐建莲社，接待往来。至光绪二十三年起建大殿。由是殿堂寮舍，稍稍完备，堪以安众行道矣。</p><p class="p-trans">金台寺，是江苏丹阳的殊胜之地，修持净土的道场。最初是个道观，是晋朝谌母修炼，飞升成仙的地方。宋朝改为仙台观，从宋朝到清朝，兴废不一。到了咸丰年间，经战乱兵火焚烧，全都成为焦土。到了同治年中，宝林大师与有共同志向的四个人，云游到了这个地方，于是建茅庐安居下来。渐渐建成莲社，接待来往学人。到了光绪二十三年（1897），起建大殿。从此，殿堂寮房，渐渐完备，能够安置众僧，行道修法了。</p></div>
+<div class="para-pair"><p class="p-orig">其宗旨系专修净业，冀登上品，故以金台为寺名焉。民国五年特立规约，永作十方常住。令法徒慧门，心安，学栽，培根等，相继住持。其徒普道，于出家后，遍谒名山，远至印度。凡释迦显著圣迹，皆往巡礼。所见高人甚多。归时请来玉佛一尊，如来真身舍利数粒。可谓慕道重法，不惮艰辛者。</p><p class="p-trans">寺院的宗旨是专修净业，希望登上上品莲台，所以用“金台”作为寺名。民国五年（1916），特地订立规约，永作十方常住道场。令法徒慧门、心安、学栽、培根等人，相继住持寺院。宝林大师的徒弟普道，在出家之后，周遍拜谒名山，远到印度。凡是释迦本师显著的圣迹，都前往朝拜。所见到的高人很多。回来的时候，请来一尊玉佛，几粒如来真身舍利。可以说是慕道重法，不畏艰辛的人。</p></div>
+<div class="para-pair"><p class="p-orig">现住持培根，欲起念佛堂数楹，以为长年精进净业之所。又虑寺无恒产，后难永继。兼欲普令有缘，同沾法利。愧无庐山昭庆之道，兼乏潞公严师之力。因斟酌其间，立一万人缘会。</p><p class="p-trans">现在的住持培根法师，想要建几间念佛堂，作为长年精进修习净业的处所。又忧虑寺院没有固定的资产，以后很难永远继续下去。又想普遍令有缘的人，共同沾获佛法利益。惭愧没有慧远大师、省常大师的道力，又缺乏潞国公文彦博、净严法师的力量。因此斟酌其间，成立一个万人缘会。</p></div>
+<div class="para-pair"><p class="p-orig">凡预会者，人各出洋一元，以此万人功德，尽数买田。以岁所收租，供念佛诸师衣单食用之费。庶得修持有资，行道无阻。毕生归命，尽报投诚。其出娑婆而生极乐，超凡流而入圣会者，皆由万人之所成就也。</p><p class="p-trans">凡是加入万人缘会的人，每个人各出一元洋钱，用这万人功德，全部用来购买田产。用每年所收的租金，作为供养诸位念佛法师衣单、食用的费用。使得修持有所依靠，行道没有阻碍。尽此一生归命阿弥陀佛，尽此报身投诚极乐世界。其中出离娑婆而往生极乐，超出凡夫之流而进入圣人莲会的人，都是由这万人所成就的啊！</p></div>
+<div class="para-pair"><p class="p-orig">出资之人，制一莲榜，书名其上，挂于念佛堂之两壁。俾得永蒙佛光，常闻佛号。由佛力法力，众僧修持恳祷之力，现时则灾障潜消，诸缘顺适，膺箕畴之五福，备华封之三多。</p><p class="p-trans">出资的人，制作一个莲榜，将功德芳名写在上面，挂在念佛堂两边的墙壁上。使得这些人永蒙佛光，常闻佛号。由于佛力法力，众僧修持恳祷之力，现在则灾障潜消，诸事顺意，享受箕子在《尚书·洪范》之“九畴”中所说的五福（注4），具足华州守封疆之人祝祷（注5）的三多（寿、富、多男子）。</p></div>
+<div class="para-pair"><p class="p-orig">临终则蒙佛接引，往生西方，谢人间之八苦，离天上之五衰。从兹常侍弥陀，恒参海众。闻圆音而顿明自性，睹妙境而彻证唯心。其为乐也，莫能喻焉。其成就人者，旋自食其成就之报。尽未来际，了无已时。其有欲超荐先亡及自求往生者，请各书芳名，同登莲榜。</p><p class="p-trans">临终，则蒙佛接引，往生西方，谢绝人间的八种痛苦，出离天上的五种衰相。从此常侍阿弥陀佛，恒参莲池海众。听闻佛陀圆音而顿明自性，看到妙境而彻证唯心。这个快乐啊！不能用语言来说明。其中成就他人的人，立即自己享受到他成就的善报。尽未来际，没有停止的时候。有想要超荐先亡，以及自求往生的人，请各自写上芳名，同登莲榜。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【省常】</span>（959年-1020年）宋代净土宗僧。钱塘（浙江）人，俗姓颜。字造微。七岁即厌俗，十七岁受具足戒，戒行谨严。后住于杭州西湖昭庆寺。慕庐山白莲社之遗风，于西湖边结白莲社，专修净业，后易名为净行社，盖取华严经净行品之意。宰相王旦为社首，士大夫预其会者前后一百二十三人，皆投诗颂，自称净行社弟子，比丘预者复千余人，往昔庐山白莲社之盛况于是再现。天禧四年入寂，世寿六十二。全身葬于灵隐山鸟窠禅师之坟侧。世称钱塘白莲社主，又号昭庆圆净法师。为莲宗第七祖。
+宋省常（莲宗七祖）●●省常，字造微，姓颜，钱塘人。七岁出家。十七受具戒。宋淳化中，住南昭庆，慕庐山之风，谋结莲社。刻无量寿佛像，刺血书华严净行品，于是易莲社为净行社。士夫与会者，一百二十人，皆称净行弟子，王文正公旦为之首。比丘及千人焉。天禧四年正月十二日，常端坐念佛。有顷，厉声唱曰，佛来也，泊然而化。众见地色皆金，移时方隐，年六十二。（佛祖统纪）（《净土圣贤录》初编）</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【王旦】</span>(958年-1019年)，字子明，山东莘县人。宋代著名政治家。真宗年间为宰相，是太宗、真宗时期内外政策的主要制订者之一，对北宋早期政治稳定、经济发展做出了极大贡献。为宋代名相之一。天禧三年(1019年)，王旦病故。临终写下遗书，不许后代向朝廷提任何要求，告诫后代永保勤俭廉洁的家风。真宗亲临治丧哭奠，废朝三日。追赠他为太师、尚书令、魏国公。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【文彦博】</span>字宽夫。历仕四朝。出入将相。五十余年。封潞国公。守洛阳日。尝致斋。往龙安寺。瞻礼圣像。忽见像坏堕地。略不加敬。但瞻视而出。旁有僧曰。何不作礼。博曰。像既坏。吾将何礼。僧曰。譬如官路土人掘以为像。智者知路土。凡人谓像生。后来官欲行。还将像填路。像本不生灭。路亦无新故。博闻之有省。繇是慕道益力。专念阿弥陀佛。辰香夜坐。未尝少懈。每发愿曰。愿我常精进。勤修一切善。愿我了心宗。广度诸含识。乃与净严。集十万人。为净土会。临终安然。念佛而化。寿九十二。
+宋文彦博●●文彦博，字宽夫，汾州介休人也。历仕宋仁英神哲四朝，出入将相，五十余年。官至太师，尝兼译经润文使，封潞国公。素皈信佛法，晚向道益力，专念阿弥陀佛，晨夕行坐，未尝少懈。发愿云，愿我常精进，勤修一切善。愿我了心宗，广度诸含识。居京师，与净严法师，集十万人，为净土会。一时士大夫多从而化焉。年九十二卒。（东都事略，佛祖统纪，佛法金汤）（《净土圣贤录》初编）</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【五福六极】</span>“箕子之陈洪范也，末后方说，向用五福，威用六极。五福，六极，乃示前生之因，为今生之果。向，顺也。用，以也，得也。（一）寿，（二）富，（三）康宁，（五）考终命，乃前生修道修德所感之果。（四）攸好德，乃前生修道修德之习性也。极，穷厄也。威，义当作违，悖逆也。谓前生所作所为，悖逆道德，致今生得（一）横死之凶，与夭寿之短折（凶与短折，合为第一），（二）及身不康之疾，（三）心不宁之忧 ，（四）用不足之贫，（五）貌丑之恶，（六）身无能力之弱也。”（《印光法师文钞续编卷下·挽回世道人心标本同治录序（民国己卯冬作 时年七十九）》）</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【华封三祝】</span>《庄子·天地》：“尧观乎华，华封人曰：‘嘻，圣人。请祝圣人，使圣人寿。’尧曰：‘辞。’‘使圣人富。’尧曰：‘辞。’‘使圣人多男子。’尧曰：‘辞。’封人曰：‘寿、富、多男子，人之所欲也，女独不欲，何邪？’尧曰：‘多男子则多惧，富则多事，寿则多辱。是三者非所以养德也，故辞。’”成玄英疏：“ 华，地名也，今华州也。封人者，谓华地守封疆之人也。”后因以“华封三祝”为祝颂之辞。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

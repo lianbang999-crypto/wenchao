@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>答徐蔚如居士问自知录书 · 印光法师文钞</title>
+<meta name="description" content="接手书，不胜慨叹。时当末法，人多作伪，每每求名闻利养，及欲后世以法身大士奉己者，皆凭空伪造种种事实，以炫惑无知，坏乱佛法，疑误众生。何苦以虚名而获实祸，至于永劫沉沦也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-036/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="答徐蔚如居士问自知录书 · 印光法师文钞">
+<meta property="og:description" content="接手书，不胜慨叹。时当末法，人多作伪，每每求名闻利养，及欲后世以法身大士奉己者，皆凭空伪造种种事实，以炫惑无知，坏乱佛法，疑误众生。何苦以虚名而获实祸，至于永劫沉沦也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-036/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">答徐蔚如居士问自知录书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，不胜慨叹。时当末法，人多作伪，每每求名闻利养，及欲后世以法身大士奉己者，皆凭空伪造种种事实，以炫惑无知，坏乱佛法，疑误众生。何苦以虚名而获实祸，至于永劫沉沦也。</p><p class="p-trans">接到信，非常感慨叹息。现在正值末法时代，人们大多作假，每每追求名闻利养，还有那些想让后世以法身大士来敬奉自己的人，都凭空伪造种种事实，来炫惑无知的人，坏乱佛法，疑误众生。何苦因贪图虚名而获实祸，以至于永劫沉沦呢？</p></div>
+<div class="para-pair"><p class="p-orig">自知录一书，实属刘侣青所造，印书中常护其人也。其书前年罗济同得之，石印一千本，丁桂樵令寄光一包。桂樵致书于光，祈为详批作序，当大为流通。光即日接到看过，即日完全寄回，谓此书系引初机人入魔之书。</p><p class="p-trans">《自知录》这本书，实际上是刘侣青所写，就是书中名为“常护”的这个人。这本书前年罗济同得到后，石印了一千本，丁桂樵让他寄给我一包。丁桂樵写信给我，请我详细批注作序，应当广为流通。我当天接到这本书看过，当天就全部寄回，告诉他这本书是引导初学人入魔的书。</p></div>
+<div class="para-pair"><p class="p-orig">胡女士之工夫，光亦不敢谓未到此境界，以光无他心通故。亦不敢谓彼实到此境界，以彼既工夫到此，断不至不知此书之有误人无穷之流弊也。</p><p class="p-trans">胡女士的工夫，我也不敢说她没有达到这种境界，因为我没有他心通的缘故。也不敢说她真的达到了这种境界，因为她既然工夫到了这种境界，绝对不至于不知道这本书有无穷的误人流弊。</p></div>
+<div class="para-pair"><p class="p-orig">从来净土知识开示人，但只在法门行相上讲谈，绝不将自己之境界搬出来与人作则。彼既不知此之利害，则其工夫，殆多虚设。所说大意如此而已。令勿分送。已送出则已，未送出当烧之，以免祸胎。</p><p class="p-trans">从古以来，净土善知识开示众人，只是在法门行相上讲谈，绝对不将自己的境界搬出来给人当作法则。她既然不知道这当中的利害关系，那么她的工夫，大概多是虚设。我跟丁桂樵所说的大意是这样。令他不要分送别人。已经送出的就算了，没有送出的应当烧掉，来免除祸胎。</p></div>
+<div class="para-pair"><p class="p-orig">罗济同得光书，以余者悉付丙丁。过数月，杭州王谋凤居士见之，亦欲石印流通，以其书寄令决断。光即以与丁桂樵言大意，与彼言之。去春，余姚一居士亦欲石印，光又止之，其信登于迦音报。</p><p class="p-trans">罗济同收到我的信，将剩余的书全都烧了。过了几个月，杭州的王谋凤居士见到这本书，也想要石印流通，将这本书寄给我，令我决断。我就将对丁桂樵所说的大概意思，也对他讲了。去年春天，余姚的一位居士也想要石印，我又制止了，这封信刊登在《迦音报》上。</p></div>
+<div class="para-pair"><p class="p-orig">至六月，常护魔子见迦音报，遂与光书，并辩驳光说。益推尊胡女士，谓为天马行空，神龙不测。所述胡女士之言，直是天上天下，了无二尊。并将胡女士传分与光，逐节说批。又与迦音报书及传，令光为转。</p><p class="p-trans">到了六月份，常护那个魔子看到了《迦音报》，于是写信给我，并辩驳我的言说。他更加地推尊胡女士，认为她是天马行空，神龙不测。他所叙述胡女士的话，简直是天上天下，没有第二个人了。并将胡女士传分给我，一节节的讲说批注。又将写给《迦音报》的信以及《胡女士传》，让我为他转寄。</p></div>
+<div class="para-pair"><p class="p-orig">传中说胡女士临死屡显神通。临终之时，一女士在家，见胡女士来，忽现身无量，后方知乃临终之时。光阅之好笑，谓彼既有此大神通，亦当与光一显。若显当推尊其人，仍不赞成流通自知录，以致误人也。</p><p class="p-trans">《胡女士传》中说胡女士临死时多次显现神通。临终的时候，一位女士在家中，见到胡女士来了，忽然现身无量，后来才知道正是胡女士临终之时。我看了感到好笑，说：她既然有如此大的神通，也应当给我显一显。如果能显神通，就推尊这个人，但仍然不赞成流通《自知录》，以致误导他人。</p></div>
+<div class="para-pair"><p class="p-orig">前年湖南一居士，皈依宝一师，来山言及胡女士。彼谓胡女士习气颇重，动辄生气，或至骂人，故致吐血后遂命终。</p><p class="p-trans">前年湖南的一位居士，皈依宝一法师，来普陀山时说到胡女士。他说胡女士的习气较重，动不动就生气，或者骂人，所以导致吐血后便命终了。</p></div>
+<div class="para-pair"><p class="p-orig">去年，一居士名杨鸿范，任衢山场佐，与其妻来山，二人同皈依宝一。光以常护所寄之信并传示之，夫妇皆谓不真实。其妇曾见其死，佛尚不会念，况会现神通乎。</p><p class="p-trans">去年，一位名杨鸿范的居士，任衢山盐场副场主，和他的妻子一起来普陀山，夫妇二人共同皈依了宝一法师。我将常护所写的信以及《胡女士传》给他们看，他们夫妇都说书中所说不真实。杨鸿范的夫人曾见胡女士死的时候，佛号尚且不会念，何况会显现神通呢？</p></div>
+<div class="para-pair"><p class="p-orig">此书但令人勿看，勿流通即已。若或批评传布，彼常护辈，或致冲突，反为不美。此信亦千万勿登报纸，庶不致令彼欲即成佛者，更迟多劫，方出地狱也。</p><p class="p-trans">这本书只是不要让人看，不要流通就好了。如果批评像常护那样传播流布这本书的人，或许导致与他们冲突，反而不好。这封信也千万不要登在报纸上，才不致令那些想即身成佛的人，（因此起争执、造谤业）要晚多生多劫以后，才能出地狱啊！</p></div>
+<div class="para-pair"><p class="p-orig">涅槃经疏已有了，乃谛师所送者。光日忙得无暇，亦只供之高阁而已。陈君之静坐，盖非真参真念之坐，乃兼带炼丹家之性质。兼之近来信心人醉心神通，故有此境。</p><p class="p-trans">《涅槃经疏》已经有了，是谛闲法师所送。我每天忙得没空，也只是将经书供在高阁而已。陈君的静坐，大概不是真参究、真念佛的静坐，乃是兼带炼丹家的性质。加上近来有信心的人沉迷于神通，所以有这个境界。</p></div>
+<div class="para-pair"><p class="p-orig">使真参本来面目，及真实至诚念佛，无求得神通之念，断不至有此魔境也。倘将此种念头全体放下，以清净心，持佛名号，即可消灭，固不必虑。所虑者，心地夹杂外宗，及欲即得神通等耳。</p><p class="p-trans">假使真实参究本来面目，以及真实至诚念佛，没有求得神通的念头，断然不至于有这种魔境啊！倘若将这种念头全体放下，以清净心，持佛名号，就可以消灭，固然不必忧虑。所忧虑的是，心地夹杂其它宗派，以及想立即得到神通等等。</p></div>
+<div class="para-pair"><p class="p-orig">午前不发，午后则发者，当是夜气镇定，日气纷繁之所致也。然光于禅定工夫，素未实修，其境界之因由，亦莫能详知，此不过据理以判而已。</p><p class="p-trans">中午之前不发，中午之后则发的现象，应当是夜晚之气镇定，白天之气纷繁所导致。然而我对于禅定工夫，向来没有实修，其中境界的原因由来，也不能详知，这些不过是根据道理来判断而已。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【任衢山场佐】</span>衢山的意思是海上四达通衢之山，岛位高亭镇东北27公里处，为岱山县第二大岛，面积59.79平方公里。场：衢山盐场。佐：副职。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

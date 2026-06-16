@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与李慧澄居士论焚化经灰及往生钱书（民国二十三年） · 印光法师文钞</title>
+<meta name="description" content="焚经一事，虽有功德，吾人不敢提倡。以粗心人多，每每烧于锡箔灰中。锡箔灰，卖于收灰者，将纸灰簸出，而留其锡以卖之，此经灰，不同弃于垃圾中乎。谁肯细心另用器焚之，而以其灰投之于大江大海中乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-083/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与李慧澄居士论焚化经灰及往生钱书（民国二十三年） · 印光法师文钞">
+<meta property="og:description" content="焚经一事，虽有功德，吾人不敢提倡。以粗心人多，每每烧于锡箔灰中。锡箔灰，卖于收灰者，将纸灰簸出，而留其锡以卖之，此经灰，不同弃于垃圾中乎。谁肯细心另用器焚之，而以其灰投之于大江大海中乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-083/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">与李慧澄居士论焚化经灰及往生钱书（民国二十三年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">焚经一事，虽有功德，吾人不敢提倡。以粗心人多，每每烧于锡箔灰中。锡箔灰，卖于收灰者，将纸灰簸出，而留其锡以卖之，此经灰，不同弃于垃圾中乎。谁肯细心另用器焚之，而以其灰投之于大江大海中乎。</p><p class="p-trans">焚化经书这件事，虽然有功德，我们不敢提倡。因为粗心的人多，经常都是烧在锡箔灰中。锡箔灰，卖给收灰的人，将纸灰簸出，留下锡来卖钱，这些经灰，不是一同丢弃到垃圾中了吗？谁肯细心另外用器物焚化，再将经灰投到大江大海中呢？</p></div>
+<div class="para-pair"><p class="p-orig">光于初出家时，见放蒙山，烧黄表，内加往生钱者（印往生咒如钱形，故名往生钱）。点著，随点随著，至手不能执则丢之，每每未烧尽，而每张多有字未烧及。</p><p class="p-trans">我在刚出家的时候，见到有人放蒙山，烧黄表，里面加上往生钱（印的往生咒如同钱的形状，所以名为往生钱）。点着火，随点随着，到手不能再拿的时候，就丢开，常有没有烧尽的，而且每张中有不少字没有烧到。</p></div>
+<div class="para-pair"><p class="p-orig">光绪十六年，在北京龙泉寺，晨出寺门，见夜间放焰口送孤魂所烧之纸堆，有往生钱，约二寸厚，只烧一半，光拾而纳之于字篓中。倘被仆人打扫，不同归于垃圾中乎。</p><p class="p-trans">光绪十六年（1890年），我在北京龙泉寺，早晨出寺门，看到夜晚放焰口送孤魂所烧的纸堆，里面有往生钱，大约二寸厚，只烧了一半，我捡起来，放在字篓中。倘若被仆人打扫，不是一同归到垃圾中了吗？</p></div>
+<div class="para-pair"><p class="p-orig">是知无论何法，皆须细心人做。若大派头人做，则益未得，而祸先得矣。前数年，太平寺为苏州隐贫会，代售朱书金刚经，真达和尚闻光说而止，不为售。</p><p class="p-trans">所以要知道无论什么法事，都必须细心人来做。如果是大派头的人来做，那么利益没有得到，而灾祸却先得到了。前些年，上海太平寺，为苏州的隐贫会，代售用朱砂写的《金刚经》（供人焚化），真达和尚听我说后就停了，不再代售。</p></div>
+<div class="para-pair"><p class="p-orig">如有人送朱书金刚经，不必于做佛事烧，恐无有细心人料理，仍蹈前愆。当在家中清净处，具一大锅，或大洋铁盆，下铺箔锭，置经于上，上又加以箔锭，以免飞飏。候其火灭，取其灰，贮于新布袋中。</p><p class="p-trans">如果有人送来用朱砂写的《金刚经》，不必在做佛事的时候烧，恐怕没有细心的人料理，还会重蹈以前的罪愆。应当在家中清净的地方，准备一个大锅，或者大洋铁盆，下面铺上锡箔纸锭，经书放在上面，上面再加上锡箔纸锭，以免纸灰飞扬。等到火灭之后，将这些灰，装在新布袋中。</p></div>
+<div class="para-pair"><p class="p-orig">又须内加净沙，或净石，净砖，投于江海深处，庶可无过。若不加沙石于内，则浮而不沉，仍漂之于岸上，终遭秽污。焚经如此用心，必有功德，必无过愆。否则，吾不敢说。彼焚经者，谁不是与锡箔同烧乎。</p><p class="p-trans">还必须在里面加上干净的沙子，或者干净的石头，干净的砖块，投在江海的深处，这样才可以没有过失。如果袋中不加沙石，就会漂浮不沉，仍会漂到岸上，最终遭到秽污。焚经如此用心去做，必定有功德，没有过愆。否则，我就不敢说了。那些焚经的人，谁不是与锡箔同时烧呢？</p></div>
+<div class="para-pair"><p class="p-orig">南方锡箔好，人不肯烧之于地。北京锡箔恶劣，诸寺皆不知敬惜字，凡人家做佛事，每每文疏均于门前车路上烧，并不用器盛贮。人畜践蹋，其过非小，而相习成风，大可痛悼。此事在吾人分上，当以缄默自守。</p><p class="p-trans">南方的锡箔质量好，人们不肯在地上烧。北京的锡箔质量恶劣，各个寺院都不知道尊敬爱惜字纸，凡是到人家里做佛事，常常将文疏都烧在门前的马路上，并不用器物盛贮起来。人畜践蹋这些纸灰，这个过失可不小，而且大家相互沿袭，成为风气，实在痛心。这件事在我们的本分上，应当缄默自守。</p></div>
+<div class="para-pair"><p class="p-orig">如南方女人拜佛手方，印有佛菩萨名号，上打各寺之印，铺地拜佛，或用垫坐。此种恶风，遍传远近。</p><p class="p-trans">就像南方女人拜佛用的白布，印有佛菩萨的名号，上面打上各个寺院的印章，铺在地上拜佛，或者用来垫着坐。这种恶风，远近都传遍了。</p></div>
+<div class="para-pair"><p class="p-orig">光绪二十一年，光在阿育王，见一女人，用此布垫坐，因与舍利殿主说。殿主云，此本地风气，意谓光多事。故于普陀志中，说其罪过，不知有人肯留心也否。</p><p class="p-trans">光绪二十一年（1895年），我在阿育王寺，见到一个女人，用这样的布垫在地下坐，因此就对舍利殿的殿主说，这样会有过失。殿主说：这是本地的风气，意思是认为我多事。所以我在《普陀山志》中，说到这件事的罪过，不知有没有人肯留心呢？</p></div>
+<div class="para-pair"><p class="p-orig">世间不知有多少不可究诘之事，相习成风，人各以为有理。如吃荤之人，以吃素为不吉祥，于子孙不利。若吃长素，当令子孙断绝。竟有信之不许父母吃长素者。此种讹传之话，遍周各处。</p><p class="p-trans">世间不知道有多少不可查考原委的事，相互沿袭，成为风气，人人都自以为有道理。例如吃荤的人，认为吃素不吉祥，对于子孙没有好处。如果吃长素，就会令子孙断绝。竟然有相信的人，因此不允许父母吃长素。这种讹传的话，到处都传遍了。</p></div>
+<div class="para-pair"><p class="p-orig">又凡生产，有念佛人，概不敢近。又有不见死人者，不见新娶之妇者。以及破地狱，破血湖，还寿生，此种无道理之事，庸僧为求利而为人作之，无知者为消罪而出资请人行之。至真得利益之念佛法门，又漠然视之。</p><p class="p-trans">还有，凡是生孩子，家中有念佛的人，一概不敢接近。还有不见死人的，不见新娶媳妇的。以及破地狱、破血湖、还寿生，这种没有道理的事，庸僧为了求利而为人来作，无知的人为了消罪而出钱请人来做。至于真正能得利益的念佛法门，却又漠然视之。</p></div>
+<div class="para-pair"><p class="p-orig">龙梓修，濮秋丞，十八年，拟以一千六七百圆，在宝华山做一堂水陆，为光说。光令以此钱打念佛七，彼便舍不得用，用几百圆念佛耳。使光赞成彼做水陆，则二人均须八百多圆。可见世间人，多多是好闹热铺排，不是真实求超荐先亡，与普度孤魂也。</p><p class="p-trans">龙梓修、濮秋丞，在民国十八年（1929年），打算以一千六七百圆钱，在宝华山做一堂水陆，并向我说起。我让他们将这些钱用来打念佛七，他们就舍不得用，只用了几百圆来念佛。假使我赞成他们做水陆，那么他们二人都须要八百多圆。可见世间人，大多都是好热闹、讲排场，不是真实求超荐先亡和普度孤魂啊！</p></div>
+<div class="para-pair"><p class="p-orig">锡箔亦不可废，亦不必一定要烧多少。须知此济孤所用，佛菩萨及往生之人，了无所用。</p><p class="p-trans">锡箔也不可废除，也不必一定要烧多少。必须知道这是救济孤魂用的，佛菩萨以及往生的人，一点用处没有。</p></div>
+<div class="para-pair"><p class="p-orig">亦当以佛力法力心力，变少成多。若人各得一，纵数千万万，也不能遍及，以孤魂与鬼神，遍满虚空故也。</p><p class="p-trans">也应当以佛力、法力、心力，变少锡箔，成多锡箔。如果想使他们每个都得到一份，即使有几千万万的锡箔，也不能够遍及，因为孤魂与鬼神，遍满虚空的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">若知变少成多之义，则济孤之心亦尽，而且无暴殄之过。是在人各至诚以将，则心力周遍，冥资亦随之而周遍矣。</p><p class="p-trans">如果知道变少成多的义理，那么也就尽了救济孤魂的心，而且没有任意浪费的过失。这关键在于每个人以至诚心来观想布施，那么心力就会周遍法界，冥界的资粮也会随之周遍了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【蒙山】</span>蒙山，是四川省雅安县的一个山名。以金刚上师不律驻锡蒙山时，依秘密部水施食法及《救拔焰口饿鬼经》等，集成《蒙山施食仪规》，故名“蒙山”。蒙山是汉传佛寺晚课时或晚间所作的一种施食饿鬼的法事，也用作超荐亡故的亲人，其与焰口相比，只是内容较简略而已，作用则与焰口同。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【相习成风】</span>相互沿袭成为风气。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【手方】</span>江浙信心妇女，每以白布铺地礼佛，名为手方。见《普陀洛迦新志卷三(灵异门）》。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【究诘】</span>追究查问；查考。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【暴殄】</span>任意浪费、糟蹋。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

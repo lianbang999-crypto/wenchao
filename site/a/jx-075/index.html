@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>75、净土五经重刊序（民国二十二年） · 印光法师文钞</title>
+<meta name="description" content="阐明净土五经的大义和编订净土五经的缘起">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-075/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="75、净土五经重刊序（民国二十二年） · 印光法师文钞">
+<meta property="og:description" content="阐明净土五经的大义和编订净土五经的缘起">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-075/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第四部分·序文 · 佚名译 高峰 杨俊华校审</div>
+      <h1 class="art-title">75、净土五经重刊序（民国二十二年）</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>阐明净土五经的大义和编订净土五经的缘起</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，其大无外。三根普被，利钝全收。九界众生，舍此则上无以圆成佛道。十方诸佛，离此则下无以普度群萌。一切法门，无不从此法界流。一切行门，无不还归此法界。</p><p class="p-trans">净土法门，其大无外。三根普被，利钝全收。九法界众生，舍弃这个法门，就不能向上圆成佛道；十方诸佛，离开这个法门，就不能向下普度众生。一切法门，无不从此法界流出；一切行门，无不还归此法界。</p></div>
+<div class="para-pair"><p class="p-orig">若论大机所见，肇始实在华严。以善财遍参知识，末后于普贤座下，蒙其威神加被，所证者与普贤等，与诸佛等，是为等觉菩萨。</p><p class="p-trans">如果论说大根机菩萨见闻经典的出现，的确是从《华严经》开始的。因为善财童子遍参知识，最后在普贤菩萨座下，蒙普贤菩萨威神加被，所证境界与普贤菩萨齐等，与诸佛齐等，也就是证得等觉菩萨位。</p></div>
+<div class="para-pair"><p class="p-orig">普贤乃以十大愿王，劝进善财，及与华藏海众四十一位法身大士，回向往生西方极乐世界，以期圆满佛果，而为华严一经归宗结顶之法。</p><p class="p-trans">普贤菩萨于是以十大愿王，劝进善财童子，以及华藏海众四十一阶位的法身大士，一同回向往生西方极乐世界，以期圆满佛果，而成为《华严经》归宗结顶之法。</p></div>
+<div class="para-pair"><p class="p-orig">然则华严明一生成佛之法，而归宗于求生净土。是知净土一法，乃十方三世一切诸佛，上成佛道，下化众生，成始成终之无上大法也。此殆大机所见，二乘尚不见闻，况具缚凡夫乎。</p><p class="p-trans">既然《华严经》阐明了一生成佛的方法，而且用求生净土来归宗。由此可知，净土法门，正是十方三世一切诸佛，上成佛道，下化众生，从初始到最终的无上大法啊！这部经因为是大根机菩萨所见闻的，所以二乘圣者（声闻、缘觉）尚且不能见闻到，何况是具缚凡夫呢？</p></div>
+<div class="para-pair"><p class="p-orig">迨至方等会上，特为专说净土三经，俾一切若凡若圣，同事修持，以期现生出此五浊，登彼九莲也。</p><p class="p-trans">等到了方等会上，释迦世尊特别专说净土三经，使得一切凡夫圣者，一同专门修持，以期现生出离这个五浊恶世，登上那个极乐世界的九品莲台啊！</p></div>
+<div class="para-pair"><p class="p-orig">佛在摩竭提国，灵鹫山中，说阿弥陀佛，最初因地，弃国出家，发四十八愿。又复久经长劫，依愿修行。迨至福慧圆满，得成佛道。所感之世界庄严，妙莫能名。</p><p class="p-trans">佛在摩竭提国，灵鹫山中，宣说阿弥陀佛，最初在因地，弃国出家，发四十八愿。又再久经长劫，依愿修行。等到福慧圆满，得成佛道。所感的世界清净庄严，微妙得无法用语言来描述。</p></div>
+<div class="para-pair"><p class="p-orig">十方诸佛咸赞叹。十方菩萨，与回小向大之二乘，具足惑业之凡夫，咸得往生，等蒙摄受。是为无量寿经。</p><p class="p-trans">十方诸佛全都赞叹。十方菩萨，与回小向大的二乘圣者，具足惑业的凡夫，全都得以往生，平等地承蒙摄受。这是《无量寿经》。</p></div>
+<div class="para-pair"><p class="p-orig">于摩竭提国王宫中，说净业三福，十六妙观。俾一切众生，悉知是心作佛，是心是佛，诸佛正遍知海，从心想生。则是心作众生，是心是众生，众生烦恼业海，从心想生之义，便已彰明校著。果能深明此义，谁肯枉受轮回。末明九品生因，以期各修上品。是为观无量寿佛经。</p><p class="p-trans">佛在摩竭提国王宫中，宣说净业三福，十六种妙观。使得一切众生，全都知道“是心作佛，是心是佛，诸佛正遍知海，从心想生”。那么，相反，是心作众生，是心是众生，众生烦恼业海，从心想生的义理，也就已经彰明显著了。果真能够深深明白这个义理，谁还肯去枉受生死轮回呢？最后说明九品往生之因，以期各个都来修习上品往生。这是《观无量寿佛经》。</p></div>
+<div class="para-pair"><p class="p-orig">在舍卫国给孤园中，说净土依正妙果令生信，劝诸闻者，应求往生以发愿，复令行者，执持名号以立行。信愿行三，为净土法门之纲宗。具此三法，或毕生执持，已得一心。或临终方闻，止称十念，均得蒙佛接引，往生西方。是为阿弥陀经。</p><p class="p-trans">佛在舍卫国给孤独园中，宣说净土依报、正报的妙果，令大众生信；劝导一切听闻的人，应当发愿来求往生（极乐世界）；还让修行人，执持名号来立行。信愿行三资粮，是净土法门的大纲宗旨。只要具备了这三法，不管一生执持、已得一心，还是临终方才听闻，只称念十声佛号，都可以承蒙阿弥陀佛接引，往生西方极乐世界。这是《阿弥陀经》。</p></div>
+<div class="para-pair"><p class="p-orig">此三，乃专谈净土之经。而阿弥陀经，摄机尤普。以故禅教律各宗，咸皆奉为日课焉。诸大乘经，带说净土者，多难胜数。</p><p class="p-trans">这三部经，是专门谈说净土的经典。而《阿弥陀经》，收摄的根机尤为普遍。所以禅、教、律各个宗派，全都把《阿弥陀经》奉为日课。诸大乘经中，兼带宣说净土的，多得难以胜数。</p></div>
+<div class="para-pair"><p class="p-orig">而楞严经大势至念佛圆通章，实为念佛最妙开示。众生果能都摄六根，净念相继以念，岂有不现前当来必定见佛，近证圆通，远成佛道乎哉。</p><p class="p-trans">而《楞严经·大势至菩萨念佛圆通章》，的确是念佛最妙的开示。众生果真能够“都摄六根，净念相继”来念，哪有不“现前当来必定见佛”。近地来说，证得圆通；远地来说，成就佛道的呢？</p></div>
+<div class="para-pair"><p class="p-orig">故将此章，列于三经之后，而以普贤行愿品殿之，以成净土法门之一大缘起。令诸阅者，知此一法，大畅佛怀，校彼仗自力断惑证真以了生死者，其难易奚啻天渊悬殊。以故九界同归，十方共赞，千经俱阐，万论均宣也。</p><p class="p-trans">所以将这一章，列在净土三经之后，并以《华严经·普贤行愿品》殿后，来形成净土法门的一大缘起。让一切阅读的人，知道这个法门，大大畅抒佛陀的本怀，比起那些依仗自力断惑证真来了生死的人，其难易对比，何止是天渊悬殊。所以九法界众生同归，十方诸佛共赞，千部经典全都阐扬，万部论典全都宣说。</p></div>
+<div class="para-pair"><p class="p-orig">金陵净土四经板，已经模糊。修净业者，苦无最清爽之读本。因为铸板，以势至念佛圆通章，附于三经之后，称为净土五经。</p><p class="p-trans">金陵刻经处的净土四经的刻板，已经很模糊了。修习净业的人，苦于没有最清爽的读本。因此重新铸板，将《大势至菩萨念佛圆通章》，附在三经之后，称为净土五经。</p></div>
+<div class="para-pair"><p class="p-orig">若论法门缘起，宜以无量寿经为首。今为便于读诵，故以阿弥陀经为首。阅者谅之。</p><p class="p-trans">如果从法门的缘起来说，应该将《无量寿经》放在最前面。现今为了便于读诵，所以将《阿弥陀经》放在开头。请读者体谅。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【方等会上】</span>即方等时。佛说法分五时。
+1、佛成道后，于最初三七日，说华严经，度大菩萨，是为华严时；
+2、继在鹿野苑等处，于十二年中，说小乘阿含经，度声闻缘觉乘人，是为阿含时；
+3、继阿含时后，于八年中，说维摩胜鬘金光明等诸大乘经，广谈四教，均被众机，是为方等时；
+4、乃后，二十二年间，说诸部般若经，强调诸法皆空之义，是为般若时；
+5、再后八年，说妙法莲华经，会三乘于一佛乘。法华之后，佛将入灭，乃在拘尸那拉城娑罗双树间，于一日一夜，说大般涅盘经，显常乐我净义，昭示一切众生，皆有佛性，乃至一阐提人，亦当成佛，是为法华涅槃时。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

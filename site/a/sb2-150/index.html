@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复张汝钊居士书 · 印光法师文钞</title>
+<meta name="description" content="竺瑞莲，人极忠厚，有志弘法利人，当受其聘。此之学法，不宜按学堂章程，当按修持而为教授。最初须令读四十二章经，佛遗教经，八大人觉经正文。兼以蕅益大师之注，为之讲演。次令读净土五经。俾于净土一门，备知其所以然。则敢于一切人前劝修净业，而不被他宗玄妙高深之教理所摇惑。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-150/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复张汝钊居士书 · 印光法师文钞">
+<meta property="og:description" content="竺瑞莲，人极忠厚，有志弘法利人，当受其聘。此之学法，不宜按学堂章程，当按修持而为教授。最初须令读四十二章经，佛遗教经，八大人觉经正文。兼以蕅益大师之注，为之讲演。次令读净土五经。俾于净土一门，备知其所以然。则敢于一切人前劝修净业，而不被他宗玄妙高深之教理所摇惑。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-150/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复张汝钊居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">竺瑞莲，人极忠厚，有志弘法利人，当受其聘。此之学法，不宜按学堂章程，当按修持而为教授。最初须令读四十二章经，佛遗教经，八大人觉经正文。兼以蕅益大师之注，为之讲演。次令读净土五经。俾于净土一门，备知其所以然。则敢于一切人前劝修净业，而不被他宗玄妙高深之教理所摇惑。</p><p class="p-trans">竺瑞莲（注1），为人极其忠厚，有志弘法利人，你应当接受她的聘请。这里的教学方法，不应按照学堂的章程，应当按照修持的方法来教授。最初必须令学员读《四十二章经》、《佛遗教经》、《八大人觉经》正文。同时用蕅益大师的注解，为他们讲演。其次令学员读《净土五经》。使得他们对于净土一门，完全知道其所以然。那么就敢在一切人面前，劝他人修持净业，而不被其他宗派玄妙高深的教理所动摇迷惑。</p></div>
+<div class="para-pair"><p class="p-orig">次则读梵网经。次则研究净土十要，兼阅净土圣贤录。聪明者不妨多看净宗诸书。亦不必特开一国学之名而学文字。佛经古人注解及与著述，皆文也。当令详审其语意，宾主问答与其意致。则终日看经书，即终日习文字也。</p><p class="p-trans">其次读《梵网经》。再其次就研究《净土十要》，同时阅读《净土圣贤录》。聪明的人，不妨多看净土宗的各种经书。也不必特别开一个以国学为名的课来学习文字。佛经、古人的注解以及著述，都是文字。应当令学员详细审察其中的语意，宾主问答与其意趣。这样整天看经书，就是整天在学习文字。</p></div>
+<div class="para-pair"><p class="p-orig">前月霞法师讲华严，又请一老儒教国文，又请一讲说文者讲字义，光闻之颇不谓然。经非文乎。注非文乎。终日看经阅注，不足为行文之方法乎。后未及一年，以用度太多而散，遂移至杭州海潮寺。彼有信令曾学者来学，光因以此意为彼说。</p><p class="p-trans">以前月霞法师（注2）讲《华严经》，又请了一位老儒教授国文，还请了一位讲《说文解字》的人讲解字义，我听了认为这样很不对。佛经难道不是文字吗？注解难道不是文字吗？整天看经、阅读注解，难道不足以成为写文章的方法吗？后来不到一年，因为费用太多而解散，于是移到了杭州海潮寺。他写有书信令曾经学习的人再来学，我因此将这个意思对他说。</p></div>
+<div class="para-pair"><p class="p-orig">汝谓白衣为比丘尼师，及讲解戒律，或有与佛制冲突处。但不自居师位，以作同学，互相研究，则绝无妨碍。然须敦实行，勿徒以学文字为事。文字是附身之用，德行是为人之本。况彼等皆非幼年，倘以竺居士所设国学国文为主旨，则是普通学堂之章程，非修持学堂之根本。彼于此事不甚明了，当以光言为彼说之，彼必不至不以为然也。</p><p class="p-trans">你认为白衣居士作为比丘尼的老师，以及讲解戒律，这样或许与佛制有冲突的地方。只要不以师位自居，彼此作为同学，互相研究，那么就绝对没有妨碍。然而必须致力于真实行持，不要仅以学习文字作为事务。文字是附带为自身使用的，德行才是做人的根本。何况他们都不是幼年之人，倘若把竺居士所设的国学、国文作为主旨，那么就是普通学堂的章程，不是修持学堂的根本。她对于这件事不是很明了，应当将我的话说给她听，她必定不至于认为我说的不对。</p></div>
+<div class="para-pair"><p class="p-orig">以后凡有求作传记者，当以誓不为人作传辞。否则好名而恶实者，日求作传，以期一死即作高僧。便成以假为真，令人谓真者亦是假造。则佛法之一败涂地，皆此种聪明人之所致也。</p><p class="p-trans">以后凡是有求你写传记的人，应当用发誓不为人写传记来推辞。否则，喜好名声而厌恶实质的人，每天来求你写传记，以期一死之后，就成了高僧。这就成了以假为真，令人认为真的高僧也是虚假捏造的了。佛法一败涂地，都是这种聪明人所导致的啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【竺瑞莲】</span>即蒋瑞莲（1890-1937年），是蒋介石的同母妹妹，1906年，蒋瑞莲嫁给萧王庙后竺村竺芝珊为妻。在浙江奉化创办法昌佛学院。请张汝钊任课。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【月霞法师】</span>（1858-1917年），俗姓胡，名显珠，湖北黄冈人。是近代的佛教学者、佛教教育家，是最早倡办僧教育的人。他曾创办过江苏僧师范学堂及华严大学，培育僧才，对后世颇有影响，尤其是华严大学，先后受教者三百余人，华严奥义，由斯昌明。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

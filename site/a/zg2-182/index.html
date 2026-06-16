@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>定海张总戎荐亲对灵小参（代撰） · 印光法师文钞</title>
+<meta name="description" content="一念真如性，光明遍大千。悟迷虽有异，本体总天然。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-182/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="定海张总戎荐亲对灵小参（代撰） · 印光法师文钞">
+<meta property="og:description" content="一念真如性，光明遍大千。悟迷虽有异，本体总天然。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-182/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">定海张总戎荐亲对灵小参（代撰）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">一念真如性，光明遍大千。悟迷虽有异，本体总天然。</p><p class="p-trans">一念真如妙心性，光明遍满大千界。虽有迷悟之差别，心性本体总常恒。</p></div>
+<div class="para-pair"><p class="p-orig">恭维诰封某某张老大人，生前积善修德，居仁由义。故致身后余庆长发，奕叶相承，德范恒新，簪缨永继。作股肱于元首，为国家之爪牙。兹者法会宏开，用申超荐。急须了知在生积德，即今受荐之心。</p><p class="p-trans">诰封张老大人，生前积德行善，居心仁慈，行事符合道义。所以致使去世之后，吉庆恒常降临家门，子孙世代相互传承，道德风范常新不败，高官显贵连绵不绝。（子孙当中，）有的成为了政界的重臣，有的成为了国家的将帅。特此大开无遮法会，来超度追荐张老大人的神识。必须急切明白的是，活着时积德行善（所凭借的），就是现在受到超荐的心性。</p></div>
+<div class="para-pair"><p class="p-orig">性本如如，不迁不变，常寂常照，离念离名。圆满无量功德，具足无边妙用。凡不能令其减损，圣不能令其增益。非色非空，历十界而无异，不生不灭，尽三际而常然。</p><p class="p-trans">心性本体，如如不动，不迁不变，常寂常照，离念离名。圆满具足无量无边的功德妙用。凡夫不能令它减损，圣人不能令它增加。非色非空，历经十法界而没有差异；不生不灭，穷尽过去、现在、未来三际而恒常依然。</p></div>
+<div class="para-pair"><p class="p-orig">所谓灵光独耀，迥脱根尘，体露真常，不拘文字。心性无染，本自圆成，但离妄念，即如如佛。</p><p class="p-trans">正所谓：“灵光独耀，迥脱根尘，体露真常，不拘文字。心性无染，本自圆成，但离妄念，即如如佛。”</p></div>
+<div class="para-pair"><p class="p-orig">若能如是会得，自然亲见天真佛性，直趣无上菩提。如或未能，须仗阿弥陀佛大悲愿力，往生西方极乐世界。果若圆发三心，直下即登九品，华开见佛，证无生忍。</p><p class="p-trans">如果能够领会到这些，自然会见到本有的天真佛性，直下趣入无上菩提。如果不能，则必须依仗阿弥陀佛的大悲愿力，往生西方极乐世界。如果能够圆满发三种心（至诚心、深心、回向发愿心），直下即登九品莲台，花开见佛，证得无生法忍。</p></div>
+<div class="para-pair"><p class="p-orig">方知前来升沉六道，积善修德，乃至即今亲临法会，闻法受荐，一念心性，从本以来，原自清净无有染污，原自具足河沙功德。</p><p class="p-trans">方才知道，从过去升沉六道、积善修德，到现在亲临法会、听闻佛法、蒙受超荐，这一念心性，从最初以来，原本就清净没有染污，原本就具足恒沙功德。</p></div>
+<div class="para-pair"><p class="p-orig">咦，一条荡荡西方路，直下归家莫问程。自是不归归便得，故乡风月有谁争。</p><p class="p-trans">咦！浩浩荡荡，西方之路，直下归家，莫问前程。只怕不归，归便能得，故乡风月，有谁相争。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【总戎】</span>统帅。亦用作某种武职的别称。如唐人称节度使为总戎；清时称总兵为总戎。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【诰封】</span>诰封就是诰命封赏。在明清之际，对文武官员及其先代妻室赠予爵位名号时，五品以上授诰命，称诰封。《清会典》中载，诰命针对官员本身的叫诰授；针对曾祖父母、祖父母、父母及妻时，存者叫诰封，殁者叫诰赠。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【居仁由义】</span>内心存仁，行事循义。《孟子·尽心上》：“居仁由义，大人之事备矣。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【由义】</span>遵循道义。《孟子·离娄上》：“吾身不能居仁由义，谓之自弃也。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【奕叶】</span>累世，代代。汉蔡邕《琅邪王傅蔡郎碑》：“奕叶载德，常历宫尹，以建于兹。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【簪缨】</span>古代官吏的冠饰。比喻显贵。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【股肱】</span>1.大腿和胳膊。2.比喻左右辅佐之臣。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【爪牙】</span>1.人的指甲和牙齿。2.比喻武臣。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>乌尤山普同塔记 · 印光法师文钞</title>
+<meta name="description" content="众生一念心性，与佛无二，由妄执故，遂成天渊悬殊。如来愍之，令修四念处观。一观身不净，二观受是苦，三观心无常，四观法无我。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-140/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="乌尤山普同塔记 · 印光法师文钞">
+<meta property="og:description" content="众生一念心性，与佛无二，由妄执故，遂成天渊悬殊。如来愍之，令修四念处观。一观身不净，二观受是苦，三观心无常，四观法无我。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-140/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">乌尤山普同塔记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">众生一念心性，与佛无二，由妄执故，遂成天渊悬殊。如来愍之，令修四念处观。一观身不净，二观受是苦，三观心无常，四观法无我。</p><p class="p-trans">众生一念心性，与佛没有区别。由于妄想执著的缘故，所得的受用就有了天渊之别。如来慈悲怜愍，令众生修习四念处观。一观身不净，二观受是苦，三观心无常，四观法无我。</p></div>
+<div class="para-pair"><p class="p-orig">此观若熟，我执即破，我执既破，法执亦亡，见思二惑因兹而断，便可以超凡入圣，了生脱死，往生净佛国土，修习菩萨行愿，以期上成佛道，下化众生而后已。</p><p class="p-trans">四念处观如果修习成熟，我执就破除了。我执破除之后，法执也消亡了，见思二惑由此而断除，就可以超凡入圣，了脱生死，往生佛国净土，修习菩萨行愿，以期上成佛道，下化众生而后已。</p></div>
+<div class="para-pair"><p class="p-orig">其有根机陋劣，现生未能如是者，待其死后，火化其身。俾彼了知五蕴本空，四大非有，一灵真性，彻底圆彰，既不属于见闻觉知，亦无所谓我人众寿，庶解脱乎业累，以亲证夫真常。</p><p class="p-trans">有根机陋劣，现生中不能达到这一程度的众生，等其死后，火化其色身。使其知道五蕴（色、受、想、行、识）本来是空，四大（地、水、火、风）并非实有。一念灵明真性，彻底圆满彰显，既不属于见、闻、觉、知，也无所谓我、人、众生、寿者。想必就能解脱惑业的累牵，而亲自证得真常法性。</p></div>
+<div class="para-pair"><p class="p-orig">是以古之在家通人，多皆依此送终，不独僧众为然也。以其既令亡者得其解脱，又令存者悟其本空，其利益殊非浅鲜。</p><p class="p-trans">所以，古时候通达佛法的在家人，大多都是火化送终，并不只是僧人才这样。因为火化既能让亡者得到解脱，又能让活着的人觉悟此身原本是空，利益实在不小。</p></div>
+<div class="para-pair"><p class="p-orig">既化之后，设道德高超者，必有坚固不化之舍利。即无舍利，其烬余之朽骨，悉安置于普同塔中，亦若生居丛林，参随海众，凡圣同居，藉资熏陶。</p><p class="p-trans">如果是道德高超的人，火化之后，必定有坚固不化的舍利。即使没有舍利，留下来的骨灰，也全都安置在普同塔中。就如同活着的时候，居住在丛林中一般，随着僧众参学，凡夫圣者同居，借此来相互熏陶。</p></div>
+<div class="para-pair"><p class="p-orig">灵骨既多，必有神超净域，业谢尘劳，莲开上品之华，佛授一生之记者。与之同居，如蝇附骥尾，亦可直达千里。亦如水归大海，悉舍本名，同一咸味矣。此普同塔之所由来也。</p><p class="p-trans">塔中安置的灵骨多了，其中必定有神超净土，业谢尘劳，上品莲台往生，佛授一生之记的人。与这样的人同居一塔，就如同苍蝇附着在良马的尾巴上，也可以直达千里之外。也如同万川流入大海，全都舍弃了本来的名称，成为同一种咸味了。这就是普同塔的由来。</p></div>
+<div class="para-pair"><p class="p-orig">嘉定乌尤寺，自唐惠净大师开山，至今千有余年，岁月既久，其普同塔亦已坍塌破坏。幸传度大师，住持其中，力振莲宗，既令存者修净业以同生西方，又欲亡者得乐所以共入海会。</p><p class="p-trans">四川嘉定乐山县的乌尤山寺，自从唐朝惠净大师开山，至今已有一千多年。时间久了，寺中的普同塔也已经坍塌破坏。幸而传度大师在这里担任住持，大力振兴莲宗。既让活着的人修习净业，一同往生西方；又想让亡故的人得到安乐处所，共入莲池海会。</p></div>
+<div class="para-pair"><p class="p-orig">用是募诸善信，以成其事，命光作记，以发挥其义意。爰为颂曰，众生受生死，皆由执有我，因兹起三毒，如蛾争赴火。试观念未生，我究居何所，即令既生后，我究属甚么。既不属根身，亦不属识心，以根无所知，识心因物移。众生不了故，逐妄而迷觉，认此妄想心，常受生死缚。如来垂慈愍，令观我本空，既知我空已，诸法尽消融。况复经火浴，四大悉分散，五蕴原无有，我从何处现。从此证无生，真我方觌面，普愿法界众，同作如是见。</p><p class="p-trans">因此向诸位善男信女募资，来办成这件事。大师请我写篇记文，来发挥其中的意义。颂文如下：</p></div>
+<p class="p-trans">众生蒙受生死，皆因执着有我，由此生起三毒，如蛾争相扑火。试观念未生时，我究居于何所，即令念生之后，我究属于什么。既不属于根身，也不属于识心，因为根无所知，识心因物而移。众生不明了故，逐妄而迷觉性，认此妄想之心，常受生死束缚。如来垂慈怜愍，令观我本是空，了知我空之后，诸法全都消融。况复经火焚烧，四大全都分散，五蕴原本没有，我从何处显现。从此证无生忍，真我方能见面，普愿法界众生，同作如是知见。</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【蝇附骥尾而致千里】</span>苍蝇因附在千里马的尾巴上而跑了千里的路程。普通人因沾了贤人的光而名声大振。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【觌面】</span>当面；迎面；见面。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>福州海门莲社缘起 · 印光法师文钞</title>
+<meta name="description" content="真如性海，寂照圆融。无能无所，不迁不变。尚无涅槃之名，何有生死之事。但以众生迷昧，全体埋没。不了自心，妄逐幻境。由是于逆顺等境，起贪瞋痴，造杀盗淫。从劫至劫，轮回六道，了无出期。反承此寂照圆融，真如佛性之力，以作起惑造业，轮回生死之本。岂不大可哀哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-256/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="福州海门莲社缘起 · 印光法师文钞">
+<meta property="og:description" content="真如性海，寂照圆融。无能无所，不迁不变。尚无涅槃之名，何有生死之事。但以众生迷昧，全体埋没。不了自心，妄逐幻境。由是于逆顺等境，起贪瞋痴，造杀盗淫。从劫至劫，轮回六道，了无出期。反承此寂照圆融，真如佛性之力，以作起惑造业，轮回生死之本。岂不大可哀哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-256/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">福州海门莲社缘起</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">真如性海，寂照圆融。无能无所，不迁不变。尚无涅槃之名，何有生死之事。但以众生迷昧，全体埋没。不了自心，妄逐幻境。由是于逆顺等境，起贪瞋痴，造杀盗淫。从劫至劫，轮回六道，了无出期。反承此寂照圆融，真如佛性之力，以作起惑造业，轮回生死之本。岂不大可哀哉。</p><p class="p-trans">真如性海，寂照圆融。无能无所（注1），不迁流、不变动。尚且没有涅槃的名称，哪里又有生死的事情。但因为众生迷惑不明，全体埋没了自性真如。不明了自己的心性，错妄追逐虚幻的尘境。因此对违逆随顺等诸多外境，生起贪瞋痴三毒，造作杀盗淫三业。从劫至劫，轮回六道，没有出离之期。反而承着这个寂照圆融，真如佛性的力量，来作为起惑造业，轮回生死的根本。岂不是太可悲了吗？</p></div>
+<div class="para-pair"><p class="p-orig">大觉世尊愍之，随机示导，说种种法。俾彼各得就路还家，亲见佛性。无奈众生根器不一，即生了脱，实难多得。因兹特开一信愿念佛，求生净土一门。冀彼若圣若凡，同于现生悉得解脱也。</p><p class="p-trans">大觉世尊怜悯众生，随机开示劝导，宣说种种法。使得众生各自得以就路还家，亲见自心佛性。无奈众生根器不一，当生了脱，实在很少有人能做到。因此特别开启一个信愿念佛，求生净土的法门。希望无论圣人凡夫，同在这一生全都得以解脱。</p></div>
+<div class="para-pair"><p class="p-orig">良以是心作佛，是心是佛，初非于心外别有所得也。以佛力不可思议，法力不可思议，众生心力亦不可思议。生佛互摄，感应道交，故得易于成办耳。</p><p class="p-trans">实在是因为“是心作佛，是心是佛”，原本不是在自心之外，另外有其它的所得。因为佛力不可思议，法力不可思议，众生心力也不可思议。众生与佛陀互相含摄，感应道交，所以容易成办罢了。</p></div>
+<div class="para-pair"><p class="p-orig">海门罗禹曾居士，宿植德本，赋性慈祥。提倡净土，不遗余力。殆欲一切同伦，同证本具佛性，以故临终得遂所愿。其子铿端，彦俊，勉承父志，家中设有佛经流通处。欲令附近净侣，随时念佛，故于流通处中，立一莲社，颜其额曰海门。</p><p class="p-trans">江苏海门的罗禹曾居士，宿植德本，天性慈祥。提倡净土，不遗余力。想使一切同伦，同证本具佛性，因而在临终时得以实现自己的愿望。他的儿子罗铿端，罗彦俊，勉力继承父亲的志向，在家中设立了佛经流通处。想令附近的清净法侣，随时念佛，所以在流通处中，成立一个莲社，匾额上写着“海门”。</p></div>
+<div class="para-pair"><p class="p-orig">以诸佛法海，唯念佛最易得入。真如性海，唯念佛最易亲证。以此念佛法门，乃为入诸佛法海，证真如性海之门，故名海门。此约理而论。若约事说，则由其父海门居士提倡念佛。一切大众，方知世有至极广大，至极圆顿，至极深妙，至极简便之净土法门。</p><p class="p-trans">因为诸佛法海，唯有念佛最容易进入。真如性海，唯有念佛最容易亲证。因为这个念佛法门，是进入诸佛法海，证得真如性海之门，所以名为海门。这是就义理来说的。如果就事相来说，则由于他的父亲海门居士提倡念佛。一切大众，才知道世间有极其广大，极其圆顿，极其深妙，极其简便的净土法门。</p></div>
+<div class="para-pair"><p class="p-orig">凡来此念佛者，必须各各敦笃伦常，恪尽己分，闲邪存诚，克己复礼，诸恶莫作，众善奉行，戒杀护生，救济急难。以此自行，复以此化他。能如是者，则心与佛合，心与道合。现生即入圣贤之域，临终直登极乐之邦。庶可满海门居士提倡之本愿。</p><p class="p-trans">凡是来到这里念佛的人，必须各各敦笃伦常，恪尽己分（即敦伦尽分），闲邪存诚（防止邪念、心怀诚敬），克己复礼（战胜己私、还归真理），诸恶莫作，众善奉行，戒杀护生，救济急难。以此自行，又以此化导他人。能够如此，那么心与佛合，心与道合。现生就进入圣贤领域，临终直登极乐莲邦。才能圆满海门居士提倡净土的本愿。</p></div>
+<div class="para-pair"><p class="p-orig">而处处各建莲社，一一仿效海门。将见佛法兴隆，灾障消灭。雨顺风调，群登大同之世。民康物阜，共乐熙皞之天矣。</p><p class="p-trans">而处处各建莲社，一一仿效海门居士。将要见到佛法兴隆，灾障消灭。风调雨顺，共登大同（注2）理想之世。人民康乐，物产丰富，共乐和谐安乐（注3）之天啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【能所】</span>佛学术语。二法对待之时，自动之法，谓为能。不动之法，谓为所。
+能所是佛教最先使用的术语，通常“能”指能动一方,“所”指被动一方；“能”指主体,“所”指客体。“能”与“所”相对，犹言主客观。如,“能缘”指认识主体及其能动作用,“所缘”指认识对象;“能取”是内识，“所取”是外境；“能知”是认识主体，“所知”为认识对象。东晋佛教哲学家僧肇说：“般若即能知也。五阴即所知也。所知即缘也。”认为佛教智慧般若是能认识的主体，五阴即物质世界和精神世界是认识对象。佛教认为“能”“所”相对，“所”不能离开“能”。
+佛学为什么要使用能所这对概念。能所是所有二分法的基本，正是有了能所，才有了分别，进而有了执取--我执--欲望......在佛教看来用能所的方法看待世界是错误的，而这是一般人最基本的思维模式，这正是人类苦难的根源。
+能所双亡（或者能所不二）：指已不执著能缘的相和所缘的相，是已进入三轮体空的境界了。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【大同】</span>战国末至汉初的儒家学派提出的一种理想社会，与“小康”相对。《礼记·礼运》：“大道之行也，天下为公，选贤与能，讲信修睦，故人不独亲其亲，不独子其子，使老有所终，壮有所用，幼有所长，矜寡孤独废疾者皆有所养，男有分，女有归，货恶其弃于地也，不必藏于己，力恶其不出于身也，不必为己，是故谋闭而不兴，盗窃乱贼而不作，故外户而不闭，是谓大同。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【熙皞】</span>和乐；怡然自得。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复许熙唐居士书（民国二十年） · 印光法师文钞</title>
+<meta name="description" content="乐慧斌来，持汝书，并其他求皈依名单。知居士年已六十有五，一子一孙，均已夭殇。约世间人情论，极为可痛心者。若约了生死之净土法门论，则实为超凡入圣之最胜因缘。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-015/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复许熙唐居士书（民国二十年） · 印光法师文钞">
+<meta property="og:description" content="乐慧斌来，持汝书，并其他求皈依名单。知居士年已六十有五，一子一孙，均已夭殇。约世间人情论，极为可痛心者。若约了生死之净土法门论，则实为超凡入圣之最胜因缘。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-015/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复许熙唐居士书（民国二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">乐慧斌来，持汝书，并其他求皈依名单。知居士年已六十有五，一子一孙，均已夭殇。约世间人情论，极为可痛心者。若约了生死之净土法门论，则实为超凡入圣之最胜因缘。</p><p class="p-trans">乐慧斌来访，带来你的信，还有其他求皈依者的名单。知道居士已有六十五岁，有一个儿子，一个孙子，均已夭折。就世间的人情来说，这是极度痛心的事。如果就了生死的净土法门来说，则实在是超凡入圣最殊胜的因缘。</p></div>
+<div class="para-pair"><p class="p-orig">世间人生不知来，死不知去，实为人生一大要事。但以为子孙计之念重，于自己生死大事，反漠然置之。使居士儿孙长寿仕进，或被富贵福禄所迷，恐难以发此皈依三宝，求受五戒之心，亦不过以福寿善终为止。至于自己之法身慧命，仍以不闻不信。纵令事事称心，岂能超出虚生浪死之外。</p><p class="p-trans">世间人生不知从哪里来，死不知要到哪里去，这个问题确实是人生的一大要事。但因为为子孙考虑的心念太重，对于自己的生死大事，反而漠然置之。假使居士的儿孙长寿当官，你或许早被富贵福禄所迷惑，恐怕很难发起这个皈依三宝，求受五戒的心，也不过只是以福寿善终来了此一生。至于自己的法身慧命，仍然是不闻不信。纵然让你事事称心，又岂能超出生死轮回之外。</p></div>
+<div class="para-pair"><p class="p-orig">今日境遇不嘉，知人世无非是苦。又得净土诸书而详阅之，知吾人本有故乡安乐处所，可以安身立命。而日唯佛是念，唯净土是求。直至临命终时，蒙佛接引往生西方，则超凡入圣，了生脱死，尽未来际，受胜妙乐。</p><p class="p-trans">今天境遇不好，才知道人世间无非是苦。又得到有关净土的诸多书籍而详细阅读，知道我们本有的故乡，安乐处所，可以安身立命。而每天只是一心念佛，只是一心求生净土。直到临命终时，蒙佛接引，往生西方，那么就会超凡入圣，了生脱死，尽未来际，受胜妙乐。</p></div>
+<div class="para-pair"><p class="p-orig">由是言之，其子与孙，实为成就汝了生死一大事而先逝者。当生大感激心，愿以自己念佛功德，消彼罪业，增彼善根。俾彼亦得仗佛慈力，往生西方，庶可不致彼子与孙，徒然早死也。</p><p class="p-trans">由此说来，你的儿子与孙子，实际上是为了成就你了生死这一件大事而先走一步的。你应当生起大感激心，愿以自己念佛的功德，消除儿孙的罪业，增加他们的善根。使他们也得以仗佛慈力，往生西方，才不至于让你的儿子和孙子，白白地早死啊！</p></div>
+<div class="para-pair"><p class="p-orig">善得益者，无往而非益。甘受损者，无往而非损，是在各人之见解何如耳。</p><p class="p-trans">善于得到利益的人，所到之处，都能得到利益。甘心受到损害的人，所到之处，都会受到损害，这在于每个人的见解如何了。</p></div>
+<div class="para-pair"><p class="p-orig">汝既发心皈依，今为汝取法名为德熙。谓以大菩提心，俾若自若他，同得沐佛慈光，生佛净土也。</p><p class="p-trans">你既然发心皈依，现今为你取法名为德熙。意思是以大菩提心，使得自己与他人，共同得以沐浴佛的慈光，生到佛的净土啊！</p></div>
+<div class="para-pair"><p class="p-orig">所有三皈，五戒，十善之义，文钞中略释，故不再书。至于自誓受戒，文钞中与徐女士书，亦已说过，亦不须再说。所宜说者，务须实行为要耳。</p><p class="p-trans">所有三皈，五戒，十善的意义，《文钞》中有简略的解释，所以不再写了。至于自誓受戒，《文钞》中的《与徐福贤女士书》中，也已经说过，也无须再说。应该要说的，就是务必要实行，这是最重要的。</p></div>
+<div class="para-pair"><p class="p-orig">若学佛之人，不以躬行实践为事，则与世之伶人无异。在当场苦乐悲欢，做得酷肖，实则一毫也与己无干。如此，便是好名而恶实之痴汉，心欲欺人欺佛，实只成就其欺人欺佛之过。人尚不能欺，何况于佛乎。</p><p class="p-trans">如果一个学佛的人，不以亲身实践为事，那么就与世间的戏子没什么两样了。在戏台上表演的苦乐悲欢，做得惟妙惟肖，实际上则是与自己丝毫也不相干。这样做的话，便是喜好虚名而实际作恶的愚痴人。心中想要欺骗他人，欺骗佛，而实际上却只成就他欺骗他人、欺骗佛的罪过。人尚且不能欺骗过去，何况佛呢？</p></div>
+<div class="para-pair"><p class="p-orig">务须从脚跟下做去，方好。至于修持，当专主净土。以汝年已将至古稀，来日无多。若欲广读大乘经论，则无此精神，无此智识，又复无此光阴。唯生信发愿，持佛名号，求生西方一法，是为无上第一胜妙法门。</p><p class="p-trans">务必脚踏实地真实去做，才好。至于修持，应当专修净土。因为你年纪已快七十岁了，来日无多。如果想要广泛阅读大乘经论，则没有这个精神，没有这个智慧能力，也没有这个时间。唯有生信发愿，持佛名号，求生西方这个法门，才是无上第一胜妙法门。</p></div>
+<div class="para-pair"><p class="p-orig">当死尽偷心，一肩担荷，决定可于现生，俯谢五浊，高登九品。又当发大慈悲心，为一切相识者，说此法门之利益。俾彼等同得修习，则自己功德，愈加广大矣。</p><p class="p-trans">应当死尽偷心，全心全意接受、修持净土法门，决定可以在这一生，俯谢五浊恶世，高登九品莲台。还应当发起大慈悲心，为一切相识的人，宣说这个法门的利益。使得他们共同来修习，那么自己的功德，就更加广大了。</p></div>
+<div class="para-pair"><p class="p-orig">然外面之人，尚应如是，况自己之夫人，与子媳，孙媳，忍令彼不蒙法利乎。一则可以慰汝夫人之老景，一则可以慰彼姑媳之凄凉。令彼亦由此以超凡入圣，了生脱死，则实为利人之功效。</p><p class="p-trans">对于外面的人，尚且应该如此，更何况是自己的夫人、儿媳妇、孙媳妇呢，你能忍心令她们不蒙受佛法的利益吗？教化家人，一则可以安慰你夫人的晚年，一则可以安慰她们婆媳的凄凉。令她们也由此得以超凡入圣，了生脱死，这才是实实在在的利人功效。</p></div>
+<div class="para-pair"><p class="p-orig">又念佛之人，若已证道，则临命终时，任彼刀割香涂，了无动念之事，则无所谓为损益也。若只有修持之力，未能到业尽情空地位，则临终得人助念，即可决定往生。</p><p class="p-trans">再有，念佛的人，如果已经证道，则临命终时，任凭他人用刀割砍，用香涂抹，也没有丝毫起心动念的事情，这样就没有所谓的损害或不损害。如果只有修持的力量，还没有修到业尽情空的地位，那么临终如果能得到他人的助念，即可决定往生。</p></div>
+<div class="para-pair"><p class="p-orig">若遇无知眷属，预于未死以前，为之洗沐换衣，令其搬动受苦。纵不受苦，一经搬动，心便不能归一于佛（以动其躯体，心便不能彻底清净纯一）。若再向之哭泣，则自己亦生爱恋，便与佛不相应，欲得往生，莫由也已。</p><p class="p-trans">如果遇到无知的眷属，预先在未死之前，为亡者洗澡换衣，令其搬动受苦。纵然不受苦，身体一经搬动，内心就不能归一在佛号上（因为搬动他的躯体，心中就不能彻底的清净纯一）。如果再向他哭泣，那么他自己也生起贪爱留恋，就与佛不相应，想要往生，也没有办法了。</p></div>
+<div class="para-pair"><p class="p-orig">所以平素，即要彼等知其利害，要常与说，到自己临终，彼等即是助道之人。岂但与己有益，实亦与彼等均有大益。若只知自己修持，绝不与彼说其利害，则汝临终时，彼等决定是破坏正念之人，决不助汝净心，令得往生也。</p><p class="p-trans">所以在平时，就要使眷属们知道这其中的利害，要经常对他们讲说，到自己临终，他们就是助道之人。不只是对自己有利益，实际也对他们都有很大的利益。如果只知道自己修持，绝不对他们说明其中的利害关系，那么在你临终之时，他们决定是破坏你正念的人，绝不会助你内心清净，令你能得往生啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝既信光，光不得不为汝计。光以五十二年之阅历，深知其利害之所在，若不与汝说，便为不尽己分。</p><p class="p-trans">你既然相信我，我不得不为你考虑。我以五十二年的阅历，深知其中的利害所在，如果不对你说明，就是没有尽到自己的责任。</p></div>
+<div class="para-pair"><p class="p-orig">汝弟燮卿，亦已六十，亦当以此书示之。须知佛法，法门无量，若欲以通身业力之凡夫，现生即得了生脱死，离此信愿念佛求生西方一法，佛也说不出第二个法门了。</p><p class="p-trans">你弟弟许燮卿，也已经六十岁了，你也应当将这封信拿给他看。必须知道佛法，虽然法门无量，如果想让一个通身都是业力的凡夫，此生就得以了生脱死，离开这个信愿念佛求生西方的法门，佛也说不出第二个法门了。</p></div>
+<div class="para-pair"><p class="p-orig">其余一切法门，皆须修到业尽情空，方有了生死分。倘有丝毫未尽，则生死依旧不了。若论业尽情空，现今恐举世亦难得其一二。若以信愿念佛求生，则万不漏一。</p><p class="p-trans">其余的一切法门，都必须修到业尽情空，方才有了生死的分。倘若有丝毫的见思惑业没有断尽，那么生死依旧不了。如果说到业尽情空，现今恐怕全世界也难以找到一二个。如果以信愿念佛，求生西方，那么一个万也不会漏掉一个。</p></div>
+<div class="para-pair"><p class="p-orig">然既念佛求生西方，必须要敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，慈愍一切，爱惜物命，戒杀吃素，广行方便，俾此心常与佛合则可矣。倘外现修持之象，内无真实之心，则是假善人。假善人，何能得真利益乎。</p><p class="p-trans">你既然念佛求生西方，必须要敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，慈愍一切，爱惜物命，戒杀吃素，广行方便，使得这个心常与佛心相符相合才可以。倘若外现修持的表象，内无真实修持之心，就是假善人。假善人，如何能够得到真实的利益呢？</p></div>
+<div class="para-pair"><p class="p-orig">又乐门谭氏（斌章之叔祖母），年八十一。庞才芳，住东门矮眼井。此二人，亦皆求受三皈五戒者，祈以此意转告之。</p><p class="p-trans">又者，乐家的谭氏夫人（乐斌章的叔祖母），八十一岁。庞才芳，住在东门矮眼井。这二人，也都是求受三皈五戒的，请你将此意转告她们。</p></div>
+<div class="para-pair"><p class="p-orig">余详文钞，此不备书。现今世乱已极，几于尽天理人伦而完全废之，以归于与禽兽无异之世道。</p><p class="p-trans">其余详看《文钞》，此处不再多写。现今世道危乱到极点，几乎要将天理人伦完全废除，回归到与禽兽没有两样的世界。</p></div>
+<div class="para-pair"><p class="p-orig">推究其致此之源，皆由不以因果报应，生死轮回，为实理实事。因此善无以劝，恶无以惩，以驯至于心无所依，遂被欧风一吹，从兹变本加厉，竟致此时如斯之现象。</p><p class="p-trans">社会道德之所以沦丧到这种地步，究其根源，都是因为不把因果报应，生死轮回，当作实理实事。因此，无法劝导人行善，无法惩戒人作恶，使得人心无所依从，于是被欧风西学一吹，从此变本加厉，竟然导致现在世道出现上述现象。</p></div>
+<div class="para-pair"><p class="p-orig">今欲挽回狂澜，若不以提倡因果报应为标准，则纵有良法，亦无实效。</p><p class="p-trans">现今想要挽回狂澜，如果不以提倡因果报应为标准，那么纵然有好的方法，也没有实际的效果。</p></div>
+<div class="para-pair"><p class="p-orig">一是消除念佛净念之外的不净念</p><p class="p-trans">否则择一寂静隐晦之处，力修净业。将从前所得之学问文章，抛向东洋大海外，作自己原是一个无知无识之人。于不生分别心中，昼夜六时，专持一句洪名圣号。果能死尽偷心，当必亲见本来面目。从兹高竖法幢，俾一切人同归净土法海。生为圣贤之徒，设预莲池之会。方可不负所学，为大丈夫真佛子矣。（三编卷一复叶玉甫居士书）</p></div>
+<p class="p-trans">今修念佛法门，当依大势至菩萨所示，如子忆母之诚心，修都摄六根净念相继之实行。果能死尽偷心，则一心不乱，念佛三昧，或可即得。（三编卷二复张曙蕉居士书八）</p>
+<div class="para-pair"><p class="p-orig">二是死尽展转企慕，不能专修净土之念</p><p class="p-trans">惟生信发愿，持佛名号，求生西方一法，是为无上第一胜妙法门。当死尽偷心，一肩担荷，决定可于现生，俯谢五浊，高登九品。（续编卷上复许熙唐居士书）</p></div>
+<p class="p-trans">如来悬知末世众生，无力断惑，特开一信愿念佛求生西方法门，俾彼法身大士，与具缚凡夫，及五逆十恶之极重罪人，同于现生，往生西方。既生西方，则了生脱死，超凡入圣，各随己资，而为悟证，其慈悲抚育之心，虽天地父母，不能喻其万一。以此法门，仗己信愿念佛之力，感佛慈悲摄受之力，感应道交，故得不断烦惑，带业往生，较彼专仗自力者，其难易不可同年而语矣。念佛之人，若知此义，自能死尽偷心，专修此法，不致好高务胜，随经教知识语言所转，舍此别修诸余法门也。普愿见闻，悉皆谛信。（增广卷四曹云荪了义居士舍宅为念佛林发隐）</p>
+<p class="p-trans">善导，弥陀化身也。其所示专修，恐行人心志不定，为余法门之师所夺。历叙初二三四果圣人，及住行向地等觉菩萨，末至十方诸佛，尽虚空，遍法界，现身放光，劝捨净土，为说殊胜妙法，亦不肯受。以最初发愿专修净土，不敢违其所愿。善导和尚，早知后人这山看见那山高，渺无定见，故作此说。以死尽展转企慕之狂妄偷心。（增广卷一复永嘉某居士书五）</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【偷心】</span>禅林用语。原指偷盗之心；于禅林中转指向外分别之心。系对动念之贬责。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【死尽偷心的两种含义：】</span></p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

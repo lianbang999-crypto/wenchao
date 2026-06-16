@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>答善熏师问（问词略） · 印光法师文钞</title>
+<meta name="description" content="（一）外道守秘密，恐人知其法，故不许人出声念佛。佛法中，无秘密之说。念佛随各人气力大小，而为大声小声。然出声念久伤气，故又须静坐默念。无论大声小声默念，总要自己听自己之佛声。默念中亦仍有声，故亦须听。能常听，心自归一。此念佛最妙之法也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-342/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="答善熏师问（问词略） · 印光法师文钞">
+<meta property="og:description" content="（一）外道守秘密，恐人知其法，故不许人出声念佛。佛法中，无秘密之说。念佛随各人气力大小，而为大声小声。然出声念久伤气，故又须静坐默念。无论大声小声默念，总要自己听自己之佛声。默念中亦仍有声，故亦须听。能常听，心自归一。此念佛最妙之法也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-342/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">答善熏师问（问词略）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">（一）外道守秘密，恐人知其法，故不许人出声念佛。佛法中，无秘密之说。念佛随各人气力大小，而为大声小声。然出声念久伤气，故又须静坐默念。无论大声小声默念，总要自己听自己之佛声。默念中亦仍有声，故亦须听。能常听，心自归一。此念佛最妙之法也。</p><p class="p-trans">（一）外道严守秘密，恐怕别人知道他们的法，所以不许人出声念佛。佛法中，没有秘密之说。念佛随各人气力的大小，而大声念、小声念。然而出声念得久了，会伤气，所以又必须静坐默念。无论大声念、小声念、默念，总要自己听自己念佛的声音。默念中，也仍然有声相，所以也必须听。能够常常听，心自然归一。这是念佛最妙的方法啊！</p></div>
+<div class="para-pair"><p class="p-orig">（二）除佛法外，所有各门，皆是邪教。何但清净门乎。各邪教，皆以炼丹运气为正道。以念经念佛劝善，为引人入此教之根据。</p><p class="p-trans">（二）除佛法之外，所有的各个教门，都是邪教。哪里只是清净门呢？各邪教，都以炼丹运气为正道。以念经念佛、劝人行善，作为引人进入这个教门的根据。</p></div>
+<div class="para-pair"><p class="p-orig">（三）同善社，亦是外道。此云莫学斋公，盖指学外道之人说耳。不可一概包括。</p><p class="p-trans">（三）同善社，也是外道。此处所说：莫学斋公，这是指学习外道之人来说的。不可一概包括学佛之人。</p></div>
+<div class="para-pair"><p class="p-orig">（四）扶乩，也非正法，多是灵鬼假冒。至于吃酒吃肉之僧尼，乃自救不了之地狱种子。何可借口彼等之行为，而指责佛教乎。</p><p class="p-trans">（四）扶乩，也不是正法。大多是灵鬼假冒。至于喝酒吃肉的僧尼，是自己都救不了的地狱种子。怎么可以，以他们这些人的行为，作为借口，而来指责佛教呢？</p></div>
+<div class="para-pair"><p class="p-orig">（五）五荤，我国只有四，即葱韭薤蒜。薤，即小蒜。西域有兴渠，吾国无此一种。有以芫荽为五荤之一者，乃外道所立耳。</p><p class="p-trans">（五）五荤，我国只有四种，就是葱、韭、薤、蒜。薤：就是小蒜。西域有兴渠，我国没有这一种。有人以香菜为五荤之一，这是外道所立。</p></div>
+<div class="para-pair"><p class="p-orig">（六）三厌者，谓天厌，地厌，水厌。天厌，即雁。雁有夫妇之谊，故不可食，此道家所说。佛法中，一切肉，皆不得食，何止此三种乎。彼谓老人为白厌，何以死人请僧做系念乎。胡说巴道，何可依从。</p><p class="p-trans">（六）三厌，就是天厌，地厌，水厌。天厌：就是大雁。雁有夫妇的道谊，所以不能吃，这是道家所说。佛法中，一切肉，都不能吃，何止这三种呢？他们称老人为白厌，为什么死人要请僧人做系念呢？胡说巴道，怎么能依从。</p></div>
+<div class="para-pair"><p class="p-orig">（七）念佛记数，是防懈惰。如无懈惰之心，不记亦可。记数也可不用掐珠子。最初当用珠子念一点钟。以后快慢，照此一样，念一刻，半点，一点，均可知其佛数。又文钞中记数念佛之法，最能摄心。阅之自知。</p><p class="p-trans">（七）念佛记数，是防止懈惰。如果没有懈惰之心，不记数也可以。记数，也可不用掐珠子记数。最初应当用珠子念一个钟头。以后的快慢速度，照这个样子，念一刻钟，半个钟头，一个钟头，就都可以知道念佛的数量了。另外，《文钞》中的十念记数念佛之法，最能摄心。读了自然知道。</p></div>
+<div class="para-pair"><p class="p-orig">（八）有佛像，当向佛拜。无佛像，或心中默拜，或向西拜。有香烛固好，无亦无碍。随各人力量而行，岂崖板法乎。</p><p class="p-trans">（八）有佛像，应当向佛拜。没有佛像，或者心中默拜，或者向西拜。有香烛固然好，没有也没有妨碍。随各人的力量去做，哪里是崖板不能变通之法呢？</p></div>
+<div class="para-pair"><p class="p-orig">（九）金刚经，说心地法门。故云，凡所有相，皆是虚妄。汝不知看经上文说的话。独以此两句，疑念佛求生西方。不知有有相三昧，有无相三昧。凡般若部中许多经，并禅宗所说，皆是依无相三昧发挥者。</p><p class="p-trans">（九）《金刚经》，是宣说心地的法门。所以经中说：“凡所有相，皆是虚妄。”你不知道看经中上文所说的话。单单以此两句，便怀疑念佛求生西方。你不知道有有相三昧，有无相三昧。凡般若部中的许多经，以及禅宗所说，都是依无相三昧来发挥的。</p></div>
+<div class="para-pair"><p class="p-orig">凡诸大乘经，备明修因证果，并开示念佛求生西方者，皆是依有相三昧而发挥者。汝完全不知世间道理，况出世间道理。而复自作聪明，妄论佛法。欲不招恶报，其可得乎。汝既有净土十要（此甚深），嘉言录（此最宜详阅），何不过细看。而一味将外道无知无识之话为是。</p><p class="p-trans">凡是诸大乘经，周备阐明修因证果，并且开示念佛求生西方的，都是依有相三昧而发挥的。你完全不知道世间道理，何况出世间道理呢。而又自作聪明，妄论佛法。想不招恶报，怎么可得呢？你既有《净土十要》（这部书义理很深）、《嘉言录》（这是最应该详细阅读的），为什么不仔细看。而一味将外道那些无知无识的话，反认为有道理呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【何但】</span>1.犹何必。2.岂止。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【芫荽】</span>又名“胡荽”，俗称“香菜”。一年生草本植物。叶互生，羽状复叶，茎和叶有特殊香气，花小，白花。果实圆形，可做香料，也可入药。嫩茎和叶可以用来调味。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【三厌】</span>道教谓三种不忍食的动物，即天厌为雁、地厌为狗、水厌为乌龟。明 朱国祯 《涌幢小品·字义字起》：“俗语有五荤三厌之说，厌字殊不解。后读《孙真人歌》，谓天厌雁，地厌狗，水厌乌龟。雁有夫妇之伦，狗有扈主之谊，乌龟有君臣忠敬之心，故不忍食。”（句中乌龟疑原书中写为乌鱼，只是现多认为乌鱼解释为乌龟。）</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

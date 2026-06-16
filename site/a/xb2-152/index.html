@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>三余德堂名说（民二十年） · 印光法师文钞</title>
+<meta name="description" content="宁子德晋，以己之三余堂求开示，冀即世间法，贯通佛法，俾后世子孙，各守敦伦修心之道，以行自利利人之事云。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-152/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三余德堂名说（民二十年） · 印光法师文钞">
+<meta property="og:description" content="宁子德晋，以己之三余堂求开示，冀即世间法，贯通佛法，俾后世子孙，各守敦伦修心之道，以行自利利人之事云。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-152/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">三余德堂名说（民二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">宁子德晋，以己之三余堂求开示，冀即世间法，贯通佛法，俾后世子孙，各守敦伦修心之道，以行自利利人之事云。</p><p class="p-trans">宁德晋居士，拿自家的“三余堂”这个名字来求开示，希望不离世间法，来贯通佛法，使后世子孙，每个人都恪守敦笃人伦、修养自心的大道，来实行自利利人的事业。</p></div>
+<div class="para-pair"><p class="p-orig">余曰，三余二字，不过诫其勤敏力学，勿旷时日，一刻千金，失则莫由再得耳。宜加一德字，则意义深长。</p><p class="p-trans">我说，“三余”（注1）这二字，不过是告诫子孙要勤勉机敏、努力学习，不要浪费了时光，一刻光阴值千金，失去了，就没有办法再得到了啊！应该再加上一个“德”字，那么意义就深长了。</p></div>
+<div class="para-pair"><p class="p-orig">余者，如易积善余庆，积不善余殃，乃悠久不息，永传不朽之谓。世间无一法能久常，唯立德立功立言者，方永传后世而垂久常。</p><p class="p-trans">“余”，就像《周易》中说：“积善之家必有余庆，积不善之家必有余殃”，这里的“余”字是悠久不息、永传不朽的意思。世间没有一法能够常久，唯有立德、立功、立言（注2）的人，才能永传后世而垂范常久。</p></div>
+<div class="para-pair"><p class="p-orig">然树此德业，谈何容易。今教汝下手易而成功高，用力少而得效速，虽无彼建树之本领，其利益当可大过彼上。</p><p class="p-trans">然而树立这样的德业（立德、立功、立言），谈何容易。现在我教你一个下手易而成功高，用力少而得效快的方法，虽然没有建树德业的本领，但是这个方法的利益却能大大超过建树德业之上。</p></div>
+<div class="para-pair"><p class="p-orig">所谓笃修敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，戒杀护生，爱惜物命，广行方便，利益一切。真为生死，发菩提心，以深信愿，持佛名号，决定求生极乐世界。</p><p class="p-trans">那就是：努力实修敦伦尽分（敦笃人伦、恪尽己分），闲邪存诚（注3），诸恶莫作，众善奉行，戒杀护生，爱惜物命，广行方便，利益一切。真为生死，发菩提心，以深信愿，持佛名号，决定求生极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">以此自行，复以化他。凡内而父母，兄弟，妻子，眷属，外而乡党，邻里，亲戚，朋友，皆以敦伦尽分，及念佛求生等相劝。俾彼等同于现生，优入圣贤之域，及至临终，高登极乐之邦。</p><p class="p-trans">不仅用这个方法来自修，还要用这个方法来教化他人。凡是家里的父母、兄弟、妻子儿女、眷属，外面的同乡、邻里、亲戚、朋友，都要用敦伦尽分，以及念佛求生等来劝化。使他们同在这一生，在世时成为圣贤，等到临命终时，高登极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">论事绩，则彼胜于此者甚大。论利益，则此胜于彼者实深。良以一则专主世间法，一则兼主出世法。一则只益色身，一则并益慧命。此世法兼出世法之三余德也。</p><p class="p-trans">如果论事业、功绩，那么建树德业要大大胜过敦伦修心念佛。但说到利益，敦伦修心念佛就远远超过建树德业了。实在是因为，建树德业只专主于世间法，敦伦修心念佛则兼主出世间法；建树德业只利益色身，而敦伦修心念佛却能一并利益法身慧命。敦伦修心念佛这个方法，就是世间法兼有出世间法的法身、般若、解脱三余德啊！</p></div>
+<div class="para-pair"><p class="p-orig">及至往生西方，见佛闻法，悟无生忍，则法身，般若，解脱三德秘藏，由分证以至究竟圆证，方为究竟三余德也。</p><p class="p-trans">等到往生西方，见佛闻法，悟无生法忍之后，那么法身、般若、解脱这三德秘藏，由分证开始，一直到究竟圆满证得，才是究竟的三余德啊！</p></div>
+<div class="para-pair"><p class="p-orig">此之三德，竖穷三际，横遍十方，亘古亘今，不迁不变，在凡不减，在圣不增，但以迷而未悟，不能得其受用耳。</p><p class="p-trans">此三德，竖穷三际，横遍十方，亘通古今，不迁流、不改变，在凡夫位不减少，在圣贤位不增多，只是因为众生迷惑而没有觉悟，所以不能得到其受用罢了。</p></div>
+<div class="para-pair"><p class="p-orig">法身德，即吾人不生不灭之本性。般若德，即吾人离念常知之正智。解脱德，即吾人净无瑕颣之净行。</p><p class="p-trans">法身德，就是我们不生不灭的本性；般若德，就是我们离念常知的正智；解脱德，就是我们清净无瑕颣（注4）的净行。</p></div>
+<div class="para-pair"><p class="p-orig">此之三德，悉不相离，约义分三。实则一尚不立，何况有三。是名究竟三余德。若非宿种善根，穷劫莫闻斯义。</p><p class="p-trans">此三德，不是互相分开的，只是从意思解释上分为三个方面。实际上“一”尚且不立，何况有“三”呢？这就叫做究竟三余德。你如果不是宿世就种下了善根，即使穷劫也不能听闻到这个义理。</p></div>
+<div class="para-pair"><p class="p-orig">即世间伦常孝弟等法，以修佛法，即出世了生死法，以导引伦常孝弟等法。犹如山巅起塔，低地掘井，其得则同，其用功大有难易相殊之相焉。果能依之而修，则其利溥矣。</p><p class="p-trans">不离世间的伦理、纲常，孝悌等法，来修习佛法；不离出世间的了生死法，来引导伦理、纲常，孝悌等法。如同在山顶上建塔，在低洼地掘井。虽然得到的塔和井是相同的，但是用功就大有难易的差别了。果真能够依照我说的这个敦伦修心念佛的方法来修行，那么利益就广大了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【三余】</span>董遇“三余”读书，出自鱼豢（huàn）的《魏略·儒宗传·董遇》：“人有从学者，遇不肯教，而云：‘必当先读百遍！’言：‘读书百遍，其义自见。’从学者云：‘苦渴无日。’遇言：‘当以三余。’或问三余之意。遇言：‘冬者岁之余，夜者日之余，阴雨者时之余也。’”指读好书要抓紧一切闲余时间。 董遇，字季直。性格质朴，不善言辞但又好学。汉献帝兴平年间，关中李傕等人作乱，董遇和他哥哥便投靠朋友段煨将军。董遇和哥哥收集捡拾野稻子卖钱维持生计，每次去打柴，董遇总是带着儒家的书籍，一有空闲，就拿出来学习诵读，他哥哥嘲笑他，但董遇还是依旧读书。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【立德、立功、立言】</span>唐人孔颖达在《春秋左传正义》中对立德、立功、立言分别做了界定：“立德，谓创制垂法，博施济众”；“立功，谓拯厄除难，功济于时”；“立言，谓言得其要，理足可传”。此三者是虽久不废，流芳百世的。春秋时鲁国大夫叔孙豹称“立德”、“立功”、“立言”为“三不朽”。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【闲邪存诚】</span>“闲者，防闲也。邪者，非理之思也。凡淫声美色，荡心佚志。狂情戾气，悖理违真。游辞浮文，废时憩日。异端曲说，背经侮圣。如是之类，皆名非理。当防闲之，不令入于吾心。即是防非止恶之意也。存者，持而不失也。诚者，真实之心也。即起信论所说直心正念真如是也。斯乃自利利他二行之本也。“（《印光法师文钞三编·卷四·跋三》）</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【瑕颣】</span>瑕，玉上的斑点；纇，丝上的疙瘩。比喻事物的缺点、毛病。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

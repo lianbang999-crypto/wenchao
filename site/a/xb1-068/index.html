@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复（又真师，觉三居士）书（民国二十年） · 印光法师文钞</title>
+<meta name="description" content="念佛之人，当恭敬至诚，字字句句，心里念得清清楚楚，口里念得清清楚楚。果能如是，纵不能完全了无妄念，然亦不至过甚。多有只图快图多，随口滑读，故无效也。若能摄心，方可谓为真念佛人。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-068/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复（又真师，觉三居士）书（民国二十年） · 印光法师文钞">
+<meta property="og:description" content="念佛之人，当恭敬至诚，字字句句，心里念得清清楚楚，口里念得清清楚楚。果能如是，纵不能完全了无妄念，然亦不至过甚。多有只图快图多，随口滑读，故无效也。若能摄心，方可谓为真念佛人。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-068/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复（又真师，觉三居士）书（民国二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">念佛之人，当恭敬至诚，字字句句，心里念得清清楚楚，口里念得清清楚楚。果能如是，纵不能完全了无妄念，然亦不至过甚。多有只图快图多，随口滑读，故无效也。若能摄心，方可谓为真念佛人。</p><p class="p-trans">念佛的人，应当至诚恭敬，字字句句，心里念得清清楚楚，口里念得清清楚楚。果真能够如此，即使不能完全没有一丝妄念，然而也不至于妄念太过厉害。有很多人只图念得快、念得多，随口滑读，所以没有效果。若能摄心，才可以称得上是真念佛人。</p></div>
+<div class="para-pair"><p class="p-orig">大势至菩萨，以如子忆母为喻。子心中只念其母，其余之境，皆非己心中事，故能感应道交。又曰，都摄六根，净念相继，得三摩地（即三昧也），斯为第一。</p><p class="p-trans">大势至菩萨，以“如子忆母”作为比喻。儿子心中只想念他的母亲，其余的境界，都不是自己心中的事，所以能够感应道交。又说：“都摄六根，净念相继，得三摩地（就是三昧），斯为第一。”</p></div>
+<div class="para-pair"><p class="p-orig">所言心口耳悉令清楚者，即都摄六根之法则也（心，即意根。口，即舌根）。心口念而耳听，眼鼻决不至向外驰求，身亦不至倨傲放肆。</p><p class="p-trans">所言说的心口耳，全都令佛号清清楚楚（心里念得清清楚楚，口里念得清清楚楚，耳朵听得清清楚楚），就是都摄六根的法则啊（心，就是意根。口，就是舌根）。心口念而耳朵听，眼鼻决不至于向外驰求，身体也不至于傲慢放纵。</p></div>
+<div class="para-pair"><p class="p-orig">今人念佛，多多都是不肯认真，故无效耳。又不念佛时，妄想虽多，无由而知。非不念时无妄想也。</p><p class="p-trans">现今的人念佛，大多都不肯认真念，所以没有效果。再者，不念佛时，妄想虽然多，却没有办法知道。而不是说不念佛时，就没有妄想了。</p></div>
+<div class="para-pair"><p class="p-orig">譬如屋中虚空，纵极好的眼，也看不见有灰尘。若窗缝中照来一线之太阳光，则见光中之灰尘，飞上飞下，了无止息。而光未到处，仍然不见有灰尘。是知念佛时，觉得有妄想，还是念佛的好处。不念佛时，完全在妄想窠里，故不知也。</p><p class="p-trans">譬如屋中的虚空，纵然有极好的眼力，也看不见有灰尘。如果从窗缝中照进来一线阳光，就能看见光中的灰尘，飞上飞下，没有止息。而阳光没有照到的地方，仍然看不见有灰尘。通过这个比喻就可以知道念佛的时候，觉得有妄想，还是念佛的好处。不念佛时，完全在妄想的巢穴里，所以不知道有妄想的存在。</p></div>
+<div class="para-pair"><p class="p-orig">又念佛一法，要紧在有真信切愿。有真信切愿，纵未到一心不乱，亦可仗佛慈力，带业往生。若无信愿，纵能心无妄念，亦只是人天福报。以与佛不相应故，固当注重于信愿求生西方也。</p><p class="p-trans">还有，念佛法门，最要紧的，在于有真信切愿。有真信切愿，纵然没有到一心不乱的境界，也可以仗佛慈力，带业往生。如果没有真信切愿，纵然能够心无妄念，也只是人天福报。因为与佛不相应的缘故，所以应当注重于信愿求生西方啊！</p></div>
+<div class="para-pair"><p class="p-orig">真有信愿，妄当自已。倘平日有过头妄想，欲得神通，得名誉，得缘法，得道等。如是完全以妄想为自己本心，越精进勇猛，此种妄想，越多越大。若不觉照，永息此妄，则后来还会著魔发狂，岂但妄想而已乎，固宜汲汲息此过头妄想也。</p><p class="p-trans">真的有信愿，妄想当会自然停止。倘若平时有过头的妄想，想得神通，得名誉，得缘法，得道开悟等。如此完全是以妄想作为自己的本心，越是精进勇猛，这种妄想，就越多越大。如果不加以觉照，永远地止息这种妄想，那么将来还会著魔发狂，何止是打打妄想而已呢？应该赶紧息灭这些过头的妄想。</p></div>
+<div class="para-pair"><p class="p-orig">做功课，当依功课章程。念佛归位，有加释迦，药师二佛者，亦无碍。论理，未念之前礼佛，则系释迦佛也。</p><p class="p-trans">做功课，应当依功课章程。念佛归到原位，有的加念本师释迦牟尼佛、药师佛二佛的名号，也没有妨碍。论道理，没有念之前礼佛，就是礼拜本师释迦牟尼佛。</p></div>
+<div class="para-pair"><p class="p-orig">世人多以人情为事，人无不求消灾延寿者，故加念药师佛。实则阿弥陀佛，与十方三世一切诸佛，威神功德，悉皆齐等，非念阿弥陀佛，不能消灾延寿也。</p><p class="p-trans">世人大多以人之常情为事，人没有不求消灾延寿的，所以加念药师佛。实际上阿弥陀佛，与十方三世一切诸佛，威神功德，全都齐等，不是说念阿弥陀佛，就不能够消灾延寿啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【倨傲】</span>傲慢不恭。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【放肆】</span>放纵，不加约束。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【缘法】</span>犹缘分。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

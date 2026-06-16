@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>潮阳佛教分会演说三 · 印光法师文钞</title>
+<meta name="description" content="诸佛菩萨于诸众生等作利益，无有偏党。如天普盖，如地普载。如日月普照，如膏雨普润。了无憎爱分别之心。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-151/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="潮阳佛教分会演说三 · 印光法师文钞">
+<meta property="og:description" content="诸佛菩萨于诸众生等作利益，无有偏党。如天普盖，如地普载。如日月普照，如膏雨普润。了无憎爱分别之心。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-151/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">潮阳佛教分会演说三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">诸佛菩萨于诸众生等作利益，无有偏党。如天普盖，如地普载。如日月普照，如膏雨普润。了无憎爱分别之心。</p><p class="p-trans">诸佛菩萨，平等利益一切众生，没有偏私。如同天穹普盖一切，如同大地普载万物，如同日月普遍照耀，如同时雨普遍润泽，丝毫没有爱憎分别之心。</p></div>
+<div class="para-pair"><p class="p-orig">然由众生向背不同，致令损益天地悬殊。譬如人处天地之间，以不善摄生故，或因严寒酷暑而致病，或因堕坑落堑以亡身。只宜归咎自己，岂可怨尤天地。</p><p class="p-trans">然而众生由于归向、背离的不同，从而导致得益、受损天差地别。譬如一个人处在天地之间，因为不善于保养身体，或遭受严寒酷暑而生病，或意外落入沟坑而死亡。这只能归咎于自己，哪能责怪天地呢。</p></div>
+<div class="para-pair"><p class="p-orig">又如日月当空，盲人虽不睹光，亦蒙其照。时雨等澍，小草纵难冲霄，亦遂其生。光润是一，而得益各别者，由目坏根小之所致也。</p><p class="p-trans">又如日月当空朗照，盲人虽然看不见光亮，却也蒙受了日月的照耀；时雨均等降落，小草虽然难以像大树那样冲入云霄，但也能够生长。照耀和滋润都是一样的，而众生、万物所得到的利益却各不相同，这是盲人眼盲、小草根小所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">其慈悲誓愿，以己功德回向众生，冥熏加被。与垂形六道，和光同事，种种方便利益众生之不思议事。若非彻证自心，遍阅大藏，何由得悉知亲见也哉。</p><p class="p-trans">佛菩萨大慈大悲，誓愿无尽，以自己的功德，回向一切众生，让众生在冥冥之中受到熏染和加被。以及化现在六道当中，和光同尘与众生共同行事，施设种种方便来利益众生。这些不可思议的事理，如果不是彻证自心、遍阅大藏经，哪里能全都知道、亲眼见到呢。</p></div>
+<div class="para-pair"><p class="p-orig">今以显而易见之一事言之，诸有智者，自当以一悟诸，深感佛恩，而悲其闻法修持之晚也。</p><p class="p-trans">现在举一件显而易见的事来说明，诸位智者自然会以一悟多，从而深深感激佛恩，悲叹自己闻法修持太晚了啊。</p></div>
+<div class="para-pair"><p class="p-orig">当今之世，去尧舜禹汤文武三四千年。其世道人心，远不能与古相比。然由知六道轮回，随业升沉，天狱迭迁，人畜互变之故。虽刚强难化，了无信心之巨恶元凶，其心亦被此法折伏。</p><p class="p-trans">现在距离唐尧、虞舜、夏禹、商汤，周文王、周武王的时代已有三、四千年了。当今的世道人心，远远不能和古时候相比。然而由于知道了六道轮回随业升沉，天界地狱迭相迁徙，人身畜体互变的事理，即使刚强难化、毫无信心的巨恶元凶，他的心也会被因果轮回的事理所折伏。</p></div>
+<div class="para-pair"><p class="p-orig">纵草菅人命，心犹隐伏一惧因畏果影子，遂不至十分暴恶。如列国诸侯，以所爱之臣妾及与百姓，杀而殉葬，动至数十数百而不以为非，反以为荣者，不犹此善于彼乎。</p><p class="p-trans">纵然做着草菅人命的恶事，心中仍然隐伏着一丝惧怕因果的影子，于是就不至于十分残暴毒恶。比如春秋列国的诸侯，将自己所爱的臣子、妻妾以及普通百姓，杀死为自己殉葬。动不动就杀掉几十、几百人，而不认为这有什么不对，反倒当成荣耀，这难道比那些巨恶元凶还要好吗？</p></div>
+<div class="para-pair"><p class="p-orig">夫文王泽及枯骨，不数百年而杀人殉葬之风，遍于天下。虽老庄孔孟齐出，尚不能挽其颓风。</p><p class="p-trans">周文王在世时，恩泽遍及到路边的枯骨。然而之后不到几百年，杀人殉葬的风气，就遍及天下了。虽然有老子、庄子、孔子、孟子等圣贤一齐出世，也不能挽救这种颓废的恶风。</p></div>
+<div class="para-pair"><p class="p-orig">自佛法东来之后，生死轮回，因果报应之理，大明于世。勿论诸侯，即南面称朕，亦不敢行。纵有行者，亦断不敢以多为荣也。</p><p class="p-trans">自从佛法传到中国之后，生死轮回、因果报应的事理，大明于世间。不要说诸侯，就连皇帝也不敢杀人殉葬了。即使有个别人还在做，也绝不敢以多杀为荣。</p></div>
+<div class="para-pair"><p class="p-orig">倘无此法，唯以正心诚意之说，令其推忠恕而笃胞与，息殉葬而全民生。吾恐劝之者徒劳，行之者益炽也。而况后儒唯知治道，不了自心。欲排佛法，强立门庭。皆谓一死永灭，无复后世。</p><p class="p-trans">倘若舍弃因果轮回的事理，只是用正心诚意的学说，让他们推广忠恕之道，而笃行民胞物与的仁慈，停止殉葬而保全人民的生命。我只怕劝说的人徒劳无功，而殉葬之风越发盛行啊。何况后世的儒生只知道治理国家的道理，却不明了自心。因为想要排斥佛法，来强立自己的门庭，所以都说一死之后永远消灭，不会再有后世。</p></div>
+<div class="para-pair"><p class="p-orig">若非如来生死轮回，因果报应之理，浃洽人心。则后世人民，其得正命而善终者，盖亦鲜矣。</p><p class="p-trans">如果不是如来所说的生死轮回、因果报应事理，普遍润泽了人心。那么后世能够享尽天年而善终的人，大概很少了。</p></div>
+<div class="para-pair"><p class="p-orig">斯盖佛法中最极浅近之法，尚可胜残去杀。而况至极深远之圆顿大法，其世智凡情，又何能测度其利益于万一也耶。</p><p class="p-trans">这大概是佛法中最最浅近的教法，尚且可以胜残去杀。何况那些极为深远的圆顿大法，用世间浅智和凡夫情见，又怎能测度其利益的万分之一呢。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【膏雨】</span>滋润作物的霖雨。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【摄生】</span>养生；保养身体。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【和光同尘】</span>出自老子“和其光，同其尘”一语，谓与尘俗相合而不自立异。于佛教，指佛菩萨为救度众生，须隐藏菩提之智慧光，以应化身权假方便，生于充满烦恼之尘世，与众生结缘，次第导引众生入佛法。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【泽及枯骨】</span>恩泽施及死去的人。形容恩情深厚。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【忠恕】</span>儒家的一种道德规范。忠，谓尽心为人；恕，谓推己及人。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【民胞物与】</span>宋张载《西铭》：“民吾同胞，物吾与也。”意谓世人，皆为我的同胞；万物，俱是我的同辈。后因以谓泛爱一切人和物。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【浃洽】</span>1.普遍沾润。2.遍及。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【胜残去杀】</span>实行仁政，使残暴的人化而为善，因而可以废除刑杀。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

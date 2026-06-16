@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复智牧居士书 · 印光法师文钞</title>
+<meta name="description" content="接手书，不胜欣慰。一切众生，皆有佛性。若无人提倡，则善根无由发现。如种子在地，不有时雨，则莫由发生滋长。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-167/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复智牧居士书 · 印光法师文钞">
+<meta property="og:description" content="接手书，不胜欣慰。一切众生，皆有佛性。若无人提倡，则善根无由发现。如种子在地，不有时雨，则莫由发生滋长。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-167/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复智牧居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，不胜欣慰。一切众生，皆有佛性。若无人提倡，则善根无由发现。如种子在地，不有时雨，则莫由发生滋长。</p><p class="p-trans">接到信，非常欣慰。一切众生，皆有佛性。如果没有人提倡，那么善根就无法发生显现。如同种子在地里，没有应时的雨水，就无法发芽生长。</p></div>
+<div class="para-pair"><p class="p-orig">汝父固宿有善根者，故一拨便转。从前之谬执，随之消灭。将来之往生，必可希冀。今为取法名为德和。以燮者，和也。若不知自心固有之明德，则不能上和诸佛之宏誓大愿，而决志忆念，以至心佛相应，如水乳和。亦不能下发起一切同人深信切愿，而一心执持弥陀万德洪名，以期现生出此娑婆，登彼莲邦，如母子和，永无背戾也。</p><p class="p-trans">你父亲原本就是宿世有善根的人，所以一经点拨，便转化过来。从前的错误执着，随之消灭。将来往生，必有希望得到。现在为他取法名为德和。因为“燮”字，就是和的意思。如果不知道自心固有的明德，就不能向上契和诸佛的宏誓大愿，而决心忆佛念佛，以至心佛相应，如水乳相和。也不能向下发起一切同人的深信切愿，而一心执持阿弥陀佛万德洪名，以期现生出离这个娑婆世界，登入那极乐莲邦，如同母子相和，永远不会悖谬啊！</p></div>
+<div class="para-pair"><p class="p-orig">倘能悉心详看文钞，再看净土三经，普贤行愿品，净土十要，净土圣贤录等。则其自利利人之道，即可知其纲要。再加以恳切至诚，谆谆然与家属乡党亲戚朋友说之，则其益大矣。以此功德，回向往生，则必高登上品。</p><p class="p-trans">倘若能够尽心详看《文钞》，再看净土三经，《普贤行愿品》、《净土十要》、《净土圣贤录》等经书。那么自利利人之道，就能知道其纲要了。再加上以恳切至诚，耐心对家属、乡邻、亲戚、朋友讲说，这样的利益就大了。以此功德，回向往生，则必定高登上品。</p></div>
+<div class="para-pair"><p class="p-orig">汝父多生之善根，由兹得其实益。汝之事亲之道，已得其大者。尚祈多方劝喻，令其信心增长，则其利溥矣。祈为洞察是幸。</p><p class="p-trans">你父亲多生的善根，由此得到真实利益。你已经得到最大的事奉双亲之道。还请多方面劝导晓喻你父亲，令他的信心增长，那么这个利益就广大了。请洞察，是为庆幸。</p></div>
+<div class="para-pair"><p class="p-orig">侄妇心芝，具有善根，一闻即信。且欲皈依。今为取法名心馥。以本有之真心，极其清净，亦极其香馥。由种种妄念，相续而起。则便成污秽景象，失其香洁之本体矣。彼既发心修持，又当以此心香，熏其丈夫与其儿女。俾彼各各去其污秽之心念，复其本体之香洁。</p><p class="p-trans">侄媳妇心芝，具有善根，一听就相信。而且想要皈依。现在为她取法名为心馥。因为众生本有的真心，极其清净，也极其香馥。由于种种的妄念，相续而起。就成为污秽的景象，失去香洁的本体了。她既然发心修持，又应当以此心香，熏染她的丈夫和她的儿女。使得家人各各去除他们污秽的心念，恢复他们本体的香洁。</p></div>
+<div class="para-pair"><p class="p-orig">而女人家第一功德，在孝翁姑，相夫教子。既为佛弟子，而不知孝亲相夫教子。则于自己本分之责任未尽，人或由此指斥其非，便不能令人相观而善也。若能笃尽己分，再加修持净业。远近见闻，皆生景慕。所谓以言教者讼，以身教者从。</p><p class="p-trans">而女人家的第一功德，在于孝顺公婆，相夫教子。既已成为佛弟子，若不知道孝敬双亲，相夫教子。那么对于自己本分的责任没有尽到，他人或许由此指斥她的过错，就不能令他人相互观摩而向善。如果能忠实恪尽自己的本分，再加上修持净业。远近看到听到的人，都会心生仰慕。所谓用空泛的言语说教，他人就会诤讼不休；以自身行为教导，他人就会听从。</p></div>
+<div class="para-pair"><p class="p-orig">匹夫匹妇若善，亦可移风易俗。若不善亦可移风易俗。今之学界不知此义，动以男子之职业，令女人习学。而不知以相夫教子为训。是学为乱，非学为治也。吾常曰，教子为治国平天下之根本。而教女尤为切要。盖以人之少时，日在母侧。受贤母之熏陶，未有不成贤人者。故于此覙缕言之，宜令亲友女人悉知之，则幸甚。</p><p class="p-trans">匹夫匹妇如果行善，也能移风易俗。如果不行善，也能移风易俗。现今的教育界不知道这个道理，动不动就用男子的职业，令女人来学习。却不知道用相夫教子（的道理）来训导女子。这是学习成为乱世，不是学习成为盛世。我常常说，教育好子女是治国平天下的根本。而教育好女儿尤其迫切重要。因为人在小的时候，每天在母亲身边。接受贤母的熏陶，没有不成为贤人的。所以对此详细述说，应该令亲戚朋友中的女人全都知道，就非常庆幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【覙缕】</span>1.犹言弯弯曲曲。2.谓详述。3.指事情的原委。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

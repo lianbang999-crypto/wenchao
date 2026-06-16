@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>阜宁合兴镇净念莲社缘起序（民二十四年） · 印光法师文钞</title>
+<meta name="description" content="净土法门，乃如来一代时教之特别法门，三根普被，利钝全收。将成佛之等觉菩萨，不能超出其外。临堕狱之逆恶罪人，亦可预入其中。为众生离苦之捷径，畅如来出世之本怀。故得往圣前贤，人人趣向，千经万论，处处指归。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-052/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阜宁合兴镇净念莲社缘起序（民二十四年） · 印光法师文钞">
+<meta property="og:description" content="净土法门，乃如来一代时教之特别法门，三根普被，利钝全收。将成佛之等觉菩萨，不能超出其外。临堕狱之逆恶罪人，亦可预入其中。为众生离苦之捷径，畅如来出世之本怀。故得往圣前贤，人人趣向，千经万论，处处指归。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-052/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">阜宁合兴镇净念莲社缘起序（民二十四年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，乃如来一代时教之特别法门，三根普被，利钝全收。将成佛之等觉菩萨，不能超出其外。临堕狱之逆恶罪人，亦可预入其中。为众生离苦之捷径，畅如来出世之本怀。故得往圣前贤，人人趣向，千经万论，处处指归。</p><p class="p-trans">净土法门，是如来一代时教的特别法门，三根普被，利钝全收。将要成佛的等觉菩萨，不能超出其外。马上要堕入地狱的五逆十恶的罪人，也可预入其中。是众生离苦的捷径，可畅达如来出世度众生的本怀。所以往圣前贤，人人趣向净土，千经万论，处处指归极乐。</p></div>
+<div class="para-pair"><p class="p-orig">溯自大教东来，远公首开莲社，其高僧巨儒之预会者，凡百二十三人。若终公之世，三十余年之内，其入社而修净业，报尽而获往生者，何可胜数也。</p><p class="p-trans">追溯佛教东来，慧远大师首开莲社，其中高僧巨儒参加莲会的，共一百二十三人。如果把大师在世这三十多年之内，入社修行净业，并于当生报尽而获得往生的人也算在一起，这个数量怎么能数得清呢？</p></div>
+<div class="para-pair"><p class="p-orig">自兹厥后，代有高人，宏扬传布，遍达中外。律教禅密，诸宗知识，或务密修，或兼显赞，皆以净土为归宿者。以其为十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门故也。</p><p class="p-trans">从此以后，历代都有高僧大德，宏扬传布，使净土法门遍及中外。律、教、禅、密，诸多宗派的善知识们，有的秘密自修，有的公开赞扬，全都以净土作为归宿。因为这个法门，是十方三世一切诸佛，上成佛道，下化众生，成始成终的总持法门的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">近来世道人心，陷溺已极。废经废伦，废孝免耻，争地争城，互相残杀之恶剧，一一搬演出来。以致天灾人祸，相继降作，国运危岌，民不聊生。</p><p class="p-trans">近来世道人心，已经陷溺到了极点。废儒经、废伦常，废孝道、无羞耻，争地夺城，互相残杀的恶剧，一一搬演出来。最终导致天灾人祸，相继而来，国运危岌，民不聊生。</p></div>
+<div class="para-pair"><p class="p-orig">有心世道者，群起而提倡佛学。明三世之因果，显六道之轮回。示本具之佛性，修念佛之净业。以期挽既倒之狂澜，复淳朴之风化。所在各立居士林，净业社等，以作挽救之法。否则人道将几乎熄矣。</p><p class="p-trans">有心世道的人，大家群起而提倡佛学。阐明三世因果、六道轮回的实理实事。揭示众生本具的佛性，修习念佛的净业。以期挽救已倒的狂澜，恢复淳朴的风化。所在之处，各各建立居士林，净业社等组织，来作为挽救的办法。否则，做人的道理都将要熄灭了。</p></div>
+<div class="para-pair"><p class="p-orig">海门施元亮居士，寄居阜宁，耕垦荒地。愍世人欲修净业，苦无知法之人，率归于炼丹运气，以求长生，及成大罗神仙之各种外道。剽窃佛经语句，以证己道为得佛法之真传。如愚人以鱼目为真珠，诚可怜愍。</p><p class="p-trans">江苏海门的施元亮居士，寄居在阜宁县，开垦耕耘（佛法）荒地。怜愍世人想要修习净业，苦于没有懂得净土法门的人，于是大都归向炼丹运气，来求长生，以及成就大罗神仙等各种外道。剽窃佛经中的语句，来证明自己的道是得到佛法的真传。如同愚痴的人用鱼目当作真宝珠一样，实在可怜可愍。</p></div>
+<div class="para-pair"><p class="p-orig">然佛法宏旷，不与人争。果能力修正法，彼等自有闻风兴起，改邪归正，惠然肯来之一日。</p><p class="p-trans">然而佛法宏大深广，不与人争。果真能够努力修行正法，他们这些人，自然就有闻风兴起，改邪归正，欣然肯入佛门的一天。</p></div>
+<div class="para-pair"><p class="p-orig">凡入社者，必须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。以真信愿，持佛名号，决志求生极乐世界。</p><p class="p-trans">凡是加入莲社的人，必须敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。以真信愿，持佛名号，决志求生极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">以此自行，复以化他。俾内而父母兄弟妻子，外而乡党亲戚朋友。同沐佛化，同修净业。同于现生，蒙佛慈力，往生西方。庶可不负此日入社念佛之一番诚心也。</p><p class="p-trans">以此自行，再以此教化他人。使得家内的父母兄弟妻子，家外的乡党亲戚朋友。共同沐浴佛法的教化，共同修习净业。共同在现生，蒙佛慈力，往生西方。才能不辜负这一天进入莲社念佛的一番诚心啊！</p></div>
+<div class="para-pair"><p class="p-orig">须知念佛法门，以信愿行三法为宗。念佛之要，在于都摄六根，净念相继。欲都摄六根，净念相继，无论行，住，坐，卧，常念佛号，或声或默，皆须听己念佛之声。倘能如是，则业消智朗，障尽福崇，凡所作为，皆悉顺遂。</p><p class="p-trans">必须知道念佛法门，以信愿行三法为宗旨。念佛的要诀，在于都摄六根，净念相继。想要都摄六根，净念相继，无论行住坐卧，常念佛号，或出声念，或者默念，都必须听自己念佛之声。倘若能够如此，那么业障消、智慧开，障碍尽、福德增，凡是所做的一切事，都会顺利如意。</p></div>
+<div class="para-pair"><p class="p-orig">士，农，工，商之职业，不但了无妨碍，且能启发心灵，精于本业。以心不散乱，作事有主，如理乱丝，神凝则易，心躁则难。</p><p class="p-trans">士、农、工、商等职业，不但没有一点妨碍，而且能够启发心中的灵感，使自己专精于本职工作。因为心不散乱，做事情有主见，如同整理一团乱丝，精神集中就容易整理，心中烦躁就很难整理了。</p></div>
+<div class="para-pair"><p class="p-orig">所以古之建大功，立大业，功勋遍四海，言行垂千秋者，皆由学佛得力而来也。</p><p class="p-trans">所以古来建大功，立大业，功勋遍及四海，言行垂范千秋的人，全都由学佛得力而来啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【惠然肯来】</span>惠：赐，敬辞。用作欢迎客人来临的客气话。《诗经·邶风·终风》：“终风且霾，惠然肯来。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

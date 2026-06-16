@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复泰顺谢融脱居士书二 · 印光法师文钞</title>
+<meta name="description" content="得手札。知阁下尚未圆具，及贵宅贵乡佛法流通之象，喜不自胜。虽然，吾于喜中，不无大忧。何以言之。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-013/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复泰顺谢融脱居士书二 · 印光法师文钞">
+<meta property="og:description" content="得手札。知阁下尚未圆具，及贵宅贵乡佛法流通之象，喜不自胜。虽然，吾于喜中，不无大忧。何以言之。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-013/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复泰顺谢融脱居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">得手札。知阁下尚未圆具，及贵宅贵乡佛法流通之象，喜不自胜。虽然，吾于喜中，不无大忧。何以言之。</p><p class="p-trans">接到您的信。了解到您尚未受大戒，以及您家里、乡里，佛法流通的情况，非常欢喜。虽然如此，我在欢喜之中，也有大忧虑。为什么这么说呢？</p></div>
+<div class="para-pair"><p class="p-orig">夫佛法者，乃九法界公共之法。无一人不当修，亦无一人不能修。持斋念佛者多，推其效则法道兴隆，风俗淳善。此则唯恐其不多，愈多则愈美也。</p><p class="p-trans">佛法是九法界众生的公共之法。没有一个人不应当修，也没有一个人不能修。持斋念佛的人多，推广使大家来效法，就会法道兴隆，风俗淳善。这样，唯恐持斋念佛的人不多，愈多则愈好。</p></div>
+<div class="para-pair"><p class="p-orig">至于出家为僧，乃如来为住持法道与流通法道而设。若其立向上志，发大菩提，研究佛法，彻悟自性。宏三学而偏赞净土，即一生以顿脱苦轮。此亦唯恐不多，多多则益善也。</p><p class="p-trans">至于出家为僧，这是如来为了住持法道与流通法道而设立的制度。如果是立志向上，发大菩提心，研究佛法，彻悟自性。宏扬戒定慧三学而偏赞净土宗，就在这一生出离轮回苦海的人。这样的人也唯恐不多，多多益善。</p></div>
+<div class="para-pair"><p class="p-orig">若或稍有信心，无大志向。欲藉为僧之名，游手好闲，赖佛偷生。名为佛子，实是髡民，即令不造恶业，已是法之败种，国之废人。倘或破戒造业，贻辱佛教。纵令生逃国法，决定死堕地狱。于法于己，两无所益。如是则一尚不可，何况众多。</p><p class="p-trans">如果是稍微有点信心，没有什么大的志向。想借僧人的名字，游手好闲，赖佛偷生。虽有佛子之名，但实际是个光头白衣，即使不造恶业，已经是佛法的败种，国家的废人。倘若破戒造业，使佛教蒙羞。生前纵然能逃过国家法律的制裁，死后决定堕入地狱。于佛法、于自己，两方面都没有利益。这样的人，就算有一个都不可以，何况很多。</p></div>
+<div class="para-pair"><p class="p-orig">古人谓出家乃大丈夫之事，非将相所能为，乃真语实语。非抑将相而扬僧伽也。良以荷佛家业，续佛慧命，非破无明以复本性，宏法道以利众生者，不能也。</p><p class="p-trans">古人说：“出家乃大丈夫之事，非将相所能为”，这是真语实语。并非是贬低将相而褒扬僧伽。实在是因为荷担如来家业，续佛慧命，如果不是破无明以复本性，宏扬佛法以利益众生的人，是不能做到啊！</p></div>
+<div class="para-pair"><p class="p-orig">今之为僧者，多皆鄙败无赖之徒。求其悠悠泛泛，持斋念佛者，尚不多得。况能荷家业而续慧命乎。今之佛法，一败涂地者，以清世祖不观时机，仰遵佛制。革前朝之试僧，永免度牒，令其随意出家，为之作俑也。</p><p class="p-trans">现在来出家为僧的人，大多都是卑鄙无赖之徒。在其中求悠悠泛泛，持斋念佛的人，尚且不多得。何况能够荷担如来家业而续佛慧命呢？现在的佛法，之所以一败涂地，是因为清世祖顺治皇帝不观时机，而一味地仰遵佛制。革除前朝的考试僧人制度，永远免除度牒，令他们随意出家，开佛法衰败之祸端。</p></div>
+<div class="para-pair"><p class="p-orig">夫随意出家，于上士则有大益，于下士则大有损。倘世皆上士，则此法固于法道有益。而上士如麟角，下士如牛毛。益暂得于当时（清初至乾隆年间，善知识如林，故有益），祸广覃于后世。致今污滥已极，纵有知识欲一整顿，无从措手。可不哀哉。</p><p class="p-trans">随意出家，对于才德高超的人有大利益，对于下劣之人就大有损害了。倘若世上都是才德高超的人，那么这个办法固然对于法道有益。然而世上才德高超的人如凤毛麟角，下劣之人却多如牛毛。只是当时暂得一点利益（清朝初年至乾隆年间，善知识如林，所以有益），而此灾祸遍及到后世。导致现在僧团污杂混滥到了极点，纵然有大善知识想要整顿，也无从下手。实在是悲哀啊！</p></div>
+<div class="para-pair"><p class="p-orig">以后求出家者，第一要真发自利利他之大菩提心，第二要有过人天姿，方可剃落。否则不可。至若女人有信心者，即令在家修行，万万不可令其出家。恐其或有破绽，则污败佛门不浅矣。</p><p class="p-trans">以后来求出家的人，第一：要真实发起自利利他的大菩提心；第二：要有过人的天姿，方可剃落。否则不可。至于女人有信心的，就令她在家修行，万万不可让她出家。担心她或有不轨的行为，就会污败佛门不浅啊！</p></div>
+<div class="para-pair"><p class="p-orig">男若真修，出家更易。以其参访知识，依止丛林也。女若真修，出家反难。以其动辄招世讥嫌，诸凡难随己意也。如上拣择剃度，不度尼僧，乃末世护持佛法，整理法门之第一要义。祈与令师及一切相识之僧，剀切言之，则其功德无量无边矣。至祷至祷。</p><p class="p-trans">男子如果真修，出家修更容易。因为他能参访善知识，依止在丛林。女子如果真修，出家修反而困难。因为她动不动就会招来世人的讥嫌，一切很难随自己的心意。如上面所说，拣择根器剃度僧人，不度尼僧，这是末世护持佛法，整理法门的第一要义。祈望与令师以及一切相识的僧人，恳切告诉他们，那么这个功德就无量无边了。这是我至诚的祈求和希望！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【手札】</span>犹手书。指亲笔信。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【圆具】</span>即僧尼具足戒。或指菩萨戒。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【髡民】</span>古指剃去头发的的罪犯，文中指剃去头发的人。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【作俑】</span>古代制造陪葬用的偶像。后指创始，首开先例。多用于贬义。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【广覃】</span>犹遍及。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【破绽】</span>指坏事、丑事或某些越轨行为。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【剀切】</span>切实，恳切。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【至祷】</span>多用于书信结尾，表示恳切的请求或希望。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

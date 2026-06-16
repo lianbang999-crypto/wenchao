@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书十三 · 印光法师文钞</title>
+<meta name="description" content="前日真达和尚由上海来，持居士书并讲演稿，阅之不胜欢喜。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-240/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书十三 · 印光法师文钞">
+<meta property="og:description" content="前日真达和尚由上海来，持居士书并讲演稿，阅之不胜欢喜。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-240/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书十三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前日真达和尚由上海来，持居士书并讲演稿，阅之不胜欢喜。</p><p class="p-trans">前天真达和尚从上海来，带来居士的信和讲演稿，读后非常欢喜。</p></div>
+<div class="para-pair"><p class="p-orig">杨棣棠数年前，颇为提倡，故居士将其书札印为两本。后欲著儒释一贯，欲光作序，托山东臧贯禅转光，贯禅亦不说杨之住处，光亦不问，仍交贯禅。</p><p class="p-trans">杨棣棠在几年前，很是提倡佛法，所以居士林的居士将他的书信，印成两本。杨棣棠后来想写《儒释一贯》，想让我写序，委托山东的臧贯禅转告我，臧贯禅也没有说明杨棣棠的住处，我也不问，写好序仍旧交给臧贯禅。</p></div>
+<div class="para-pair"><p class="p-orig">次年杨有函致谢，亦系由上海居士林转来，此后了无消息，已四五年矣。光问居士林，棣棠曾有书来否。云无。或者放下身心，切实用功，欲得大明儒佛之道于世，亦未可知。</p><p class="p-trans">第二年，杨棣棠写信来致谢，也是由上海居士林转来，此后就没了消息，已经四五年了。我问居士林，杨棣棠有没有信来，回答说：没有。或者他放下身心，切实用功，想要在世间大大阐明儒佛之道，也不可知。</p></div>
+<div class="para-pair"><p class="p-orig">汝所讲者甚好，实为根本要义。唯第一章论孔子之天命一段，完全师法宋儒，完全与孔子诗，书，易，春秋之理与名义相悖。</p><p class="p-trans">你所讲的很好，实在是根本要义。只是第一章，“论孔子之天命”这一段，完全效法宋代的儒者，完全与孔子《诗经》、《尚书》、《周易》、《春秋》的正理与名义相违悖。</p></div>
+<div class="para-pair"><p class="p-orig">儒教诸书说天，那有约佛教理性第一义天之义。宋儒见此义高深，窃取其名义以自尚，欲与佛教争衡。而竟将实事说做空理。</p><p class="p-trans">儒教书籍中说到“天”， 哪里有佛教理性第一义天的意思。这是宋儒看到这些义理高深，窃取佛教中的名义来壮大自己，想与佛教争个高低。然而竟将真实的事说成是空理。</p></div>
+<div class="para-pair"><p class="p-orig">汝学佛有年，何得尚不知宋儒之过，而欲袭之以开人正知乎。佛教事理，性相，修证，因果等，不相混滥。</p><p class="p-trans">你学佛也有些年头了，怎么还不知道宋儒的过错，却想要沿袭他们的说法来开启他人的“正知”呢？佛教中事理，性相，修证，因果等，不会互相混滥。</p></div>
+<div class="para-pair"><p class="p-orig">宋儒专取其最深之理谛，其余事相，概皆抹杀。以故斥因果报应生死轮回，谓天即理也，鬼神者二气之良能也。</p><p class="p-trans">宋儒专门窃取其中最深的理性义谛，其余的事相，一概都抹杀。所以排斥因果报应，生死轮回，认为“天”就是理性；“鬼神”，是阴阳二气的良能。</p></div>
+<div class="para-pair"><p class="p-orig">由此一般眼中无珠者，奉其学说，大家皆以因果报应生死轮回，为佛诳人之法。纵有见得及者，以门庭虚荣心盛，欲百年后主入文庙，亦不得不人云亦云。</p><p class="p-trans">因此，一般有眼无珠的人，尊奉他们的学说，大家都以因果报应，生死轮回，当作是佛教骗人的说法。纵然有看得明白的人，因为门派虚荣心太强盛，想要百年之后进入文庙，受后人供奉，也不得不人云亦云。</p></div>
+<div class="para-pair"><p class="p-orig">道学之明由宋儒，道学之灭亦由宋儒。自兹以后，多半人，皆以因果生死轮回为渺茫，以致善无以劝，恶无以惩。</p><p class="p-trans">理学的阐明是由于宋儒，理学的灭亡也是由于宋儒。从此以后，大多数的人，都将因果生死轮回当作是渺茫虚无，以致无法劝人行善，惩人作恶了。</p></div>
+<div class="para-pair"><p class="p-orig">向无欧风，尚可支持人道。近来欧风东渐，竟公然废经废伦，废孝免耻，杀父杀母之学说，与其实事，通通演出。此之祸根，完全从宋儒来。</p><p class="p-trans">以前没有欧风，尚可支持人道伦理。近来欧风东来，竟公然提倡废儒经、废伦常、废孝道、免羞耻、杀父、杀母的学说，与这些相应的事实，也全都搬演出来。这个祸根，完全是从宋儒而来的。</p></div>
+<div class="para-pair"><p class="p-orig">光每一思及，不禁为儒教痛。偶与一二知己者言此义，绝无一人谓为不然者。在彼当日倡此学说，其意恐人谓儒教之义，浅于佛教。</p><p class="p-trans">我每一想到这里，就不禁为儒教痛惜。偶尔对一二位知己友人，说到这些义理，绝对没有一人不认为是如此的。宋儒在当时提倡这些学说，他们的本意是恐怕他人认为儒教的义理，比佛教浅显。</p></div>
+<div class="para-pair"><p class="p-orig">得此义以维持，庶不至天下后世之人，完全崇奉佛教，而藐视儒教。不知数百年后，竟得此之结果。所谓欲大明儒教，适成其灭除儒教也。哀哉。</p><p class="p-trans">得到这些义理来维持，才不至于天下后世的人，完全崇奉佛教，而藐视儒教。然而不知道几百年后，竟然得到这样的结果。所谓：想要大大阐明儒教，正成了灭除儒教啊！悲哀啊！</p></div>
+<div class="para-pair"><p class="p-orig">儒教圣人之本，吾人不得而知。论儒者，必须按儒教所立之地步身分而论，方可无弊。汝后之诸说，均好。</p><p class="p-trans">儒教圣人的本地，我们不知道。讨论儒者，就必须按照儒教所建立的地步身分来讨论，才能没有弊病。你后面的讲说，都很好。</p></div>
+<div class="para-pair"><p class="p-orig">唯此一段，光已知汝佩服宋儒之固执甚坚。当此群灭儒教之时，尚不知因何而得有此事，而袭此故套，欲今后同师宋儒执理废事之说。</p><p class="p-trans">只有这一段，我已经知道你非常固执地佩服宋儒。在这大众群起灭除儒教的时候，还不知道为什么会有这些事，却还沿袭宋儒的老套，想在今后一同效法宋儒执理废事的学说。</p></div>
+<div class="para-pair"><p class="p-orig">又欲贡之棣棠，若棣棠是真通家，决不赞许汝此说。若尚依附人言，则将引棣棠入于执理废事一门，其祸岂有既极。</p><p class="p-trans">又想要将这些说法贡献给杨棣棠，倘若杨棣棠是真正的大通家，决定不会赞许你的这种说法。如果他还依附他人所说，那么就会引导杨棣棠进入执理废事的门中，这种祸患哪有穷极。</p></div>
+<div class="para-pair"><p class="p-orig">光是以不寄与棣棠。而略说宋儒心病，及因此致成此时率天下之人，同归兽域之恶极世道也。汝若谓光所说者不是，请熟读诗，书，易，春秋说天处，看毕竟是宋儒之失，是光之妄也。</p><p class="p-trans">所以我不寄给杨棣棠。而略说宋儒的心病，以及因此导致现在率领天下的人同归兽域的恶极世道。你如果认为我所说的不对，请熟读《诗经》、《尚书》、《周易》、《春秋》中说到“天”的地方，看看究竟是宋儒错了，还是我乱说了。</p></div>
+<div class="para-pair"><p class="p-orig">孟子荀子告子，及所有儒书之言性处，若按儒家本宗论，则光不敢置喙。若按佛教论，则彼之所言性者，皆属于情。虽名为性，不得谓之真如不变之性。倘此处一儱侗，虽能利人，亦伏有误人之机。若知是情，则谓善，谓恶，谓善恶混，均可。若认此为真如不变之佛性，谓之为善，尚属赘语。况又谓之恶与善恶混乎。</p><p class="p-trans">孟子、荀子、告子，以及所有儒书，说到“性”的地方，如果按照儒家的本宗来讨论，那么我不敢插嘴。如果按照佛教来讨论，那么他们所说的“性”，全都属于情的范畴。虽然名为性，但不能认为是真如不变的佛性。倘若在这个地方一笼统混乱，虽然能够利益他人，也伏有误害他人的祸根。如果知道他们说的性就是情，那么认为性是善，是恶，是善恶相混，都可以。如果认为他们说的这个性，是真如不变的佛性，那么说是善，还都属于多余的话语。何况又说是恶，是善恶相混呢？</p></div>
+<div class="para-pair"><p class="p-orig">古今大聪明人，每好自立门庭，不肯人云亦云，故致有此种议论。正所谓世界原清平，唯人自扰乱耳。</p><p class="p-trans">古往今来的大聪明人，常常喜好自立门庭，不肯人云亦云，所以导致有这些议论。正所谓世界原本清净太平，只是人们自己扰乱罢了。</p></div>
+<div class="para-pair"><p class="p-orig">又汝久慕棣棠之名，欲与之相磋磨，此稿何不令人抄好，而潦草如此，殊失交友之道。光直心直口，不计人之然否，祈为慧谅。（杨朱之学说，于世毫无所益，何可与墨并论，补论。）</p><p class="p-trans">另外，你久慕杨棣棠之名，想要与他互相切磋琢磨，此稿为什么不令人抄好，却写得如此潦草，很失交友之道。我直心直口，不计较他人是否认为正确，还请慧察体谅。（杨朱的学说，对于世道毫无利益，怎可与墨子相提并论，补充说明。）</p></div>
+<div class="para-pair"><p class="p-orig">又，许止净又将历史统纪，略为增修。李耆卿拟刻木板，以期永传（请一极高写宋字人写而刻，亦甚认真，不惜工本）。此须二年后，方可出书。</p><p class="p-trans">再有，许止净又将《历史统纪》，略为增补修定。李耆卿准备刻成木板，以期永久流传（请了一位极为高明，善写宋字的人书写刻印，也很认真，不惜工本）。这样必须二年后，才可以出书。</p></div>
+<div class="para-pair"><p class="p-orig">现又令照旧式排板，亦排两种，缓办不急，大约年内或可出书。此板排成，纸板打好后，去年所打之八付纸板，悉付祝融，庶以后同得阅此善本矣。</p><p class="p-trans">现在又照着旧式排板，也排了两种，慢慢办理不着急，大约年内或许可以出书。这个印板排成，纸板打好后，去年所打的八付纸板，全都烧掉，使得后人都能阅读这个好的本子。</p></div>
+<div class="para-pair"><p class="p-orig">无事勿来信，免得彼此劳神。某某由此二书，真有正知见人尚肯挂齿乎哉。枭鸣獍嗥，谁听此音，何须提及。（五月十三日）</p><p class="p-trans">没有事，不要来信，免得彼此劳神。由于这两封信，真有正知正见的人读后，还肯提及某某人吗？枭鸣獍嗥，谁愿听这些声音，何必要提起。（五月十三日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【杨棣棠】</span>广东中山隆都申明亭村人，别号弘道居士，信仰佛教，祖辈世居檀香山。……后定居美国，晚年沉甸于古籍中，著有《养晦庵书》及诗作。1965年病逝纽约。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【自尚】</span>自高；自负。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【争衡】</span>争强斗胜，比试高低。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【道学】</span>宋代儒家周敦颐、张载、程颢、程颐、朱熹等的哲学思想。道学又称理学，是宋明时期思想界最重要的学术流派。道学之名源于北宋时期；而道学被改称理学，则是在南宋时期。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【杨朱】</span>先秦哲学家，战国时期魏国（今河南开封市）人，字子居，反对儒墨，尤其反对墨子的“兼爱”，主张“贵生”、“重己”，重视个人生命的保存，反对他人对自己的侵夺，也反对自己对他人的侵夺。他的见解散见于《庄子》，《孟子》，《韩非子》，《吕氏春秋》等书。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【枭鸣】</span>枭鸟鸣叫。迷信以为不吉之兆。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【獍】</span>传说中的恶兽名。又称破镜。獍枭：传说枭鸟食母，獍兽食父，或曰亦食母。常喻不孝或忘恩负义之人。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复宁德晋居士书六 · 印光法师文钞</title>
+<meta name="description" content="前与明道师书，并与光之款，及后与光之书，均接到。本欲即复，以西方公据，弥陀经六方佛后，落去舍利弗于汝意云何，何故名为一切诸佛所护念经，二十字，几人屡校，皆未看出，实为业障心眼，令成大罪过也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-147/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复宁德晋居士书六 · 印光法师文钞">
+<meta property="og:description" content="前与明道师书，并与光之款，及后与光之书，均接到。本欲即复，以西方公据，弥陀经六方佛后，落去舍利弗于汝意云何，何故名为一切诸佛所护念经，二十字，几人屡校，皆未看出，实为业障心眼，令成大罪过也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-147/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复宁德晋居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前与明道师书，并与光之款，及后与光之书，均接到。本欲即复，以西方公据，弥陀经六方佛后，落去舍利弗于汝意云何，何故名为一切诸佛所护念经，二十字，几人屡校，皆未看出，实为业障心眼，令成大罪过也。</p><p class="p-trans">上次给明道师的信，还有给我的钱款，以及后来给我的信，都收到了。本来想立即回信，但因为《西方公据》这本书，在《阿弥陀经》六方佛之后，漏掉了“舍利弗，于汝意云何，何故名为一切诸佛所护念经”，这二十个字，几个人多次校对，都没有看出来，实在是业力障蔽心眼，成为大罪过啊！</p></div>
+<div class="para-pair"><p class="p-orig">现另排三页板，已印之六千本，皆印割贴之样子，印出当为寄来。汝处有二包，凡自存及已送人者，皆一一为之贴好，庶免遗漏经文之罪。殆后印出寄时，即不再写信。</p><p class="p-trans">现在另外排印三页的字板，已经印好的六千本，都是印割贴的样子，印出来后寄给你。你那里有二包，凡是自己存留及已经送人的，都一一贴好，才免遭遗漏经文之罪。等到以后印出来寄给你的时候，就不再写信了。</p></div>
+<div class="para-pair"><p class="p-orig">所言疫灾，令大家同在家中念观世音菩萨。于早晚到堂中礼拜若干，及念若干句。此外一任行住坐卧，并做一切事，除作文算帐之用心事外，余做一切事，均好念。</p><p class="p-trans">所说的瘟疫之灾，令大家同在家中念“观世音菩萨”。早晚到观音堂中礼拜若干，以及念若干句。此外，一切行住坐卧，以及做一切事，除了作文算帐，这些要用心去做的事之外，其余做一切事，都好念佛。</p></div>
+<div class="para-pair"><p class="p-orig">睡时念，宜心中默念。若衣冠整齐，手口洗漱了，出声念也好，默念小声念均好。若睡下，或初起，衣冠尚未整齐，或洗澡，或抽解，或至不洁之处，心中默念，亦是一样有功德。若出声念，于仪式不合。</p><p class="p-trans">睡觉的时候念，宜心中默念。如果衣冠整齐，手口洗漱了，出声念也好，默念、小声念都好。如果睡下了，或者刚刚起来，衣冠还没有穿戴整齐，或洗澡，或大小便，或者到不洁净的地方，心中默念，也是一样有功德。此时如果出声念，则对于仪式有所不合。</p></div>
+<div class="para-pair"><p class="p-orig">譬如小儿念母，一日之中，无时不想念其母也。纵睡眠洗澡抽解之时，岂能令心中完全忘却念佛之事。既记得无碍，则心中默念亦无碍也。</p><p class="p-trans">譬如小孩子想念母亲，一天之中，无时不想念他的母亲啊！即使是睡眠、洗澡、大小便的时候，岂能令心中完全忘记念佛的事。既然记得念佛之事没有妨碍，那么心中默念也就没有妨碍了。</p></div>
+<div class="para-pair"><p class="p-orig">人虽至愚，无不怕死，念观世音可保不染此恶疫。若教一切人一日之中随便念，则念观音之声，达于田地道路矣。汝只知向菩萨前念，则能可有几人。又谁能跪念五百声。</p><p class="p-trans">人虽然愚昧到极点，也没有不怕死的，念“观世音菩萨”就可以保佑不染上此恶疫。如果教导一切人，在一天之中随时随地便念，那么念观世音菩萨的声音，就盈满于田地道路间了。你只知道在菩萨像前念，那么有几个人能够这样念。又有谁能够一直跪在菩萨像前念五百声。</p></div>
+<div class="para-pair"><p class="p-orig">念佛之法，当先立念偈后念名号，第二声即行围绕。或地方宽则作圆绕，地方窄作直绕。</p><p class="p-trans">念佛的方法，应当先站着念偈颂，后念菩萨名号，念第二声圣号，就开始绕佛念。如果地方宽敞，就作圆圈绕，地方窄小，就作直线绕。</p></div>
+<div class="para-pair"><p class="p-orig">圆绕则从东至南，至西，至北而行。直绕则壁直走向前，又壁直回头。然亦须依由东至南至西至北之规矩以回身。切不可由东至北至西至南，此名逆行有过。</p><p class="p-trans">圆绕是从东到南，从南到西，从西到北来绕行。直绕是笔直向前走，又笔直回头走。然而也必须依照由东向南、向西、向北的规矩来转身。千万不可以由东向北、向西、向南，这名为逆行，有罪过。</p></div>
+<div class="para-pair"><p class="p-orig">回向之偈，广大无碍，有何不可。但跪念五百声，断断不可。以多人不能如此。或久则致病。</p><p class="p-trans">回向的偈颂，广大无碍，有什么不可以的。但是一直跪着念五百声，断断不可以。因为多数人，不能做到如此。或因时间久了会导致生病。</p></div>
+<div class="para-pair"><p class="p-orig">当此极苦极恶之世，唯阿弥陀佛，观世音菩萨为可凭依。普令一切老幼男女，日常在家念观世音，管保不遭灾祸，多获祯祥。观音堂但于早晚去念。此外随各人行住坐卧，各自随便念，实为最方便之道。</p><p class="p-trans">在这极苦极恶的世道，唯有阿弥陀佛，观世音菩萨可以作为依凭依靠。普令一切老幼男女，日常在家中念观世音菩萨，保证不遭灾祸，多获吉祥。观音堂只在早晚去念。此外随各人的行住坐卧，各自随便念，实在是最方便的办法。</p></div>
+<div class="para-pair"><p class="p-orig">女儿家从小肯念，后来出嫁，便无难产之苦。或者受孕即日常念之。若至临产，须令产妇自己出声念观世音菩萨。旁边照应的人，同皆大声帮产妇念。家里的人在别室中，也可为产妇念。</p><p class="p-trans">女孩子从小肯念观世音菩萨，将来出嫁，便没有难产的痛苦。或者受孕了，就日常念菩萨圣号。如果到了临产，必须令产妇自己出声念观世音菩萨。旁边照应的人，共同都大声帮产妇念。家里的人在其它房中，也可为产妇念。</p></div>
+<div class="para-pair"><p class="p-orig">纵难产将要死了，一念即不久安然而生。切不可谓裸露不净，念之恐得罪，不知此系无可奈何，非能恭敬洁净，而不肯恭敬洁净者也。不但无罪过，且令母子同种善根。</p><p class="p-trans">即使难产将要死了，一念菩萨圣号，不久就会安然而生。千万不可以认为产妇裸露不净，念了恐怕得罪菩萨，不知这是无可奈何的事，并非能够恭敬洁净，而不去恭敬洁净啊！这不但没有罪过，而且令母子二人同种善根。</p></div>
+<div class="para-pair"><p class="p-orig">世人每知守经而不知达权，致有免苦种善根之法，而不敢用，令其受苦，或送命也。可不哀哉。</p><p class="p-trans">世间人每每知道遵守经典而不知道达权通变，致使有这个免除痛苦，种植善根的办法，也不敢用，令她们受苦，或许送了性命啊！能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">临产万不可心里默念，必须出声。以此时，努力要送儿出，心中再默念，或致受病。即不受病，而默念之功德，比朗念为弱小。世人举重物，必须以声相助。况此生死顷刻之时，可不尽力以求菩萨加被乎。</p><p class="p-trans">临产时，千万不可在心里默念，必须要出声念。因为这个时候，努力要将婴儿生出，心中再默念，或许导致受病。即使不受病，默念的功德，比起大声念的功德弱小。世间人举起重物，还必须用发声来相助。何况在此生死顷刻之时，能不尽力来求菩萨加被吗？</p></div>
+<div class="para-pair"><p class="p-orig">光从前不知世之迷信谓产房念不得佛，且念佛之人，不敢到产房。故文钞中一未提及。近四五年始知其弊，故常与一切人言之。</p><p class="p-trans">我从前不知道世人迷信，认为产房中念不得佛，而且念佛的人，不敢到产房中去。所以《文钞》中一概没有提到。最近四五年来，才知道有这个弊病，所以常对一切人来讲说。</p></div>
+<div class="para-pair"><p class="p-orig">亦愿彼母子同安乐。亦愿彼所生儿女同具正信，同为善人，以故与汝说过。以汝绝无体贴文义之心虑，致文钞中说了许多行，住，坐，卧，洗澡，抽解，通好念佛。汝尚以行止坐时忙时闲时，随大小默念可乎，为问。知汝只知跪念为有益，是令多数人不敢发心念也。</p><p class="p-trans">也祈愿她们母子同安乐。也祈愿她们所生的儿女，同具正信，同为善人，所以我对你说过。因为你绝对没有细心体会文义的心思，致使《文钞》中说了许多行、住、坐、卧、洗澡、大小便时，都好念佛。你仍然还以“行时、止时、坐时、忙时、闲时，随大声、小声、默念，可以吗？”，来问我。知道你只知跪着念佛有利益，这是会令多数人不敢发心念佛。</p></div>
+<div class="para-pair"><p class="p-orig">三障者，即烦恼障，业障，报障。烦恼即无明，亦名为惑，即是于理不明（即贪瞋痴也），妄起各种不顺理之心念。</p><p class="p-trans">三障：就是烦恼障，业障，报障。烦恼就是无明，也名为惑，就是对于道理不明白（就是贪瞋痴三毒），妄起各种不顺正理的心念。</p></div>
+<div class="para-pair"><p class="p-orig">业，即由贪瞋痴烦恼之心所作之杀盗淫等之恶事，故名为业。其业已成，则将来必定要受各种苦报。</p><p class="p-trans">业：就是由贪瞋痴烦恼的心，所造作的杀盗淫等等的恶事，所以名为业。恶业已成，那么将来必定要遭受各种的苦报。</p></div>
+<div class="para-pair"><p class="p-orig">三途，途即道也，路也，相通之义。由有杀盗淫之恶业，故当受地狱饿鬼畜生之三途恶报也。</p><p class="p-trans">三途：途就是道的意思，路的意思，相通的意思。由于有杀盗淫的恶业，所以应当受地狱、饿鬼、畜生的三途恶报。</p></div>
+<div class="para-pair"><p class="p-orig">八难有通有别。通则水旱疾疫等是。别则生在佛前佛后（一），无想天（二），北俱卢洲（三），世智辩聪（四），盲聋喑哑（五），地狱（六），饿鬼（七），畜生（八）。此八种，虽苦乐智愚不同，然皆难受佛化，故并名八难也。（立秋日）</p><p class="p-trans">八难有通义，有别义。通义来说，水灾、旱灾、疾疫等都是八难。别义：生在佛前佛后（一难），无想天（二难），北俱卢洲（三难），世智辩聪（四难），盲聋喑哑（五难），地狱（六难），饿鬼（七难），畜生（八难）。这八种难，虽然受苦受乐，智慧愚痴不同，然而都很难接受佛的教化，所以一并名为八难。（立秋日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【心虑】</span>思虑；神思。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

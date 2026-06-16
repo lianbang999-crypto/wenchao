@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复恩施法院院长黄晓浦居士书（附来书 法名德宏） · 印光法师文钞</title>
+<meta name="description" content="端午后二日来示，延至大暑日拜读，计时三十一天。交通不便如此。非常时期，一切以非常视之，天宽地阔矣。自惟孽重障深，幸留残命与公通问者，皆佛菩萨默佑之力也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-175/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复恩施法院院长黄晓浦居士书（附来书 法名德宏） · 印光法师文钞">
+<meta property="og:description" content="端午后二日来示，延至大暑日拜读，计时三十一天。交通不便如此。非常时期，一切以非常视之，天宽地阔矣。自惟孽重障深，幸留残命与公通问者，皆佛菩萨默佑之力也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-175/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 附录</div>
+      <h1 class="art-title">复恩施法院院长黄晓浦居士书（附来书 法名德宏）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">端午后二日来示，延至大暑日拜读，计时三十一天。交通不便如此。非常时期，一切以非常视之，天宽地阔矣。自惟孽重障深，幸留残命与公通问者，皆佛菩萨默佑之力也。</p><p class="p-trans">端午节之后两天（五月初七）寄出来的来信，一直拖延到大暑这一天（六月初八）才得以拜读，共计拖延三十一天。交通的不便竟然到了这种程度。非常时期，一切都要用非常的心来看待，就会天宽地阔了。我想，自己罪孽业障深重，却能有幸保留残命和您互通音讯，这都是佛、菩萨暗中保佑的力量。</p></div>
+<div class="para-pair"><p class="p-orig">古历四月二十日，日机轰炸恩施县城，时在酉初，德宏方自法院回寓。警报至，两女与女仆，抱福周儿避往山洞。小妾抱福备儿，随宏不走。</p><p class="p-trans">农历四月二十日，日本飞机轰炸恩施县城。当时正是下午五点多钟，我（德宏）刚刚从法院回到寓所，警报就响起来了。两个女儿和女仆，抱着儿子黄福周去山洞躲避。小妾却抱着儿子黄福备，跟随我不肯走。</p></div>
+<div class="para-pair"><p class="p-orig">紧急警报旋至，宏在佛前念观音菩萨。机声回环作响，佛座前，有一方桌，上加棉絮，小妾伏其下。忽牵宏衣，宏俯首视之，头部方入桌下，炸弹陆续发声，却不甚烈。</p><p class="p-trans">接着，紧急警报又马上响了起来，我在佛前念观世音菩萨，飞机声回环作响。佛座前面，有一个方桌，上面加有棉絮，小妾就伏在方桌下。她忽然牵拉我的衣服，我低头去看，头部才钻进桌下，炸弹就陆续爆炸了，但是却不太猛烈。</p></div>
+<div class="para-pair"><p class="p-orig">备儿大哭。宏背部有物微触，起立一视，房门震倒，佛座亦倾，满室灰土。足下有小瓷观音像，急拾入怀中（上年法院寝室被回禄，瓷像陷瓦砾中，毫无损伤）。</p><p class="p-trans">儿子黄福备被吓得大哭。这时，我觉得背部有物体微触，起来一看，房门已被震倒，佛座也倾斜了，满室灰土。脚旁边是被震落的小瓷观音像，就急忙拾起塞入怀中（去年法院寝室遭火灾，瓷像陷入瓦砾之中，却毫无损伤）。</p></div>
+<div class="para-pair"><p class="p-orig">墙已外斜。与小妾出门视之，始知前后两进皆中炸弹，栋折榱崩。后进邻居，又中硫磺弹起火，仓卒从前进木料支柱下窜出。</p><p class="p-trans">屋墙已经向外倾斜，和小妾出门查看，才知道前、后两进都中了炸弹，房梁全都崩塌了。后进的邻居，还中了硫磺弹燃起大火，我们仓卒从前进的木料支柱下钻出来。</p></div>
+<div class="para-pair"><p class="p-orig">小妾与邻女，避往安全地点。宏拟抢救衣物，回至原寓门首，孤力无援，不敢一人窜入。正徘徊间，不意四面火遮去路，急避伏夹墙内烂泥沟中，闭目念佛。</p><p class="p-trans">小妾和邻居的女人，都去安全地点躲避。我打算抢救衣物，于是又回到原来的寓所门前，因为孤力无援，所以不敢一个人钻进去。正在徘徊时，没有想到，四面大火遮住了去路，就急忙躲避，趴在夹墙内的烂泥沟中，闭目念佛。</p></div>
+<div class="para-pair"><p class="p-orig">上下左右，火落如雨，手拍即息。火焰离头不足一丈，热气非常难受。沟泥已成温汤，衣已著火一二处。心中仍无所恐，惟自咎不应恋恋衣物，陷入绝地，静待佛菩萨援救而已。</p><p class="p-trans">上下左右，火点如雨落下，用手一拍就息灭了。火焰离头不足一丈，热气烤得非常难受。沟泥已经成了温汤，衣服也有一、两处已经着了火。但是心中仍然没有恐惧，只是自我埋怨，不应该贪恋衣物，使自己陷入绝境，静静等待佛、菩萨援救而已。</p></div>
+<div class="para-pair"><p class="p-orig">久之，南面火势落下，恃鞋底为烂泥浸透，奋起蹋火而过。行十丈远，竟获安全，无一毫损伤。不过肌肉久经火炙，胖子已成瘦汉。所有衣物书籍，及十余年来日记，诗文稿，荡然无存。</p><p class="p-trans">过了很久，南面的火势缓落下来，仗着鞋底被烂泥浸透，奋起蹋过火焰。走了十丈远，竟然获得安全，没有一丝毫的损伤。只不过肌肉久经火烤，胖子已经成了瘦汉。所有的衣物、书籍，以及十多年来的日记、诗文手稿，荡然无存。</p></div>
+<div class="para-pair"><p class="p-orig">法院文卷器具，亦成焦土。又幸行政财政各部，皆由高院第三分院院长负责。昨奉部令，分院院长，首席皆撤职。宏将来虽受处分，想于饭碗无碍。</p><p class="p-trans">法院的文卷、器具，也成了焦土。另外，值得庆幸的是，行政、财政各部，都由高等法院第三分院院长负责。昨天奉司法部命令，分院院长、首席都撤职了。我将来虽然会受到处分，但是想必饭碗还不至于丢掉。</p></div>
+<div class="para-pair"><p class="p-orig">法院移东乡大歇场，即在附近赁茅屋一间。借友人衣一二件，同乡赠小儿衣数件。两女两儿，有衣无裤。</p><p class="p-trans">法院转移到东乡的大歇场，就在附近租了一间茅草屋。向友人借了一、两件衣服，同乡赠送了几件小孩子穿的衣服。两个女儿、两个儿子，只有上衣没有裤子。</p></div>
+<div class="para-pair"><p class="p-orig">城内商店，大部炸毁。乡中须赶场，衣料难买。聊度难民生活，历时将两月。念先考八旬冥诞，无力营斋，只有汇上五圆，叩乞转请百八佛七道场，设位超荐。又乞代购吃饭家伙（即六法全书）一部。</p><p class="p-trans">城内商店，大部分被炸毁了。乡中买东西要赶集市，衣料很难买。暂时过着难民生活，历时已经将近两个月。考虑到先父的八十冥诞，已经无力办理斋会，只有汇上五圆，叩乞您转请在一百零八人的佛七道场里，设灵位超荐亡父。还乞请您代购吃饭的家伙（就是《六法全书》）一部。</p></div>
+<div class="para-pair"><p class="p-orig">次儿本名福备，不料印老法师，赐名即此二字，佛法感应，不可思议。宏自劫火出后，誓持大悲咒终身，行住坐卧，心中默诵，为世界祈祷和平。只问耕耘，不问收获，师谓然否。</p><p class="p-trans">二儿子本名叫福备，不料印老法师，赐的名字就是“福备”这二字，佛法感应，不可思议。我自从劫火逃出之后，发誓终身持《大悲咒》，行、住、坐、卧，心中默诵，为世界祈祷和平。只问耕耘，不问收获，师父您认为这样做是否正确？</p></div>
+<div class="para-pair"><p class="p-orig">生儿教养并重，小妾督责甚严，急时亦知念观世音菩萨。福周儿，亦能拜佛。知念，附陈。切盼来谕，开示此次火劫因果之理。老法师座前，烦为叩安。</p><p class="p-trans">生孩子要教养并重，小妾督责极严，急难时也知道念观世音菩萨。大儿子福周，也能拜佛了，知道您惦念，所以附带告知。切盼来信，开示这次火劫的因果道理。老法师座前，麻烦您代为叩安。</p></div>
+<div class="para-pair"><p class="p-orig">前日接航函，惊悉经过危险，何啻虎口余生，真令人不寒而栗。佛菩萨有求必应，寻声救苦，不可思议之感通，益信而有征。</p><p class="p-trans">前几天接到了来信，吃惊地了解到你所经历的危险，何止是虎口余生，真是令人不寒而栗啊！佛、菩萨有求必应，寻声救苦，不可思议的感通，有了你经历的证明，就更加让人相信了。</p></div>
+<div class="para-pair"><p class="p-orig">森拟撰一灵感记，登佛学半月刊等，为之宣扬，启人信仰。居士之善根，亦可日益增长矣。</p><p class="p-trans">德森我打算把这个事迹撰写成一篇灵感记，登在《佛学半月刊》等刊物上，来加以宣扬，启发人们的信仰。居士的善根，也能因此而日益增长了。</p></div>
+<div class="para-pair"><p class="p-orig">第居士于衣物上遭此大劫，森远在数千里外，实抱爱莫能助之慨。幸全家大小，均得脱险无恙。只贵体为劫火久炙，大胖子成瘦汉，亦无其他伤害，则行动当较庆快，亦无所碍。</p><p class="p-trans">只是居士在衣物上遭到这样的大劫，德森我远在几千里外，的确抱有爱莫能助的慨叹。幸好你全家大小，都得以脱险，安然无恙。只是你的身体因为长时间被劫火烘烤，大胖子变成了瘦汉，但是也没有其他的伤害，而且行动应当会比以前轻快，这也没有什么妨碍。</p></div>
+<div class="para-pair"><p class="p-orig">至在未脱火窟，最危险之时，能心无恐怖，此为修持有素之表现。但只静待佛菩萨救援，不知念及已陷绝境，自分万无生理，尤应专念南无阿弥陀佛，或南无观世音菩萨（随念一名即可），一心希望佛菩萨垂慈。</p><p class="p-trans">至于在没有脱离火窟，最危险的时候，能够心无恐怖，这是你修持有素的表现。但只是静待佛、菩萨救援，却不懂得考虑到已陷绝境，凭自己的能力万无生还之理，就尤其应该专念南无阿弥陀佛，或南无观世音菩萨（随念哪一种名号都可以），一心希望佛菩萨垂慈救度。</p></div>
+<div class="para-pair"><p class="p-orig">如不能脱险逃生，即专望接引往生。不知如此著想，犹非彻底究竟。幸得脱险，不然，恐葬身火窟，而不得往生之善利，为大误矣。</p><p class="p-trans">如果不能脱险逃生，就专门盼望接引往生。不懂得这样去着想，（你的所作所为）仍然不是彻底究竟的。幸好能够脱险，不然的话，恐怕要葬身火窟，却又得不到往生的善利，那就是大失误了。</p></div>
+<div class="para-pair"><p class="p-orig">注想佛菩萨接引往生，如未至其时，亦能感佛菩萨救护脱险。尤望百尺竿头，更进一步，其利益大，方为彻底。</p><p class="p-trans">这种情况下应当专注忆想佛菩萨接引往生，如果还没有到往生的时候，也一样能感应佛、菩萨救护脱险。尤其要盼望自己百尺竿头，更进一步，这样（获得往生）的大利益，这才是彻底的。</p></div>
+<div class="para-pair"><p class="p-orig">至云此次因果之理，吾人自无始来，无孽不造，但须因缘会遇，方受果报。即如目下令吾人罹此大劫之人，一切险恶心行，吾人往昔昏迷不知觉照时，纵有轻重强弱之不同，亦无非只顾我活，不怕人死，以五十步笑百步耳。</p><p class="p-trans">至于说到这次火劫的因果道理，我们从无始以来，无孽不造，只是须要因缘会遇时，才能受到果报。就像眼下令我们遭受这样大劫的那些敌人，所起的一切险恶的心行一样，我们在过去无明迷惑、不懂得觉照时候的心行，（和他们相比，）即使有轻重强弱的不同，但无非是只顾我自己活、不怕别人死，只是以五十步笑百步罢了。</p></div>
+<div class="para-pair"><p class="p-orig">世无无因之果，亦无无果之因。将来究应如何酬偿，或冥或显，自有相当之价值在。吾人深信因果毫发不爽即已。若云毕竟如何，自非凡庸粥饭僧所能分析。</p><p class="p-trans">世上没有无因之果，也没有无果之因。将来究竟应该如何酬偿，或冥或显，自然有互相对等的代价存在。我们只要深信因果丝毫不爽就行了。如果非要问，到底是怎样的，自然不是我这样凡庸的粥饭僧所能分析的。</p></div>
+<div class="para-pair"><p class="p-orig">令先严老人八十冥寿，已函百八佛七道场，安位超荐。吃饭家伙六法全书，已托友人代购代寄。友人回信，一并附上，便知所以。</p><p class="p-trans">您先父的八十冥寿，已经写信通知一百零八人的佛七道场，安灵位超荐。吃饭家伙《六法全书》，已托付友人代购代寄。友人的回信，一并附在信后，看了就知道购、寄费用了。</p></div>
+<div class="para-pair"><p class="p-orig">尊愿终身持大悲咒，祈祷世界和平，固属甚善。但此万无生理，劫后余生之有限光阴，尤须多念南无阿弥陀佛。</p><p class="p-trans">您发愿终身持《大悲咒》，祈祷世界和平，这当然很好。但是，经过这万无生理的灾难，在劫后余生的有限光阴里，尤其必须多念“南无阿弥陀佛”。</p></div>
+<div class="para-pair"><p class="p-orig">并以一切功德，普为众生回向，同求生西方极乐世界，俾自他悉得了生脱死之究竟实益，庶不负佛菩萨此番慈救矣。</p><p class="p-trans">并把一切功德，普为众生回向，祈求共同往生西方极乐世界，使自己和他人都能得到了生脱死的究竟实益，如果能这样做就不辜负佛、菩萨对您的这次慈悲救度了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【回禄】</span>传说中的火神。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【栋折榱崩】</span>榱：椽子。正梁和椽子都毁坏了。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【六法全书】</span>近代世界法律有两大法系，英美法系，以英、美为代表；大陆法系，以法、德为代表，日本和当时的中国的&quot;六法&quot;均属之；两大法系在全世界的影响，大致各占一半。大陆法系国家的基本法律制度，都可以简称&quot;六法&quot;，因此，&quot;六法全书&quot;的名称，实际上涵盖了世界上半数以上的国家，甚至苏联的立法也可以包括在内。中国近代的&quot;六法全书&quot;体系的形成经历了三个时期：晚清修律时期、国民政府成立时期、国民政府时期，日臻成熟。　　《六法全书》，有狭义和广义之分，狭义的六法全书，原指国民党政府制定的“宪法”、“刑法”、“民法”、“商法”、“刑事诉讼法”、“民事诉讼法”的六法。广义的六法全书则包括了以上六大法典为主的国民党政府的所有法律。《六法全书》在新中国建立时被废除了。但国民党政府却把他的“法统”——《六法全书》带到了台湾。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【庆快】</span>庆幸喜悦。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【注想】</span>注望思念。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

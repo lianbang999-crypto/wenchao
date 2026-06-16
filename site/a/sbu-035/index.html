@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>致郑鸣之居士书 · 印光法师文钞</title>
+<meta name="description" content="印光粥饭庸僧，素昧生平，何敢妄投芜简，以自取辱乎哉。但以四月至申，料理观音颂及文钞与寿康宝鉴事，乡人王幼农居士，屡来谈叙。每赞阁下以时势不可有为，特发菩提心，长斋念佛，以求出世。且劝光致书阁下，以结净缘。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-035/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="致郑鸣之居士书 · 印光法师文钞">
+<meta property="og:description" content="印光粥饭庸僧，素昧生平，何敢妄投芜简，以自取辱乎哉。但以四月至申，料理观音颂及文钞与寿康宝鉴事，乡人王幼农居士，屡来谈叙。每赞阁下以时势不可有为，特发菩提心，长斋念佛，以求出世。且劝光致书阁下，以结净缘。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-035/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">致郑鸣之居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">印光粥饭庸僧，素昧生平，何敢妄投芜简，以自取辱乎哉。但以四月至申，料理观音颂及文钞与寿康宝鉴事，乡人王幼农居士，屡来谈叙。每赞阁下以时势不可有为，特发菩提心，长斋念佛，以求出世。且劝光致书阁下，以结净缘。</p><p class="p-trans">我是个只会喝粥吃饭的平庸僧人，和你素昧平生，哪敢妄自写信给你，来自取其辱呢？只因为四月份到上海，处理《观音颂》及《文钞》和《寿康宝鉴》的事，同乡王幼农居士，多次前来谈叙。常常称赞阁下因为时局形势不能有所作为，所以特发菩提心，长斋念佛，以求出世之法。而且劝我写信给阁下，以结净缘。</p></div>
+<div class="para-pair"><p class="p-orig">光闻之，不胜欣慰。但以冗繁，不克如愿。六月初至山，因抽暇略摅鄙见，冀作自利利他，往生上品之资助，想阁下当不以冒昧疏浅而弃之也。</p><p class="p-trans">我听了，非常欣慰。但因为琐事繁多，不能如愿。六月初到了普陀山，因此抽空稍微抒发鄙陋之见，希望作为自利利他，往生上品的资助，想来阁下当不会因我的冒昧疏浅而嫌弃。</p></div>
+<div class="para-pair"><p class="p-orig">现今之世，谬乱已极，废经废伦，无可救药。然以道眼观之，是殆催人出此娑婆，生彼极乐之大警策。倘不怀出世之心，则将来之世，直无可为吾父母者。</p><p class="p-trans">现今的世道，荒谬坏乱到了极点，废儒经，废伦理，无可救药。然而以道眼来观察，则是催人出离此娑婆世界，往生那极乐世界的大大警策。如果没有出世间的心，那么将来的世间，简直就没有可以作我父母的人了。</p></div>
+<div class="para-pair"><p class="p-orig">近来研究佛学者，实繁有徒。但天姿高者，每任臆见，偏重理性，不务事修。或以信愿为著相，或以参究为亲切。纵修净业，不依净土法门之宗旨，则致感应道隔，以现生了脱之法，作未来得度之因。令上等天姿，反不如愚夫愚妇，颛蒙念佛，为能得其实益，岂不大可惜哉。</p><p class="p-trans">近来研究佛学的人，很多很多。但是天姿高的人，常常随任自己的主观私见，偏重理性，不注重事相上的修持。有的认为信愿念佛是著相，有的认为参究自性更加亲切。即使修习净业，但却不依净土法门的宗旨，于是便导致感应之道阻隔，将现生了脱生死的法门，作为未来得度的因种。令上等天姿的人，反而不如愚夫愚妇，颛蒙念佛，更能得到其中的真实利益，岂不是很可惜吗？</p></div>
+<div class="para-pair"><p class="p-orig">阁下既发心念佛，固当依净土宗旨。凡离信愿说念佛等开示，悉宜置之度外。以彼系禅宗唯究自心者之方法，非净宗仗佛慈力，以求往生者之轨范也。光之所说，乃宗净宗古德之诚言，非臆见杜撰之偏论。请熟读净土十要，则自可悉知。</p><p class="p-trans">阁下既已发心念佛，本就应当依照净土宗旨。凡是离开信愿说念佛等的开示，全都应将它们置之度外。因为这些是禅宗只参究自心之人的方法，不是净土宗仗佛慈力，以求往生者的轨范。我所说，是遵从净土宗古德的诚实之言，不是自己主观臆见杜撰的偏执之论。请熟读《净土十要》，就自然可以全都知道了。</p></div>
+<div class="para-pair"><p class="p-orig">印光文钞，文虽浅陋，其于禅净界限，及普通特别法门之所以，佛力自力大小之得失，颇为详悉。倘肯详阅，亦未始绝无裨益。</p><p class="p-trans">我的《文钞》，文词虽然浅陋，其中对于禅宗、净土的界限，以及普通、特别法门的所以然，佛力、自力的大小得失，说得颇为详悉。倘若肯详读，也不会绝无一点利益。</p></div>
+<div class="para-pair"><p class="p-orig">昔沈子培居士，以菩萨自命，不愿往生。光极力破斥，方回心净土。时在民国十年。而年高望重，无有常与谈论勉勖者，至临命终时，犹然不提往生之事。</p><p class="p-trans">过去沈子培居士，以菩萨自命，不愿往生。我极力破斥，他才回心净土。当时是民国十年（1921）。然而因为他年纪大，德望重，没有常常与他谈论（净土）以及勉励他的人，到了临命终时，他依然不提往生的事。</p></div>
+<div class="para-pair"><p class="p-orig">通州张季直，由其门人江易园之劝进，于此道亦颇注意，曾函询于光。时民国十四年。但以实业心重，不能直下承当，为可惜耳。</p><p class="p-trans">通州的张季直，由他的学生江易园的劝进，所以对于念佛往生之道也很注意，曾经写信询问过我。当时是民国十四年。但因为他办实业的心太重，不能直下承当，实在可惜。</p></div>
+<div class="para-pair"><p class="p-orig">唯如皋沙健庵，颇能依信愿行之宗旨，其操持颇严密。临终数日前，即令人助念，得其往生实益。新排之增广文钞，有彼往生记，八九月当可出书，出则当寄以请政。是知天姿高者，若能通身放下，则其利益，便能超越侪伍。否则，反不如愚夫妇之老实念佛者，为有实益也。</p><p class="p-trans">唯有江苏如皋的沙健庵，颇能依信愿行的宗旨，他的操行修持颇为严密。临终前好几天，就令人助念，得到了他往生的真实利益。新排的《增广文钞》，有他的《往生记》，八九月份应当可以出书，书印出后寄给你，请斧正。所以知道天姿高的人，如果能通身放下，那么这个利益，就能够超越同辈。否则，反而不如愚夫愚妇那样老实念佛的人，能得到真实利益。</p></div>
+<div class="para-pair"><p class="p-orig">然阁下德高望重，以身率物。凡有来者，固宜以提倡因果报应，信愿念佛，为救世度人之方便。当今之世，若不提倡因果报应，虽圣贤佛菩萨同出于世，亦无可如何。</p><p class="p-trans">然而阁下德高望重，以身作则。凡是有来学的人，本就应该以提倡因果报应，信愿念佛，来作为救世度人的方便。当今之世，如果不提倡因果报应，即使是圣贤佛菩萨同出于世，也无可奈何。</p></div>
+<div class="para-pair"><p class="p-orig">光常曰，因果者，世出世间圣人平治天下，度脱众生之大权也。有藐视因果，谓为小乘者，皆徒逞狂慧，不务真修之魔侣也。果能大倡此风，则唯知利己，不顾害人者，必当有惧于心，而为之戢其暴虐，以期己得实益，而亦以利人为事也。</p><p class="p-trans">我常常说：因果，是世间、出世间圣人平治天下，度脱众生的大方便之法。有轻视因果，认为这是小乘的人，都是徒然卖弄狂慧，不注重真实修持的魔侣。果真能够大大提倡这个风气，那么只知利益自己，不顾危害他人的人，必定在内心有所畏惧，因而收敛他们的暴虐，以期自己得到真实利益，而且也以利益他人为要事。</p></div>
+<div class="para-pair"><p class="p-orig">光谓提倡因果报应，为现在救世唯一无二之妙法。而修持净业，亦须以此为成始成终之道。鄙见如是，不知阁下以为然否。</p><p class="p-trans">我认为提倡因果报应，是现在救世独一无二的妙法。而修持净业，也必须以提倡因果报应作为成始成终的方法。鄙陋之见如上所说，不知阁下认为对否？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【请政】</span>敬辞。请斧正。斧正：请人修改诗文的敬辞。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

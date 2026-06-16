@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>学佛浅说序（民十三年） · 印光法师文钞</title>
+<meta name="description" content="佛法深广，有如大海，唯佛与佛，方能彻其源底。其余九法界，虽则圣凡利钝不同，各各随己分量而为修习，以迄证入。譬如修罗香象，及与蚊虫，饮于大海，各得饱腹而去。若欲一口吸尽，除非具足大海之量者方可。否则只可亲尝其味，未易穷源彻底也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-029/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学佛浅说序（民十三年） · 印光法师文钞">
+<meta property="og:description" content="佛法深广，有如大海，唯佛与佛，方能彻其源底。其余九法界，虽则圣凡利钝不同，各各随己分量而为修习，以迄证入。譬如修罗香象，及与蚊虫，饮于大海，各得饱腹而去。若欲一口吸尽，除非具足大海之量者方可。否则只可亲尝其味，未易穷源彻底也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-029/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">学佛浅说序（民十三年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法深广，有如大海，唯佛与佛，方能彻其源底。其余九法界，虽则圣凡利钝不同，各各随己分量而为修习，以迄证入。譬如修罗香象，及与蚊虫，饮于大海，各得饱腹而去。若欲一口吸尽，除非具足大海之量者方可。否则只可亲尝其味，未易穷源彻底也。</p><p class="p-trans">佛法深广，就像大海一样，唯有佛与佛，才能彻底了知其源底。其余九法界众生，虽然圣者、凡夫，利根、钝根各不相同，但都能各随自己的分量进行修习，直到证入。譬如修罗香象，以及蚊虫，都饮用大海水，各个得以饱腹而去。如果想一口气吸尽大海水，除非具足大海那样的肚量才能做到。否则，只能亲口尝到海水的味道，而不容易穷源彻底啊！</p></div>
+<div class="para-pair"><p class="p-orig">然佛法乃一切众生即心本具之法。于众生心外，了无一法之所增益。以一切众生之心，当体与佛无二无别。但由迷而未悟，起惑造业，随业受苦。以致即心本具之智慧德相，被烦恼恶业之所盖覆，如云笼月，不见光相。虽则不见光相，而月之光相常自如如，了无所减。</p><p class="p-trans">然而佛法是一切众生即心本具之法。在众生心外，了无一法能够增益。因为一切众生的心，当体与佛无二无别。但由于迷惑而没有觉悟，起惑造业，随业受苦。以致即心本具的智慧德相，被烦恼恶业所盖覆，如同乌云笼罩了月亮，见不到月光。虽然看不见月光，而月光本身却恒常地与原来一样，没有一点减少。</p></div>
+<div class="para-pair"><p class="p-orig">如来由是起无缘慈，运同体悲，随顺机宜，与之说法。虽大小，权实，偏圆，顿渐，随机施设，种种不同。在佛本意，无非令一切众生，背尘合觉，返迷归悟，出幻妄之生死，成本具之佛道而已。</p><p class="p-trans">如来因此起无缘慈，运同体悲，随顺众生的根机时宜，为众生说法。虽然随顺众生根机而施设时，有大乘、小乘、权教、实教、偏教、圆教、顿教、渐教，种种不同。但佛陀的本意，无非是使一切众生，背尘合觉，返迷归悟，出离幻妄的生死，成就本具的佛道而已。</p></div>
+<div class="para-pair"><p class="p-orig">以众生业障深重，未易消除。故特开信愿念佛之净土法门，俾一切若圣若凡，或愚或智，同仗弥陀宏誓愿力，往生西方。则复本具之心性，成无上之菩提，盖易易矣。</p><p class="p-trans">因为众生业障深重，不容易消除。所以佛陀特别开启了信愿念佛的净土法门，使一切圣者、凡夫，智者、愚人，同仗阿弥陀佛的宏誓愿力，往生西方。那么恢复本具的心性，成就无上菩提，就很容易了。</p></div>
+<div class="para-pair"><p class="p-orig">自佛法入震旦，千八百余年以来，凡圣君贤臣，伟人名士，莫不仰遵佛嘱，护持流通。以佛法虽属出世之法，所有世间经世之道，悉皆包括无遗。</p><p class="p-trans">自从佛法传入中国，一千八百多年以来，凡是圣明君主、贤能大臣，伟人、名士，无不仰遵佛陀的咐嘱，护持流通佛法。因为佛法虽然属于出世法，然而所有世间经国治世的道理，全都包括无遗。</p></div>
+<div class="para-pair"><p class="p-orig">举凡父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠，咸与世间圣人所说无异。世间圣人，唯令人尽义尽分。佛则具明能尽义尽分，与不能尽义尽分之善恶报应。</p><p class="p-trans">凡是父慈、子孝，兄友、弟恭，夫和、妇顺，主仁、仆忠这些伦常道理，都与世间圣人所说的没有差异。世间的圣人，只是让人竭尽道义、竭尽本分。佛则具体说明能够竭尽道义、竭尽本分，与不能够竭尽道义、竭尽本分的善恶报应。</p></div>
+<div class="para-pair"><p class="p-orig">尽义尽分，只能教其上智。若禀性顽劣，则不是伪为，便是故悖。倘知善恶报应，则欲为善而必能勉力，欲为不善而有所不敢矣。</p><p class="p-trans">竭尽道义、竭尽本分，只能教育那些上智的人。如果是禀性顽劣的人，那么他们不是虚伪地去做，便是故意违悖。倘若知道善恶报应，那么想要行善而必定能努力去做，想要作恶而也有所不敢了。</p></div>
+<div class="para-pair"><p class="p-orig">如来所说三世因果，六道轮回等法，深则见深，浅则见浅。以之修心，即可断惑证真，了生脱死。以之治世，即可胜残去杀，返浇还淳。</p><p class="p-trans">如来所说的三世因果，六道轮回等法，深根的人，就见到深理；浅见的人，就见到浅理。以因果轮回的道理来修心，就可以断惑证真，了生脱死。以因果轮回的道理来管理国家，就可以胜残去杀（感化那些残暴的人使其不再作恶，这样便可以废除死刑），使浇薄的社会风气得以恢复淳朴。</p></div>
+<div class="para-pair"><p class="p-orig">近来世道人心，陷溺已至极点。竞倡新法，废弃旧章。虽父子夫妇之伦，尚欲推翻，况其小焉者乎。以故天灾人祸，相继降作。国运危岌，民不聊生。</p><p class="p-trans">近来的世道人心，已经陷溺到了极点。竞相提倡新法，废弃旧有规章。即使是父子、夫妇这样重要的人伦，尚且还想要推翻，何况其他小的方面呢？因此，天灾人祸，相继发生。国运危急，民不聊生。</p></div>
+<div class="para-pair"><p class="p-orig">有心世道人心之人，欲为挽救，普劝悉皆研究佛学。戒杀放生，吃素念佛，诸恶莫作，众善奉行。由一传十，由十传百，至千至万，靡然风从。庶可望其天下太平，人民安乐。此实治乱持危，改革世道人心之根本法轮也。</p><p class="p-trans">有心世道人心的人，想要挽救，普劝大家都来研究佛学。戒杀放生，吃素念佛，诸恶莫作，众善奉行。由一传十，由十传百，至千至万，群起效尤而成风气。这才有可能期望天下太平，人民安乐。这实在是治理乱世、扶持危局，改革世道人心的根本法轮啊！</p></div>
+<div class="para-pair"><p class="p-orig">当今之世，若不以因果报应，生死轮回为训，虽圣贤齐出于世，亦末如之何矣。若不以信愿念佛，求生西方是修，纵天姿高上，亦难断惑证真，了生脱死。</p><p class="p-trans">当今之世，如果不以因果报应，生死轮回作为训导，即使是圣贤一齐出世，也无可奈何啊！如果不以信愿念佛、求生西方这一法门来修行，纵然天姿很高，也很难断惑证真，了生脱死。</p></div>
+<div class="para-pair"><p class="p-orig">王博谦居士，宿根深厚，救世心切。兼且主笔报馆，操言论之机关。欲令同人，同皆学佛。以佛教经论著述，文深义奥。纵慧业文人，久经研究，尚难悉其指归，入其阃奥，况愚夫愚妇乎哉。</p><p class="p-trans">王博谦居士，宿世善根深厚，救世心切。并且是报馆的主编，掌控社会言论的机关。想要使志同道合的人，共同都来学佛。但因为佛教的经论著述，文义深奥。即使是有文学天赋并以文字为业的人，经长时间研究，仍很难完全明白佛法的宗旨，进入其精微深奥之处，何况是愚夫愚妇呢？</p></div>
+<div class="para-pair"><p class="p-orig">由是以己所见之理，作学佛浅说二十篇。概用通俗文字，其语悉本佛祖经论，不过借显浅之文发挥之。以期雅俗同观，智愚咸了耳。</p><p class="p-trans">因此，将自己所见的义理，作《学佛浅说》二十篇。一概用通俗的文字，其中的言语全都以佛菩萨、祖师的经论为本，不过借助显浅的文字来加以发挥。以期雅俗同观，智者愚人全都能理解罢了。</p></div>
+<div class="para-pair"><p class="p-orig">以光形迹虽异，志道原同。虚心下问，以稿见寄，谬令鉴订，以便流通。因详阅之，不胜欢喜。聊抒愚怀，以示同意。普愿阅者，同生信心，所有利益，当自证知。</p><p class="p-trans">我认为我与他的外表行迹虽然不同，但却一向志同道合。他虚心请问，将文稿寄给我，错谬地让我鉴订，以便流通。因此我详细阅读，非常欢喜。略微抒发我的心怀，以表示同意。普愿读者，共同生起信心，所有的利益，当会自己证知。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【修罗香象】</span>指不平常的强硕大象。修罗：即梵语阿修罗，汉语译为“非同类”，这里借指不平常、狂暴；香象：鬓角分泌有香气液体的强硕大象，即交配期的大象。此时期的象，其力特强，性甚狂暴，难以制伏，合十凡象之力仅可抵一香象之力。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【经世】</span>1.治理国事。2.阅历世事。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【胜残去杀】</span>感化残暴的人使其不再作恶，便可废除死刑；也指以德化民，太平至治。出自《论语·子路》。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【治乱持危】</span>治：治理。治理乱世，扶持危局。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【末如之何】</span>犹言无法对付，莫可奈何。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【阃奥】</span>比喻学问或事理的精微深奥所在。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

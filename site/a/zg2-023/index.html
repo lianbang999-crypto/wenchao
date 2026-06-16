@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>净业良导序 · 印光法师文钞</title>
+<meta name="description" content="娑婆，生死险道也。极乐，常住家乡也。众生由一念不觉，入此险道，莫之能出。纵欲出此险道，归彼家乡。而生无慧目，不知所趣。若无良导，不但误入歧途，竟成背驰，且有堕坑落堑，丧身失命之忧。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-023/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="净业良导序 · 印光法师文钞">
+<meta property="og:description" content="娑婆，生死险道也。极乐，常住家乡也。众生由一念不觉，入此险道，莫之能出。纵欲出此险道，归彼家乡。而生无慧目，不知所趣。若无良导，不但误入歧途，竟成背驰，且有堕坑落堑，丧身失命之忧。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-023/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">净业良导序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">娑婆，生死险道也。极乐，常住家乡也。众生由一念不觉，入此险道，莫之能出。纵欲出此险道，归彼家乡。而生无慧目，不知所趣。若无良导，不但误入歧途，竟成背驰，且有堕坑落堑，丧身失命之忧。</p><p class="p-trans">娑婆世界，是生死轮回的险路；极乐净土，是常住本有的家乡。众生由于一念不觉，所以进入娑婆险路，无法出离。即使想要出离险路，回归极乐家乡，然而生来不具备慧眼，从而不知道回归的路径。如果没有好的向导，不但会误入歧途，背道而驰，而且还有堕落到坑堑，丢掉性命之忧。</p></div>
+<div class="para-pair"><p class="p-orig">净土三经一论，以及一切大乘经论，皆导师也。但以文深义奥，初机不易领会。虽则无边妙义，具足无遗。而以暗钝心识当之，每致有疑而不能决，有信而不能生。</p><p class="p-trans">“净土三经一论”，以及一切大乘经论，都是修行人的导师。只因为文字义理深奥，初学者不容易领会。虽然这些经论当中具足了无量无边的深妙义理，然而以我们昏暗迟钝的心识来承当，每每导致有疑惑而不能决断，有信心而不能生起。</p></div>
+<div class="para-pair"><p class="p-orig">因兹历代古德各垂言教，以逗时机。由是法流无壅，而群机悉蒙其利济矣。无名居士，自虽未度，志切度人。因将乐邦文类，及莲池，紫柏，憨山，蕅益，各集中之合时机者。录数十篇，以应初入法门之士。</p><p class="p-trans">因此历代的古大德，都各各垂示言教，来逗合当时众生的根机。由此，佛法的流传就没有壅塞，各种根机的众生就都能蒙受利益和救济。无名居士，虽然自己还没有得度，却有迫切的度人之心。因此将《乐邦文类》，以及莲池大师、紫柏尊者、憨山大师、蕅益大师各大德文集中契合时机的文章，摘录出几十篇，来接应初入佛法之门的人。</p></div>
+<div class="para-pair"><p class="p-orig">待其门径已得，然后遍阅全书，则知一滴之味，与大海之味，无二无别。而如来出世一大事因缘，唯净土一法，方能究竟畅佛本怀也。</p><p class="p-trans">等读者得到佛法门径之后，再遍阅这些古德的全集，就会知道，一滴海水的味道，与整个大海的味道，没有差别。也会知道，如来出现于世的一大事因缘，唯有净土法门，才能究竟无遗地畅达佛陀的本怀。</p></div>
+<div class="para-pair"><p class="p-orig">无名居士，㧑谦不敢自专，命光鉴定。因题之曰净业良导云。</p><p class="p-trans">无名居士，谦虚不敢自己专断，就让我来鉴定。于是我为本书题名为《净业良导》。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【坑堑】</span>沟壑；山谷。喻险恶环境。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【三经一论】</span>即净土宗所依准之四部典籍。三经指：无量寿经二卷（曹魏康僧铠译）、观无量寿经一卷（刘宋疆良耶舍译）、阿弥陀经一卷（姚秦鸠摩罗什译）。一论指无量寿经优婆提舍愿生偈一卷（天亲著，元魏菩提流支译）。四书要旨均在明示往生净土之教。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【当】</span>1承受；承当。2值；遇到。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【乐邦文类】</span>凡五卷。南宋宗晓（1151-1214）编。庆元六年（1200）完成。收于大正藏第四十七册。乐邦乃安乐国，即极乐净土之意。本书内容乃编集有关净土宗诸经论之要文，以及诸师之著述、诗偈、传记等，分为十四门，计有二百二十余篇。后宗晓复作续编乐邦遗稿二卷</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【㧑谦】</span>谓施行谦德。泛指谦逊。《易·谦》：“无不利，㧑谦。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【自专】</span>一任己意，独断独行。《礼记·中庸》：“愚而好自用，贱而好自专。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

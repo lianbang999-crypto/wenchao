@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>味精能挽劫运说 · 印光法师文钞</title>
+<meta name="description" content="饮食于人，关系甚大。得之则生，弗得则死。故曰食为民天。然天地既为人生种种谷，种种菜，种种果。养人之物，亦良多矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-153/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="味精能挽劫运说 · 印光法师文钞">
+<meta property="og:description" content="饮食于人，关系甚大。得之则生，弗得则死。故曰食为民天。然天地既为人生种种谷，种种菜，种种果。养人之物，亦良多矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-153/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">味精能挽劫运说</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">饮食于人，关系甚大。得之则生，弗得则死。故曰食为民天。然天地既为人生种种谷，种种菜，种种果。养人之物，亦良多矣。</p><p class="p-trans">饮食对人有很大关系，得到就能生存，得不到就会死亡。所以说：“民以食为天”。然而天地已经为人类生产出了种种谷物、种种蔬菜、种种瓜果。能够养活人的食物，已经很多了。</p></div>
+<div class="para-pair"><p class="p-orig">而以口腹之故，取水陆空行诸物，杀而食之，以图一时之悦口。绝不计及彼等与吾，同禀灵明之性，同赋血肉之躯，同知疼痛苦乐，同知贪生怕死。</p><p class="p-trans">然而世人却为了自己的口腹之欲，捕获水陆空行种种动物，将它们杀死吃掉。只贪图一时的悦口，绝不考虑它们和我们一样，也禀受着灵明的本性，也赋予了血肉的身躯，也知道疼痛和苦乐，也懂得贪生而怕死。</p></div>
+<div class="para-pair"><p class="p-orig">但以力弗能敌，被我杀而食之，能不怀怨结恨，以图报于未来世乎。试一思之，能不惴惴。忍以一时悦口之故，于未来世，受彼杀戮乎哉。</p><p class="p-trans">只因为力量敌不过我们，所以就被我们杀死吃掉。它们能不心怀怨恨，在未来世寻求报复吗。试着想一想，怎能不害怕，怎能忍心为了一时的悦口，从而在未来世受它们的屠杀呢。</p></div>
+<div class="para-pair"><p class="p-orig">愿云禅师云，千百年来碗里羹，怨深似海恨难平。欲知世上刀兵劫，但听屠门夜半声。详味斯言，可以悟矣。奈世人习惯肉食，劝其吃素，纵有恻隐之心，亦不易从，以无滋味以佐食故。</p><p class="p-trans">愿云禅师说：“千百年来碗里羹，怨深似海恨难平。欲知世上刀兵劫，但听屠门夜半声。”细细体会这番话，就可以觉悟了。奈何世间的人习惯了吃肉，劝他们吃素，纵然他们有恻隐之心，也不容易听从，这是因为没有滋味来辅佐饮食的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">近有化学大家，吴蕴初君。有心世道，欲挽杀劫，特专精研究食味一事。乃取麦麸，洗出面筋，酝酿多日，制成酱精，味精，以资饮食之味，其意亦良厚矣。此品其质醇厚，绝无荤物。愿吃素之人，放心用之。</p><p class="p-trans">近来，化学大家吴蕴初先生，有心于世道，想要挽回杀劫，特地专精研究食品调味这件事。于是用小麦麸皮洗出面筋，经过多天的酝酿，制成酱精、味精，来辅助饮食的味道。他的用意真是善良仁厚啊！这种调味品，质味醇厚，绝对没有荤腥。愿吃素的人，可放心食用。</p></div>
+<div class="para-pair"><p class="p-orig">光初闻其说，尚不敢信。一日，林涤庵夫妇，同来皈依。因与说食肉结果之惨，天灾人祸，多从杀生食肉而起。奈世人多以口舌滋味所误，故难消灭其根本也。</p><p class="p-trans">我起初听到这件事，还不敢相信。有一天，林涤庵夫妇一起来皈依。我就对他们说到吃肉的悲惨结果，天灾人祸大多是从杀生吃肉而起。奈何世人大多被口舌滋味所误导，所以很难从根本上消灭吃肉。</p></div>
+<div class="para-pair"><p class="p-orig">彼遂言，吴君所制味精，酱精，甚鲜美。若著少许于食中，即粗粝亦等珍羞矣。因请光偕江味农居士，并二三友人，同往其厂，看其制法。</p><p class="p-trans">他们就说：“吴蕴初先生所制造的味精、酱精，味道很鲜美。如果放一点点在食物当中，即使是粗糙的饭食也等同于美味珍羞了”。因此就请我偕同江味农居士，以及两三位朋友，共同去吴先生的工厂，参观味精、酱精的制作方法。</p></div>
+<div class="para-pair"><p class="p-orig">深佩吴君一番苦心。以此品一行，不但救护物命，且能令同人解怨释结，俾与一切物类，同得共生于天地之间，以各尽天年，其利益大矣。</p><p class="p-trans">深深佩服吴先生的一番苦心。因为这种调味品一旦流行，不但可以救护动物的生命，而且能让大家解除生死怨结。使得人类和一切动物，共同生长在天地之间，各各享尽天然的寿命，这个利益很大啊！</p></div>
+<div class="para-pair"><p class="p-orig">孟子曰，矢人岂不仁于函人哉，矢人惟恐不伤人，函人惟恐伤人。巫匠亦然，故术不可不慎也。</p><p class="p-trans">孟子说：“造箭的工匠想必比造铠甲的工匠残忍不仁吧。造箭的工匠唯恐箭不能射伤人，造铠甲的工匠唯恐穿铠甲的人被箭射伤。巫医和棺材匠之间的关系也是这样（按：巫医怕病人不好，棺材匠怕病人不死）。所以职业的选择不能不慎重啊”。</p></div>
+<div class="para-pair"><p class="p-orig">窃谓吴君此品，艺也而进乎道矣。出此以行世，求利也而实含利人利物，救国救民之深益矣。其功伟哉。</p><p class="p-trans">我认为吴先生的这种调味品，虽然属于技艺，却也达到了道的高度。生产出这种产品，流行在世间，虽然属于求财取利，实际却包含了利益人类、利益动物，救国救民的深远利益了。功德很大啊！</p></div>
+<div class="para-pair"><p class="p-orig">慈受深禅师云，饮食于人日月长，精粗随分塞饥疮。下喉三寸成何物，不用将心细校量。况有此品以辅之，宜一切人各各吃素，以保我身世世生生，不遭杀劫。明哲君子，当不以光言为迂腐也。</p><p class="p-trans">慈受怀深禅师说：“饮食于人，日月长久，精粗随分，吃饱不饿。下喉三寸，究成何物，吃前不必，仔细较量”。何况有了这酱精、味精来辅佐饮食，一切人都应当吃素，从而保全自己，生生世世，不遇杀劫。明智贤哲的君子，应当不会觉得我的话迂腐吧。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【矢人】</span>造箭的工匠。《孟子·公孙丑上》：“矢人岂不仁于函人哉？”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【函人】</span>造铠甲的工匠。《孟子·公孙丑上》：“矢人岂不仁于函人哉？矢人惟恐不伤人，函人惟恐伤人。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【怀深】</span>（1077-1132）宋代云门宗僧。寿春府（安徽）六安人，俗姓夏。字慈受。世称慈受禅师。十四岁剃发。崇宁（1102-1106）初，谒长芦崇信于嘉禾（浙江嘉兴）资圣寺，并嗣其法。后崇信移住江苏长芦寺，命师为首座。政和三年（1113），应仪真郡守之请，住资福寺，学侣僧众云集。后朝廷改资福寺为神霄宫，遂往蒋山，住于西庵。其后奉敕住于江苏焦山、洛阳慧林寺。靖康事起，师二度请辞，乃经天台徙于灵隐，再入蒋山，数月后退居洞庭之包山，复应王氏之请，为圆觉第一祖。高宗绍兴二年示寂，世寿五十六，法腊三十六。有慈受深和尚广录四卷行世。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

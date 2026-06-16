@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复志梵居士书四 · 印光法师文钞</title>
+<meta name="description" content="前所寄金刚新疏接到，以冗烦未复，勿念。今知宝鉴，文钞，各寄到，欣慰。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-458/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复志梵居士书四 · 印光法师文钞">
+<meta property="og:description" content="前所寄金刚新疏接到，以冗烦未复，勿念。今知宝鉴，文钞，各寄到，欣慰。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-458/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复志梵居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前所寄金刚新疏接到，以冗烦未复，勿念。今知宝鉴，文钞，各寄到，欣慰。</p><p class="p-trans">上次所寄的《金刚新疏》收到了，因为琐事繁多，未能回信，不要挂念。现在知道《寿康宝鉴》、《文钞》，已分别寄到，非常欣慰。</p></div>
+<div class="para-pair"><p class="p-orig">谛公深得讲演之益，故年已七十，随讲随疏，不以为劳。足见佛法之利益，不可思议也。</p><p class="p-trans">谛闲法师深得讲经的利益，所以他年纪已经七十岁了，还能一边讲经，一边注疏，并不觉得辛劳。足见佛法的利益，不可思议。</p></div>
+<div class="para-pair"><p class="p-orig">排时宜用现时之宋体字，仿宋字万不可用。不但易破难校，而且贵得一倍。何苦将钱作无益之事，令工人称快乎。</p><p class="p-trans">排印时，应该用现在通行的宋体字。仿宋字千万不能用。不但字模容易破，难以校对，而且价钱还贵了一倍。何苦将钱用作无益的事，令工人拍手称快呢？</p></div>
+<div class="para-pair"><p class="p-orig">宜令印书根，中华有此机器。若别家或无有，当令特办。铁的须二百多圆。去年浙江印刷公司做一木机器，云只三圆，光令做一付，送于太平寺，转送漕河泾监狱。</p><p class="p-trans">应该要他们印书根，中华书局有这种机器。如果其他的印刷公司没有，应当让他们特地去办。铁的机器需要二百多圆。去年浙江印刷公司做了一个木机器，说只要三圆钱，我令他们做了一副，送到太平寺，转送给漕河泾监狱的印刷所。</p></div>
+<div class="para-pair"><p class="p-orig">如肯买铁机固好，否则令照漕河泾监狱之样子，做一二付。光亦要一付，以备不时之需。</p><p class="p-trans">如果肯买铁的机器当然好，否则，就令他们照着漕河泾监狱的样子，做一二副。我也要一副，以备不时之需。</p></div>
+<div class="para-pair"><p class="p-orig">书根印字易检收，且不至久而忘记，为益大矣。凡所印书，通通都令印书根。中华之机，由光印安士书而始，先亦无有。</p><p class="p-trans">书根印字容易检收，而且不至于时间久了就忘记，好处很多。凡是印书，通通都要他们印书根。中华书局印书根的机器，由我印《安士全书》开始，先前也没有。</p></div>
+<div class="para-pair"><p class="p-orig">汝嫂可谓女中丈夫，五年中作许多功课。当即乘此功德，往生西方。虽云少亡，不名短折。以能念佛往生，则必定证无量寿，大为德门之光。非可以世间俗情而为论断也。</p><p class="p-trans">你嫂子可说是女中丈夫，五年中作了许多功课。应当会乘此功德，往生西方。虽然说她年少而亡，也不能说是短命。因为她能够念佛往生，就必定证得无量寿，是有德之家极大的荣耀。不是可以用世间俗情来论断的。</p></div>
+<div class="para-pair"><p class="p-orig">祈劝令兄，亦须于念佛一法注意。凡有大病，非医能疗者，于医治时，兼令念佛。仗佛力故，必有奇效。于己于人，均有利益。</p><p class="p-trans">请劝导你哥哥，也必须注重念佛这一法门。凡是生了大病，非医生能够治疗好的，在医治的时候，同时让他念佛。因为仗佛慈力的缘故，必定会有奇效。对于自己，对于他人，都有利益。</p></div>
+<div class="para-pair"><p class="p-orig">倘平时修持有素，待至百年报尽，直往西方，庶可对于陆氏元配了无愧色。否则彼以女子已得超凡入圣，我以丈夫犹在生死轮回。有血性汉子，能不愧死。（正月十三）</p><p class="p-trans">倘若平时修持得很好，等到这一生报尽，直接往生西方，才可以面对元配陆氏夫人时，没有羞愧之色。否则，她一位女子，已经得以超凡入圣，我一个男子大丈夫还在生死轮回。有血性的汉子，能不羞愧死吗？（正月十三日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【《金刚新疏》】</span>谛闲法师著。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【仿宋字】</span>是出现于20世纪初叶的一种刻版印刷字体。仿宋字出现于1916年前后，钱塘人丁辅之、丁善之兄弟摹拟北宋欧体刊本字体，将楷书笔画和宋体字的间架结构融合在一起，设计了一种新的印刷字体，名曰“聚珍仿宋”。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【书根】</span>书籍下端的切口部分。线装书卧置，为便于检阅，常利用书根书写或加印书名、卷次和册数。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

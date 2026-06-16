@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复刘惠民居士书（五）（法名德惠。民国二十一年起，至二十八年止。节录汇钞。） · 印光法师文钞</title>
+<meta name="description" content="以合十求皈依，世岂有此理。剃头修脚者拜师，也当三跪九叩。况皈依三宝，欲资之以超凡入圣，了生脱死，如此轻慢，何敢相许以自轻乎。故将原函寄回，祈另求明师。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-152/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复刘惠民居士书（五）（法名德惠。民国二十一年起，至二十八年止。节录汇钞。） · 印光法师文钞">
+<meta property="og:description" content="以合十求皈依，世岂有此理。剃头修脚者拜师，也当三跪九叩。况皈依三宝，欲资之以超凡入圣，了生脱死，如此轻慢，何敢相许以自轻乎。故将原函寄回，祈另求明师。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-152/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复刘惠民居士书（五）（法名德惠。民国二十一年起，至二十八年止。节录汇钞。）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">以合十求皈依，世岂有此理。剃头修脚者拜师，也当三跪九叩。况皈依三宝，欲资之以超凡入圣，了生脱死，如此轻慢，何敢相许以自轻乎。故将原函寄回，祈另求明师。</p><p class="p-trans">只是用“合十”二字来信祈求皈依，世间哪有这种道理？学习剃头、修脚的人拜师父，也当三跪九叩。何况是皈依三宝，想要依凭三宝来超凡入圣，了生脱死，如此轻慢，我怎么敢答应你来自我轻慢呢？所以将你的原信寄回，请你另求明师。</p></div>
+<div class="para-pair"><p class="p-orig">●（其二）学佛之人，必须敦伦尽分，闲邪存诚。诸恶莫作，众善奉行。信愿念佛，求生西方。自行化他，同修净业。</p><p class="p-trans">●（第二封信）学佛的人，必须敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬）。诸恶莫作，众善奉行。信愿念佛，求生西方。自己行持，并化导他人，同修净业。</p></div>
+<div class="para-pair"><p class="p-orig">念佛之时，必须摄耳谛听，一字一句，勿令空过。久而久之，身心归一。听之一法，实念佛要法，无论何人，均有利无弊，功德甚深。</p><p class="p-trans">念佛的时候，必须摄耳谛听，一字一句，不要让它泛泛滑过。久而久之，身心自然归一。谛听这一方法，实在是念佛最重要、最关键的方法，无论对什么人，都是有利无弊，功德很深。</p></div>
+<div class="para-pair"><p class="p-orig">不比观想等法，知法者则得益，不知法者多受损。以故不可令不知教理，不明性体之人，修观想等法也。</p><p class="p-trans">不像观想念佛等方法，知法的人，会得到利益；不知法的人，大多受到损害。所以不能让不知道教理，不明白性体的人，修观想念佛等方法啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝要皈依，为取法名德惠。以信愿念佛之法，自惠惠人，功德不可思议矣。</p><p class="p-trans">你要皈依，为你取法名为德惠。以信愿念佛的方法，自得惠利，并且惠及他人，功德不可思议啊！</p></div>
+<div class="para-pair"><p class="p-orig">●（其三）日前接所寄洋十圆，今以一百圆，助本城一弟子办善举，汝十圆亦在内。光之钱，随来随用。或印经书，或救灾难，俾送光者，功归实际。然光于死时，只随身衣服而已，以免死后被得财物者，骂为贪心鬼子也。</p><p class="p-trans">●（第三封信）前几天收到你所寄来的大洋十圆，现今将一百圆，帮助本城的一位弟子做善事，你的十圆也在其中。我的钱，随来随用。或者印经书，或者救灾难，使得送钱给我的人，功德归于实际。然而我在死的时候，只有随身衣服而已，以免死后，被得到财物的人，骂作是贪心鬼啊。</p></div>
+<div class="para-pair"><p class="p-orig">●（其四）令友之女病已愈，亦其祖母之诚心所感。凡服大悲咒水，至诚者则必灵，不诚则难见效。</p><p class="p-trans">●（第四封信）你朋友女儿的病已经痊愈，这也是她祖母的诚心所感。凡是服用大悲咒水，至诚的人则必定灵验，不至诚就很难见到效果。</p></div>
+<div class="para-pair"><p class="p-orig">令师所著之书，有丁仲祜先生之赞即可矣。光目已垂盲，即此信看写，系用手眼二镜，强勉从事。不见其书，而如作论文像赞等空套子，光绝无此胆识。</p><p class="p-trans">你老师所写的书，有丁仲祜（丁福保，字仲祜）先生的赞文就可以了。我的眼睛已经接近盲瞎，就是这封信的看和写，都是用手镜（放大镜）和眼镜两个镜子，才勉强做到的。没有看过他的书，而来写论文、像赞这样的空套子，我绝对没有这样的胆识。</p></div>
+<div class="para-pair"><p class="p-orig">今目力日衰，记性日弱，书也不能看，序也不能作。二种提要，均挂号寄回。以后切勿来信，亦勿介绍人皈依，以无力应酬故也。</p><p class="p-trans">现今我的视力一天天衰退，记性一天天衰弱，书也不能看，序也不能写。两种提要，都挂号寄回给你。以后千万不要再来信，也不要介绍人皈依，因为我没有精力应酬的缘故啊。</p></div>
+<div class="para-pair"><p class="p-orig">●（其五）汝是提倡之人，宜吃长素，以为表率。观音殿，须太平时再造，以免人疑有钱而生坏念头。</p><p class="p-trans">●（第五封信）你是提倡佛法的人，应该吃长素，作为大家的表率。观音殿，必须在国家太平的时候再建造，以免他人怀疑你有钱而萌生坏念头。</p></div>
+<div class="para-pair"><p class="p-orig">汝母六十多，宜一心念佛，求生西方，切不可有求人天福报之心。有一念求人天福报之心，便不能往生西方。</p><p class="p-trans">你母亲已经六十多岁了，应该一心念佛，求生西方，千万不可有求人天福报的心。有一念求人天福报的心，就不能往生西方了。</p></div>
+<div class="para-pair"><p class="p-orig">四法名，另纸书之，附函寄上。香敬不必补寄，光现无需用钱之事。但愿大家各各吃素念佛，求生西方，此外别无希望矣。</p><p class="p-trans">四个人的法名，用另外的纸写好了，随信寄上。供养的钱不必补寄，我现在没有需要用钱的事情。只愿大家各各吃素念佛，求生西方，除此之外，没有其他的希望了。</p></div>
+<div class="para-pair"><p class="p-orig">德森法师，现在上海太平寺，候校各书。因现今邮局不能按时寄件，恐有遗失，故住申候校为妥。</p><p class="p-trans">德森法师，现在正在上海太平寺，等候校对各种书籍。因为现在的邮局不能按时寄件，担心会有遗失，所以住在上海等候校对比较妥当。</p></div>
+<div class="para-pair"><p class="p-orig">弘化社，现因交通不便，事事艰难，缩小范围。原三在家人通辞去。因德森师尚在申，光代派一僧暂为料理。</p><p class="p-trans">弘化社，现在因为交通不便，事事艰难，便缩小了规模。原来的三个在家人都辞退了。因为德森法师还在上海，我替他派了一位僧人，暂时料理。</p></div>
+<div class="para-pair"><p class="p-orig">只照本一法，又须款到方交书。以时局关系，中途遗失，无力续办。非吾人苛刻，时势所使，不得不如此也。</p><p class="p-trans">（弘化社的佛经、善书）只是按照成本价进行流通，而且必须钱款到了才寄书。这是因为时局战乱的原因，如果中途遗失，便没有能力续补办理。不是我们苛刻，而是时局形势使我们不得不如此啊！</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

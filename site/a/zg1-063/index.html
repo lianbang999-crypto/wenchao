@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复汪梦松居士书 · 印光法师文钞</title>
+<meta name="description" content="昨接手书。备悉介怀。虽未觌面，却叨知心。光一介庸僧，毫无淑状。不过所说皆按己本分，不敢以过头大话，自瞒瞒人。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-063/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复汪梦松居士书 · 印光法师文钞">
+<meta property="og:description" content="昨接手书。备悉介怀。虽未觌面，却叨知心。光一介庸僧，毫无淑状。不过所说皆按己本分，不敢以过头大话，自瞒瞒人。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-063/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复汪梦松居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接手书。备悉介怀。虽未觌面，却叨知心。光一介庸僧，毫无淑状。不过所说皆按己本分，不敢以过头大话，自瞒瞒人。</p><p class="p-trans">昨天接到你的信。一切尽知，牵萦于心，不能忘怀。虽然没能见面，却承蒙你了知我心。我是一个平庸的僧人，丝毫没有值得崇仰的行事。不过是，所说的话，都是按自己的本分，不敢以过头的大话，自瞒瞒人。</p></div>
+<div class="para-pair"><p class="p-orig">蔚如居士，以其与己之意见合，遂屡为排印流布。致其残馊酸臭之气，遍刺人耳目。不亿阁下不以酸臭见弃，而复过为推崇。不禁令人惭惶无地。</p><p class="p-trans">徐蔚如居士，因为这些与他自己的意见相吻合，于是屡次的排印流布《文钞》。导致这些残馊酸臭之气，到处刺人耳目。不想阁下你不因为《文钞》的酸臭而嫌弃，反而过份的加以推崇。不禁令人惭愧惶恐，无地自容。</p></div>
+<div class="para-pair"><p class="p-orig">然由此一函，备知阁下之德与过。不以光为无知，且请言其大略。厌儒者假圣贤经传以欺世盗名，佛者假普度众生以诓骗钱财。有此志操，自强不息，必能正心诚意，以为真儒。断惑证真，以为真佛。</p><p class="p-trans">然而也由此一封信，完全了知阁下你的德与过。不认为我是无知之人，而且请问我其中的大略情形。厌恶儒学人假借圣贤经典来欺世盗名，厌恶佛学人假借普度众生来骗取钱财。有这样的志向操守，自强不息，必定能够正心诚意，成为真儒。断惑证真，成为真佛。</p></div>
+<div class="para-pair"><p class="p-orig">厌之之心愈切，则修之之心愈力。修之之心愈力，则证之之益愈大矣。其德诚可继往开来。若惟知厌而不肯从事，则成厌世疾俗狷介者之志操耳。</p><p class="p-trans">厌离过患的心愈迫切，那么修持的心愈有力。修持的心愈有力，那么证果的利益就愈大。这种功德实在可以继往圣，开来学。如果只知道厌离，却不肯从事进修，那么就成为厌世疾俗，孤高洁身之人的志向操行了。</p></div>
+<div class="para-pair"><p class="p-orig">所谓不善用厌，则即德成过矣。阁下一向似偏于用厌。今于厌中打一转身，遂全过以为德。而其于儒佛之心法，将必因是而亲得矣。敢为阁下预贺。</p><p class="p-trans">所谓的不善于运用厌离之心，那么就即功德而成为过失了。阁下你一向似乎偏重于运用厌离之心。现在于厌离当中，打一个转身，于是全体过失成为功德。而对于儒家佛教的心法，将必定因此而亲得啊！冒昧地为阁下预先道贺。</p></div>
+<div class="para-pair"><p class="p-orig">欲为真佛，须先从能为真儒始。若于正心诚意，克己复礼，主敬存诚，孝友弟恭等，不能操持敦笃。则根基不固，何以学佛。</p><p class="p-trans">想做真佛，必须先从为真儒开始。如果对于儒家教导的正心诚意、克己复礼、主敬存诚、孝友弟恭等道理，不能严持操守，躬身力行。那么修行的根基就不牢固，怎么能学佛呢？</p></div>
+<div class="para-pair"><p class="p-orig">选忠臣于孝子之门，岂有行悖儒宗，而能担荷如来家业，上续慧命，下化众生乎。佛法大无不包，细无不举。世出世间，无一法不在范围之中。世之拘墟者，每以出家为悖伦理。遂不体究，反加谤毁。因噎废食，自丧性命。实可哀怜。</p><p class="p-trans">遴选忠臣良将要在孝子当中进行，那些行为有悖于儒家宗旨的人，怎么能担荷如来家业，上续慧命，下化众生呢？佛法广大无边，包罗万象，世间法和出世间法，没有一法不在佛法范围之内。世上有人拘泥于狭镒短浅的见识，往往认为劝人出家有悖于世间伦理纲常。于是不去深入探究原因，反而加以诽谤诋毁。结果因噎废食，自丧性命。实在非常可怜啊。</p></div>
+<div class="para-pair"><p class="p-orig">若能放开眼界，方知佛法流布中外。二千年来，其道盛行。经几多圣君贤相，杰士伟人，为之护持传布者，固自有非凡情所测之真道在也。纵有一二拘墟之儒辟之，暴恶之君毁之。究属只手遮日，仰面唾天。适自形其少知少见，妄作妄为之过咎耳。于佛究何损哉。</p><p class="p-trans">如果能放开眼界，就会知道佛法流布中外，二千年来，佛道盛行。经历很多圣君贤相、杰士伟人的护持传布，如此看来，佛法中肯定存在着非凡情所能测度的真道啊。就算有一两个拘泥于儒家的人批驳佛教，暴恶的君王摧毁它，结果也只能如以手遮日、仰面唾天罢了，恰恰显示出他们的少知少见，贸然妄作妄为的过失，于佛法究竟又有什么损伤呢？</p></div>
+<div class="para-pair"><p class="p-orig">又有外彰辟拨之名，内取修证之实。由宋以来，凡儒门大宗，莫不皆然。光所谓诚意正心，由此致有欠缺者，实属决定论也。</p><p class="p-trans">还有人外表上批驳佛教，心里却秘密汲取佛法修证的实质。从宋朝以来，儒家的大修行人，无不都是这样做的。所以我认为儒家的诚意正心，从这点上就有了欠缺，这实属决定之论。</p></div>
+<div class="para-pair"><p class="p-orig">阁下宿根深厚，故能于厌中企求其真，不以光不肖而求其入阶。然光学喻如蚊虫饮于大海，只知饱腹，不测深广。若欲作大通家，须从通途佛学而论。则起信论，楞严经，最为切要。当专攻之，以为自利利人，上求下化之本。然其道理宏深，得大通且不易，况由通而亲证乎。</p><p class="p-trans">阁下你宿根深厚，所以能够在厌离当中企求其真理，不因为我的不成材，而求问其中的入门阶梯。然而我所学的如同蚊虫饮于大海，只知道自己吃饱，不能测度大海的深广。如果想要作一个大通家，必须从通途的佛学来讨论。那么《大乘起信论》、《楞严经》，是最为切要的。应当专门来攻读，作为自利利人，上求下化的根本。然而其中的道理宏深，得到大悟贯通尚且不容易，何况由悟通而亲证呢？</p></div>
+<div class="para-pair"><p class="p-orig">其余大乘经论，悉当研究。而法门无量，必须以禅净二法为本。如是则自可宏扬法化，导利众生。若非天资高迈，断难实获巨益。若欲随分随力修持，即生便了生死，当专主净土一门。以真信切愿，念佛求生西方。则不论工夫深浅，无不临终得遂所愿。此之一法，乃如来为末世众生，无力断惑，不能了生死者，特设一决定了之之法。使佛不开此法，则无力断惑者，皆于了生死无望也。</p><p class="p-trans">其余的大乘经论，都应当研究。而法门无量，必须以禅净二种法门为根本。如此，则自然可以宏扬法化，引导利益众生。如果不是天资高迈，断然很难实际获得巨大的利益。如果想要随分随力的修持，在这一生便了生死，应当专门主修净土一门。以真信切愿，念佛求生西方。则不论工夫深浅，没有不在临终得满所愿。这个法门，是如来为末世众生，无力断惑，不能了生死的人，特别施设的一个决定了生死的法门。假使佛不开此法，那么无力断惑的人，对于了生死就全都没有指望了。</p></div>
+<div class="para-pair"><p class="p-orig">何幸得遇此法，虽无大根，能自断惑。而带业往生，速出生死，又何歉憾乎。然此一法，统摄一切。能自断惑，自了生死者。犹须回心向往，方可速登佛地。切勿谓此为浅近之法，以为愚夫愚妇之所从事者，则当自得其益矣。</p><p class="p-trans">何等幸运得遇此法，虽然没有大根器，能够自力断惑。而带业往生，速出生死，又有什么歉缺遗憾的呢？然而净土一法，统摄一切法门。能够自力断惑，自了生死的人。还必须要回心归向极乐，方可速登佛地。千万不要认为这是浅近之法，认为是愚夫愚妇所从事的法门，那么必当自得其利益啊！</p></div>
+<div class="para-pair"><p class="p-orig">其宜看书，光文钞中亦略标一二，今不复赘。就欲念佛求生西方，必须知因识果。身之所行，心之所念，须与佛合。若与佛悖，则纵能念佛，亦难往生。以感应之道，不相交故。若能生大惭愧，大怖畏。改过如去毒疮，立志如守白玉。则万无一失，各得往生。其意光文钞，及净土诸书，皆详言之，不须多说。</p><p class="p-trans">适宜看的书，我的《文钞》中也略标一二，这里不再多说。想要念佛求生西方，必须知因识果。身体所行，心里所念，必须与佛相合。如果与佛相悖，那么纵然能够念佛，也很难往生。因为感应之道，不能互相交融的缘故。如果能够生起大惭愧，大怖畏。改过失如同去除毒疮，立志向如同守护白玉。则万无一失，各得往生。其中的意思，我的《文钞》，以及净土宗的各种书籍中，都详细说到，不须再多说。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【备悉】</span>完全知悉；详细知道。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【觌面】</span>当面；迎面；见面。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【叨】</span>犹忝。表示承受之意。常用作谦词。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【经传】</span>儒家典籍经与传的统称。传是阐释经文的著作。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【狷介】</span>孤高洁身。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【拘墟】</span>比喻孤处一隅，见闻狭隘。语本《庄子·秋水》：“井鼃不可语于海者，拘于虚也。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【因噎废食】</span>《吕氏春秋·荡兵》：“夫有以饐死者，欲禁天下之食，悖。”饐，同“噎”。后以“因噎废食”比喻受过挫折以后，连该做的事情也不去做了。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【不肖】</span>谓子不似父。这里是自谦之称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

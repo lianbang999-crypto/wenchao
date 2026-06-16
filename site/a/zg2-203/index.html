@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>为梨园会首某上堂 · 印光法师文钞</title>
+<meta name="description" content="三界原来一戏场，诸人及早返家乡。莫待锣鼓齐休歇，归路不知枉著忙。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-203/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为梨园会首某上堂 · 印光法师文钞">
+<meta property="og:description" content="三界原来一戏场，诸人及早返家乡。莫待锣鼓齐休歇，归路不知枉著忙。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-203/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">为梨园会首某上堂</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">三界原来一戏场，诸人及早返家乡。莫待锣鼓齐休歇，归路不知枉著忙。</p><p class="p-trans">三界原来，是一戏场，奉劝大家，早回家乡。莫要等到，锣鼓声停，不知归路，枉然奔忙。</p></div>
+<div class="para-pair"><p class="p-orig">法无定相，遇缘即宗。山僧杆木随身，不妨逢场作戏。应彼来机，令其就路还家。须知吾人现前一念见闻觉知之性，与彼十方三世一切诸佛常住寂灭之性，无二无别。</p><p class="p-trans">佛法没有定相，遇缘便可显示宣说。山僧我干木随身，不妨逢场作戏。顺应来者的根机，让他们就路还家。必须知道，我们现前一念见闻觉知之性，与十方三世一切诸佛常住寂灭之性，无二无别。</p></div>
+<div class="para-pair"><p class="p-orig">但以迷心逐境，背觉合尘。致使轮回六道，了无出期。由善业而暂升人天。随恶业而永堕三途。</p><p class="p-trans">只因为迷昧自心，追逐妄境，背离觉性，合于六尘。从而轮回在六道之中，没有出离的时候。要么由善业暂时升到人、天善道，要么随恶业永远堕入三途恶道。</p></div>
+<div class="para-pair"><p class="p-orig">镬汤炉炭，驴胎马腹。万苦备膺，一灵永昧。认六道业报之身，为自己本命元辰。仗亘古亘今，不迁不变之佛性，受头出头没，忽升忽坠之苦荼。</p><p class="p-trans">地狱中的镬汤炉炭，畜生道的驴胎马腹。万种痛苦全都尝遍，一念灵知永远迷昧。错把六道业报之身躯，当作自己的本命元辰。依仗着亘古亘今、不迁不变的佛性，冤枉地遭受头出头没、忽升忽坠的痛苦。</p></div>
+<div class="para-pair"><p class="p-orig">镜花水月，了无实相。不异当场演剧，生旦净丑，君臣佐使迭更。而主人翁本来面目，毫无改变。</p><p class="p-trans">如镜中花、水中月，完全没有真实之相。和登台演戏没有区别，生、旦、净、丑，君、臣、佐、使，（各种角色）迭相更换。而主人翁的本来面目，丝毫没有改变。</p></div>
+<div class="para-pair"><p class="p-orig">惜乎众生当场即迷，以幻为真。弃背本有，枉受轮回。诸佛菩萨愍之，以不思议如幻三昧游戏神通，示生世间。</p><p class="p-trans">可惜的是，众生一上台就迷失，把虚幻当成真实，背弃本有真性，枉受生死轮回。诸佛菩萨垂慈怜愍，以不可思议的如幻三昧游戏神通，示现出生在世间。</p></div>
+<div class="para-pair"><p class="p-orig">与彼同事，应机说法。唱还乡之曲，指归元之路。令其悉皆了境明心，背尘合觉。亲见本来面目，彻证真常佛性。</p><p class="p-trans">与众生共处，随应根机而说法，启唱回家的歌曲，指示归元的路径。令众生全都了境明心，背尘合觉，亲见本来面目，彻证真常佛性。</p></div>
+<div class="para-pair"><p class="p-orig">又恐劣机，未能顿出尘劳。若一受生，难免仍旧汩没。遂即大开方便，令其往生西方。则出离戏场，归家安坐。永离众苦，但受诸乐矣。</p><p class="p-trans">又担心根机低劣的众生，不能顿出尘劳。如果再次转世受生，难免仍旧迷失淹没。于是大开方便之门，令众生往生西方。这样就出离戏场，回家安坐，永离众苦，只受诸乐了。</p></div>
+<div class="para-pair"><p class="p-orig">虽然，因斋庆赞一句，作么生道。（卓杖云）咦，逢斋若会吃饭人，堪现神通游戏身。</p><p class="p-trans">虽然如此，因为施设斋席，欢庆赞颂一句，作么生道！（锡杖叩地说）：咦，逢斋若会吃饭人，堪现神通游戏身。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【山僧】</span>僧人自称的谦词。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【竿木】</span>又作干木。法会时，师家所用之拄杖，或指一般步行时之拄杖。于禅林中，转指师家胸中无形之妙棒，以之为接化学人之机略。故禅林中每以“竿木随身”一语譬喻自在无碍之机用。出自宋代释道原《景德传灯录》。内有一句云“杆木随身，逢场作戏”。其本义为江湖艺人遇到适合的场合便搭台唱戏，表演节目。后来多喻随事应景、偶尔为之。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【本命元辰】</span>禅林用语。指本性。本命，指人出生年之干支；值其干支之星，称本命星。元辰，谓人之命运受阴阳二星所左右，而以阳八阴六配合卜算。故本命、元辰皆为支配人命运之星。禅宗则将之比喻为自己之本性。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【生旦净丑】</span>京剧角色分生、旦、净、丑四行。各类角色根据剧中人物的身份、气质与性格的不同，都有固定的脸谱、扮相和服饰，各行角色的舞台动作也都有规范。据说取相反之义：“生”：生疏。而生角的演出老练成熟，故反其义为“生”。 “旦”：指旭日东升。而旦角表演的是女性，女属阴，故反名为“旦”。“净”，即清洁干净，而净角都是大花脸，看起来很不干净，不干净的反面就是干净，因而名“净”。“丑”指属相，丑属牛，牛性笨。而演丑角的人，则要求伶俐、活泼、聪明，所以反其名为“丑”。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【君臣佐使】</span>原指君主、臣僚、僚佐、使者四种人分别起着不同的作用，后指中药处方中的各味药的不同作用。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【同事】</span>即四事者的同事。四事：布施、爱语、利行、同事也。谓修菩萨行者，自行既充，必须外引众生，同己所行之道，是以常行布施，周其贫乏；复以爱语，安慰开谕；起诸利行；同其事业，而广集一切善根也。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【尘劳】</span>佛教徒谓世俗事务的烦恼。《无量寿经》卷上：“散诸尘劳，坏诸欲堑。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【庆赞】</span>（术语）新调佛像经卷及堂塔等时之法事也。庆喜成功，赞善根之义。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【作么生】</span>禅林用语。又作怎么生、似么生、作么、作生。作么，即“何”；生，为接尾词。相当于“如何了”、“怎么样”。本为宋代俗语，禅宗多用于公案之感叹或疑问之词。临济慧照禅师语录勘辨（大四七·五○三上）：“后沩山问仰山：‘此二尊宿意作么生？’”又作么会，即“如何体”会之意。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

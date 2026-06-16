@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复濮大凡居士书 · 印光法师文钞</title>
+<meta name="description" content="遥捧云章，实深惭愧。不慧幼失问学，长无所知，客路竛竮，寄食普陀。不亿阁下，以宿承佛嘱，乘愿再来，得儒佛之心宗，穷性相之秘藏，遍参缁素，力修净业之出格豪杰，过量大人。乃不耻下问，询于刍荛，而过为谦誉，令人无地容身。设大地有缝，当即彻底深入，何敢仰答。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-011/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复濮大凡居士书 · 印光法师文钞">
+<meta property="og:description" content="遥捧云章，实深惭愧。不慧幼失问学，长无所知，客路竛竮，寄食普陀。不亿阁下，以宿承佛嘱，乘愿再来，得儒佛之心宗，穷性相之秘藏，遍参缁素，力修净业之出格豪杰，过量大人。乃不耻下问，询于刍荛，而过为谦誉，令人无地容身。设大地有缝，当即彻底深入，何敢仰答。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-011/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复濮大凡居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">遥捧云章，实深惭愧。不慧幼失问学，长无所知，客路竛竮，寄食普陀。不亿阁下，以宿承佛嘱，乘愿再来，得儒佛之心宗，穷性相之秘藏，遍参缁素，力修净业之出格豪杰，过量大人。乃不耻下问，询于刍荛，而过为谦誉，令人无地容身。设大地有缝，当即彻底深入，何敢仰答。</p><p class="p-trans">捧起您文采斐然的来信，实在深感惭愧。我幼时失于求学，长大了一无所知，一个人在他乡，于普陀山挂单。不料阁下您，以过去世承受佛陀的咐嘱，乘愿再来，得儒家、佛教的心法宗旨，穷尽事物本质和表象的秘藏，遍参僧俗高人，力修净业的杰出英豪，雅量君子。却能不耻下问，询于我这样的草野浅陋之人，而您如此自谦赞他，令人无地容身。假设大地有缝，当立即彻底深入，怎么敢抬头作答。</p></div>
+<div class="para-pair"><p class="p-orig">继思阁下学问如是之博，见地如是之高。如斯数则，义甚浅近。岂真怀疑不决哉。殆欲发起同人耳。阁下既以了知为不知，不慧不妨以无知为有知。因即据款批判，随语剖析。非敢效老吏之断狱，不过如课士之纳卷耳。所陈菲词，详列后幅。其当与否，祈垂麈政。</p><p class="p-trans">继而想到阁下您的学问如此渊博，见地如此的高超。如信中的几个问题，义理却很是浅近。哪里是真的怀疑不决呢？大概是想要发起大家的正见罢了！阁下您既然以了知为不知，我不妨以无知为有知。因此就一条条的评论，随文剖析。不敢效法很有经验的官员一样来审断案件，不过如同科考之人交纳考卷罢了。我所说浅见，详列如下。其中得当与否，还请您不吝指正。</p></div>
+<div class="para-pair"><p class="p-orig">念佛虽贵心念，亦不可废口诵。以身口意三，互相资助。若心能忆念，身不礼敬，口不持诵，亦难得益。世之举重物者，尚须以声相助，况欲摄心以证三昧者乎。</p><p class="p-trans">念佛虽然贵在心念，但也不可废除口诵。因为身口意三业互相帮助。如果心能忆念，身不礼敬，口不持诵，也很难得到真实的利益。世上举重物的人尚且需要口中出声相助，又何况打算摄心来证三昧的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">所以大集经云，大念见大佛，小念见小佛。古德谓大声念，则所见之佛身大。小声念，则所见之佛身小耳。而具缚凡夫，心多昏散。若不假身口礼诵之力，则欲得一心，末由也已。</p><p class="p-trans">所以《大集经》说大念见大佛，小念见小佛。古代大德说大声念，则所见之佛身大；小声念，则所见之佛身小。而且具缚凡夫的心多数昏沉或散乱。如果不借身口礼诵的力量，那么想得到一心不乱，是没有途径可以达到的。</p></div>
+<div class="para-pair"><p class="p-orig">实际理地，方无生灭。佛事门中，何一非生灭法乎。等觉菩萨，破四十一品无明，证四十一分秘藏，亦不出于生灭之外。是生灭乃生死之根，亦菩提之本，视其人之所用何如耳。</p><p class="p-trans">实际真如理地，方才无生无灭。佛门自修化他的事业中，哪一法不是生灭法呢？等觉菩萨，破除四十一品无明，证得四十一分秘藏，也不超出生灭之外。生灭是生死的根本（菩萨的生死是变易生死，而不是我们所理解凡夫的分段生死），这也是菩提的根本，要看个人如何运用罢了。</p></div>
+<div class="para-pair"><p class="p-orig">都摄六根，净念相继。乃以彼背觉合尘之生灭，转而为背尘合觉之生灭，以期证于不生不灭之真如佛性也。</p><p class="p-trans">《大势至菩萨念佛圆通章》中说：都摄六根，净念相继。这是将背离觉性而合于六尘的生灭，转而成为背离六尘而合于觉性的生灭，以期证得不生不灭的真如佛性啊！</p></div>
+<div class="para-pair"><p class="p-orig">念念在净土，方可往生，乃上品往生者之身分。若执定此义，以自求上品，何善如之。若执定此义，以教中下根人，则阻人胜进不浅。何以故。以彼必以为此法太高，遂以卑劣自居，不肯修持耳。</p><p class="p-trans">念念在净土，方可往生，这是上品往生者的身分。如果认定这个道理，来自己求上品上生，这是大好事。如果强认这个道理，来教导中下根的人，就会阻碍他人的进修。为什么呢？因为中下根人必定认为“念念在净土”这个法太高，于是自认卑劣难以企及，就不肯用功修持了。</p></div>
+<div class="para-pair"><p class="p-orig">又此念佛虽属意识，而诸识咸具。不观上文都摄六根乎。六根既摄，则六识将何为乎。即转送含藏者，亦唯此事而已。</p><p class="p-trans">另外，念佛虽然属于意识作用，而八识全具。您没有看上文所说：“都摄六根，净念相继”吗？六根摄住之后，那六识还能做什么呢？就是第七转识、第八含藏识，也唯有念佛这一件事了啊！</p></div>
+<div class="para-pair"><p class="p-orig">刀砍不入一段，原无可疑。以阁下将自力他力，禅宗净宗之界限未分，致成一大疑团耳。</p><p class="p-trans">“刀砍不入”这段文，原本没有什么可疑。因为阁下您将自力、他力，禅宗、净宗的界限没有分清楚，所以导致成为一大疑团。</p></div>
+<div class="para-pair"><p class="p-orig">念佛一法，乃仗佛力出三界，生净土耳。今既不发愿，亦岂有信（有真信者，必有切愿）。信愿全无，但念佛名，仍属自力。以无信愿，故不能与弥陀宏誓，感应道交。若见思惑尽，或可往生。若全未断，及断未净尽，则业根尚在，何能即出轮回。</p><p class="p-trans">念佛一法是仰仗佛力出离三界，往生净土。现在既然不发愿，哪能说是有信心呢（有真信的人，必定有切愿）？信愿完全没有，只是念佛的名号，仍然属于自力。因为没有信愿，所以不能和弥陀宏誓愿力感应道交。假如见惑、思惑已经断尽，或许可以往生。假如没有全部断尽，或者断得不彻底，那么业根依然存在，怎么能够当生便出离轮回呢？</p></div>
+<div class="para-pair"><p class="p-orig">五祖戒，草堂青等，即是确证。须知去却信愿念佛，与宗家之参究无异。若得往生，则因果不相符契矣。蕅益云，得生与否，全由信愿之有无。品位高下，全由持名之深浅。乃铁案也。</p><p class="p-trans">五祖戒禅师后世为苏东坡、草堂青禅师后世为曾鲁公等，就是确证。应该知道舍去信愿而念佛，这与禅宗的参究没有区别。如果这样也能往生，那就因果不相符合了。蕅益大师说：“得生（西方）与否，全由信愿之有无；品位高下，全由持名之深浅。”这是千古不变的定论啊。</p></div>
+<div class="para-pair"><p class="p-orig">经云一心不乱，远承前文依正功德，即是教令生信。近承上文众生闻者，应当发愿，愿生彼国，即是教令发愿。</p><p class="p-trans">《阿弥陀经》说：“一心不乱”，这是远承前面经文的依正功德（宝池德水等），就是教令我们生起信心。近承上面经文“众生闻者，应当发愿，愿生彼国”，就是教令我们发愿。</p></div>
+<div class="para-pair"><p class="p-orig">又况下文劝信劝愿，不一而足。阁下截断前文，止执一句，故有不贵发愿之疑。又以无信愿之一心，与有信愿之一心，敌体同观，故有刀砍不入，岂非纯一，何以无愿不得往生之疑。</p><p class="p-trans">又何况下面经文，劝信劝愿，不一而足。阁下截断前面经文，只执著一句“一心不乱”，所以有不注重发愿求生的怀疑。又将没有信愿的一心不乱，与有信愿的一心不乱，平等看待，所以有“刀砍不入，岂非纯一，何以无愿不得往生”的疑问。</p></div>
+<div class="para-pair"><p class="p-orig">又念佛之外，第二念，夹杂，难以枚举。举其正者，如求大彻大悟，得大总持等。非指发愿为第二念，为夹杂也。须知净土一法，以信愿行三法为宗。行如车牛，愿如御者，信如前导。导与御者，正成就其车牛之进趣耳。是以朝暮必须向佛发愿。</p><p class="p-trans">又者，念佛之外，有第二念、夹杂间断等问题，难以枚举。举出其中正确的来说，例如求大彻大悟，得大总持等等是第二念。不是指发愿求生为第二念，为夹杂。必须知道净土一法，以信、愿、行三法为宗旨。“行”如同车牛，“愿”如驾车的人，“信”如前导。向导与驾车人，正是成就这个车牛的前进趋向啊！所以早晚必须向佛发愿。</p></div>
+<div class="para-pair"><p class="p-orig">又不念佛时，亦不可泥。纵令一念万年，不妨日有起止。若谓有不念时，有发愿时，便成间断夹杂，便难成办。试问此一心念者，亦曾见色闻声，著衣吃饭，举手动足，与否。若有，彼既不间断夹杂，此何独间断夹杂。若无，除非法身大士。然法身大士，端居一处，而现身尘刹。其间断夹杂，将不胜其多矣。</p><p class="p-trans">又者，不念佛时，也不可以拘泥。纵然一念万年，远离时间长短的分别，也不妨碍每日有起有止。如果认为有不念佛时，有发愿时，就成为间断夹杂，便难成办往生大事。那么请问这一心念佛时，有没有见色闻声、穿衣吃饭、举手投足呢？如果有，一心念佛与举手投足二者，既然不会产生间断夹杂，一心念佛与发愿往生二者，为何就会产生间断夹杂呢？如果一心念佛时，不见色闻声，不知举手投足等，除非法身大士，才有这种功夫。然而法身大士，端居在一处，却又能现身尘刹。这其中的间断夹杂，就不知有多少了。</p></div>
+<div class="para-pair"><p class="p-orig">心具众理，应万事，岂止佛愿同时而已。约常途修持，发愿当在朝暮。亦有念佛一进毕，即发愿者。</p><p class="p-trans">心具众理，普应万事，哪里只是念佛发愿能够同时进行而已呢？对于平时的修持，发愿应当在早晚。也有念佛一完，就发愿的。</p></div>
+<div class="para-pair"><p class="p-orig">阁下深通性相，谓佛念，求生念，不能两具，似于事事无碍之圆理，未能彻信。又谓有则此念当剖为二，一半归佛，一半归愿，如此，一人应成两佛。</p><p class="p-trans">阁下深通性相二宗，认为念佛之念，求往生之念，二念不能同时具有，似乎对于事事无碍的圆教之理，未能彻底相信。又认为如果有二念同具一念中，那么这一念，应当一剖为二，一半归念佛，一半归发愿，如此，一个人应成两尊佛。</p></div>
+<div class="para-pair"><p class="p-orig">阁下于日用之中，眼见色时，耳鼻舌身意，便不闻声及缘法等耶。若一时并行不悖，何独于此而疑之。须知一念心体，其用无量。八识非一心之体用乎，彼既不成八佛，此何以成两佛也耶。</p><p class="p-trans">阁下在日常生活中，眼睛看见外色时，耳、鼻、舌、身、意五根，就不会听到声音以及攀缘法尘了吗？如果眼耳能够同时进行而互不冲突，为何独独对于念佛发愿二念同具而生疑呢？必须知道一念心体，他的作用无量。八识不是一心的体用吗？八识同运既然不成八佛，念佛发愿二念并行，如何能成两佛呢？</p></div>
+<div class="para-pair"><p class="p-orig">平生绝无信愿者，临终决定难仗佛力。既云善恶俱时顿现，且无论阿弥陀佛四字不现者，不得往生。即现，亦不得往生。何以故。以不愿生故。以不求佛，因不得蒙佛接引故。</p><p class="p-trans">平生绝对没有信愿的人，临终决定很难仗佛力往生。既然说临终是善恶境界同时顿然显现，暂且不论阿弥陀佛四字不现前的人不得往生。就算现前，也不得往生。为什么呢？因为他不愿意往生的缘故。因为不求阿弥陀佛的摄受，因此不能蒙受阿弥陀佛接引的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">华严经云，假使恶业有体相者，十方虚空不能容受。古德云，如人负债，强者先牵。心绪多端，重处偏坠。今善恶皆现，由无信愿，便不能奈恶业何矣。须知仗自力，则恶业有一丝毫，便不能出离生死，况多乎哉。</p><p class="p-trans">《华严经》中说：“假使恶业有体相者，十方虚空不能容受。”古德说：“如人负债，强者先牵。心绪多端，重处偏坠。”现在善恶二业都现前，由于没有信愿之力，便不能奈何恶业啊！必须知道只依仗自力，那么就算恶业还有一丝一毫，就不能出离生死，何况恶业还很多呢？</p></div>
+<div class="para-pair"><p class="p-orig">又无信愿，念至一心，无量无边之中，或可有一二往生。决不可以此为训，以断天下后世一切人往生净土之善根。何以故。以能仗自力，念至业尽情空，证无生忍者，举世少有一二。倘人各依此行持，置信愿而不从事。则芸芸众生，永居苦海，无由出离，皆此一言为之作俑也。而其人犹洋洋得意，以为吾言甚高。而不知其为断佛慧命，疑误众生之狂言也。哀哉（世间善业，不出轮回，若对信愿具足之往生净业，则彼善业，仍属恶业）。</p><p class="p-trans">又者，没有信愿的人，念佛念到一心不乱，无量无边的众生之中，或许可能有一二人往生。绝对不可以此作为教导，以断天下后世一切人往生净土的善根。为什么呢？因为能够只仗自力，念到业尽情空，证到无生忍的人，举世罕有一二。倘若每个人都依照这个标准来行持，将信愿二事放在一边而不去做。那么芸芸众生就永远停留在生死苦海，无法出离，都是这一句话成为罪魁祸首啊！而这个人还洋洋得意，认为自己的言论很高超。却不知道这是断佛慧命，疑误众生的狂言啊！悲哀啊！（世间善业出不了轮回，如果与信愿具足的往生净业相比，那么这个世间善业仍属恶业）。</p></div>
+<div class="para-pair"><p class="p-orig">净土一法，须另具只眼，不得以常途教义相例。使如来不开此法，则末世众生之了生死者，不可得而见之矣。</p><p class="p-trans">净土这个法门必须另外具一只眼，不得以常途的教义来类比。假使如来不开示净土法门，那么末世众生中想了生死的人，就不可能见到了。</p></div>
+<div class="para-pair"><p class="p-orig">蕅益大师，弥陀要解，理事各臻其极，为自有此经以来之第一注解。当以之为的，则他日往生品位，咸不得与阁下齐肩矣。</p><p class="p-trans">蕅益大师的《弥陀要解》，对理性事相的阐述均完美至极，是自从有《阿弥陀经》以来的第一注解。应当以这本书作为准绳，那么将来往生的品位，他人都无法与阁下平齐了。</p></div>
+<div class="para-pair"><p class="p-orig">古人修行，皆能证道。今人修行，少见明心。岂人根之不等耶，抑亦敬慢之所致耳。历观传记高人，咸皆视经像如视活佛。其敬畏之迹，虽忠臣之奉圣主，孝子之读遗嘱，何能仿佛一二。因其恭敬之极，故能断惑证真，超凡入圣。</p><p class="p-trans">古人修行，皆能证道。今人修行，则很少见到明心者。难道是人的根机不同吗？或许是古今态度有恭敬与轻慢的不同所导致的罢。阅读历代高人的传记，全都是见佛经佛像如同见到活佛。恭敬畏慎的事迹，即使是忠臣侍奉圣主，孝子捧读遗嘱，也不能比拟一二。因为他们恭敬到了极点。所以能够断惑证真，超凡入圣。</p></div>
+<div class="para-pair"><p class="p-orig">观于二祖立雪，程门立雪，可见矣。今人视佛像如土木，视佛经如故纸。纵有信心，读诵受持，亦不过供其口头滑利而已，有何实益之可论也。虽种远因，而亵慢之罪，有不堪设想者。</p><p class="p-trans">看看二祖慧可立雪求法，杨时二人立雪侍师，就可以见到古人之风了。现在的人视佛像如同土木，视佛经如同旧纸。纵然有信心，读诵受持，也不过是为了口头流利而已，哪里有什么实际利益可说呢？虽然种下解脱的远因，而亵渎轻慢的罪业，实在不堪设想。</p></div>
+<div class="para-pair"><p class="p-orig">愿阁下以博学宏词，提倡佛法时，必须常以此普利一切。则法门幸甚，众生幸甚。</p><p class="p-trans">愿阁下您以渊博的学识才华，在提倡佛法之时，必须常常以恭敬心来普利一切。那么法门幸甚！众生幸甚！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【濮大凡】</span>即濮一乘居士，曾任《佛学丛报》（1912年10月创刊）主编。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【云章】</span>1.语出《诗·大雅·棫朴》：“倬彼云汉，为章于天。”2.指文彩蜚然的文章。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【不慧】</span>谦词。僧人自称。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【问学】</span>1.求知；求学。2.犹学问。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【性相】</span>性指事物的本质，相指事物的表象。《大智度论》卷三一：“有人言性相小有差别。性言其体，相言可识……如火，热是其性，烟是其相。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【秘藏】</span>隐而不传于人，称为秘；蕴蓄于内，称作藏。秘藏者，谓诸佛之妙法，以诸佛善为守护，不妄宣说。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【大人】</span>指德行高尚、志趣高远的人。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【刍荛】</span>割草采薪之人。《诗·大雅·板》：“先民有言，询于刍荛。”谦辞，在向别人提供意见时，把自己比喻成草野鄙陋的人。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【老吏】</span>熟谙公务案牍的胥吏。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【断狱】</span>审理和判决案件。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【课士】</span>考核士子的学业。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【麈政】</span>麈，即是四不象。魏晋名士清谈时手持麈尾，为名流雅器，相沿成习。后人因以敬称他人之教诲为“麈教”，请他人指正为“麈正（或政）”。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【大念见大佛，小念见小佛】</span>《大方等大集经》第四十三卷：“或一日夜，或七日夜。不作余业，至心念佛。乃至见佛，小念见小，大念见大。乃至无量念者，见佛色身无量无边。”</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【末由】</span>无由。《论语·子罕》：“虽欲从之，末由也已。”末：没有。由：途径。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【转送】</span>转识。第七末那识异名。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【含藏】</span>八识中第八阿赖耶识也。阿赖耶，译曰藏。含藏一切种子之识也。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【五祖戒】</span>五祖，山名，亦寺名。师戒禅师，宋朝人，生寂年岁不详。云门宗，双泉师宽法嗣。住蕲州（湖北省）五祖山五祖寺，大振宗风。五灯全书云：“师暮年至大愚，倚杖、谈笑而化”。龙舒净土文七：五祖戒禅师，乃东坡前身，应验不一。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【草堂青】</span>龙舒净土文七：“宋朝有二青草堂，在前者、年九十余，有曾家妇人，常为斋供，及布施衣物，和尚感其恩，乃言：‘老僧与夫人作儿子。’一日，此妇人生子，使人看草堂，已坐化矣！所生子，即曾鲁公也。以前世为僧，常修福修慧，故少年登科，其后作宰相”。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【铁案】</span>证据确凿，不能推翻的定案。</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【敌体】</span>谓彼此地位相等，无上下尊卑之分。</p>
+<p class="note-item"><span class="note-n">[21]</span><span class="note-term">【一念万年】</span>指一念即万年，万年即一念。乃表示舍离长短等相对概念之绝对语句。义同“一即一切”。谓在一念心中收摄万年之岁月而无遗。</p>
+<p class="note-item"><span class="note-n">[22]</span><span class="note-term">【心绪多端，重处偏坠】</span>《彻悟禅师语录》：吾人生死关头。唯二种力。一者心绪多端。重处偏坠。此心力也。二者如人负债。强者先牵。此业力也。</p>
+<p class="note-item"><span class="note-n">[23]</span><span class="note-term">【作俑】</span>《孟子·梁惠王上》：“仲尼曰：‘始作俑者，其无后乎！’为其象人而用之也。”本谓制作用于殉葬的偶象，后因称创始，首开先例为“作俑”。多用于贬义。</p>
+<p class="note-item"><span class="note-n">[24]</span><span class="note-term">【一只眼】</span>禅林用语。指于佛法上，具有真实正见之慧眼。非凡夫之肉眼。义同顶门眼、正眼、活眼、明眼。碧岩录第八则：“具一只眼，可以坐断十方，壁立千仞。</p>
+<p class="note-item"><span class="note-n">[25]</span><span class="note-term">【立雪】</span>1.禅宗二祖慧可为求其师达摩广度众生而彻夜坚立大雪中，及晓，积雪过膝，师甚感动。事见《景德传灯录·慧可大师》。后遂以“立雪”为僧人精诚求法之典故。 2.北宋儒生杨时、游酢往见其师程颐，值颐瞑目久坐，二人侍立不去，颐既觉，门外雪已盈尺。事见《宋史·道学传二·杨时》。后以“立雪”为敬师笃学之典故。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

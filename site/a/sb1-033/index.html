@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谛醒法师书 · 印光法师文钞</title>
+<meta name="description" content="接九月十三日手书，知已进关静修，不胜欣慰。所言常有境界，当是未曾真实摄心，但只做场面行持之所致。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-033/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谛醒法师书 · 印光法师文钞">
+<meta property="og:description" content="接九月十三日手书，知已进关静修，不胜欣慰。所言常有境界，当是未曾真实摄心，但只做场面行持之所致。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-033/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复谛醒法师书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接九月十三日手书，知已进关静修，不胜欣慰。所言常有境界，当是未曾真实摄心，但只做场面行持之所致。</p><p class="p-trans">接到九月十三日的信，知道您已进关静修，不胜欣慰。您所说常有的种种境界，应当是没有真实摄心，只是做表面的行持所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">使真实摄心，则内无妄念，专注于一句佛号中，必能消除业障，增长福慧，何至常有境界之苦。</p><p class="p-trans">假使能够真实摄心，那么内心没有妄念，专注在一句佛号中，必能消除业障，增长福慧，何至于经常有种种境界的苦恼。</p></div>
+<div class="para-pair"><p class="p-orig">修行切不可以躁妄心，求得圣境界现，及得种种神通。只期心佛相应而已。所谓全心是佛，全佛是心。心外无佛，佛外无心。</p><p class="p-trans">修行千万不可以躁妄心，求得圣境界现前，以及得种种神通。只期望心与佛相应而已。所谓“全心是佛，全佛是心。心外无佛，佛外无心”。</p></div>
+<div class="para-pair"><p class="p-orig">若能如是，譬如杲日当空，霜雪俱化。又何得有不如法之境界，为苦恼于身心乎。若不如是用心，平常专欲得见圣境，不知圣境之得，须到业尽情空地位。</p><p class="p-trans">如果能够如此，譬如丽日当空，霜雪全都被融化。又哪里会有不如法的境界，来苦恼身心呢？如果不如此用心，平常专门想要见到圣境，不知道要见到圣境，必须达到业尽情空的地位。</p></div>
+<div class="para-pair"><p class="p-orig">否则勿道所得者皆属魔境，即是圣境亦无所益，或有大损。以不知精进力修，反从此生大欢喜，未得谓得，则必至著魔发狂。</p><p class="p-trans">否则，不要说所得的都是属于魔境，即使是圣境现前，也没什么利益，或许有大损害。因为您不知道要精进努力修持，反而从此生起大欢喜，没有证得认为已经证得，则必然会著魔发狂。</p></div>
+<div class="para-pair"><p class="p-orig">楞严经谓，不作圣心，名善境界，若作圣解，即受群邪者，此之谓也。况汝之境界，乃属俗染境界乎。</p><p class="p-trans">《楞严经》中说：“不作圣心，名善境界，若作圣解，即受群邪” ，说的就是这个意思。何况您的境界，乃属于世俗杂染的境界呢？</p></div>
+<div class="para-pair"><p class="p-orig">但自提起正念，俾从前所有淫欲瞋恚等心不起。即或偶起，当即觉照，令其速灭。喻如贼至其家，若主人识得是贼，其贼即时便去。若当做家里人，则其家便被贼劫掠净尽矣。</p><p class="p-trans">只要自己提起正念，使得从前所有淫欲、瞋恚等心不起。即使偶尔生起，应当立即觉照，令其快速息灭。譬如盗贼到了家里，如果主人认识这是贼，这个贼当时就会离去。如果当做家里人，那么这个家便会被盗贼劫掠的干干净净了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

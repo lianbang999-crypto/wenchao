@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>印送净土五经跋（民二十六年） · 印光法师文钞</title>
+<meta name="description" content="梵网经云，汝是当成佛，我是已成佛，常作如是信，戒品已具足。华严经云，一切众生，具有如来智慧德相，但因妄想执著，不能证得。若离妄想，则一切智，自然智，无碍智，则得现前。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-162/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="印送净土五经跋（民二十六年） · 印光法师文钞">
+<meta property="og:description" content="梵网经云，汝是当成佛，我是已成佛，常作如是信，戒品已具足。华严经云，一切众生，具有如来智慧德相，但因妄想执著，不能证得。若离妄想，则一切智，自然智，无碍智，则得现前。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-162/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">印送净土五经跋（民二十六年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">梵网经云，汝是当成佛，我是已成佛，常作如是信，戒品已具足。华严经云，一切众生，具有如来智慧德相，但因妄想执著，不能证得。若离妄想，则一切智，自然智，无碍智，则得现前。</p><p class="p-trans">《梵网经》中说：“汝是当成佛，我是已成佛，常作如是信，戒品已具足。”《华严经》中说：“一切众生，皆具如来智慧德相，但因妄想执著，不能证得。若离妄想，则一切智，自然智，无碍智，则得现前。”</p></div>
+<div class="para-pair"><p class="p-orig">是知众生心性，与佛原同，心佛众生，三无差别，只为迷悟之分耳。奈众生迷而不觉时，虽具有竖穷三际，横遍十方，广大圆满之佛性，全被尘劳埋没，反承此佛性功德之力，起惑造业，毁谤三宝，自害害他。正如流泉潜隐地中，全不觉知，必须时节因缘为之启发，方能逐渐开明。</p><p class="p-trans">由此可知，众生的心性，和佛原本相同，心、佛、众生，三无差别，只是迷悟上的分别罢了。怎奈众生迷惑不觉的时候，虽然具有竖穷三际、横遍十方、广大圆满的佛性，但是完全被尘劳埋没，反而承借这个佛性功德的力量，起惑造业，毁谤三宝，自害害他。这正像流动的泉水潜隐在大地之中，全然不被觉知，必须依靠时节因缘来启发，才能逐渐开发出来。</p></div>
+<div class="para-pair"><p class="p-orig">所以古今来许多有力伟人，幼时迷昧，专以毁谤佛法为能事。及阅历渐深，遇境逢缘，翻然觉悟，从而皈依三宝，实力奉行者，亦不可胜数。足征佛法广大，实即一切众生本具之心法也。</p><p class="p-trans">所以古往今来许多有智慧力的伟人，幼时迷昧，专门以毁谤佛法为能事。等到阅历渐深以后，遇境逢缘，幡然觉悟，从而皈依三宝、实力奉行的人，多得也不可胜数。这足以证明佛法广大，实际是一切众生本具的心法。</p></div>
+<div class="para-pair"><p class="p-orig">江西吉安吴南浦居士，本宿根深厚，自少经商沪滨，心存慈善。奈全不知佛法，反目信佛为迷信。其室人张氏，虽具信心，而又不识邪正，从而相劝，亦难启发。</p><p class="p-trans">江西吉安的吴南浦居士，本就宿根深厚，从年少时起，就在上海经商，心存慈善。怎奈完全不懂佛法，反而视信佛为迷信。他的妻子张氏，虽然有信心，但是却又分不清邪正，即使从旁相劝，也难以启发他。</p></div>
+<div class="para-pair"><p class="p-orig">民国二十年，被匪绑至匪窟，愁苦交迫，寻思无计，遂忆及张氏劝信佛法之语，因而望佛慈救，冀出匪窟。</p><p class="p-trans">民国二十年，他被土匪绑到了匪窟，愁苦交迫，思前想后，毫无计策，于是回想起张氏劝自己信佛法的话语，因此盼望佛慈悲救护，希望能逃出匪窟。</p></div>
+<div class="para-pair"><p class="p-orig">讵知佛法不可思议，佛慈如母忆子，感应道交，捷如桴鼓。忽来巡捕，为救旁人之票，误走地方，即将伊救出，不费分文，安然脱险。乃知佛法有灵，略启信心，遂往普陀等处进香礼佛。</p><p class="p-trans">没想到佛法真实不可思议，佛大慈大悲，如母忆子，感应道交，快如槌落鼓响。忽然来了巡捕，本来是救旁人的绑票，但是却走错了地方，就把他救出来了，不费分文安然脱险。他这才知道佛法有灵，略微启发了信心，于是前往普陀山等处进香礼佛。</p></div>
+<div class="para-pair"><p class="p-orig">二十二年，与室人张氏，偕一子，乘汽车，行至途中曲处，忽一西人少女，从旁横来，适与车撞，被车横压，仆跌车下。</p><p class="p-trans">民国二十二年（1933），和妻子张氏，带着一个儿子，乘坐汽车，行至途中的一个转弯处，忽然一个西洋少女，从旁边横插过来，恰好和车相撞，被车横压，仆倒在车下。</p></div>
+<div class="para-pair"><p class="p-orig">伊父子三人，吓得魂不附体，汗流浃背，意谓此女已成三段。急念观世音菩萨，以期佛慈加被解救。</p><p class="p-trans">他们父子三人，吓得魂不附体，汗流浃背，猜想这个少女可能已经压成了三段。就急忙念观世音菩萨，以期佛慈加被来解救。</p></div>
+<div class="para-pair"><p class="p-orig">及停车下看，但见该西女，仰卧车下，恰在四轮当中，随车拖走数十步。一时巡捕市民云集，该女父亦寻至。将女援起，只见其满脸通红，了无伤痕。旋经检验，毫无损伤，女即随父而去。</p><p class="p-trans">等到停车下来看，只见这位西洋少女，仰卧在车下，恰好在四轮当中，随车拖走了几十步。一时间，巡捕、市民云集，少女的父亲也寻找到这里。把女儿扶起来，只见她满脸通红，完全没有伤痕。不久经过检验，毫无损伤，少女于是随父亲离去。</p></div>
+<div class="para-pair"><p class="p-orig">居士经此二险，大启信心，二十三年，特来向光求授皈依，遂为取法名曰慧云，张氏法名曰慧贤，继而进受五戒。</p><p class="p-trans">居士经过这两次历险，大大开启了信心。民国二十三年，特地前来向我求授皈依，于是给他取法名叫慧云，张氏法名慧贤，进而受了五戒。</p></div>
+<div class="para-pair"><p class="p-orig">从此信心真切，精进修持，复在灵岩各处广作功德。又数男名下，连得数女孙，艰于男孙。至二十四年，适居士六十寿期，长儿媳遂生一麟儿。各亲友群相道贺，居士因已长斋奉佛，则自己寿诞，及孙儿弥月，皆用素筵，毫不动荤，以为戒杀吃素倡。</p><p class="p-trans">从此信心真切，精进修持，又在灵岩各处广作功德。另外，在他几个儿子名下，连得了几个孙女，却没有孙子。到了民国二十四年，正赶上居士六十寿辰，大儿媳就生下一麟儿。各位亲友群相道贺，居士因为已经长斋奉佛，所以自己的寿诞，以及孙儿满月，都用素筵招待客人，毫不动荤，以此来提倡戒杀吃素。</p></div>
+<div class="para-pair"><p class="p-orig">今复以千圆印净土五经，赠送结缘，请光述其信佛因缘而为之跋。普愿未发信心者，见闻起信，已发信心者，因而增长。必期人人信佛，同生西方，同圆种智，以慰诸佛普度众生之本怀焉。</p><p class="p-trans">现在又出资一千圆印《净土五经》，赠送结缘，并祈请我写跋，叙述他信佛的因缘。普愿还没有发起信心的人，见闻后能发起信心；已经发起信心的人，因此能增长信心。真诚期望人人信佛、同生西方、同圆种智，来慰藉诸佛普度众生的本怀。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【桴鼓】</span>用鼓槌打鼓，鼓就响起来。比喻相互应和，配合得很紧密。又作“桴鼓相应”。《汉书·李寻传》：“顺之以善政，则和气可立致，犹桴鼓之相应也。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

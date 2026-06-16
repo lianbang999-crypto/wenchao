@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>中国济生会苏州分会捐放生池园永为灵岩山寺下院功德碑记（民二十五年） · 印光法师文钞</title>
+<meta name="description" content="大觉世尊，为三界大师，四生慈父，视一切众生，犹如一子。以一切众生，皆有佛性，皆当作佛，皆是过去父母，未来诸佛故。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-078/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中国济生会苏州分会捐放生池园永为灵岩山寺下院功德碑记（民二十五年） · 印光法师文钞">
+<meta property="og:description" content="大觉世尊，为三界大师，四生慈父，视一切众生，犹如一子。以一切众生，皆有佛性，皆当作佛，皆是过去父母，未来诸佛故。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-078/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">中国济生会苏州分会捐放生池园永为灵岩山寺下院功德碑记（民二十五年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大觉世尊，为三界大师，四生慈父，视一切众生，犹如一子。以一切众生，皆有佛性，皆当作佛，皆是过去父母，未来诸佛故。</p><p class="p-trans">大觉世尊，是三界的大导师，是胎卵湿化四类众生的慈父，视一切众生，就像自己唯一的儿子。因为“一切众生，皆有佛性，皆当作佛，皆是过去父母，未来诸佛”的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">于诸大乘经，严戒杀生食肉，以期一切众生，同得长寿安乐之近报，同证解脱涅槃之远果也。</p><p class="p-trans">所以佛在各大乘经中，严戒杀生吃肉，希望能让一切众生，共同得到长寿安乐的近报，共同证得解脱涅槃的远果啊！</p></div>
+<div class="para-pair"><p class="p-orig">智者大师，宗佛慈意，于陈大建间，买临海江沪溪梁六十余所，亘三百余里，为放生池。请敕立碑，禁止渔捕，有偷捕者，动辄得祸。至唐贞观中，犹然如是，此佛祖普度众生之悲心也。</p><p class="p-trans">智者大师（天台宗四祖，被后世尊为“东土释迦”），秉承佛陀慈悲的本意，在南朝陈代大建年间，买下临海的江沪溪粱六十多所，长达三百多里，作为放生池。请皇帝下诏刻立石碑，禁止渔捕，有偷捕的人，一有举动就会招致灾祸。一直到唐朝贞观中期，仍然还是这样，这就是佛祖普度众生的慈悲用心啊！</p></div>
+<div class="para-pair"><p class="p-orig">乾为大父，坤为大母，民吾同胞，物吾与（友也）也，此儒者民物一视之素志也。</p><p class="p-trans">天是我们的大父，地是我们的大母，一切人民都是我们的同胞，一切万物都是我们的朋友（与就是友），这是儒者将人民、万物一视同仁的素志啊！</p></div>
+<div class="para-pair"><p class="p-orig">严禁伤胎破卵，必使鸟兽鱼鳖咸若（若，顺也。咸若者，皆顺遂其生也），此圣王胜残去杀之德政也。</p><p class="p-trans">严禁伤胎破卵，必使鸟兽鱼鳖都能随顺它们的习性，享尽天年（若，就是顺。咸若，就是全都随顺它们的习性，使之自然生长），这是古代圣王胜残去杀的德政啊！</p></div>
+<div class="para-pair"><p class="p-orig">良以天地之大德曰生，民物之大苦曰杀。胜残去杀，须由小而至大。仁民爱物，必自易而至难。</p><p class="p-trans">的确是因为天地的大德就是生，人民、万物的大苦就是被杀。胜残去杀，必须从小事逐渐做到大事；仁爱人民、爱惜物命，必须从容易的事逐渐做到难事。</p></div>
+<div class="para-pair"><p class="p-orig">倘不推本于涵养仁恕，必至舍小取大，舍易取难，日行残杀，而妄冀仁民爱物，则徒成空谈，决难实行其事矣。</p><p class="p-trans">假如不从涵养仁恕之心这个根本出发，就必定会导致舍小取大、舍易取难，一个人每天都做残杀的事，却又妄想日后能够仁爱人民、爱惜物命，那么这只能徒劳地成为空谈，而绝对难以实行仁民爱物的事了。</p></div>
+<div class="para-pair"><p class="p-orig">何以言之，小儿平民，皆能实行爱物之事，行之既久，满腔仁慈，日后得位行政，便可大庇群黎。即隐居一乡，亦可以身率物，移风易俗。</p><p class="p-trans">为什么这样说呢？如果小儿平民，都能实行爱惜物命的事，那么实行的时间久了，就会满腔仁慈，将来如果得到权位来施政，就可以广泛地庇护百姓。即使隐居在某处乡里，也能以身率物，移风易俗。</p></div>
+<div class="para-pair"><p class="p-orig">如是，则仁民之道，自爱物培植而来者，方可周遍圆满而无弊。不由爱物来者，于现生犹无所憾，于将来大有可虞。以既种残害物类之因，难免循环报复之果。愿仁民者，当慎思焉。</p><p class="p-trans">这样的话，那么从爱惜物命培植而来的仁民之道，才能周遍圆满而没有弊端。如果不是从爱惜物命培植而来的，在现生还没有什么遗憾，但是在将来就大有忧虑了。因为既然种下了残害物类的因，就难免遭受循环报复的果。希望仁爱人民的当政者，应当谨慎思考爱惜物命这件事。</p></div>
+<div class="para-pair"><p class="p-orig">放生一事，原为启发现未人之善心，以期戒杀吃素，普令含识，各得其所，各尽天年。近之则息杀因，远之则灭杀果。小之则全吾心之纯仁，大之则弭世界之杀劫。且勿以为不急之务，而漠然置之也。</p><p class="p-trans">放生这件事，原本是为了启发现在、未来的人们的善心，希望这样做能使他们戒杀吃素，广泛地使有情众生，各得其所，各尽天年。从近处说，就能息止杀因；从远处说，就能消灭杀果。从小处讲，就能成全我们至仁的心念；从大处讲，就能平息世界的杀劫。千万不要认为放生这件事是不急的事务，从而漠然置之啊！</p></div>
+<div class="para-pair"><p class="p-orig">中国佛教济生会苏州分会，虎啸桥放生池园，系民十三年甲子七月，上海济生会会员陆君维镛，来苏叙谈，始知苏济生分会同人，议设放生池园，极表赞成。</p><p class="p-trans">中国佛教济生会苏州分会，虎啸桥放生池园，是民国十三年（1924年）甲子七月，上海济生会会员陆维镛先生，来苏州叙谈时，才知道苏州济生分会的同人，正在商议设立放生池园这件事，于是极力表示赞成。</p></div>
+<div class="para-pair"><p class="p-orig">谓适有苏人沈君，以地一方，约六亩许，捐上海济生会，今可移捐分会，以为放生池园地址。中有一塘，掘池尤为省力。嗣将地契寄来，至十四年九月，分会会员杨君达洤，介绍汪君吉庭，加入分会，首愿捐资建筑。</p><p class="p-trans">他说正好有个苏州人沈先生，把一块约六亩左右的土地，捐给了上海济生会，现在可以移捐给苏州济生分会，来作为放生池园的地址。这块地的中间有一个池塘，所以掘池特别省力。随后就把地契寄来了，到了民国十四年（1925年）九月，分会会员杨达洤先生，介绍汪吉庭先生，加入分会，汪先生愿意带头捐资建筑。</p></div>
+<div class="para-pair"><p class="p-orig">复经同人等集资一万余圆，继续经营，掘池盖亭，布置一切。虽不华美，而雅致不俗，可称世外桃源。至十五年十二月，功始告竣。十七年五月，袁君孝谷，加购南面地基七分，藉以扩大，并画图呈县备案。</p><p class="p-trans">又经过同人等集资了一万多圆，继续经营，掘池盖亭，布置一切。虽然不华美，但是雅致不俗，可以称得上是世外桃源。到了民国十五年（1926年）十二月，才宣告竣工。民国十七年（1928年）五月，袁孝谷先生，加购了南面地基七分，借以扩大，并画图呈交到县政府备案。</p></div>
+<div class="para-pair"><p class="p-orig">此数年中管理经费，悉由吴君颖芝等，先后维持。去夏，灵岩山寺监院妙真师，以苏垣无有下院，以后来苏，颇感不便。注意于虎啸桥放生池园，祈光向曹君崧乔，询问情况，并祈与该会诸同人商量。若肯施送，则放生事业，益可进行。</p><p class="p-trans">这几年中管理的经费，全都由吴颖芝等人，先后维持。去年（1935年）夏天，灵岩山寺监院妙真法师，认为苏州城内没有灵岩山寺（寺院在吴县木渎镇）的下院，以后来苏州城办事，感到非常不便。于是注意到了虎啸桥放生池园，就请我向曹崧乔先生询问情况，并希望与该会的诸位同人商量。如果他们肯施送给灵岩山寺，那么放生的事业，就能更好地进行。</p></div>
+<div class="para-pair"><p class="p-orig">又无须特派人员管理，彼此有益。所谓一点水墨，两处成龙也。曹君去问，同人咸皆赞成，谓灵岩山不上十年，道风遍闻遐迩，居然为吴县第一清修道场。</p><p class="p-trans">而且还不需要再特意派人员来管理，对彼此都有益。这正是所谓的“一点水墨，两处成龙”。曹先生去问后，济生会的同人全都赞成，说不到十年，灵岩山的道风就已经遍闻远近，居然成为吴县第一的清修道场。</p></div>
+<div class="para-pair"><p class="p-orig">若以放生池园为下院，则后来之发达，安知不与灵岩相埒耶。遂议订五种条件，以期永不废坠。</p><p class="p-trans">如果把放生池园作为灵岩山寺的下院，那么池园将来的发达，怎么知道不会像灵岩山寺那样呢？于是大家商议订下了五种条件，希望放生池园永不废弃。</p></div>
+<div class="para-pair"><p class="p-orig">一，中国佛教济生会苏州分会放生池园字样。二，济公祖师殿。三，悟根师牌位。四，池上吉亭一座。五，园墙外地主沈姓坟址。此五种，当永远保存，不得取消。</p><p class="p-trans">第一，中国佛教济生会苏州分会放生池园字样；第二，济公祖师殿；第三，悟根师牌位；第四，池上吉亭一座；第五，园墙外地主沈姓的坟址。这五种，应当永远保存，不得取消。</p></div>
+<div class="para-pair"><p class="p-orig">余诸建筑开拓，则随灵岩寺僧料理。其缘起当勒碑存案，以垂永久。于是以从前所有契约图画，存案字据，统皆交出。可谓成就灵岩净土道场，发展放生事业，最大功德。</p><p class="p-trans">其余各种建筑的开拓，就随任灵岩寺僧料理。这件事的缘起应当刻碑存案，永远留传后世。于是就把从前所有的契约图画，存案字据，全部都交出。真可以称得上是成就灵岩净土道场，发展放生事业的最大功德。</p></div>
+<div class="para-pair"><p class="p-orig">所愿该会同人，与灵岩监院，大家同心戮力，提倡卫生吃素，以成不放之大放。至诚念佛，以期往生而了生死。其弭杀劫而邀天眷，挽世道而正人心者，岂语言文字所能形容也哉。</p><p class="p-trans">希望该会的同人，与灵岩山寺监院妙真法师，大家能够齐心合力，提倡护生吃素，来成就不放生的大放生。至诚念佛，希望将来能够往生极乐而了生脱死。那么，平息杀劫并求得上天的眷顾，挽回世道并端正人心，这样的大功德又哪里是用语言文字所能形容的呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【沪】</span>捕鱼的竹栅。唐陆龟蒙《渔具》诗序：“列竹于海澨曰沪。”宋陆游《村舍》诗：“潮生鱼沪短，风起鸭船斜。”清黄叔璥《台海使槎录·赋饷》：“沪者，于海坪潮涨所及处，周围筑土岸，高一、二尺，留缺为门……潮涨淹没沪岸，鱼蛤随涨入沪。潮退水由沪门出，鱼蛤为网所阻。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【梁】</span>断水捕鱼的堰。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【民胞物与】</span>宋张载《西铭》：“民吾同胞，物吾与也。”意谓世人，皆为我的同胞；万物，俱是我的同辈。后因以谓泛爱一切人和物。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【胜残去杀】</span>实行仁政，使残暴的人化而为善，因而可以废除刑杀。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【一点水墨，两处成龙】</span>禅林用语。一点水墨：指见到真心。两处成龙：真俗有无等一切对立万法，全都圆融无碍。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【废坠】</span>1.衰亡；灭绝。2.因懈怠而中止。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【卫生】</span>1.养生；保护生命。2.保护生灵。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【天眷】</span>上天的眷顾。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

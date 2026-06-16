@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复某居士书 · 印光法师文钞</title>
+<meta name="description" content="病与魔，皆由宿业所致，汝但能至诚恳切念佛，则病自痊愈，魔自远离。倘汝心不至诚，或起邪淫等不正之念，则汝之心，全体堕于黑暗之中，故致魔鬼搅扰。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-167/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复某居士书 · 印光法师文钞">
+<meta property="og:description" content="病与魔，皆由宿业所致，汝但能至诚恳切念佛，则病自痊愈，魔自远离。倘汝心不至诚，或起邪淫等不正之念，则汝之心，全体堕于黑暗之中，故致魔鬼搅扰。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-167/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复某居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">病与魔，皆由宿业所致，汝但能至诚恳切念佛，则病自痊愈，魔自远离。倘汝心不至诚，或起邪淫等不正之念，则汝之心，全体堕于黑暗之中，故致魔鬼搅扰。</p><p class="p-trans">疾病和魔障都是因为宿业所导致。你只要能至诚恳切地念佛，那么疾病自然会痊愈，魔障会自然远离。如果你的心不至诚，或者生起邪淫等不正当的念头，那么你的心全体堕于黑暗之中，故会招致魔鬼来搅扰。</p></div>
+<div class="para-pair"><p class="p-orig">汝宜于念佛毕回向时，为宿世一切怨家回向，令彼各沾汝念佛利益，超生善道。此外概不理会，彼作声，也不理会作怕怖，不作声，也不理会作欢喜。但至诚恳切念，自然业障消，而福慧俱皆增长矣。</p><p class="p-trans">您应该在念佛完毕回向时，为过去世一切冤亲债主回向，让他们全都沾你的念佛利益，超生到善道去。除此之外一概不理会，他们作声，你不要恐惧。他们不作声，你也不要理会而欢喜。你只要至诚恳切地念佛，业障自然会消除，福报和智慧全都会增长。</p></div>
+<div class="para-pair"><p class="p-orig">看经典切不可照今人读书之毫不恭敬，必须如佛祖圣贤降临一般，方有实益，汝果能如是，则心地正大光明，彼邪鬼邪神，便无地可安身矣。倘汝心先邪，则以邪招邪，何能令彼远离不扰也。</p><p class="p-trans">阅读经典，千万不要像现代人读书那样毫无恭敬心，必须如面对佛陀、祖师、圣贤亲身降临那样，才会有真实的利益。如果你果真能这样读经，那么心地就会正大光明，那些邪鬼邪神便没有地方可以安身了啊。假如你的心先邪恶了，就会以邪招邪，哪能让他们远离而不扰乱你呢？</p></div>
+<div class="para-pair"><p class="p-orig">他心通，鬼神虽有，小而且近，若业尽情空，则犹如宝镜当台，有形斯映。</p><p class="p-trans">他心通，鬼神虽然也有，但是神通力小而且浅近。如果达到业尽情空的地步，就好像宝镜当台，凡是有形象的东西都会映现出来。</p></div>
+<div class="para-pair"><p class="p-orig">汝不至心念佛，而欲研究此之真相，不知此心，便成魔种。譬如宝镜，无丝毫尘垢，自会照天照地。汝之心被尘垢封蔽深固，而欲得此，如尘封深厚之镜，断不能发光，或有发者，乃妖光，非镜光也。</p><p class="p-trans">你不至心念佛，反而想研究这些神通的真相，你或许不知道这种心便是著魔的种子。比如宝镜没有丝毫尘垢，自然会照天照地。你的心覆盖了厚厚的尘土，却妄想得到这些神通，就像覆盖了厚厚尘土的镜子，是断然不能发光。或许有发光的情况，那发出来的也是妖光，绝不是镜光啊。</p></div>
+<div class="para-pair"><p class="p-orig">此事且置之度外，如堕水火，如救头然以念佛，则无业魔不消矣。</p><p class="p-trans">这件事暂且置之度外，希望你能像堕入水火、像扑救头上的大火一样诚恳念佛，那么没有什么业力和魔障是不能消除的。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

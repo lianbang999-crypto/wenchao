@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>佛学述要铸板流通序 · 印光法师文钞</title>
+<meta name="description" content="自佛法入中国，千八百余年来。若缁若素，若男若女，深入经藏，彻悟心源者，何可胜数。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-027/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="佛学述要铸板流通序 · 印光法师文钞">
+<meta property="og:description" content="自佛法入中国，千八百余年来。若缁若素，若男若女，深入经藏，彻悟心源者，何可胜数。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-027/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">佛学述要铸板流通序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">自佛法入中国，千八百余年来。若缁若素，若男若女，深入经藏，彻悟心源者，何可胜数。</p><p class="p-trans">自从佛法传入中国，一千八百多年以来。无论出家在家，或男或女，深入经藏，彻悟心源的人，哪里数得清。</p></div>
+<div class="para-pair"><p class="p-orig">良以真如佛性，人人本具，但以迷而不觉，初非有失。及闻如来言教，知识指示。则知珠在衣里，佛性恒存。不离当处，得大自在。自利利他，受用无尽矣。</p><p class="p-trans">实在因为真如佛性，人人本来具足。只因为迷惑而不觉悟，起初并没有失去。等到听闻了如来的言教，以及善知识的指示，才知道无价宝珠就在自己衣服里面，真如佛性恒常存在。（从此就能）不离当处，得大自在，自利利他，受用无尽了。</p></div>
+<div class="para-pair"><p class="p-orig">天台陈勤先女士，宿有慧根。于台禅性相净土诸宗，悉知壸奥。而且偏赞净土，冀一切不能彻悟自心，断惑证真者，即生便登阿鞞跋致。亦可谓于博得约，宏法知要矣。</p><p class="p-trans">天台的陈勤先女士，宿世具有慧根。对于天台宗、禅宗、三论宗、唯识宗、净土宗各宗派，全都知晓其中的奥义。而且偏赞净土，希望所有不能彻悟自心、断惑证真的人，即于现生登上不退转位。可以说是，由广博而得到精约，知道了宏扬佛法的切要所在。</p></div>
+<div class="para-pair"><p class="p-orig">其所发挥，机理双契。虽则多录成文，然如一屋散钱，一一上串，俾用者现成持取。三叉歧路，条条标示，令行者勇往直前，亦不可谓无功也。</p><p class="p-trans">她的文字发挥，根机、教理双双契合。虽然大多是摘录现成的文字，然而如同将一屋子的散钱，穿成一串，让使用的人现成受持取用。又在三叉路口，一条条进行标示，让行路的人勇往直前，不能说没有功德啊。</p></div>
+<div class="para-pair"><p class="p-orig">惜其子袁授荀，根性弗类。于其母所述，了无所知。抄录而欲流通，其注概节略之。不知有宜节者，有不宜节者。不宜节者而妄节之，则有意义不明，文法不合之弊。而且错讹满纸，致有许多词不达意之处。足见此道，须自有善根，方可优入。否则虽母子至亲，亦不能传。</p><p class="p-trans">可惜她的儿子袁授荀，根性与母亲不同。对于母亲的著述一无所知。抄录下来想要流通，却将其中的注解全都删节了。殊不知有应当删节的，有不应当删节的。不应删节的地方，随意删节，就存在意义不明、不合文法的弊病。而且抄录的文稿中错误满篇，导致有许多词不达意的地方。由此足以看出，佛法，必须要有善根，才可以优先进入。否则，即使是母子这样的至亲，也不能够相传。</p></div>
+<div class="para-pair"><p class="p-orig">奉化孙玉仙居士，欲铸板流通。冀须眉丈夫，闺阁英贤，同发思齐之心，共证本具佛性。委光鉴订。因正其错讹，离其句读。遂题之为佛学述要云。</p><p class="p-trans">奉化的孙玉仙居士，想要将这本书铸板流通。期望所有的大丈夫，以及女中英贤们，共同发起见贤思齐之心，共同证得本具的佛性。孙居士委托我来鉴别修订。我于是改正了书中的讹谬，进行了断句，并为这本书题名为《佛学述要》。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【性宗】</span>佛教语。法性宗的简称，与法相宗同为大乘的两大宗派。以破相显性为宗旨。清钱谦益《寄内衡法师书》：“古来判教，大率以《瑜珈》属相宗，《中论》属性宗。相先性后，似有浅深差别。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【法相宗】</span>中国佛教主要宗派之一。唐代玄奘及其弟子窥基继承古印度瑜伽行派学说所创立。该宗严密分析诸法之相而阐述“万法唯识”之理，也称为法相唯识宗、唯识宗。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【壸奥】</span>阃奥。壸谓宫巷，奥谓室隅。比喻事理的奥秘精微。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【阿鞞跋致】</span>译曰不退转。不退转成佛进路之义。是菩萨阶位之名。经一大阿僧祇劫之修行，则至此位。阿弥陀经曰：“极乐国土，众生生者，皆是阿鞞跋致。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【见贤思齐】</span>看到德才兼备的人，就想向他学习，和他一样。《论语·里仁》：“子曰：‘见贤思齐焉，见不贤而内自省也。’”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

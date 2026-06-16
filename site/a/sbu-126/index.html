@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普陀胜迹序 · 印光法师文钞</title>
+<meta name="description" content="观音大士，乃法界众生之恃怙。普陀名山，实大士应化之道场。名载华严，善财昔年亲参。恩周庶类，中外长时朝拜。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-126/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普陀胜迹序 · 印光法师文钞">
+<meta property="og:description" content="观音大士，乃法界众生之恃怙。普陀名山，实大士应化之道场。名载华严，善财昔年亲参。恩周庶类，中外长时朝拜。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-126/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 序跋疏</div>
+      <h1 class="art-title">普陀胜迹序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观音大士，乃法界众生之恃怙。普陀名山，实大士应化之道场。名载华严，善财昔年亲参。恩周庶类，中外长时朝拜。</p><p class="p-trans">观音大士，是法界众生的依靠。普陀名山，实际是观音大士应化的道场。普陀山的名字记载在《华严经》中，善财童子往昔曾亲身参访。大士慈恩周遍万物万类，中外长时朝拜。</p></div>
+<div class="para-pair"><p class="p-orig">由是历朝敕建，举世尊崇。三寺鼎立，众庵棋布。岑楼杰阁，耸峙乎云霄之外。皇文御碑，辉煌乎渤海之中。菩萨应化道场，震旦虽有其四。善信礼谒众多，此山实为第一。</p><p class="p-trans">因此，历朝都敕命建造，举世尊重推崇。三座寺院（普济寺、法雨寺、佛顶山寺）鼎立，众庵星罗棋布。高楼高阁，耸立于云霄之外；皇文御碑，辉煌于茫茫大海之中。菩萨的应化道场，虽然中国有四座名山。但善信礼拜谒见众多的，普陀山实在是第一。</p></div>
+<div class="para-pair"><p class="p-orig">盖以大士久成正觉，安住寂光。度生之愿既赊，垂慈之方斯普。由是四圣六凡之身，无身不现。七难二求之感，无感不通。如皓月普映万川，江河各现皓月。犹阳春遍育百卉，草木悉被阳春。</p><p class="p-trans">因为观音大士久已成就正等正觉，安住常寂光净土。度众生的大愿长久，垂慈的方法广大无边。因此，四圣六凡之身，无身不能显现；救七难应二求（注1）之感，无感不能通达。如同皓月当空普映于万川，江河各个现出皓月；像阳春一到普遍孕育出百卉，草木均受阳春泽被。</p></div>
+<div class="para-pair"><p class="p-orig">大士本无心，以众生之心为心。大士本无境，以众生之境为境。以故桥梁道路等依报，人天凡圣等正报，悉得随感而应，拔苦与乐也。此指有信心者而言。若无信心，则如戴盆睹天。天固常覆其上。由戴盆故，莫由见其光相矣。</p><p class="p-trans">大士原本无心，以众生之心为心；大士原本无境，以众生之境为境。因此桥梁、道路等依报，人天凡圣等正报，全都随感而应，拔苦与乐啊！这是针对有信心的人而说的。若无信心，则如头戴大盆望天。天固然常在他的头顶上，但由于他头戴大盆的缘故，所以无法看见天的光相啊！</p></div>
+<div class="para-pair"><p class="p-orig">山东潘对凫居士，久欲来山进香，未得即遂所愿。欲以己之遗憾，俾一切人悉无所憾。乃托普陀真达和尚，遍摄山林寺宇形胜诸影，共计七十三片。</p><p class="p-trans">山东的潘对凫居士，想来普陀山进香已经很久了，未能立刻满其所愿。他想以自己的遗憾，使一切人都没有遗憾。于是托普陀山真达和尚，普遍拍摄普陀山山林、寺宇等风景胜地的诸多影像，共计七十三片。</p></div>
+<div class="para-pair"><p class="p-orig">其次序，由道头至普济，至法雨，至佛顶山。由佛顶后山，至梵音洞。复回至普济。往西天门，磐陀石，以至潮音洞，观音眺。以此数处，不能一去顺便即至，故其序如此。</p><p class="p-trans">影像的次序，由海岸道头至普济寺，至法雨寺，至佛顶山。由佛顶后山，至梵音洞。再回至普济寺。往西天门、磐陀石，最后到达潮音洞、观音眺。因为这多处地方，不能一去便一一顺路到达，因此影像的顺序如上所述。</p></div>
+<div class="para-pair"><p class="p-orig">末附对凫居士之相，欲以遍会诸上善人，而结莲池预会之缘。特请江西许止净居士，一一题示大略。祈商务印书馆，加以英文，精印流通。以期沐大士之慈恩，慕大士之道场者，同得不出户庭，亲见圣地。</p><p class="p-trans">末后附有潘对凫居士的相片，想因此遍会诸上善人，而结下预会莲池海会的因缘。特地请江西许止净居士，一一题示大略。请商务印书馆，加上英文，精印流通。以期沐浴大士的慈恩，仰慕大士道场的人，共同能够不出家门，而亲见圣地。</p></div>
+<div class="para-pair"><p class="p-orig">心若念佛，心即是佛矣。既知心即是佛，忍令长劫被烦恼恶业之所锢蔽，终为大士所怜悯之人，了无己立立人，自利利他之实事实理可得乎哉。愿诸阅者，于此一著，同深感慨。则幸甚幸甚。民国十八年己巳季秋古莘释印光谨撰。</p><p class="p-trans">心若念佛，心即是佛啊！知道心即是佛后，忍心让长劫被烦恼恶业所禁锢遮蔽，最终被大士所怜悯的人，完全没有己立立人、自利利他的实事实理可得吗？愿各位读者，对于这一著，同样深深地感慨。那么就非常庆幸了。民国十八年（1929）己巳季秋（农历九月）古莘释印光谨撰。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【七难二求】</span>救七难，七难指“水难、火难、风难、枷锁难、黑风难、刀杖难、怨贼难”等等；解三毒，就是解除“贪、瞋、痴”这三毒；应二求，就是应“求男、求女”这二求。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

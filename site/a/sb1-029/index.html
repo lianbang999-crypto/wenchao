@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复太虚法师书 · 印光法师文钞</title>
+<meta name="description" content="昨聆手教，言欲往宁，若至中秋，或可再来。愚意座下学问文章，口碑载道，此行一去，必有挽令主讲，推令出世者，纷沓相寻。再来白华，恐徒成忆想而已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-029/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复太虚法师书 · 印光法师文钞">
+<meta property="og:description" content="昨聆手教，言欲往宁，若至中秋，或可再来。愚意座下学问文章，口碑载道，此行一去，必有挽令主讲，推令出世者，纷沓相寻。再来白华，恐徒成忆想而已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-029/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复太虚法师书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨聆手教，言欲往宁，若至中秋，或可再来。愚意座下学问文章，口碑载道，此行一去，必有挽令主讲，推令出世者，纷沓相寻。再来白华，恐徒成忆想而已。</p><p class="p-trans">昨天聆受您的来信，说您准备前往南京，如果到了中秋，或许可以再来普陀山。我心里想，以您的学问文章，口碑载道，此行一去，必定有挽留请您主讲弘法，推举令您出世任职的人，纷沓找寻而来。那么您再来白华顶东侧的法雨寺，恐怕就徒然成为忆想而已。</p></div>
+<div class="para-pair"><p class="p-orig">光年虽未老，神体极衰，入息虽存，出息难保。纵令座下再来，其复瞻懿范，重读佳作，未可预料。</p><p class="p-trans">我年纪虽然还未太老，然而精神身体极为衰弱，入息虽有，但出息难保。即使让您再来普陀山，想再瞻仰您的美好风范，重新阅读您的佳作，已不可预料了。</p></div>
+<div class="para-pair"><p class="p-orig">窃念现今世风浇薄，师友道丧。多从谄誉，不事箴规。致令上智迟入圣之期，下愚失日新之益。</p><p class="p-trans">我想到，现今世风浇薄，良师益友的法道丧失。大多都是谄媚赞誉，而不是劝诫规谏。致使上智之人，推迟成为圣人的日期；下等愚人，失去日日图新向善的利益。</p></div>
+<div class="para-pair"><p class="p-orig">光本北陕鄙夫，质等沙石，每于良玉之前，横肆粗厉之态，必欲令彼速成完器，为举世珍。纵粉身碎骨，亦不暇顾。</p><p class="p-trans">我本来是陕北的一介鄙夫，品质像沙石一般，常常在良玉面前，横加恣肆粗厉的姿态，是想让对方快速成为完美的玉器，成为举世的珍宝。我纵然粉身碎骨，也无暇顾及。</p></div>
+<div class="para-pair"><p class="p-orig">座下美玉无瑕，精金绝矿，何用箴规，岂陷谄誉。光之驴技，了无所施。然欲继往开来，现身说法，俯应群机，引人入胜，似乎或有小补。</p><p class="p-trans">您乃美玉无瑕，精金绝矿，哪里还用得着劝诫规谏，哪里还会陷于谄媚赞誉。我的黔驴之技，毫无所施之处。然而想要继往开来，现身说法，俯应群机，引人入胜，似乎或许有一点小小的补益。</p></div>
+<div class="para-pair"><p class="p-orig">因取座下答易实甫诗而敷衍之，用申昨日相缘而动，择人而交之意。非曰吹毛求疵，实欲玉成完德。而语意丑拙，有刺雅目。祈愍谅愚诚，相忘于文言之外，则幸甚幸甚。</p><p class="p-trans">因此取您回答易实甫的诗而敷衍写了两首，用来表明昨天所说的察看因缘而行动，选择智人而交往的意思。不是吹毛求疵，实在是想要成全您的完美品德。然而言语文意丑陋拙劣，有刺您的雅目。祈请怜愍体谅我的愚诚，相忘于诗文言意之外，则非常庆幸欣慰。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【手教】</span>即手书。对来信的敬称。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【易实甫】</span>（1858-1920年）湖南龙阳（今汉寿）人。名顺鼎，清末民初之才子、诗人、名士，自称“三十余年内，初为神童，为才子，继为酒人，为游侠。”世号龙阳才子。工诗词、骈文和联语。自谓“或古或今，或朴或华，莫能以一诣绳之。”甲午战时曾两度赴台帮助刘永福抗日。晚年曾筑一屋在庐山上，榜其门曰：“纳于大麓，藏诸名山。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

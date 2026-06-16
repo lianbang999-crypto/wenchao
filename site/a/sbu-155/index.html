@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普济寺建如意寮开念佛堂功德碑记 · 印光法师文钞</title>
+<meta name="description" content="普陀名山，乃大士示迹之胜地。普济禅寺，实四众祈福之道场。以故历朝钦敬，举世尊崇。一切善信，中外人民，各欲礼拜以投诚，不惮梯山而航海。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-155/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普济寺建如意寮开念佛堂功德碑记 · 印光法师文钞">
+<meta property="og:description" content="普陀名山，乃大士示迹之胜地。普济禅寺，实四众祈福之道场。以故历朝钦敬，举世尊崇。一切善信，中外人民，各欲礼拜以投诚，不惮梯山而航海。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-155/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 论文</div>
+      <h1 class="art-title">普济寺建如意寮开念佛堂功德碑记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">普陀名山，乃大士示迹之胜地。普济禅寺，实四众祈福之道场。以故历朝钦敬，举世尊崇。一切善信，中外人民，各欲礼拜以投诚，不惮梯山而航海。</p><p class="p-trans">普陀名山，是观音大士示现化迹的胜地。普济禅寺，实在是四众弟子祈福的道场。所以历朝历代受到人们的钦仰敬重，举世之人全都尊重推崇。一切善男信女，中外各地人民，各各想要礼拜投诚，不惧登山渡海。</p></div>
+<div class="para-pair"><p class="p-orig">其十方僧众之礼朝者，每岁常有数千。虽则三寺分住，而普济实居多半。人众既多，不无疾病死亡。</p><p class="p-trans">十方僧众来礼拜朝山的人，每年常有数千之多。虽然是普济、法雨、慧济三寺分开挂单居住，但在普济寺实际挂单居住的占一多半。挂单居住的僧众已然很多，难免会有生病死亡的情况发生。</p></div>
+<div class="para-pair"><p class="p-orig">如意寮舍，向设鼓楼之下，无奈屋宇过深，窗牖甚少，阴沉暗闷，有碍卫生。前现住持，各欲重新建设，以工项甚多，力未暇及。锡麟堂当家明觉师，久蓄此志，殊少机缘。</p><p class="p-trans">如意寮舍，一向设在鼓楼的下面，无奈房屋太深，窗户很少，里面阴沉暗闷，有碍卫生。前任和现任住持，各个都想重新建设，但因工项很多，无力顾及到如意寮。锡麟堂的当家明觉法师，很久就怀有建如意寮的愿望，只是缺少机缘。</p></div>
+<div class="para-pair"><p class="p-orig">爰有安徽寿州孙融惺女士者，系孙中堂之裔孙，亦法门之外护也。今夏来山，寓锡麟堂，明觉为说，慨捐二千元以为发起，由是缁素诸公，各助净资，以观厥成。</p><p class="p-trans">现有安徽寿州孙融惺女士，是孙家鼐中堂（注1）的后裔子孙，也是法门的外护（注2）。今年夏天来普陀山，住在锡麟堂，明觉法师对她说到这件事，她慷慨地捐出二千元作为发起，由此僧俗诸公，各自捐助净资，以期办成这件事。</p></div>
+<div class="para-pair"><p class="p-orig">又由本山大德十八位，起一念佛会，经理念佛堂一切规则及经费。遂于鼓楼之南，建楼房十间，以为养病之所。鼓楼之下，中间作念佛堂，两边隔作六间，以住师僧，上开天窗，俾阳光透入，清斋净几，颇便诵持。</p><p class="p-trans">另外，由本山十八位大德，发起一念佛会，管理念佛堂的一切规则和经费。于是在鼓楼的南面，修建十间楼房，作为养病之处。鼓楼的下面，中间作念佛堂，两边隔开分为六间，安住师僧，上面开天窗，使阳光透入，清净斋房，明净茶几，非常便于诵经持咒。</p></div>
+<div class="para-pair"><p class="p-orig">请发菩提心之高僧作管堂，并真实修行之师僧六位，每日在本堂中二时课诵，三时念佛。寺中殿堂应酬，概不干预，以期病人常闻佛号，心念归一，庶易痊愈。若或欲终，更为助念，俾彼正念昭彰，随佛往生。至其已寂，则移于其旁之涅槃堂，以便装送，而免妨碍。</p><p class="p-trans">请发菩提心的高僧作管堂师父，还有真实修行的师僧六位，每天在本堂中二时课诵，三时念佛。寺院中殿堂的应酬，一概不干预，以期病人常闻佛号，心念归一，更容易痊愈。如果将要命终，更会为他们助念，使他们正念昭彰，随佛往生。等到他们圆寂之后，就移到旁边的涅槃堂，方便装殓送葬，以免有妨碍。</p></div>
+<div class="para-pair"><p class="p-orig">照应病人，管堂总其大纲，香灯，司水详悉料理，出龛迁化，均为助念，只此一举，有多种益。俾念佛人知身为苦本，努力勤修。</p><p class="p-trans">照料病人的事，管堂师父总揽其中的大纲，香灯师，司水师详细悉心料理，出龛迁化，都为亡人助念，就这一举动，便有多种利益。使念佛人知道色身为招苦的根本，努力勤修。</p></div>
+<div class="para-pair"><p class="p-orig">若病重者自不能念，由听堂中念佛之声，其心中已念念有佛现矣。若将去世，因大家助念之力，不至心现尘境，随业缘去。</p><p class="p-trans">如果病重的人自己不能念佛，由于听到堂中念佛的声音，其心中已经念念有佛显现了。如果将要去世，因为大家的助念之力，不至心现五欲尘境，随业缘而去。</p></div>
+<div class="para-pair"><p class="p-orig">佛以看病为八福田中第一福田，愿以后之住斯堂者，咸发自利利他之心，精修净业，决定现生烦惑消除，善根增长，临终感应道交，佛圣来迎矣。</p><p class="p-trans">佛以看病为八福田中的第一福田，愿以后住在念佛堂的人，全都发起自利利他之心，精修净业，决定现生烦惑消除，善根增长，临终感应道交，佛圣来迎啊！</p></div>
+<div class="para-pair"><p class="p-orig">又所募之款，除修葺念佛堂，创建如意寮，涅槃堂外，又补修御碑亭栅门，造化身窑，迁七十余厝棺葬于后山梵音洞所属之沙地，重修码头，盖道头男女厕室各一所，悉由明觉与普济寺监院融通，知客本立而为捐募。</p><p class="p-trans">再有，所募化的钱款，除了修葺念佛堂，创建如意寮，涅槃堂之外，另外补修御碑亭的栅门，造化身窑，将七十多付厝棺（注3）迁葬到后山梵音洞所属的沙地，重修码头，盖建道头男女厕所各一座，全由明觉法师与普济寺监院融通法师，知客本立法师捐募。</p></div>
+<div class="para-pair"><p class="p-orig">窃谓如意寮立念佛堂最为合宜，以于存殁健病，均为有利益。诸方丛林，当有相继而立者，愿我同衣，各为提倡。</p><p class="p-trans">我认为如意寮建立念佛堂是最合适的，这对于生者死者、健康的人、生病的人，都有利益。各个地方的丛林，当会有相继而建立的，愿我同衣僧众，各各为之提倡。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【孙家鼐】</span>（1827-1909），字燮臣，安徽寿州(寿县)人，咸丰期间状元，与翁同龢同为光绪帝师，累迁内阁学士，擢工部侍郎，署工部、刑部、户部尚书。1898年为京师大学堂第一任管学大臣，被聘为总教习。主张阅报去皇帝壅蔽，然要严禁“渎乱宸聪”。建议酌置散卿，广集人才，以资议政。“中堂”，唐于中书省设政事堂，以宰相领其事，后因称宰相为中堂。明、清大学士亦沿用此称。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【外护】</span>乃僧侣以外之在家人，如族亲、檀越等，为佛教所从事之种种善行，如供给僧尼衣食以助其安稳修行，或尽力援护佛法之弘通等。亦即从外部以权力、财富、知识或劳力等护持佛教，并扫除种种障碍以利传道。从事以上诸行者，亦称为外护，或外护者、外护善知识。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【厝棺】</span>丧葬习俗。徽俗重风水，人死埋葬，即择年、月、日、时，又择山水形势、龙脉真穴，认为子孙的贫富、贵贱、贤愚、寿夭均同祖坟有关。亲人死后，多不立即下葬，必须等选到吉地后方才入土。富家便停柩户外，盖厝屋藏棺，俗称“厝棺”。贫家仅覆盖瓦片或茅茨，亦称“厝棺”。真穴难寻，厝三年五年者有之，有的竟厝数十年不能入土，日久难免暴露骸骨，污染环境。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

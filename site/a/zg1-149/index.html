@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复甬江某居士书 · 印光法师文钞</title>
+<meta name="description" content="色欲一事，乃举世人之通病。不特中下之人，被色所迷。即上根之人，若不战兢自持，乾惕在念，则亦难免不被所迷。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-149/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复甬江某居士书 · 印光法师文钞">
+<meta property="og:description" content="色欲一事，乃举世人之通病。不特中下之人，被色所迷。即上根之人，若不战兢自持，乾惕在念，则亦难免不被所迷。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-149/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复甬江某居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">色欲一事，乃举世人之通病。不特中下之人，被色所迷。即上根之人，若不战兢自持，乾惕在念，则亦难免不被所迷。</p><p class="p-trans">色欲这件事，是全世界人的通病。不仅中下根机的人，会被色欲所迷惑。即使上根利智的人，如果不战战兢兢自我把持，念念之间有所警惕，也难免要被色欲所迷惑。</p></div>
+<div class="para-pair"><p class="p-orig">试观古今来多少出格豪杰，固足为圣为贤。只由打不破此关，反为下愚不肖。兼复永堕恶道者，盖难胜数。</p><p class="p-trans">且看古往今来，多少卓越的豪杰，本来足以成为圣贤人。只因为打不破色欲这一关，反而成为了下等愚昧不成材之人，并且永远堕入恶道。这样的人实在是多得数不过来。</p></div>
+<div class="para-pair"><p class="p-orig">楞严经云，若诸世界六道众生，其心不淫，则不随其生死相续。汝修三昧，本出尘劳。淫心不除，尘不可出。学道之人，本为出离生死。苟不痛除此病，则生死断难出离。</p><p class="p-trans">《楞严经》说：“若诸世界六道众生，其心不淫，则不随其生死相续。汝修三昧，本出尘劳。淫心不除，尘不可出。”学佛，原本是为了出离生死。如果不痛下决心除去此病，就决定难以出离生死轮回。</p></div>
+<div class="para-pair"><p class="p-orig">即念佛法门，虽则带业往生。然若淫习固结，则便与佛隔，难于感应道交矣。欲绝此祸，莫如见一切女人，皆作亲想，怨想，不净想。</p><p class="p-trans">即使修行念佛法门，虽然说带业往生。然而如果被淫欲的习气牢固束缚，就与佛的气氛相隔离，就难以感应道交了。如想断绝这个祸害，最好是见到一切女人都作亲想，怨想，不净想。</p></div>
+<div class="para-pair"><p class="p-orig">亲想者，见老者作母想，长者作姊想，少者作妹想，幼者作女想。欲心纵盛，断不敢于母，姊，妹，女边起不正念。视一切女人，总是吾之母，姊，妹，女。则理制于欲，欲无由发矣。</p><p class="p-trans">所谓“亲想”，就是见到年纪大的女人，将她想作自己的母亲，比自己年长的想作自己的姐姐，比自己年少的想作自己的妹妹，年幼的想作自己的女儿。淫欲心即使很旺盛，也绝对不敢对母亲，姐妹，女儿生起不正的念头。看一切女人，都是我的母亲，姐妹，女儿，则理智降伏了欲望，淫欲就无从产生了。</p></div>
+<div class="para-pair"><p class="p-orig">怨想者，凡见美女，便起爱心。由此爱心，便堕恶道。长劫受苦，不能出离。如是则所谓美丽娇媚者，比劫贼虎狼，毒蛇恶蝎，砒霜鸩毒，烈百千倍。于此极大怨家，尚犹恋恋著念，岂非迷中倍人。</p><p class="p-trans">所谓“怨想”，就是见到美女，就会生起贪爱之心，而正是这种贪爱心，引我堕落恶道，长劫受苦，不能出离。这样一想，那么所谓的美女娇娘，比盗贼虎狼，毒蛇恶蝎，砒霜鸩毒还恶毒百千倍。对于这样的极大怨家，还要恋恋不舍，难道不是迷惑人中间的糊涂虫吗？</p></div>
+<div class="para-pair"><p class="p-orig">不净者，美貌动人，只外面一层薄皮耳。若揭去此皮，则不忍见矣。骨肉脓血，屎尿毛发，淋漓狼藉。了无一物可令人爱。但以薄皮所蒙，则妄生爱恋，华瓶盛粪，人不把玩。</p><p class="p-trans">所谓“不净想”，就是见到美貌动人的女人，想想她也只不过是外面一层薄皮罢了。如果揭去这张皮，则会惨不忍睹了。骨肉脓血，屎尿毛发，淋漓狼藉，完全没有一物可让人爱，只不过因为外面蒙了一层薄皮，就幻妄地对她生出爱恋。如果花瓶中装了粪，人们就不会赏玩它。</p></div>
+<div class="para-pair"><p class="p-orig">今此美人之薄皮，不异华瓶。皮内所容，比粪更秽。何得爱其外皮，而忘其皮里之种种秽物，漫起妄想乎哉。苟不战兢乾惕，痛除此习。则唯见其姿质美丽，致爱箭入骨，不能自拔。平素如此，欲其没后不入女腹，不可得也。入人女腹犹可。入畜女腹，则将奈何。</p><p class="p-trans">而现在这美人的薄皮，和花瓶没有区别。薄皮内所装的东西，比大粪更加污秽。怎么能贪爱外皮，却忘记了皮里的种种秽物，而乱生妄想呢？如果不战战兢兢，保持警惕，痛除这个习性，那么一见女人姿色美丽，就爱箭入骨，以致不能自拔。平时尚且如此，死后想要不进入女腹，就不可能了。进入女人的腹中还算可以了，如果进入雌性动物的腹中，那可怎么办呢？</p></div>
+<div class="para-pair"><p class="p-orig">试一思及，心神惊怖。然欲于见境不起染心，须于未见境时，常作上三种想，则见境自可不随境转。否则纵不见境，意地仍复缠绵，终被淫欲习气所缚。固宜认真涤除恶业习气，方可有自由分。</p><p class="p-trans">一想到这里，心神惊怖。然而要想见到境缘不起染心，就必须在还没有见到境缘时，常作以上三种观想，那么见境时自然可以不随境转。否则即使不见境，意地里仍旧缠绵不绝，终究会被淫欲习气所束缚。所以，一定要认真涤除恶业习气，自由（此处指出离轮回）才有份啊。</p></div>
+<div class="para-pair"><p class="p-orig">每日除了己职分外，专心念佛名号。朝暮佛前，竭诚尽敬，恳到忏悔无始宿业，如是久之，当有不思议利益，得于不知不觉中。</p><p class="p-trans">每天除了自己的本职工作外，专心念佛名号。早晚在佛前，竭诚尽敬，恳切忏悔自己无始宿业，这样一直做下去，久而久之，就会在不知不觉中得到不可思议的利益。</p></div>
+<div class="para-pair"><p class="p-orig">法华经云，若有众生，多于淫欲，常念恭敬观世音菩萨，便得离欲。瞋恚，愚痴，亦然。是知能至诚念弥陀观音圣号者，贪瞋痴三惑，自可消除也。</p><p class="p-trans">《法华经》说：“若有众生，多于淫欲，常念恭敬观世音菩萨，便得离欲。”瞋恚、愚痴也是一样的。由此可知只要能至诚念弥陀、观音圣号，贪瞋痴三种惑业自然可以消除。</p></div>
+<div class="para-pair"><p class="p-orig">又现今乃患难世道，须于念佛外，加念观音圣号，冥冥中自有不可思议之转回。庶不至宿业现前，无法躲脱耳。更宜常阅戒淫因果报应之书，远离狂荡匪鄙之友，则内志正而外诱绝，净业自可成就矣。勉之勉之。</p><p class="p-trans">另外，当今是个患难的世道，必须在念佛之外，加念观世音菩萨圣号，冥冥中损害自然能不可思议地扭转成利益。才不至于当宿业现前时，没有办法躲避啊。戒淫及因果报应的书更应该经常阅读，远离狂妄放荡、匪劣鄙俗的朋友，那么心中志向正直，而外面的引诱断绝，净业自然可以成就了。努力啊努力。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【甬江】</span>宁波市的别称。因境内有甬江而得名。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【迷中倍人】</span>《楞严经》：“汝等即是迷中倍人。如我垂手。等无差别。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【恳到】</span>亦作“恳倒”。犹恳至。《后汉书·独行传·谅辅》：“今郡太守改服责己，为民祈福，精诚恳到，未有感彻。”南朝梁简文帝《唱导文》：“今为六道四生，三途八难，慈悲恳倒。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【匪鄙】</span>行为不端、品质低劣。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

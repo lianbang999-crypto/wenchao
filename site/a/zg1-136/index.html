@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复马契西居士书一 · 印光法师文钞</title>
+<meta name="description" content="所言长斋念佛外之应守规律，即是敦行孝友，务尽伦常。诸恶莫作，众善奉行。居心动念，不干邪僻，并及虚伪。与人做事，克尽厥职。遇有缘者，劝令入道。其种种行相，不须具标，但勤看印光文钞，及安士全书自知。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-136/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复马契西居士书一 · 印光法师文钞">
+<meta property="og:description" content="所言长斋念佛外之应守规律，即是敦行孝友，务尽伦常。诸恶莫作，众善奉行。居心动念，不干邪僻，并及虚伪。与人做事，克尽厥职。遇有缘者，劝令入道。其种种行相，不须具标，但勤看印光文钞，及安士全书自知。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-136/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复马契西居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">所言长斋念佛外之应守规律，即是敦行孝友，务尽伦常。诸恶莫作，众善奉行。居心动念，不干邪僻，并及虚伪。与人做事，克尽厥职。遇有缘者，劝令入道。其种种行相，不须具标，但勤看印光文钞，及安士全书自知。</p><p class="p-trans">所谓在持长斋念佛之外，应遵守的生活规矩，就是敦实地行持孝道和友善，完全恪守伦理纲常。诸恶莫作，众善奉行。居心动念不涉及乖谬不正的事情，以及虚伪作人。给别人做事情应当克尽自己的职责。遇到有佛缘的人，劝他们修行佛道。如此种种修行事相，不需要具体地一一标明，只要勤看《印光法师文钞》及《安士全书》自然会知道。</p></div>
+<div class="para-pair"><p class="p-orig">须知为佛弟子，凡所作为，必须超过世俗所行，方能自己得真实益，令他相观而善。若口说修行，心怀不善。于父母兄弟，以及一切世人上，未能尽其本分。如是之人，名为假善人。因地既伪，实益何得。</p><p class="p-trans">须知身为佛弟子，所有的作为必须超过世俗人的所行，才能使自己得到真实利益，使他人看了也能够效法学习。如果只是嘴里说修行，心中怀有不善的念头。对于父母兄弟以及一切世间的人，不能恪尽自己的本分。这样的人名为假善人。因地的心既然虚伪，真实的利益又怎能得到呢？</p></div>
+<div class="para-pair"><p class="p-orig">圣贤之学，皆从格物致知，诚意正心而始。况欲了生脱死，超凡入圣者乎。格物致知，当看四书蕅益解重刻序，及袁了凡四训序。</p><p class="p-trans">圣贤的学问都从“格物致知、诚意正心”开始的。更何况想了生脱死、超凡入圣的人呢！格物致知等意思，当看《四书蕅益解重刻序》，及《了凡四训序》这两篇文章就知道了。</p></div>
+<div class="para-pair"><p class="p-orig">昔白居易，问鸟窠禅师，如何是佛法的的大意。窠曰，诸恶莫作，众善奉行。白曰，这两句话，三岁孩童也会恁么道。窠曰，三岁孩童虽道得，八十翁翁行不得。须知此语，乃一切学佛法人之总关切要语。诸恶众善，皆须在心地上论。不专指行之于事而已。</p><p class="p-trans">从前，白居易问鸟窠禅师说:“什么是佛法大意”禅师说:“诸恶莫作，众善奉行。”白居易说：“这两句话，三岁孩童也会这么说。”禅师说：“三岁孩童虽然能说，可是八十老翁未必能做到。”要知道，这是一切学佛人最重要的一句话。诸恶莫作、众善奉行，这些事情都必须在心地上论。不专门指外相上的行事而已。</p></div>
+<div class="para-pair"><p class="p-orig">心地上了不起恶，全体是善。其念佛也，功德胜于常人百千万倍矣。欲得心地唯善无恶，当于一切时处，主敬存诚，如面佛天，方可希企。心一放纵，诸不如法之念头，随之而起矣。</p><p class="p-trans">心地上不起一丝恶念，身口意三业全体是善。这样念佛，功德胜过常人百千万倍。想让心地上只有善念，了无恶念，就应当于一切时处，主敬存诚，如同面对佛和上天，方才可能有所希望。心里稍微一放纵，一切不如法的念头，就会随之而起啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【格物致知】</span>谓研究事物原理而获得知识。为中国古代认识论的重要命题之一。语出《礼记·大学》：“欲诚其意者，先致其知，致知在格物。”此处意为：格除私欲，以显良知。印祖在《复念佛居士书》中有云：光近来作一格物致知确解，今为陈之。解曰，格除幻妄私欲物，致显中庸秉彝知。此物，即心中不合天理人情之私欲。一有私欲，则所知所见皆偏而不正。若格除此幻妄不实之私欲，则不偏不易，即心本具之正知自显。一举一动，悉合情理，了无偏僻。此圣人为天下后世所立修己治心之大法。修齐治平在是。超凡入圣亦在是。于此用功最省力。而其所得之利益，随各人之工夫浅深，为贤为圣，乃至为佛，悉由是得。况其下焉者乎。惜后儒不察，以物为事物，以知为知识。则是以根本之根本，认为枝末之枝末。又以枝末之枝末，认为根本之根本。不但不得圣人之意，亦乱圣人之文。何以言之，以欲诚其意，先致其知，致知在格物。此极省力，极简便，举念即得之法。弃之不讲，令人推极吾之知识，穷尽天下事物之理，以期诚意正心者，则举世难得其人矣。由宋儒误认物为外物，故后儒只云诚正，而不提格致。此理极明显，以自命得圣人心传者错解之。致圣人教人修己治心之道，晦塞不彰。可不哀哉。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

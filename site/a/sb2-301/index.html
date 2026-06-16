@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>安士全书题辞 · 印光法师文钞</title>
+<meta name="description" content="读书须知">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-301/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安士全书题辞 · 印光法师文钞">
+<meta property="og:description" content="读书须知">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-301/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">安士全书题辞</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<p class="p-orig">读书须知</p>
+<div class="para-pair"><p class="p-orig">此书凡孔孟薪传，佛祖道脉，格致诚正，了生脱死，与凡日用云为，居心动念，一一发明，堪为规范。诚可谓借世间之因果，示作圣之玄猷。实如来随机利生之妙道，众生离苦得乐之真诠。读者当与佛经一律看。宜存敬畏，切勿亵渎。则福无不臻，灾无不消矣。敬呈读法十条，祈鉴愚诚。</p><p class="p-trans">这部书，凡是孔孟儒家的圣学传承，佛陀祖师的正道法脉，格物致知，诚意正心，了生脱死，与一切日常行为，起心动念，都一一作了阐发显明，堪为规范。实在可以说是，借世间的因果，明示成为圣人的大道。实在是如来随机利生的妙道，众生离苦得乐的真诠。读者应当将这部书与佛经一样看待。应该心存敬畏，千万不要亵渎轻慢。那么幸福无不来临，灾难无不消除了。敬呈读书法则十条，请鉴我的愚诚。</p></div>
+<div class="para-pair"><p class="p-orig">（一） 将开卷诵读时，应先发恭敬心。如见大宾，如对先哲。庶在在悟入作者之深心处。</p><p class="p-trans">（一） 将开卷诵读时，应先发恭敬心。如面见贵宾，如面对先贤。才能处处都悟入作者的深心之处。</p></div>
+<div class="para-pair"><p class="p-orig">（二） 将开卷诵读时，当先发至诚心，出恳切言。赞叹周公安士以救世宏心，成救世杰作。并欣己之有缘得读。</p><p class="p-trans">（二） 将开卷诵读时，应当先发至诚心，出恳切之言。赞叹周安士先生以救世宏伟之心，完成救世的杰作。并欣慰自己有缘能够读到。</p></div>
+<div class="para-pair"><p class="p-orig">（三） 将开卷诵读时，先洗手漱口，就净室洁案，而后展诵。</p><p class="p-trans">（三） 将开卷诵读时，先洗手漱口，到干净的屋子，整洁书桌，然后展书读诵。</p></div>
+<div class="para-pair"><p class="p-orig">（四） 将开卷诵读时，当先正襟端坐片时，忏悔一切嫉妒轻慢骄狂等恶念恶语恶行。</p><p class="p-trans">（四） 将开卷诵读时，应当先正襟端坐片刻，忏悔一切嫉妒、轻慢、骄狂等恶念、恶语、恶行。</p></div>
+<div class="para-pair"><p class="p-orig">（五） 诵读时，于一字一句悟入处，当起大欢喜。并随时记录其心得，勿任忘失。</p><p class="p-trans">（五） 诵读时，对于一字一句有悟入之处，应当生起大欢喜。并随时记录悟到的心得，不要随意忘失。</p></div>
+<div class="para-pair"><p class="p-orig">（六） 诵读时，当广思其义。始以书摄心。继以心转业。终以进而不已之心，广行劝导。转五浊恶世界，而为极乐世界。</p><p class="p-trans">（六） 诵读时，应当广泛思考其中的义理。开始以书来摄自心。接着以心来转业。最终以前进不停止的心，广泛劝导他人。转五浊恶世界，而为极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">（七） 心起妄念时，则恭敬安置，而暂止读。</p><p class="p-trans">（七） 心生起妄念时，就恭敬地放好书，而暂时停止读诵。</p></div>
+<div class="para-pair"><p class="p-orig">（八） 读后欢喜依法奉行，当常起羡慕周公宏法之心，悉力仿效之。</p><p class="p-trans">（八） 读后欢喜，依法奉行，应当常生起羡慕周居士宏法之心，全力仿效他。</p></div>
+<div class="para-pair"><p class="p-orig">（九） 全书读毕，当广思随现在社会趋向，以宏摄化，而善为流布之。</p><p class="p-trans">（九） 全书读完，当广泛思维，随现在社会的趋向，来广大佛的摄化，而善为流布该书。</p></div>
+<div class="para-pair"><p class="p-orig">（十） 全书读毕，得可以迎机宣说之处，广为不识字人，方便宣说，作大饶益。</p><p class="p-trans">（十） 全书读完，得到可以对机宣说之处，广为不认识字的人，方便宣说，作大饶益。</p></div>
+<p class="p-orig">题后</p>
+<div class="para-pair"><p class="p-orig">此书措词阐意，精详曲尽。其于格致诚正修齐治平，穷理尽性，经世出世，悉皆有大裨益。允为挽回世道人心之第一奇书。</p><p class="p-trans">这部书措词文句、阐明意义，精细周详，婉转详尽。对于格物、致知、诚意、正心、修身、齐家、治国、平天下，穷天理，尽人性，经世、出世，全都有大利益。实在是挽回世道人心的第一奇书。</p></div>
+<div class="para-pair"><p class="p-orig">读者务必恭敬虔洁，息心体究。则无边利益，自可亲得。若或亵渎，获罪不浅。如不欲看，祈转施人，慎勿置之高阁。又祈种种设法展转流传。俾现在未来，一切同胞，共出迷途，咸登觉岸云耳。</p><p class="p-trans">读者务必要恭敬虔诚洁净，息心体会探究。那么无边的利益，自然可以亲得。如果亵渎轻慢，就会获罪不浅。如果不想看，请转施他人，千万不要置之高阁。另外，请想种种办法展转流传。使得现在未来，一切同胞，共出迷途，咸登觉岸。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【玄猷】</span>指先圣的大道。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【大宾】</span>1.周王朝对来朝觐的要服以内的诸侯的尊称。2.泛指国宾。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【先哲】</span>先世的贤人。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【在在】</span>处处；到处。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

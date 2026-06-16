@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复某居士书 · 印光法师文钞</title>
+<meta name="description" content="易本圣人观象立法，示人以明明德亲民之道，非徒只为卜吉凶已也。后世学者，舍本逐末，遂成艺术，可哀也已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-078/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复某居士书 · 印光法师文钞">
+<meta property="og:description" content="易本圣人观象立法，示人以明明德亲民之道，非徒只为卜吉凶已也。后世学者，舍本逐末，遂成艺术，可哀也已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-078/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复某居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">易本圣人观象立法，示人以明明德亲民之道，非徒只为卜吉凶已也。后世学者，舍本逐末，遂成艺术，可哀也已。</p><p class="p-trans">《易经》本来是圣人观察宇宙自然万象而建立的方法，旨在向人们显示＂明明德、亲民＂的大道，并非只是为了占卜吉凶而已。后世的学人，舍本逐末，于是《易经》在他们那里沦为了技艺和数术，实在悲哀啊！</p></div>
+<div class="para-pair"><p class="p-orig">试观每卦之大象，其语言多剀切详明。如乾卦，则曰天行健，君子以自强不息。坤卦，则曰地势坤，君子以厚德载物。</p><p class="p-trans">请看看每卦的大象，其中的语言大多切中事理，详尽明了。例如乾卦，就说：“天行健，君子以自强不息。坤卦，就说：“地势坤，君子以厚德载物”。</p></div>
+<div class="para-pair"><p class="p-orig">六十四卦之大象，可录之一幅，以为立身行道之准。将由此以继往圣，开来学，岂区区然只成一算命之艺，以求糊口而已哉。</p><p class="p-trans">六十四卦的大象，可以录成一幅训诫，以做为立身行道的准则。由此便可以继承已往圣贤的道脉，开辟未来的为学之路，哪里只是小小的只成一个算命的技艺，以求糊口活命而已呢？</p></div>
+<div class="para-pair"><p class="p-orig">吾言不足为轻重，试熟读各卦之大象，自可悉知，况各卦之全文，及一部之全文乎。</p><p class="p-trans">我的话不足为轻重，请熟读各卦的大象，自然可以完全了知，更何况每一卦的全文，以及一整部的全文呢？</p></div>
+<div class="para-pair"><p class="p-orig">易乃圣道之源也，故孔子读至韦编三绝。年将七十，尚期天假以年，以期学易而免大过，其自强不息，厚德载物，为何如哉。愿深长思之，则幸甚。</p><p class="p-trans">《周易》是圣人之道的源泉，所以孔子读《周易》读到串书的皮绳断了多次。将要七十岁的时候，仍期望上天赐与足够的年寿，以期继续学习《易经》来免除大的过失，孔子自强不息，厚德载物的精神如何呢？愿你深深地思考这些，则非常庆幸！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【《易》】</span>即《易经》，以阴阳变化来说明宇宙万物的一切现象。它通过占筮来启示天道、人道、地道的变化规律，为的是把握人生立身处世的根本。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【观象】</span>观察卦爻之象。古人用以测吉凶。《易·系辞上》：“圣人设卦观象，系辞焉而明吉凶，刚柔相推而生变化。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【立法】</span>树立规范；规定法则。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【新民】</span>使民更新；教民向善。《书·康诰》：“亦惟助王宅天命，作新民。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【大象】</span>《易》传之一。以卦象为根据来解释卦辞。《易·干》：“象曰：‘天行健，君子以自强不息。’”唐孔颖达疏：“此大象也。十翼之中第三翼，总象一卦，故谓之大象。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【剀切】</span>切实，恳切；切中事理。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【立身】</span>处世、为人。行道：实践自己的主张或所学。《孝经·开宗明义》：“立身行道，扬名于后世，以显父母，孝之终也。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【来学】</span>后来的学者。宋朱熹《＜中庸章句＞序》：“所以继往圣，开来学，其功反有贤于尧舜者。”</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【韦编三绝】</span>《史记·孔子世家》：“孔子晚而喜《易》……读《易》，韦编三绝。曰：‘假我数年，若是，我于《易》则彬彬矣。’”《汉书·儒林传序》：“盖晚而好《易》，读之韦编三绝，而为之传。”颜师古注：“编，所以联次简也。言爱玩之甚，故编简之韦为之三绝也。”后遂以“韦编三绝”为读书勤奋、刻苦治学之典。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【天假之年】</span>上天赐给足够的年寿。谓能享其天年。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

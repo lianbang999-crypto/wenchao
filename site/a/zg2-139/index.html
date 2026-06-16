@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>乌尤山寺新建藏经阁记（山在四川嘉定乐山县） · 印光法师文钞</title>
+<meta name="description" content="佛法大无不包，细无不举，凡十方世界之大，一念心性之微，淑世善民之嘉谟，超凡入圣之懿范，无不彻示原始要终所以然之极致。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-139/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="乌尤山寺新建藏经阁记（山在四川嘉定乐山县） · 印光法师文钞">
+<meta property="og:description" content="佛法大无不包，细无不举，凡十方世界之大，一念心性之微，淑世善民之嘉谟，超凡入圣之懿范，无不彻示原始要终所以然之极致。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-139/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">乌尤山寺新建藏经阁记（山在四川嘉定乐山县）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法大无不包，细无不举，凡十方世界之大，一念心性之微，淑世善民之嘉谟，超凡入圣之懿范，无不彻示原始要终所以然之极致。</p><p class="p-trans">佛法，广大而无不包含，细微而无不列举。举凡十方世界的广大，一念心性的微细，教化世间的法则，超凡入圣的规范，无不彻底究竟地显示出其起源与结果的所以然。</p></div>
+<div class="para-pair"><p class="p-orig">其道大理微，文深义广，欲阐扬其旨趣，则罄海墨而莫穷其妙，若玄会其圆诠，则觅一字而了不可得，虽圣人有所不知，岂凡情所能测度。</p><p class="p-trans">佛法道大理微，文深义广。如果想要阐扬佛法的宗旨趣向，那么用尽大海般的墨水也不能穷尽其奥妙；如果想要玄会佛法的圆妙诠解，那么寻觅一个字也了不可得。即使是圣人也有所不知，哪里是凡夫所能够测度的呢。</p></div>
+<div class="para-pair"><p class="p-orig">是以举行其法，天地鬼神悉无所违，故古今首出庶物出类拔萃之人，莫不殚精修持，极力流通，以期自他同得实益焉。</p><p class="p-trans">所以佛法施行之后，天地鬼神都不会违背。故古往今来，杰出卓越、出类拔萃的人，无不殚精竭虑修持佛法，极力加以流通，以期自己和他人，共同得到佛法的真实利益啊。</p></div>
+<div class="para-pair"><p class="p-orig">综举如来一代教典，分为三藏，藏者，深固幽远，无穷无尽之谓。凡佛所说大小乘经，名为经藏，凡佛所制大小乘律，名为律藏，凡菩萨声闻所著释经宗经诸论，名为论藏，此皆自佛国请梵本至此土翻译者，约五千余卷。</p><p class="p-trans">综合列举如来一代教典，分为经律论三藏。藏是深固幽远，无穷无尽的意思。凡是佛陀所说的大小乘经，名为经藏；凡是佛陀所制定的大小乘戒律，名为律藏；凡是菩萨、声闻所著述的释经、宗经的诸多论典，名为论藏。这都是从佛国迎请梵文本到中国然后翻译的，大约有五千多卷。</p></div>
+<div class="para-pair"><p class="p-orig">自大法东来，诸宗崛起，代有高人，或著疏以释经，或宗经而造论，以及种种语录传记，凡属宏扬法道之著述，皆续之于后，名为续藏。</p><p class="p-trans">自从佛法来到中国，诸多宗派崛起，历代都有高人。或者撰写注疏来解释佛经，或者宗主于佛经而著作论典，以及种种的语录传记。凡是属于宏扬法道的著述，都续在三藏之后，名为续藏。</p></div>
+<div class="para-pair"><p class="p-orig">然古德著述，类多遗轶，入藏者乃百千分中之一二耳，而其多已至二千余卷，况未入藏而举世流通者，更难悉数也。</p><p class="p-trans">然而古大德的著述，大多都遗失了，入藏的只是百千分之一二罢了。然而这就已经有二千余卷之多，何况没有入藏而遍天下流通的，就更难计算了。</p></div>
+<div class="para-pair"><p class="p-orig">巍巍义山，洋洋法海，随人资禀而为研穷，莫不皆得见真空而彻法源，以复其本具之佛性焉。</p><p class="p-trans">巍巍乎义理之高山，洋洋乎佛法之大海，各人随自己的天资禀赋而穷尽地钻研，无不能彻见真空、穷彻法源，从而恢复自己本具的佛性啊。</p></div>
+<div class="para-pair"><p class="p-orig">乌尤山寺者，西蜀著名之胜地，观音现化之道场也。自唐惠净上人开山以来，历千余年，宗风不坠。虽琳宫绀殿，稍逊往昔，而乘戒俱急，竭诚礼诵，今昔固无二致，非所谓地灵则人杰乎。</p><p class="p-trans">乌尤山寺，是四川著名胜地，观音菩萨示现教化的道场。自从唐朝惠净上人开山以来，经过一千多年，宗风不坠。虽然楼阁殿宇，比过去稍稍逊色。然而乘戒俱急，竭诚念诵礼拜，这些方面和往昔自然没有两样。这不就是所谓的，地若灵秀，人便杰出吗。</p></div>
+<div class="para-pair"><p class="p-orig">传度大师，住持此山，凡百废坠，渐悉修理。既建弥陀殿，以为专修净业之所，又建此阁，用供所请频伽书册藏，以为研究佛法之据。</p><p class="p-trans">此山目前由传度大师住持。凡是颓坏破败的地方，大师都渐渐地加以修理。已经建成了弥陀殿，作为专修净业的场所。现在又建成了藏经阁，用来供奉所迎请的《频伽藏》，作为研究佛法的依据。</p></div>
+<div class="para-pair"><p class="p-orig">其藏字小，不利老人，拟后有大施主，当入都请梵本大藏，以期普得读诵而研究焉。其为法为人之诚，于此可见其概。其阁五楹两层，备极庄严，所费约三千数百圆，皆远近檀越感度师之德，而欢喜布施者。</p><p class="p-trans">这部藏经的字体较小，不利于老人阅读。计划以后如果有了大施主，就到北京迎请梵本大藏经（即乾隆大藏经），以期大家能够普遍读诵研究。传度大师为法道、为他人着想的诚心，由此可以见到一些大概了。藏经阁面宽五间，上下两层，极其庄严。修建花费大约三千多圆，都是或远或近的檀越施主，感念传度大师的德行，而欢喜布施的。</p></div>
+<div class="para-pair"><p class="p-orig">工成，致书于光，命为之记。窃惟一大藏教，义理无尽，而法不自宏，宏之在人。譬如大富长者，库藏众多，设使其子不知，则无从得其受用，殆与贫贱人子，了无有异。</p><p class="p-trans">工程完成之后，传度大师写信给我，请我写一篇记述。我想，如来一大藏教，义理无穷无尽。然而佛法不会自己宏扬，宏扬佛法在人。譬如大富长者，库中所藏的珍宝很多，可是假如他的儿子不知道，那就无法得到珍宝的受用。大概就和贫贱人的儿子，丝毫没有差异了。</p></div>
+<div class="para-pair"><p class="p-orig">倘能知之，则用以自奉，并以周济一切，无不称己所欲，而悉充足，其藏仍复不减丝毫，以此宝藏，是无尽藏，取之不尽，用之不穷，尽未来际，无或罄竭。</p><p class="p-trans">他的儿子如果知道了父亲的宝库，那么就能自己享用，并且用来周济一切众生。无不是称合自己的心意，并且全都充足，而宝藏仍然不会减少一丝一毫。因为这宝藏，是无尽藏，取之不尽，用之不竭，尽未来际，不会穷竭。</p></div>
+<div class="para-pair"><p class="p-orig">所愿一切四众，同皆探此宝藏，以自利利他，则灯灯相续，明明不绝。庶不负如来说经，诸祖宏法，度师建阁，檀信佽助之一番至意矣。凡我同伦，各自勉旃。</p><p class="p-trans">祈愿一切四众弟子，都来探究这一宝藏，从而让自己和他人同得利益。灯火相传，光明不绝，想必就不负如来宣说经教，祖师宏扬法道，传度大师建造藏经阁，檀信施主资助钱财的一番诚心了。诸位道友，各各勉励啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【原始要终】</span>原、要：推求。探求事物发展的起源和结果。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【深固】</span>牢固；坚固。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【宗风】</span>原指佛教各宗系特有的风格、传统，多用于禅宗。有时也用以泛指道教或文学艺术各流派独有的风格和思想。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【琳宫】</span>仙宫。亦为道观、殿堂之美称。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【绀殿】</span>指佛寺。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【乘戒】</span>乘，指藉以开悟实相、出离生死之智慧；戒，指用以防非止恶，而可招感人、天果报之制法。乘戒俱急：谓因戒急故，得生人天，由乘急故，亦得闻法悟道，是名乘戒俱急。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【频伽藏】</span>民国初年的私版铅印本。全称《频伽精舍校刊大藏经》。1909-1913年出版。全藏入经1916部，8416卷，分订为414册（包括目录1册）；合40函，千字文编次天字至霜字。经文用4号铅字排印，每页40行，每行45字，折为两个半页，有书口和边框，书口印经名、页码等。基本上是以日本《弘教藏》为底本排印，内容略有变动，删去部分日本著述。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【佽助】</span>帮助。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【至意】</span>1.极深远的用意。2.极诚挚的情意。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

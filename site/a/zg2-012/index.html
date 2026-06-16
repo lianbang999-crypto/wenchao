@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>重刻安士全书序二 · 印光法师文钞</title>
+<meta name="description" content="淫杀二业，乃一切众生生死根本。最难断者唯淫，最易犯者唯杀。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-012/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重刻安士全书序二 · 印光法师文钞">
+<meta property="og:description" content="淫杀二业，乃一切众生生死根本。最难断者唯淫，最易犯者唯杀。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-012/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">重刻安士全书序二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">淫杀二业，乃一切众生生死根本。最难断者唯淫，最易犯者唯杀。</p><p class="p-trans">淫欲、杀生这两种罪业，是一切众生生死轮回的根本。最难以断除的是淫欲，最容易犯的是杀生。</p></div>
+<div class="para-pair"><p class="p-orig">二者之中，淫则稍知自爱者犹能制而不犯。然欲其意地清净，了无丝毫蒂芥者，唯断惑证真之阿罗汉方能之耳。余则爱染习气，虽有厚薄不同。要皆缠绵固结于心识之中，从劫至劫，莫能解脱。</p><p class="p-trans">二者之中，淫欲，稍微知道自爱的人还能控制自己而不违犯。然而要想在意地里清净，丝毫没有淫欲念头，只有断惑证真的阿罗汉才能做到。其余众生的情爱迷染习气，虽然有厚薄的不同，但都缠绵固结在心识当中，从劫至劫，不能解脱。</p></div>
+<div class="para-pair"><p class="p-orig">杀则世皆视为固然。以我之强，凌彼之弱。以彼之肉，充我之腹。只顾一时适口，谁信历劫酬偿。</p><p class="p-trans">至于杀生，世人都看作是理所当然。以我的强大，欺凌它的弱小；以它的血肉，填饱我的肚子。只顾着当时吃得适口，有谁相信欠下的命债历经长劫都要偿还。</p></div>
+<div class="para-pair"><p class="p-orig">楞严经云，以人食羊，羊死为人，人死为羊，如是乃至十生之类，死死生生，互来相啖，恶业俱生，穷未来际。</p><p class="p-trans">《楞严经》中说：“以人食羊，羊死为人，人死为羊，如是乃至十生之类，死死生生，互来相啖，恶业俱生，穷未来际。”</p></div>
+<div class="para-pair"><p class="p-orig">古德云，欲得天下无兵劫，除非众生不食肉。又云，欲知世间刀兵劫，须听屠门半夜声。既有其因，必招其果。不思则已，思之大可畏也。</p><p class="p-trans">古大德说：“欲得天下无兵劫，除非众生不食肉。”又说：“欲知世间刀兵劫，须听屠门半夜声。”既然有了杀戮的因，必定召感杀戮的果。不想则罢，仔细一想，实在是太恐怖了。</p></div>
+<div class="para-pair"><p class="p-orig">安士先生恭禀佛敕，特垂哀愍。因著欲海回狂以戒淫，万善先资以戒杀。征引事实，详示因果。切企举世之人，同怀乾父坤母，民胞物与之真心。永断伤风乱伦，以强凌弱之恶念。</p><p class="p-trans">周安士先生，恭敬禀承佛陀的敕命，垂慈哀愍世人，因此著作了《欲海回狂》一书来戒淫，又著作了《万善先资》一书来戒杀。书中征引事实，详示因果，迫切期望全天下的人，共同怀着天为大父，地为大母，人民是同胞，动物是同伴的真心，永远断除伤风败俗、坏乱伦常、以强凌弱的恶念。</p></div>
+<div class="para-pair"><p class="p-orig">又欲同人诸恶莫作，众善奉行。因将文昌帝君阴骘文详加注释。俾日用云为，居心行事，大而治国安民，小而一言一念，咸备法戒，悉存龟鉴。由兹古圣先贤之主敬慎独，正心诚意，不至徒存空谈而已。</p><p class="p-trans">又想让大家诸恶莫作，众善奉行。因此将《文昌帝君阴骘文》详细加以注释。使读者的日常言行、居心行事，大到治理国家，安抚人民，小到一句话，一个念头，都具有法则和鉴戒，都给出了榜样和教训。由此，古圣先贤“注重恭敬，谨慎独处，正心诚意”等教诲，就不至于只是空谈了。</p></div>
+<div class="para-pair"><p class="p-orig">如上三种，文词理致，莫不冠古超今，翼经辅治。以其以奇才妙悟，取佛祖圣贤之心法，而以雅俗同观之笔墨发挥之故也。</p><p class="p-trans">上面三本书，文词义理，无不是冠超古今，足以作为儒教《六经》的辅助。这是因为周先生凭借着奇妙的才华和觉悟，吸取佛陀、祖师、圣贤的心法，又用雅俗同观的文笔加以发挥的缘故啊。</p></div>
+<div class="para-pair"><p class="p-orig">虽然已能戒淫戒杀，诸恶莫作，众善奉行。若不了生脱死，安能保其生生世世不失操持。则恒生善道，广修福慧，不堕恶趣，彼此酬偿者，有几人哉。</p><p class="p-trans">虽然已经能够戒淫戒杀，诸恶莫作，众善奉行。可是如果不了脱生死，哪能保证生生世世都不会失去德操和行持呢。常生善道，广修福慧，不堕恶道，不用彼此偿债的人，有几个呢？</p></div>
+<div class="para-pair"><p class="p-orig">而了生脱死，岂易言乎。唯力修定慧，断惑证真者，方能究竟自由。余则纵令尊为天帝，上而至于非非想天，福寿八万大劫。皆属被善恶业力之所缚著，随善恶业力之所轮转耳。</p><p class="p-trans">然而了脱生死这件事，谈何容易啊。只有竭力修习戒定慧，断除烦惑，证得真常的人，才能彻底自由。其余的人，纵然成为尊贵的天帝，上至非非想天，福报寿命有八万大劫那么久。但也都是被善恶业力所捆绑，随着善恶业力的牵引而轮转罢了。</p></div>
+<div class="para-pair"><p class="p-orig">因是特依如来仗佛慈力，带业往生之法，荟萃净土经论要义，辑为一书，名曰西归直指。若能一阅是书，谛信不疑，生信发愿，求生西方。无论根机之利钝，罪业之轻重，与夫工夫之浅深，但能信愿真切，持佛名号，无不临命终时，蒙佛慈力，接引往生。</p><p class="p-trans">因此，先生特地依据如来所说的仗佛慈力，带业往生的法门，荟萃净土经论的关键义旨，辑录成一本书，名叫《西归直指》。如果读了这本书，深信不疑，从而生信发愿，求生西方。那么无论根机是利是钝，罪业是轻是重，工夫是浅是深，只要能信愿真切，持念阿弥陀佛的名号，无不会在临命终时，蒙阿弥陀佛慈力接引，往生极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">既往生已，则超凡入圣，了生脱死，悟自心于当念，证觉道于将来，其义理利益，唯证方知，固非笔舌所能形容也。</p><p class="p-trans">往生之后，则超越凡伦，位列圣流，了脱了生死轮回。一念之中觉悟自心，将来究竟证得觉道。其中的义理和利益，只有实际证得，才能知道，自然不是笔墨口舌所能形容的了。</p></div>
+<div class="para-pair"><p class="p-orig">此系以己信愿，感佛慈悲，感应道交，获斯巨益。较仗自力断惑证真，了生脱死者，其难易奚啻天地悬隔而已。</p><p class="p-trans">这是通过自己的信愿之力，感通佛的大慈悲力，感应道交，从而获得这样巨大的利益。相比于凭着自己的力量断惑证真、了生脱死，难易程度何止是天差地别啊。</p></div>
+<div class="para-pair"><p class="p-orig">现今外洋各国大战数年，我国始因意见不同，竟成南北相攻。加以数年以来，水风旱潦，地震，土匪，瘟疫等灾，频迭见告。统计中外所伤亡者，不下万万。痛心疾首，惨不忍闻。</p><p class="p-trans">现在欧美各国已经大战数年了，我国最初因为各方意见不同，竟然导致南北开战。加上多年以来，水灾、风灾、旱灾、地震、土匪、瘟疫等灾害，频繁发生。统计中国外国伤亡的人，超过了一亿。痛心疾首，惨不忍闻。</p></div>
+<div class="para-pair"><p class="p-orig">不慧滥厕僧伦，未证道果。徒存伤世之心，毫无济人之力。有同乡芹浦刘在霄先生者，清介之士也。世德相承，笃信佛法。今夏来山见访，谈及近来中外情景。戚然曰，有何妙法，能为救护。余曰，此是苦果，果必有因。若欲救苦，须令断因。因断则果无从生矣。故经云，菩萨畏因，众生畏果。遂将安士全书示之，企其刊板广传，普令见闻，同登觉岸。</p><p class="p-trans">我滥充于僧人的行列，而没有证得道果；徒有一片感伤世事的心，却毫无救济他人的能力。我的一位同乡刘在霄先生，是一个清正耿直的人。家族之中美德代代相传，笃实信奉佛法。今年夏天刘先生来普陀山拜访我，谈到近来国内外的情景。他忧伤地问：“有什么妙法，能够加以救护呢？”我说：“这是苦果，有果必定有因。要想挽救苦果，必须断除苦因。因断除了，果就无从生起了。所以经中说，菩萨畏因，众生畏果。”于是我将《安士全书》给他看，希望他来刊板，广泛流传，让见到听到的人，共同到达觉悟的彼岸。</p></div>
+<div class="para-pair"><p class="p-orig">先生不胜欢喜，即令其甥赵步云出资七百元，祈余代任刊事。忆昔戊申，曾劝李天桂刊板于蜀，彼即祈余作序。后以因缘不具，事竟未行。</p><p class="p-trans">刘先生非常欢喜，就让他的外甥赵步云出资七百元，请我代理刊印的事务。我想起戊申年（1908年）的时候，曾经劝李天桂居士在四川刊印这本书，他当时就请我写序。后来因为因缘不具足，事情终究没能做成。</p></div>
+<div class="para-pair"><p class="p-orig">今蒙刘公毅然赞成，殆非小缘。窃以袁了凡四训，为改过迁善之嘉言。俞净意一记，为至诚格天之懿行。其发挥事理，操持工夫，最为严厉纯笃，精详曲尽。</p><p class="p-trans">现在承蒙刘先生毅然赞成，其中的因缘想必不小。我认为《了凡四训》，是教人改过向善的嘉言善语；《俞净意遇灶神记》，是至诚感动上天的美好行迹。这两本书中的事理发挥，修持工夫，最为严厉笃实，详细精纯。</p></div>
+<div class="para-pair"><p class="p-orig">因分附于阴骘文广义三卷之后。莲池戒杀放生文，为灭残忍魔军之慈悲主帅。省庵不净观等颂，为灭贪欲魔军之净行猛将。省庵劝发菩提心文，为沉沦苦海众生之普度慈航。爰附于三种法门之后。譬如添花锦上，置灯镜旁，光华灿烂，悦人心目。果能读之，则不忠不恕之念，忽尔冰消。自利利他之心，油然云起。</p><p class="p-trans">因此把这两本书分别附在《阴骘文广义》三卷后面。莲池大师的《戒杀放生文》，是消灭残忍魔军的慈悲主帅；省庵大师的《不净观》等颂文，是消灭贪欲魔军的净行猛将；省庵大师的《劝发菩提心文》，是沉沦苦海众生的普度慈航，因而将这几篇文章附在三种法门之后。如同锦上添花，又如把明灯放在明镜旁边，光华灿烂，悦人心目。如果能够恭读，那么不忠不恕的念头，就会立刻消融；而自利利他的心念，就会油然生起。</p></div>
+<div class="para-pair"><p class="p-orig">从兹步步入胜，渐入渐深。不知不觉，即凡情而成圣智矣。庶可了生脱死，永出轮回。面礼弥陀，亲蒙授记。</p><p class="p-trans">从此渐渐深入，一步步进入胜境。不知不觉中，即凡情而成圣智，想必就可以了生脱死，永出轮回，当面礼拜阿弥陀佛，蒙佛授记了。</p></div>
+<div class="para-pair"><p class="p-orig">谨为阅此书者贺曰，久沉业海，忽遇慈航。遵行忠恕，归命觉皇。信真愿切，执谢情亡。感应道交，觐无量光。</p><p class="p-trans">谨此向读这本书的人祝贺：长久沉沦业力大海，忽然遇到慈悲舟航。遵从实行忠恕之道，一心归命大觉世尊。信心真实愿望恳切，告别执著、情见消亡。感应道交往生极乐，亲见弥陀光寿无量。</p></div>
+<div class="para-pair"><p class="p-orig">余详戊申序中，兹不复赘。</p><p class="p-trans">其余详见戊申年的序文，这里不再多说。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【民胞物与】</span>宋张载《西铭》：“民吾同胞，物吾与也。”意谓世人，皆为我的同胞；万物，俱是我的同辈。后因以谓泛爱一切人和物。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【法戒】</span>楷式和鉴戒。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【龟镜】</span>龟可卜吉凶，镜能别美丑，因以比喻可供人对照学习的榜样或引以为戒的教训。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【奚啻】</span>何止；岂但。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【清介】</span>清正耿直。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【戚然】</span>忧伤貌。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【忠恕】</span>儒家的一种道德规范。忠，谓尽心为人；恕，谓推己及人。《论语·里仁》：“夫子之道，忠恕而已矣。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【觉皇】</span>佛的别称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

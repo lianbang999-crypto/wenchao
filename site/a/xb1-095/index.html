@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复许慧舫居士书（民国二十二年） · 印光法师文钞</title>
+<meta name="description" content="汝之病，乃宿世或现生，有害人性命之事。此业不消，病决难好。现在吃药无效，即可不吃。但息心念佛，念观世音，以期超度怨家。念佛虽不见效，仍有利益，不可与吃药同作一例。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-095/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复许慧舫居士书（民国二十二年） · 印光法师文钞">
+<meta property="og:description" content="汝之病，乃宿世或现生，有害人性命之事。此业不消，病决难好。现在吃药无效，即可不吃。但息心念佛，念观世音，以期超度怨家。念佛虽不见效，仍有利益，不可与吃药同作一例。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-095/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复许慧舫居士书（民国二十二年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝之病，乃宿世或现生，有害人性命之事。此业不消，病决难好。现在吃药无效，即可不吃。但息心念佛，念观世音，以期超度怨家。念佛虽不见效，仍有利益，不可与吃药同作一例。</p><p class="p-trans">你的病，是宿世或者现生，有害人性命的事所造成的。这个业障不消，病肯定很难好。现在吃药无效，就可以不吃了。只要息心念佛，念观世音菩萨，以期超度怨家。念佛虽然不见效，但仍有利益，不可与吃药不见效等同来看待。</p></div>
+<div class="para-pair"><p class="p-orig">汝家计如何，若无财力，则自己至诚恳切念佛。当生惭愧心，不可生愤恨心。生惭愧，则怨家之怨恨可解。生愤恨，则是欲解而更结矣。以彼怀恨相报，汝又怀恨彼报，则愈结愈深，莫可如何矣。此系解怨释结之最上一著。</p><p class="p-trans">你的家庭经济条件如何？如果没有财力，就自己至诚恳切地念佛。应当生惭愧心，不可生愤恨心。生惭愧心，则怨家的怨恨就可以解除；生愤恨心，则是想要解开怨结，反而结得更深了。因为他怀恨来报仇，你又怀恨他来报仇，那么仇恨愈结愈深，就没有办法解开了。生惭愧心是解怨释结的最高一著。</p></div>
+<div class="para-pair"><p class="p-orig">如家计尚丰，或可于灵岩山打一佛七，或请十五，二十，三十人，均可。灵岩为江浙第一认真办道之处，常年念佛，与普通打佛七同。有施主求若干人打七，仍是照常念佛，不过于佛前，牌位前，多三次回向而已。</p><p class="p-trans">如果你家中经济条件较好，也可以在灵岩山寺打一场佛七，请十五、二十、三十人，都可以。灵岩山寺是江浙一带第一认真办道的地方，常年念佛，与普通打佛七相同。有施主来求若干人打佛七，仍是照常念佛，只不过在佛前、牌位前多加三次回向而已。</p></div>
+<div class="para-pair"><p class="p-orig">无论打七者，不打七者，通同一样念。不过请若干人，即得若干人之功德耳。现念佛堂有三十余人。若打七，当供一解怨释结之纸牌位，圆满则焚化之。</p><p class="p-trans">无论打七，还是不打七，全都一样念佛。不过你请多少人，就得到多少人念佛的功德。现在念佛堂有三十多个人。如果打七，应当供一个解怨释结的纸牌位，打七圆满这一天就将其焚化。</p></div>
+<div class="para-pair"><p class="p-orig">若自己供长生禄位牌位，则做一木牌位，永供念佛堂中，则加五十圆，不做，则按人十圆。如十五人，即一百五十圆，三十人，即三百圆。此非为灵岩拉佛七，以汝病体重，故不妨说此办法耳。汝自斟酌，若无力，则不必强勉。</p><p class="p-trans">如果自己供长生禄位牌位，就做一个木制牌位，永远供在念佛堂中，则另外加五十圆，不做，就按每人十圆计费。如果是十五人，就是一百五十圆，三十人，就是三百圆。这不是为灵岩山寺拉佛七，因为你身上的病很重，所以不妨说出这个办法而已。你自己斟酌，如果没有经济能力，就不必勉强。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝寄净土五经二本，汝与妇同得受持，此可作常时读诵本。又灵岩去年重修大工，今碑已刻成，拓出，今寄一张，阅之，可知其修持之概耳。至于光之随便所说，何必集录。文钞，嘉言录已可为法，何必求多乎。</p><p class="p-trans">现在为你寄去《净土五经》两本，你与你妻子共同受持，这些经书可以作为平时的读诵本。另外，灵岩山寺去年重修的大工程，如今石碑已经刻成，拓印出来，现在寄一张给你，阅读后，就可以知道寺众修持的大概了。至于我随便所说的话，何必集录呢。《文钞》、《嘉言录》已经可以作为法则，又何必求多呢？</p></div>
+<div class="para-pair"><p class="p-orig">至于某某外道，所伪造之书，吾人只好任彼所为，各行各道。若与彼盲无目者辨别黑白，彼何能自知其非，反惹彼生谤讟耳。譬如狗子吃屎，彼自谓香美。若与彼说是臭恶，彼决不肯信，反谓说者不知好恶。</p><p class="p-trans">至于某某外道，所伪造的书，我们只好随任其所为，大家各走各的道。如果与那些盲而无目的人辨别黑白，他们如何能知道自己的错误呢？反而招惹他们生起诽谤。譬如狗子吃屎，它自己认为很香美。如果对它说，这是臭恶，它绝对不肯相信，反而认为说这话的人不知好恶。</p></div>
+<div class="para-pair"><p class="p-orig">当今之世，大家完全在黑暗中，越学问大，越糊涂。往者，程子朱子之学问人品，可谓很大很高，而且极力破斥因果轮回，谓为佛借此以骗愚夫愚妇耳。</p><p class="p-trans">当今的世界，大家完全在黑暗中，越是学问大，就越糊涂。过去，二程（程颢、程颐）、朱熹的学问人品，可说是很大很高，但他们极力破斥因果报应、生死轮回，认为是佛教借此来骗取愚夫愚妇的信仰。</p></div>
+<div class="para-pair"><p class="p-orig">此种话，即是提倡破坏孝弟，忠信，礼义，廉耻者之大根据。知此，益当一心念佛，求生西方矣。今之有学问者，又何足道。</p><p class="p-trans">这种话，就是提倡破坏孝悌、忠信、礼义、廉耻的大根据。知道了这些，就更应当一心念佛，求生西方了。现今所谓有学问的人，又哪里值得一提呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【讟】</span>1怨恨。2诽谤。3憎恶。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

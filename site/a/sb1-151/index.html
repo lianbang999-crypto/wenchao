@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复宁德晋居士书十 · 印光法师文钞</title>
+<meta name="description" content="前接来信，言有糖果一匣，粳小米各二升，作一袋。汝真痴人，数千里寄此物，岂非无事以自扰扰人乎。米袋至今未来，故今始复。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-151/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复宁德晋居士书十 · 印光法师文钞">
+<meta property="og:description" content="前接来信，言有糖果一匣，粳小米各二升，作一袋。汝真痴人，数千里寄此物，岂非无事以自扰扰人乎。米袋至今未来，故今始复。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-151/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复宁德晋居士书十</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前接来信，言有糖果一匣，粳小米各二升，作一袋。汝真痴人，数千里寄此物，岂非无事以自扰扰人乎。米袋至今未来，故今始复。</p><p class="p-trans">上次接到来信，说有糖果一匣，粳小米各二升，包作一袋寄给我。你真是痴人，几千里远，寄这些东西，岂不是无事找事，自扰扰人吗？米袋至今没有来，所以今天才回信。</p></div>
+<div class="para-pair"><p class="p-orig">无要事，来信悉复，汝一人即可，况不止汝一人乎。何可出怨言，以为不可教乎。何不体谅老弱，不能应酬乎。</p><p class="p-trans">如我没有要紧的事，来信全都会回复，即便是你一个人来信也会回复，况且不只你一个人呢？怎么可以因暂未回复你就出此怨言，认为说（自己）不可教呢？为什么不体谅我年老体弱，不能应酬呢？</p></div>
+<div class="para-pair"><p class="p-orig">若如汝所说，则累死也来不及，以后切勿作此种不知世务之计较，亦勿以食物远寄。所寄十元收到，以作印书之用。</p><p class="p-trans">如果如你所说，那么我就是累死，也来不及，以后千万不要作这种不知世务的计较，也不要大老远地寄食物来。所寄的十元钱收到，作为印书的费用。</p></div>
+<div class="para-pair"><p class="p-orig">明道于十月十九丑时死，二十一运龛归灵岩，二十五迁化。其人绝无真实修持之绩，以在佛教会数年帮办，一班不知世务之人，定要与彼修塔，拟以土偶作真金像，亦只好任他去。此种俗劣恶派，切勿效法。</p><p class="p-trans">明道师是十月十九丑时死的，二十一日，运灵龛回到灵岩山，二十五日火化。此人绝对没有真实修持的功绩，因为他在佛教会中，好些年帮忙做事，一班不知世务的人，一定要给他修塔，准备以泥人像当作真金像，也只好随他去。这种俗劣不佳的做法，千万不要效法。</p></div>
+<div class="para-pair"><p class="p-orig">以后无要事，勿来信。现不出关，弘化社事，亦归光任，则更为烦琐矣。（廿一年十一月初四日）</p><p class="p-trans">以后没有要紧的事，不要来信。现在不出关，弘化社的事，也归我担任了，就更加烦琐了。（民国二十一年十一月初四日）</p></div>
+<div class="para-pair"><p class="p-orig">临济正宗出家。然光以净土法门为宗，不以禅宗为主。居士问此，了无关系。光亦无徒，死即了无遗物矣。照片亦无。多拜佛，比拜我好百千万倍。</p><p class="p-trans">临济正宗出家。然而我以净土法门为宗，不以禅宗为主。居士问这些，与你没有一点关系。我也没有徒弟，死后，就没有一点遗物了。照片也没有。多拜佛，比拜我好百千万倍。</p></div>
+<div class="para-pair"><p class="p-orig">近闻一戒烟神方，用方方一尺红洋布，剪作二十四条。吃烟时，先以烟签子插布上头，下接一碗。</p><p class="p-trans">近来听到一个戒烟神方，用四方一尺的红洋布，剪作二十四条。吃烟时，先以烟签子插在布上头，下面接一个碗。</p></div>
+<div class="para-pair"><p class="p-orig">点著，布灰落碗中，用开水冲服，再吃烟。不待廿四条布条吃完，即可断瘾。当令吃烟者试之，果灵，则烟祸可救也。</p><p class="p-trans">点燃布，红布灰落在碗中，用开水冲服，再吃烟。不等二十四条布条吃完，就可以断除烟瘾。应当令吃烟的人试试，果真灵验，那么鸦片烟祸，就可以有救了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【临济正宗出家】</span>案：出家须知师父是何宗何派，法名第一个字，也是宗派所传。宋代以后，禅宗中的两大支派临济宗与曹洞宗特别昌盛，有“临济临天下，曹洞曹半天”的说法。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

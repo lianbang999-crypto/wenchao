@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>法雨寺万年簿序（代开如和尚作） · 印光法师文钞</title>
+<meta name="description" content="得最胜之地，方可宏最胜之道。建非常之事，必须待非常之人。宗匠出，则本立道生。哲人亡，则法残教弛。虽否极泰来，属于天运。而革故鼎新，实赖人为。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-037/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="法雨寺万年簿序（代开如和尚作） · 印光法师文钞">
+<meta property="og:description" content="得最胜之地，方可宏最胜之道。建非常之事，必须待非常之人。宗匠出，则本立道生。哲人亡，则法残教弛。虽否极泰来，属于天运。而革故鼎新，实赖人为。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-037/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">法雨寺万年簿序（代开如和尚作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">得最胜之地，方可宏最胜之道。建非常之事，必须待非常之人。宗匠出，则本立道生。哲人亡，则法残教弛。虽否极泰来，属于天运。而革故鼎新，实赖人为。</p><p class="p-trans">得到最殊胜的场地，才可以宏扬最殊胜的道法；建树不寻常的事业，必须等待不寻常的人。祖师大德出兴于世，则宏法的根本建立，法道自然兴盛；智慧卓越的人去世，则法教便会残败。虽说否极泰来，属于天运；然而除旧建新，实在要依赖人的作为。</p></div>
+<div class="para-pair"><p class="p-orig">法雨常住，肇始于大智老人，中兴于别庵统祖。规模宏敞，法道兴隆。嗣后历代住持，虽则无大树立。然皆恪守成规，家风不坠。及至兵燹之后，住持不得其人，遂致一败涂地。</p><p class="p-trans">法雨寺常住，开始于大智老人，中兴于别庵性统祖师。庙宇规模宏大，法道兴隆。之后的历代住持，虽然没有大的建树，然而都是严格遵守已有的规矩，使法雨寺的家风没有坠落。可是到了兵火战乱之后，因为没有好的住持，于是便一败涂地。</p></div>
+<div class="para-pair"><p class="p-orig">殿堂寮舍，坍塌破坏。法器庄严，百无一存。诸房法眷，见此景象。咸皆束手，不肯承当。</p><p class="p-trans">殿堂和寮房，大都坍塌破坏了；法器和各种庄严物品，很少有存留下来的。诸房的法亲眷属，看到这一景象。全都束手无策，不肯出来承当。</p></div>
+<div class="para-pair"><p class="p-orig">于同治十一年，众强先师公立山老人住持。荒垣破屋，竭力修葺。兢兢业业，十有余年。自天王殿，至藏经阁，悉皆重新。其余工程，虽未尽复当日旧制，而大局已有可观矣。</p><p class="p-trans">同治十一年（1872），众人强请我的师公立山老人来住持。（师公担任住持之后），对于寺里的各处残墙破屋，都竭尽心力来加以修葺。这样兢兢业业，历时十多年。从天王殿，到藏经阁，全都修葺一新。其余的工程，虽然没有完全恢复过去的庄严景象，但是全局上已大有可观了。</p></div>
+<div class="para-pair"><p class="p-orig">至光绪十一年，以老病退隐，命先师闻老人继席住持。先师缵承旧绪，发广大心。凡师公力未暇及之工，一切殿堂寮舍，或创或修，无一处不使一新。其规模制度，不亚中兴。</p><p class="p-trans">到了光绪十一年，师公因为年老生病而退院隐居，让我的师父化闻老人继任住持。师父于是发广大心，继承师公未竟的事业。凡是师公当时来不及完成的工程，一切殿堂寮舍，或者新建，或者修理，没有一处不是焕然一新。完成后的庙宇规模和制度，不亚于中兴时期。</p></div>
+<div class="para-pair"><p class="p-orig">凡咸丰年间，压出桃花庄稻田，尽行赎回。又以欲转法轮，须仗庄严法器。十余年来，宏宗阐教。所置什物，上自龙藏佛像，下至桌凳床榻。凡所需用，般般具足。</p><p class="p-trans">凡是在咸丰年间抵压出去的桃花庄稻田，全都赎了回来。要转法轮，就必须依仗庄严的法器。所以十多年来，宏扬宗门，阐说教下，所置办的庄严什物，上自乾隆大藏经、佛像，下至桌凳床榻。凡是所需要用的，样样具足。</p></div>
+<div class="para-pair"><p class="p-orig">然老人大愿云兴，恨不得十方僧众，咸萃一堂。往昔祇园，复现今日。为法，为人，为常住，为大众之心，如丧考妣，如救头然。日夜焦思，忧劳成疾。</p><p class="p-trans">然而老人的大愿如层云一般兴起，恨不得十方僧众，都聚集到法雨寺来；直想让往昔给孤园的盛况，在今日重现。为法、为人、为常住、为大众的心，如同丧失父母一般着急，如同抢救燃头之火一样急迫。日夜焦思，忧心操劳，因而生了病。</p></div>
+<div class="para-pair"><p class="p-orig">至二十三年冬，修建尚未毕工，而老人竟赍志西逝矣。如自愧凉德，兼无作略。因厕门墙，委理院务。勉承师命，极力辅弼。</p><p class="p-trans">光绪二十三年冬天，修建还没有完工，而老人竟然怀抱着志愿西去了。开如我惭愧自己德行浅薄，加上没有什么作为。只因为我是门下弟子，所以当时老人委托我来管理院务。我只好勉强承接命令，尽全力来辅助他。</p></div>
+<div class="para-pair"><p class="p-orig">虽轻尘坠露，不足添江益岳。然于自分论之，亦可谓鞠躬尽瘁，罄竭愚忱矣。承此未了公案，只得竭力担当。于是奉先师遗命，邀诸法眷，公举定公，继席住持。</p><p class="p-trans">虽然一滴露水，不足以增添江河；一粒灰尘，不足以增高山岳。然而就自己的本分而言，也可以说是鞠躬尽瘁，竭尽我的愚忱了。面对先师没有了结的公案，只得竭力担当起来。于是奉先师的遗命，邀请诸位法眷，公开推举开然德定和尚，继任寺庙住持。</p></div>
+<div class="para-pair"><p class="p-orig">如仍居旧职，监理院务。及至定公退隐，荷蒙法眷，委此重任。虽知弗克担荷，而不容推却者。以先师公案，尚未了毕故也。</p><p class="p-trans">我仍然担任旧职，监理院务。后来德定和尚退院归隐，又承蒙诸位法眷，对我委以（住持）重任。虽然知道自己不能够担荷，然而因为先师的修建公案还没有了结，所以形势不容我推却。</p></div>
+<div class="para-pair"><p class="p-orig">由是夙夜经营，莫敢或遑。拌此身心，谨成师志。三年之内，所有事宜，悉皆清楚。可以交代，不累他人。</p><p class="p-trans">因此日夜经营，不敢稍有松懈。拼尽这一番身心，谨此完成师父的志愿。担任住持的三年里，所有事务，全都清清楚楚，可以交代明白，不会拖累他人。</p></div>
+<div class="para-pair"><p class="p-orig">故今谨同法眷，备将常住所有巨细什物，一一登记。俾后之莅住持位，膺职事职者。知前人为转法轮，置办什物，一番苦心，大不容易。各加爱惜，无或暴殄。</p><p class="p-trans">所以现在会同诸位法眷，将常住所有的大小物品，全部一一登记（在万年簿上）。让后来的住持，或担任职务的人，知道前辈人为了转法轮而置办物品，这一番苦心，很不容易。各各能够加以爱惜，不任意浪费。</p></div>
+<div class="para-pair"><p class="p-orig">使守成之功，媲美创业。缵绪之德，追踪开山。亿万斯年，永无替废。</p><p class="p-trans">使得守护成果的功劳，与创立事业的功劳，两相媲美；继承发扬的功德，和开山建宇的功德，相追相随。经历亿万年，永远不会更替和废弛。</p></div>
+<div class="para-pair"><p class="p-orig">庶可法轮与愿轮而常转，千古恒守旧家风。国恩共佛恩以并报，奕世常沾新雨露。则法门幸甚，常住幸甚。</p><p class="p-trans">法轮与愿轮一并常转，千秋万代恒守旧家风；国恩与佛恩一齐报答，世世代代常沾新雨露。这实在是法门的幸事，常住的幸事啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【宗匠】</span>技艺高超的工匠。常比喻在政治上或学问上有重大成就，众所推崇之人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【本立】</span>根基树立。《论语·学而》：“君子务本，本立而道生。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【哲人】</span>智慧卓越的人。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【肇始】</span>发端，开始。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【大智禅师】</span>（1524-1592）真融。湖北麻城人。幼有慧性。十五为沙弥。潜心教乘数年。托钵行游。涉历名山。……世寿69，僧腊54，塔于雪浪山之簏。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【性统】</span>清初临济宗僧。生卒年不详。四川潼川安岳人，俗姓龙。号别庵。十一岁父殁，遂追随三山灯来出家。受具足戒后，参谒衡山灯炳，后归返而得三山之法。康熙二十四年（1685），三山示寂，师遂继高峰之法席。翌年，游江浙、嘉禾、径山，后住于天童、普陀。二十八年，兼住武林东园永寿寺。三十年，著有续灯正统四十二卷，继集普陀别庵禅师同门录三卷。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【宏敞】</span>高大宽敞。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【缵承】</span>继承。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【如丧考妣】</span>像死了父母一样。形容极度悲伤和着急。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【赍志】</span>怀抱着志愿。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【凉德】</span>1.薄德，缺少仁义。2.后世多用为王侯的自谦之词。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【门墙】</span>《论语·子张》：“夫子之墙数仞，不得其门而入，不见宗庙之美，百官之富。得其门者或寡矣。”后因称师门为“门墙”。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【暴殄】</span>任意浪费、糟蹋。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【守成】</span>保持前人的成就和业绩。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【缵绪】</span>继承世业。特指君主继位。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【奕世】</span>累世，代代。《国语·周语上》：“奕世载德，不忝前人。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

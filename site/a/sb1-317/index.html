@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复慧昭居士书 · 印光法师文钞</title>
+<meta name="description" content="去腊因两月余校对历史统纪，以排二付纸板，各印二万，冀藉此挽回世道人心。至腊月二十，已经了结。次日受寒，卧病旬余。今虽痊愈，精神尚未大复。不日将隐，故略叙所以。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-317/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复慧昭居士书 · 印光法师文钞">
+<meta property="og:description" content="去腊因两月余校对历史统纪，以排二付纸板，各印二万，冀藉此挽回世道人心。至腊月二十，已经了结。次日受寒，卧病旬余。今虽痊愈，精神尚未大复。不日将隐，故略叙所以。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-317/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复慧昭居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">去腊因两月余校对历史统纪，以排二付纸板，各印二万，冀藉此挽回世道人心。至腊月二十，已经了结。次日受寒，卧病旬余。今虽痊愈，精神尚未大复。不日将隐，故略叙所以。</p><p class="p-trans">去年冬天，连续两个多月，校对《历史统纪》，以排出二付纸板，各印二万部，希望藉此挽回世道人心。到了腊月二十，已了结此事。第二天受了寒，卧病十多天。如今虽然痊愈，但精神还没有完全恢复。不久将要隐居，所以大略叙述所以然。</p></div>
+<div class="para-pair"><p class="p-orig">前令明道师寄书十包，想已收到。所言马君观想有效，亦属竭诚尽敬所致，有何奇特。以一马君之相应，遂于莲宗诸祖通常教人之法，生诸疑念，是尚可谓信佛信法者乎。</p><p class="p-trans">前些天令明道师寄给你的十包经书，想必你已经收到了。你所说的马君观想念佛有效验，也是竭诚尽敬所导致的，有什么奇特的呢？因为一位马君的观想相应，于是就对莲宗诸位祖师，通常教人的方法，生起诸多疑惑，这还能称得上是信佛、信法的人吗？</p></div>
+<div class="para-pair"><p class="p-orig">观想本佛所开示，但以世人每每不能彻底息灭妄想，以躁妄欲得之心修观，则甚危险。古今来著魔者，多坐此故。故古德谓，境细心粗，观难成就，或起魔事。非谓绝不许人修观，亦非谓修观通皆著魔也。</p><p class="p-trans">观想念佛本来就是佛所开示的，只是因为世人常常不能彻底息灭妄想，用急躁狂妄、想要有所得的心来修观，这样非常危险。古往今来著魔的人，大多由于这个缘故。所以古德说，境细心粗，修观很难成就，或许生起著魔的事。不是说绝对不许人修观。也不是说，修观全都会著魔。</p></div>
+<div class="para-pair"><p class="p-orig">今以马君一人有效，遂并从上祖师真实为人之语而疑。可见汝与诸友，同皆在重今轻古之流派中。似此见解，必致见异思迁，以求所谓奇特玄妙者。异日有提倡高超玄妙之余法惑人，于少时间便成佛道之诳言，定当随之而舍此修彼。如浮萍无根，随风荡漾，信道不笃，焉能为有无。</p><p class="p-trans">现今因为马君一个人有效验，于是一并连祖师真实之语都生起怀疑。可见你与诸位友人，共同都堕在重今人、轻古德的流派之中。像这样的见解，必定导致见异思迁，来求所谓的奇特玄妙之法。等到有一天，有人提倡高超玄妙的其他法门来迷惑人，说在少时间就成佛道的诳言，你们定当跟随而去，舍此念佛法门而修习快速成佛的法门。如同浮萍无根，随风荡漾，信仰正道不能专一诚实，这样的人，有他不多，没他不少。</p></div>
+<div class="para-pair"><p class="p-orig">孔子早已为之授记矣，光又何必多说哉。马君之好处在诚恳。虽不知发愿之仪，因其有观念百八声佛，加以接引我到西方之语，即是有愿。但加此以念，不可效法。</p><p class="p-trans">孔子此言早已为这样的人授记了，我又何必多说呢！马君的好处在于诚恳。虽然他不知道发愿的仪轨，因为他有观想念一百零八声的佛号，加上有“接引我到西方”的话，就是有发愿了。但是加上这些方法来念佛，不可效法。</p></div>
+<div class="para-pair"><p class="p-orig">今人每见一法有效，则不加拣择，完全袭行。致有未得实益，先受大损者。譬如食瓜果宜去其皮核，非可完全食，亦非可完全去。是在学道之人善用其心耳。祈慧察，则幸甚。</p><p class="p-trans">现今的人常常看到一个方法有效，就不加拣择，完全沿袭照搬来做。致使未能得到实际利益，先受到大损害。譬如吃瓜果，应该除去瓜果的果皮、果核，不是完全吃掉，也不是完全去除。这在学道的人善用其心罢了。请慧察，那么就很庆幸欣慰。</p></div>
+<div class="para-pair"><p class="p-orig">又叶照空前有信来，本不欲复，以与汝相契，故连络书之，祈为转致。光以庸劣粥饭僧，被虚名所误，十余年为人忙，致自己净业荒疏。何可以法华父疗子疾相喻，不惧获以凡滥圣之咎乎。</p><p class="p-trans">另外，叶照空以前有信来，本来不想回信，因为他与你相交深厚，所以在你的信上，接下来说说他的事，请你转达给他。我这个平庸低劣的粥饭僧，被他人所传的虚名所误，十多年来，为他人奔忙，致使自己的净业荒废生疏。怎么能用《法华经》中父亲治疗儿子疾病来比喻，不怕获取以凡滥圣的罪过吗？</p></div>
+<div class="para-pair"><p class="p-orig">修净土人，注重信愿行三法。至于定境中之八触及与六妙，不应注意。倘或工夫发现，亦当视为平常，不加欣幸。否则或恐以为胜妙，致将正修净业，反视为等闲。</p><p class="p-trans">修净土的人，注重信愿行三法。至于在禅定境界中的八触以及六妙，不应多加注意。倘若修持的工夫发现，也应当看作平常，不要欣喜庆幸。否则或恐认为这些境界非常殊胜微妙，导致将正修的净业，反而视作等闲平常。</p></div>
+<div class="para-pair"><p class="p-orig">伊字三点，且勿妄自担任，乃法身般若解脱三德秘藏。圆教初住菩萨，始能证其少分。唯佛方能圆满彻证。汝何人斯，敢说过分大话。须知见理纵能与佛齐，修持当遵普通事相。庶不致执理废事，落豁达空，拨无因果之无底深坑耳。</p><p class="p-trans">伊字三点，暂且不要妄自担任，这是法身、般若、解脱三德秘藏。圆教初住菩萨，才能证得其中少分。只有佛方能圆满彻底证得。你是什么人，敢说这样过分的大话。必须知道，所见的道理纵然能够与佛齐等，修持应当遵从普通的事相。才不致于执理废事，落入豁达空，拨无因果的无底深坑啊！</p></div>
+<div class="para-pair"><p class="p-orig">三子欲取法名，今为各取一字以名之，新唐法名德新。雍唐法名德雍。熙唐法名德熙。能日新其德，则可以断贪瞋痴，绝杀盗淫，而三业清净矣。雍者，和也。敦笃伦常，修持净业，以至诚心希圣希贤，是世法与佛法，自心与圣贤相和也。熙者，光也，明也。力去烦惑，不使障蔽自心，则本有良知真知，悉得显现矣。</p><p class="p-trans">他的三个儿子想要取法名，现今为他们各取一个字，来作为他们的法名。新唐，法名德新。雍唐，法名德雍。熙唐，法名德熙。能够每天更新自己的德行，就可以断除贪瞋痴三毒，断绝杀盗淫三事，而使三业清净。雍，和的意思。敦笃伦常，修持净业，以至诚心仰慕效法圣贤，这是世间法与佛法，自心与圣贤心相和。熙，光的意思，明的意思。努力去除烦惑，不让烦惑障蔽自心，那么本有的良知真知，全都得以显现了。</p></div>
+<div class="para-pair"><p class="p-orig">余令彼详读嘉言录，当自知之，故不多及。四十八愿九品观章颂随人所好，用否随意。总之念佛之人，以省事为妙。若过为张罗种种行仪，或致疲劳。然法无定相，不可固执，亦不应泛滥。唯取得益合机为事耳。</p><p class="p-trans">其余令他们详读《嘉言录》，当会自知，所以不多说。四十八愿、《九品观章颂》，随各人所好，用或不用随意。总之，念佛之人，以省事为最好。如果过份张罗种种的行持仪轨，或许导致疲劳。然而法无定相，不可固执一定，也不应泛滥无章。只取能得到实际利益、契合机宜为事而已。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【坐此】</span>因此；由此。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【信道不笃，焉能为有】</span>《论语·子张》子张曰：“执德不弘，信道不笃，焉能为有？焉能为亡？”意思为：子张说：“执守仁德不能发扬光大，信仰道义不能专一诚实，（这种人）哪能算有？哪能算无？”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【相契】</span>相合；相交深厚。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【何可以法华父疗子疾相喻】</span>“医子喻”，又作医师喻，出自《法华经·如来寿量品》。一天，某位良医因有事故，远至异国，孩子们误饮了他的毒药，毒性大作，以至心神错乱，痛苦不堪。这时父亲由外地归来，饮了毒药的儿女们非常欢喜，希望父亲能实时救治他们。父亲见孩子们及其痛苦，立即依照处方，调配最好的药草令们服食，并说“这是上等的良药，色香味具足，饮了此药，你们的痛苦很快就会解除。”但是他的这些儿女由于中毒太深，而失去了分辨能力，因此不肯服药。父亲心想：“这些孩子们太可怜了，毒气攻心，神志颠倒错乱，虽见我回来欢喜，但给他们好药而不肯服用。现在我应当另设方便，使他们能服下这些良药以根除他们的痛苦。”于是长者对儿女们说：“我已衰老，离死期不远，这些良药留在家里，你们可以自已取来服用。”交待后长者就外出他国远游。稍后，长者派人回国通知诸子：“你们的父亲已客死他乡，他再也不回来了。”儿子们听到这个恶耗，非常悲伤忧虑，心想：“若父亲仍在人间，定会救护我们，现他已离我们而去，让我们无依无靠。”由于悲伤终于醒悟，于是想起了父亲曾给留下的良药，果然色香味美，立刻取而服用，毒病得以全愈。父亲得知孩子们病都好了，不久就回家了。
+这里的医师，比喻如来；孩子们，比喻三乘人。谓诸子无知，饮他毒药，心即狂乱，其父设方便，令服好药，以治其病。此喻三乘之人信受权教，不得正道，如来设各种方便，令服大乘法药，速除苦恼，无复众患。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【伊字三点】</span>伊字三点，教义譬喻。谓梵文（音伊）字之形状由三笔组成。至唐灌顶分新、旧两种写法，其《涅槃经疏》卷六说：“言伊字者，外国有新旧两伊。旧伊横竖断绝相离；借此况彼，横如列火，竖如点水，各不相续……应如此土草下字相，细画相连，是新伊相。”此处所谓“旧伊”，譬如汉字正楷部首“氵”，诸点之间不连接；“新伊”如草书“下”字形状“∴”，三点连成一体。经中以伊字三点成为一字，譬喻佛教所说三法的关系。
+另，悉昙字（i，伊）字系由三点组成，此三点既非纵列，亦非横列，乃呈三角形状，故以譬喻物之不一不异、非前非后。据南本大般涅槃经卷二所载，摩醯首罗面上之三目，其状如伊字之三点。同书并将伊字三点譬喻为涅槃之法身、般若、解脱等三德；因此三德具有相即不离之关系，由此三德而成涅槃实义，譬如伊字系由三点组成。三点：指古印度婆罗谜字体表示i－(kara)的字母。原写作不纵不横的三个点，后在吐火罗语中作三个“c”字形，故称“三点”。佛教借此三点不纵不横的三角关系，以喻教义。一般指《涅槃经》所说的“三德”：法身德、般若德和解脱德。天台宗亦因以指空、假、中。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【八触】</span>谓将得初禅定时，身中所生之八种感触。即：(一)动触，坐禅时，俄而身起动乱之象。(二)痒触，俄而身痒，如无置身处。(三)轻触，俄而身轻如云如尘，有飞行之感。(四)重触，俄而身重如大石，不能稍动。(五)冷触，俄而身如水冷。(六)暖触，俄而身热如火。(七)涩触，俄而身涩如木皮。(八)滑触，俄而身滑如乳。此八触发生之原因，以欲得初禅定时，上界之极微入于欲界之极微，二者交替，地水火风狂乱发动。不明此法相之人，骤起惊惧，以为发病，驰回不已，遂乱血道，真为狂气。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【六妙门】</span>为天台宗所立。妙，指涅槃；入于涅槃之法门有六，故称六妙门。此处特指六种禅观，即：(一)数息门，数息（从一至十）摄心，为入定之要法，故为第一妙门。(二)随息门，随息之出入而不计其数，如此则禅定自易引发，故为第二妙门。(三)止门，心止而诸禅自发，故为第三妙门。(四)观门，观五阴之虚妄，破种种颠倒妄见，则无漏之方便智可因此开发，故为第四妙门。(五)还门，收心还照，知能观之心非实，则我执自亡，无漏之方便智自然而朗，故为第五妙门。(六)净门，心无住着，泯然清净，则真明之无漏智因此而发，自然断惑证真，故为第六妙门。六妙门中，前三门属定，后三门属慧，依此定、慧，即可获得真正之菩提。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【四十八愿九品观章颂】</span>《九品观章颂》出自《净土随学》清古昆编------《续藏》</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

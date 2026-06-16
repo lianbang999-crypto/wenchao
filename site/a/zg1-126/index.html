@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与扬州万寿寺寂山和尚书 · 印光法师文钞</title>
+<meta name="description" content="久仰高风，未获一晤。幸由通公开蒙法缘，得承謦欬。而且不轻末学，下询刍荛。感愧之私，笔难尽述。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-126/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与扬州万寿寺寂山和尚书 · 印光法师文钞">
+<meta property="og:description" content="久仰高风，未获一晤。幸由通公开蒙法缘，得承謦欬。而且不轻末学，下询刍荛。感愧之私，笔难尽述。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-126/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">与扬州万寿寺寂山和尚书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">久仰高风，未获一晤。幸由通公开蒙法缘，得承謦欬。而且不轻末学，下询刍荛。感愧之私，笔难尽述。</p><p class="p-trans">很久就仰慕您的高尚风范，没能与您见上一面。很庆幸由于通智法师所著《楞严开蒙》的法缘，得以承听您的妙语。而且您不轻视后学之人，屈尊向下询问我的浅见。（末学）我感动惭愧的心，用笔墨难以述说。</p></div>
+<div class="para-pair"><p class="p-orig">昨悟开师一接华翰，即持以相示。知黎端甫居士，已允修治，刻期告圆。晚喜出望外，不禁手舞足蹈。公在山时，晚亦议及黎公。但虑应聘校对地论，恐不暇及。今既允公请。足征大士智慧，犹如日轮当午，大地普照，非我辈持萤火以寻行墨者可比也。</p><p class="p-trans">昨天悟开师一接到您的信，就拿来给我看。看过以后知道黎端甫居士，已经答应修订《楞严开蒙》，在预定的期限内即可圆满完成。我为此喜出望外，不禁手舞足蹈起来。通智法师在普陀山的时候，我也曾提到黎端甫居士。但考虑到他已经应聘校对《十地经论》，恐怕没有多余的闲暇。现在他已经答应了通智法师的邀请，这足以证明大菩萨的智慧，就像正午太阳一样，普照着大地，不是我这类借着微弱的萤火光亮来寻对几行文字的人可以相比的啊。</p></div>
+<div class="para-pair"><p class="p-orig">然通公开蒙，实纂集诸家菁华。其于发挥理性，可谓深切著明。但以赋性率真，不事支末。故于措词立言，不无参差疏漏之弊。</p><p class="p-trans">通智法师所著的《楞严开蒙》，实在是纂集了诸多注本的精华。这本书对于理性的发挥，可以说是深入切要而又显明。只是因为他天性率真，不注重细枝末节。所以书中的措词和表述，不是没有差错和疏漏。</p></div>
+<div class="para-pair"><p class="p-orig">若夫略玄黄而取神骏，须待得意忘言之人。玩图象而怖真龙，每多寻行数墨之士。若不大加修治，决难三根等益。</p><p class="p-trans">略玄黄而取神骏（忽略马的颜色而求取神骏的内质），这样的事，必须等待那些已经得到了真意，从而忘却了言语的人（按，参见陶潜《醉酒》诗句）；至于玩图像而怖真龙（喜好龙的图案却害怕真正的龙），做这类事的，大多是些咬文嚼字的人。（从文字措辞来看，《楞严开蒙》一书）如果不大加修订，决定难以普遍地利益上中下三种根器的众生。</p></div>
+<div class="para-pair"><p class="p-orig">窃思鲁史春秋，一经仲尼笔削，遂成千古致治之大经。憨山全集，因嘱谦益修治，即为随藏流通之妙典。古既如是，今亦宜然。只期彻露庐山真面，不必确守原稿成规。</p><p class="p-trans">我想到鲁国的国史《春秋》，一经过孔子的删改订正，就成了千古流传治国安邦的大经。《憨山大师全集》，因为嘱咐钱谦益加以修订，就成为了录入大藏经流通的妙典。古时候既然是如此，现今也应该这样。只期望彻底显露庐山真面目，而不必拘泥于原稿。</p></div>
+<div class="para-pair"><p class="p-orig">譬如拆倒五凤楼以重修，打散左氏序以另集。材料虽则仍旧，结构须随所宜。不妨以柱为梁，一任截长补短。文之赘者去之，义之阙者补之。宜在前者移之于前，当在后者置之于后。</p><p class="p-trans">譬如拆倒五凤楼重新修建，打散《春秋左传》另外集录。材料虽然是旧的，然而结构必须随所适宜。不妨以柱子为横梁，听凭修订的人截长补短。文字多余的去除，义理缺少的补充。适合在前面的，移到前面，应当在后面的，放到后面。</p></div>
+<div class="para-pair"><p class="p-orig">俾大佛顶理，圆通常性，与夫若义若文，悉皆彻底掀翻，和盘托出。使上中下根，无不一目了然，各获巨益。庶可令通公，黎公，我公之本怀，究竟舒畅矣。</p><p class="p-trans">使得《大佛顶首楞严经》的深理，二十五圆通的真常法性，以及经文的义理文字，全都彻底掀翻，和盘托出。使得上、中、下三种根机的人，全都能够一目了然，各自从中获得巨大的利益。这样，或许可以让通智法师、黎端甫居士，以及和尚您的本怀，究竟舒畅啊！</p></div>
+<div class="para-pair"><p class="p-orig">若限以两月告圆，恐致成略加雠校。日期过促，黎公之匠手莫形。修治不精，通公之婆心仍晦。刊而传之，欲与楞严诸注，并寿于世，恐难必矣。宜革欲速见，多限数月。俾得反复研究，谛审精修。自然上契诸佛之妙心，下满诸公之宏愿。罄来际以流通，尽生界而得度也已。</p><p class="p-trans">如果限定在两个月完成，恐怕结果只是略微加以校对而已。日期过于仓促，黎端甫居士高明的妙笔就无从施展；修订如果不精准严密，通智法师的一片婆心就仍然不能彰显。刊印流传出来之后，想要与《楞严经》的各种注解，一并久住于世间，恐怕难以确保啊。应该打消想要快速成书的想法，多宽限几个月，使得黎公能够反复研究，谛实审察，专精修订。如此一来，自然向上可以契合诸佛之妙心，向下可以满足诸位的宏愿，尽未来际而流通不绝，尽众生界而化度无穷了。</p></div>
+<div class="para-pair"><p class="p-orig">疏首题名，二公并书。初云忆莲沙门通智寻源述，次云端甫居士黎养正重治。虽黎公心游华藏，志在利人，悟人我以皆空，了自他之不二。然在吾人感恩颂德分上，固应如是施设也。</p><p class="p-trans">疏文开头的署名，二位大德的尊名一并写上。先写＂忆莲沙门通智寻源述＂，再写＂端甫居士黎养正重治＂。虽然黎公端甫居士已经心游华藏世界，志在利益他人；悟到人我皆空，明了自他不二。然而就我们感恩颂德的本分而言，自然还是应当这样安排。</p></div>
+<div class="para-pair"><p class="p-orig">修治已讫，即付手民，不须寄来。黎公儒门山斗，法海津梁。宗说兼通，行解相应。若非观音普贤之应化，定是方山无为以再来。所有著述，机理双契。倘悬之国门，易一字者，赏以千金。当穷年竟月，无一人敢一著笔。有何所疑，尚须傍人相证耶。待至全部刻圆，即祈普惠法施。</p><p class="p-trans">修订完成之后，就交给排字工人，不必再寄来给我了。黎公是儒门的泰山北斗，是佛法大海的津梁。他宗门教下通达无碍，行持悟解相应相合。如果不是观世音菩萨、普贤菩萨的应化示现，就一定是李通玄、杨杰转世再来。他所有的著述，都做到了根机教理两相契合。如果将他的著述悬挂在国门上，发出告令：有谁能更改一个字，就赏千两黄金，想必穷尽年月，也没有一个人敢下一笔。他的修订有什么值得怀疑，还须要别人来证明的呢。等到书全部刻好，就祈请普遍地布施流通，也寄给我一部。</p></div>
+<div class="para-pair"><p class="p-orig">晚虽盲目，不能亲见日光，然长夜重昏之中，常欲蒙其照烛也已。临颖依依，不任神驰。</p><p class="p-trans">晚辈我虽然如同瞎眼，不能够亲眼见到太阳的光辉，然而在长夜昏黑之中，也常常想要蒙受太阳的照耀啊。临笔不舍，不胜思念仰慕。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【高风】</span>1.高尚的风操。2.美善的风教、政绩。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【通公开蒙】</span>见增广卷三《通智法师公堂序》。《楞严开蒙》十卷。通智法师著。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【謦欬】</span>咳嗽。亦借指谈笑，谈吐。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【刍荛】</span>1.割草采薪。2.割草采薪之人。《诗·大雅·板》：“先民有言，询于刍荛。”3.指草野之人。4.浅陋的见解。多用作自谦之辞。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【华翰】</span>对他人来信的美称。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【黎端甫】</span>杨仁山门下，善三论。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【刻期】</span>限定日期。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【行墨】</span>指文字或诗文。谓为文专在辞句上下功夫。亦指披阅文章专注于辞句。宋韩淲《涧泉日记》卷中：“其寻行数墨，又拘拘以论说为学，其弊不足以成己教人。”</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【玄黄】</span>泛指颜色，这里比喻外表，非本质的东西。南朝宋刘义庆《世说新语·轻诋》：“谢安目支道林如九方皋之相马，略其玄黄，取其儁逸。”</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【笔削】</span>1.指著述。笔，书写记录；削，删改时用刀削刮简牍。2.《史记·孔子世家》：“至于为《春秋》，笔则笔，削则削，子夏之徒不能赞一辞。”后因以“笔削”谓历史著作。4.谓对作品删改订正。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【致治】</span>使国家在政治上安定清平。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【谦益】</span>钱谦益（1582-1664)，字受之，号牧斋，晚号蒙叟。江苏常熟人。万历进士，授翰林院编修。晚明著名居士学者。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【五凤楼】</span>古楼名。唐在洛阳建五凤楼，玄宗曾在其下聚饮，命三百里内县令、刺史带声乐参加。梁太祖朱温即位，重建五凤楼，去地百丈，高入半空，上有五凤翘翼。见《新唐书·元德秀传》、宋周翰《五凤楼赋》。后喻文章巨匠为造五凤楼手。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【左氏】</span>此指《左传》，史书，儒家经典之一。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【雠校】</span>校雠；校对文字。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【手民】</span>古时仅指木工。后指雕板排字工人。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【方山】</span>李长者，讳通玄，出唐宗室。不涉世缘，清净自居，以华严为业。唐开元七年，居方山土龛中，日食枣柏少许，时称枣柏大士，亦称方山长者。著华严经论四十卷；后人会经入论，谓之合论，共一百二十卷。开元十八年（730年）三月坐化，寿九十六。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【杨杰】</span>北宋无为（安徽）人。字次公，号无为子。雄才俊迈，年少登科。好禅，历叩诸山名宿，参谒天衣义怀，义怀每引庞居士之机语提撕。一日奉祠泰山，睹日如盘涌，因而大悟，呈偈于义怀，遂蒙称可。后会芙蓉道楷，相互酬问。宋神宗熙宁（1068-1077）末年，归乡省母，闲居阅藏经，遂归心净土。曾任两浙提点刑狱，有杨提刑之称。时诣天台山白莲寺，师事真咸，礼智者之塔。晚年专事净业，曾画丈六阿弥陀佛像礼拜观想。临终时感佛来迎，端坐而逝，享年七十。著有释氏别集、辅道集等。
+【临颖】犹临笔。常用于书信。
+【依依】恋恋不舍的样子。形容思慕怀念的心情。
+【不任】不任犹不胜，表示程度极深。
+【神驰】心神向往。谓思念殷切。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>40、复永嘉某居士书四 · 印光法师文钞</title>
+<meta name="description" content="谈劝家属信因果和念佛">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-040/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="40、复永嘉某居士书四 · 印光法师文钞">
+<meta property="og:description" content="谈劝家属信因果和念佛">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-040/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第一部分·书信 · 如诚法师译</div>
+      <h1 class="art-title">40、复永嘉某居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>谈劝家属信因果和念佛</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝家属甚多。倘诸弟妇令妹令女等，学堂归来，宜以因果报应，及念佛利益，与之谈论。俾彼等各各心中自知己心与天地鬼神相通，与弥陀慈父相通。由兹断除恶念，增长正信。俾彼现在堪为人之贤妻，将来堪为人之贤母。以此风于乡邑，是亦治天下国家之根本法轮也。</p><p class="p-trans">你的家里女众很多，诸位弟媳妇、妹妹、女儿等人从学校回来以后，你应当与她们谈论因果报应，以及念佛的利益。使得她们每个人都知道自己的心与天地鬼神是相通的，与阿弥陀佛慈父也是相通的。由此断除恶的念头，增长佛法正信。使得她们现在能够做人家的贤妻，将来能够做他人的贤母。再以这种风气感化乡里，这是治理天下国家的根本方法啊。</p></div>
+<div class="para-pair"><p class="p-orig">菩萨随俗利生，并不另起炉灶。对病发药，令彼各各就路还家而已。现今学堂中妇女，多多妄生异图，拟操政权。不知各守本分，相夫教子，乃天下太平之根本。以故周之王业，基于三太。彼太姜，太任，太姒，乃女中圣人。但以阴相其夫，胎教其子为事。</p><p class="p-trans">菩萨随顺世俗利益众生，并没有另外搞一套什么做法，只不过对症施药，使众生能够各自找到回家的路而已。现在学校里的女子，大多心生叛逆狂妄的心，打算操持国家政权。而不知道女人家安守本分，相夫教子（辅助丈夫、教育子女）才是使天下太平的根本。过去周朝的王业，根基在于三位太夫人。太姜、太任、太姒，都是女子中的圣人，而她们也只是暗中辅佐自己的丈夫，从胎教开始，以行为道德规范教育子女，把这些作为她们的事业。</p></div>
+<div class="para-pair"><p class="p-orig">今人不此是学。其所计虑，皆为乱天下之媒糵，可胜道哉。光本世外人，何论妇女事。以汝家女眷多故。亦愿将来师表女流，仪型闺阃，以扬佛日之光耳。</p><p class="p-trans">现在的人不学习这些，他们所计划考虑的事，都是扰乱天下的祸端，真是数不胜数啊。我一个出家人，为什么还要谈论妇女的事情呢。只因为你家里女眷比较多的缘故。同时也是希望将来，她们能够成为女子中的表率，进而可以发扬佛法的光辉啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【媒糵】</span>酒母。比喻借端诬罔构陷，酿成其罪。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【仪型】</span>做楷模，做典范。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【闺阃】</span>1.宫院或后宫；内室。2.借指妇女。3.家庭；家族。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

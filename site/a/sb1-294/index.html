@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复钱晓朕居士书（附来书） · 印光法师文钞</title>
+<meta name="description" content="疑问求答">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-294/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复钱晓朕居士书（附来书） · 印光法师文钞">
+<meta property="og:description" content="疑问求答">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-294/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复钱晓朕居士书（附来书）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">疑问求答</p><p class="p-trans">疑问求答（来信）</p></div>
+<div class="para-pair"><p class="p-orig">㈠ 瑜伽焰口有云，罪性本空由心造，心若灭时罪亦亡，心亡罪灭两俱空，此则是名真忏悔。其他编著中，亦有引之者（字句稍异），不知原出何经何卷。</p><p class="p-trans">㈠《瑜伽焰口》中说：“罪性本空由心造，心若灭时罪亦亡，心亡罪灭两俱空，此则是名真忏悔。”其他的佛学书籍中，也有引用这个偈颂的（字句稍有不同），不知原本出自哪部经？哪一卷？</p></div>
+<div class="para-pair"><p class="p-orig">㈡ 习见之大慈菩萨赞佛偈，十方三世佛，阿弥陀第一等百八字，出何书何卷。</p><p class="p-trans">㈡ 我们平常所看到的《大慈菩萨赞佛偈》，“十方三世佛，阿弥陀第一”等一百零八个字，出自哪部书？哪一卷？</p></div>
+<div class="para-pair"><p class="p-orig">㈢ 径中径又径卷二，引天如法师净土或问，引经言受持佛名者，获十种胜利。不知净土或问所引，出何经何章。</p><p class="p-trans">㈢ 《径中径又径》卷二，引天如维则禅师的《净土或问》，引用佛经说：“受持佛名者，获十种胜利。”不知《净土或问》所引的这句话，出自哪部经？哪一章？</p></div>
+<div class="para-pair"><p class="p-orig">㈣ 念佛有十种胜利，如上述，供奉念诵地藏菩萨有二十八种利益，见地藏本愿经，不知供奉念诵观世音菩萨名号之利益，有无如上列举之经文，曾见何经何卷，其文如何（六十华严卷十六偈中所言及大悲陀罗尼经除外）。</p><p class="p-trans">㈣ 念佛有十种殊胜利益，如上面所说，供奉念诵地藏菩萨有二十八种利益，见《地藏本愿经》，不知供奉念诵观世音菩萨名号的利益，有没有如上列举利益的经文，在哪部佛经，哪一卷，经文又是如何（六十卷《华严经·卷十六》偈颂中所说的，以及《大悲陀罗尼经》除外）？</p></div>
+<div class="para-pair"><p class="p-orig">晓朕居士鉴，汝有此闲工夫，究此不急之事。</p><p class="p-trans">晓朕居士鉴，你怎么有这种闲工夫，研究这些不急的事情？</p></div>
+<div class="para-pair"><p class="p-orig">（一）瑜伽施食忏悔偈，既知其胜妙，即依此忏悔，则便可得大利益，何必要问出于何经。</p><p class="p-trans">（一）《瑜伽焰口》中有《忏悔偈》，既已知道这个偈颂的殊胜微妙，就依照这个方法来忏悔，就可以得到大利益，何必要询问出自哪部经。</p></div>
+<div class="para-pair"><p class="p-orig">施食中所有偈，有引经成文者，而专依其事而作者居多半，将谓不出于经，便不见重于世乎。</p><p class="p-trans">《瑜伽焰口》中所有的偈颂，有的是引用佛经成文的，但专门依施食的事而撰写的居大半，难道说这不是出自佛经，就不被世人重视了吗？</p></div>
+<div class="para-pair"><p class="p-orig">即谓出于瑜伽施食，有何不可，还屡屡问人。汝真是问桥之后嗣，只顾问桥，致误胜会大利。徒生懊恼，有何所益。</p><p class="p-trans">即使说这个偈颂出自《瑜伽施食》，有什么不可以的，还多次问人。你真是问桥比丘（注1）的后世子孙，只顾着问桥是何人所修的，导致耽误了赶往殊胜无遮大会的大利益。徒然生起懊恼，有什么利益？</p></div>
+<div class="para-pair"><p class="p-orig">（二）大慈菩萨发愿偈，甚好。古今均未注明其为何时人。吾人又何能独知之（龙舒净土文，云栖诸经日诵均未标）。</p><p class="p-trans">（二）《大慈菩萨发愿偈》，很好。古今都没有注明他是什么时代的人。我们又如何能够独知呢（《龙舒净土文》、云栖莲池大师撰的《诸经日诵集要》中都没有标明）？</p></div>
+<div class="para-pair"><p class="p-orig">（三）十种胜利，云栖大师曾标于往生集后，亦未说及出于何经。实则胜利无穷，何止十种。若详说之，当有无量无边之无量无边种耳。此不过略示一二，令人生信心耳。</p><p class="p-trans">（三）十种殊胜利益，云栖大师曾经标示在《往生集》的后面，也没有说到出自哪部经。实际上，受持佛名的殊胜利益是无穷的，何止十种？如果详细说，应当有无量无边的无量无边种啊！这十种殊胜利益，只不过是大略显示出一二，令人生起信心罢了。</p></div>
+<div class="para-pair"><p class="p-orig">（四）汝真痴人说痴话，普门品莫读过。若有众生多于淫欲，常念恭敬观世音菩萨，便得离欲。瞋恚愚痴亦然。三毒既灭，三学圆明，其为利益，岂限数量。</p><p class="p-trans">（四）你真是痴人说痴话，《妙法莲华经·观世音菩萨普门品》没读过吗？“若有众生多于淫欲，常念恭敬观世音菩萨，便得离欲。”瞋恚、愚痴也是如此。贪嗔痴三毒既然灭除，戒定慧三学圆明，这种利益，哪能限于数量呢？</p></div>
+<div class="para-pair"><p class="p-orig">汝以地藏之廿八种疑观音，不知此廿八种，对凡夫心量说耳。至于观音，遍尘刹感，遍尘刹应。则二十八尘点三千大千世界之微尘，也标不尽。何以故，以菩萨无心无境，以众生之心之境而为心境故也。</p><p class="p-trans">你以供奉念诵地藏菩萨的二十八种利益，怀疑观世音菩萨，不知道这二十八种利益，是针对凡夫的心量来说的。至于观世音菩萨，是遍尘刹感，遍尘刹应。那么就是二十八尘点劫的三千大千世界的微尘，也标示不尽。为什么呢？因为菩萨无心无境，以众生的心境而为心境的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">以故楞严观音圆通四不思议之第四云，我得佛心，证于究竟。能以珍宝种种，供养十方如来。傍及法界六道众生，求妻得妻（求贤慧之妻，蒙菩萨加被，即得贤慧之妻，不可错认为菩萨即与之以妻也。求子亦然），求子得子，求三昧得三昧，求长寿得长寿，如是乃至求大涅槃得大涅槃。</p><p class="p-trans">所以在《楞严经·观世音菩萨耳根圆通章》中，“四不思议之第四”说：“我得佛心，证于究竟。能以珍宝种种，供养十方如来。傍及法界六道众生，求妻得妻（求贤慧的妻子，蒙菩萨加被，就得到贤慧的妻子，不可以错误地认为，菩萨就给他一个妻子。求子也是如此），求子得子，求三昧得三昧，求长寿得长寿，如是乃至求大涅槃得大涅槃。”</p></div>
+<div class="para-pair"><p class="p-orig">大涅槃乃究竟佛果，尚能令得。况其余世出世间所有之一切人天福乐，及三乘果证乎。</p><p class="p-trans">大涅槃是究竟佛果，尚且能令众生得到。何况其余世间、出世间所有的一切人天福乐，以及三乘果证呢？</p></div>
+<div class="para-pair"><p class="p-orig">汝看经无择法眼，由地藏之廿八种，而疑观音。人非不能答，特藐视汝而不屑答耳。</p><p class="p-trans">你看经没有择法眼，由供奉念诵地藏菩萨的二十八种利益，而怀疑供奉念诵观世音菩萨的利益。他人不是不能回答你，而是特别轻视你而不屑于回答罢了。</p></div>
+<div class="para-pair"><p class="p-orig">光恐汝以为汝之本事，常找些人不注意之事而问人以自夸。而不知其为自轻也。从此生大我慢，谓我能问倒一切人，则汝后来著魔发狂，大有日在。</p><p class="p-trans">我恐怕你以为你有本事，常常找一些别人不注意的事情来问别人以自我夸耀。而不知道这是自己轻贱自己啊！从此生起大我慢，认为我能问倒一切人，那么你以后著魔发狂，大有日在。</p></div>
+<div class="para-pair"><p class="p-orig">何不以此心思一心念佛，以期心佛相应，生为真佛弟子，没为莲邦净侣乎。汝且放下狂心，看文钞中与顾显微居士书，则必能得益，令病根净尽。</p><p class="p-trans">为什么不用这个心思一心念佛，以期心佛相应，活着成为真正的佛弟子，死后成为极乐莲邦的净侣呢？你暂且放下狂妄心，看《文钞》中《与顾显微居士书》，则必定能够得到利益，令你的病根净除究尽。</p></div>
+<div class="para-pair"><p class="p-orig">此实与顾友潘承锷说，以与彼未会过，顾祈光医彼之邪执。故不避忌讳，直言无隐。潘阅之，即皈依谛闲法师，始终不敢与光通信。</p><p class="p-trans">这封信，实际是对顾显微的朋友潘承锷说的，因为没有与他见过面，顾显微请我医治他的邪执。所以不避忌讳，直言责斥、没有隐藏。潘承锷看信后，就皈依了谛闲法师，始终不敢与我通信。</p></div>
+<div class="para-pair"><p class="p-orig">观音以得佛心，而遍应世出世间一切凡圣之心。而各人之满愿，岂数量之所能说乎。地藏与观音，均系古佛示现。</p><p class="p-trans">观世音菩萨因为得佛心，而周遍应世间、出世间一切凡夫圣人的心。而满足各人的愿望，哪里是用数量所能称说的完的呢？地藏菩萨与观音菩萨，都是古佛示现。</p></div>
+<div class="para-pair"><p class="p-orig">经中所标，盖欲凡夫之人生正信心。若广说者，每难领会。汝于地藏观音之威神功德能善会，则可谓明白有智慧人。否则痴人之窠臼，毕竟莫由而出也。祈慧察。</p><p class="p-trans">经中所标示的利益，是想让凡夫之人生起正信心。如果广泛详说的话，众生常常难以领会。你对于地藏菩萨、观世音菩萨的威神功德能够好好领会，就可以说是明白而有智慧的人。否则，痴人的牢笼，毕竟没有办法出离啊！请智慧思察。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【问桥】</span>指徒然无益之发问。此语典故系佛陀为劝说莫多问于身无利益之事，而叙述过去世曾为一比丘，因常生无穷疑问，终误失真正之利益。据《大方等陀罗尼经·卷三》所载，此一比丘因甚贫穷，欲往大布施会所，于途中就所见而生种种愚问，如桥何人所作等，作七千八百问，因此耽误至会所之时间，以致所需物品荡然无馀，终无所获而归。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【窠臼】</span>1.门臼。旧式门上承受转轴的臼形小坑。2.比喻旧有的现成格式；老套子。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

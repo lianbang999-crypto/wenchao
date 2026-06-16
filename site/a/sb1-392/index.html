@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复龙澄徹居士书 · 印光法师文钞</title>
+<meta name="description" content="上月二十九，令弘化社寄经书十四包，收到否。此非弘化社书，光以钱请，令彼寄耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-392/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复龙澄徹居士书 · 印光法师文钞">
+<meta property="og:description" content="上月二十九，令弘化社寄经书十四包，收到否。此非弘化社书，光以钱请，令彼寄耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-392/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复龙澄徹居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">上月二十九，令弘化社寄经书十四包，收到否。此非弘化社书，光以钱请，令彼寄耳。</p><p class="p-trans">上个月二十九日，我让弘化社寄的十四包经书，是否收到？这些不是弘化社（免费结缘）的书，是我出钱请书，让弘化社邮寄的。</p></div>
+<div class="para-pair"><p class="p-orig">光一向凡需请书送人，皆照售价出资。一免经手人因光作弊。二可随意多少，无人敢生嫌意，及光不敢随意。我出资则两不相妨。</p><p class="p-trans">我一向凡是需要请书送人，都按照售价来出钱。一来免得经手人因我而作弊。二来可以请多少随意，没有人敢生厌嫌之意，以及（因未出钱，）我不敢随意请。如果我出钱，那么两方面就不相妨碍了。</p></div>
+<div class="para-pair"><p class="p-orig">现已作即死之想，已无余蓄。如再请，可直与弘化社接洽，光不预闻矣。</p><p class="p-trans">现在我已作将死想，已无多余的积蓄。如果再请经书，可直接与弘化社接洽，我不再参与了。</p></div>
+<div class="para-pair"><p class="p-orig">崂山乃憨山大师弘化之地。陈飞青欲修寺，以大师年谱钞本持来，祈排印流通。光寄信各图书馆问年谱疏，皆无有。</p><p class="p-trans">崂山是憨山大师弘化的地方。陈飞青想要修建寺院（青岛湛山寺），将大师年谱钞本拿来，请求排印流通。我寄信给各个图书馆，询问《憨山大师年谱疏》，各图书馆都没有。</p></div>
+<div class="para-pair"><p class="p-orig">后闻北京嘉兴寺有书册全藏，托人请来钞出付排，故寄二包。憨山于佛法有大功，于明社稷有大功。</p><p class="p-trans">后来听说北京嘉兴寺有书册全藏，托人请来，钞出交付排印，所以寄上二包。憨山大师对于佛法有大功，对于明朝社稷有大功。</p></div>
+<div class="para-pair"><p class="p-orig">若不谪广东，以谈笑而息大乱于始萌者几次，则其危也，甚于累卵矣。光于六咏颂略标大要，事在有心人。</p><p class="p-trans">如果大师不被贬谪到广东，好几次用谈笑（的方式）在祸乱开始萌发时，止息了大乱（民众暴动、少数民族兵变等），那么社稷的危险，要超过累卵啊！我在《题憨山大师六咏手卷》中，概略标示了大要，事情在于有心人。</p></div>
+<div class="para-pair"><p class="p-orig">唐陶镕月初来信，为三人祈法名。内有张勋栋者，以文学自豪，觉得芜地，惟有我高。</p><p class="p-trans">唐陶镕在月初来信，为三个人求取法名。其中有一位张勋栋先生，以自己的文学（水平高而）自豪，觉得在芜地，只有我最高。</p></div>
+<div class="para-pair"><p class="p-orig">唐与说因果不信。唐令阅文钞，阅几篇，即求代祈皈依。然念佛求生，尚不肯盲从。若看到与顾显微书，当不敢不盲从也。</p><p class="p-trans">唐陶镕对他讲说因果，他不相信。唐陶镕让他阅读《文钞》，读了几篇后，就求唐陶镕代他求皈依。然而念佛求生净土，却仍不肯“盲从”。如果他看到写给顾显微的信（即《复顾显微居士书》），就应当不敢不“盲从“了。</p></div>
+<div class="para-pair"><p class="p-orig">唐以明年来山住数月为请。光不许来，即来只可住数日即去。此人乃居士引进，其志较比泛泛悠悠之男子，尚为真切。况又是回回乎。（民廿九年）</p><p class="p-trans">唐陶镕请求明年来灵岩山，住几个月。我不许他来，即使来，只可住几天就回去。此人是由居士你引进佛门的，他的志向比起泛泛悠悠的男子，还算是真切的。何况又是回族人呢？（民国二十九年&lt;1940年&gt;）</p></div>
+<div class="para-pair"><p class="p-orig">心</p><p class="p-trans">金翅鸟命终。骨肉尽消散。唯有心不化。圆明光灿烂。龙王取为珠。照破诸黑暗。转轮得如意。能救一切难。如何在人中。日用而不见。</p></div>
+<div class="para-pair"><p class="p-orig">无常</p><p class="p-trans">法性本无常。亦不堕诸数。譬彼空中云。当体即常住。圣凡皆过客。去来无二路。是生不是生。非新亦非故。智眼明见人。此外何所慕。</p></div>
+<div class="para-pair"><p class="p-orig">苦</p><p class="p-trans">梦入大火聚。怕怖多慞惶。正当苦恼时。滴水便清凉。水尽火复然。念慕何慨慷。及至醒眼观。向者谁悲伤。</p></div>
+<div class="para-pair"><p class="p-orig">空</p><p class="p-trans">须弥横太虗。大地浮香海。六尘蔽性天。四大遍法界。劫火洞然时。此个坏不坏。何必待烧尽。然后无障碍。</p></div>
+<div class="para-pair"><p class="p-orig">无我</p><p class="p-trans">一水作众味。酸醎苦辣具。以本淡然故。而能成众事。若实不随者。安肯随他去。唯有不随者。谁能识此趣。</p></div>
+<div class="para-pair"><p class="p-orig">生死</p><p class="p-trans">生死不流转。流转非生死。若实不流转。生死无穷已。谛观流转性。流转当下止。不见流转心。是真出生死。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【预闻】</span>谓参与其事并得知内情。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【崂山】</span>古称劳山或牢山，亦名辅唐山、鳌山。在今山东省青岛市崂山县境。东临崂山湾，南濒黄海，景色雄奇灵秀，气候宜人，历来为避暑和游览的胜地。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【光寄信各图书馆问年谱疏】</span>指《憨山大师年谱疏》（明）福善 记录 福征述疏。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【册子本】</span>我国书册的装订形式之一。或起源于西方，然于宋代时在我国开始风行，敦煌等地出土之佛典册子本几全为此类册子本。册子本系笔记本形式，大多将一张四开纸对折，再以浆糊一一黏合或以细绳装订成册。</p>
+<p class="note-item"><span class="note-n">[5]</span>【若不谪广东，以谈笑而息大乱于始萌者几次，则其危也，甚于累卵矣】《憨山大师年谱》中记载：二十八年庚子。
+予年五十五。时榷使初出。狠戾暴横。官民不堪。地方震荡。加以倭警。人心惶惶。予即散诸弟子。闭关绝迹。粤人素苦闽海之白艚运。米恐腾贵也。时以为乱。新军门闽人也。公子舟次海上。适大将军请告将行。税使正畜意侵之。偶有白艚数只。即借口。以大将军为公子资行者。嗾市民大哄。顷刻聚数千人。投砖石。打公子舟几破。围帅府。持戈相向甚急。时三司府县。皆赴军门行节礼。会城无一正官。卒无解救者。势变在呼吸也。大将军危之。无已。乃命中军。诣予关前求解。予甚不可曰。无神术也。中军跪泣曰。师即不念宾主。岂不念地方生灵乎。予闻之惕然。遂破关往谒税使者。从容劝化。开晓其意。使者闻予言果悟。乃令自行招安。以散乱民。予先往。大言于众曰。诸君今所为。欲食贱米耳。今犯大法。当取死。即有贱米。谁食之耶。众闻之愕然。顷令至帅府。围即解。会城遂以宁。父老感予。欲尸祝之。时三司正在军门饭。闻报民作乱。皆投箸而起。及回。业已安堵。然皆知予之力也。观察任公闻之。乃以书抵予曰。憨师不出。其如地方何。憨师既出。其如憨师何。予亦自知此后无宁日矣。是年秋。南韶道祝公。延予入曹溪。予乘兴遂入山。为六祖奴郎。新制府戴公。知予安乱民。深德之。意欲一见。谕大将军。将予往谒。及见。礼遇甚优。留款斋饭。因辞往曹溪。公遂愿为护法。予是得安心焉。
+二十九年辛丑。
+予年五十六。春正月。予见曹溪。四方流棍。集于山门。开张屠沽。秽污之甚。积弊百余年矣。坟墓率占祖山。僧产多侵之。且勾合外棍。挟骗寺僧。无敢正视者。予叹曰。此心腹之疾也。苟不去。则六祖道场。终将化为狐窟。卒莫可救矣予纵居此何为哉。熟虑之无已。乃往白制台戴公。公曰。无难也。予试为公力行之。即下令本县坐守。限三日内。尽行驱逐。不留一人。铺居尽拆。不存片瓦。自此曹溪山门。积垢一旦如洗。公因留予。斋饭坐谈。公曰。六祖腥膻。予为公洗之矣。目前地方生灵涂炭。大菩萨。有何慈悲以救之乎。予曰。何为也。公曰。殊船千艘。率皆海上巨盗。今以钦采。资之以势。罢采之日不归。横行海上。劫掠无已。法不能禁。此其一也。地方开矿。采役暴横。掘人之墓。破人之产。在在百姓。受其毒害。甚于劫掠。由是民无安枕矣。为之柰何。予曰。此未易言也。姑徐图之。采使者李公。颇有信心。是年秋。至曹溪进香于六祖。留山中数日。闻法甚喜。予因劝为重兴祖庭布金檀越慨然力荷之。徐密启之曰。开采为害于地方甚矣。非　圣天子意也。采船急设约束。期往来过限以罪。矿罢开采。尽撤其差役。第令所司。岁额助解进。秋毫无扰于民。可乎。采使唯唯。力行之。由是山海地方。一旦遂以宁。公深感之。以书谢予曰。而今乃知佛祖慈悲之广大也。以此护法之心益切。予因是得以安心曹溪。是年秋。开辟祖庭。改风水道路。选僧受戒。立义学作养沙弥。设库司清规。查租课。赎僧产。归侵占。一岁之闲。百废具举。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【六咏颂】</span>《题憨山大师六咏手卷》增广卷四。附《六咏诗》</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【芜城】</span>古城名。即广陵城。故址在今江苏省江都县境。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复海曙师书 · 印光法师文钞</title>
+<meta name="description" content="友人以时事新报征文启见寄。光企座下发挥佛祖道妙，以结法缘。座下以执心在内（一），直指见性是心非眼（二），色阴本如来藏妙真如性（三），眼入本如来藏妙真如性（四），十二处本如来藏妙真如性（五），地大周遍（六），一心二门（七）等七题，令光作论，而曰拟作模范。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-008/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复海曙师书 · 印光法师文钞">
+<meta property="og:description" content="友人以时事新报征文启见寄。光企座下发挥佛祖道妙，以结法缘。座下以执心在内（一），直指见性是心非眼（二），色阴本如来藏妙真如性（三），眼入本如来藏妙真如性（四），十二处本如来藏妙真如性（五），地大周遍（六），一心二门（七）等七题，令光作论，而曰拟作模范。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-008/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复海曙师书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">友人以时事新报征文启见寄。光企座下发挥佛祖道妙，以结法缘。座下以执心在内（一），直指见性是心非眼（二），色阴本如来藏妙真如性（三），眼入本如来藏妙真如性（四），十二处本如来藏妙真如性（五），地大周遍（六），一心二门（七）等七题，令光作论，而曰拟作模范。</p><p class="p-trans">友人将《时事新报》的“征文启”寄给我。我企盼座下您发挥佛陀祖师的道妙，来结法缘。您反过来却以：执心在内（一）；直指见性是心非眼（二）；色阴本如来藏妙真如性（三）；眼入本如来藏妙真如性（四）；十二处本如来藏妙真如性（五）；地大周遍（六）；一心二门（七）等七题，令我来作论，说是打算作为模范论文。</p></div>
+<div class="para-pair"><p class="p-orig">光幼失问学，长无所知。兼以宿业深厚，生即病目。近十余年来，一切经论，皆不能看。但只执持佛号，忏除宿业。企其仗佛慈力，速生西方而已。何能作论，况曰拟作模范乎。其谦恭自牧，诚可嘉尚。其意见错谬，有不堪详言者。</p><p class="p-trans">我小时候没有好好做学问，长大了也一无所知。又因为宿业深厚，生下来眼睛就有病。近十多年来，一切经论，都不能看。只是执持阿弥陀佛名号，来忏除自己的宿业。企盼能够依仗阿弥陀佛的慈悲愿力，快速往生西方而已。哪里能够作论，何况还说要当作模范论文呢？您在信中谦虚恭敬的自我修养，实在是值得称赞崇尚。但您信中的意见错谬，有不可详说的地方！</p></div>
+<div class="para-pair"><p class="p-orig">夫欲发挥楞严起信之奥，何不取法乎释迦如来与马鸣菩萨，及历代古德之注此经此论者，而反拟以光作者为模范。是何异儒者欲发挥二帝三王孔孟之薪传，不以四书五经十三经作模范，而以樵歌牧唱为模范。织师欲织回文古锦，不取织锦者之法则以为模范，而取编芦席者之法则以为模范。何颠倒一至于此。</p><p class="p-trans">想要发挥《楞严经》、《大乘起信论》的奥妙，为何不取法于释迦如来与马鸣菩萨，以及历代古德注疏的经论，却反过来要以我写的论文作为模范。这就如同：儒家学者想要发挥尧、舜、禹、汤、周武王、孔子、孟子代代相传的学问，却不以《四书》、《五经》、《十三经》作为模范，而以樵夫的歌声、牧童的唱曲作为模范；织布师想要织出回文古锦，不取织锦人的法则作为模范，而取编芦席人的法则以为模范。你为何颠倒到如此地步。</p></div>
+<div class="para-pair"><p class="p-orig">虽然，人之相交，唯贵各尽其分量而已。昔有童子捧沙供佛，佛即欢喜纳受。以沙乃童子力所能办，其供之之诚，与供无上珍馐妙味等无有异。今以光所易办之沙，供之座下。固知无用，聊将其诚。倘亦用以涂地，庶可灭我罪垢，长我福田。因将七题一串穿来，儱侗论之，以塞其责。</p><p class="p-trans">虽然如此，但与人交往，贵在尽其所能。过去有童子捧沙供佛，佛即欢喜纳受。因为沙是童子力量所能办到的，他供养的诚心，与供养无上珍馐妙味，平等没有差异。现在以我所容易备办到的沙，来供养座下您。虽然知道没什么用，姑且就供养一片诚心吧。就像用沙来涂地，或许可以灭除我的罪垢，增长我的福田。因此将上面七个题目一起串起来，笼统讨论，勉强作答。</p></div>
+<div class="para-pair"><p class="p-orig">论曰，执心在内，在外，在中间等，乃凡夫之情见也。执心定不在内，在外，在中间等，亦凡夫之情见也。非直指见性是心非眼，即末显本，指波即水之真智也。何也。以五阴，六入，十二处，十八界，七大，一一皆如来藏妙真如性，周遍法界也。若有在有不在，则非如来藏妙真如性，不周遍矣。以如来藏妙真如性，含育生佛，包括空有。世出世间，无有一法能出其外，不在其中故也。</p><p class="p-trans">论说：执著于心在身内、在身外、在中间等等，这是凡夫的情识分别知见。执著于心一定不在身内、在身外、在中间等等，也是凡夫的情见啊！这些都不是直指见性是心非眼，都不是即末显本，指波浪就是水体的真智啊！为什么呢？因为五阴、六入、十二处、十八界、七大，一一都是如来藏妙真如性，周遍法界。如果有在某处、不在某处的分别执著，就不是如来藏妙真如性，不能周遍了。以如来藏妙真如性，含育众生佛陀，包括空、有二法。世间、出世间，没有一法能够超出如来藏之外，没有一法不在妙真如性之中的缘故啊！</p></div>
+<div class="para-pair"><p class="p-orig">以凡情观之，岂但五阴，六入，十二处，十八界，七大，皆属生灭，皆非真如。即断惑证真，成等正觉，亦不出生灭之外。以圣智观之，非但断惑证真，成等正觉，固属真如。即五阴，六入，十二处，十八界，七大，全体真如。从本已来，原无一毫生灭之相可得。再进而论之，真亦不立，如本无名。一心尚不可得，有何二门之可论哉。是为究竟真如，究竟如来藏妙真如性，究竟心。正所谓五蕴皆空，度诸苦厄，圆满菩提，归无所得者也。</p><p class="p-trans">以凡夫情见来观，不但五阴、六入、十二处、十八界、七大，都属于生灭，都不是真如。就是断惑证真，成等正觉，也不超出生灭之外。但以圣人的智慧来观，不但断惑证真，成等正觉，固属于真如。就是五阴、六入、十二处、十八界、七大，全体是真如。从本已来，没有一丝毫的生灭之相可得。再进一步讨论说，真也不立，如本无名。一心尚且不可得，有什么二门来可以讨论的呢？这才是究竟真如，究竟如来藏妙真如性，究竟真心。正所谓的五蕴皆空，度一切苦厄，圆满菩提，归无所得者啊！</p></div>
+<div class="para-pair"><p class="p-orig">如上一番说话，乃光二十年前偶尔梦著者。今承其雅意，献于座下。如曰必须分而论之，详其文义语脉旨趣，则非光之衰颓心目，荒唐学业，所能办也。请求之古德，及当代讲家。自能畅座下之本怀，惬座下之素志耳。</p><p class="p-trans">如上面这一番话，是我二十年前偶尔梦到的。今天承蒙您的雅意，献于座下。如果说必须要分开来讨论，详述其中的文字义理、言语脉络、宗旨归趣，就不是我衰颓的心力视力，荒疏的学业，所能办到的了。请您去求教古德，以及当代的讲经大家。自然能够畅遂您的本怀，满足您的素志啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【时事新报】</span>《时事新报》1907年12月在上海创刊。1917年，张云雷主事《时事新报》。大师建议刊登戒杀放生，因果报应等文章。张云雷等人经过策划，单独开辟一个专栏，即《佛门汇载》。次年正月刊登不少大师的文章。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【七处征心】</span>佛于楞严会上征诘阿难心目所在之处，阿难先后以七处回答之，均为佛所论破，称为七处征心。(一)执心在内。(二)执心在外。(三)计潜根。(四)开合明暗。(五)随所合处。(六)在中间。(七)一切无着。见《楞严经》第一卷。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【十番显见】</span>（一）指见是心。（二）显见不动。（三）显见不灭。（四）显见不失。（五）显见无还。（六）显见不杂。（七）显见无碍。（八）显见不分。（九）显见超情。（十）显见离见。见《楞严经》第二卷。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【五蕴】</span>色、受、想、行、识。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【十二处】</span>六根、六尘。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【十八界】</span>六根、六尘、六识。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【七大】</span>地、水、火、风、空、见、识。此七者皆如来藏妙真如性。即性常住，即妄皆真。见《楞严经》第三卷。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【一心二门】</span>一心即众生心，二门即心真如门与心生灭门。大乘起信论：“依一心法，有二种门。云何为二？一者心真如门，二者心生灭门；是二种门皆各总摄一切法。”佛教真常唯心论系统称宇宙万有之本体为一心，而谓众生与佛同具此心。然此心有觉与不觉之分，故析为二门，觉者称为心真如门，不觉者称为心生灭门。由此一心之本体（具有不生、不灭、不增、不减等性质，为绝对的无差别相）而言，称心真如门。由此一心之动相（具有生、灭、增、减等性质，为相对的差别相）而言，称心生灭门。心真如门为宇宙本体之觉性，心生灭门为宇宙现象之不觉性。此种一体二面之关系，即称为一心二门。然二门毕竟不一不二，犹海水与波浪，虽因风动而起波浪，然于海水之本性则不生变化，故海水与波浪两者为毕竟不二。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【马鸣】</span>（100～160）付法藏第十二祖。佛教诗人。中印度舍卫国娑枳多城人，与贵霜王朝迦腻色迦王关系深厚。出身婆罗门家族，家学渊源，为卓越之论客。初习外道之法，后与胁尊者对论，深有所感而皈依佛门，受菩萨之称号。博学三藏，明达内外典，为古典期梵语文学之先驱者，开优美文体文学之先河，在梵文学史上留下不朽之盛名。将佛陀之生涯以梵语写成叙事诗“佛所行赞”。复以难陀之故事（难陀断却美妻之爱着，最后成为大乘佛教徒）为经纬，衬托以美诗，即孙陀罗难陀诗。此外，最近从中亚发现之断片“舍利弗之所说”为古典梵语剧之最古例。以上之代表作品均洋溢着热烈的佛教信仰。其它著作另有大乘庄严经论、金刚针论、犍稚梵赞等。后秦鸠摩罗什译有马鸣菩萨传一卷，记述其生平事迹，今收于大正藏第五十册。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【二帝】</span>指“唐尧”与“虞舜”。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【三王】</span>指夏、商、周三代之君。夏禹、商汤、周武（文）王。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【四书】</span>《论语》、《大学》、《中庸》、《孟子》的合称。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【五经】</span>五部儒家经典，即《诗》《书》《易》《礼》《春秋》。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【十三经】</span>儒家的十三部经书，即《易》、《书》、《诗》、《周礼》、《仪礼》、《礼记》、《春秋左传》、《春秋公羊传》、《春秋谷梁传》、《论语》、《孝经》、《尔雅》、《孟子》。其形成过程为：汉立《诗》《书》《易》《礼》《春秋》于学官，为五经；唐加《周礼》《仪礼》《公羊》《谷梁》为九经；至开成间刻石国子学，又加《孝经》《论语》《尔雅》为十二经；宋复增《孟子》，因有十三经之称。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【本怀】</span>本来的心愿。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

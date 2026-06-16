@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复王寿彭居士书（二）（民国二十年） · 印光法师文钞</title>
+<meta name="description" content="所有求皈依者，均于单子上书名寄回，以人多亦不各说所以。但祈与彼等说，务须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。决定念佛求生西方，方可不愧为佛弟子。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-020/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复王寿彭居士书（二）（民国二十年） · 印光法师文钞">
+<meta property="og:description" content="所有求皈依者，均于单子上书名寄回，以人多亦不各说所以。但祈与彼等说，务须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。决定念佛求生西方，方可不愧为佛弟子。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-020/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复王寿彭居士书（二）（民国二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">所有求皈依者，均于单子上书名寄回，以人多亦不各说所以。但祈与彼等说，务须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。决定念佛求生西方，方可不愧为佛弟子。</p><p class="p-trans">所有求皈依的人，都在单子上写好了法名寄回，因为人多，就不分别说明法名的含义了。只是请你对他们说，务必要敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。决心念佛，求生西方，才能不愧为佛弟子。</p></div>
+<div class="para-pair"><p class="p-orig">现今水灾，无处不有，或无此灾，又有彼灾，总因人心过于下劣所致。我等佛弟子，当以矫正时弊为务，切不可随顺潮流，则便陷溺无有底极矣。</p><p class="p-trans">现今的水灾，到处都有，即使没有这场水灾，也有其它的灾害，总的来说是因为人心过于下劣所导致的。我等佛弟子，应当以致力于矫正时弊作为要务，千万不可以随顺潮流，否则就会堕落到无可挽回的地步了。</p></div>
+<div class="para-pair"><p class="p-orig">汝之三子皆聪明，若善教之，则为正器。否则，愈聪明，愈易自误误人。以故为建国取名为慧立，谓能立身，则一切事，均可建立矣。</p><p class="p-trans">你的三个孩子都很聪明，如果能好好的教导，则会成为正人君子。否则，愈是聪明，愈容易自误误人。因为这个用意，所以为建国取名为慧立，意思是：能够立德立身，那么一切事业，均可成就。</p></div>
+<div class="para-pair"><p class="p-orig">身乃天下国家，及菩提道之根本，不能立身于道义中，则一事无成。次子惠泉，天姿聪颖，可喜亦可虑也，故取名慧韬。</p><p class="p-trans">身心是天下国家，以及菩提道的根本，如果不能在道义中立德立身，那么就会一事无成。次子惠泉，天姿聪颖，既为他欢喜也为他担忧，所以取法名为慧韬。</p></div>
+<div class="para-pair"><p class="p-orig">果能韬晦自淑，不炫露其才华，则可以成正器而大有为。若无涵养，辄形矜夸炫露，必不能载福而有大成就也。</p><p class="p-trans">果真能收敛锋芒、修身养性，不夸耀显露自己的才华，就可以成为一个正人君子而大有作为。如果没有涵养，动不动就夸耀本事、炫耀才华，就必定不能承载福德而有大的成就。</p></div>
+<div class="para-pair"><p class="p-orig">小女翠娜，亦甚有宿根，取名慧妙。妙者，合宜适当之谓。倘以聪明用之于无益有损之事理中，则成劣慧，不名妙慧。能所施各适其宜，方名妙慧。</p><p class="p-trans">小女儿翠娜，也是宿世很有善根，取法名为慧妙。妙，合宜适当的意思。倘若将聪明用在无益有损的事理中，就成了劣慧，不叫妙慧了。如果将聪慧使用得恰当、适宜，方可称为妙慧。</p></div>
+<div class="para-pair"><p class="p-orig">今之聪明人，每每以自己聪明，施之于诲盗诲淫，越理蔑伦之小说中，以自矜文才。不知其一气不来，后经若干劫，不知能知天地父母之名字与否。</p><p class="p-trans">现今的聪明人，常常将自己的聪明，用在引诱他人偷盗、奸淫，违背天理，蔑视伦常的小说中，来夸显自己的文才。不知道其一口气上不来，将来经过若干劫，不知还能不能知道天地父母的名字啊！</p></div>
+<div class="para-pair"><p class="p-orig">使此等人无此劣慧，何至其苦如是之极。故宜栽培，令其一举一动，咸归正道。将来母仪闺阃，师范女流，均可于此卜之矣。慧妙之义，如是，如是。</p><p class="p-trans">假使这种人没有这些劣慧，何至于受这些极苦呢？所以应该好好栽培她，令其一举一动，全都归于正道。将来为闺门的典范，女子的榜样，都可以从这一点预先料定。慧妙的意义，就是如此啊。</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，不及见其成，而希望于彼者如此。亦可常为彼言之，庶可顾名思义，悉副所望也。</p><p class="p-trans">我老了，来不及看到他们将来的成就，然而却希望他们能够如此去做。也可常常为他们讲说这些道理，才可以使他们顾法名而思义，全都不负所望啊！</p></div>
+<div class="para-pair"><p class="p-orig">●（其二）潘懋春，既欲皈依，自写愿单，何竟无一恳求语，并无一致屈之字。彼纵曰不知，汝亦不知乎。</p><p class="p-trans">●（第二封信）潘懋春，既然想要皈依，自己写发愿求皈依的单子，为何竟没有一句恳求的话，并且没有一个表示谦卑的字。纵然可以说他不懂道理，但你也不懂道理吗？</p></div>
+<div class="para-pair"><p class="p-orig">世间行路，欲问人，尚须拱手以示敬。况皈依三宝，欲资以了生脱死，竟若以事示平人，则太得不洞事务矣。</p><p class="p-trans">世间行路时，想要向人问路，尚且须要拱手表示尊敬。何况皈依三宝，想要依靠三宝来了生脱死，竟然好像是和普通人说事那样，这真是太不懂事务了。</p></div>
+<div class="para-pair"><p class="p-orig">光作此说，非求人恭敬也，理当如此。若不说，彼一生也只是一不洞事人耳。清顺治皇帝，拜玉林禅师为师，法名行痴。与玉林法徒行森书，署名尚写法弟行痴和南。和南，乃磕头也。皇帝与同门尚如此，况与其师乎。此种芳规，岂可不知。</p><p class="p-trans">我这样说，不是求人家恭敬我，而是理应如此。如果不说，他一生恐怕也只是一个不懂事的人而已。清朝顺治皇帝，拜玉林禅师为师，法名行痴。在写给玉林禅师的徒弟行森法师的信中，署名尚且写：法弟行痴和南。和南，就是磕头。皇帝与同门师兄尚且如此，何况与他师父呢？这种前贤的遗规，怎可不知道呢。</p></div>
+<div class="para-pair"><p class="p-orig">古人云，下人不深，不得其真。非曰深下于人，人则尽心教导也。以自己不能生恭敬心，纵人肯教，自己心中有傲慢象相障，不得其益。譬如高山顶上，不存滴水，故不能受滋润也。</p><p class="p-trans">古人说：恭敬谦下他人不够深，就得不到他的真传。并不是说深深礼下于他人，他人才会尽心教导。而是因为自己不能生起恭敬心，纵然他人肯教，但自己心中有傲慢象的障碍，也不能得到其中的利益。譬如高山顶上，不能存留一滴水，所以不能受到水的滋润。</p></div>
+<div class="para-pair"><p class="p-orig">不但学佛如是，即世间学一材一艺亦如是。世间只身口之活计，佛法则性道之本源，其关系轻重，固天渊相悬也。</p><p class="p-trans">不但学佛是如此，即使是世间学习一个才能，一个技艺，也是如此。世间的才能技艺只是糊口的活计，佛法则是性道的本源，这两者关系的轻重，本就有天渊之别。</p></div>
+<div class="para-pair"><p class="p-orig">祈将此语，令彼视之。然今但取其心，不计其迹，为彼取法名慧懋。谓以智慧，自勉勉人，令其悉皆敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，生信发愿，念佛圣号，求生西方极乐世界。</p><p class="p-trans">请你将这些话，拿给他看看。不过，我只看他有想求皈依的心，就不计较他的过错了，现在为他取法名为慧懋。就是以智慧，自己勉励，并勉励他人，令自己和他人都能敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，生信发愿，念佛圣号，求生西方极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">能如是者，即真佛弟子。否则，但有其名，不得实益。余详嘉言录，此不具书。祈为彼说之，则各尽其分矣。</p><p class="p-trans">能够如此的话，就是真正的佛弟子。否则，只有虚名，得不到真实的利益。其余详看《嘉言录》，此处就不再一一写出了。请你为他说明这些道理，那么我们就都尽到自己的职责本分了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【正器】</span>谓合乎标准的治具或器具。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【韬晦】</span>1.指光芒收敛。2.借指才能行迹隐藏不露。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【诲淫诲盗】</span>《易·系辞上》：“慢藏诲盗；冶容诲淫。”孔颖达疏：“若慢藏财物，守掌不谨，则教诲于盗者，使来取此物。女子妖冶其容，身不精悫，是教诲淫者，使来淫己也。”原有祸由自招的意思。后常用“诲淫诲盗”指引诱人去干盗窃奸淫等坏事。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【越理】</span>违反义理，悖理。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【灭伦】</span>灭绝人伦。指背弃伦理道德。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

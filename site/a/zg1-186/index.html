@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>金陵三汊河法云寺放生池疏 · 印光法师文钞</title>
+<meta name="description" content="金陵为文献之邦，素称佛国。其地之人，多有大乘根性。以大法东来，百七十余年，只在北方。至吴孙权赤乌四年，康僧会尊者，行化至此。以感佛舍利降临，孙权为之建塔修寺，以宏法化。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-186/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="金陵三汊河法云寺放生池疏 · 印光法师文钞">
+<meta property="og:description" content="金陵为文献之邦，素称佛国。其地之人，多有大乘根性。以大法东来，百七十余年，只在北方。至吴孙权赤乌四年，康僧会尊者，行化至此。以感佛舍利降临，孙权为之建塔修寺，以宏法化。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-186/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">金陵三汊河法云寺放生池疏</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">金陵为文献之邦，素称佛国。其地之人，多有大乘根性。以大法东来，百七十余年，只在北方。至吴孙权赤乌四年，康僧会尊者，行化至此。以感佛舍利降临，孙权为之建塔修寺，以宏法化。</p><p class="p-trans">南京是一座历史文化名城，且一向被称为佛国。这个地方的人民，大部分都有大乘根性。佛法传到中国，一百七十多年，只在北方弘扬。到了三国时期东吴孙权赤乌四年（241年），康僧会尊者，行化到了此地。因为尊者虔诚感应到佛舍利的降临，孙权为他建塔修寺，来宏扬佛法，教化众生。</p></div>
+<div class="para-pair"><p class="p-orig">至晋而佛驮跋陀罗，译华严经，亦在其地。宋，齐，梁，陈以来，译经宏法，大有其人。一则宿昔熏陶，善根所使。一则山水崇深，地灵所致也。</p><p class="p-trans">到了东晋，有佛驮跋陀罗，翻译《华严经》，也是在这个地方。南朝的宋、齐、梁、陈以来，在此地译经宏法的高僧大德有很多。既是因为宿世的熏陶，善根所使。也是因为山水峻隐，山川灵秀所致啊！</p></div>
+<div class="para-pair"><p class="p-orig">迨至唐肃宗时，颜鲁公真卿，适守是邦。诏天下诸州各立放生池，命鲁公撰文。其曰，举天下以为池，罄域中而蒙福。是岂独为物计哉，盖欲有所感也。今清凉山下乌龙潭，乃鲁公自立之放生池。</p><p class="p-trans">到了唐肃宗时，鲁公颜真卿，恰逢镇守南京。皇帝下诏天下各州都要建立放生池，敕命颜鲁公撰写疏文。颜真卿在疏文中说：“举天下以为池，罄域中而蒙福。”这哪里只是为动物来考虑的呢？这是想要天下人因此而有所感动啊！现今清凉山下的乌龙潭，就是颜鲁公自立的放生池。</p></div>
+<div class="para-pair"><p class="p-orig">鲁公精忠贯日月，文笔动风云。而且笃信佛法，极意护生。其懿德弘慈，千百年后，莫不景仰。</p><p class="p-trans">颜鲁公之忠义可与日月比高，又有“笔落惊风雨”的文采与书法造诣。而且他深信佛法，极度留意护生。他美好的德行，弘法的慈心，千百年后的人，没有不景仰的。</p></div>
+<div class="para-pair"><p class="p-orig">近来世道人心，陷溺已极。天灾人祸，频频降作。忧世之士，以为此等业果，皆由杀起。倘能知物不可杀，则断无杀人之理。由是各怀慈善，互相扶持。自可移风易俗，感召天和矣。</p><p class="p-trans">近来，世道人心，已经坏乱到了极点。天灾人祸，连续不断的发生。忧虑世事的仁人智士，认为这些业力果报，都是由于杀生引起。倘若能够知道动物不可杀害，就断然没有杀人的道理。因此每个人都怀有慈善之心，互相扶持。自然可以移风易俗，感召天地和顺啊！</p></div>
+<div class="para-pair"><p class="p-orig">于是冯梦老，王幼农，庞性存，魏梅荪等诸居士，谋立放生池。以提倡息杀行慈之道，企敦民胞物与之风。以乌龙潭鲁公故址，不能通江。另觅三汊河方家下圩，其地宽敞，有百数十亩。足可以建立道场，开池放生。</p><p class="p-trans">于是冯梦老、王幼农、庞性存、魏梅荪等诸位居士，计划建立放生池。来提倡息杀行慈的道理，企望劝勉广泛爱护同胞万物的风气。因为乌龙潭颜鲁公放生池故址，不能够流通到大江。另又找到三汊河方家下圩，这个地方宽敞，有一百几十亩地。足可以建立道场，开挖大池来放生。</p></div>
+<div class="para-pair"><p class="p-orig">幸其地主方君峻生，元属乐善君子。只取半价，亦可谓稀有功德矣。议甫成，而予适至金陵。魏君以其事告予，且令作疏，以为之倡。</p><p class="p-trans">幸而这块地的主人方峻生先生，原本就是乐善好施的君子。只要了一半的价钱，也可以说是希有的功德啊！商议刚刚达成，而我又恰好到了南京。魏梅荪居士将这件事告诉我，而且要我写一篇疏文，作为倡导。</p></div>
+<div class="para-pair"><p class="p-orig">予常痛近世杀劫之惨，欲挽无力。因彼之请，触动予怀。予前撰南浔极乐寺放生池疏，已将吾人与物类之本具真心，及随业升沉，并杀生护生之现未果报，撮略言之，兹不缕述。</p><p class="p-trans">我常常痛心近来世上杀劫的悲惨，想要挽救却没有力量。因为他们的请求，触动了我的心怀。我前面撰写的《南浔极乐寺放生池疏》，已经将我们人类与动物畜类的本具真心，以及各随业力升沉六道，杀生护生之现在未来的果报，大略说过了，此处就不再详说了。</p></div>
+<div class="para-pair"><p class="p-orig">冀诸位檀越，同发善念，同捐净资。俾此举速得成功，庶物类各得其所。其功德利益，无量无边。岂特现世万祸冰消，千祥云集。而未来世之衔恩报德者，正不知其几千万亿也。</p><p class="p-trans">希望诸位护法檀越，同发善念，同捐净财。使这个善举速得成功，动物畜类各得其所。这个功德利益，无量无边。哪里只是现世万祸冰消，千祥云集。而且未来世，来感恩报德的，不知道有几千万亿呢！</p></div>
+<div class="para-pair"><p class="p-orig">须知放生原为戒杀，戒杀必从吃素始。倘人各戒杀，人各吃素。则家习慈善，人敦礼义。俗美风淳，时和年丰。何至有刀兵劫起，彼此相戕之事乎。此挽回天灾人祸，正本清源之要务也。</p><p class="p-trans">必须知道放生原本为了戒杀，戒杀必须从吃素开始。倘若每个人都戒杀，每个人都吃素。那么家家修习慈善，人人崇尚礼义。民俗和美，风气淳厚，时节和顺，年成丰收。何至于有刀兵劫兴起，彼此相杀的事情呢？这是挽回天灾人祸，正本清源的首要事务啊！</p></div>
+<div class="para-pair"><p class="p-orig">凡有欲家门清泰，身心康宁，天下太平，人民安乐者。请皆于戒杀放生吃素念佛中求之，则求无不得矣。</p><p class="p-trans">凡是想要家门清泰，身心康宁，天下太平，人民安乐的人。请都在戒杀、放生、吃素、念佛当中来求，则求无不得啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【康僧会】</span>（？～280）三国时代译经僧。精通经律论三藏。三国吴赤乌十年（247）至建业，设像行道，终日烧香礼拜、诵经、坐禅，并至市托钵，其矫异之行深惑市人，遂诉于吴主孙权，孙权召而诘之，后应孙权之请，于三七日内感得舍利，孙权感其威神，遂皈依之，并为之建立建初寺，传道译经，其地称佛陀里，建业地方佛教因此得兴，此为佛教传入我国南方之嚆矢。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【佛驮跋陀罗】</span>（359-429）姓释，为迦维罗卫城甘露饭王之后裔。义熙十一年（415）至建康（今南京），止住道场寺，从事翻译，与法显合译摩诃僧祇律、大般泥洹经，又独译出大方广佛华严经六十卷等。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【崇深】</span>1.犹陡峻。 2.高藏深隐。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【颜真卿】</span>（709-785年），唐代杰出书法家，伟大的爱国者。汉族，字清臣，琅琊孝悌里（今临沂市费县诸满村）人。其曾祖、祖父、父亲都工篆隶，母亲殷氏亦长于书法。他创立的“颜体”楷书与赵孟頫、柳公权、欧阳询并称“楷书四大家”。和柳公权并称：“颜筋柳骨”。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【举天下以为池，罄域中而蒙福】</span>《天下放生池碑铭》：“昔殷汤克仁，犹存一面之网；汉武垂惠，才致衔珠之答。虽流水救涸，宝胜称名，盖事止于当时，尚介祉于终古。岂若我今日动者植者，水居陆居，举天下以为池，罄域中而蒙福，乘陀罗尼加持之力，竭烦恼海生死之津，揆之前古，曾何髣？微臣职忝方面，生丁盛美，受恩寖深，无以上报，谨缘皋陶奚斯歌虞颂鲁之义，述天下放生池碑铭一章，虽不足形容明圣万分之一，亦臣之精恳也。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【贯日】</span>遮蔽太阳；干犯太阳。古人常以之为君王蒙难或精诚感天的天象。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【陷溺】</span>1.谓使人处于水深火热之中，祸害人。2.比喻深深陷入错误的泥淖而无法自拔。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【民胞物与】</span>宋张载《西铭》：“民吾同胞，物吾与也。”意谓世人，皆为我的同胞；万物，俱是我的同辈。后因以谓泛爱一切人和物。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【正本清源】</span>从根源上进行整顿清理。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

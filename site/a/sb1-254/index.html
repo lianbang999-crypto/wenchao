@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书二十七 · 印光法师文钞</title>
+<meta name="description" content="两函均收到，勿念。峨志前开单时，意每包五部，拟一百部归峨山，故开二十包。后因重，只包四部，峨山之百部，尚欠二十部，故又令寄五包，以足一百之数。余均不再补寄。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-254/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书二十七 · 印光法师文钞">
+<meta property="og:description" content="两函均收到，勿念。峨志前开单时，意每包五部，拟一百部归峨山，故开二十包。后因重，只包四部，峨山之百部，尚欠二十部，故又令寄五包，以足一百之数。余均不再补寄。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-254/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书二十七</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">两函均收到，勿念。峨志前开单时，意每包五部，拟一百部归峨山，故开二十包。后因重，只包四部，峨山之百部，尚欠二十部，故又令寄五包，以足一百之数。余均不再补寄。</p><p class="p-trans">两封信都收到了，不要挂念。《峨嵋山志》上次开清单的时候，想着每包五部，打算寄给峨嵋山一百部，所以开了二十包。后来因为太重，每包只包了四部，峨嵋山的一百部，还欠二十部，因此又令人寄了五包，补足一百部的数目。其余的均不再补寄。</p></div>
+<div class="para-pair"><p class="p-orig">又王镜湖所画佛相，前寄王晓曦义比洋行，并书已与佛学社说，令其追问，彼又欲寄峨山结缘，直寄成都汝宅，想已收到。当为看门者说，令其回信报收到，以免彼企望。</p><p class="p-trans">另外，王镜湖所画的佛像，上次寄到王晓曦的义比洋行，并且写信已经对佛学社说过，令他们去追问，他又想寄到峨嵋山结缘，就直接寄到了成都你的家中，想必已经收到了。应当对看门的人说，让他回信告知收到，免得对方盼望。</p></div>
+<div class="para-pair"><p class="p-orig">峨山明时尚不乏高人，而木皮殿之铁碑，自嘉靖时竖立，至今令人痛心。圣钦记载，直以彼为全国僧人领袖，竟将铁碑录出，交王晓曦寄来。而且每篆之傍，各音楷字，尚不知其为谤佛法之文。</p><p class="p-trans">峨嵋山在明朝的时候，尚不乏高僧大德，然而木皮殿的铁碑（碑文是诽谤佛法的文字），自明朝嘉靖年间竖立，至今令人痛心。圣钦法师记载，（大众）将他（圣钦法师）作为全国僧人的领袖，竟然将铁碑之文录出，交给王晓曦寄来。而且每个篆字的傍边，都标出注音楷字，却还不知这篇碑文是诽谤佛法的文章。</p></div>
+<div class="para-pair"><p class="p-orig">当日铸碑之僧，县志尚载其名，彼亦不知其为谤佛法之文（今与汝说者，恐一班无知僧，谓为毁古迹也）。今果能毁此四百年长谤佛法之文，实为一大快事。</p><p class="p-trans">当年铸碑的僧人，县志还记载了他的名字，而他也不知道这篇碑文是诽谤佛法的（现在对你说这些的原因，是恐怕一批无知的僧人，认为是毁灭古迹）。如今果真能够毁灭这篇长达四百年诽谤佛法的碑文，实在是一大快事。</p></div>
+<div class="para-pair"><p class="p-orig">尚祈为峨山大众说其所以。庶不至瞎眼者，谓毁古迹也。（正月二十一日）</p><p class="p-trans">还请对峨嵋山的大众说明其所以然。才不至让瞎正法眼的人，认为这是毁灭古迹。（正月二十一日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【而木皮殿之铁碑】</span>《木皮殿记》铁碑，原立大乘寺内。为明代嘉靖年间嘉定州知州、前户部山西司朗中康浩撰文、判官汪伦篆书。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【自嘉靖时竖立，至今令人痛心】</span>参考：“峨眉山有化成寺，时改岁殊，狼狈太甚，或以木皮蔽之，遂名木皮殿。……僧人法堂乃光复之，求记于余。以下的文字便是此位康刺史对于“寂灭之教”与“孔孟之术”的一番议论。其认为孔孟之术虽大益于世，却惟有知义理，能身体力行者感之；释教“固无益于世”，但有益于诸人。因为，世之好佛者多惠人，惠人则轻利，轻利则与好义者近之，如此争斗之事可免矣；多好生，好生则博爱，博爱则与好仁者近之，如此则残忍之事可免矣；多计报感，计报感，则祸福荣辱皆归于所履，如此无忌惮之事可免矣。又认为，尊佛氏之教多于尊孔孟之教的原因是由于佛教对于一般人来说更为浅易，并且“使人皆有是念”，等等如是之说。很明显，这是站在统治者的立场上，从一个为官一方者的角度对于孔孟之道与释氏之教跟其政治利益关系的典型的，有代表性的观点。”---《峨眉“银色界”——读《峨眉纪游》兼谈释儒之理》中国社会科学院世界宗教研究所  周齐</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【圣钦】</span>圣钦老和尚（1869-1964）四川省三台县人。16岁出家。老法师一生提倡僧伽教育，大力重兴古刹，整顿丛林，保护寺庙，对四川佛教贡献至多。在四川的佛教界威望甚高，受到缁素四众的尊敬。一九六四年元月三十日，圣钦老法师在大慈寺圆寂，世寿九十五岁，戒腊七十九龄，遗体荼毗后，葬于峨嵋山接引殿前坡下，立碑为记。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

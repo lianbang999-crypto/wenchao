@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复慧海居士书八 · 印光法师文钞</title>
+<meta name="description" content="接手书，知去职家居，日与眷属修持净业。以期同出此苦世界，登彼乐邦。常得亲炙阿弥陀佛与观音势至诸上善人也。不胜欣慰。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-112/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复慧海居士书八 · 印光法师文钞">
+<meta property="og:description" content="接手书，知去职家居，日与眷属修持净业。以期同出此苦世界，登彼乐邦。常得亲炙阿弥陀佛与观音势至诸上善人也。不胜欣慰。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-112/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复慧海居士书八</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知去职家居，日与眷属修持净业。以期同出此苦世界，登彼乐邦。常得亲炙阿弥陀佛与观音势至诸上善人也。不胜欣慰。</p><p class="p-trans">接到信，知道你离职在家闲居，每天与眷属修持净业。以期同出这极苦世界，登上那极乐莲邦。常能亲受阿弥陀佛与观世音菩萨、大势至菩萨诸上善人的教育熏陶。非常欣慰。</p></div>
+<div class="para-pair"><p class="p-orig">去冬杭州浙江印刷公司挂号寄去新印增广文钞二十包，每包三部。寿康宝鉴四包，每包二十五本。寄于花园街住处，不知汝已收到与否。此系送汝结缘者。若未收到，当到邮局一问，此书毕竟送交何处。</p><p class="p-trans">去年冬天，杭州浙江印刷公司挂号寄去新印的《增广文钞》二十包，每包三部。《寿康宝鉴》四包，每包二十五本。寄到花园街住处，不知你收到没有。这是送给你结缘的。如果没有收到，应当到邮局问一问，这些书到底送到了什么地方。</p></div>
+<div class="para-pair"><p class="p-orig">又哈埠宣讲堂，已寄去安士全书五十包，每包四部。寿康宝鉴二十包。文钞恐尚未寄。以去冬十二月二十间，开发送单子来。以后三四日所发，则不得而知。</p><p class="p-trans">另外，哈尔滨宣讲堂，已经寄去《安士全书》五十包，每包四部。《寿康宝鉴》二十包。《文钞》恐怕还没有寄。因为去年冬天十二月二十日期间，开出发送的书单来。以后的三四天所发的书，就不得而知。</p></div>
+<div class="para-pair"><p class="p-orig">至二十四夜走电，正房物屋一空。光之观音颂，安士书，文钞，宝鉴，四付纸板，悉皆灰灭。彼公司文钞系令印一万，宝鉴三万。彼先印五千文钞，二万宝鉴。为光说通已印完，已发出大半，要支钱。</p><p class="p-trans">到了二十四日的夜晚漏电起火，正房的物品、房屋被大火焚烧一空。我的《观音颂》、《安士全书》、《文钞》、《寿康宝鉴》四付纸板，全都烧掉了。《文钞》是令他们印刷公司印一万部，《寿康宝鉴》印三万本。他们先印了五千部《文钞》，二万本《寿康宝鉴》。就对我说全都已经印完了，已经发出了一大半，要求支付钱款。</p></div>
+<div class="para-pair"><p class="p-orig">光令开发送单子来，彼支吾不开。及至于上海太平寺将钱要来，方将单子寄来，方知印了一半。其钱已用过头千多元。先日接到此单子，次日即接被焚之信。此系一向奸刁，致干神怒所致。</p><p class="p-trans">我令他们开出发书的书单来，他们支吾不开。等他们到上海太平寺将钱要去，才将发书的单子寄来，才知道书只印了一半。钱款已经使用超过了一千多元。前一天接到这个单子，第二天就接到印刷公司被焚的信。这是他们一向狡诈，致使干犯神灵致其发怒所致。</p></div>
+<div class="para-pair"><p class="p-orig">光之书，约天良说，当不至烧多少。以钉成者，存于后边小屋，小屋未烧。未钉成者，在钉作处。彼不昧天良，光之书完全交清，光尚吃亏上千元（此系使过头者）。若昧天良，则光当损失二千三百上下。四付纸板不在内。此系光无道德，彼昧天良，一切净业学人，少看此书之缘，故有此灾也。</p><p class="p-trans">我的书，凭良心说，应当不至于烧去多少。因为装订好的书，存在后边的小屋，小屋没有烧。没有装订好的，在装订处。他们若不昧良心，我的书完全交清的话，我还吃亏上千元（这是超出开支的钱）。如果昧良心，那么我应当损失在二千三百元左右。四付纸板不包括在内。这是我没有道德，他们昧良心，一切净业学人，少看此书的因缘，导致有这个灾祸。</p></div>
+<div class="para-pair"><p class="p-orig">闰月当到上海印。凡出钱者，通通按钱交书，一毫不欠。凡结缘者，则量力耳。不能如前矣。祈到宣讲堂问问所说安士书宝鉴通寄到否。文钞寄若干来。若全未来，则尚欠彼六十六元，夏间当寄来。若来全，则溢出二百元之外矣。</p><p class="p-trans">闰月当会到上海印书。凡是出钱的人，全都按钱款交书，一毫也不亏欠。凡是结缘的，就量力而行了。不能像以前那样了。请到宣讲堂问问所说的《安士全书》、《寿康宝鉴》全都寄到没有。《文钞》寄来了多少？如果完全没有寄来，那么还欠他们六十六元，夏天当会寄来。如果全都寄来了，就多出二百元之外了。</p></div>
+<div class="para-pair"><p class="p-orig">哈地汇费太重，无论宣讲堂与汝，皆勿汇钱来。光虽遭此灾，尚不至紧迫无措。春夏间当有弥陀经白话注，及嘉言录寄二三包来。此二书皆打四付纸板，拟以一付寄哈宣讲堂，或极乐寺。庶以后不须在南方请矣。</p><p class="p-trans">哈尔滨的汇费太贵，无论宣讲堂与你，都不要汇钱来。我虽然遭遇这个灾祸，还不至于手头紧得没办法。春夏之间当会有《弥陀经白话注》，及《嘉言录》寄二三包来。这二部书，都打四付纸板，打算将一付纸板寄到哈尔滨的宣讲堂，或者极乐寺。或许以后就不须要在南方请书了。</p></div>
+<div class="para-pair"><p class="p-orig">现今世道，无法挽回。若欲救世，除提倡因果报应，及家庭教育，不为功。而家庭教育，尤须注重因果报应。而又以教女为至切要。以无贤女则无贤母，无贤母何能有贤子女，此系根本法轮。</p><p class="p-trans">现今的世道，无法挽回。如果想要救世，除了提倡因果报应，以及家庭教育，不会成功。而家庭教育，尤其必须注重因果报应。而又以教导女儿最为至关重要。因为没有贤良之女，就没有贤母，没有贤母，如何能有贤良的子女，这是根本法轮。</p></div>
+<div class="para-pair"><p class="p-orig">今人所说者，皆是枝末。以幼未知为人之道，及因果报应之事理，一被邪人所诱，则任意妄为。彼废伦免耻杀父奸母者，皆由最初无贤母以钧陶之所致也。</p><p class="p-trans">现在人所说的，都是枝末。因为幼年不知道为人之道，以及因果报应的事理，一旦被邪人所诱惑，就任意妄为。那些废伦理、无羞耻、杀父奸母的人，都是由于最初没有贤母教育熏陶所导致的。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【亲炙】</span>谓亲受教育熏陶。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【干】</span>干犯；冲犯；干扰。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>创建菩提精舍缘起碑记 · 印光法师文钞</title>
+<meta name="description" content="净土法门者，十方三世一切诸佛，上成佛道，下化众生，成始成终之法门也。以如来所说一代时教，种种法门，皆须修持功深，亲到业尽情空地位，方可了生脱死，超凡入圣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-141/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建菩提精舍缘起碑记 · 印光法师文钞">
+<meta property="og:description" content="净土法门者，十方三世一切诸佛，上成佛道，下化众生，成始成终之法门也。以如来所说一代时教，种种法门，皆须修持功深，亲到业尽情空地位，方可了生脱死，超凡入圣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-141/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">创建菩提精舍缘起碑记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门者，十方三世一切诸佛，上成佛道，下化众生，成始成终之法门也。以如来所说一代时教，种种法门，皆须修持功深，亲到业尽情空地位，方可了生脱死，超凡入圣。</p><p class="p-trans">净土法门，是十方三世一切诸佛，上成佛道，下化众生，成始成终的法门。因为如来一代时教所说的种种法门，都必须修持功夫很深，亲自证到惑业净尽、情见空亡的地位，才可以了生脱死，超凡入圣。</p></div>
+<div class="para-pair"><p class="p-orig">若惑业未尽，则生死轮回决定莫出，纵有修持，只得世福，及作未来得度之缘种而已。此系仗自力以了生死者之难也。</p><p class="p-trans">如果惑业没有除尽，那么生死轮回决定不能出离。纵然有一定的修持，也只能感得世间福报，以及作为未来得度的因缘种子而已。这是依仗自力了脱生死的困难所在。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，则以深信切愿，持佛名号，求生西方。兼以敦笃伦常，恪尽己分，诸恶莫作，众善奉行，以己信愿，感佛慈悲，感应道交，故于临命终时，即得蒙佛慈力，亲垂接引，往生西方也。</p><p class="p-trans">净土法门，则是以深信切愿，持佛名号，求生西方。同时敦笃伦常，恪尽己分（敦伦尽分），诸恶莫作，众善奉行，以自己的深信切愿，感通阿弥陀佛的慈悲。感应道交，所以临命终时，就能蒙阿弥陀佛慈力，亲垂接引，往生西方了。</p></div>
+<div class="para-pair"><p class="p-orig">固无论惑业之有无，功夫之浅深，但具真信切愿，虽罪业深重者，尚能出此三界，登彼九莲，况戒善齐修，定慧均等者乎。此系全仗佛力，兼仗自力以了生死者，故于一代时教法门之中，名为特别法门，不得以通途仗自力法门并论也。</p><p class="p-trans">所以无论惑业是有是无，功夫是浅是深。只要具足真信切愿，即使是罪业深重的人，尚且能够出离三界，登九品莲。更何况持戒行善一并修持，定慧同时具备的人呢。这完全是依仗佛力，兼带依靠自力来了脱生死，所以在一代时教的诸多法门之中，称为特别法门，不能用依仗自力的通途法门来相提并论。</p></div>
+<div class="para-pair"><p class="p-orig">良由以果地觉，为因地心，故得因该果海，果彻因源。以故千经万论，处处指归，往圣前贤，人人趣向。以其为了生脱死之捷径，超凡入圣之妙法故也。</p><p class="p-trans">实在由于净土法门，是以阿弥陀佛的果地觉海，作为众生的因地发心，所以能够因心该摄果海，果证通彻因源。因此，千经万论处处指归净土，往圣前贤人人趣向西方。因为这个法门，是了生脱死的捷径，超凡入圣的妙法的缘故啊。</p></div>
+<div class="para-pair"><p class="p-orig">溯自大教东来，庐山远公，创开莲社。与僧俗一百二十三人，精修净业，咸得往生。自后代有高人，为之提倡，而天台，清凉，永明，大智等，其发挥阐扬，尤为不遗余力。由是莲风遍及中外，因兹出五浊以预海会者，又何可以算数譬喻而得知其数哉。</p><p class="p-trans">自从佛教传到中国，庐山慧远大师开创莲社，与僧俗一百二十三人，精进修持净业，全都往生西方，之后历代都有高人来加以提倡。而天台智者大师、清凉澄观国师、永明延寿大师、大智元照律师等人，对于净土法门的发挥阐扬，尤为不遗余力。由此，净土之风由此遍及中外。通过修行净土法门而出离五浊恶世，进入莲池海会的人，又哪里可以用算数譬喻而得知其数目呢。</p></div>
+<div class="para-pair"><p class="p-orig">近来世道人心，愈趋愈下，凡怀忧世之心，欲为救援者，莫不以归心佛法，提倡因果报应及戒杀护生，信愿念佛，求生西方为志事。</p><p class="p-trans">近来世道人心，越来越低下。凡是怀着忧世之心，想要加以救援的人，无不是把归心佛法，提倡因果报应，以及戒杀护生，信愿念佛，求生西方作为志向事业。</p></div>
+<div class="para-pair"><p class="p-orig">傅裕斋居士，宿植德本，性行淳和，以职任商业，未知佛法。去岁访友至杭，夜宿常寂光兰若，闻众僧念佛声，直同甘露灌顶，醍醐沃心，庆快之忱，非言可喻。因兹触动宿根，即欲与同志，随分随力修持此法。</p><p class="p-trans">傅裕斋居士，宿世培植善根，性情淳和，言行质朴。因为平常以经商为业，不知道佛法。去年他到杭州拜访朋友，夜里借宿在常寂光兰若，听到众僧人念佛的声音，直下如同甘露灌顶，醍醐沃心，庆幸畅快的心情，无法用语言形容。居士因此触动了宿世的善根，就想和志同道合的人，随分随力来修持这个法门。</p></div>
+<div class="para-pair"><p class="p-orig">乃与丁甘仁，倪大椿，谭步韶，严子良，孙良臣，傅裕经，傅庭芳，沈晋镛，金益如，林双泉，陈载峰，庄海涛，李述初，吴祖昌，谭子临，谭石卿，谭海秋，谭竹馨，罗稚云，谢崇华，田玉树，傅梦弼，谭肇贵等商，拟于杭州西湖建一精舍，以作现在随力修持，老来专心办道之所，佥称曰善。</p><p class="p-trans">于是打算和丁甘仁、倪大椿、谭步韶、严子良、孙良臣、傅裕经、傅庭芳、沈晋镛、金益如、林双泉、陈载峰、庄海涛、李述初、吴祖昌、谭子临、谭石卿、谭海秋、谭竹馨、罗稚云、谢崇华、田玉树、傅梦弼、谭肇贵等商界人士一起，在杭州西湖，建造一座精舍，作为现在随力修持，老来专心办道的场所，大家都说好。</p></div>
+<div class="para-pair"><p class="p-orig">遂购地建筑，不二年而工竣，因名之为菩提精舍。其基地二亩六分七厘，共为两进。前为大殿，五间，中供西方三圣，旁供十八罗汉，以作念佛礼诵之所。后阁五间三层，上层三间，中供三圣尊像，旁供二十四人祖先牌位，以显会预莲池，常侍弥陀，即得亲证无量光寿之体用，不生不灭之佛性。</p><p class="p-trans">于是就购置土地开始建造，不到二年就竣工了，命名为菩提精舍。占地二亩六分七厘，共有两进。前面是大殿，宽五间，中间供奉西方三圣，旁边供奉十八罗汉，作为念佛诵经礼拜的场所。后面的楼宽五间，高三层。最上一层宽三间，中间供奉西方三圣尊像，旁边供奉二十四位发起人的祖先牌位，以显示进入七宝莲池，常侍阿弥陀佛，就能亲证光寿无量的本体相用，亲证不生不灭的佛性。</p></div>
+<div class="para-pair"><p class="p-orig">其前后次序，悉以当人之年齿为准。两旁及中层，分装房间，以作诸人静修之所。下为客厅，旁作养心堂，以备高人杰士暂时憩息。</p><p class="p-trans">牌位的先后次序，都是按照当事人的年龄来排。后楼的两旁以及中间层，分别装修成房间，作为诸位静修的场所。一楼为客厅，侧面装修为养心堂，以备高人杰士暂时休息。</p></div>
+<div class="para-pair"><p class="p-orig">其宗旨大纲有五。一本精舍，原为社友各有职业，不能常住专修，因礼请真心办道之戒僧七位，常年修持，每日二时课诵，三时念佛，以为诸社友乘暇来此修持之向导。衣单食用，通归社友摊任。</p><p class="p-trans">精舍的宗旨大纲有五条：一、因为诸位社友各自都有职业，不能常住在舍中专心修行。因而礼请七位真心办道的具戒僧人，常年安住舍中修持，每天四小时课诵，六小时念佛，作为诸位社友空暇时来这里修持的向导。僧众的衣物饮食费用，全部由社友来分摊。</p></div>
+<div class="para-pair"><p class="p-orig">二本精舍，乃二十四人公同建立，公同经管，将来继管之权，每人只传一房，须择其性质与佛法相应者，其余子孙，概不过问，以免支派蕃衍，无处安居，及人各异见，或致纷争耳。</p><p class="p-trans">二、本精舍是由二十四人共同建立，共同经管。将来继承管理权，每个人只能传一房子孙，而且必须挑选禀性气质与佛法相应者。其余子孙，一概不得过问。以免支派过多地方不够，以及意见不同引起纷争。</p></div>
+<div class="para-pair"><p class="p-orig">三本精舍，原为自修而设，与寺庙性质各别，不得应酬社外人经忏佛事，即逢年节，亦不任人烧香，唯社友或有祈祷，或有追荐，则无所碍。</p><p class="p-trans">三、本精舍原本是为自己修行而设立，与寺庙性质不同，不得应酬社外人士的经忏佛事。即使逢年过节，也不能随任外人进来烧香。唯有社友祈祷或追思超荐时，则无所妨碍。</p></div>
+<div class="para-pair"><p class="p-orig">四本精舍，以专修净业清净持戒为主旨，荤酒不许入门，凡下棋打牌，以及与佛法相违之事，一概禁止，凡诸社友，各宜自勉。</p><p class="p-trans">四、本精舍以专修净业、清净持戒为宗旨，荤酒不许入门。凡是下棋打牌，以及与佛法相违背的事，一概禁止。诸位社友，应当各自勉励。</p></div>
+<div class="para-pair"><p class="p-orig">五本精舍，原为社友静修而设，其居住日期，随己心意，唯不得携带女眷及小孩等，设或家眷欲来瞻礼，固无不可，但须即日便去，决不许女眷住宿，以期无妨清修，息世讥嫌，俾菩提二字，得以光大而扩充之，则为幸大矣。</p><p class="p-trans">五、本精舍原本是为社友静修而设立。在舍中居住的日期，随任社友自己的心意。只是不能携带女眷，以及小孩等。如果家人想来瞻仰礼拜，自然是可以的。但是必须当天就离开，决不允许女子住宿，以期清修不受妨碍，世人不起讥嫌，使得“菩提”二字，能够发扬光大，那就太庆幸了。</p></div>
+<div class="para-pair"><p class="p-orig">综此僧俗修持功德，上祈各人历代祖宗，现生父母，消除无始恶业，增长殊胜善根，预莲池之海会，证本具之法身。</p><p class="p-trans">综合舍中僧俗二众修持的功德，祈愿每个人的历代祖宗、现生父母，都能消除无始恶业，增长殊胜善根，加入莲池海会，证得本具法身。</p></div>
+<div class="para-pair"><p class="p-orig">又祈凡住此念佛诸师，及各社友，与诸眷属，三障冰消，五福云集，生入圣贤之域，没归极乐之邦。</p><p class="p-trans">又祈望住在这里念佛的诸位法师、各位社友及眷属，三障如坚冰般消融，五福如祥云般聚集。在生时进入圣贤领域，死之后回归极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">又祈见者闻者，各各效行，共转凡心，以成圣智，则礼让兴而兵戈永息，忠恕起而物我同观。</p><p class="p-trans">又祈望见者闻者，各各效仿而实行，转变凡心，成就圣智，则礼让兴起而战乱永远止息，忠恕兴起而物我一视同仁。</p></div>
+<div class="para-pair"><p class="p-orig">庶天下太平，人民安乐，唐虞盛世之风，便可见于今日。而人皆可以为尧舜，人皆可以作佛之语，悉得其实证焉。此诸居士创建精舍，题名菩提之本心也，因略述之。</p><p class="p-trans">想必天下太平、人民安乐、尧舜盛世之风，就可以在今天看到了。而“人人都可以成为尧舜，人人都可以作佛”这句话，就都得到实际证明了。这是诸位居士创建精舍，并题名为“菩提”的初衷，就此简略予以记述。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【元照】</span>（1048-1116）宋代律僧。余杭（浙江杭县）人，俗姓唐。字湛然。号安忍子。少年离俗，十八得度，从神悟处谦学台教，而志在毗尼。后礼广慈受菩萨戒，嗣允堪南山正传。宋元丰（1078-1085）年间，主昭庆寺，弘律传戒。晚迁灵芝，居止三十年，世称灵芝尊者。于政和六年九月入寂，世寿六十九。谥号“大智律师”。著有观无量寿经及阿弥陀经之注释书，另以天台宗旨注释道宣之四分律删繁补阙行事钞，撰成四分律行事钞资持记，异于允堪注释之会正记所采取律之立场，故世称其法系为资持派。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【醍醐】</span>从酥酪中提制出的油。《大般涅槃经·圣行品》：“譬如从牛出乳，从乳出酪，从酪出生稣，从生稣出熟稣，从熟稣出醍醐。醍醐最上。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【沃心】</span>谓使内心受启发。旧多指以治国之道开导帝王。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【庆快】</span>庆幸喜悦。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【佥】</span>都；皆。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【礼让】</span>守礼谦让。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【忠恕】</span>儒家的一种道德规范。忠，谓尽心为人；恕，谓推己及人。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【物我】</span>彼此，外物与己身。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【唐虞】</span>唐尧与虞舜的并称。亦指尧与舜的时代，古人以为太平盛世。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

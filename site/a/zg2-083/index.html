@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>佛化随刊序 · 印光法师文钞</title>
+<meta name="description" content="佛法者，世出世间一切诸法之本源也。故其道大无不包，细无不举。语其广大，则罄海墨而莫书，语其精微，则觅一字而叵得。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-083/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="佛化随刊序 · 印光法师文钞">
+<meta property="og:description" content="佛法者，世出世间一切诸法之本源也。故其道大无不包，细无不举。语其广大，则罄海墨而莫书，语其精微，则觅一字而叵得。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-083/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">佛化随刊序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法者，世出世间一切诸法之本源也。故其道大无不包，细无不举。语其广大，则罄海墨而莫书，语其精微，则觅一字而叵得。</p><p class="p-trans">佛法，是世出世间，一切诸法的本源。所以佛道大而无所不包；细小而无所不穷。要说广大，用尽大海那么多的墨也写不完；要说精微，即使寻觅一个字也得不到。</p></div>
+<div class="para-pair"><p class="p-orig">凡孝弟忠信礼义廉耻之道，格致诚正修齐治平之法，无不详示无遗。非止谈三世因果，明善恶报应，阐发即心本具之佛性，断惑证真之事理而已。</p><p class="p-trans">凡是孝、悌、忠、信、礼、义、廉、耻之道，格物、致知、诚意、正心、修身、齐家、治国、平天下之法，全都详细阐示，毫无遗漏。并不只是谈论三世因果，明示善恶报应，阐发即心本具的佛性，以及断惑证真的事理而已。</p></div>
+<div class="para-pair"><p class="p-orig">良以一切诸法，悉本于心，唯其彻悟自心，故能建立诸法。知其指归，纵凡夫皆堪造诣，究其极致，虽圣人有不知能。是以古之聪明睿智，首出庶物之出格高人，莫不护持流通，密修显化，而唯恐不及焉。</p><p class="p-trans">实在因为一切诸法，根本都在于心。唯有彻悟自心，才能建立诸法。知道了指向归趣，纵然是凡夫，也能够修学而有所成就；如果推究到极致，即使是圣人，也有所不知而有所不能。所以自古以来，凡是聪明睿智、优秀卓越的高人，无不护持流通佛法，秘密修持，显扬教化，而唯恐来不及啊。</p></div>
+<div class="para-pair"><p class="p-orig">溯自东汉，法传震旦，求其高人杰出，法道大兴者，唯吾秦最为第一。以佛法大兴，自晋而始，当时苻秦姚秦，皆都长安，及道安至秦，罗什入关，凡缁素之见越等流，识超侪伍者，皆归趣而师事焉。</p><p class="p-trans">自从东汉时佛法流传到中国以来，要论高人杰出、法道大兴的地方，唯有我们陕西最为第一。因为佛法是从晋朝开始兴盛的，当时的苻秦、姚秦两国，都将都城设在长安。等道安法师和鸠摩罗什大师到了秦地，凡是僧、俗当中见识超群的人，都来归依他们，以师礼奉事跟随他们修学。</p></div>
+<div class="para-pair"><p class="p-orig">迄至隋唐，亦都其地，故其宏宣法道，迈越古今。而当唐之世，诸宗悉备，以国家极意尊崇，故诸宗之首领，多皆住止京师，以其所学所得，阴翼郅治，显淑民情，其法道之盛，他处何能相比。</p><p class="p-trans">到了隋唐，都城也在长安。所以陕西这个地方，佛法的弘扬，超越古今。而到了唐朝，各个宗派全都齐备了。因为国家极意地崇尚尊奉佛法，所以各宗的领袖，大都住在京城，用他们的所修所证，在暗处辅佐国家治理，在明处改善民风民俗。因此，（唐朝时）秦地法道的兴盛程度，其他地方怎能相比。</p></div>
+<div class="para-pair"><p class="p-orig">自后虽都迁他处，而宏宗演教，潜修密证者，亦代不乏人。至清之末叶，经发匪回匪之乱，人民困难，遂置此道于不问，其殆一线之未绝耳。</p><p class="p-trans">自此以后，虽然都城迁到别处，然而宏宗演教，潜修密证的高僧大德，历代都不乏其人。到了清朝末年，经历发匪、回匪之乱，人民生活困难。于是就将佛法搁置一边，不闻不问，大概只剩一线法脉没有断绝了。</p></div>
+<div class="para-pair"><p class="p-orig">近十数年来，世道人心，坏乱已极，而乱极思治，否极思泰，凡具通方之知见者，莫不以佛法明因果，示报应，直指心源，发明性体，为挽回世道人心之要道。于是若缁若素，群起而提倡修持之，以期自他同出迷途，诞登觉岸。</p><p class="p-trans">近十几年来，世道人心坏乱到了极点。乱到极点，就会想要整治，坏到极点，就会想要安泰。凡是知见通达的人，都把阐明因果、显示报应、直指心源、发明性体的佛法，作为挽回世道人心的要道。于是或僧或俗，都纷纷起来提倡和修持，期望自己和他人共同出离迷途，登上觉岸。</p></div>
+<div class="para-pair"><p class="p-orig">由是敦笃伦常，精修净业，生入圣贤之域，没归极乐之邦。以故长安佛教会，蔚然而兴，同人以异地而居，非书报莫能达意。</p><p class="p-trans">由此敦行伦理纲常，精进修习净业，在生时进入圣贤领域，去世后回归极乐家乡。所以长安佛教会，就蔚然兴起了。因为同修们居住在不同的地方，如果没书刊，就不能传达修学的意旨。</p></div>
+<div class="para-pair"><p class="p-orig">故将随见随闻之事，所会所悟之理，潜修密证之方法，格言嘉论之训诲，朋友之所讲习，智照之所发挥，分门别类，录作随刊。</p><p class="p-trans">所以（佛教会）将随见随闻的事迹，领会觉悟的道理，潜修密证的方法，格言嘉论的训诲，朋友之间的讲习，智慧观照的发挥，分门别类，录成《佛化随刊》。</p></div>
+<div class="para-pair"><p class="p-orig">彼此参观，互相灌输，庶可正智藉众论以开发，丽泽由互滋而广润。将见知因识果，永息弱肉强食之恶心，尽分敦伦，同怀仁民爱物之善念。</p><p class="p-trans">彼此参照，互相交流，想必就能借着大家的言论而开发自己的正智，通过互相切磋而彼此共同受益。将会见到，弱肉强食的恶心因为明白了因果事理而永远止息；人们都敦行伦理，竭尽本分，共同怀着仁民爱物的善念。</p></div>
+<div class="para-pair"><p class="p-orig">去杀胜残，上溯大同之世，风淳俗美，共作羲皇上人。其为利益，莫能名焉。爰为祝曰，如来大法，为诸法源，一切诸法，无不包含。敦伦致治，发挥无遗，事理因果，各适机宜。</p><p class="p-trans">胜残去杀（感化残暴的人使其不再作恶，死刑便可废除），回到大同社会；风俗淳美，人民都效法古圣先贤。这个利益，无法宣说。谨此祝祷如下：如来大法，是诸法之本源。一切诸法，无不包含。敦行伦理，天下大治，佛法发挥，没有遗漏。事理因果，针对众生根机而宣说。</p></div>
+<div class="para-pair"><p class="p-orig">缅维秦川，昔号法窟，贤慈密律，悉肇其域。善导法照，特阐莲宗，普令凡夫，同出樊笼。末世众生，断惑匪易，唯此一法，堪为怙恃。</p><p class="p-trans">遥想长安，过去号称是法窟。贤首、慈恩、密教、律宗，全都在这里开创。善导大师、法照大师，特别阐扬净土宗，普令凡夫，共同出离三界樊笼。末世众生，很难断除烦惑，唯有这一法，能够作为依靠。</p></div>
+<div class="para-pair"><p class="p-orig">自晋及唐，五百余年，震旦法道，莫之能先。从兹以后，代有高人，潜修密证，率多隐沦。性天理老，摄受莲池，中兴净土，实启于兹。若无至德，彼肯屈服，古德芳踪，惜多遗轶。</p><p class="p-trans">晋朝到唐朝五百多年间，要论佛法的兴盛程度，没有哪里能超过陕西的。从这之后，历代都有高僧大德出现。因为潜修密证，所以事迹大多隐没了。性天文理老人，摄受莲池大师为弟子，净土宗得以中兴的因缘，实际是由此开始的。如果没有高深的德行，莲池大师哪肯屈服在他的门下。可惜古德们的美好行迹，大多都遗失了。</p></div>
+<div class="para-pair"><p class="p-orig">至清末叶，兵火频兴，人民凋敝，几绝传宏。近时通人，眼界大开，知非佛法，莫挽劫灾。由是聚集，缁素同志，随机提倡，用建法帜。欲普法利，特出随刊，丽泽互益，冀悟性天。佛由心作，道在人弘，竭诚若极，草偃风行。</p><p class="p-trans">到了清朝末年，兵火频频兴起，人民生活困乏，佛法的宏传几乎断绝了。近来学识通达的人眼界大开，从而知道除了佛法，没有什么能挽救这一劫难。因此，出家、在家的同志们聚集起来，随机提倡，竖起佛法旗帜。为了让佛法普遍利益世人，特地出版了《佛化随刊》。切磋交流，相互助益，希望觉悟自性之天真。佛由自心而作，法道在人弘扬，竭诚如果到了极点，世风必定会随之转变，就如野草会随风倒伏一样。</p></div>
+<div class="para-pair"><p class="p-orig">光虽庸劣，亦表同情，聊摅愚悃，以作先声。愿我同伦，各修净行，庶可即生，超凡入圣。</p><p class="p-trans">我虽然平庸低劣，却也有着同一心志。权且表达一点诚意，带头提倡。希望大家都来修习净土法门，想必可以即此一生，超凡入圣。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【前秦】</span>（351-394）中国古代十六国之一。氐族苻坚所建。都长安（今陕西西安）。盛时疆域东至大海，西抵葱岭，南控江淮，北极大漠，东南以淮、汉与东晋为界。领土面积在东晋十六国时期，处在首位。历六主，共四十四年。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【后秦】</span>（384-417，或称姚秦）是十六国时期羌族贵族姚苌建立的政权。前秦苻坚淝水兵败后，关中空虚，原降于前秦的羌族贵族姚苌在渭北叛秦，晋太元九年（384）自称万年秦王，次年（385）擒杀苻坚。太元十一年（386）姚苌称帝于长安（今陕西西安西北），国号大秦，史称后秦。共存在32年（384-417）。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【等流】</span>犹同类，同辈。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【侪伍】</span>做伙伴；与同列。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【师事】</span>谓拜某人为师或以师礼相待。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【否泰】</span>《易》的两个卦名。天地交，万物通谓之“泰”；不交闭塞谓之“否”。后常以指世事的盛衰，命运的顺逆。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【丽泽】</span>谓两个沼泽相连。《易·兑》：“丽泽兑，君子以朋友讲习。”王弼注：“丽犹连也。”朱熹本义：“两泽相丽，互相滋益，朋友讲习，其象如此。”后比喻朋友互相切磋。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【缅惟】</span>遥想。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【凋敝】</span>1.衰败；破败；困乏。2指困苦的百姓</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【摅】</span>抒发；表达。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【愚悃】</span>谦指自己的诚意。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

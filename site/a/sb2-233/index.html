@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>广长舌序 · 印光法师文钞</title>
+<meta name="description" content="法无定相，合机则妙。如来以一味法，作种种说。譬如大士珍膳，若遇成人，则和盘托出，令其饱餐。若遇婴儿，不能咬嚼，必须代为嚼碎，含而哺之。庶可资益身心，而速得成立也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-233/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="广长舌序 · 印光法师文钞">
+<meta property="og:description" content="法无定相，合机则妙。如来以一味法，作种种说。譬如大士珍膳，若遇成人，则和盘托出，令其饱餐。若遇婴儿，不能咬嚼，必须代为嚼碎，含而哺之。庶可资益身心，而速得成立也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-233/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">广长舌序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">法无定相，合机则妙。如来以一味法，作种种说。譬如大士珍膳，若遇成人，则和盘托出，令其饱餐。若遇婴儿，不能咬嚼，必须代为嚼碎，含而哺之。庶可资益身心，而速得成立也。</p><p class="p-trans">佛法没有固定的相，契合根机就是妙法。如来以一味法，作种种的宣说。譬如大士的珍贵食物，如果遇到成年人，就和盘托出，令他饱餐（一顿）；如果遇到婴儿，不能咬嚼，必须替他嚼碎，含在嘴里喂养他。才可以利益（婴儿的）身心，而快速得以成长自立啊！</p></div>
+<div class="para-pair"><p class="p-orig">苦行居士，以如来普度众生之净土法门，为未发心者，以浅显之语言，约略说之，冀其顿生信心。然后研究净土诸经论著述，实益自得。</p><p class="p-trans">苦行居士，以如来普度众生的净土法门，为尚未发心修学的人，用浅显的语言，简略地讲说，希望他们顿时生起信心。然后研究净土诸多经论著述，真实利益自然得到。</p></div>
+<div class="para-pair"><p class="p-orig">又复如此浅显之语，实如来广长舌所宣扬。十方诸佛普度众生，九界众生圆成佛道之成始成终无上圆顿大法门也。故以广长舌为目，祈未发心者阅之，随即发心。已入门者，固无须乎此。</p><p class="p-trans">另外，这如此浅显的语言，实际是如来的广长舌所宣扬。十方诸佛普度众生，九法界众生圆成佛道的成始成终、无上圆顿的大法门啊！所以用“广长舌”作为题目。希望尚未发心的人阅读，随即发心修学。已经入门的人，固然不必这样。</p></div>
+<div class="para-pair"><p class="p-orig">然嚼食喂婴之法，固育婴者之所宜讲究者。在己虽无所用，亦不得不为初机备也。（民国十二年癸亥十月）</p><p class="p-trans">然而嚼碎食物，喂哺婴儿的方法，原本就是养育婴儿的人所应讲究的。对于我们自己来说，虽然没有什么用，但也不得不为初学人预备啊！（民国十二年&lt;1923&gt;癸亥十月）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【广长舌】</span>佛三十二相之一，佛舌广长，而且柔软红薄，能覆面至发际。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【一味】</span>（术语）如来之教法，譬如甘味。教法之理趣，唯一无二。故名一味。法华经药草喻品曰：“如来说法，一相一味。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【成人】</span>1.德才兼备的人。犹完人。2.成年。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

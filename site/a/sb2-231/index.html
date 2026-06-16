@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>名山游访记序 · 印光法师文钞</title>
+<meta name="description" content="人之智识，非学问阅历莫由开通。而天下名山圣道场地，最足以感发人希圣希贤之志。其有关于立身修业成德达才也大矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-231/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="名山游访记序 · 印光法师文钞">
+<meta property="og:description" content="人之智识，非学问阅历莫由开通。而天下名山圣道场地，最足以感发人希圣希贤之志。其有关于立身修业成德达才也大矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-231/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">名山游访记序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人之智识，非学问阅历莫由开通。而天下名山圣道场地，最足以感发人希圣希贤之志。其有关于立身修业成德达才也大矣。</p><p class="p-trans">人的智识，不通过学问、阅历是没有办法开通的。而天下的名山圣道场地，最足以感动发起人们仰慕效法圣贤的志向。其中有关立身处世、修学知识、成就品德、通达成才的内容，关系也很大啊！</p></div>
+<div class="para-pair"><p class="p-orig">故古今负己立立人自利利他之热心者，每不以跋涉为劳。以期凡所见境，凡所悟入，皆资益于吾身心，开发乎智识也。</p><p class="p-trans">所以古往今来，担负自己成就、成就他人，自利利他的热心者，常常不以山川跋涉为辛劳。以期凡所见到的美境，凡所悟入的道理，都能资助有益于我们的身心，开发我们的智识啊！</p></div>
+<div class="para-pair"><p class="p-orig">古之周遍游历者，有千岁宝掌和尚，中天竺人，在天竺约五百年，于汉末来此方。历三国两晋宋齐梁陈隋，至唐高宗显庆二年，一千七十二岁，方始入灭。以故凡南北名山圣道场地，无不亲历其地而住止焉。至明末时，紫柏尊者，亦复遍历名山。以日行三百余里，虽无宝掌之寿，其所游历，可与宝掌相齐。</p><p class="p-trans">古时候周遍游历各地的，有千岁宝掌和尚，中天竺人，在天竺时，大约已经有五百年，在汉朝末年来到东土。经历了三国、两晋、宋、齐、梁、陈、隋，到唐高宗显庆二年（657年），一千零七十二岁，方才入灭。所以，凡是南北名山，圣道场地，无不亲身到达那个地方而居留住止。到了明朝末年的时候，紫柏尊者，也周遍游历名山。他每天行走三百多里，虽然没有宝掌和尚那样的寿命，然而他所游历的地方，可与宝掌和尚相齐。</p></div>
+<div class="para-pair"><p class="p-orig">近世缁素中，唯高鹤年居士，游历最为广远。凡四大名山，五岳终南，天台雁荡，罗浮鸡足，武当云居，庐岳黄山。或一至者，或二三至者。凡所经过之土地人情，与夫古迹胜境及道场寺宇，并高僧名士所有事迹，根据语言问答，各皆备载。</p><p class="p-trans">近世的僧俗中，唯有高鹤年居士，游历最为广大辽远。凡是四大名山、五岳、终南、天台、雁荡、罗浮、鸡足、武当、云居、庐岳、黄山。有的游历一次，有的游历二三次。凡是经过之处的土地人情，与古迹胜境及道场寺宇，还有高僧名士的所有事迹，根据语言问答，各个全都详细记载。</p></div>
+<div class="para-pair"><p class="p-orig">一可以慰不能行脚者，无由得知圣道场地之胜迹。一可以作初机学人寻师访友之一大方针。以故民国元年佛学丛报，曾录之以饷同志。今者王一亭，许止净，聂云台，狄楚青，简玉阶诸居士，又欲特作一册。俾阅者备观其全。亦未始非入佛海之前导也。</p><p class="p-trans">一方面，可以安慰不能行脚的人，无法得知圣道场地的胜迹。一方面，可以作为初机学人寻师访友的一个大方向、指南针。所以，民国元年《佛学丛报》，曾经登录他的《名山游访记》以飨同好。现今的王一亭、许止净、聂云台、狄楚青、简玉阶等诸位居士，又想要特地辑为一册。使得读者能详细地看到全部文章。这也未尝不是进入佛法大海的前导啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【立身】</span>处世、为人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【修业】</span>1.建立功业。2.古人写字著书所用的方版称业，因此把写作叫修业。3.学习知识，钻研学问。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【成德】</span>盛德。《易·干》：“君子以成德为行。”3.成就品德。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【达才】</span>使之通达、成才。《孟子·尽心上》：“君子之所以教者五：有如时雨化之者，有成德者，有达财者，有答问者，有私淑艾者。”焦循正义：“财即才也，才恐其滞而不通，故达之。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【宝掌】</span>（人名）谓千岁宝掌和尚也。中印度人，于周威烈十二年丁卯降神受质，左手握拳，七岁祝发，乃展，因名宝掌。魏晋间来游此土，入蜀。一日谓众曰：吾愿住世千载，今年六百二十有六，后历游海内，唐显庆二年，寂于浦江宝岩寺。见五灯会元。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【三千七十二岁】</span>似为：一千七十二岁。见《五灯会元·千岁宝掌和尚》：“即澡浴易衣趺坐，谓云曰：‘吾住世已一千七十二年，今将谢世。’”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【住止】</span>居留；住宿。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【五岳】</span>我国五大名山的总称。古书中记述略有不同。指东岳泰山、南岳衡山、西岳华山、北岳恒山、中岳嵩山。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【罗浮山】</span>位于广东省惠州市博罗县西北境内东江之滨罗浮山。堪称“岭南第一山”，历史上道、佛、儒三家长期在此繁衍共存。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【行脚】</span>又作游方、游方、游行。谓僧侣无一定居所，或为寻访名师，或为自我修持，或为教化他人，而广游四方。游方之僧，即称为行脚僧。与禅宗参禅学道之“云水”同义。行脚僧于游方时可随身携带常用对象，然于对象类别及数量均有一定之限制。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

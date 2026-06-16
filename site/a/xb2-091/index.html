@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>灵岩山寺重修弥勒楼阁功德碑记（民国二十九年庚辰季夏） · 印光法师文钞</title>
+<meta name="description" content="弥勒者，当来下生娑婆世界之教主也。楼阁者，善财南参时，弥勒所住之屋宇也。重屋名楼，岑楼名阁。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-091/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="灵岩山寺重修弥勒楼阁功德碑记（民国二十九年庚辰季夏） · 印光法师文钞">
+<meta property="og:description" content="弥勒者，当来下生娑婆世界之教主也。楼阁者，善财南参时，弥勒所住之屋宇也。重屋名楼，岑楼名阁。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-091/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">灵岩山寺重修弥勒楼阁功德碑记（民国二十九年庚辰季夏）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">弥勒者，当来下生娑婆世界之教主也。楼阁者，善财南参时，弥勒所住之屋宇也。重屋名楼，岑楼名阁。</p><p class="p-trans">弥勒菩萨，是将来下生到娑婆世界的教主。楼阁，是善财童子向南方参学时，弥勒菩萨所住的屋宇。好几层的屋子名为楼，高大的楼名为阁。</p></div>
+<div class="para-pair"><p class="p-orig">此之楼阁，胜妙无比，凡夫，二乘，权位菩萨，皆不能见。乃弥勒无量劫来，上求下化，胜妙功德所感之报境也。</p><p class="p-trans">这座楼阁，殊胜微妙无比，凡夫、二乘、权位菩萨，都不能见到。这是弥勒菩萨无量劫来，上求佛道、下化众生，殊胜微妙功德所感的报境啊！</p></div>
+<div class="para-pair"><p class="p-orig">善财既参德生，有德二善知识已。又令往南方海岸国，大庄严园，毗卢遮那庄严藏大楼阁，请教弥勒菩萨。彼菩萨必能为汝说究竟契理契机妙法，令汝得大利益。</p><p class="p-trans">善财童子参访德生、有德二位善知识后。二位善知识又令他前往南方海岸国，大庄严园，毗卢遮那庄严藏大楼阁，请教弥勒菩萨。“彼菩萨必能为汝说究竟契理契机妙法，令汝得大利益。”</p></div>
+<div class="para-pair"><p class="p-orig">于是善财极力对治烦恼习气，极力修持戒定慧道。至海岸毗卢遮那大楼阁前，五体投地，愿见弥勒，说偈赞叹。乃见弥勒从别处来。</p><p class="p-trans">于是善财童子极力对治烦恼习气，极力修持戒定慧道。到了海岸国，毗卢遮那大楼阁前，五体投地，愿见弥勒菩萨，并说偈赞叹。于是就见到弥勒菩萨从别处来。</p></div>
+<div class="para-pair"><p class="p-orig">善财顶礼，弥勒为同来大众，赞叹善财，为真佛子，真法器。又为善财说菩提心种种功德，以培成佛之基。令入大楼阁中，周遍观察，则能了知学菩萨行。学已，成就无量功德。</p><p class="p-trans">善财童子向弥勒菩萨顶礼，弥勒菩萨就向和自己一同到来的大众，赞叹善财童子是“真佛子、真法器。”又为善财童子宣说发菩提心的种种功德，来培养成佛的基础。让他进入毗卢遮那庄严藏大楼阁中，周遍观察，则能了知学菩萨行。学已，成就无量功德。</p></div>
+<div class="para-pair"><p class="p-orig">善财白言，唯愿大圣，开楼阁门，令我得入。弥勒弹指出声，其门即开，令善财入，入已还闭。见其楼阁，广博无量，同于虚空。</p><p class="p-trans">善财童子禀告弥勒菩萨说：“唯愿大圣，开楼阁门，令我得入。”弥勒菩萨“弹指出声，其门即开，令善财入，入已还闭。见其楼阁，广博无量，同于虚空。”</p></div>
+<div class="para-pair"><p class="p-orig">地及宫殿，一切供具，皆以无量众宝而共合成。又见其中，有无量百千诸妙楼阁，一一广博严丽，皆同虚空，不相障碍，亦无杂乱。于一处中，见一切处。一切处中，悉如是见。</p><p class="p-trans">地面和宫殿，一切供具，都是用无量众宝共同合成的。“又见其中，有无量百千诸妙楼阁，一一广博严丽，皆同虚空，不相障碍，亦无杂乱。于一处中，见一切处。一切处中，悉如是见。”</p></div>
+<div class="para-pair"><p class="p-orig">尔时善财普申礼敬，才始稽首，自见其身，遍在一切诸楼阁中，普礼一切诸佛法僧，具见种种不可思议自在境界。</p><p class="p-trans">这时，善财童子普申礼敬，才开始稽首礼拜，就见自己的身体，遍在一切诸楼阁中，普礼一切诸佛法僧，具见种种不可思议自在境界。</p></div>
+<div class="para-pair"><p class="p-orig">所谓或见弥勒初发菩提心，行菩萨道，所亲何知识，所证何三昧。以至亲证法身，于十方法界，经佛刹微尘数劫，现三乘六道等身，以行教化，一一圆见。并十方世界一切诸佛，从初发心，以至成佛度生，及与涅槃，法住久近，亦各圆见。</p><p class="p-trans">这正是所谓的“或见弥勒初发菩提心，行菩萨道，所亲何知识，所证何三昧。以至亲证法身，于十方法界，经佛刹微尘数劫，现三乘六道等身，以行教化，一一圆见。并十方世界一切诸佛，从初发心，以至成佛度生，及与涅槃，法住久近，亦各圆见。”</p></div>
+<div class="para-pair"><p class="p-orig">善财在楼阁中，上求下化，经佛刹微尘数劫，精勤修持种种妙行，而不疲倦，一心直趣无上菩提。</p><p class="p-trans">善财童子在楼阁中，上求佛道、下化众生，经过佛刹微尘数劫，精勤修持种种妙行，而不疲倦，一心直趋无上菩提。</p></div>
+<div class="para-pair"><p class="p-orig">时弥勒菩萨，即摄神力，入楼阁中，弹指作声，告善财言，善男子起，法性如是。此是菩萨知诸法智，因缘聚集所现之相。如是自性，如幻如梦。是知此大楼阁，即法界藏。</p><p class="p-trans">“尔时弥勒菩萨，即摄神力，入楼阁中，弹指作声，告善财言，善男子起，法性如是。此是菩萨知诸法智，因缘聚集所现之相。如是自性，如幻如梦。”由此可知，这座大楼阁，就是法界藏。</p></div>
+<div class="para-pair"><p class="p-orig">凡法界中所有诸微妙事，此楼阁中，无不圆见。所谓十世古今，始终不离于当念。无边刹土，自他不隔于毫端。非弥勒神通道力，善财竭诚尽敬，何克臻此。</p><p class="p-trans">凡是法界中所有一切微妙事，在这座楼阁中，没有不圆满见到的。正是所谓的“十世古今，始终不离于当念；无边刹土，自他不隔于毫端。”如果不是弥勒菩萨的神通道力、善财童子的竭诚尽敬，怎么能达到这种境界呢？</p></div>
+<div class="para-pair"><p class="p-orig">近世诸方，无不以弥勒像，供于前殿。不称弥勒殿，乃名天王殿，直是以弥勒为天王之寄客，甚失尊敬之义。</p><p class="p-trans">近代诸多寺院，没有不把弥勒菩萨像供奉在前殿的。不称弥勒殿，却叫天王殿，这简直是把弥勒菩萨当成天王的寄客，很失尊敬之义。</p></div>
+<div class="para-pair"><p class="p-orig">灵岩修前殿，因与监院妙真大师，说其所以。又节录华严经善财参弥勒章，以示弥勒德超十地，道证等觉，慈济众生，非佛莫知，因名其殿为弥勒楼阁。以期后之入者，皆同善财，或于现生，或于来世，各得亲证楼阁中道，以慰弥勒时时示时人之大慈悲心。</p><p class="p-trans">灵岩山寺修建前殿，因此我就向监院妙真大师，说了这个理由。又节录《华严经》中的《善财参弥勒章》，来显示弥勒菩萨德超十地，道证等觉，慈济众生，非佛莫知，因此命名他的宝殿为弥勒楼阁。希望可以让今后入寺的人，都能像善财童子那样，或者在现生、或者在来世，每个人都能亲证楼阁中的佛道，来安慰弥勒菩萨“时时示时人”的大慈悲心。</p></div>
+<div class="para-pair"><p class="p-orig">又诸方所供之弥勒像，乃唐季弥勒示现之布袋和尚像。今既知是弥勒示现，固宜供微妙庄严之本像。以现处兜率天，故戴五佛冠为标识。</p><p class="p-trans">另外，各个寺院所供奉的弥勒菩萨像，是唐朝末年弥勒菩萨示现的布袋和尚像。现在既然已经知道布袋和尚是弥勒菩萨示现，就一定要供奉微妙庄严的本像。因为弥勒菩萨现在居于兜率天，所以戴五佛冠作为标识。</p></div>
+<div class="para-pair"><p class="p-orig">略叙缘起，以告来哲，知我罪我，所不计也。修殿始终，檀信功德，另碑详录，此不备述。</p><p class="p-trans">大略叙述了这个缘起，来告诉未来有智之人，是了解我，还是怪罪我，我都不计较。修建前殿的始末，檀信的功德芳名，在另外的碑文中详细记录，此处不再详述。</p></div>
+<p class="p-orig">颂 赞（附偈）</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【时时示时人】</span>偈颂全文为：“弥勒真弥勒，分身千百亿。时时示时人，时人俱不识”。（宋·释昙华）</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

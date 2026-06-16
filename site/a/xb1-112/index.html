@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复宅梵居士书（民国二十一年） · 印光法师文钞</title>
+<meta name="description" content="江浙念佛婆，统统都是信受外道无理之理，只知恭敬洁净，而不知按事而论，故有此种瞎说，流毒世间，误人不浅。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-112/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复宅梵居士书（民国二十一年） · 印光法师文钞">
+<meta property="og:description" content="江浙念佛婆，统统都是信受外道无理之理，只知恭敬洁净，而不知按事而论，故有此种瞎说，流毒世间，误人不浅。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-112/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复宅梵居士书（民国二十一年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">江浙念佛婆，统统都是信受外道无理之理，只知恭敬洁净，而不知按事而论，故有此种瞎说，流毒世间，误人不浅。</p><p class="p-trans">江苏浙江一带的念佛老太婆，统统都是相信接受外道没有道理的道理，只知道恭敬洁净，而不知道就事论理，所以才有这种瞎说，流毒于世间，误人不浅。</p></div>
+<div class="para-pair"><p class="p-orig">光从前不知此种邪说，故文钞中绝不提及。次后详知其弊，故对于一切人常说之。有难产者，依之而念，无一不即时安然而生也。</p><p class="p-trans">我从前不知道有这种邪说，所以在《文钞》中完全没有提及。后来详细了解了这种邪说的弊端，所以才对一切人常相说起。有难产的人，依照我所说的，念观世音菩萨，没有一个不立刻安然而生的。</p></div>
+<div class="para-pair"><p class="p-orig">念佛之人，行住坐卧均好念，但睡时，及衣冠不整齐，手口未洗漱，与洗澡，抽解及至污秽之处，俱宜心中默念，不宜出声。默念功德仍不减少，出声则于仪式不合。</p><p class="p-trans">念佛的人，行住坐卧都可以念佛，但是在睡觉、衣冠不整齐、手口还没有洗漱、洗澡、大小便的时候，以及到了污秽的地方，就都应该在心中默念，不应该出声。默念的功德仍然不会减少，此时出声念就与仪式不合了。</p></div>
+<div class="para-pair"><p class="p-orig">若妇人临产，只可念观世音菩萨（以观世音菩萨，悲愿深重之故，非不可念佛，只可念观音也，切勿错会），以观音救苦心殷，必要出声朗念，断断不可心里默念。心里念，为力较小，感通亦较小。又此时用力送儿出，若用力送儿，又默念，伤气受病。</p><p class="p-trans">如果妇女临产，这时只可念观世音菩萨（因为观世音菩萨，悲愿深重的缘故，不是不可念佛，只可念观世音菩萨，千万不要错误领会），因为观世音菩萨救苦的心很殷切，必须要大声念，万万不可在心里默念。心里默念，用的力量较小，感通也就比较小。而且在这个时候，要用力将孩子送出，如果用力生产，同时还在心里默念，就会伤气受病。</p></div>
+<div class="para-pair"><p class="p-orig">产妇自己朗念，产室照应者亦朗念，家中人在别屋亦当为念。切不可谓裸露不净，念之恐获罪咎。须知理固有定，事变不一，只可据事论理，不可执崖理而论。</p><p class="p-trans">产妇自己大声念，产室照顾的人也应大声念，家里人在其它屋子的，也应当为她念。千万不可以认为裸露不净，念了担心会因此获取罪咎。要知道道理固然有一定，事情变化没有一定，只可以根据实事来论理，不可以执著死理来论事。</p></div>
+<div class="para-pair"><p class="p-orig">譬如儿女误堕于粪坑水火之中，呼父母以求救，父母闻之，即往救援。断不至以彼身体不洁净，衣冠不整齐，而不肯救援，任其死亡。</p><p class="p-trans">譬如儿女误落在粪坑、水火之中，呼叫父母来求救，父母听到了，立即前往救援。断然不至于因为儿女身体不洁净、衣冠不整齐，就不肯救援，任由其死亡。</p></div>
+<div class="para-pair"><p class="p-orig">菩萨之德，深逾父母无量万万倍。当众生罹苦求救时，只有救苦之念，绝无计较形迹之念。且此系无可如何，非能表示恭敬洁净，而特为裸露不净也。</p><p class="p-trans">菩萨的恩德，远超过父母无量万万倍。在众生遭受苦难求救的时候，菩萨只有救苦的念头，绝对没有计较她们形迹的念头。况且这种情况属于无可奈何，并不是在能够表示恭敬洁净的情况下，却特意裸露不净啊！</p></div>
+<div class="para-pair"><p class="p-orig">若能而不为，则诚为有罪。若不能致其恭敬之相，则只可论心中归向之诚，不可在形迹上讲礼貌仪式也。</p><p class="p-trans">如果能够做到恭敬洁净却不去做，那么就确实是有罪了。如果在特殊情况下不能做到外在的恭敬，那么就只能衡量其心中归向佛菩萨的诚心，不能只在形迹上讲究礼貌仪式了。</p></div>
+<div class="para-pair"><p class="p-orig">菩萨无苦不救，无难不救，何得于产妇而遗之。虽经中未及明言，然当推及救苦之心，以期息人生之大苦，慰菩萨之慈心。</p><p class="p-trans">菩萨无苦不救，无难不救，怎么会遗弃产妇呢？虽然经中没有明文说到，可是应当推及菩萨救苦的心，以期通过这个方法来止息人生的大苦，慰藉菩萨的慈心。</p></div>
+<div class="para-pair"><p class="p-orig">况药师经中，佛教产妇念药师佛文云，或有女人，临当产时，受于极苦。若能至心称名礼赞（称名，则产妇所能，其礼赞恭敬供养，乃家中人之事，非产妇所能），恭敬供养彼如来者，众苦皆除（众苦皆除，则无苦可得。所生之子以下，其所得利益，大莫能名。产妇念之，得如此大益，岂念佛之人，一进产妇之房，便完全丧失平日念佛之功德乎。无知之人，自立章程，自误误人，罪岂有极，可怜）。所生之子，身分具足，形色端正，见者欢喜，利根聪明，安隐少病，无有非人夺其精气。</p><p class="p-trans">何况在《药师经》中，佛陀教导产妇念药师佛的经文中说：“或有女人，临当产时，受于极苦。若能至心称名礼赞（称名，是产妇所能做的事，其余礼赞、恭敬、供养等，是家里人应该做的事，不是产妇所能做的事），恭敬供养彼如来者，众苦皆除（“众苦皆除”，就是没有痛苦可得。“所生之子”以下，所得的利益，大到不能言说。产妇念了，便得到如此大的利益，怎会是念佛的人一进到产妇的房间，就完全丧失平时念佛的功德了呢？无知的人，自己建立章程，自误误人，罪过极重，可怜啊）。所生之子，身分具足，形色端正，见者欢喜，利根聪明，安隐少病，无有非人夺其精气。”</p></div>
+<div class="para-pair"><p class="p-orig">可知临产肯念，不但无罪，而且母子安全，得大利益，种大善根。产妇如此，余人可知。</p><p class="p-trans">由此可知，临产肯念观世音菩萨名号，不但没有罪，而且母子安全，得到大利益，种下大善根。产妇都能够如此，其余的人念了所得的利益就可以知道了。</p></div>
+<div class="para-pair"><p class="p-orig">湖南马舜卿（文钞中有此名），系回回（回回之皈依者，唯此一家人），彼夫妇与五儿女，皆函祈皈依者。</p><p class="p-trans">湖南的马舜卿（《文钞》中有他的名），是回族人（回族人皈依的，只有这一家人），他们夫妇二人与五个儿女，都写信来求皈依。</p></div>
+<div class="para-pair"><p class="p-orig">民十八年秋，来信言，彼妇生五儿女，初二次尚平安，三次即血崩，四五次更甚。今不久要生，倘再血崩，即无命矣，祈为说救济之法。</p><p class="p-trans">民国十八年（1929年）秋，马来信说，他妻子生了五个儿女，第一、二胎还平安，第三次就出现了血崩，第四、五次更为严重。现在不久又要生孩子了，如果再发生血崩，就会没命了，请求为他说说救济的方法。</p></div>
+<div class="para-pair"><p class="p-orig">光令志诚念观世音菩萨，临产虽裸露不净，切勿以为不可念。又须出声念，不可默念。彼又祈为胎儿预取法名。光信到，彼夫妇同看，其妇即念，次日即生，生时仍念，安然无苦。彼即回信言，出于意料之外，菩萨真可谓大慈大悲也。</p><p class="p-trans">我让他们志诚念观世音菩萨，临产时虽然裸露不净，但千万不要认为不可以念。还必须出声念，不可以默念。他们又请求为胎儿预先取个法名。我的信到了，他们夫妇二人一同看，他的妻子马上就开始念菩萨圣号，第二天就生下了孩子，生的时候还在念，结果孩子安然出生，产妇没有痛苦。他当时就回信对我说：真是出乎意料之外，菩萨真可说是大慈大悲啊！</p></div>
+<div class="para-pair"><p class="p-orig">光自民十五年秋后，增广文钞排毕后，无论何等文字，概不存稿，以免印费虚耗。故近来深知此事之弊，曾常与一切人言其利害。冀彼此相传，以预救产妇与儿之患难，及性命也。即不谅者，谓我好言产妇事，亦所不惜，以期挽此恶风，令大家同生正信耳。</p><p class="p-trans">我自从民国十五年秋天，《增广文钞》排印完毕之后，无论什么样的文字，一概不存底稿，以免浪费印刷的费用。所以近来深知这件事的弊端后，曾经常常对一切人讲说其中的利害关系。希望大家彼此相传，来预先救度产妇与婴儿的患难以及性命。即使不体谅的人，说我喜欢说产妇的事，也在所不惜，以期挽回“女人生孩子不能念佛”这个坏风气，让大家共同生起正信。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

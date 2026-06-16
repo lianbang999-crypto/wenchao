@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复叶福备居士书二 · 印光法师文钞</title>
+<meta name="description" content="昨日当家师以汝书交光，光阅之，知强盗来抢汝物，一无所失。对房老太婆，抢去一箱及诸衣物。此即三宝加被之明证。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-444/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复叶福备居士书二 · 印光法师文钞">
+<meta property="og:description" content="昨日当家师以汝书交光，光阅之，知强盗来抢汝物，一无所失。对房老太婆，抢去一箱及诸衣物。此即三宝加被之明证。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-444/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复叶福备居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨日当家师以汝书交光，光阅之，知强盗来抢汝物，一无所失。对房老太婆，抢去一箱及诸衣物。此即三宝加被之明证。</p><p class="p-trans">昨天当家师将你的信交给我，我看了，知道强盗来抢你的东西，但一点损失都没有。对面房里的老太婆，被抢去一箱东西和许多衣物。这就是三宝加被的明证。</p></div>
+<div class="para-pair"><p class="p-orig">但当勉力念佛及念观世音菩萨，何可妄生怖畏，欲移他处。你看那里是安乐处。幸此处淡薄，尚无大祸。若在富庵，恐更危险。</p><p class="p-trans">只应当努力念佛以及念观世音菩萨，怎么能妄生怖畏，想要移居到其他地方。你看哪里是安乐之处。幸好这个地方没钱，还没什么大祸。如果是在有钱的庵中，恐怕会更加危险。</p></div>
+<div class="para-pair"><p class="p-orig">苏州景德路合发纸店郭振声，民十九年陪彼本家一老头来皈依。光为彼说，现在是一个患难世道，当至诚念佛并念观音圣号，即可逢凶化吉，遇难成祥。</p><p class="p-trans">苏州景德路合发纸店的郭振声，民国十九年，陪他本家的一位老头来皈依。我对他说，现在是一个患难世道，应当至诚念佛并念观世音菩萨圣号，就可逢凶化吉，遇难成祥。</p></div>
+<div class="para-pair"><p class="p-orig">次年腊月去上海，上海战事起，不能回苏。至二十一年春，不能不回来。火车路断，坐小火轮，绕嘉兴回苏。</p><p class="p-trans">第二年腊月，他去上海，上海战事发起，不能回苏州。到了民国二十一年春，不能不回来。但火车不通，就坐小火轮，绕嘉兴回苏州。</p></div>
+<div class="para-pair"><p class="p-orig">但轮船来去，常被强盗抢。振声怕抢，心中默念观音圣号。不久强盗来，一船人通抢得精光。</p><p class="p-trans">但轮船来来去去，常被强盗抢。郭振声怕被抢，就心中默念观世音菩萨圣号。不久强盗来了，一船人全都被抢得精光。</p></div>
+<div class="para-pair"><p class="p-orig">振声大胖子，穿的皮袍子，在人众中，强盗并不问他。可知念南无观世音菩萨，决定能蒙菩萨加被，不至或有意外之祸。</p><p class="p-trans">郭振声是个大胖子，穿的皮袍子，在人群中，强盗并不问他。可知念南无观世音菩萨，决定能够蒙菩萨加被，不至于或有意外灾祸。</p></div>
+<div class="para-pair"><p class="p-orig">汝信，光看过，今欲复汝，遍寻无有。因思此系菩萨示汝一心念佛念菩萨防祸保身之兆。汝果至诚，强盗见汝，或看不见，或看见是他不要的东西，不至于汝有所损伤。</p><p class="p-trans">你的信，我看过了，现在想回你的信，却到处找不到你的信。因此想到这是菩萨开示你一心念佛，念菩萨，防祸保身的征兆。你果真至诚，强盗遇见你，或者看不见，或者看见是他不要的东西，不至于对你有所损伤。</p></div>
+<div class="para-pair"><p class="p-orig">现在无论何人，都要念阿弥陀佛，及念观世音菩萨为靠山。但一心常念，不必怖畏。</p><p class="p-trans">现在无论什么人，都要念阿弥陀佛，以及念观世音菩萨作为靠山。只要一心常念，不必害怕。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

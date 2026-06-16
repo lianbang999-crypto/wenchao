@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>常熟莲华庵放生池碑记（民二十三年） · 印光法师文钞</title>
+<meta name="description" content="乾为大父，坤为大母，民吾同胞，物吾与也，此儒者民物一视之素志也。严禁伤胎破卵，必使鸟兽鱼鳖咸若，此圣王胜残去杀之德政也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-090/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常熟莲华庵放生池碑记（民二十三年） · 印光法师文钞">
+<meta property="og:description" content="乾为大父，坤为大母，民吾同胞，物吾与也，此儒者民物一视之素志也。严禁伤胎破卵，必使鸟兽鱼鳖咸若，此圣王胜残去杀之德政也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-090/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">常熟莲华庵放生池碑记（民二十三年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">乾为大父，坤为大母，民吾同胞，物吾与也，此儒者民物一视之素志也。严禁伤胎破卵，必使鸟兽鱼鳖咸若，此圣王胜残去杀之德政也。</p><p class="p-trans">天为大父，地为大母，人民是我同胞，万物是我朋友，这是儒家对人民万物一视同仁的素志。严禁伤胎破卵，必使鸟兽鱼鳖，全都自由存活，这是圣王化残暴为良善，废除刑杀的德政。</p></div>
+<div class="para-pair"><p class="p-orig">良以天地之大德曰生，民物之大苦曰杀。胜残去杀，须由小而至大。仁民爱物，必自易而至难。倘不推本于涵养仁恕，必至舍小取大，舍易取难。日行残杀，而妄冀仁民爱物，则徒成空谈，决难实行其事矣。</p><p class="p-trans">的确是因为，天地的大德是好生，人民万物的大苦是被杀。化残暴为良善，去除刑杀，必须由小事逐渐做到大事。仁民爱物，必须从容易的事逐步做到难事。假如不从涵养仁慈忠恕这个根本出发，就必定会导致舍小取大，舍易取难。每天做残杀的事，却又妄想仁民爱物，那么这只能徒劳地成为空谈，就绝对难以实行仁民爱物的事了。</p></div>
+<div class="para-pair"><p class="p-orig">何以言之。小儿平民，皆能实行爱物之事。行之既久，满腔仁慈。日后得位行政，便可大庇群黎。即隐居一乡，亦可以身率物，移风易俗。</p><p class="p-trans">为什么这样说呢？如果小孩子、平民百姓，都能够实行爱惜物命的事。实行的久了，自然满腔仁慈。日后若得到官位施政，就可以广泛地庇护黎民百姓。即使隐居在某处乡村，也可以身作则，率领大家，移风易俗。</p></div>
+<div class="para-pair"><p class="p-orig">如是则仁民之道，自爱物培植而来者，方可周遍圆满而无弊。不由爱物来者，于现生似无所憾，于将来大有可虞。以既种残杀物类之因，难免循环报复之果。愿仁民者，当慎思焉。</p><p class="p-trans">如此，那么从爱惜物命培植而来的仁民之道，才能周遍圆满而没有弊端。如果不是从爱惜物命培植而来的，在现生倒是还没有什么遗憾，但是在将来就大有忧虑了。因为既然种下了残害物类的因，就难免循环报复的果。祈愿仁慈万民的当政者，应当谨慎思考爱惜物命这个问题。</p></div>
+<div class="para-pair"><p class="p-orig">放生一事，原为启发现未人之善心，以期戒杀茹素，普令含识各得其所，各尽天年。近之则息杀因，远之则灭杀果。小之则全吾心之纯仁，大之则弭世界之杀劫。且勿以为不急之务，而漠然置之也。</p><p class="p-trans">放生这件事，原本是为了启发现在、未来人们的善心，以期大家都来戒杀吃素，普令一切有情众生，各得其所，各尽天年。从近处说，就能止息杀因；从远处说，就能消灭杀果。从小处讲，就能成全我们心念的纯善仁慈；从大处讲，就能平息世界的杀劫。千万不要认为这件事是不急的事务，从而漠然置之。</p></div>
+<div class="para-pair"><p class="p-orig">莲华庵者，四周皆水，中涌一洲，筑庵其上，供奉西方三圣。敦请戒德僧人为之住持。境地清幽，红尘不到。修持严密，戒德远闻。庵前河中，以栅隔断，作放生池。</p><p class="p-trans">莲华庵这个地方，以前四周都是水，中间涌出一个沙洲，后来才在上面建筑了这个庵，并供奉西方三圣。而且还诚恳地邀请有戒德的僧人担任住持。当地环境清幽，红尘沾染不到。僧众修持严密，戒德远近闻名。在庵前的河中，用栅栏隔断一处水面，作为放生池。</p></div>
+<div class="para-pair"><p class="p-orig">自明以来，为时久远。现有邑绅瞿良士，庞德超者，极欲整顿，兼欲发挥放生之义致与利益，祈余为文以告来哲。</p><p class="p-trans">从明朝以来，时间已经很久远了。现在有乡绅瞿良士、庞德超，极力想要整修，并且想要阐发弘扬放生的意义和利益，就祈请我作篇文章来告诉未来有智之人。</p></div>
+<div class="para-pair"><p class="p-orig">窃谓放生原为提倡戒杀吃素，人若毕生吃素，则成不放之大放矣。今将黄山谷居士戒食肉诗录之，以期大家于食肉时，一再思之，必有不忍食与不敢食之心，勃然而兴。</p><p class="p-trans">我认为放生原本是为了提倡戒杀吃素，人们如果毕生吃素，就成就了不放生的大放生了。现在把黄山谷居士的《戒食肉诗》摘录出来，以期大家在吃肉的时候，能够再三思考，就一定有不忍心吃和不敢吃的心念，勃然兴起。</p></div>
+<div class="para-pair"><p class="p-orig">诗曰。我肉众生肉，名殊体不殊。本是一种性，只为别形躯。苦恼从他受，肥甘为我需，莫教阎君断，自揣应何如。</p><p class="p-trans">诗句为：“我肉众生肉，名殊体不殊。本是一种性，只为别形躯。苦恼从他受，肥甘为我需，莫教阎君断，自揣应何如。”</p></div>
+<div class="para-pair"><p class="p-orig">有味哉，斯诗也。忠恕违道不远，施诸己而不愿，亦勿施于人。此仁民爱物成始成终之大经大法，固不须更为详谈三世因果，六道轮回之深义也。愿见闻者，咸深思之。</p><p class="p-trans">这首诗有味道啊！《中庸》中说：“一个人做到了忠恕，离中庸之道也就不远了。什么叫忠恕呢？自己不愿意的事，也不要施加给别人。”这是仁慈众民、爱惜物命，成始成终的大经大法，就没有必要再详谈三世因果、六道轮回的深义了。祈愿见者闻者，都能深入思考爱惜物命这件事。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【敦请】</span>熟促，恳请。恳切地邀请。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

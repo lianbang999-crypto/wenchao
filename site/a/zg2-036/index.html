@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>募建药王篷序（代撰） · 印光法师文钞</title>
+<meta name="description" content="大觉世尊，名大医王。普治众生身心等病。所用之药，其数无量。戒定慧三，摄尽无遗。以故此三，名为药王。若能服之，即凡成圣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-036/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="募建药王篷序（代撰） · 印光法师文钞">
+<meta property="og:description" content="大觉世尊，名大医王。普治众生身心等病。所用之药，其数无量。戒定慧三，摄尽无遗。以故此三，名为药王。若能服之，即凡成圣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-036/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">募建药王篷序（代撰）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大觉世尊，名大医王。普治众生身心等病。所用之药，其数无量。戒定慧三，摄尽无遗。以故此三，名为药王。若能服之，即凡成圣。</p><p class="p-trans">大觉世尊，名为大医王，普遍医治众生身心种种病症。所用的药，数目无量无边。然而用“戒定慧”三个字，可完全概括，没有遗漏。所以戒定慧三者，名为药王。如果能够服用这三味药，就能转凡夫而成圣人。</p></div>
+<div class="para-pair"><p class="p-orig">然药虽美妙，修合实难。而信愿念佛求生西方，名为阿伽陀药，万病总治，下手易而成功高，用力少而得效速。上中下三根，即生皆出苦轮。戒定慧三法，当念悉得具足。</p><p class="p-trans">法药虽然美妙，要想修持到契合实在很难。然而信愿念佛求生西方这一法，名为阿伽陀药，万种病症统统能够对治，下手易而成功高，用力少而得效速。上中下三种根机的众生，都能在现生当中出离轮回苦海；戒定慧三法，在当下一念之中全体具足。</p></div>
+<div class="para-pair"><p class="p-orig">是知信愿念佛一法，乃药王中之药王也。某幸承宿因，得闻此法。敢不竭诚致敬，孜孜修持乎。</p><p class="p-trans">由此知道信愿念佛这个法门，是药王中的药王。我凭借过去生中所种的善因，幸运地听闻到了这个法门。怎敢不竭尽诚敬，努力修持呢。</p></div>
+<div class="para-pair"><p class="p-orig">拟建茅篷一所，名为药王。安住其中，笃修净业。以期普愈自他身心生死等大病。恳祈檀越，发菩提心，行方便事。略分宝海之涓滴，俾成安身之陋室。</p><p class="p-trans">因此我打算建一所茅篷，命名为药王篷。安心地住在茅蓬当中，努力修习净业。期望能够普遍治愈自己和他人，身、心、生、死等大病。恳祈诸位檀越，发菩提心，行方便事。稍稍分出宝海当中的一滴，帮助我建成这间安身行道的陋室。</p></div>
+<div class="para-pair"><p class="p-orig">由兹夙夜翘勤，礼拜忆念。既能念兹在兹，何难即心即佛。则无边利益，皆所成就。以如是因，感如是果。</p><p class="p-trans">从此之后，我将日日夜夜翘勤五体，礼拜忆念。只要能够念念不忘，达到即心即佛的境界又有什么困难呢。无量无边的利益，都由此而成就。以如是因，感如是果。</p></div>
+<div class="para-pair"><p class="p-orig">现生必得蒙佛接引，高预海会。将来必作药树王身，普治众病。若能鉴此愚诚，则此语当不虚弃矣。</p><p class="p-trans">现生当中必定承蒙阿弥陀佛慈悲接引，高登莲池海会。将来必定现作药树王身，来普遍治疗众生的病痛。诸位如果能够体察我这一番庸愚的诚意，那么上面所说的这些话，当不会落空啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【阿伽陀药】</span>原意为健康、长生不死、无病、普去、无价，后转用作药物名称，尤指解毒药而言。阿伽陀药又称不死药、丸药。此药灵奇，价值无量，服之能普去众疾。于陀罗尼集经卷八详载其制法。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【念兹在兹】</span>《书·大禹谟》：“帝念哉！念兹在兹，释兹在兹。名言兹在兹，允出兹在兹，惟帝念功。”孔传：“兹，此；释，废也。念兹人，在此功；废兹人，在此罪。言不可诬。”后谓念念不忘于某一事情。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【药树王身】</span>（术语）菩萨应现于六道，救众生苦难之身也。观音玄义上曰：“如华严云：有上药树，其根深入，枝叶四布，根茎枝叶，皆能愈病。闻香触身，无不得益。菩萨亦如是，大悲熏身形声利物，名大药王身。又如如意珠，能雨大千珍宝，随意而不穷不尽。菩萨大慈熏身与众生乐，名如意药王身。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

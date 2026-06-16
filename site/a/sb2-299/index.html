@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>阿弥陀经白话解释题辞 · 印光法师文钞</title>
+<meta name="description" content="阿弥陀经，乃一切圣凡同修之道。亦决于现生了脱之法。文虽显略，义极宏深。古德欲人皆修习，以故列为日课。每有普通善信，文理不深，纵看古德著述，依旧莫知其义。黄涵之居士欲一切人同沐佛恩，俱获实益。以白话体而为解释。俾稍识文字者，悉可了然。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-299/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿弥陀经白话解释题辞 · 印光法师文钞">
+<meta property="og:description" content="阿弥陀经，乃一切圣凡同修之道。亦决于现生了脱之法。文虽显略，义极宏深。古德欲人皆修习，以故列为日课。每有普通善信，文理不深，纵看古德著述，依旧莫知其义。黄涵之居士欲一切人同沐佛恩，俱获实益。以白话体而为解释。俾稍识文字者，悉可了然。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-299/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">阿弥陀经白话解释题辞</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">阿弥陀经，乃一切圣凡同修之道。亦决于现生了脱之法。文虽显略，义极宏深。古德欲人皆修习，以故列为日课。每有普通善信，文理不深，纵看古德著述，依旧莫知其义。黄涵之居士欲一切人同沐佛恩，俱获实益。以白话体而为解释。俾稍识文字者，悉可了然。</p><p class="p-trans">《阿弥陀经》，是一切圣凡共修之道。也是决定在现生了脱生死之法。经文虽然浅显简略，经义却极为宏大深广。古德想让人人都来修习，所以列为日课。常常有普通的善男信女，文化知识不高，纵然看古德的著述，依旧不知道是什么意思。黄涵之居士想使一切人共同沐浴佛恩，全都获得真实利益。所以用白话文加以解释。使得稍微认识文字的人，都能够明白。</p></div>
+<div class="para-pair"><p class="p-orig">初次印千部，未久函索罄尽。乃作广布计，稍缩其式。同志任及二万，以期修持净业之初机学人，同得受持。</p><p class="p-trans">初次印了一千部，不久全都被来信索请完。于是作了一个广泛流布的计划，稍微压缩这本书的样式。有共同志向的人们任资达二万册，以期修持净业的初机学人，共同得以受持。</p></div>
+<div class="para-pair"><p class="p-orig">所愿得是解者，恭敬修习，展转流通。普令同人皆得受持。以此功德，资益净业。则尽此报身，直登九品。见佛闻法，证无生忍。其为乐也，莫能喻也。</p><p class="p-trans">祈愿得到这本《白话解》的人，恭敬修习，辗转流通。普令同人大众都得以受持。并以此功德，资益净业。那么尽此报身，直登九品。见佛闻法，证无生忍。这样的快乐，是无法形容的。</p></div>
+<div class="para-pair"><p class="p-orig">诸大乘经，皆以实相为体。所说谛理，了无轩轾。若论机宜，则于无轩轾中，大有轩轾。以一切诸经所说法门，皆须自力修习。以至断惑证真，方有了生死分。</p><p class="p-trans">诸大乘经，都以实相为体。所说的谛理，没有高低优劣之分。如果就众生根机所适宜的法门来说，则是在无优劣中，却大有优劣分别。因为一切诸经，所说的法门，都必须靠自力修习。以至断惑证真，才有了生死的分。</p></div>
+<div class="para-pair"><p class="p-orig">净土三经所说，则博地凡夫，以深信愿，持佛名号，求生西方。兼以诸恶莫作，众善奉行。虽具惑业，亦可仗佛慈力，带业往生。此则一切诸经之所未有，乃如来普令一切若圣若凡，同于现生，得出六道轮回之大法门也。</p><p class="p-trans">净土三经所说的，则是博地凡夫，以深信愿，持佛名号，求生西方。兼以诸恶莫作，众善奉行。即使具足惑业，也可仗佛慈力，带业往生。这是一切诸经，所没有的，是如来普令一切圣人凡夫，同于现生，得以出离六道轮回的大法门啊！</p></div>
+<div class="para-pair"><p class="p-orig">而阿弥陀经，文略义丰，普透群机。其为利益，穷劫难宣。以故自佛说此法门以来，往圣前贤，人人趣向。千经万论，处处指归。有缘遇者，祈勿错过，则幸甚。</p><p class="p-trans">而《阿弥陀经》，经文简略，义理丰富，普遍收摄众机。这个利益，穷劫难宣。所以自佛宣说这个法门以来，往圣前贤，人人趣向。千经万论，处处指归。有缘遇到的人，请千万不要错过，那么就非常庆幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【轩轾】</span>车前高后低叫轩，前低后高叫轾。引申为高低、轻重、优劣。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

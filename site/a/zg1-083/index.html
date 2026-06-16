@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复江易园居士书 · 印光法师文钞</title>
+<meta name="description" content="接手书，知贵地净土法门，由阁下提倡，得以大行，慰甚。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-083/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复江易园居士书 · 印光法师文钞">
+<meta property="og:description" content="接手书，知贵地净土法门，由阁下提倡，得以大行，慰甚。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-083/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复江易园居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知贵地净土法门，由阁下提倡，得以大行，慰甚。</p><p class="p-trans">接到你的信，知道你所在的地方由于你的提倡，净土法门得以盛行，非常欣慰。</p></div>
+<div class="para-pair"><p class="p-orig">光徒张虚名，毫无实德，但愿有益于人，即属虚张声势，其损在我，而人或得益，亦所乐为。</p><p class="p-trans">我徒有虚名，毫无真实德行，只希望能够利益于他人。即使是虚张声势的事情，受损害的是我自己，只要其他人从中或能得到利益，那么也是我乐意做的。</p></div>
+<div class="para-pair"><p class="p-orig">如谈梅口酸，想崖足战，虽无实事，人起斯心。亦非无益。</p><p class="p-trans">就像谈到梅子，口里就会发酸，想到悬崖，脚底就会打战，虽然没有见到实际的事和物，而听到的人却会生起相应的心念。也不是没有利益。</p></div>
+<div class="para-pair"><p class="p-orig">至于阁下拟以慈觉故事，直令光惭愧无地耳。光愿再寄二十包文钞，以期送有缘，并留图书馆以长供阅览。</p><p class="p-trans">至于你把我比拟为慈觉大师，这真是令我惭愧的无地自容。我想再寄二十包文钞，以期送给有缘人，并留在图书馆以便长期提供阅览。</p></div>
+<div class="para-pair"><p class="p-orig">又今之提倡佛学，须注重于净土法门，及因果报应。并令入社之人，各各戒杀护生，各各善教儿女。</p><p class="p-trans">另外，现在提倡佛学，必须注重于净土法门，以及因果报应。并令进入莲社的人，各各都要戒杀护生，各各都要教育好儿女。</p></div>
+<div class="para-pair"><p class="p-orig">国之荒乱，由乏贤人，其源由家无善教而始。而家庭之教，母教更为要紧，故教女比教子关系更大也。</p><p class="p-trans">国家的荒乱，是由于缺乏贤能之人，这个源头是由于家庭没有好的教育开始的。而家庭的教育，母教更为重要，所以教育女儿比教育儿子的关系更大。</p></div>
+<div class="para-pair"><p class="p-orig">有贤女，则有贤妻，贤母矣。人少有贤母，长有贤妻，欲不为贤人，不可得也，此正本清源图太平之良策也。愿阁下于提倡佛学时，谆谆以此告之，庶佛法世间法皆振兴也。</p><p class="p-trans">有了贤慧的女子，就有了贤妻、贤母了。一个人小时候有贤良的母亲，长大了有贤慧的妻子，想要不成为贤能之人，这是不可能的，这是正本清源，图谋太平的良策。愿你在提倡佛学之时，真诚恳切地反复以此来劝告大家，使得佛法、世间法，都能够得以振兴啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【江易园】</span>（1875-1942）近代佛教居士。名谦，字易园，号阳复，安徽婺源人。幼读儒书，13岁即能诗文，19岁受业于张謇门下。1902年任通州师笵学校校长。1914年任江苏省教育厅厅长，次年任南京高等师范学校校长。1918年病中得阅彭二林著《无量寿经起信论》，遂深植信根，一心念佛，不服药而病霍然而愈。嗣后皈依谛闲、印光两法师。博览三藏，融会各宗归于净土，颇得印光大师称许。旋创佛光社于婺源、江湾，并于各地设立分社。1941年移居上海，仍应各方之请讲经弘法。后期沉酣于“扶乩”，遂为印光大师厉斥。1942年4月病逝。生平著作有合辑《阳复斋丛刊》，内容颇广，主张儒佛合一，共同弘道。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【谈梅口酸，想崖足战】</span>见《楞严经》卷上：“阿难。譬如有人。谈说酢梅。口中水出。思蹋悬崖。足心酸涩。想阴当知亦复如是。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【慈觉】</span>古代名为慈觉的大德很多，这里应指【宗赜慈觉】宋代净土宗、云门宗僧。襄阳人，俗姓孙。谥号慈觉大师。生卒年不详。幼年丧父，由母鞠养。志节高迈，夙修儒业，博通世典。二十九岁，就真州长芦寺圆通法秀落发，并受具足戒，后依广照应夫参叩禅旨。一日，方登台阶，忽有省悟，作颂（大五一·五三九下）：“举足上砖阶，分明这个法，黄杨木畔笑呵呵，万里青天一轮月。”遂得应夫印可。元佑年间，住长芦寺，迎母于方丈之东室，劝母剃发出家，持念阿弥陀佛。居七年，母逝。自谓报亲之心已尽，作劝孝文一二○篇，阐述世间、出世间之孝道。
+元佑四年（1089），效庐山白莲社，建莲华胜会，普劝道俗念佛号，日记其数，回向发愿，期生净土。崇宁年间（1102-1105），应待制杨畏之请，初于真定府（河北正定）洪济院弘法。据乐邦文类卷三载，师为莲社继祖五大法师之一。著有禅苑清规十卷、苇江集、坐禅箴、念佛参禅求宗旨说、莲华胜会录文、念佛回向发愿文、念佛防退方便文、观无量寿佛经序、劝念佛颂、西方净土颂等。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【荒乱】</span>形容社会秩序极端不安定。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【正本清源】</span>从根源上进行整顿清理。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【谆谆】</span>反复告诫、再三叮咛貌。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

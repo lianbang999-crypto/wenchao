@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复夏寿祺居士书 · 印光法师文钞</title>
+<meta name="description" content="汝父年高，当令即刻通身放下，一心念佛，求生西方。念时须心中念得清楚。口中念得清楚。耳中听得清楚。即不开口，心中默念，亦须字字句句，听得清楚。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-112/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复夏寿祺居士书 · 印光法师文钞">
+<meta property="og:description" content="汝父年高，当令即刻通身放下，一心念佛，求生西方。念时须心中念得清楚。口中念得清楚。耳中听得清楚。即不开口，心中默念，亦须字字句句，听得清楚。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-112/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复夏寿祺居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝父年高，当令即刻通身放下，一心念佛，求生西方。念时须心中念得清楚。口中念得清楚。耳中听得清楚。即不开口，心中默念，亦须字字句句，听得清楚。</p><p class="p-trans">你父亲年事已高，应当让他即刻通身放下，一心念佛，求生西方。念的时候必须心中念得清楚。口中念得清楚。耳中听得清楚。即使不开口，心中默念，也必须字字句句，听得清楚。</p></div>
+<div class="para-pair"><p class="p-orig">以心一起念，即有声相。自己之耳，听自己心中之声，仍是明明朗朗。能常听得清楚，则心归一处，神不外驰。故眼也不他视，鼻也不他嗅，身也不放逸，故名都摄六根。如此念佛，名为净念（此三句，师自加密圈）。</p><p class="p-trans">因为心中一起念，就有声音之相。自己的耳朵，听自己心中的声音，仍就是明明朗朗。能够常常听得清楚，那么心归一处，神不向外奔驰。所以眼睛也不看其他的，鼻子也不闻其他的，身体也不放逸，所以名为都摄六根。如此念佛，名为净念（这三句，师父自己加上密密的圆圈&lt;表示非常重要&gt;）。</p></div>
+<div class="para-pair"><p class="p-orig">以摄心于佛号，则杂念虽尚未全无，然已轻减多多矣。若能常常相继，便可浅得一心不乱，深则得念佛三昧矣。此系平日勖令专心致志之要义。</p><p class="p-trans">因为摄心在佛号上，那么杂念虽然还不能完全没有，然而已经减轻了许多。如果（净念）能够常常相继，便可以浅得一心不乱，深则得念佛三昧了。这是平时勉励令我们专心致志的要义。</p></div>
+<div class="para-pair"><p class="p-orig">日日常作将往生想，心中不留一事。有宜交代者，即预交代之。子孙有宜问者，即预问之。待至临终，则全家念佛。无一事可问，亦无一事交代，大家同声念佛。</p><p class="p-trans">天天常作将要往生来想，心中不存留一件事。有应该交代的事，就预先交代好；子孙有应该问的事，就预先问好。等到临终时，就全家念佛。没有一件事可问，也没有一件事要交代，大家同声念佛。</p></div>
+<div class="para-pair"><p class="p-orig">若自己有把握，自己会洗澡换衣，则甚好。若自己不能，则万不可预为抹澡，换衣，问事，哭泣等。一有此种瞎张罗，定规破坏正念，不得往生矣。</p><p class="p-trans">如果自己有把握，自己能洗澡、换衣，则很好；如果自己不能，则万万不可以预先为他抹澡、换衣服、问俗事、哭泣等。一旦有了这种瞎张罗，一定会破坏正念，不能往生了。</p></div>
+<div class="para-pair"><p class="p-orig">令将亡人面向西方，面前供一尊接引佛，作随佛往生想。一直念到气断已过三点钟后（此至少时，尚宜多念），再为洗换哭泣等，则不致贻误大事。</p><p class="p-trans">令将亡人面向西方，面前供一尊接引佛（阿弥陀佛），作随佛往生来想。一直念到气断已过三个钟头后（这是最少的时间，还应该多念），再为亡者洗澡、换衣、哭泣等，就不致贻误（往生）大事。</p></div>
+<div class="para-pair"><p class="p-orig">哭泣亦不可废，当以息哀念佛为事。切弗以哭泣做假场面。老人临终如是，年轻人亦如是，则定可往生。</p><p class="p-trans">哭泣也不可以废除，应当以息哀念佛作为事务。千万不要以哭泣做假场面。老人临终是这样，年轻人也是这样，则一定可以往生。</p></div>
+<div class="para-pair"><p class="p-orig">又女子从小，须令性情柔和，不生气。习久则成天性。其利益说不能尽。未嫁前生大气，或停经，或血崩。</p><p class="p-trans">另外，女子从小，必须令她性情柔和，不生气。习惯就成为自然了。其中的利益不能说尽。没有出嫁前生大气，或者停经，或者血崩；</p></div>
+<div class="para-pair"><p class="p-orig">嫁后亦然，或堕胎，或所怀儿女成暴恶性质。儿生后喂奶时，生极大气，儿吃奶时即死。不极大，则半天一天死。无一不死者。</p><p class="p-trans">出嫁后也是这样生大气的话，或者堕胎，或者所怀的儿女成暴恶的性质。孩子出生后喂奶时，生很大的气，孩子吃奶时就会死去；不是很大的气，则会过半天、一天死。没有一个不死的。</p></div>
+<div class="para-pair"><p class="p-orig">小气虽不死必病，无一不病者。若连一二三日生气，则儿之毒，屡积屡大，亦难不死。此吾国古今名医神医，均未言及者。以此义与一切男女说，即是救命于未生之前。</p><p class="p-trans">生小气（给孩子喂奶），孩子虽然不死，但必定生病，没有一个不生病的。如果连生一、二、三天的气，那么孩子体内的毒，越积越大，也很难不死。这是我国古今的名医神医，都没有说到的地方。将这个义理对一切男女讲说，就是救（孩子的）命于未生之前。</p></div>
+<div class="para-pair"><p class="p-orig">而女子性情柔和，则家道亦可和睦。所生儿女性情，亦悉慈善柔和。吾尝谓教子为天下太平之根本，而教女为尤要。以人生禀母之气，视母之仪，比父为多。</p><p class="p-trans">而女子性情柔和，那么家道也可以和睦。所生儿女的性情，也全都慈善柔和。我曾经说，教育孩子是天下太平的根本，而教育女儿尤为重要。因为一个人出生，禀承母亲的气质、观察母亲的行仪，比父亲多。</p></div>
+<div class="para-pair"><p class="p-orig">有贤女则有贤妻。贤妻之夫，必为贤人。贤母之子，定是贤士。太任有胎教，故文王生有圣德。盖教之于未生之前也。</p><p class="p-trans">有贤女就有贤妻。贤妻的丈夫，必定成为贤人。贤母的孩子，一定是贤士。太任有胎教，所以周文王生下来就有圣德。这是教育孩子于未生之前。</p></div>
+<div class="para-pair"><p class="p-orig">光已八十，朝不保夕，所有信札，令常住书记代，光不顾问。以汝在远方，特别注意，故交光看而为复。</p><p class="p-trans">我已经八十岁了，朝不保夕，所有的信件，令常住书记代写，我不过问。因为你在远方，特别注意，所以交给我看而为你回信。</p></div>
+<div class="para-pair"><p class="p-orig">其修持方法，自有净土各书及文钞在，此不备书。冶公，宗况，祈亦以此信中所说告之。（民廿八年五月十五日）</p><p class="p-trans">净土法门的修持方法，自有净土各书以及《文钞》在，此处不再多说。冶公、宗况，请也以此信中所说的，告诉他们。（民国二十八年五月十五日）</p></div>
+<div class="para-pair"><p class="p-orig">不得常来信，常来则光不能为复矣。今之僧人，多系俗派，四十五十，也举行祝寿，有以此事语光者，光曰，我宁受斩头之刑，不愿闻祝寿之名。有欲为光祝寿者，是拉光于最下劣之下流坯一派也。</p><p class="p-trans">不得常来信，常来信，则我不能为你回信。现今的僧人，大多属世俗派，四十、五十岁，也举行祝寿，有人将这件事告诉我，我说，我宁愿受斩头之刑，也不愿听闻祝寿之名。有想要为我祝寿的，是拉我到最下劣的下流坯这一派中去。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

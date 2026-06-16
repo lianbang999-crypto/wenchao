@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复四川谢诚明居士书 · 印光法师文钞</title>
+<meta name="description" content="适奉手书，知贵地尚有儒佛心法，一肩担荷者，欣慰无似。至于誉不慧处，颇涉世谛俗套。夸鱼目逾宝珠，谓寸木高岑楼，令人惭惶无地耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-134/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复四川谢诚明居士书 · 印光法师文钞">
+<meta property="og:description" content="适奉手书，知贵地尚有儒佛心法，一肩担荷者，欣慰无似。至于誉不慧处，颇涉世谛俗套。夸鱼目逾宝珠，谓寸木高岑楼，令人惭惶无地耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-134/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复四川谢诚明居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">适奉手书，知贵地尚有儒佛心法，一肩担荷者，欣慰无似。至于誉不慧处，颇涉世谛俗套。夸鱼目逾宝珠，谓寸木高岑楼，令人惭惶无地耳。</p><p class="p-trans">刚才接到你的信，知道你家那边还有将儒家、佛教的心法，一肩承担的人，欣慰无比。至于你信中称赞我的地方，就流于俗套了。如同夸赞鱼的眼睛超过了宝珠，形容一寸短木比楼房还高，真是令人惭愧惶恐，无地自容了。</p></div>
+<div class="para-pair"><p class="p-orig">光一介庸僧，无法自给。常时行乞于大富长者之门，见其所弃之残羹馊饭，取而自资。有不嫌酸臭者，亦复以此用施。</p><p class="p-trans">我是一个平庸的僧人，（在佛法的修学方面）没有办法自给自足。常常在大富长者的门前乞讨，见到他们所遗弃的残羹馊饭，就取来自我资养。有不嫌酸臭的人，也用这讨来的饭菜布施给他们。</p></div>
+<div class="para-pair"><p class="p-orig">而徐蔚如谓其有益饥人，遂屡为流布。虽意有可取，而文不足观。不意竟渎阁下青眼，感愧何极。</p><p class="p-trans">而徐蔚如居士认为这些残羹馊饭（谦指《文钞》）有益于饥饿的人，于是多次加以排印流布。虽然文意有可取之处，然而文笔不足观看。没想到竟然蒙阁下您青眼垂顾，实在感激又惭愧。</p></div>
+<div class="para-pair"><p class="p-orig">芜钞二次所印，以蔚如丁母忧出京，托友人校对。由通家不能细心，遂致错讹数十。去春，蔚如又令上海商务印书馆，另编另排，兼以留板（此次校对颇精）。至今春正月出书，以印二千部，未出正月，即已售尽。该馆事忙，不暇再印。</p><p class="p-trans">第二次所印的文钞，因为徐蔚如料理母亲丧事离开北京，就委托友人校对。由于大通家没能细心校对，导致错误的地方有几十处。去年春天，徐蔚如又让上海商务印书馆另外编排，并留下了底板（这次校对很精详）。到了今年春天正月出书，印了二千部，还没出正月，就已经发售完了。商务印书馆的事务繁忙，没有空再加印。</p></div>
+<div class="para-pair"><p class="p-orig">后由请者屡催，许抽暇先印一千以应之。待后有暇，再为多印。今奉上二部，祈查收。此中比京中二次印者，多卅余篇。其于正心诚意，竭诚尽敬之旨，亦略为发挥。以对治今人向外驰求，及肆无忌惮之病。</p><p class="p-trans">后来由于请书的人多次催促，答应抽空先印一千部。等以后有空了再多印。现在奉上两部给阁下，请查收。这两部比北京第二次印的多了三十多篇。其中对于正心诚意，竭诚尽敬的旨义，也略有发挥。以此来对治如今的人向外驰求、肆无忌惮的毛病。</p></div>
+<div class="para-pair"><p class="p-orig">于初学稍有裨益，若通宗通教者见之，未免有发呕者。然果呕尽宗教不消之陈食，则此残羹馊饭，亦可培补元气。待其气力充足，再用王膳，则方得实益矣。川中若有不嫌酸臭者，当令商务印书分馆，代为发售可也。</p><p class="p-trans">对于初学的人稍稍有些好处，如果是通达宗门教下的人看了，未免会有发呕的情形。然而如果呕吐光了（学习）宗门教下（所积攒的）不能消化的陈食，那么我的这些残羹馊饭，也可以给他们补补元气。等到他的气力充足了，再享用帝王的美膳，才能得到真实的利益。四川当地如果有不嫌弃《文钞》酸臭的人，就让商务印书馆当地的分馆，代为发售好了。</p></div>
+<div class="para-pair"><p class="p-orig">至律教禅净之种种法门，何者合机，当于净土决疑论，息心详阅，自知梗概。今不具书。至谓以佛法助儒道，二法并行，俾一切人于世法为真儒，于出世法为真释。</p><p class="p-trans">至于律、教、禅、净种种法门当中，哪一种适合众生的根机，应当息心详细阅读《净土决疑论》，自然就会知道梗概，这里就不具体说了。至于你所说的，以佛法辅助儒道，儒佛二法一并实行，使得一切人在世法成为真的儒士，在出世法成为真的释子（这样的想法）。</p></div>
+<div class="para-pair"><p class="p-orig">若大通家，则禅净双修，而必以净土为主。若普通人，则亦不必令其遍研深经奥论，但令诸恶莫作，众善奉行，一心念佛求生西方即已。</p><p class="p-trans">如果是大通家，就禅净双修，同时也必定要以净土为主。如果是普通人，就不必让他普遍研究深奥的经论了，只要让他诸恶莫作，众善奉行，一心念佛，求生西方就好。</p></div>
+<div class="para-pair"><p class="p-orig">此人不废居家业，而兼修出世法。虽似平常无奇，而其利益不可思议。良以愚夫愚妇，颛蒙念佛，即能潜通佛智，暗合道妙。校比大通家之卜度思量，终日在分别中弄识神者，为益多多也。以故愚夫愚妇念佛，易得益。大通家能通身放下，亦易得益。若唯以义理是卜度者，则不得益，或反得病。及未得谓得，流入狂派者有之。</p><p class="p-trans">这是不废弃家庭事业的情况下，同时修持出世法的（最佳途径）。虽然看似平常无奇，但得到的利益却是不可思议的。实在是因为愚夫愚妇，老实念佛，就能够潜通佛智，暗合道妙。相比于大通家按自己的想法测度思量，整天在分别心中搬弄自己的识神，要有利益得多啊。因此愚夫愚妇念佛，容易得到利益。大通家如果能够通身放下，也容易得到利益。如果只是思维分别义理，就不能得到利益，或许反而受害，甚至也有人没有得到就说得到，流入了狂派。</p></div>
+<div class="para-pair"><p class="p-orig">参禅一法，非现今人所宜学。纵学亦只成文字知见，决不能顿明自心，亲见自性。何以故，一则无善知识提持抉择，二则学者不知禅之所以。名为参禅，实为误会。</p><p class="p-trans">参禅不适合现在的人修学，即使学也只是停留于文字表面，绝对不能顿悟明了自心，亲见本有自性。什么原因呢？一是因为没有善知识提醒和把持，替他抉择正确的路头；二是因为学习的人不知道什么是禅。名义上是在参禅，实际上是误会了禅。</p></div>
+<div class="para-pair"><p class="p-orig">光于宗教不宜混滥论，及净土决疑论，已示大概。今人无论上中下根，皆须以力敦伦常，主敬存诚，深信因果，广行众善，一心念佛求生西方为事。</p><p class="p-trans">我在《宗教不宜混滥论》，以及《净土决疑论》中，已经指明了其中的大概。现今的人，无论上中下根，都必须把努力遵行伦常道德，恪守诚敬，深信因果，广行众善，一心念佛，求生西方作为事业。</p></div>
+<div class="para-pair"><p class="p-orig">因果一法乃世出世间圣人，烹凡炼圣之大冶洪炉。若最初不以因果是究，则通宗通教之后，尚或有错因果事。因果一错，则堕落有分，超升无由矣。</p><p class="p-trans">因果一法，是世间、出世间圣人，烹炼凡夫，成就圣果的大宝炉。若最初不将因果的道理研究透彻，那么等到通宗通教后，或许还会做错落因果的事。因果一错则堕落有分，超升无望了。</p></div>
+<div class="para-pair"><p class="p-orig">且勿谓此理浅近而忽之。如来成正觉，众生堕三途，皆不出因果之外。而凡夫心量小，凡经中所说之大因果处，或领会不及。</p><p class="p-trans">不要说因果的道理浅近而忽略它。如来成就正觉佛果，众生堕落三途六道，都没有超出因果之外。而凡夫心量狭小，佛经中所说的大因大果，或许领会不到。</p></div>
+<div class="para-pair"><p class="p-orig">当以世间浅近者，为入胜之方便。如文昌阴骘文，太上感应篇等（感应篇，上海中华书局有感应篇汇编，为古今注此篇者之冠，文理俱佳，有二本），俾熟读而详审以行之。则人人可以为良民，人人可以了生死矣。</p><p class="p-trans">应当用世间浅近的书籍，作为超凡入胜的方便法。例如《文昌帝君阴骘文》，《太上感应篇》等等（《太上感应篇》，上海中华书局有《感应篇汇编》，是古今注解这本书之首，文字义理都很好，共有二本），假如熟读这些书，（根据书中所说）详细审察来行事的话。那么人人都可以成为良民，人人都可以了脱生死了。</p></div>
+<div class="para-pair"><p class="p-orig">光前年曾刻安士全书（文钞中有二序，可知大概）板存扬州，各经房皆为流通。诚淑世善民之要书也。</p><p class="p-trans">我前年曾经刻印《安士全书》（《文钞》中有《安士全书》的两篇序文，看后可以知道书中的大概）刻板保存在扬州，各地经房都有流通。确实是挽救世风，教导民众向善的重要书籍啊。</p></div>
+<div class="para-pair"><p class="p-orig">念佛所重在往生，念之至极，亦能明心见性。非念佛于现世了无所益也。昔明教嵩禅师，日课十万声观音圣号，后于世间经书，悉皆不读而知。</p><p class="p-trans">念佛所注重的是往生，念到极处，也能明心见性，并非对于现世完全没有利益。从前，被称为“明教大师”的嵩禅师，每日功课都要念十万声的观音圣号，后来对于世间的经书，都能不读而知。</p></div>
+<div class="para-pair"><p class="p-orig">当看净土十要，净土圣贤录，方可知念佛之妙。而光之芜钞，屡屡言之。居士谓现世无益者，不但未深体净宗诸经论，即光钞亦属走马观灯，未暇详究耳。</p><p class="p-trans">应当看《净土十要》、《净土圣贤录》，就可以知道念佛的妙处。我在《文钞》中也反复地提到了。你说念佛对现世没有利益，这说明你不但没有深刻体会净土诸经论的道理，而且对我的《文钞》也只是走马观灯地读了一下，并没有详细深究其中的道理啊。</p></div>
+<div class="para-pair"><p class="p-orig">律不独指粗迹而已，若不主敬存诚，即为犯律。而因果又为律中纲骨。若人不知因果，及瞒因昧果，皆为违律。</p><p class="p-trans">戒律不单单是粗略地针对言语行为来说的。如果内心不恪守诚敬，就是犯戒。而因果又是戒律中的框架和统领。假如人不知道因果，或是瞒因昧果（对于所造作的身口意前因有所遮掩，对于所招感的果报感到冤屈无辜），都属于违犯戒律。</p></div>
+<div class="para-pair"><p class="p-orig">念佛之人，举心动念，常与佛合。则律教禅净一道齐行矣。须知如来所说一切法门，皆须断惑证真，方可了生脱死。绝无惑业未断，得了脱者。</p><p class="p-trans">念佛之人，起心动念应常常与佛相合。那么就是律、教、禅、净，一道齐行了。必须知道如来所说的一切法门，都必须断惑证真，才可以了生脱死。绝对没有惑业还没断除干净，就了脱生死的。</p></div>
+<div class="para-pair"><p class="p-orig">念佛法门，断惑业者往生，则速证法身。具惑业者往生，已超登圣地。一则全仗自力，一则全仗佛力，又兼自力。二者难易，奚啻天渊。</p><p class="p-trans">修行念佛法门，已经断除惑业的人往生后，就立即可以证得法身；仍有惑业未断的人往生后，也已经超越凡俗高登圣地。一个是全仗自力（指其他通途法门）；一个是全仗佛力，又兼仗自力（指净土特别法门）。二者证道的难易程度，何止是天渊之别。</p></div>
+<div class="para-pair"><p class="p-orig">每有聪明人，涉猎禅书，觉其有味，遂欲以禅自命，拟为通方高人。皆属不知禅净所以，妄自尊大之流类。如是知见，断断不可依从。依之则了生脱死，恐经尘点劫数，尚无望也。祈细阅光文钞自知。</p><p class="p-trans">时常有一些聪明人，涉猎了一些讲述禅宗的书籍，觉得很有味道，于是自命为是禅宗行人，还打算成为通达各个法门的高人。这些都是不知道禅宗和净土的所以然，妄自尊大的人。这种知见万万不可依从。如果依从这种知见去修行，想了生脱死，恐怕要经历尘点般的劫数，也仍然没有希望啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【岑楼】</span>高楼。《孟子·告子下》：“不揣其本而齐其末，方寸之木，可使高于岑楼。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【青眼】</span>黑色的眼珠在眼眶中间，青眼看人则是表示对人的喜爱或重视、尊重（跟“白眼”相对）。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【丁母忧】</span>遭逢母亲丧事。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【息心】</span>除掉杂念，专心致志。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【明教嵩禅师】</span>禅师名契嵩，字仲灵，自号潜子。生藤州镡津李氏。七岁，母钟施以事东山沙门某。十三得度受具。……嵩夜则顶戴观世音菩萨之像。而诵其号，必满十万，乃寝以为常。自是世间，经书章句，不学而能。是时天下之士，学古文。慕韩愈拒我，以遵孔子。东南有章表民。黄聱隅，李太伯，尤雄杰者。学者宗之。嵩作原教论十余万言。明儒释之道一贯，以抗其说。读之者畏服。（宋，惠洪《禅林僧宝传》）</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【涉猎】</span>粗略地阅读，浏览。不深入钻研。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【通方】</span>指不限于一经一论的研究方法。吕澄《中国佛学源流略讲》第六讲：“这种不限于一经一论的研究方法，叫作‘通方’，即通达一切。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

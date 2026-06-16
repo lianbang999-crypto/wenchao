@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>莲宗十二祖赞颂 · 印光法师文钞</title>
+<meta name="description" content="晋初祖庐山东林慧远大师">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-117/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="莲宗十二祖赞颂 · 印光法师文钞">
+<meta property="og:description" content="晋初祖庐山东林慧远大师">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-117/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">莲宗十二祖赞颂</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<p class="p-orig">晋初祖庐山东林慧远大师</p>
+<div class="para-pair"><p class="p-orig">以特别法，永为世范。意旨暗合于行愿，中外流通遍。普令庸彦，大事即生办。</p><p class="p-trans">以净土特别法门，永远作为世人的典范。念佛求生意旨暗合于《普贤菩萨行愿品》，中外流通普遍。普遍令庸才与俊才，生死大事当生成办。</p></div>
+<div class="para-pair"><p class="p-orig">肇启莲宗福震旦，畅佛本怀垂方便。</p><p class="p-trans">首创莲宗，造福中国，畅佛本怀，垂慈方便。</p></div>
+<div class="para-pair"><p class="p-orig">圆音一阐士归庐，大法将弘神运殿。</p><p class="p-trans">说法圆音一经阐扬，高人达士归聚来到庐山，大法将要弘扬，神灵运木建成宝殿。</p></div>
+<div class="para-pair"><p class="p-orig">一切法门从此流，一切行门从此办。</p><p class="p-trans">一切法门从此净土法门流出，一切行门从此净土法门成办。</p></div>
+<div class="para-pair"><p class="p-orig">致令各宗尽朝宗，万川赴海依行愿。</p><p class="p-trans">致使各个宗派全都回归到净土宗，依行愿有如万条江河归赴大海。</p></div>
+<p class="p-orig">唐二祖长安光明善导大师</p>
+<div class="para-pair"><p class="p-orig">师当唐初，各宗盛行。提倡净土惬群情，佛力谁与京。若肯投诚，西方定往生。</p><p class="p-trans">大师生活在唐朝初年，各个宗派都很盛行。大师提倡净土法门，合乎众生的根机，佛力谁能够与之相比。如果肯投诚（归依），一定会往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">世传师是弥陀现，提倡念佛义周赡。</p><p class="p-trans">世间传说大师是阿弥陀佛的示现，提倡念佛的义理很是周全完备。</p></div>
+<div class="para-pair"><p class="p-orig">切诫学者须撝谦，兼使极力生欣厌。</p><p class="p-trans">极力告诫修学的人必须要谦逊，同时要极力生起欣求极乐、厌离娑婆的心。</p></div>
+<div class="para-pair"><p class="p-orig">解宜遍通一切法，行择机理双契幹。</p><p class="p-trans">解门，应该遍通一切法；行门，要选择根机义理都契合的来做。</p></div>
+<div class="para-pair"><p class="p-orig">念佛出光励会众，所说当作佛说看。</p><p class="p-trans">大师念佛时，口中发出光明，以此激励与会大众，他所说的，大家都当作佛说的来看待。</p></div>
+<p class="p-orig">唐三祖南岳般舟承远大师</p>
+<div class="para-pair"><p class="p-orig">羸形垢面，侍弥陀傍。法照神游得观光，佛示其名坊。往嗣门墙，心法永传扬。</p><p class="p-trans">大师虽然身形瘦弱，面容污秽，却侍奉在阿弥陀佛的旁边。法照大师在禅定中神游极乐，阿弥陀佛说出大师的名字与住处。法照大师前往南岳，成为承远大师的弟子，净宗心法永远传扬。</p></div>
+<div class="para-pair"><p class="p-orig">般舟苦行世难堪，绝粮泥土作所餐。</p><p class="p-trans">承远大师修般舟念佛，他的苦行世间人难以忍受，他断绝粮食，用泥土来当饭。</p></div>
+<div class="para-pair"><p class="p-orig">常将经要佛名号，遍书涂巷岩石间。</p><p class="p-trans">常常将经中要义，佛陀名号，周遍书写在街巷、岩石之间。</p></div>
+<div class="para-pair"><p class="p-orig">念佛佛教特别法，来学以此令心安。</p><p class="p-trans">念佛是佛教的特别法门，大师以此净土念佛法门令来学的人心安。</p></div>
+<div class="para-pair"><p class="p-orig">天子闻名南向礼，故得道风四海传。</p><p class="p-trans">当时天子唐代宗听闻到大师的名号，向南作礼，因此大师的道风得以四海传扬。</p></div>
+<p class="p-orig">唐四祖五台竹林法照大师</p>
+<div class="para-pair"><p class="p-orig">缅维四祖，懿德堪钦。乐邦得师佛指陈，文殊示宿因。普令群伦，即生达本真。</p><p class="p-trans">缅怀遥想净宗四祖法照大师，他的美德实在令人钦仰。在神游极乐莲邦时得到师父，这是阿弥陀佛给他的指示，文殊菩萨开示宿因。普令众生，当生通达本真。</p></div>
+<div class="para-pair"><p class="p-orig">衡州钵中见圣境，台山一一悉亲造。</p><p class="p-trans">大师在衡州云峰寺时，在钵中见到圣境，五台山的寺院，他一一全都亲自造访。</p></div>
+<div class="para-pair"><p class="p-orig">净土得睹承远师，竹林恭承文殊教。</p><p class="p-trans">在神游极乐净土时，看到了承远大师，在竹林寺中恭承文殊菩萨的教导。</p></div>
+<div class="para-pair"><p class="p-orig">并州佛声达宫闱，代宗遣使优旨诏。</p><p class="p-trans">他在山西并州教人五会念佛之声，传到了宫廷之中，唐代宗派遣使者，特地下旨封为国师，诏令大师入宫教导大家念佛。</p></div>
+<div class="para-pair"><p class="p-orig">念佛之妙究如何，能令速成菩提道。</p><p class="p-trans">念佛之妙究竟如何呢？它能够令我们快速成就菩提大道。</p></div>
+<p class="p-orig">唐五祖新定乌龙少康大师</p>
+<div class="para-pair"><p class="p-orig">忌谈世谛，七岁不言。出言即便惊人天，广结净土缘。小儿为钱，各种九品莲。</p><p class="p-trans">大师不谈论世俗的事，七岁之前不说话。一开口说话，就语惊人天，广结净土法缘。用钱诱导小孩念佛，各自种下了登上九品莲台的因缘。</p></div>
+<div class="para-pair"><p class="p-orig">七岁绝未发一言，发言即称世尊号。</p><p class="p-trans">七岁之前绝没有说一句话，一开口就称世尊名号。</p></div>
+<div class="para-pair"><p class="p-orig">一见善导西方文，方知净土堪倚靠。</p><p class="p-trans">一见善导大师的《西方化导文》，方才知道净土法门完全能够依靠。</p></div>
+<div class="para-pair"><p class="p-orig">钱诱小儿念弥陀，未久道路佛声噪。</p><p class="p-trans">用钱诱导小孩子念阿弥陀佛，不久之后，道路上，全都是念佛声。</p></div>
+<div class="para-pair"><p class="p-orig">念佛佛像从口出，有谁闻见不依教。</p><p class="p-trans">大师念佛的时候，有佛像从口飞出，有谁听见看见不依教奉行呢？</p></div>
+<p class="p-orig">宋六祖杭州永明延寿大师</p>
+<div class="para-pair"><p class="p-orig">法华一部，佛事百八。四重料拣利愚黠，万善作警察。普期超拔，往生极乐刹。</p><p class="p-trans">大师每天诵一部《法华经》，做佛陀事业一百零八件。大师所写四重料拣，利益愚昧与聪慧的人，《万善同归集》作为止恶的警示省察。普遍期望超拔众生，往生极乐刹。</p></div>
+<div class="para-pair"><p class="p-orig">视诸众生皆是佛，只顾救生忘国宪。</p><p class="p-trans">大师视一切众生都是佛，只顾救护生命而忘记了国家宪法。</p></div>
+<div class="para-pair"><p class="p-orig">赴市心乐颜不变，蒙赦得遂出家愿。</p><p class="p-trans">行刑的时候心中安乐，脸色不变，得蒙赦放，成就出家大愿。</p></div>
+<div class="para-pair"><p class="p-orig">日课佛事百八件，法华一部佛十万。</p><p class="p-trans">每天功课有佛事一百零八件，法华经一部，佛号十万声。</p></div>
+<div class="para-pair"><p class="p-orig">若非大权示世间，法幢谁能如是建。</p><p class="p-trans">如果不是菩萨大权示现世间，谁能够建造如此的法幢。</p></div>
+<p class="p-orig">宋七祖杭州昭庆省常大师</p>
+<div class="para-pair"><p class="p-orig">道慕庐山，追踪莲社。刺血特将净行写，首辅归座下。百廿大雅，愿生效龙马（龙树，马鸣）。</p><p class="p-trans">大师仰慕庐山慧远大师的法道，效法慧远大师创办莲社。刺血特地书写《华严经·净行品》，当朝首辅王旦归依在他的座下。一百二十个大德才俊，愿意在生仿效龙树菩萨、马鸣菩萨。</p></div>
+<div class="para-pair"><p class="p-orig">慕庐山风立净社，爰因后世实行寡。</p><p class="p-trans">追慕庐山慧远大师之风创立净行社，实在因为后世的人，真实去做的太少。</p></div>
+<div class="para-pair"><p class="p-orig">百四一愿随事发，人各寝馈菩提者。</p><p class="p-trans">《净行品》中一百四十一个大愿，随日常生活的事相发愿，每个人各自在饮食起居中发起菩提心。</p></div>
+<div class="para-pair"><p class="p-orig">首辅王旦既归依，公卿百廿受陶冶。</p><p class="p-trans">宰相王旦归依不久，朝中的公卿一百二十人又受到教化。</p></div>
+<div class="para-pair"><p class="p-orig">阎浮虽则赞皇猷，何若乐邦得佛嘏（音假，福也）。</p><p class="p-trans">即使在阎浮世界中，赞扬皇帝的清明政治，也不如在极乐莲邦得到佛陀的福佑（嘏：读音假，福义）。</p></div>
+<p class="p-orig">明八祖杭州云栖袾宏大师</p>
+<div class="para-pair"><p class="p-orig">初住云栖，即灭虎患。旱请念佛雨慰盼，村民咸感叹。庀材开办，道场重兴建。</p><p class="p-trans">大师最初住在云栖山，就灭除了老虎的祸患。天大旱，村民请大师念佛祈雨，天降大雨安慰了大家的期盼，村民全都感叹。备齐材料开工承办，云栖道场得以重新兴建。</p></div>
+<div class="para-pair"><p class="p-orig">幼闻念佛意颇快，末诫门徒莫捏怪。</p><p class="p-trans">大师幼年听到念佛，心中很愉快，临终时告诫门徒：大众老实念佛，莫捏怪。</p></div>
+<div class="para-pair"><p class="p-orig">行为世则言世法，注重净土及规戒。</p><p class="p-trans">他的行为成了世人的准则，言语成了世人的法轨，他注重净土以及戒规。</p></div>
+<div class="para-pair"><p class="p-orig">砥柱狂澜契理机，阐明佛心祛蜂虿。</p><p class="p-trans">是法门的中流砥柱，力挽狂澜，契理契机，阐明佛陀本心，祛除邪知邪见。</p></div>
+<div class="para-pair"><p class="p-orig">普令具缚诸凡夫，仗佛慈力登莲界。</p><p class="p-trans">普令具缚的一切凡夫，依仗佛的慈力，登上莲界。</p></div>
+<p class="p-orig">清九祖北天目灵峰智旭大师</p>
+<div class="para-pair"><p class="p-orig">幼即信佛，随母礼诵。入塾宗宋遂放纵，读竹窗自讼。力弘大乘，冀同出陷阱。</p><p class="p-trans">大师幼年时就信佛，随母亲礼佛诵经。进入私塾，宗从宋朝理学，于是放纵自心辟佛，读了莲池大师的《竹窗随笔》后，自责过错。竭力弘扬大乘，希望大家同出陷阱。</p></div>
+<div class="para-pair"><p class="p-orig">宗乘教义两融通，所悟与佛无异同。</p><p class="p-trans">大师对于宗门教下，两方面都融会贯通，悟解与佛没有不同。</p></div>
+<div class="para-pair"><p class="p-orig">惑业未断犹坯器，经雨则化弃前功。</p><p class="p-trans">见思惑业若还没有断，就如同未烧的坯器，经过大雨就会融化，前功尽弃。</p></div>
+<div class="para-pair"><p class="p-orig">由此力修念佛行，决欲现生出樊笼。</p><p class="p-trans">由此努力修习念佛行门，决定想要在这一生就出离生死樊笼。</p></div>
+<div class="para-pair"><p class="p-orig">苦口切劝学道者，生西方可继大雄。</p><p class="p-trans">苦口婆心，劝导修学佛道的人，生到西方，才可以继承佛陀之位。</p></div>
+<p class="p-orig">清十祖虞山普仁行策大师</p>
+<div class="para-pair"><p class="p-orig">阐扬净土，恳切少俦。以深信愿竭诚修，心佛两相投。万念俱休，决定出苦邱。</p><p class="p-trans">大师阐扬净土，他的恳切很少有人能够相比。以深信愿竭诚修，心佛两相投。妄想杂念全都放下，决定出离生死苦轮。</p></div>
+<div class="para-pair"><p class="p-orig">憨山宿愿尚未酬，故复示生作截流。</p><p class="p-trans">憨山大师的宿愿尚未实现，所以又示生为截流大师。</p></div>
+<div class="para-pair"><p class="p-orig">呵斥修人天福者，直是阐提旃陀俦。</p><p class="p-trans">呵斥修人天福报的人，简直就是一阐提、旃陀罗之类的人。</p></div>
+<div class="para-pair"><p class="p-orig">佛我心性原不异，佛是已成我未修。</p><p class="p-trans">佛与我们的心性原本没有不同，佛是已成佛，我是未修佛。</p></div>
+<div class="para-pair"><p class="p-orig">欲得心佛两无差，当向忆佛念佛求。</p><p class="p-trans">想要得到心佛两者无差别，应当向忆佛念佛当中去求。</p></div>
+<p class="p-orig">清十一祖杭州梵天实贤大师</p>
+<div class="para-pair"><p class="p-orig">四十八愿，仰效弥陀。百八首诗胜楚歌，闻者厌娑婆。振起蹉跎，证波罗蜜多。</p><p class="p-trans">大师燃指发四十八愿，仰效阿弥陀佛。写下一百零八首的净土诗，胜过楚歌，听到的人都厌离娑婆。从蹉跎中奋发振起，证得波罗蜜多。</p></div>
+<div class="para-pair"><p class="p-orig">深入经藏难亲证，彻悟心源力弘净。</p><p class="p-trans">深入经藏，难以亲证，大师彻悟心源，竭力弘扬净土。</p></div>
+<div class="para-pair"><p class="p-orig">欲使世人知所以，作文作诗示佛令。</p><p class="p-trans">想要使得世人知道其中的所以然，作诗作文开示佛陀的法令。</p></div>
+<div class="para-pair"><p class="p-orig">发菩提心为前导，真信愿行为后劲。</p><p class="p-trans">以发菩提心作为前导，以真信切愿实行作为后劲。</p></div>
+<div class="para-pair"><p class="p-orig">若能具此殊胜法，即生超凡而入圣。</p><p class="p-trans">如果能够具有这些殊胜之法，当生就能超凡入圣。</p></div>
+<p class="p-orig">清十二祖红螺资福际醒大师（即彻悟大师）</p>
+<div class="para-pair"><p class="p-orig">遍通经史，冀为世导。一病方知不可靠，研穷各宗奥。均难证到，专主净土教。</p><p class="p-trans">大师遍通经书史籍，希望成为世间的良导。一场大病之后，方才知道不可靠，于是研究各宗的奥妙，但都很难当生证到，于是专门主修净土法门。</p></div>
+<div class="para-pair"><p class="p-orig">示众法语利益多，念佛伽陀悉包罗。</p><p class="p-trans">大师开示大众的法语利益很多人，念佛的伽陀偈颂全都包罗。</p></div>
+<div class="para-pair"><p class="p-orig">全真成妄只此心，全妄成真亦非他。</p><p class="p-trans">全真成妄，也就是这个心，全妄成真，也不是其他的东西。</p></div>
+<div class="para-pair"><p class="p-orig">不变随缘宜随净，随缘不变莫随讹。</p><p class="p-trans">不变随缘，应该随清净的缘，随缘不变，不要随染污的缘。</p></div>
+<div class="para-pair"><p class="p-orig">人若依此义修持，光寿当同阿弥陀。</p><p class="p-trans">一个人如果依照这个义理来修持，将来光明寿量当等同阿弥陀佛。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

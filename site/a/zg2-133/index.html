@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>九江居士念佛林莲社缘起碑记 · 印光法师文钞</title>
+<meta name="description" content="念佛一法，乃如来一代时教中之特别法门，实为十方三世一切诸佛，上成正觉，下化众生之成始成终无上要道。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-133/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="九江居士念佛林莲社缘起碑记 · 印光法师文钞">
+<meta property="og:description" content="念佛一法，乃如来一代时教中之特别法门，实为十方三世一切诸佛，上成正觉，下化众生之成始成终无上要道。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-133/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">九江居士念佛林莲社缘起碑记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">念佛一法，乃如来一代时教中之特别法门，实为十方三世一切诸佛，上成正觉，下化众生之成始成终无上要道。</p><p class="p-trans">念佛这一法门，是释迦如来一代时教中的特别法门，实在是十方三世一切诸佛，上成正觉，下化众生，成始成终的无上要道。</p></div>
+<div class="para-pair"><p class="p-orig">今特立以为林者，缅维远公东林结社，开念佛之先声。了义居士，深知此法契理契机，遂于千余年后，极力提倡，重兴莲社，追彼芳踪。</p><p class="p-trans">现在之所以建立念佛林，是缅怀净宗初祖慧远大师在东林寺集结莲社，开启了念佛的先声。了义居士，深知这一法门契理契机，于是在一千多年后的今天，极力提倡念佛法门，重兴莲社，追续慧远大师的芳踪。</p></div>
+<div class="para-pair"><p class="p-orig">虽知自他智慧浅薄，迷惑深厚，而不容已者，以人同此心，心同此理，倘能认真提倡，自可同声相应，固无所论其古今难易也。</p><p class="p-trans">虽然知道自己和其他同修都智慧浅薄，迷惑深厚。而之所以坚持不懈，是因为人人同具此心，心心同具此理，倘若能够认真提倡，自然可以同声相应。那么就谈不上所谓古今难易的差别了。</p></div>
+<div class="para-pair"><p class="p-orig">因兹不辞劳瘁，策厉进行，不遗余力，以冀远近见者闻者，同皆兴起，提倡举行，以至遍周寰宇，岂区区为此一处计乎。</p><p class="p-trans">因此他不辞辛劳，不遗余力地敦促这件事的进展，希望或远或近见者闻者，都共同兴起，提倡举行，以至于周遍全世界。哪里只是区区为这一处考虑呢？</p></div>
+<div class="para-pair"><p class="p-orig">然宏扬佛法，道场为本，初则借寓他庵，不但不能持久，而且地址偏僻，往来不便，遂于癸亥年，舍己住宅，为念佛林，其愿力之勇毅宏深，实为罕有。</p><p class="p-trans">然而宏扬佛法，道场是根本。念佛林最初是借用别人的寺庵，不但不能持久，而且位置偏僻，交通不便。于是了义居士癸亥年（1923年）舍出自己的住宅，作为念佛林。他这番勇毅宏深的愿力，实在罕见。</p></div>
+<div class="para-pair"><p class="p-orig">其宅四重，临街一重，向租米铺，年得二百余元，以供林中零用。二重作招待，及会计之所。三重作大殿，中供西方三圣接引像，以常时礼拜瞻仰，临终自易于感通也。四重为净土延生堂，备列捐款各人父母牌位，以期存则福增寿永，没则直登莲邦。且各有楼，以为阅经坐禅之所。</p><p class="p-trans">宅院有四重，临街的一重，向来出租给米铺，年租金二百多元，用来供给念佛林中的零杂开支。第二重作为接待、会计的场地。第三重作为大殿，中间供奉西方三圣接引像，以备居士们时常礼拜瞻仰，临终时自然就容易感通了。第四重作为净土延生堂，详细列出各捐款人的父母牌位，希望他们在生时福增寿永，没后往生西方。而且每一重都有单独的阁楼，作为阅经坐禅的场所。</p></div>
+<div class="para-pair"><p class="p-orig">居士既发此心，同社之人，悉生景仰，各随其力而为培植，或造佛像，或置庄严，及诸供具，凡道场所应用者，罔不备焉。</p><p class="p-trans">了义居士发了这番大心之后，同社的人都心生景仰，各各随自己的能力培植福德。或者造佛像，或者置办庄严法器，以及种种供具。凡是道场所需要的，无不具备。</p></div>
+<div class="para-pair"><p class="p-orig">从兹修持讲演，既得其所，将见善信源源而来，远近各各相效，于以祛凡情而了佛性，挽劫运以致太平，生为圣贤之徒，没预莲池海会。</p><p class="p-trans">从此就有了修持讲演的处所，将会见到善男信女，源源而来，远近各地，相互效仿。就此消除凡情，了达佛性，挽回劫运，实现太平。现生中成圣成贤，没后进入莲池海会。</p></div>
+<div class="para-pair"><p class="p-orig">庶不负世尊说法，历代诸善知识宏扬，及了义居士舍宅提倡之一番大慈悲心，与自己即心本具之真如佛性也。</p><p class="p-trans">想必才不辜负世尊说法，历代善知识宏扬，以及了义居士舍宅提倡的一番大慈悲心，与自己即心本具的真如佛性啊。</p></div>
+<div class="para-pair"><p class="p-orig">原夫净土法门，理极宏深，唯佛与佛，乃能究尽。勿道博地凡夫不能测度，即久证法身之菩萨，亦不能尽知。以故世尊说此法门时，十方恒河沙数诸佛，出广长舌，同声赞叹，普令众生，同生信心，且深叹释迦世尊能为甚难希有之事。</p><p class="p-trans">净土法门，义理极为宏大深远，只有佛与佛才能究竟了知。不要说博地凡夫不能测度，即使是久已证得法身的大菩萨，也不能完全了知。因此释迦世尊宣说这一法门时，十方恒河沙数诸佛，出广长舌相同声赞叹，普令众生生起信心。并且深深赞叹释迦世尊，能做甚难希有之事。</p></div>
+<div class="para-pair"><p class="p-orig">世尊亦自谓我于五浊恶世，行此难事，得阿耨菩提，为一切世间说此难信之法，是为甚难。而普贤菩萨，令华藏海众，同以十大愿王，回向往生，非成始成终之要道，能如是乎。</p><p class="p-trans">释迦世尊自己也说：“我于五浊恶世，行此难事，得阿耨多罗三藐三菩提，为一切世间，说此难信之法，是为甚难。”而普贤菩萨，让华藏世界的大海众菩萨们，共同以十大愿王，回向往生西方。如果不是成始成终的要道，能这样做吗？</p></div>
+<div class="para-pair"><p class="p-orig">是故千经万论，处处指归。往圣前贤，人人趣向。如群星之拱北，众水之朝东也。念佛之人，能如是信，若不往生者，日月当逆行，天地当易位矣，有是理乎。愿见闻者，同皆勉旃。</p><p class="p-trans">所以千经万论，处处指归净土；往圣前贤，人人趣向西方。如同群星围绕北极星，众水向东流入大海。念佛的人，能够这样生起信心，如果不往生的话，日月当会逆行，天地当会换位了。有这样的道理吗？愿见到听到的人，共同勉励啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【缅惟】</span>遥想。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【劳瘁】</span>因辛劳过度而致身体衰弱。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【策厉】</span>督促勉励。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

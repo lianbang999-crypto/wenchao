@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>阜阳资福寺重建念佛堂开莲社缘起（民二十六年） · 印光法师文钞</title>
+<meta name="description" content="如来圣教，法门无量，随依一法，以菩提心修持，皆可以了生死，成佛道。然于修而未证之前，大有难易疾迟之别。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-169/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阜阳资福寺重建念佛堂开莲社缘起（民二十六年） · 印光法师文钞">
+<meta property="og:description" content="如来圣教，法门无量，随依一法，以菩提心修持，皆可以了生死，成佛道。然于修而未证之前，大有难易疾迟之别。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-169/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">阜阳资福寺重建念佛堂开莲社缘起（民二十六年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来圣教，法门无量，随依一法，以菩提心修持，皆可以了生死，成佛道。然于修而未证之前，大有难易疾迟之别。</p><p class="p-trans">如来圣教，法门无量，随便依照一个法门，以菩提心来修持，都可以了生死，成佛道。然而在修习而没有证道之前，修行过程却大有难易、迟速的差别。</p></div>
+<div class="para-pair"><p class="p-orig">求其至圆至顿，最简最易，契理契机，即修即性，三根普被，利钝全收，为律教禅密诸宗之归宿，作人天凡圣证真之捷径者，无如信愿念佛求生西方一法也。</p><p class="p-trans">如果寻求其中最圆顿，最简易，契理契机、即修即性、三根普被、利钝全收，为律、教、禅、密诸宗的归宿，作人、天、凡、圣证真的捷径的法门，就没有比信愿念佛、求生西方这个法门更好的了。</p></div>
+<div class="para-pair"><p class="p-orig">良以一切法门，皆仗自力。念佛法门，兼仗佛力。仗自力，非烦惑断尽，不能超出三界。仗佛力，若信愿真切，即可高登九莲。当今之人，欲于现生了生死大事者，舍此一法，则绝无希望矣。</p><p class="p-trans">实在是因为一切法门，都依仗自力，而念佛法门，却兼仗佛力。依仗自力，如果不是烦惑断尽，就不能超出三界；依仗佛力，如果信愿真切，就能高登九品莲台。当今之人，想要在现生了却生死大事，如果舍掉这个法门，就绝对没有希望了。</p></div>
+<div class="para-pair"><p class="p-orig">须知净土法门，法法圆通。如皓月丽天，川川俱现。水银堕地，颗颗皆圆。不独于格物致知，穷理尽性，觉世牖民，治国安邦者，有大裨益。即士农工商，欲发展其事业，老幼男女，欲消灭其疾苦者，无不随感而应，遂心满愿。</p><p class="p-trans">要知道，净土法门，法法圆通。就像皓月挂于中天，每条江河都能映现出月影；也像水银落在地上，颗颗都是圆的。不仅对格物致知、穷理尽性、觉世醒民、治国安邦的人，大有裨益；即使是士农工商，想要发展自己的事业，老幼男女，想要消灭自身的疾苦，对这些人也无不是随感而应、遂心满愿。</p></div>
+<div class="para-pair"><p class="p-orig">今则人心陷溺，世乱已极。变乱是非，颠倒黑白，争夺欺陵，极力演变。若不挽救，则人道或几乎熄。</p><p class="p-trans">现在社会，人心沉溺，世道混乱已经到了极点。变乱是非，颠倒黑白，争夺欺凌，都极力演变出来。如果不加以挽救，那么做人的道理可能就要熄灭了。</p></div>
+<div class="para-pair"><p class="p-orig">于是各处有心之士，群起而提倡佛法，明三世之因果，显六道之轮回，示娑婆之浊恶，表极乐之严净。以期斯世之人，克己复礼，生入圣贤之域。了生脱死，没归极乐之邦。</p><p class="p-trans">于是各处的有心人士，群起而提倡佛法。阐明三世因果，显扬六道轮回；开示娑婆世界的浊恶，表明极乐世界的庄严清净。希望可以让这个世间的人们，在世时能够克己复礼，成为圣人、贤人；临终时能够了生脱死，往生极乐国。</p></div>
+<div class="para-pair"><p class="p-orig">阜阳资福寺，乃几朝古刹，载之志乘。近以住持无弘法之资格，一班不知佛法者，竞倡维新，破除迷信，急欲毁灭其寺。虽明哲之士，谕以正理，绝不肯听。</p><p class="p-trans">安徽阜阳资福寺，是经历过几个朝代的古刹，被明确记载在志书上。近来因为住持没有弘法的资格，而且一群不懂佛法的人，竞相提倡维新，破除迷信，急着想要毁灭这座寺院。虽然有明哲人士，用正理劝告他们，但是他们根本不肯听。</p></div>
+<div class="para-pair"><p class="p-orig">阜阳佛教会代表邢纯斋，愤不顾身，奔走省垣，面见主席雪亚刘公，祈其出示保护。幸蒙刘公护法心切，爱民情殷，立即出示禁止，方得保存。</p><p class="p-trans">阜阳佛教会代表邢纯斋，奋不顾身，奔走省政府，面见省主席刘雪亚先生，祈请他出告示加以保护。幸好承蒙刘先生护法心切，爱民情殷，立即出告示禁止，才得以保存。</p></div>
+<div class="para-pair"><p class="p-orig">地方人士，因思佛法理智高深，利益广大。更念资福为颍地名胜，自古迄今，人民沐恩戴德者，多难胜数。不忍任其荒凉，于是重谋兴复。</p><p class="p-trans">地方上的人士，因为考虑到佛法理智高深，利益广大。更考虑到资福寺是颍州的名胜古迹，从古至今，沐恩戴德的人民，多得难以胜数。所以不忍心任其荒凉，于是重新谋划兴复这座寺院。</p></div>
+<div class="para-pair"><p class="p-orig">现已建立念佛堂五楹，请秉初法师暂主其事。拟安戒德师僧若干位，常年修持净业。每月朔望，聚集在家信士，念佛一日，以资提倡。</p><p class="p-trans">现在已经建立了念佛堂五楹，并邀请了秉初法师暂时主持寺务。还打算安排有戒德的出家师父若干位，常年修持净业。每月的初一、十五，聚集在家信士，念佛一天，来协助提倡。</p></div>
+<div class="para-pair"><p class="p-orig">午后念佛毕，不拘缁素，为之讲演念佛大旨，与居尘学道，在野报国之法。以及敦伦尽分，闲邪存诚，诸恶莫作，众善奉行之事。并真为生死，发菩提心，信愿念佛，求生西方之理。</p><p class="p-trans">午后念佛完毕，不论出家人、在家人，都可以给大家讲演念佛的主要宗旨，和身在红尘如何学道、身为普通百姓如何报国的方法，以及敦伦尽分（敦笃人伦、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行这些事理，还有真为生死、发菩提心，信愿念佛、求生西方这些义理。</p></div>
+<div class="para-pair"><p class="p-orig">俾一切人，知人皆可以为尧舜，人皆可以作佛之所以然。则于一切时，一切处，皆为希圣学佛之事。此实不居位而护国救民，不现形而移风易俗之大方便法门。愿若缁若素共勉之，则其利益大矣。</p><p class="p-trans">使得一切人，知道人人都能作尧舜、人人都能作佛的所以然。那么大家在一切时、一切处，就都会做效法圣贤、学习佛法的事。这实在是不居官位却能护国救民，不现形迹却能移风易俗的大方便法门。希望不论出家人、在家人都能共勉，那么这样做的利益就太大了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复朱石僧居士书一 · 印光法师文钞</title>
+<meta name="description" content="尹王氏素不吃素念佛，一闻净土法门，便能认真修持。而且改所有田庄为慈云莲社，俾有志修持女众，同得依止修持，实为难得。若非宿有善根，何能如此，诚所谓九品莲华也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-125/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复朱石僧居士书一 · 印光法师文钞">
+<meta property="og:description" content="尹王氏素不吃素念佛，一闻净土法门，便能认真修持。而且改所有田庄为慈云莲社，俾有志修持女众，同得依止修持，实为难得。若非宿有善根，何能如此，诚所谓九品莲华也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-125/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复朱石僧居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">尹王氏素不吃素念佛，一闻净土法门，便能认真修持。而且改所有田庄为慈云莲社，俾有志修持女众，同得依止修持，实为难得。若非宿有善根，何能如此，诚所谓九品莲华也。</p><p class="p-trans">尹王氏一向不吃素念佛，但一听闻净土法门，便能认真修持。而且改所有的田庄为慈云莲社，使有志修持的女众，共同得以依止修持，实在是难得。如果不是宿世有善根，如何能够如此，实在是所谓的九品莲华度众生。</p></div>
+<div class="para-pair"><p class="p-orig">然彼恐未熟闻净土法门，固宜令其生真信心，发切愿心，决定求于临命终时，蒙佛接引，往生西方。切不可带外道炼丹运气之工夫，以求长生。并冀为大罗神仙等。则便可不虚此生，不虚此遇矣。</p><p class="p-trans">然而她恐怕没有熟闻净土法门，本应令她生真信心，发切愿心，决定愿求在临命终时，蒙佛接引，往生西方。千万不可带着外道炼丹运气的工夫，来求长生。并希望成为大罗神仙等等。就能够不浪费这一生，不浪费遇到净土法门了。</p></div>
+<div class="para-pair"><p class="p-orig">今为彼取法名为慧导。谓以智慧导引同伦，同生西方。又须令念佛者，各各尽己之分。如父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠。存好心，说好话，行好事。诸恶莫作，众善奉行。以此自行，复以此化他。则无知之人，不敢妄生讥毁。倘不能尽己之分，纵有修持，亦难与佛相应。而且招彼无知者，妄谓佛法无益于伦常世道也。</p><p class="p-trans">现在为她取法名为慧导。就是以智慧导引同辈大众，同生西方。还有，必须让念佛的人，各各恪尽自己的本分。如父亲慈祥、儿子孝顺，兄长友爱、弟弟恭敬，丈夫温和、妻子顺从，主人仁厚、仆人忠心。存好心，说好话，行好事。诸恶莫作，众善奉行。以此自行，再以此教化他人。那么无知的人，不敢妄生非议诋毁。倘若不能恪尽自己的本分，即使有所修持，也很难与佛相应。而且招来那些无知的人，错误地认为佛法无益于伦理纲常、世道人心。</p></div>
+<div class="para-pair"><p class="p-orig">历观古来大忠大孝，深仁厚德者，多皆由学佛得力而来。是以观经三种净业正因，第一即是孝养父母，奉事师长（师长即有德之人），慈心不杀，修十善业。能孝能弟能慈，能令身三（身三业杀盗淫），口四（口四业妄言绮语两舌恶口），意三（意三业贪瞋痴），通皆是善。如是之人，乃为国家社会之宝。令彼见者闻者相观而善。所谓以言教者讼，以身教者从，世间事事，皆须以身为本。况且现在邪说异见，无奇不有。</p><p class="p-trans">历观古来大忠大孝，深仁厚德的人，大多都是由学佛得力而来。所以《观经》中三种净业正因，第一就是：孝养父母，奉事师长（师长就是有德之人），慈心不杀，修十善业。能孝顺父母、能友爱兄弟、能仁慈万物，能令身三（身三业：杀、盗、淫），口四（口四业：妄言、绮语、两舌、恶口），意三（意三业：贪、瞋、痴），通通都是善。如此之人，乃是国家社会之宝。令那些见到听到的人相互观摩学习而向善。所谓用空泛的言语教导，大家就会争辨是非；用自身的行为教导，他人就会听从，世间的每件事，都必须以身行为根本。况且现在邪说异见，无奇不有。</p></div>
+<div class="para-pair"><p class="p-orig">吾人学佛，若不认真从伦常居心动念处讲究。则自己工夫亦难得益。他人见闻，或生闲议。是以须要从伦常上讲究，从起心动念处体察。则本立而道生。世人见闻，不知不觉相随而学。譬如风行草偃，水到渠成矣。</p><p class="p-trans">我们学佛，如果不认真从伦理纲常、居心动念处来讲求。那么自己的工夫也很难得益。他人见到听到，或许会生起闲话议论。所以必须要从伦理纲常上讲究，从起心动念处体察。那么根本确立了，做人的原则就产生了。世人见到听到，不知不觉就跟随学习。譬如风吹草伏，水到渠成啊！</p></div>
+<div class="para-pair"><p class="p-orig">其余所宜与之说者，备在马俊卿函中，均当与彼说之。然介绍人皈依，实为最好之事。若心无正信者，切勿滥为介绍。恐彼后来退堕造业，反为不美。人心不同有如是。凡遇有宿根者，因宜引导。无善心者，不可妄引。以免反为法门辱也。</p><p class="p-trans">其余适合对她讲说的，都在给马俊卿的信中，都应当对她讲说。然而介绍人皈依，实在是最好的事。但是如果心中没有正信的人，千万不要滥为介绍。恐怕他将来退堕造业，反而不好。人心有如此的不同。凡是遇到有宿世善根的人，应因时制宜加以引导。没有善心的人，不可随便引导。以免反而成为法门的羞辱。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【朱石僧】</span>名祺。早年皈依谛闲法师，法名显伽。后又皈依印光法师，法名智睿。父业农。母杨太夫人，乐善好施。石僧幼承庭训，慈祥诚朴。久任宁沪铁路吴淞站长等职。一九二二年，发起成立世界佛教居士林，任副林长。扩建林所大殿及堂寮，奔走规划，煞费苦心。一九三一年，七·七事变，上海难民甚多，饥寒交迫，石僧商同道友，筹设佛教济寒会，竭力救济。凡寒苦隐贫等众，切实调查，按月补助。护法济众，耗尽心血。晚年因操劳过度，时婴疾苦。一九四二年古历十月初八日，灵岩妙真和尚闻石僧疾笃，特临病榻，详切开示。嘱其“万缘放下，提起正念，一心念佛，求生西方。”石僧极为感动，切实奉行。至十一日晨九时，林中道友正在助念之际，其子永钧问父：“心中能念佛否？”点头云：“能！我心早到西方，念佛真不落空。”并索笔书“你父定归西”数位示之。手掏数珠，唇齿微动，念佛不辍。至午刻，安祥生西。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【大罗天】</span>道教所称三十六天中最高一重天。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【风行草偃】</span>偃：倒伏。风一吹草就倒下。比喻道德文教的感化人。《论语·颜渊》：“君子之德风，小人之德草，草上之风，必偃。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

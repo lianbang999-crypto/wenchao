@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复某居士书 · 印光法师文钞</title>
+<meta name="description" content="阅来书，知汝聪明尚不彻底，故以儒佛之因果，与世间王法之赏罚同论，则似有理，而实无理矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-140/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复某居士书 · 印光法师文钞">
+<meta property="og:description" content="阅来书，知汝聪明尚不彻底，故以儒佛之因果，与世间王法之赏罚同论，则似有理，而实无理矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-140/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复某居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">阅来书，知汝聪明尚不彻底，故以儒佛之因果，与世间王法之赏罚同论，则似有理，而实无理矣。</p><p class="p-trans">看完你的来信，知道你的聪明还不够彻底，所以将儒教、佛教的因果，与世间王法的赏罚相提并论，看似有些道理，实际上却毫无道理。</p></div>
+<div class="para-pair"><p class="p-orig">世间赏罚，约人情为定。因果，乃心识所感召，儒释无二道。汝以儒所未发明者，谓儒尽乎此，此亦汝聪明不彻底之一证。</p><p class="p-trans">世间王法的赏罚，是以人情来设定的。因果，是自己的心识所感召，儒教、佛教并无不同。你因为儒家没有深入阐明因果报应，认为儒家就到此为止了，这也是你聪明不够彻底的一个证明。</p></div>
+<div class="para-pair"><p class="p-orig">夫善恶因果，皆自心之感召。世人不知，佛为详说，汝谓佛设，岂真聪明乎哉。果报之来，有在即刻即世者，有在来生后世，及多生多劫者。汝嫌报远，而欲令速报，则成邪见。</p><p class="p-trans">善恶因果，都是自心的感召。世间人不知道，佛才为我们详细说明，你认为这是佛陀设定的，这哪里是真正的聪明呢？果报到来，有的是在当下、今世，有的是在来生、后世，有的是在多生、多劫。你嫌果报来得太迟、太遥远，而想要让果报迅速现前，就成了邪见。</p></div>
+<div class="para-pair"><p class="p-orig">须知超凡入圣，了生脱死，以至成佛之果报，皆在多劫。虽曰，放下屠刀，立地成佛，而实证佛果，也须多劫。且莫以一悟佛性，为实证佛果。若如汝说，则世无一人能了生死，况成佛乎。</p><p class="p-trans">要知道超凡入圣，了生脱死，以至成佛的果报，都在多劫以后。虽然说：放下屠刀，立地成佛，而实际证得佛果，也须要多劫。千万不要以为一悟到佛性，就实证佛果了。如果像你所说，那么世间就没有一个人能够了生死了，何况成佛呢？</p></div>
+<div class="para-pair"><p class="p-orig">汝若知此，则不至怪佛为酷烈，当感佛为慈悲，而痛哭流涕以告同伦也。汝嫌不速报，而不知不速之大利益，乃夏虫不知有冰，蜉蝣不知有来日之见，可不哀哉。</p><p class="p-trans">你如果知道这些道理，就不会责怪佛陀太残酷惨烈（施设地狱），反而会感激佛陀的慈悲，并痛哭流涕地告诉同辈们了。你嫌果报不能迅速现前，而不知道不速报的大利益，这是夏虫不知有寒冰，蜉蝣不知有来日的见解，很悲哀啊。</p></div>
+<div class="para-pair"><p class="p-orig">夫报之迟速，皆自业识所感，何可推之于佛。以汝之聪明，意地中，尚有知而故犯之过，可知寡过一事，虽圣人尚须努力。</p><p class="p-trans">果报的迟速，都是自己的业识所感，怎么可以推给佛陀呢。以你的聪明，在起心动念中，还有明知故犯的过失，由此可知，减少过失这件事，即使是圣人也还须要努力。</p></div>
+<div class="para-pair"><p class="p-orig">故孔子行年七十，尚欲天假或五或十之数年，以期学易而免大过。儒者见浅，谓为圣人过谦，而不知圣道之深，非一悟即可彻底也。</p><p class="p-trans">所以孔子在七十岁时，还想要上天再给他五年、十年时间，以期学习《周易》来免除大过。儒学人见识浅薄，认为这是圣人过于自谦，而不知道圣道的深广，并不是一开悟就可以彻底证得的。</p></div>
+<div class="para-pair"><p class="p-orig">余且勿提，以圆教论，初信断见，七信断思，八九十信破尘沙，伏无明。于十信后心，再破一分无明，即证初住，即法身大士。从初住，至十住，十行，十回向，十地，等觉，历四十一位，尚未到无明净尽地位。等觉，再破一分无明，则真穷惑尽，而成圆满菩提之佛果矣。此善报之远者。</p><p class="p-trans">其余的法门暂且不说，以圆教来说，初信位断见惑，七信位断思惑，八、九、十信位破尘沙惑，伏无明惑。在十信位之后，再破一分无明，就证入初住位，就是法身大士。从初住位，到十住、十行、十回向、十地、等觉，经历四十一阶位，都还没有达到无明除尽的地步。等觉菩萨，再破一分无明，才会使真心彻底显现、惑业断除净尽，从而成就圆满菩提的佛果了。这是经历久远才得的善报。</p></div>
+<div class="para-pair"><p class="p-orig">而恶报之远者，当亦相埒。况尚有修因证果，以至成佛之时乎。若事事皆一时即了，则便成无因无果之断灭深坑。</p><p class="p-trans">而经历久远才得的恶报，也是相同的情况。更何况受恶报的众生也还是有修因证果，以至成佛的时候，那不是更久远了吗？如果每件事都是在当时就可以了结，就陷入无因无果的断灭深坑了。</p></div>
+<div class="para-pair"><p class="p-orig">不观天道运行乎，夏至一阴生而大热，冬至一阳生而大寒。立春有在过年前，有在过年后。则一一不皆一时俱尽，方成岁时。若一时俱尽，则不成运行，而成断灭矣。</p><p class="p-trans">你没有观察过天道的运行吗？夏至白天最长，阳极而生一阴，天气大热；冬至夜晚最长，阴极而生一阳，天气大寒。立春有时在过年之前，有时在过年之后。这一个一个节气都不是在短时间内全部出现，才能成为一年四季。如果在短时间内全都出现，就构不成一年四季的运行，而成了断灭了。</p></div>
+<div class="para-pair"><p class="p-orig">至于罪福之赏罚，阴间实有主掌之人，然亦不同阳间繁难。以案簿皆自现自消，并非有人登记勾消耳，故阴间无错误。</p><p class="p-trans">至于罪福的赏罚，阴间确实有主管的人，不过也不像阳间这样繁杂困难。因为案卷、帐簿都是自动显现，自动消失，并不是有人在上面登记勾消，所以阴间的记录没有错误产生。</p></div>
+<div class="para-pair"><p class="p-orig">其有以彼省某人，误勾此省同名之某人者，乃藉此不宜死之人，倡明实有阴间地狱刑罚等事，以期世人生信耳。</p><p class="p-trans">有时将另外一省的某人，误勾成这个省同名的某人，这是想借着这个并不该死的人，来倡导显明确实有阴间地狱刑罚等事，期望世间人相信而已。</p></div>
+<div class="para-pair"><p class="p-orig">以故每有世间正直士夫，权理阎罗王事。世间平民作阴差，因误勾人，打而革除者。皆因穷措大（措大者，举行修齐治平之大事也），以眼不见而不信，且藉以谤佛，而特现此，以冀措大开一眼光耳。</p><p class="p-trans">所以常常有世间正直的士大夫，临时代理阎罗王的事；世间平民作阴间的差役，因为错勾了人，被责打后开除这种事，都是因为那些穷苦的读书人（措大：举行修身、齐家、治国、平天下的大事），因为眼不见就不信，而且借此来诽谤佛法，因而特别显现这种情形，希望为这些读书人打开一点知见罢了。</p></div>
+<div class="para-pair"><p class="p-orig">此事甚多，且举一，以期俱知。蕅益大师见闻录，载湖北一生员，权理五殿阎罗王事。一夜至阴间，见一簿，载其妻盗杀邻鸡，连毛一斤十二两，因折其簿角记之。醒问其妻，何得盗杀邻鸡。</p><p class="p-trans">这种事情很多，暂且举出一例，以期大家都能知道。蕅益大师的《见闻录》中，记载湖北有一位秀才，临时代理五殿阎罗王的事。一天夜晚到了阴间，看见一个帐簿，记载着他的妻子偷杀邻居的鸡，鸡连毛共有一斤十二两，于是折了那个帐簿的角作为记号。醒来后问他的妻子，为什么偷杀邻居的鸡。</p></div>
+<div class="para-pair"><p class="p-orig">其妻不承任。曰，汝还瞒我，阴间簿上已载，汝盗杀邻鸡，连毛一斤十二两。妻言，院中晒东西，鸡来吃，以物掷之，即死，尚未动。令称之，果一斤十二两。令持鸡，并一鸡之价钱以还，为彼说其来历，祈勿见怪。其夜入阴视簿，则折角仍旧，一字已无矣。</p><p class="p-trans">他妻子不承认。他说：你还瞒我，阴间的帐簿上已经记载得清清楚楚，你盗杀邻居的鸡，鸡连毛一共一斤十二两。妻子说：院子里晒着东西，鸡跑来吃，我用东西扔过去，结果就砸死了这只鸡，还没有动这只死鸡。他们就去称这只鸡，果然是一斤十二两。于上他让妻子拿了死鸡，以及一只鸡的价钱还给邻居，向他们说明来龙去脉，请他们不要见怪。这天夜里再到阴间看这个帐簿，帐簿的折角还在，上面的字却没有了。</p></div>
+<div class="para-pair"><p class="p-orig">汝以阴间刑罚为佛设，可谓孤负佛恩之尤者矣。汝书字小，光目极昏，略举要者，释汝之疑。汝果知此，则当一心念佛求生西方。当知汝之得大利益，由汝儿女而始，况生西后之利益，以至圆满佛果为止。</p><p class="p-trans">你认为阴间刑罚是佛陀设定的，可以说是辜负佛恩太深太深了啊！你信中的字太小，我的眼睛又不好，大略举出重要的事理，来解除你的疑惑。你果真知道这些道理，就应当一心念佛，求生西方。要知道你得到大利益，是由你的儿女开始，何况往生到西方后的利益更大，将一直到圆满佛果为止。</p></div>
+<div class="para-pair"><p class="p-orig">若不自量，从兹研究性相禅密各宗，不以念佛为事，则或可做一个半串子通家，而了生脱死，当在驴年矣。</p><p class="p-trans">如果你不自量力，从此研究性宗、相宗、禅宗、密宗各个宗派，不以念佛为本，那么或许可以做一个半吊子的通家，但对于了生脱死，就会在驴年了。</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，目力不给，以后不许又来信，即祈妙师代问，亦不复。何以故，以汝非举一而明三者，纵一一示之，亦仍是一一一一，而不能圆通耳。</p><p class="p-trans">我老了，视力不好，以后不许再来信，即使请妙师代问，我也不会回复。为什么呢？因为你不是一个能够举一反三的人，纵然我一条一条地开示，也仍然是一个一个一个一个地疑问，而不能圆融贯通啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【夏虫不可以语冰】</span>不能和生长在夏天的虫谈论冰。比喻时间局限人的见识。也比喻人的见识短浅，不懂大道理。《庄子·秋水》：“夏虫不可以语于冰者，笃于时也。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【蜉蝣】</span>具有古老而特殊的性状，是最原始的有翅昆虫。稚虫水生，成虫不取食，寿命很短，仅一天而已。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【相埒】</span>相等。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【夏至】</span>每年的6月21日或22日，为夏至日，此时太阳直射北回归线，是北半球一年中白昼最长的一天。夏至是极阳之点，阳极生阴，所以有“夏至一阴生”之说。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【冬至】</span>是每年白昼最短的一天，也是白昼渐长的开始。冬至是极阴之点，阴极生阳，所以有“冬至一阳生”之说。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【穷措大】</span>比喻贫穷的读书人。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【生员】</span>唐国学及州、县学规定学生员额，因称生员。明、清指经本少各级考试入府、州、县学者，通名生员，习称秀才，亦称诸生。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【举一明三】</span>禅林用语。谓知解敏锐，示一即能知三。禅宗以此语显示伶俐之机用。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

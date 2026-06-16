@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复丁福保居士书七 · 印光法师文钞</title>
+<meta name="description" content="相别数月，企慕实深。适接来函，并所注二经，如觌法颜，感愧无极。光以业障深重，目等生盲。虽常时忏悔，业仍如故。谨将普贤行法经二序，各阅一遍。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-059/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复丁福保居士书七 · 印光法师文钞">
+<meta property="og:description" content="相别数月，企慕实深。适接来函，并所注二经，如觌法颜，感愧无极。光以业障深重，目等生盲。虽常时忏悔，业仍如故。谨将普贤行法经二序，各阅一遍。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-059/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复丁福保居士书七</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">相别数月，企慕实深。适接来函，并所注二经，如觌法颜，感愧无极。光以业障深重，目等生盲。虽常时忏悔，业仍如故。谨将普贤行法经二序，各阅一遍。</p><p class="p-trans">分别数月，仰慕实深。恰好接到来信，以及注解的二部佛经，如同亲见你的法颜，感动惭愧无比。我因为业障深重，眼睛等同盲人。虽然常常忏悔，业力仍旧如故。谨将《观普贤行法经笺注》的二篇序，各阅一遍。</p></div>
+<div class="para-pair"><p class="p-orig">大心之序，可谓以己立立人之心，行自利利他之事。其决十疑而显十益，岂徒为阁下诸经之序，实为古今弘经者之通序也。不意中州有此伟人。</p><p class="p-trans">大心写的序文，可说是以自己成就、成就他人的心，实行自利利他的事。其中决断十疑而显明十益，哪里仅仅是阁下所注多部经的序，实在是古今弘经者的通序。想不到河南竟然有如此的伟人。</p></div>
+<div class="para-pair"><p class="p-orig">末后品之一字，似不甚妥。彼虽非有意僭窃，但从无此法。有冒经式，宜改作总序。钝根之跋，意甚推崇，依宗依教，两皆不合，然亦无大关系，且自随他去了。</p><p class="p-trans">最后“品”这一个字，似乎不妥。他虽然不是有意越分窃取，但从来没有这个用法。冒充经文的样式，适宜改作“总序”。钝根的跋文，他的文意中很推崇，依禅宗、依教理，两方面都不符合，然而也没有大关系，暂且随他去了。</p></div>
+<div class="para-pair"><p class="p-orig">阁下序中，初引演宗之言，可谓不刊之论。末引胡氏之说，足见就正之心。后之视今，亦犹今之视昔。能存畏后之心，断不至违经叛古，贻诮将来也。</p><p class="p-trans">阁下的序文中，最初引用刘演宗的话，可说是不可改易的确论。最后引用胡氏的说法，足见匡正讹误的心。后人看今人，也如同今人看古人。能够存着畏惧后人的心，断然不至于违背经典、叛离古德，见笑于将来啊！</p></div>
+<div class="para-pair"><p class="p-orig">凡注佛经，当另具只眼。不可以凡夫境界，测度如来不思议微妙境界。如纪大奎叶锡凤等，坐此之故，以弘法而竟成谤法，曷胜惜哉。余以目力不堪，皆未敢阅。</p><p class="p-trans">凡是注解佛经，应当具有另外一只眼。不可以凡夫境界，测度如来不思议微妙境界。如纪大奎、叶锡凤等人，因此之故，以弘法而竟然成为谤法，非常可惜啊！我因为视力不好，都没敢阅读。</p></div>
+<div class="para-pair"><p class="p-orig">又经中名相大小相同者多。释大乘经，不得引小乘经中之义为之诠释。如六念末后念天，小乘即念欲色等天，大乘则念第一义天，大涅槃天。若大乘经引小乘义释之，则为坏乱经宗，不可不慎。只此一义，余可类推。（民七十月廿六）</p><p class="p-trans">再者，经中的名相，大乘、小乘相同的很多。注释大乘经，不得引小乘经中的义理来为之诠释。如六念最后的念天，小乘就是念欲界、色界等天，大乘则是念第一义天、大涅槃天。如果大乘经引小乘的义理来解释，就是坏乱佛经的宗旨了，不可不谨慎。只说这一个义理，其余的可以类推。（民国七年十月二十六）</p></div>
+<div class="para-pair"><p class="p-orig">光现在打七，祈勿来书。纵有商量，且待明年三月。若于三月前来书，概不奉复。祈慈谅。</p><p class="p-trans">我现在打七中，请不要来信。纵然有事商量，暂且等到明年三月。如果在三月前来信，一概不回复。请慈悲体谅。</p></div>
+<div class="para-pair"><p class="p-orig">念佛一法，当依净土经论为准。末世众生，业重障深，依观经修观，尚难成就。是以莲宗诸祖，多皆专主持名。以持名易故，相续即生。</p><p class="p-trans">念佛这一方法，应当依净土经论为准。末世众生，业重障深，依《观无量寿佛经》修观，尚且很难成就。所以莲宗诸位祖师，大多都专一注重持名念佛。因为持名念佛容易的缘故，相续就能往生。</p></div>
+<div class="para-pair"><p class="p-orig">至于摄心方法，种种不一。随其人之根器用之，自得其益。若夫最为切要之法，总不过大势至都摄六根，净念相继八字。大心念佛三昧法门，虽各有见处，不堪普遍教人。以下根不能修，而上根虽能修，固不须用此方法也。</p><p class="p-trans">至于摄心的方法，有种种的不同。随各人的根器来用，自然可以得到其利益。最为切要的方法，总超不过大势至菩萨 “都摄六根，净念相继”这八字。大心所说的念佛三昧法门，虽然是各有见地，但不能普遍教导他人。因为下根人不能修，而上根人虽然能修，固然不必用这个方法。</p></div>
+<div class="para-pair"><p class="p-orig">至于书额，佛之一字，写得潦草古怪。足见其人之平日，实未能于佛分上至诚恳切矣。凡此恶套，须力戒之。</p><p class="p-trans">至于书额上，“佛”这一个字，写得潦草古怪。足见这个人的平时，确实没能于佛分上做到至诚恳切啊！凡是这些恶习俗套，必须努力戒除。</p></div>
+<div class="para-pair"><p class="p-orig">刘演宗述法华六十五种不思议力，可谓深入法华深固幽远之藏。而一一与净土对举而论其胜劣，实为不达如来权实法门。唯能利于南岳天台以上之根性。下此皆被彼断其往生西方之善根矣。此书断断不可流通。若流通，虽能令人尊信法华，而令彼一切不通权实教理者，从兹藐视净土而不修也。</p><p class="p-trans">刘演宗阐述《法华经》中六十五种不思议力，可以说是深入《法华经》深固幽远的藏海。却一一都拿来与净土对比而讨论它们的优劣，实在是不通达如来的权实法门。（这样）只能利益南岳慧思大师、天台智者大师以上的根性。在此之下的人，都被他断除其往生西方的善根了。《法华经力》这本书绝对不可以流通。如果流通，虽然能够令人尊崇信奉《法华经》，然而却令那些一切不通权实教理的人，从此藐视净土而不修习啊！</p></div>
+<div class="para-pair"><p class="p-orig">夫寂光净土，当处即是。能圆证者，唯佛一人。等觉菩萨，尚是分证，况其他哉。今以登地登住所见所证，为博地凡夫担任，其可乎哉。华严于证齐诸佛之后，尚令往生。今为具足惑业者，令舍弥陀净土，而修本师娑婆净土。其心诚为宏博，而其害有不能尽言者。</p><p class="p-trans">常寂光净土，当处即是。然而能够圆满证得的，只有佛一人。等觉菩萨，尚且还是分证，何况其他人。现今以登地、登住菩萨的所见所证，让博地凡夫来担任，这样可以吗？《华严经》在善财童子证悟齐等诸佛之后，普贤菩萨尚且令他发愿往生极乐世界。现今为具足惑业的人，令他们舍弃弥陀净土，而修本师的娑婆净土。这种用心实在是宏大广博，然而其中的害处却不能说尽了。</p></div>
+<div class="para-pair"><p class="p-orig">夫安养娑婆，原一实报寂光（实报寂光，原是一土。约所感之报，名为实报。约所证之理，名为寂光。寂光无相，实报具足不思议佛刹海微尘数庄严妙相，虽具尘刹庄严，原是一法不立，虽则一法不立，而复具足庄严，如明镜了无一物，而复胡来胡现，如虚空体非群相，不妨日照云屯）。</p><p class="p-trans">安养世界（即极乐世界）、娑婆世界，原本是一个实报土、寂光土（实报、寂光，原本是一土。就所感的果报来说，名为实报土；就所证的理性来说，名为寂光土。寂光土没有形相，实报土具足不可思议佛刹海微尘数的庄严妙相，虽具尘刹庄严，原本是一法不立；虽然是一法不立，而又具足庄严，如同明镜了无一物，而又胡人来现胡人；如同虚空之体不是万相，也不妨碍太阳照耀、白云聚集）。</p></div>
+<div class="para-pair"><p class="p-orig">此实报寂光之净土，唯登圆初住者方能得见。彼西方凡圣同居土，无有众苦，但受诸乐。此方凡圣同居土，则惑业苦三，如恶叉聚。轮回六道，了无出期。以此之实报寂光，与彼之凡圣同居对论，其违叛经旨，错投法药者，可胜叹哉。</p><p class="p-trans">此娑婆世界的实报、寂光的净土，唯有登上圆教初住位的菩萨，才能见到。那西方极乐世界的凡圣同居土，无有众苦，但受诸乐。此娑婆世界的凡圣同居土，则是惑业苦三，如恶叉聚。轮回六道，了无出期。以娑婆世界的实报、寂光土，与那极乐世界的凡圣同居土来对比讨论，这样违背叛离佛经宗旨，错投法药的情形，实在可叹啊！</p></div>
+<div class="para-pair"><p class="p-orig">何不以此之凡圣同居，与彼之凡圣同居对论，而为契理契机，三世诸佛皆悉印可之说乎。为是智识未精，为欲自辟门径，以显当改革时，亦有乘大愿轮者，改革如来三根普被，华严末后归宗结穴之法门，令其良善也耶。</p><p class="p-trans">为什么不以此娑婆世界的凡圣同居土，与那极乐世界的凡圣同居土来对比讨论，这才是契理契机，三世诸佛全都印可的说法。是他的智慧学识不精深，还是他想自己开辟一个门径，来显示正当时代改革时，也有乘大愿轮的人，改革如来三根普被、《华严经》末后归宗结穴的净土法门，令这个法门更为良善呢？</p></div>
+<div class="para-pair"><p class="p-orig">印光无道无德，少参少学，不能为法门效一言一字之力。然欲一切有情同生西方，不得不冲冒大家，以献其他山顽石之见耳。倘以法为重，当即见原。否则纵谓光为邪见谤法，亦欢喜领受，而无或怨恶也。</p><p class="p-trans">我无道无德，少参少学，不能为法门效一个字、一句话之力。然而想令一切有情同生西方，不得不冲撞犯冒见识渊博的大通家，以献那他山顽石的愚见罢了。倘若以法为重，应当立即原谅我。否则，纵然认为我是邪见谤法，也欢喜领受，而没有怨恨憎恶。</p></div>
+<div class="para-pair"><p class="p-orig">光目力衰劣，近又头火大发，更加衰劣，以事关法道，不得不略陈愚诚。</p><p class="p-trans">我的视力衰弱，近来又因为头火大发，更加衰弱，因为事情有关法道，不得不略微陈述我的愚诚。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【观普贤菩萨行法经】</span>全一卷。刘宋昙摩密多译。又称出深功德经。略称观普贤经、普贤观经、普贤经、观经。收于大正藏第九册。本经系佛陀于说法华经之后，在毗舍离国大林精舍所说。因佛宣告三个月后将般涅槃，阿难等随即请问佛入灭后弟子应如何修行及大乘法要，佛遂为说普贤观门、六根罪之忏悔及忏悔后之功德。
+本经旨在阐明法华经之普贤菩萨劝发品，故与法华经普贤劝发品互为表里；而与妙法莲华经、无量义经合称法华三部经。又无量义经称为法华经之开经，相对于此，天台大师谓本经为法华经之结经。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【不刊之论】</span>不可改易之论，确论。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【就正】</span>向人求教，以匡正学识文章的讹误。常用作谦辞。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【别具只眼】</span>另有一番独特的眼力与高超的见解，与众不同，俗谓之“别具只眼”。“别具只眼”，顾名思义，就是比常人多了一只眼。在佛书上，指的“色究竟天”，天主摩醯首罗竖生在额头上的那只“顶门眼”。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【经宗】</span>(一)经宗即经典主要之宗旨，或指根本的主张而言。而所谓“经体”者，系指始终一贯经文之内容。如以房屋为喻，则经宗为房屋之柱梁，经体为其他之构成材料。例如，天台宗认为，法华经系以因果为宗，实相之理为体。日本净土真宗认为，无量寿经以本愿为宗，以名号为体。（大乘瑜伽金刚性海曼殊室利千臂千钵大教王经卷一、瑜伽师地论卷八十一、往生论注卷上）
+(二)根据“论”所立之宗派，称为论宗；反之，依据“经”所立之宗派，则称经宗。例如，华严宗系以华严经为本据，故称经宗。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【恶叉聚】</span>意译为綖（xiàn）贯珠、金刚子。恶叉，树名，亦为果实名。其果实皆三粒同一蒂，且落地后多聚集于一处，故称恶叉聚，用以譬喻惑、业、苦三者间之互相关连。此外，经论中多引之譬喻多数或众多之意。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

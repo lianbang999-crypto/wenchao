@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复康寄遥居士书二 · 印光法师文钞</title>
+<meta name="description" content="接手书，备悉。秦地苦寒，净业居，只好作素饭铺，稍考究点。若照南方功德林之办法，则必至亏本。此中既名净业居，当将净业功德利益，修持法则，请善书者用时行正楷体书之，悬于各壁，以作观感兴起。此不可办以讲演，恐来人多，无地步可容，可勿依行。行则反成障碍，于生意亦有碍。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-130/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复康寄遥居士书二 · 印光法师文钞">
+<meta property="og:description" content="接手书，备悉。秦地苦寒，净业居，只好作素饭铺，稍考究点。若照南方功德林之办法，则必至亏本。此中既名净业居，当将净业功德利益，修持法则，请善书者用时行正楷体书之，悬于各壁，以作观感兴起。此不可办以讲演，恐来人多，无地步可容，可勿依行。行则反成障碍，于生意亦有碍。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-130/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复康寄遥居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，备悉。秦地苦寒，净业居，只好作素饭铺，稍考究点。若照南方功德林之办法，则必至亏本。此中既名净业居，当将净业功德利益，修持法则，请善书者用时行正楷体书之，悬于各壁，以作观感兴起。此不可办以讲演，恐来人多，无地步可容，可勿依行。行则反成障碍，于生意亦有碍。</p><p class="p-trans">接到信，一切尽知。陕西那边贫苦严寒，“净业居”，只好作“素饭铺”，显得稍微考究一点。如果按照南方功德林的办法，就必定会亏本。房屋既然名为“净业居”，应当请善于书法的人，将净业的功德利益，修持法则，用现时流行的正楷体写好，悬挂在四面墙壁上，以使见闻者能够观后有感、发心兴起修持佛法。此处不可举办演讲，恐怕来的人多，没有地方可以容纳，可以不用依照行事。如依照行事，就反而成为障碍，对于生意也有妨碍。</p></div>
+<div class="para-pair"><p class="p-orig">寂园莲社，必须清净香洁。主人必须恭敬至诚。不可傲慢于人，亦不可有德色于人之气象。凡来者，悉温恭谦逊以待之（按现各处佛会之规模稍大者，每犯傲慢于人恶习，读此应痛戒。固宜不分贵贱，普令同沾些法味，植些善根也）。</p><p class="p-trans">“寂园莲社”，必须要清净香洁。主人必须至诚恭敬。不可对他人傲慢，也不可用对他人有恩德的脸色待人。凡是来的人，全都要温良、恭敬、谦逊地来对待（按：现在每个地方，佛教会的规模稍微大一点的，常常犯有傲慢他人的恶习，读到这里，应该痛加戒除。本来就应该不分贵贱，普令大众同沾一些法味，培植一些善根）。</p></div>
+<div class="para-pair"><p class="p-orig">至于未念佛，及念佛毕，概不得谈家常。有可谈叙之要义，则谈之。否则各归原所。年纪太轻者，只可在自己家里念。若常来，路近尚可，路远或恐有意外之处，不可不慎。此不过为地方作一提倡而已，仍须以专意在家念佛为事。汝既提倡莲社，家中大小，当悉断除荤酒。倘仍照时人一样，则便失于提倡之体格矣。</p><p class="p-trans">至于未念佛的时候，以及念佛完毕之后，一概不得谈论家常里短。有可以谈论的重要义旨，就谈一谈。否则，各回各家。年纪太轻的人，只可在自己家里念。如果常来，路近还可以，路远或恐有意外发生，不可不慎。这不过是为地方上作一个提倡而已，仍旧必须以专心在家念佛作为紧要事。你既然提倡莲社，家中的大小家眷，都应当断除荤酒。倘若仍然与当时的人一样，就失去提倡的资格了。</p></div>
+<div class="para-pair"><p class="p-orig">净业居简章，文理俱好。而荤字讹作晕（音运）字，实为失格。祈令改正。荤，正指葱韭薤蒜之物，故从草。梵网经明五辛，大蒜，葱（即韭），慈葱（即葱），兰葱（即小蒜，薤即是此），荤物，此方只有四种。西域加兴渠，故名五辛，亦名五荤。有外道以芫荽为荤者，又有以红萝卜为荤者，皆属妄作。</p><p class="p-trans">净业居的简章，文字义理都很好。而“荤”字错作“晕”（发音“运”）字，实在是有失标准。请加以改正。荤，正指葱、韭、薤、蒜等物，所以从草字部首。《梵网经》中说明五辛，大蒜，葱（就是韭菜），慈葱（就是葱），兰葱（就是小蒜，也就是薤），为荤物，我国只有四种。西域加上兴渠，所以名为五辛。也名五荤。有外道将香菜认为是荤菜，还有人将红萝卜认为是荤菜，都属于妄说。</p></div>
+<div class="para-pair"><p class="p-orig">此五荤，本是菜类，以其臭秽，故不许食。食之诵经念佛，皆无大利益。况肉乃众生身分，活活杀死，以图口头滋味。世人习惯，不以为怪。想一想真无理之极，可畏哉。光之回期，不能预定，何须要人接。只一空人，接反成障。千万勿来，来则不回去矣。</p><p class="p-trans">这五荤，本来是蔬菜之类的东西，因为它很臭秽，所以不许吃。吃了诵经念佛，都没有大利益。何况肉类，是众生的身上的东西，活活杀死，来贪图口头滋味。世人习惯了，就不以为怪。想一想，真是无理到极点，可怕啊！我的回程日期，还不能预定，何必要人接。我只空身一人，接我反而成为障碍。千万不要来，来了我就不回去了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【观感】</span>1.看到事物以后所产生的印象和感想。语出《易·咸》：“观其所感，而天地万物之情可见矣。”2.观看而引起感动。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【兴起】</span>因感动而奋起。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【失格】</span>谓有失尊严、体面。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【兴渠】</span>为五辛之一。产于新疆和阗、西藏、印度、伊朗、阿富汗等地，为高达二公尺之草本植物。根粗如细蔓菁之根，色白，其臭如蒜，可供食用。若切断茎枝，在断口处会渗出液体，凝固后供作药用，称为阿魏药，可驱除小虫或除臭。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【芫荽】</span>俗称“香菜”。一年生草本植物。叶互生，羽状复叶，茎和叶有特殊香气，花小，白花。果实圆形，可做香料，也可入药。嫩茎和叶可以用来调味。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【妄作】</span>虚妄之谈。晋王羲之《兰亭集序》：“固知一死生为虚诞，齐彭殇为妄作。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

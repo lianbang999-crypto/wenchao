@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>傅春浦居士生西记（民国二十七年九月述。余蕅生，陈展西同记） · 印光法师文钞</title>
+<meta name="description" content="居士，讳川，号春浦，江西清江县东郭村人。幼失怙，母聂太夫人，苦节教养。习法政巡警学，屡充清江县署科员，万载株潭镇警察分所所长，樟树义务学校校长等职。居县城有年，参与各项公务，官绅倚畀，有大疑难，每预商决。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-181/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="傅春浦居士生西记（民国二十七年九月述。余蕅生，陈展西同记） · 印光法师文钞">
+<meta property="og:description" content="居士，讳川，号春浦，江西清江县东郭村人。幼失怙，母聂太夫人，苦节教养。习法政巡警学，屡充清江县署科员，万载株潭镇警察分所所长，樟树义务学校校长等职。居县城有年，参与各项公务，官绅倚畀，有大疑难，每预商决。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-181/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 附录</div>
+      <h1 class="art-title">傅春浦居士生西记（民国二十七年九月述。余蕅生，陈展西同记）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">居士，讳川，号春浦，江西清江县东郭村人。幼失怙，母聂太夫人，苦节教养。习法政巡警学，屡充清江县署科员，万载株潭镇警察分所所长，樟树义务学校校长等职。居县城有年，参与各项公务，官绅倚畀，有大疑难，每预商决。</p><p class="p-trans">傅居士，名川，号春浦，江西清江县东郭村人。幼年丧父，母亲聂太夫人，艰苦守节，悉心教养。学习法政巡警学科，历任清江县署科员、万载县株潭镇警察分所所长、樟树镇义务学校校长等职。居住在县城多年，参与各项公务，官绅都很倚靠信任他，有大疑难时，常常找居士商量解决。</p></div>
+<div class="para-pair"><p class="p-orig">聂太夫人，夙奉观音大士，持素念佛。民国十七年，太夫人寝疾，居士发愿朝普陀，弗药而愈。</p><p class="p-trans">聂太夫人，早就信奉观音大士，持素念佛。民国十七年（1928），太夫人卧病，傅居士发愿朝礼普陀山，没有用药医治就痊愈了。</p></div>
+<div class="para-pair"><p class="p-orig">二十年九月，遂至普陀还愿，礼梵音洞，感菩萨示现白衣执净瓶杨枝相。复求明宿命，见一头陀，衣服褴褛。乃悟轮回之非虚，求出离娑婆之念益切。</p><p class="p-trans">民国二十年九月，遂前往普陀山还愿，礼拜梵音洞，感应到菩萨在洞中示现白衣执净瓶杨枝的法相。又接着礼拜，祈求明了自己的宿命，见到洞中示现一个苦行僧，衣服褴褛。这才了悟轮回的不假，祈求出离娑婆的心念更加真切。</p></div>
+<div class="para-pair"><p class="p-orig">得月净法师函介，谒印光法师，及德森师，于苏州报国寺，始闻净宗法要。嗣后弘化社出版典籍，各有所赠。因而信解益增，遂函恳皈依。</p><p class="p-trans">得到月净法师的信函介绍，在苏州报国寺，拜见了印光法师，以及德森法师，才开始听闻到净宗法要。从此以后，弘化社出版的各种典籍，每次都有赠送。通过这些典籍，居士更增加了对净土法门的信解，于是写信恳求皈依。</p></div>
+<div class="para-pair"><p class="p-orig">德师为取法名禅川，字航西。复承德师路过樟树时，为授优婆塞戒。信愿念佛，精进不懈，盖得力于德师之启迪为多。</p><p class="p-trans">德森法师给他取法名叫禅川，字航西。又承借德森法师路过樟树镇的机会，为居士授优婆塞戒。居士信愿念佛，精进不懈，大多是得力于德森法师的启迪。</p></div>
+<div class="para-pair"><p class="p-orig">二十二年，充鹿江念佛林宣讲主任，诱掖劝导，从者甚众。居士家道素寒，体弱善病。每欲出家，苦无相当寺宇。</p><p class="p-trans">民国二十二年，担任鹿江念佛林宣讲主任，辅助劝导大众，跟从居士学佛的人非常多。居士的家中一向清贫，且体弱多病。常常想要出家，苦于找不到合适的寺院。</p></div>
+<div class="para-pair"><p class="p-orig">常就诊蕅生家，蕅生语以时节因缘，非可强致。然厌浊欣净之心既深，减寿求生之愿益切。礼拜观想，必期早蒙接引，径赴莲池。</p><p class="p-trans">经常来蕅生家就诊，蕅生就用“时节因缘，不可强求”等话来劝说居士。但是，居士厌离五浊、欣求净土的心念已经很深，减寿求生的愿望也更加真切。每次礼拜观想时，都一定要期望早蒙阿弥陀佛接引，直接进入莲池。</p></div>
+<div class="para-pair"><p class="p-orig">今年春，梦观音菩萨示语，期在七月。迨盂兰盆会后，遂抱病，则一心念佛，忘其所苦。二十三日，戚友助念，已瞑，而逾时复苏。请永泰大宝殿大仁师来，托以荼毗事。</p><p class="p-trans">今年春天，梦见观世音菩萨开示说：“往生的时间在七月。”等到七月十五的盂兰盆会后，就抱病不起，但是却一心念佛，忘掉了病苦。七月二十三日，亲戚、道友来助念，本来已瞑目，但是过了一个时辰又苏醒过来。要求请永泰县大宝殿的大仁法师来，托付他荼毗（火化）的事。</p></div>
+<div class="para-pair"><p class="p-orig">二十六日复绵惙，家人泣。居士笑止之曰，吾当于地藏菩萨圣诞日西归。至时，端坐椅中，结弥陀印，凝视佛相，安然西逝。遍体冷透，顶门独温，面容妍泽，有逾生平。</p><p class="p-trans">七月二十六日，病势再次危急，家人哭泣。居士笑着阻止说：“我会在地藏菩萨圣诞日这一天西归。”到了这一天（七月三十日），居士端坐椅中，结弥陀印，凝视佛像，安然西逝。全身冷透，唯独顶门温热。面容美好光泽，胜过生前。</p></div>
+<div class="para-pair"><p class="p-orig">闰七月初二日，樟树通慧寺住持大松和尚及大仁师皆至，料理入龛。为之趺坐合掌，宛如生人。</p><p class="p-trans">闰七月初二日，樟树通慧寺的住持大松和尚，以及大仁法师，全都赶来，料理入龛。安排居士趺坐合掌，全身柔软宛如活人。</p></div>
+<div class="para-pair"><p class="p-orig">先日大风雨，迄子时举火，天忽光明。异香馥郁，非檀非兰。白光一道自龛出，向西而去。当秋初炎热之时，死经三四日，尸不腐臭，反放异香，非佛法灵异，曷克臻此。</p><p class="p-trans">荼毗的头一天，刮大风、下大雨，到子时举火时，天空忽然放光明。异香馥郁，既不是檀香也不是兰香。这时，有一道白光从龛中射出，向西而去。当时正是初秋炎热的天气，死后经过三、四天，尸体不但不腐臭，反而还放异香，如果不是佛法灵异，怎么能达到这种程度呢？</p></div>
+<div class="para-pair"><p class="p-orig">见者闻者，咸赞叹起敬，称佛法真不可思议也。春秋四十有八。</p><p class="p-trans">见者闻者，全都赞叹不已、生起敬信，称赞佛法真的是不可思议。居士享年四十八岁。</p></div>
+<div class="para-pair"><p class="p-orig">蕅生曰，末世念佛者多，成就者少，无真信切愿故也。孟子论大丈夫，须富贵不能淫，贫贱不能移，威武不能屈。世间法尚如此，况求生净土，超凡入圣之佛法乎。</p><p class="p-trans">蕅生我认为，末法时代之所以念佛的人多、成就的人少，是因为没有真信、切愿的缘故。孟子说真正的大丈夫，要做到：富贵不能淫，贫贱不能移，威武不能屈。世间法尚且如此，更何况是求生净土，超凡入圣的佛法呢？</p></div>
+<div class="para-pair"><p class="p-orig">居士于贫病家累，概置弗顾，孜孜汲汲，唯佛是念，讥侮摧挫，百折不回。卒之预知时至，瑞相昭然，足为生西之据。</p><p class="p-trans">居士对于贫病家累，一概置之不顾，急切精勤，唯佛是念，纵使受到他人的讥讽、欺侮、挫折、伤害，也百折不回。终于预知时至，瑞相昭然，足以作往生西方的证据。</p></div>
+<div class="para-pair"><p class="p-orig">如来彻底悲心，无问自说之净土法门，真为末世众生出苦之捷径。但办肯心，决不相赚，古人诚不我欺。</p><p class="p-trans">如来发彻底的悲心，无问自说的净土法门，真是末世众生出苦的捷径。只要发下肯定的决心，佛绝对不会欺骗我们，古人真的不会欺骗我们啊！</p></div>
+<div class="para-pair"><p class="p-orig">蕅生获与居士交，实受其熏陶而起信。欣睹捷足之先，勉抑人琴之痛。传之励俗，亦以自警焉。</p><p class="p-trans">蕅生我和居士相交，其实是受到居士的熏陶才生起正信的。欣然目睹居士捷足先登极乐净土，勉强抑制痛失益友的悲伤，写下居士往生的这篇记文，来勉励大众，也以此自警。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【失怙】</span>指死了父亲，丧父。语本《诗·小雅·蓼莪》:“无父何怙?无母何恃?”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【倚畀】</span>谓倚靠信任。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【头陀】</span>意为抖擞，谓精勤振奋，去除烦恼污垢，意即弃除对衣、食、住等贪著，以修炼身心。即佛教倡修的苦行。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【诱掖】</span>引导扶植。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【绵惙】</span>病势危急。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【妍泽】</span>美好润泽。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【曷克臻此】</span>怎么能够到达这种地步呢？曷：为什么，怎么。克：能够。臻：致，到。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【孜孜汲汲】</span>心情急切、勤勉不懈的样子。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【摧挫】</span>挫折；损害。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【肯心】</span>甘心；称心。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【古人诚不我欺】</span>是为倒装句式,实际是“古人诚不欺我”。意思是，古人之言果然非虚，即古人说的对极了。适合用在遇到某事的时候，想起了古人说的某句话用在此处正合适，实为一语中的，故而幡然醒悟。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【人琴俱亡】</span>形容看到遗物，怀念死者的悲伤心情。常用来比喻对知己、亲友去世的悼念之情。南朝宋·刘义庆《世说新语·伤逝》：“弦既不调，掷地云：&#x27;子敬子敬，人琴俱亡！&#x27;因恸绝良久，月余亦卒。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

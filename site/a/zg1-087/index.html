@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与方远凡居士书 · 印光法师文钞</title>
+<meta name="description" content="世间人之病，多多都是自己造者。即如令严之病，乃不知慎口腹，贪食水果凉物之所致者。及乎有病，不能从善养上令恢复，而一味靠医生转移。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-087/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与方远凡居士书 · 印光法师文钞">
+<meta property="og:description" content="世间人之病，多多都是自己造者。即如令严之病，乃不知慎口腹，贪食水果凉物之所致者。及乎有病，不能从善养上令恢复，而一味靠医生转移。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-087/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">与方远凡居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">世间人之病，多多都是自己造者。即如令严之病，乃不知慎口腹，贪食水果凉物之所致者。及乎有病，不能从善养上令恢复，而一味靠医生转移。</p><p class="p-trans">世间人的病，大多都是自己造的。就如你父亲的病，是不知道注意口腹，贪吃水果凉物所导致的。等到有病了，不能从好好调养上来恢复健康，而是一味地依靠医生来转移。</p></div>
+<div class="para-pair"><p class="p-orig">医生每遇富贵人之病，便大喜过望，遂用种种方法，令其阔张，而后始令收敛，则金钱自可大得矣。</p><p class="p-trans">医生每每遇到富贵的人生病，便大喜过望，于是用种种的方法，令他的病情扩大，而后才开始慢慢治疗，这样自然可以得到许多的金钱了。</p></div>
+<div class="para-pair"><p class="p-orig">然医之善者，亦只医病，不能医业。即如子重病肠痈，医云非开剖不可，汝四婶不放心，遂不医，与德章拌命念佛念金刚经，五日即愈，此病可谓极大，极危险矣，然不医而五天即愈。</p><p class="p-trans">然而再好的医生也只能医治人的疾病，不能医治人的宿世业力所感的病。就比如你的儿子得了“肠痈”这种重病，医生说不开刀不行。你四婶不放心，于是就选择不开刀医治，她与德章拼命念佛、念《金刚经》，五天以后孩子的病好了。这种病可以说非常严重，危险之极，然而不开刀，通过念佛、念《金刚经》五天就好了。</p></div>
+<div class="para-pair"><p class="p-orig">子庠之颠，乃属宿业，汝四婶以至诚礼诵，半年即愈。汝父既皈依佛法，当依佛所说，不当信从洋医，特往彼医院去医也。</p><p class="p-trans">子庠的癫痫病也是宿业所感，你四婶因为至诚礼诵，半年就痊愈了。你父亲既然已经皈依佛法，就应当依靠佛陀的言教，不应当听从西医，特地去西医医院看病。</p></div>
+<div class="para-pair"><p class="p-orig">使一切病皆由医而始好，不医便不好者，则古来皇帝，及大富贵人，皆当永不生病，亦永不死亡。</p><p class="p-trans">假使一切疾病医生都能治好，不医治就不能好，那么古来皇帝，及大富贵人都应该永不生病，也永不死亡。</p></div>
+<div class="para-pair"><p class="p-orig">然而贫贱者病少，而寿每长，富贵者病多，而寿每短。其故何哉，以一则自造其病，二则医造其病，有此二造之功能，欲脱病苦，其可得乎。</p><p class="p-trans">然而，贫贱的人多半病少而寿长。富贵的人多半病多而寿短。这是为什么呢？这是因为一来他们自己造病，二来就是医生造病，有这两种原因，想脱离病苦，有可能吗？</p></div>
+<div class="para-pair"><p class="p-orig">祈为汝父说，不必往上海求西医，就在家中求阿弥陀佛，观世音菩萨之大医王，则自可勿药而愈矣。</p><p class="p-trans">希望你为你父亲说明，不必往上海求西医，就在家中求阿弥陀佛、观世音菩萨这些大医王，就自然会不用药物而病自然痊愈了。</p></div>
+<div class="para-pair"><p class="p-orig">求西医好否参半，求大医王，或身躯上即好，即身躯上未好，而神识上决定见好。</p><p class="p-trans">求西医好坏参半。求大医王，或身体上立即见好，就算身体上未见好，而神识上是决定见好的。</p></div>
+<div class="para-pair"><p class="p-orig">若妄欲即好，完全废弃先所持之戒，大似剜肉做疮，有损无益。</p><p class="p-trans">如果想立即见好，而完全废弃以前所持的戒律，这就象剜肉做疮，有损无益。</p></div>
+<div class="para-pair"><p class="p-orig">西医未入中国，中国人有病皆不治乎。固宜放下妄想，提起正念，则感应道交，自可全愈矣。</p><p class="p-trans">西医没来中国以前，难道中国人有病就不能治疗吗？现在你应该放下妄想，提起正念，则感应道交，自然可以疾病痊愈啊。</p></div>
+<div class="para-pair"><p class="p-orig">所言天冷身弱，衣丝绵者，必须非此不能生活方可。若借冷弱为名，以自图华美轻快，则是不知惭愧之人，以所杀蚕命，实非小可。</p><p class="p-trans">你所说的，天气冷，身体弱，要穿丝绵的衣服，不穿这个就不能活的话方可。如果是借着天冷身弱为名，来自我贪图华美轻快，就是不知惭愧的人，因为丝绵所杀害的蚕命，实在不是小小的一点。</p></div>
+<div class="para-pair"><p class="p-orig">至于服阿胶，更非所宜问者，此与吃肉有何分别。阿胶吃了就会不冷乎，倘日常礼拜，身体自然强壮，何用阿胶为哉。</p><p class="p-trans">至于服用阿胶，更不是所应该问的，这与吃肉有什么分别。阿胶吃了，就会不冷吗？倘若每天经常礼拜，身体自然强壮，哪里用得着阿胶呢？</p></div>
+<div class="para-pair"><p class="p-orig">彼贫人亦曾过冬，谁曾用丝绵阿胶乎。一言以蔽之，曰不知惭愧，与不知自己是甚么人而已。祈洞察是幸。</p><p class="p-trans">那些贫苦人也曾过冬，他们谁曾用过丝绵阿胶呢？一句话来概括，就是不知惭愧，与不知道自己是什么人而已。祈望洞察，是为庆幸。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【令严】</span>对对方父亲的尊称。即方圣胤居士。方远凡（方子藩）居士之父，见谛闲法师《慈悲道场梁皇宝忏随闻录缘起》。方子藩曾发起成立上海佛教青年会。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【肠痈】</span>中医指阑尾炎。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【剜肉做疮】</span>语本唐聂夷中《伤田家》诗：“二月卖新丝，五月粜新谷。医得眼前疮，剜却心头肉。”后因以“剜肉补疮”或“剜肉医疮”比喻用有害的手段救眼前之急，不暇顾及后果。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【阿胶】</span>中药名。是用驴皮加水熬成的胶。原产山东省东阿县，以阿井水煎黑驴皮制成。佳者带琥珀色，透明，无臭味。亦称驴皮胶。由于杀生，佛弟子不应吃。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

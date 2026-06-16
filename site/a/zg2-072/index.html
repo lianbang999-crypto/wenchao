@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>上海世界居士林佛学研究丛书序 · 印光法师文钞</title>
+<meta name="description" content="众生与佛，心性一如，了无优劣，及与增减。而佛则安住寂光，众生则轮回生死者，以悟与未悟，及顺修，逆修之所致也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-072/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="上海世界居士林佛学研究丛书序 · 印光法师文钞">
+<meta property="og:description" content="众生与佛，心性一如，了无优劣，及与增减。而佛则安住寂光，众生则轮回生死者，以悟与未悟，及顺修，逆修之所致也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-072/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">上海世界居士林佛学研究丛书序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">众生与佛，心性一如，了无优劣，及与增减。而佛则安住寂光，众生则轮回生死者，以悟与未悟，及顺修，逆修之所致也。</p><p class="p-trans">众生与佛，心性相同，没有优劣，没有增减。佛安住在常寂光中，而众生却处在生死轮回，这是因为有着悟与未悟，以及随顺修德，背逆修德的差别所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">如来知众生之皆具佛性，皆堪作佛也，是故示生世间，示成正觉，随机演说一切权实法门。俾彼利根，直下开示悟入佛之知见，其有钝根，亦得渐次熏陶而得悟入。</p><p class="p-trans">如来知道众生都具有佛性，都可以作佛。所以示生世间，示现成佛，随机演说一切权、实法门。使得那些根机锐利的众生，当下就开、示、悟、入佛之知见；那些根机迟钝的众生，也能够渐渐熏陶而得以悟入。</p></div>
+<div class="para-pair"><p class="p-orig">待其悟证及极，方复本具佛性，方离凡圣生佛之差别名相，所谓令一切众生悉入无余涅槃而灭度之，实无众生得灭度者。</p><p class="p-trans">等他们悟证到极处，才能恢复本具的佛性，才能脱离凡夫、圣人、众生、如来的差别名相。也就是经中所说的：“令一切众生悉入无余涅槃而灭度之，实无众生得灭度者。”</p></div>
+<div class="para-pair"><p class="p-orig">噫，如来度生之心，可谓慈悲至极，无以复加矣。自后诸菩萨，祖师，善知识，各各潜修密证，宏阐发挥，以上续如来慧命，下作众生津梁。</p><p class="p-trans">噫！如来度化众生的心，可以说是慈悲到极点，无以复加了。此后的诸位菩萨、祖师、善知识，各各潜修密证，宏扬阐说，发挥要妙，以便上续如来慧命，下作众生的津梁。</p></div>
+<div class="para-pair"><p class="p-orig">自法流东震，千数百年，其悟自性而断烦惑，出生死以证涅槃者，何可胜数。其绪余尚能移风易俗，胜残去杀，使民日迁善而不知所以为之者。故古今首出庶物之出格高人，莫不以此自行化他，以期天下太平，万国咸宁也。</p><p class="p-trans">自从佛法流传到东土，之后的一千几百年当中，觉悟自性而断除烦惑，出离生死而证得涅槃的人，哪里数得清呢。他们遗留下来的德风尚且能够移风易俗，胜残去杀，使人民在不知不觉中一天天向善。所以，古往今来那些杰出超群的高人，无不是以佛法来自行化他，以期天下太平，国家安宁啊。</p></div>
+<div class="para-pair"><p class="p-orig">及清咸同间，屡遭兵劫，法运遂衰。自后罢除举业，天姿高者，于各种科学外，兼研佛学，知为世间唯一无二之道。当此世道人心陷溺已极，欲为救援，舍昌明佛学，莫能为力，故咸以提倡佛学为急务。</p><p class="p-trans">到了清朝咸丰同治年间，国家多次遭到战乱，法运于是衰败了。之后科举制度废除，那些天姿高的人，在学习各种科学之余，顺带着研究佛学。从而知道佛法是世间唯一无二的大道。如今世道人心沉溺了到极点，想要来救援，舍弃发扬光大佛学，就无能为力，所以大家都把提倡佛学当作紧急要务。</p></div>
+<div class="para-pair"><p class="p-orig">而研究会，居士林，随处建立。法不执一，随人之机，或禅或教，或显或密，而为修持，及与发挥。而又注重于净土法门，以期悟与未悟，同于现生出离生死轮回也。良以末法众生，自力微弱，匪仗佛力，决难即生解脱。</p><p class="p-trans">到处都建立了佛学研究会和居士林。弘法不执一门，随顺当人的根机，或者参禅，或者学教，或者显教，或者密法。并且又注重于净土法门，希望无论开悟还是没有开悟的人，共同在这一生中出离生死轮回。实在因为末法时期的众生，力量微弱。如果不仗佛力，决定难以当生解脱。</p></div>
+<div class="para-pair"><p class="p-orig">华严会上，华藏海众，等觉菩萨，尚以十大愿王，回向往生，况末世之学者乎。是知净土法门，乃十方三世一切诸佛，上成佛道，下化众生之成始成终法门。</p><p class="p-trans">华严会上，华藏世界的大海众菩萨，乃至等觉菩萨们，尚且以十大愿王，回向往生极乐世界，更何况末法时期的学人呢。所以就知道，净土法门是十方三世一切诸佛，上成佛道，下化众生的成始成终法门。</p></div>
+<div class="para-pair"><p class="p-orig">上海为全国枢要之地，其居士林诸居士，欲普布佛化，于讲经念佛外，季出林刊，以期推广。</p><p class="p-trans">上海是全国的枢纽城市，当地居士林的诸位居士，想要让佛的教化普遍流布。因此在讲经念佛之外，每季度出版一期林刊，希望借此推广佛法。</p></div>
+<div class="para-pair"><p class="p-orig">今又继出佛学研究丛书，若起信论，楞严经指要。取深经奥论，以浅显之语言发挥之，俾初机之人，易于领会，庶无扞格不入之苦，悉获因指见月之益。</p><p class="p-trans">现在又接着出版了佛学研究丛书，如《大乘起信论》、《楞严经指要》等。摘取深奥的经论，用浅显的语言加以发挥，使得初学的人容易领会。想必学者就不会有格格不入的辛苦，全都能获得因指见月（顺着手指看见月亮）的利益。</p></div>
+<div class="para-pair"><p class="p-orig">从兹相续刊布，以扬佛日之光，俾一切同人，同悟本具之天真佛性，庶不负如来出世之一大事因缘，而挽回世道人心，亦以是为根据。凡我同伦，各宜资助以期遍界流通云。</p><p class="p-trans">从此相续刊印流布，来发扬佛日光辉，使得一切同人，共同悟得本具的天真佛性，或许才不辜负释迦如来出世的大事因缘。而挽回世道人心，也要以此为根据啊。诸位同修，各各都应该加以资助，以期让这些书周遍法界，广泛流通。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【绪余】</span>抽丝后留在蚕茧上的残丝。借指事物之残余或主体之外所剩余者。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【胜残去杀】</span>实行仁政，使残暴的人化而为善，因而可以废除刑杀。《论语·子路》：“善人为邦百年，亦可以胜残去杀矣。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【首出】</span>杰出。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【庶物】</span>众物，万物。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【扞格】</span>抵触，格格不入。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

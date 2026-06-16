@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复卓智立居士书五 · 印光法师文钞</title>
+<meta name="description" content="人生世间，宜尽所当尽之义务。如汝所说，为云游集哀挽录，尚要求光鉴定作序，你直把我当做奴隶。此种骄奢虚浮之恶习，吾人虽不能挽此颓风，何可附和而效法之。俾一切虚张声势无聊之恶后生，群以此为沽名钓誉之最上一著，可不哀哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-213/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复卓智立居士书五 · 印光法师文钞">
+<meta property="og:description" content="人生世间，宜尽所当尽之义务。如汝所说，为云游集哀挽录，尚要求光鉴定作序，你直把我当做奴隶。此种骄奢虚浮之恶习，吾人虽不能挽此颓风，何可附和而效法之。俾一切虚张声势无聊之恶后生，群以此为沽名钓誉之最上一著，可不哀哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-213/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复卓智立居士书五</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人生世间，宜尽所当尽之义务。如汝所说，为云游集哀挽录，尚要求光鉴定作序，你直把我当做奴隶。此种骄奢虚浮之恶习，吾人虽不能挽此颓风，何可附和而效法之。俾一切虚张声势无聊之恶后生，群以此为沽名钓誉之最上一著，可不哀哉。</p><p class="p-trans">人生于世间，应该尽自己所应当尽的义务。如你所说，为了《云游集》、《哀挽录》，还要求我来鉴定作序，你简直把我当做奴隶。这种骄奢虚浮的恶习，我们虽然不能挽救这种颓风，怎么能附和而且效法呢？使一切虚张声势无聊的恶劣后生，全都以此作为沽名钓誉的最上一著，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">汝切勿为此，即定欲为之，切勿与我寄来，令我烧。你就自在当处烧之，免得彼此烦神。你学佛学到这样知见，不学佛又当如何。彼妻子之孤苦无依，尚欲开此奢风，则是雪上加冰，于亡于存，均皆有损无益。</p><p class="p-trans">你千万不要作这件事，即使一定要找人鉴定作序，千万不要寄给我，让我烧掉。你就在你自己那里烧掉，免得彼此烦神。你学佛学到这样的知见，不学佛又当会如何。亡者的妻子孤苦无依，还想开这个奢浮之风，就是雪上加冰，对于亡者，对于生者，全都有损无益。</p></div>
+<div class="para-pair"><p class="p-orig">光数十年来，为先父，先母，先师，先兄（即读书之师），了无一字之记述，以不愿附此虚张声势之恶派，兼不愿人谓此恐是粉饰之语，未必为真实事迹也。我岂肯为皈依者，提倡此事。试问彼不过供职无忝而已，究于国家人民，有何功德，可令人歌颂也。此风一张，一班下劣不堪者，通皆效之，作俑之人，谓无罪咎，可乎。</p><p class="p-trans">我几十年来，为过世的父母、老师、兄长（就是教我读书的老师），没有一个字的记述，因为不愿意附和这种虚张声势的恶派，又不愿意他人认为这些恐怕是粉饰之语，未必是真实的事迹。我哪会肯为皈依弟子，提倡此事。试问：他不过是任职没有差错而已，究竟对于国家人民，有什么功德，可以令人歌颂呢？这个风气一旦开始，一班下劣不堪的人，全都来效仿，这个带头的人，认为他没有罪咎，可能吗？</p></div>
+<div class="para-pair"><p class="p-orig">即其弟欲为，亦当劝止，况汝欲劝其弟乎。汝能担任此费用，尚不可。况汝绝无此财力，而劝彼弟乎。居士住寺庙，不过看庙之一道人而已。汝谓为住持法道，则其僭也大矣。</p><p class="p-trans">即使他的弟弟想流通，也应当劝止，何况你想劝他弟弟来做这件事呢？你能够承担这些费用，尚且不可以。何况你绝对没有这样的财力，而劝他弟弟呢？居士住寺庙，不过是看庙的一个道人而已。你认为是住持法道，那么这样的僭越本份也太大了。</p></div>
+<div class="para-pair"><p class="p-orig">世俗以住庙僧为住持，为当家，彼亦如是称，乃随俗便，固无甚背戾。汝谓住持法道，则完全以凡滥圣之谬说。彼以何德住持法道乎，看庙而已。</p><p class="p-trans">世俗人将住庙的僧人称为住持，称为当家，他也如是称呼，这是随世俗方便，固然没什么不合适。你说住持法道，就完全是以凡滥圣的谬论瞎说。他有什么德行来住持法道呢？只是看庙而已。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【无忝】</span>不玷辱；不羞愧。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【作俑】</span>古代制造陪葬用的偶像。后指创始，首开先例。多用于贬义</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【背戾】</span>乖张、不合法度也。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

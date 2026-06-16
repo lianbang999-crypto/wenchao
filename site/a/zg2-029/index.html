@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>不可录重刻序 · 印光法师文钞</title>
+<meta name="description" content="女色之祸，极其酷烈。自古至今，由兹亡国败家，殒身绝嗣者，何可胜数。即未至此，其间颓其刚健之躯，昏其清明之志。以顶天履地，希圣希贤之姿，致成碌碌庸人，无所树立之辈者，又复何限。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-029/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不可录重刻序 · 印光法师文钞">
+<meta property="og:description" content="女色之祸，极其酷烈。自古至今，由兹亡国败家，殒身绝嗣者，何可胜数。即未至此，其间颓其刚健之躯，昏其清明之志。以顶天履地，希圣希贤之姿，致成碌碌庸人，无所树立之辈者，又复何限。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-029/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">不可录重刻序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">女色之祸，极其酷烈。自古至今，由兹亡国败家，殒身绝嗣者，何可胜数。即未至此，其间颓其刚健之躯，昏其清明之志。以顶天履地，希圣希贤之姿，致成碌碌庸人，无所树立之辈者，又复何限。</p><p class="p-trans">女色的祸害，极为残酷剧烈。从古至今，因为女色而亡国败家、丧失性命、断子绝孙的人，哪里数得清。即使没到这个地步，（而因为女色）颓废了刚健的身躯，昏昧了清明的心志，本着顶天立地、成圣成贤的天资，却沦为碌碌无为、无所成就的庸流，（这样的人）不知又有多少。</p></div>
+<div class="para-pair"><p class="p-orig">况乎逆天理，乱人伦，生为衣冠禽兽，死堕三途恶道者，又何能悉知之而悉见之耶。噫。女色之祸，一何酷烈至于此极也。</p><p class="p-trans">何况那些悖逆天理、坏乱人伦，活着时作衣冠禽兽，死之后堕三途恶道的人，又哪里是人人都能知道见到的呢。唉！女色的祸害，为何残酷剧烈到了如此的极点啊。</p></div>
+<div class="para-pair"><p class="p-orig">由是诸圣诸贤，特垂悲愍。或告之以法言，或劝之以巽语。直欲福善祸淫之理，举世咸知。而又征诸事实，以为法戒。企知自爱者读之，当必怵然惊，憬然悟，遏人欲于横流，复天良于将灭。</p><p class="p-trans">因此，诸位圣贤特地垂慈悲愍，或者用严肃的教语告诫，或者用委婉的言词劝导。只想让全天下人，都知道行善得福、淫乱招祸的道理。并且征引诸多事实，作为警戒。希望那些知道自爱的人读了以后，必定会惊恐畏惧，幡然醒悟，遏止横流的人欲，恢复将灭的天良。</p></div>
+<div class="para-pair"><p class="p-orig">从兹一切同伦，悉享富寿康宁之福，永离贫病夭折之祸。此不可录所由辑也。</p><p class="p-trans">从此一切人，全都享受富寿康宁的幸福，永久远离贫病夭折的祸患。这就是编辑《不可录》这本书的缘由。</p></div>
+<div class="para-pair"><p class="p-orig">张瑞曾居士，欲重刻印施，命余作序，畅演窒欲要义。须知美色当前，欲心炽盛，法言巽语，因果报应，皆难断其爱心。若能作不净观，则一腔欲火，当下冰消矣。</p><p class="p-trans">张瑞曾居士，想要重新刻印流通这本书。让我写一篇序言，究畅演说窒熄淫欲的要义。必须知道，美色到来时，淫欲之心炽盛热烈，无论教戒、劝导，以及因果报应事理，都难以斩断（当事人）的贪爱之心。如果能够作不净观，那么一腔欲火，当下就如冰雪般消融了。</p></div>
+<div class="para-pair"><p class="p-orig">吾秦长安子弟，多玩促织。有兄弟三人，年皆成童，于月夜捉促织于坟墓间。忽见一少妇，姿色绝伦，遂同往捉之。其妇变脸，七窍流血，舌拖尺余，三人同时吓死。</p><p class="p-trans">我们西安的子弟，大多爱玩蟋蟀。有兄弟三人，都十来岁了，在一个有月亮的夜晚，到坟墓中间捉蟋蟀。忽然见到一位美丽绝伦的少妇，于是一同去捉她。少妇突然变了脸，七窍流血，舌头拖出来有一尺多长，三个人同时被吓死。</p></div>
+<div class="para-pair"><p class="p-orig">次日其家寻得，救活者一，方知其事。活者大病数月方愈。其家子孙，不许夜捉促织。夫此少妇，未变脸时，则爱入骨髓，非遂所欲则不可。及既变脸，则一吓至死，爱心便成乌有。</p><p class="p-trans">第二天，家人找到他们，救活了其中一个，才知道事情经过。救活的那个，大病了几个月才恢复。这家人从此不许子孙在夜里捉蟋蟀。那位少妇，没有变脸时，就对她爱入骨髓，非要满足自己的欲望不可。等到变了脸，就活活吓死，爱欲心随之化为乌有。</p></div>
+<div class="para-pair"><p class="p-orig">然当其群相追逐时，固未始无血与舌也。何含而藏之，则生爱心。流而拖之，则生畏心。</p><p class="p-trans">然而当三兄弟一起追逐时，那少妇并不是没有鲜血与舌头。为什么含藏在体内，就生起爱欲心，流出来拖下来，就生起畏惧心呢？</p></div>
+<div class="para-pair"><p class="p-orig">了此，则凡见一切天姿国色，皆当作七窍流血，舌拖尺余之钓颈鬼想矣。又何至被色所迷，生不能尽其天年，死必至永堕恶道耶。</p><p class="p-trans">明白了这一点，那么但凡见到一切天姿国色的美女，都应当作七窍流血、舌拖尺余的吊脖子鬼来想。又怎么至于被女色所迷惑，这一生早死，死后永堕恶道呢。</p></div>
+<div class="para-pair"><p class="p-orig">以故如来令贪欲重者，作不净观。观之久久，则尚能断惑证真，超凡入圣。岂止不犯邪淫，窒欲卫生而已。</p><p class="p-trans">所以佛让那些淫欲心重的人，作不净观。观想久了，尚且能断惑证真、超凡入圣。哪里只是不犯邪淫，窒熄欲望，保养身体而已呢。</p></div>
+<div class="para-pair"><p class="p-orig">其女貌娇美，令人生爱心而行欲事者，不过外面一张薄皮，光华艳丽，为其所惑耳。若揭去此之薄皮，则不但皮里之物，不堪爱恋。即此薄皮，亦绝无可爱恋矣。</p><p class="p-trans">容貌娇美的女子，让人心生贪爱而行淫的原因，只不过是外面一张光华艳丽的薄皮，（当事人）被这张皮所迷惑罢了。如果揭去这层薄皮，那么不但皮里的东西，不值得爱恋。就连这薄皮本身，也绝对没有什么可爱恋的了。</p></div>
+<div class="para-pair"><p class="p-orig">再进而剖其身躯，则唯见脓血淋漓，骨肉纵横，脏腑屎尿，狼藉满地。臭秽腥臊，不忍见闻。校前少妇所变之相，其可畏惧厌恶，过百千倍。</p><p class="p-trans">再进一步剖开她的身躯，就只见到脓血淋漓，骨肉交错，五脏六腑，屎尿充满，一片狼藉，满地污秽，腥臊恶臭，不忍见闻。比起前面那位少妇所变的厉鬼相，恶心可怕的程度，超过百千倍。</p></div>
+<div class="para-pair"><p class="p-orig">纵倾城倾国之绝世佳人，薄皮里面之物，有一不如是乎。人何唯观其外相，而不察其内容，爱其少分之美，遂不计其多分之恶乎。</p><p class="p-trans">即使是倾城倾国的绝世佳人，她薄皮里面的东西，有一个不是这样吗？人们为什么只看她的表相，而不深察里面的内容；爱慕她那一小点美丽，于是就不计较她绝大多数的丑恶呢？</p></div>
+<div class="para-pair"><p class="p-orig">余愿世人，遗外相而察内容，厌多恶以弃少美。则同出欲海，共登觉岸矣。又当淫欲炽盛，情不能制之时。但将女阴作毒蛇口，如以阳纳蛇口中。则心神惊悸，毛骨悚然。无边热恼，当下清凉矣。此又窒欲之最简便法也。</p><p class="p-trans">我祈愿世间的人，遗弃表相而深察内容，厌恶多部分的丑恶而遗弃小部分的美丽。那么就能共同出离淫欲苦海，共同登上觉悟彼岸了。又者，正当淫欲炽盛、情不自禁的时候，只要将女阴想作毒蛇口，如同将阳具纳入毒蛇口中。就会心神恐惧，毛骨悚然。无边的热恼，当下化为清凉了。这是窒熄淫欲最简便的方法啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【不可录】</span>《不可录》即后来增订的《寿康宝鉴》。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【一何】</span>为何；多么。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【法言】</span>1.合乎礼法的言论。2.犹格言。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【巽词】</span>委婉的言词。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【法戒】</span>楷式和鉴戒。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【怵然】</span>戒惧、惊惧貌。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【天良】</span>天赋的善心；良心。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【促织】</span>蟋蟀的别称，属于蟋蟀科，也叫蛐蛐儿。因其能鸣善斗，自古便为人饲养。据记载，中国家庭饲养蟋蟀始于唐代，当时无论朝中官员，还是平民百姓，人们在闲暇之余都喜欢带上自己的“宝贝”，聚到一起一争高下。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

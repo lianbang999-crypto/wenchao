@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>持经利益随心论 · 印光法师文钞</title>
+<meta name="description" content="大觉世尊，所说一切大乘显密尊经，悉皆理本唯心，道符实相，历三世而不易，举十界以咸遵。归元复本，为诸佛之导师。拔苦与乐，作众生之慈父。若能竭诚尽敬，礼诵受持，则自他俱蒙胜益，幽显同沐恩光。犹如意珠，似无尽藏，取之不匮，用之无穷，随心现量，悉满所愿。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-182/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="持经利益随心论 · 印光法师文钞">
+<meta property="og:description" content="大觉世尊，所说一切大乘显密尊经，悉皆理本唯心，道符实相，历三世而不易，举十界以咸遵。归元复本，为诸佛之导师。拔苦与乐，作众生之慈父。若能竭诚尽敬，礼诵受持，则自他俱蒙胜益，幽显同沐恩光。犹如意珠，似无尽藏，取之不匮，用之无穷，随心现量，悉满所愿。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-182/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 论</div>
+      <h1 class="art-title">持经利益随心论</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大觉世尊，所说一切大乘显密尊经，悉皆理本唯心，道符实相，历三世而不易，举十界以咸遵。归元复本，为诸佛之导师。拔苦与乐，作众生之慈父。若能竭诚尽敬，礼诵受持，则自他俱蒙胜益，幽显同沐恩光。犹如意珠，似无尽藏，取之不匮，用之无穷，随心现量，悉满所愿。</p><p class="p-trans">自觉、觉他、觉行圆满的释迦牟尼佛，他所宣说的一切大乘显密诸经，全都是理论上依据真如本性，法道上符合究竟实相，经历过去、现在、未来三世而不能更改，所有十方世界的众生都应该遵守行持。这些尊贵的经典，能使一切众生回归真如本性，是一切诸佛的导师。这些尊贵的经典，能够拔除众生的一切痛苦，能够给与众生究竟快乐，是一切众生的慈父。如果我们能够对佛经，至诚恭敬，礼拜读诵，一心受持，那么自己和他人都能蒙受经典殊胜的利益，看不见的和看得见的一切众生都能沐浴到佛陀的慈光。这些尊贵的经典，就像如意宝珠、无尽宝藏一样，取之不尽，用之不竭，随众生之心而现一切境界，能够满足众生的全部愿望。</p></div>
+<div class="para-pair"><p class="p-orig">楞严所谓求妻得妻，求子得子，求三昧得三昧，求长寿得长寿，如是乃至求大涅槃得大涅槃。夫大涅槃者，究竟果德。若论如来本心，契经全力，实属乎此。但以众生志愿狭劣，与夫致诚未极，不能直契。故随彼行心，满彼所愿。</p><p class="p-trans">这就是《楞严经》所讲的求妻得妻，求子得子，求三昧得三昧，求长寿得长寿，甚至求大涅槃得大涅槃。大涅槃就是指如来究竟的果德。如果要讨论到如来出世的本来用心，以及这些经典所发挥的能力和作用，其实就是想让一切众生当下证得大涅槃。但是因为众生心志愿力狭隘低劣，以及他们的至诚心还没有发挥到极点，因此不能直接契入大涅槃的境界。所以佛陀随顺众生的行持和心意，来满足众生的愿望。</p></div>
+<div class="para-pair"><p class="p-orig">倘宿根深厚之士，则顿明自性，彻证唯心，破烦惑而直趣菩提，圆福慧而速成觉道。获契经之全益，畅如来之本怀矣。譬如一雨普润，卉木同荣。大根则拂云以蔽日。小根则长寸而增分。</p><p class="p-trans">假如有宿世根器深厚的人，受持读诵这些尊贵的经典，顿时明了自性，彻证万法唯心，破除烦恼迷惑而直接趣向无上菩提，圆满福德智慧而快速成就无上觉道。获得经典的全部利益，这样就能使释迦如来出世的本怀得以舒畅啊。这些尊贵的经典，就像雨水普遍滋润大地一样，小草和大树都能因此而茂密繁盛，欣欣向荣。大根的树木则高耸入云，遮蔽烈日，小根的花草也能成长一寸、增高一分。</p></div>
+<div class="para-pair"><p class="p-orig">道本唯一真如，益随心而胜劣。然善根苟种，佛果终成。纵不能即获巨益，亦必以因兹度脱。闻涂毒鼓，远近皆丧。食少金刚，决定不消。先以欲钩牵，后令入佛智者，其斯之谓欤。</p><p class="p-trans">佛道原本就是唯一的真如，所得利益却随着众生的心量而有胜劣的差异。然而善根已经种植，那么佛果终究是可以成就的。众生即使不能马上获得巨大的利益，将来也必定会因曾经读诵经典，而得以了生脱死。就像听闻到涂毒鼓的声音，不论远近，所有的人都会丧失性命；又像吃了金刚沙，就算再少，也决定不会消化。先利用众生的欲望来吸引利益他们，然后让他们证入佛陀的智慧，这就是受持佛经的利益啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【涂毒鼓】</span>谓涂有毒料，使人闻其声即死之鼓。禅宗以此比喻师家令学人丧心或灭尽贪、嗔、痴之一言一句之机言。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【食少金刚，决定不消】</span>《大方广佛华严经卷第三十六》：“佛子。譬如丈夫，食少金刚。终竟不消。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -28,6 +28,26 @@ const articleCache = new Map();
 
 /* ---------- 工具 ---------- */
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const articleHref = (id, p) => {
+  const q = p !== undefined && p !== null && p !== '' && !Number.isNaN(Number(p))
+    ? '?p=' + encodeURIComponent(p)
+    : '';
+  return '/a/' + encodeURIComponent(id) + '/' + q;
+};
+function goArticle(id, p) {
+  if (!id) return;
+  const href = articleHref(id, p);
+  if (location.pathname + location.search !== href || location.hash) {
+    history.pushState(null, '', href);
+  }
+  route();
+}
+function goHome() {
+  if (location.pathname !== '/' || location.search || location.hash) {
+    history.pushState(null, '', '/');
+  }
+  route();
+}
 /* 卷名缩写：「增广印光法师文钞卷第一」→「卷第一」 */
 const shortJuan = (j) => j.replace(/^(增广)?印光法师文钞(续编|三编)?/, '') || j;
 
@@ -63,7 +83,7 @@ $('#btn-nav').onclick = () => openDrawer('L');
 $('#btn-ai').onclick = () => openDrawer('R');
 $('#btn-ai-close').onclick = closeDrawers;
 overlay.onclick = closeDrawers;
-$('#topbar-title').onclick = () => { location.hash = ''; closeDrawers(); };
+$('#topbar-title').onclick = () => { goHome(); closeDrawers(); };
 
 /* 边缘滑动手势：左缘右滑开目录，右缘左滑开AI；抽屉上反向滑动关闭 */
 let touch = null;
@@ -98,7 +118,7 @@ async function fullSearch(kw) {
   if (!searchIndex) {
     tree.innerHTML = '<p class="nav-empty">正在载入全文索引…<br><small>首次约数秒，此后离线可用</small></p>';
     try {
-      searchIndex = await (await fetch('data/search.json', { cache: 'no-cache' })).json();
+      searchIndex = await (await fetch('/data/search.json', { cache: 'no-cache' })).json();
     } catch {
       tree.innerHTML = '<p class="nav-empty">索引载入失败，请检查网络</p>';
       return;
@@ -128,7 +148,7 @@ async function fullSearch(kw) {
   tree.querySelectorAll('.search-hit').forEach((b) => {
     b.onclick = () => {
       pendingFind = kw;
-      location.hash = '#/a/' + b.dataset.id;
+      goArticle(b.dataset.id);
       closeDrawers();
     };
   });
@@ -205,7 +225,7 @@ const navItemHtml = (it, withVol, asJuan) => {
 };
 function bindNavItems(root) {
   root.querySelectorAll('.nav-item').forEach((b) => {
-    b.onclick = () => { location.hash = '#/a/' + b.dataset.id; closeDrawers(); };
+    b.onclick = () => { goArticle(b.dataset.id); closeDrawers(); };
   });
 }
 function highlightNav() {
@@ -220,16 +240,30 @@ function highlightNav() {
 $('#nav-search').addEventListener('input', (e) => renderTree(e.target.value));
 
 /* ---------- 路由 ---------- */
+window.addEventListener('popstate', route);
 window.addEventListener('hashchange', route);
+function articleRoute() {
+  const legacy = (location.hash || '').match(/^#\/a\/([\w-]+)(?:\?p=(\d+))?/);
+  if (legacy) {
+    history.replaceState(null, '', articleHref(legacy[1], legacy[2]));
+    return { id: legacy[1], p: legacy[2] };
+  }
+  const m = location.pathname.match(/^\/a\/([\w-]+)\/?$/);
+  if (!m) return null;
+  const p = new URLSearchParams(location.search).get('p');
+  if (location.pathname !== '/a/' + m[1] + '/') {
+    history.replaceState(null, '', articleHref(m[1], p));
+  }
+  return { id: decodeURIComponent(m[1]), p };
+}
 async function route() {
-  const m = location.hash.match(/^#\/a\/([\w-]+)/);
+  const r = articleRoute();
   closeDrawers();
-  if (!m) { renderHome(); maybeTradify($('#reader')); return; }
-  await renderArticle(m[1]);
+  if (!r) { renderHome(); maybeTradify($('#reader')); return; }
+  await renderArticle(r.id);
   maybeTradify($('#reader'));     // 繁体模式：正文渲染后转换
   // 分享二维码深链：?p=N 定位到所引段落
-  const pm = location.hash.match(/[?&]p=(\d+)/);
-  if (pm) scrollToPara(+pm[1]);
+  if (r.p !== null && r.p !== undefined && r.p !== '') scrollToPara(+r.p);
 }
 // 滚动到正文第 n 段并短暂高亮（与 share.js paraIndexOf 同口径）
 function scrollToPara(n) {
@@ -278,7 +312,7 @@ function renderHome() {
     </div>`;
   paintProgress();
   const rc = $('.resume-card');
-  if (rc) rc.onclick = () => { location.hash = '#/a/' + rc.dataset.id; };
+  if (rc) rc.onclick = () => { goArticle(rc.dataset.id); };
   document.querySelectorAll('.vol-card').forEach((b) => {
     b.onclick = () => {
       openDrawer('L');
@@ -291,7 +325,7 @@ function renderHome() {
 /* ---------- 文章 ---------- */
 async function loadArticle(id) {
   if (articleCache.has(id)) return articleCache.get(id);
-  const res = await fetch('data/articles/' + id + '.json', { cache: 'no-cache' });
+  const res = await fetch('/data/articles/' + id + '.json', { cache: 'no-cache' });
   if (!res.ok) throw new Error('载入失败');
   const a = await res.json();
   articleCache.set(id, a);
@@ -463,7 +497,7 @@ async function renderArticle(id) {
   });
   // 选读篇目 → 跳转文钞原篇
   reader.querySelectorAll('.xd-link').forEach((b) => {
-    b.onclick = () => { location.hash = '#/a/' + b.dataset.id; };
+    b.onclick = () => { goArticle(b.dataset.id); };
   });
   // 注释词条弹卡
   reader.querySelectorAll('.term').forEach((b) => {
@@ -480,11 +514,11 @@ async function renderArticle(id) {
     };
   });
   reader.querySelectorAll('.art-nav button').forEach((b) => {
-    b.onclick = () => { location.hash = '#/a/' + b.dataset.id; };
+    b.onclick = () => { goArticle(b.dataset.id); };
   });
   // 双链跳转：出处（嘉言录→文钞）与反向链接（文钞→嘉言录）
   reader.querySelectorAll('.seg-src.linked, .backref').forEach((b) => {
-    b.onclick = () => { location.hash = '#/a/' + b.dataset.go; };
+    b.onclick = () => { goArticle(b.dataset.go); };
   });
 
   // 搜索跳转：高亮全文命中并定位首处；否则恢复阅读进度
@@ -551,7 +585,7 @@ function loadOpenCC() {
   if (_conv) return Promise.resolve(_conv);
   return new Promise((resolve) => {
     const s = document.createElement('script');
-    s.src = 'js/opencc.js?v=20260614-ai12';
+    s.src = '/js/opencc.js?v=20260614-ai13';
     s.onload = () => {
       try {
         const c = OpenCC.Converter({ from: 'cn', to: 'tw' });
@@ -644,7 +678,7 @@ function showCitation(p) {
   const g = $('#sheet-body .sheet-goto');
   if (g) g.onclick = () => {
     $('#sheet').hidden = true; $('#sheet-backdrop').hidden = true;
-    location.hash = '#/a/' + g.dataset.id; closeDrawers();
+    goArticle(g.dataset.id); closeDrawers();
   };
 }
 // 角标 hover 预览（仅桌面；触屏走点击弹卡）
@@ -873,7 +907,7 @@ async function boot() {
   syncWide();
   matchMedia('(min-width: 1180px)').addEventListener('change', syncWide);
   try {
-    books = await (await fetch('data/books.json', { cache: 'no-cache' })).json();
+    books = await (await fetch('/data/books.json', { cache: 'no-cache' })).json();
   } catch {
     $('#reader').innerHTML = '<p class="loading">目录载入失败，请刷新重试</p>';
     return;
@@ -889,6 +923,6 @@ async function boot() {
   await route();
   if (prefs.trad) loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); });
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost'))
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
 }
 boot();

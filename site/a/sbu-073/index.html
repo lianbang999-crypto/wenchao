@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复崔德振居士书一 · 印光法师文钞</title>
+<meta name="description" content="前次之信，不愿为复。以汝只知其一，不知其二。只知令人如是行，若令汝做，也不能一一全依。盖如纸上论兵，威猛无敌，若或两阵相近，则只有逃走一策之大本领耳。光以是不敢赞成汝之计划。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-073/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复崔德振居士书一 · 印光法师文钞">
+<meta property="og:description" content="前次之信，不愿为复。以汝只知其一，不知其二。只知令人如是行，若令汝做，也不能一一全依。盖如纸上论兵，威猛无敌，若或两阵相近，则只有逃走一策之大本领耳。光以是不敢赞成汝之计划。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-073/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复崔德振居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前次之信，不愿为复。以汝只知其一，不知其二。只知令人如是行，若令汝做，也不能一一全依。盖如纸上论兵，威猛无敌，若或两阵相近，则只有逃走一策之大本领耳。光以是不敢赞成汝之计划。</p><p class="p-trans">上次的信，不愿回复。因为你只知其一，不知其二。只知道让别人来这样做，如果让你做的话，也不能一一全都依照来做。就如同纸上谈兵，说得威猛无敌，如果真的两阵交战，那么就只剩逃走这一计策的大本事了。所以我不敢赞成你的计划。</p></div>
+<div class="para-pair"><p class="p-orig">至于终夜助念，何可以截流三班念佛之人，不离当初为例。是知汝之立法，均未设身体察。</p><p class="p-trans">至于整夜助念，怎么能用截流大师（注1）（所作的《起一心精进念佛七期规式》中）“三班念佛的人，不离当初”（注2）来作为范例呢？因此知道你所立的法则，都没有设身处地地体察。</p></div>
+<div class="para-pair"><p class="p-orig">至于与某大法师书，意实可佩，语欠婉和。彼竟以为毁，不道歉忏过，则其平日自负为唯我独尊，全体彰显无遗也。彼当然赞成汝之精进组之办法，亦可见彼之素志，所慕者大，不详其细耳。</p><p class="p-trans">至于写给某位大法师的信，用意实在值得敬佩，但语气有欠婉转温和。他竟然认为这是诋毁，不道歉忏悔过失，那么他平时自负为唯我独尊，就全部彰显无遗了。他当然赞成你精进念佛小组的办法，也能看出他平素的志向，所企慕的目标很大，但并不能详察其中的细节。</p></div>
+<div class="para-pair"><p class="p-orig">复游有维一篇，光极佩服，惜彼迷之已极，香臭，邪正，真伪，利害，无一不错会，故亦无改过回头之效，为可怜可悯也。</p><p class="p-trans">回复游有维（注3）的一篇信稿，我极为佩服，可惜他迷惑到了极点，香臭、邪正、真伪、利害，没有一样不是错误地领会，所以也没有改过回头的效果，实在可怜可悯啊！</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，无手眼二镜，不能阅来书，然亦甚模糊，况复书乎。以故无论何人，均以以后切勿来书拒。</p><p class="p-trans">我老了，没有手、眼两个镜子，不能阅读来信，然而（即使用手镜、眼镜）也很模糊，何况是回信呢？所以无论什么人，都用“以后切勿来信”予以拒绝。</p></div>
+<div class="para-pair"><p class="p-orig">依旧打之绕。此是宗意，须有悟处，方可彻知。鲁川自命是通宗通教之大通家，尚错会其意。阁下即欲令示此意，诚所谓游戏而问。阁下且放下一切闲知见，一心念佛，念到心佛双亡之后，自可发一大笑，完全了知。未到此时，若别人与说，亦不得而知。譬如已到含元殿，其殿中种种悉皆备知。若为未到者说的纵明白，依旧是茫然不知。</p><p class="p-trans">“依旧打之绕”（注4）。这是禅宗的深意，必须有悟处，才能完全明了。曹鲁川自命是通达宗门、教下的大通家，尚且错会其中的禅意。阁下即刻想让我开示这句话的意思，实在是所谓的游戏之问。阁下暂且放下一切无关紧要的知见，一心念佛，念到心佛双亡之后，自然能发一大笑，完全明了。没到这个时候，如果别人对你说，也不得而知。譬如自己已经到了（长安大明宫的）含元殿，其殿中的种种景象就全都知道了。如果对没到过含元殿的人，即使说得再明白，而对方依旧是茫然不知所云。</p></div>
+<div class="para-pair"><p class="p-orig">宗家之语句，通是教人参的，若以文会意，不但不得其益，尚且以误为悟，其罪极大。即令真悟，尚去了生脱死，远之远矣。以彼唯仗自力，非大悟后烦恼惑业断得净尽无余，方可了，否则莫由而了。</p><p class="p-trans">禅家的语句，全都是教人来参的，如果以文义来领会意思，不但不能得到利益，而且还会将误会认为是开悟，这样的罪过极大。即使是真的开悟，距离了生脱死，还远之又远。因为那个法门只仗自力，非得要大悟之后，烦恼惑业断得净尽无余，才能了生死，否则是没办法了生死的。</p></div>
+<div class="para-pair"><p class="p-orig">念佛法门，若具真信切愿，念佛求生西方，则仗佛慈力，带业往生。阁下之根性，只可学愚夫愚妇之修持，若妄效曹鲁川之身分，诚恐堕落三恶道为准程的。何以故，以未得谓得，未证谓证，因兹坏乱佛法，疑误众生故。</p><p class="p-trans">念佛法门，如果具足真信切愿，念佛求生西方，就能仗佛慈力，带业往生。阁下的根性，只可学愚夫愚妇的修持，如果妄想仿效曹鲁川的身份，只怕会以堕落三恶道作为准则。为什么呢？因为未得说得，未证说证，因此坏乱佛法，疑误众生的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">文钞等寄一包来，若不嫌鄙陋，祈详阅而依行之，庶可不虚此生，不虚此遇也。若以其不堪寓目，则转施于不具目者。以后只可与范九谈叙，不得与不慧通函，以无精神应酬故也。</p><p class="p-trans">《文钞》等书寄一包给你，如果不嫌粗鄙浅陋，请详细阅读并依照实行，才能不虚此生，不虚此遇啊！如果认为这些书不值得看，那么就请转送给不具眼的人。以后只可以与费范九谈论，不得与我通信，因为我没有精神应酬的缘故。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【截流】</span>截流大师（1626-1682）：清代高僧，中国净土宗第十代祖师。俗姓蒋，名行策，字截流，清初顺康间宜兴（今江苏宜兴）人。父名全昌，是宜兴老儒，与憨山大师是好友。憨山大师示寂后三年，一天晚上，全昌梦见憨山大师进卧室，随后截流大师出生，是以其父为子取名为梦憨，时为明朝熹宗天启六年（公元1626年）。康熙九年（公元1670年），截流大师进住虞山（在今江苏常熟）普仁院，开始依靠自身的修行经验与影响力，接引大众共修净业，倡导兴建莲社，并发起集众七日念佛的共修法会。七日之中大众同心念佛求生净土，此种行法，使得许多社会不同阶层的居家学佛念佛人士，虽不能长期住于庙宇之内修行，亦可在短时内共修净业，大众同修念佛法门，同愿求生西方净土，此种行法可谓是清代以降“打念佛七”之滥觞。大师居普仁院十三年，于康熙二十一年（公元1682年）七月九日示寂，著有《净土警语》。
+清十祖虞山普仁行策大师（《印光法师文钞续编·卷下·莲宗十二祖赞颂》）
+阐扬净土，恳切少俦。以深信愿竭诚修，心佛两相投。万念俱休，决定出苦邱。
+憨山宿愿尚未酬，故复示生作截流。
+呵斥修人天福者，直是阐提旃陀俦。
+佛我心性原不异，佛是已成我未修。
+欲得心佛两无差，当向忆佛念佛求。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【不离当初为例】</span>“选僧十二，分三班，每班四人，各有所司。十二人外，不论缁素多寡，亦分三班，随其后。一班旋绕，则两班安坐。食时赴斋堂，依次无敢紊，坐定，佛声初歇，小沙弥击板念佛以继之，使一句洪名，不绝于心口耳间。夜分略睡，闻钟声鸣齐起。凡左行者罚，越位者罚，相语者倍罚，盖严若军令焉。”参见截流大师的《起一心精进念佛七期规式》。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【游有维】</span>（1917—1990）：现代佛教居士。字祥科，江西婺源人。青年时即笃信佛教，曾随江易园（江谦，字易园）居士研习佛学、文学及儒学。又曾皈依印光大师，先后参与弘化社及印光大师永久纪念会工作。1941年春，游有维与江谦女儿江有贞在“三余海滨耕读处”结婚，逾年，江有贞因难产死于耕读处。1949年6月，任《弘化月刊》主编兼发行人。1956年2月，《弘化月刊》改由上海市佛协主办，居士任执行编辑，时上海佛教书店成立，佛协任命居士为总经理。建国后任上海世界居士林及后改名为上海佛教居士林之副林长、林长。中国佛教协会1953年5月在北京成立后，居士历任五届理事，并先后任上海市佛协理事、常务理事、副秘书长、副会长等职。居士一生不遗余力地弘扬净土法门。1990年初，居士身患绝症时，还作文发表于各佛刊。居士主要著作有《上海近代佛教简史》，编订刊行了然法师之《般若净土中道实相菩提论》等。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【依旧打之绕】</span>《莲池大师答苏州曹鲁川书》：“如齐己禅师曰，唯有径路修行，依旧打之绕。但念阿弥陀佛，念得不济事。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

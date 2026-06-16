@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>冯平斋宜人事实发隐 · 印光法师文钞</title>
+<meta name="description" content="人生世间，善恶各须辅助，方克有成。虽天纵之圣，尚须贤母贤妻，以辅助其道德，况其下焉者乎。以故太任有胎教，致文王生有圣德。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-159/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="冯平斋宜人事实发隐 · 印光法师文钞">
+<meta property="og:description" content="人生世间，善恶各须辅助，方克有成。虽天纵之圣，尚须贤母贤妻，以辅助其道德，况其下焉者乎。以故太任有胎教，致文王生有圣德。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-159/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">冯平斋宜人事实发隐</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人生世间，善恶各须辅助，方克有成。虽天纵之圣，尚须贤母贤妻，以辅助其道德，况其下焉者乎。以故太任有胎教，致文王生有圣德。</p><p class="p-trans">人生世间，或善或恶，都必须要有所辅助，才能成就。即使是天生的圣人，还必须要有贤母贤妻，来辅助他的道德。更何况圣人以下的人呢。所以太任（周文王之母）有好的胎教，致使周文王生来就有圣德。</p></div>
+<div class="para-pair"><p class="p-orig">故诗赞其刑于寡妻，至于兄弟，以御于家邦。然此但约文王边说。若论太姒之德，固亦可以辅助文王之道。如两灯互照，愈见光明。两手互洗，方得清净。</p><p class="p-trans">所以《诗经·大雅·思齐》赞扬周文王说：“施行礼法，先给妻子做榜样，再推广到兄弟，进而整顿好家庭、治理好国家”。然而这只是就周文王这一边来说的，要说太姒（周文王之妻）的德行，自然也可以辅助周文王的治理之道。如同两盏灯互相照耀，更加显得光明；两只手互相搓洗，方才能够清净。</p></div>
+<div class="para-pair"><p class="p-orig">观思斋太任，太姒嗣徽音之说，可以知矣。由是言之，世少贤人，由于世少贤母，与贤妻也。</p><p class="p-trans">看了《诗经·大雅·思齐》中“太任端庄而又谨慎”、“太姒继承了先辈的美德”这些赞说，就可以知道了。由此说来，世间少有贤德之人，是由于世间少有贤德之母，少有贤德之妻啊。</p></div>
+<div class="para-pair"><p class="p-orig">良以妻能阴相其夫，母能胎教子女。况初生数年，日在母侧。亲炙懿范，常承训诲。其性情不知不觉为之转变，有不期然而然者。</p><p class="p-trans">实在因为妻子能够在背后辅佐丈夫，母亲能够在胎中教育子女。况且孩子出生后的几年里，每天都在母亲的身边。亲身蒙受母亲德行的熏陶，常常承受母亲的教导，性情在不知不觉中得以转变，有着不期然而然的效果。</p></div>
+<div class="para-pair"><p class="p-orig">余常谓教女为齐家治国之本，又常谓治国平天下之权，女人家操得一大半，盖谓此也。以天姿高者，若有贤母以钧陶之，贤妻以辅翼之。自可意诚心正，明明德，止至善。穷则独善其身，达则兼善天下。</p><p class="p-trans">我常常说，教育女儿是齐家治国的根本。又常常说，治国平天下的权柄，一大半操持在女人手里，说的就是这个意思。因为，天姿高的人如果有了贤母的塑造和贤妻的辅助，自然可以诚意、正心、明明德、止于至善。穷微的时候就修养自己的德行，显达的时候就带动天下人共同修德。</p></div>
+<div class="para-pair"><p class="p-orig">即天姿平常者，亦堪循规蹈矩，作一守分良民。断不至越理犯分，为非作奸，以忝所生，而为世害也。</p><p class="p-trans">即使是天姿平常的人，（如果有了贤母的塑造和贤妻的辅助），也能循规蹈矩，作一个安分守己的良民。绝对不至于违背道理、僭越本分、为非作歹，愧对生养自己的父母，成为世间的祸害。</p></div>
+<div class="para-pair"><p class="p-orig">惜世人梦梦，不以尽伦守分教女，使日唯从事于妆饰，此外则一无所讲。异日为人妻，为人母，不但不能相夫教子，以成善士，或反相之教之以成恶人。</p><p class="p-trans">可惜世间的人都在梦中做梦，不教育女儿尽伦常、守本分，却每天只是让她从事化妆打扮，除此之外什么都不教。将来她成了妻子当上母亲的时候，不但不能辅佐丈夫教育子女，使他们成为善人，或许反倒会把他们辅佐教育成恶人。</p></div>
+<div class="para-pair"><p class="p-orig">由是言之，教女一事，重于教子多多矣。而余所谓教女为齐家治国之本，及治国平天下之权，女人家操得一大半，乃真语实语也。</p><p class="p-trans">由此说来，教育女儿这件事，比教育儿子重要太多了。而我所说的“教育女儿是齐家治国的根本”，以及“治国平天下的权柄，一大半操持在女人手里”，是真话实话啊。</p></div>
+<div class="para-pair"><p class="p-orig">近世学风大开，女子入学，多被不知教本之教员所误。从兹不以尽伦守分，宜室宜家，相夫教子为事。各各皆欲操政权，作长官。越分计虑，习为狂妄，亦可慨也。</p><p class="p-trans">近年来，学校风气大开。女子进入学校后，大多被不懂教育根本的教师所误导。从此，不从事于尽伦常，守本分，家庭和顺、夫妻和睦，相夫教子。却各各都想要操持政权，进入官场，谋划考虑本分之外的事，渐渐习染成了狂妄气质，令人感慨啊。</p></div>
+<div class="para-pair"><p class="p-orig">安得有长民者，极力提倡，令其在家庭中培植。俾修齐治平之效，出于不知不觉，了无形迹中，则何幸如之。以是之故，余于冯宜人事实，重有感焉。</p><p class="p-trans">怎么样才能有一位长官大人，极力提倡让女子在家庭中培植品德。使得修身、齐家、治国、平天下的成效，从不知不觉、无形无迹中产生，这会是多么地庆幸啊。正因为如此，我对于冯宜人的事迹，有很深的感触。</p></div>
+<div class="para-pair"><p class="p-orig">宜人者，包培斋居士之德配也。生有异性，幼娴姆训。在家孝父母，已嫁孝舅姑。而且笃信佛法，修持唯谨。</p><p class="p-trans">冯宜人，是包培斋居士的妻子。天生禀性不同于常人，小时候就熟知关于女子的训诫。在家中孝顺父母，出嫁后孝顺公婆。而且笃实信奉佛法，修持很是严谨。</p></div>
+<div class="para-pair"><p class="p-orig">包君初尚不以为然，久之则与之俱化，而长斋念佛矣。以包君具聪明特达之资，又日与端庄静默，守分尽伦之宜人相处。其至性感人，盖有潜移密化于不知不觉中。</p><p class="p-trans">包居士最初还不以为然，时间久了就被妻子感化，也长斋念佛了。因为包居士有着聪明达观的天资，又天天和端庄静默、守本分、尽伦常的冯宜人相处。大概不知不觉中，就被妻子至善的性情潜移默化地感染了。</p></div>
+<div class="para-pair"><p class="p-orig">包君固明哲君子，一清如水。宦游时于有所入，不知来历者，尚虑其或有错因果处。必正色劝戒，详问来历，以期无负于心而后已。</p><p class="p-trans">包居士自然是一个明智贤哲的君子，清廉如水。在他做官期间，对于家中的收入，有来历不明者，冯宜人尚且担心会不会有违于因果事理的情况。她必定郑重地劝戒包居士，详细询问钱财的来历，以期心中无愧才好。</p></div>
+<div class="para-pair"><p class="p-orig">又每戒其子，勿入政界。犹恐或有难免，故又曰，政界中钱，唯日日办事，应得薪俸，可以领受。否则悉属非分，终须偿还，不可不慎。</p><p class="p-trans">又常常告戒自己的儿子，不要进入政界。仍然担心儿子或许难免会从政，所以又对他说：“政界中的钱，只有每天工作应得的薪水，可以领受。除此之外，都属于非分之财，以后终究要偿还，不可不谨慎”。</p></div>
+<div class="para-pair"><p class="p-orig">其事亲相夫，持家教子之芳踪，与夫戒杀放生，周急济困，力忏宿业，笃修净土之种种懿行，皆堪风世。</p><p class="p-trans">她奉事双亲、辅助丈夫、操持家务、教育儿子的美好行迹，以及戒杀放生、周济急难、救济贫困、力忏宿业、笃修净土的种种美德懿行，都足以成为劝勉世人的典范。</p></div>
+<div class="para-pair"><p class="p-orig">至其将终前三日，切戒厚葬，命用薄棺布衣。以为真者既去，何可为此幻躯，滥费金钱，暴殄天物乎。况丝绸之原，皆由杀起。用以送葬，是以罪业相加。于亲爱之道，大相乖戾。</p><p class="p-trans">临终前三天，她严肃告诫家人不要厚葬，要使用薄板棺材和棉布衣服。认为真实的神识已经离去，怎能为了这个虚幻的身躯，来浪费金钱，糟蹋东西呢？况且丝绸的来源，都是由杀生而起。用丝绸来送葬，就是将罪业加在死者身上，大大有悖于亲爱之道。</p></div>
+<div class="para-pair"><p class="p-orig">临终一二日，现诸痛苦，颇觉难堪。卒得见佛光明，结印而逝。盖由宿根深厚，现行淳淑。又得包君深知要义，乃教家人悉为助念。绝不提及诀别等事，亦不略露哀痛情状。</p><p class="p-trans">临终前的一、二天，现出诸多痛苦，非常难以忍受。最终得以见到佛陀的光明，结手印而逝。大概是由于她宿世善根深厚，现行仁厚善良。又加上包居士深知临终要义，让全家人都为她助念，绝口不提离别之类的事，也丝毫不露出哀痛的神情。</p></div>
+<div class="para-pair"><p class="p-orig">又请通法女友，常为开导。比丘六人，相续助念。直至次日入殓，不动哭声。故使神识不生爱恋，得遂往生之愿。则包君成就宜人之净业者，可谓至矣。</p><p class="p-trans">又请来通达佛法的女佛友，常常对她进行开导。加上六位比丘，相续为她助念。直到第二天入殓，都没有哭声。所以使得她的神识不生爱恋，得以达成往生的愿望。包居士对冯宜人净业的助成，可以说到了极处啊。</p></div>
+<div class="para-pair"><p class="p-orig">法华经云，善知识者，是大因缘，所以化导，令得见佛。宜人固包君之善知识，包君亦宜人之善知识。所谓善与善遇，相得益彰。若宜人者，可为当世妇女之师。</p><p class="p-trans">《法华经》中说：“善知识者，是大因缘，所以化导，令得见佛。”冯宜人自然是包居士的善知识，而包居士也是冯宜人的善知识。所谓善人遇到善人，彼此相得益彰。像冯宜人这样，可以作为当世妇女的师表。</p></div>
+<div class="para-pair"><p class="p-orig">而包君于其临终助念，及诸举动，实足为修净业者之家人，与其子若孙之轨范也。余故表而出之，以为爱亲者劝。余详事实中，此不备书。</p><p class="p-trans">而她临终时包居士的助念，以及种种举措，实在足以成为净业修习者家人以及儿孙们的轨范。所以在此加以表述，来劝导世间所有的爱亲之人。其余的细节详见《冯平斋宜人事实》，这里就不详细说明了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【天纵】</span>天所放任，意谓上天赋予。后常用以谀美帝王。《论语·子罕》：“固天纵之将圣，又多能也。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【刑于】</span>亦作“刑于”。谓以礼法对待。《诗·大雅·思齐》：“刑于寡妻，至于兄弟，以御于家邦。”郑玄笺：“文王以礼法接待其妻。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【寡妻】</span>嫡妻。一说为贤妻。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【思齐】</span>《诗·大雅·思齐》：“思齐大任，文王之母。思媚周姜，京室之妇。大姒嗣徽音，则百斯男。”毛传：“齐，庄也。”郑玄笺：“常思庄敬者，大任也，乃为文王之母。”后因以“思齐”赞美母教及内助之词。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【徽音】</span>犹德音。指令闻美誉。《诗·大雅·思齐》：“大姒嗣徽音，则百斯男。”郑玄笺：“徽，美也。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【百男】</span>犹言多男孩。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【宜室宜家】</span>宜：和睦。家庭和顺，夫妇和睦。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【长民】</span>为民之长；官长。古指天子、诸侯，后泛指地方官吏。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【姆训】</span>女师的训诫。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【舅姑】</span>称夫之父母。俗称公婆。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【风世】</span>谓劝勉世人。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【淳淑】</span>仁厚善良。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

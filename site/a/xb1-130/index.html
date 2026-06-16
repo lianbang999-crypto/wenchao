@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复（宋六湛，褚莲净，张子净）三居士书（民国十七年） · 印光法师文钞</title>
+<meta name="description" content="世乱极矣，不堪言说。推究其由，其近因由百十年来，一切读书居官之人，只知习举业，求功名，不知提倡因果报应，及家庭教育。若论远因，实由程朱破斥因果报应，及生死轮回之所致也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-130/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复（宋六湛，褚莲净，张子净）三居士书（民国十七年） · 印光法师文钞">
+<meta property="og:description" content="世乱极矣，不堪言说。推究其由，其近因由百十年来，一切读书居官之人，只知习举业，求功名，不知提倡因果报应，及家庭教育。若论远因，实由程朱破斥因果报应，及生死轮回之所致也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-130/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复（宋六湛，褚莲净，张子净）三居士书（民国十七年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">世乱极矣，不堪言说。推究其由，其近因由百十年来，一切读书居官之人，只知习举业，求功名，不知提倡因果报应，及家庭教育。若论远因，实由程朱破斥因果报应，及生死轮回之所致也。</p><p class="p-trans">世道坏乱到了极点，不堪言说。推究其原因，近因是由于近百十年来，一切读书做官的人，只知道学习、参加科举考试，求取功名，不知道提倡因果报应，以及家庭教育；若论远因，实在是由于二程（程颢、程颐）、朱熹破斥因果报应，以及生死轮回所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">以素未受家庭之善教，并不知人之所以为人，又习闻一死即灭，了无前生后世。一遇欧风所吹，觉此废孝废伦不耻，为自在无碍，遂一致进行。其根本误人，不能不归罪于理学诸子也。</p><p class="p-trans">因为平时没有受到家庭的善教，并且不知道人之所以为人的道理，又学习听闻到一死永灭，没有前生后世的说法（断灭见）。一遇到欧风的吹袭，不但觉得废除孝道和伦理道德并不可耻，而且还认为这样做是获得自由，于是一致效法推行废除孝道和伦理道德。上述误人的根本原因，不能不归罪于那些理学家！</p></div>
+<div class="para-pair"><p class="p-orig">光之此语，乃的确之极，平允之至，非妄说也。为今之计，当认真提倡因果报应，生死轮回，及家庭教育。而家庭教育，尤须注重因果报应。此二法互相维持，方能令后之子弟，不致悉数入彼兽域。否则，纵有教育，亦难制彼不随邪转也。</p><p class="p-trans">我的这些话，极其确切、公平、恰当，并不是瞎说的。为今之计，应当认真提倡因果报应、生死轮回以及家庭教育。而家庭教育，尤其必须注重因果报应的教育。这两个方法（因果教育、家庭教育）互相维持，才能令以后的孩子们，不致全部沦为兽类。否则，纵然有家庭教育，也很难制止他们不被邪说所转啊！</p></div>
+<div class="para-pair"><p class="p-orig">所言念佛修持，种种方法，文钞中具有。若详说，则太费笔墨。然虽详说，亦仍属文钞中之所说。</p><p class="p-trans">你们所提的念佛修持的种种方法，《文钞》中都有说明。如果详细说明，则太费笔墨。而且即使详细说明，也仍旧是《文钞》中所说的内容。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝等寄文钞，安士书，嘉言录，弥陀经白话解，观音本迹颂，感应篇直讲，寿康宝鉴，感应篇汇编，闺范等，各一份。若有多者，则结缘。</p><p class="p-trans">现在给你们寄去《文钞》、《安士全书》、《嘉言录》、《阿弥陀经白话解》、《观世音菩萨本迹感应颂》、《感应篇直讲》、《寿康宝鉴》、《感应篇汇编》、《闺范》等书，每个人一份。如果有多余的，就结缘送给其他人。</p></div>
+<div class="para-pair"><p class="p-orig">以文钞，安士书已送完，尚未印出。嘉言录，一万已送完，二三万皆未出书，不能多寄。</p><p class="p-trans">因为《文钞》、《安士全书》已经送完了，新的还没有印出来。《嘉言录》，一万本已经送完，后续的二、三万本都还没有出书，不能多寄。</p></div>
+<div class="para-pair"><p class="p-orig">嘉言录，分门别类，颇省心力。祈以此自行，以此化他，则超凡入圣，了生脱死，可决定亲得矣。</p><p class="p-trans">《嘉言录》，将《文钞》中的精华分门别类地整理出来，看起来比较省心省力。请以书中所说来自我行持，并以此化导他人，那么超凡入圣，了生脱死，就可以决定亲得了。</p></div>
+<div class="para-pair"><p class="p-orig">然欲修持净业，必须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。戒杀吃素，护惜物命，信愿念佛，求生西方。</p><p class="p-trans">然而想要修持净业，必须敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。戒杀吃素，保护爱惜动物生命，信愿念佛，求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">内而父母，兄弟，姊妹，外而亲戚，朋友，乡党，邻里，咸皆以此奉劝。无论彼之能信受与否，固不可不令彼一得闻知也。</p><p class="p-trans">家内的父母、兄弟、姐妹；家外的亲戚、朋友、乡亲、邻居，全都以此来奉劝他们。无论他们能否相信接受，也一定要让他们有机会听闻、了解。</p></div>
+<div class="para-pair"><p class="p-orig">汝等既欲皈依，今为汝等各取法名。宋六湛，法名慧湛。褚莲净，法名慧净。张子净，法名慧澄。</p><p class="p-trans">你们既然想要皈依，现今为你们各取法名。宋六湛，法名慧湛。褚莲净，法名慧净。张子净，法名慧澄。</p></div>
+<div class="para-pair"><p class="p-orig">若能断除妄想，一心正念，则所谓湛也，净也，澄也，皆即心本具之德，非自外来也。若心念尘劳，则本具之湛，净，澄德，由妄想鼓动，便成昏浊污秽之相矣。</p><p class="p-trans">如果能够断除妄想，一心正念，就是所谓的湛、净、澄，都是自心本具的性德，不是从外得来的。如果心中挂念世俗尘劳，那么本具的湛、净、澄的性德，由于妄想鼓动，就成为昏浊、污秽的相状了。</p></div>
+<div class="para-pair"><p class="p-orig">光明年三月初，当复来上海，以了印书事。明年秋后，当离普陀，游行东西南北，以避信札应酬之劳耳。普陀千祈勿来。但熟读文钞，嘉言录，胜于亲见光多多矣。</p><p class="p-trans">我在明年三月初，应该会再来上海，以了结印书的事。明年秋后，应该会离开普陀山，游行东西南北，以避开信件应酬的劳苦。请千万不要来普陀山。只要熟读《文钞》、《嘉言录》，就远远胜过亲见我了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

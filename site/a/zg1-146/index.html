@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与马契西居士书十一 · 印光法师文钞</title>
+<meta name="description" content="两次飓风，各处被灾，普陀亦然。殆众生同分恶业之所感召。不知贵宅房屋如何。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-146/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与马契西居士书十一 · 印光法师文钞">
+<meta property="og:description" content="两次飓风，各处被灾，普陀亦然。殆众生同分恶业之所感召。不知贵宅房屋如何。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-146/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">与马契西居士书十一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">两次飓风，各处被灾，普陀亦然。殆众生同分恶业之所感召。不知贵宅房屋如何。</p><p class="p-trans">两次飓风，各个地方都遭受了灾害，普陀山也一样。这大概是众生同分恶业所感召而成的。不知你家的房屋怎么样？</p></div>
+<div class="para-pair"><p class="p-orig">居科长年正壮盛，气象淳厚，堪为入道之器。光之为人，绝无执著。前念相信，不妨相交。后念不信，不妨即绝。来去任人，我固无心于交与绝也。</p><p class="p-trans">居科长（居秉磐）正当壮盛之年，气度敦厚质朴，可以成为进入佛道的法器。我为人绝对不会执著。前念彼此相信，不妨相交为友。后念不相信，不妨断绝来往。是来是去，随任他人，我原本就不在交友与绝交这些事上用心的。</p></div>
+<div class="para-pair"><p class="p-orig">然他人教人，多在玄妙处著力。光之教人，多在尽分上指挥。设不能尽分，纵将禅教一一穷源彻底，也只成一个三世佛怨而已。况尚无穷源彻底之事乎。</p><p class="p-trans">然而其他人教导人，大多在玄妙之处用功著力。我教导人，大多在克尽本分上来指导发挥。假设不能竭尽本分，纵然将禅宗和教下的义理，一一都穷源彻底弄个明白，也只成一个三世佛怨而已。况且还没有穷源彻底这回事呢。</p></div>
+<div class="para-pair"><p class="p-orig">居君既已到过山上，何必七月又来。往返跋涉，路途资费，动需若干，祈勿复来。即有疑问，尚有显微居士。即欲问光，邮递最便。何必重来，作无益以害有益也。</p><p class="p-trans">居秉磐既然已经到过普陀山，何必七月份又来。来往跋涉，路途资费，都需要不少。所以请他别来了。即使有疑问，还有顾显微居士可以请教。就是想问我，写信邮递最方便。何必再来普陀山，作无益的来往跋涉，而影响有益的修行呢。</p></div>
+<div class="para-pair"><p class="p-orig">今为居君取名契心，以彼名秉磐，字漱庵。以其心果能如磐石之贞固不动，又加以漱荡其外垢，则心之本体自可显现矣。</p><p class="p-trans">现为居秉磐取法名为契心，因为他名秉磐，字漱庵。如果他的心果真能够如磐石一样贞固不动，再加上用净水漱洗滌荡心外的污垢，那么心的本体，自然可以显现了。</p></div>
+<div class="para-pair"><p class="p-orig">心字，指常住真心而言，非随缘所起之习心也。习心，乃情染耳，非本体也。</p><p class="p-trans">（这里所说的）心，是指常住真心而言，不是随外缘所生起的习心。习心，是情识染污，不是心的本体。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【飓风】</span>最初只指加勒比海的热带气旋；后来又可指任何具有狂风的热带气旋。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【同分】</span>为“众同分”之略称。指有情众生之共性或共因。为俱舍七十五法之一，唯识百法之一。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【穷源】</span>1.河流的发源处。2.穷尽水流的源头。3.亦作“穷原”。探寻事物的本原。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【彻底】</span>通透到底。形容深透、完全而无所遗留。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

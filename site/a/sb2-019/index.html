@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复陈伯达居士书二 · 印光法师文钞</title>
+<meta name="description" content="汝说自利须出家，利他须不出家。不知修戒定慧者，唯出家为易。若修净土法门，则在家更为得力也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-019/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复陈伯达居士书二 · 印光法师文钞">
+<meta property="og:description" content="汝说自利须出家，利他须不出家。不知修戒定慧者，唯出家为易。若修净土法门，则在家更为得力也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-019/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复陈伯达居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝说自利须出家，利他须不出家。不知修戒定慧者，唯出家为易。若修净土法门，则在家更为得力也。</p><p class="p-trans">你说自利须出家，利他须不出家。这是不知修戒定慧的人，唯有出家才容易。如果修净土法门，则在家更为得力。</p></div>
+<div class="para-pair"><p class="p-orig">倘谓在家决难修行，则出家亦不能修行。何以故，以在家不著力，出家能认真乎。此可预决其不能之势耳。</p><p class="p-trans">如果认为在家绝对难以修行，那么出家也不能修行。为什么呢？因为在家就不尽力，出家能认真吗？这就能预先判断其不能认真修行的趋势了。</p></div>
+<div class="para-pair"><p class="p-orig">汝家有妻子，无所依靠，何可作此妄想。此系因循推托之情。使汝真出家，汝仍是懒惰懈怠，无所成就。光见之多多矣。</p><p class="p-trans">你家里有妻子儿女，没有依靠，怎么能作这种妄想。这是因循推托之情。假使你真出家，你仍是懒惰懈怠，无所成就。这样的人，我见得多了。</p></div>
+<div class="para-pair"><p class="p-orig">至于受戒一事，诸恶莫作，众善奉行，乃三世诸佛之总戒。谁不许汝自己发心受。即五戒，谁不许汝向佛前自誓受，何须要到普陀，方能受乎。</p><p class="p-trans">至于受戒一事，“诸恶莫作，众善奉行”，是三世诸佛的总戒。谁不许你自己发心受戒了。就五戒来说，谁不许你向佛前自己发誓受戒，何须要到普陀山来，才能受戒呢？</p></div>
+<div class="para-pair"><p class="p-orig">普陀千万勿来，以来须用若干川费，经若干日，亦不过但授以五戒之名相而已。即必欲从师受，常熟亦有清修僧人，岂不能授。而必欲从光受乎。学佛之人，先以知因果慎独上下手。既能慎独，则邪念自清，何至有所不如法处。</p><p class="p-trans">千万不要来普陀山，因为来需要花用不少旅费，经许多天，也只不过授以五戒的名相而已。即使一定想依从法师受戒，常熟也有清修的僧人，难道不能授，而必定想依从我受呢？学佛的人，先在知因果、慎独上下手。既然能够慎独，那么邪念就会自清，哪里还会有不如法的地方呢。</p></div>
+<div class="para-pair"><p class="p-orig">若有，则当力令断灭，方为真实行履。否则学在一边，行在一边，知见愈高，行履愈下，此今学佛自称通家者之贴骨大疮。倘能以不贰过是期，则学得一分，便得一分之实益矣。</p><p class="p-trans">如果有，则应当努力令其断灭，这才是真实的行持。否则学在一边，行在一边，知见越高，行为越下劣，这是现今自称通家的学佛人的贴骨大疮（指大毛病）。如果能够以不重犯为目标，那么学得一分，便得到一分的实际利益啊！</p></div>
+<div class="para-pair"><p class="p-orig">现今之世，乃一患难世。光前请许止净所著之观音本迹感应颂，已令付排。今寄说明一纸，有欲利人者，不妨令其任印流布。</p><p class="p-trans">现今的世代，是一个患难的世代。我先前请许止净所著的《观音本迹感应颂》，文稿已经令人交付排版了。现在寄上一纸说明，有想要利人的人，不妨让他们任印流布。</p></div>
+<div class="para-pair"><p class="p-orig">现已任及五六万部矣。光拟印数十万遍布中外，恐不易到。上十万部，当可做到。（乙丑十一月初七）</p><p class="p-trans">现在已经任印到五六万部了。我打算印数十万部来遍布中外，恐怕不容易做到。但印十万部以上，应当可以做到。（乙丑&lt;1925年&gt;十一月初七日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【川资】</span>旅费。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【不贰过】</span>不重犯同样的错误。《论语·雍也》：“有颜回者，好学，不迁怒，不贰过。”何晏集解：“不贰过者，有不善，未尝复行。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

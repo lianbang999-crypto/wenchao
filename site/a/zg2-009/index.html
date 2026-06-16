@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>重刻龙舒净土文题词并序（代王弘愿作） · 印光法师文钞</title>
+<meta name="description" content="众生心性，与佛同俦。由迷背故，轮回不休。如来慈愍，随机说法。普令含识，就路还家。无奈根性，万有不齐。非出格人，决难出离。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-009/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重刻龙舒净土文题词并序（代王弘愿作） · 印光法师文钞">
+<meta property="og:description" content="众生心性，与佛同俦。由迷背故，轮回不休。如来慈愍，随机说法。普令含识，就路还家。无奈根性，万有不齐。非出格人，决难出离。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-009/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">重刻龙舒净土文题词并序（代王弘愿作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">众生心性，与佛同俦。由迷背故，轮回不休。如来慈愍，随机说法。普令含识，就路还家。无奈根性，万有不齐。非出格人，决难出离。</p><p class="p-trans">众生一念心性，原本与佛同等。只因迷惑背觉合尘的缘故，轮回六道不停。如来慈悲怜愍，随顺众生根机而说法，普让一切众生，就路回归家乡。无奈众生根性，各各参差不齐。除非杰出高人，否则决难出离。</p></div>
+<div class="para-pair"><p class="p-orig">因兹特开，净土一门。普摄一切，上中下根。五逆十恶，地狱相现。一念投诚，即登彼岸。等觉菩萨，德与佛齐。尚须往生，方证菩提。博地凡夫，具足烦恼。不肯念佛，如何是好。</p><p class="p-trans">如来因此特开，净土一大法门。普遍摄受一切，上中下根众生。五逆十恶罪人，临终地狱相现。只要一念投诚（称念南无阿弥陀佛圣号），即能登入莲邦。上至等觉菩萨，德与佛齐，尚且要生极乐，才能证得佛果。我等博地凡夫，具足烦恼，如果不肯念佛，那该如何是好。</p></div>
+<div class="para-pair"><p class="p-orig">寄语世人，同生信愿。执持佛号，始终莫变。待至临终，蒙佛接引。顿出五浊，直登九品。见佛闻法，亲证无生。乘大愿轮，普度有情。</p><p class="p-trans">希望世间之人，共同生起信愿。执持弥陀名号，自始至终不变。等到临命终时，蒙佛慈悲接引。顿出五浊恶世，直登九品莲台。见佛闻法，亲证无生法忍。然后乘大愿轮，普度一切众生。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门者，如来彻底悲心，普度众生之法门也。令彼无力断惑，具缚凡夫，信愿持名，现生了脱。与观音势至同为伴侣。</p><p class="p-trans">净土法门，是如来以彻底悲心，普度众生的法门。让那些无法靠自己的力量断除烦惑的具缚凡夫们，通过真信切愿持念阿弥陀佛的名号，在现生当中了脱生死轮回，从而和观世音菩萨、大势至菩萨同为伴侣。</p></div>
+<div class="para-pair"><p class="p-orig">上而至于等觉菩萨，位邻佛果。尚须往生，方成正觉。至顿至圆，彻上彻下。超越一代时教所说一切法门。以故当佛说弥陀经时，六方诸佛出广长舌，一音赞叹，称为不可思议功德一切诸佛所护念经。又谓我释迦世尊，能为甚难希有之事。</p><p class="p-trans">上而至于等觉菩萨，距离成佛只差一个位次，尚且必须往生西方，才能成就无上正等正觉。这个法门极为圆满迅捷，彻上彻下，超越了如来一代时教所宣说的其余一切法门。因此，当佛宣说《阿弥陀经》时，六方诸佛全都现出广长舌相，同声赞叹，称赞《阿弥陀经》为“不可思议功德，一切诸佛所护念经”。又说释迦牟尼世尊，能为甚难稀有之事。</p></div>
+<div class="para-pair"><p class="p-orig">而我世尊，自叙宿因。谓我于五浊恶世，行此难事，得证菩提，为一切世间说此难信之法，是为甚难。令其闻者，信受奉行，以究竟畅己出世之本怀而已。</p><p class="p-trans">而释迦牟尼佛，自己讲述过去的因缘说：“我于五浊恶世，行此难事，得证菩提，为一切世间说此难信之法，是为甚难”。让听闻到的众生能够信受奉行，从而究竟畅达佛陀出现世间的本怀而已。</p></div>
+<div class="para-pair"><p class="p-orig">然此法门，甚深难测。虽经诸佛本师交相劝信。而世之疑者，犹复甚多。不但世智凡情不信，即深通宗教之知识，犹或疑之。不但知识不信，即已证真谛，业尽情空之声闻缘觉，犹或疑之。</p><p class="p-trans">然而这个法门，非常深广，难以测度。虽然经过六方诸佛和本师释迦牟尼佛交相劝勉，令生信心。然而怀疑的人还是很多。不但见识普通的人不信，就连深深通晓宗门、教下的通家，仍然可能怀疑。不但大通家不信，即使是已经证得真谛，业尽情空的声闻、缘觉，仍然可能怀疑。</p></div>
+<div class="para-pair"><p class="p-orig">不但小圣不信，即权位菩萨，犹或疑之。即法身大士，虽能谛信，尚不能穷源彻底。良以此之法门，以果觉为因心，全体是佛境界。唯佛与佛，乃能究尽，非彼诸人智所能知故也。</p><p class="p-trans">不但小果圣人不信，即使是处在权位的菩萨，仍然可能怀疑。即使是法身大士，虽然能够谛信无疑，却还不能彻底穷尽净土法门的本源。实在因为这个法门，是以阿弥陀佛的果地觉证，作为修行众生的因地发心，全体是佛的境界。只有佛与佛之间才能彻底明白净土法门的究竟，而不是前面所说那些人的智慧所能够了知的啊。</p></div>
+<div class="para-pair"><p class="p-orig">我辈凡夫，仰信佛言，依教奉行，自获实益。若得闻此不思议法门，便是多劫深种善根，况信受奉行乎哉。</p><p class="p-trans">我们这些凡夫，只管仰信佛言，依教奉行，自然会获得真实的利益。能够听闻到这个不思议的法门，就已经是多生多劫以来深种善根，更何况听闻之后信受奉行呢。</p></div>
+<div class="para-pair"><p class="p-orig">溯自大教东来，远公创开莲社。嗣后宗教高人，无不弘赞。如智者，慈恩，清凉，永明等。以其为初机入道之第一要门，华严成佛之末后一著也。由是具缚凡夫，仗佛力以了生死者，非算数譬喻所能知也。</p><p class="p-trans">自从佛教流传到中国，慧远大师开创莲社。之后禅宗、教下的高僧大德，没有不弘扬赞叹净土法门的，如智者大师、慈恩大师、清凉国师、永明大师等。因为净土法门，是初学者进入佛法的第一要门，也是《华严经》成佛的最后一著。从那之后，通身烦恼惑业的凡夫们，仗着阿弥陀佛慈悲愿力而了脱生死的，数目不是算数譬喻所能知道的啊。</p></div>
+<div class="para-pair"><p class="p-orig">当南宋时，吾宗先德，有龙舒居士，名日休，字虚中者。乘愿再来，以身说法。虽在尘俗，不纳妻室。虽入国学，不履仕途。</p><p class="p-trans">南宋时，净土宗有一位大德——王龙舒居士。居士名日休，字虚中。他乘愿再来，以身说法。虽然身在尘俗，但是不娶妻子。虽然进了官学，但是不入官场。</p></div>
+<div class="para-pair"><p class="p-orig">发挥儒佛之心宗，教授具信之子弟。又欲同人，咸生净土。作为此书，普遍倡导。言浅而典，理深而著。俯顺劣机，循循善诱。曲尽婆心，无所不至。</p><p class="p-trans">龙舒居士发挥儒、佛的心法宗要，用以教授有信心的子弟。又想让大家全都往生极乐世界，于是就编写了这本书，普遍倡导。书中的言语浅显而又精要，书中的义理深广而且显著。俯顺劣等根机，循循善诱。委曲婉转，用心良苦，无所不至。</p></div>
+<div class="para-pair"><p class="p-orig">恐其畏难不入，故以晨朝十念，作普摄群机之最胜方便。待其渐入渐深，如得嘉肴，既知其味，则日用云为，自能拳拳服膺，唯佛是念。非限于一茶之顷，以为定章也。倘能具真信愿，毕生坚持十念，决定往生。况更能加功用行者乎。</p><p class="p-trans">担心众生会怕难而不愿意修行，所以用“晨朝十念”，作为普遍摄受各种根机众生的最胜方便法。等他们渐渐深入，就像得到了美味佳肴，一旦尝到其中的滋味，那么日常生活当中，自然会诚恳信奉，唯佛是念。并不是限定在喝一壶茶的时间啊。如果能具足真信、切愿，一生当中都坚持晨朝十念，那么命终决定往生西方。何况是更加用功修行的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">不但此也。即绝无信愿，绝不修持。知有弥陀圣号，亦为不可思议善根。何以故，以由知故，遇境逢缘，便能提起。</p><p class="p-trans">不但如此。即使绝对没有信、愿，绝对不修持的人，仅仅是知道有南无阿弥陀佛圣号，也是不可思议的善根。为什么呢？因为知道了弥陀圣号，那么遇到事情和境缘的时候，就能提起佛号来。</p></div>
+<div class="para-pair"><p class="p-orig">如陈企被所杀之怨鬼见逼，由念佛而鬼遂不现，因兹毕世念佛，临终往生。且能归而叙述前因，亲现生西本身妙相，使先未预闻，则便被鬼夺命，永劫沉沦矣。</p><p class="p-trans">比如《净土文》中所载的，陈企杀了人，被杀的人变成怨鬼来向他讨命。陈企连忙称念南无阿弥陀佛，怨鬼就消失了。陈企因此一生念佛，临终得以往生极乐世界。而且能够回来为家人讲述自己生西的前因，还亲自显现出往生西方之后的殊妙身相来。假使他起初没有听到过弥陀圣号，就会被怨鬼夺去性命，从而永劫沉沦在苦海中了。</p></div>
+<div class="para-pair"><p class="p-orig">所以观经三福，初则世善皆堪回向。及至九品，末则狱现尚获往生。至于一心不乱，妙观圆成，证三昧而往生者，更不须言矣。</p><p class="p-trans">所以《观无量寿佛经》教示净业三福，最初则讲到，世间善法都可以回向往生，依次讲了九个品位。最末一品，临终时地狱境象已经呈现，尚且可以往生。那么念佛念到一心不乱，修观修到妙观圆成，证得念佛三昧而往生的人，就更不用说了。</p></div>
+<div class="para-pair"><p class="p-orig">是知净土法门，普摄群机，了无弃物，猗欤大哉。其书以真信切愿，持佛名号，即生决定往生为宗。</p><p class="p-trans">从而知道，净土法门普遍摄受各种根机的众生，丝毫没有遗漏，伟大啊！《龙舒净土文》这本书，以真信切愿，持佛名号，现生决定往生西方为宗旨。</p></div>
+<div class="para-pair"><p class="p-orig">详观断疑生信，普劝修持，往生事迹，特为劝谕等，以及居士一生所行，末后所现。则上中下三根，无根不被。信愿行三法，无法不彰矣。爰付剞劂，普遍流通。企酬释迦说法，诸佛证明，列祖传灯，居士著书之大慈悲心于刹尘海滴云耳。</p><p class="p-trans">详细阅读书中“断疑生信”、“普劝修持”、“往生事迹”、“特为劝谕”等章节，以及龙舒居士一生的行持、往生的瑞相。那么上中下三根，无不加被；信愿行三法，无不彰显了。现在准备将这本书刻印出来，普遍流通。以此酬报释迦牟尼佛金口宣说，六方诸佛齐声证明，列位祖师传续灯火，龙舒居士著作本书的大慈悲心，于百千万亿分之一啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【一音】</span>佛教称佛说法之音为“一音”。后亦以“一音”指高僧大德宣讲佛法之音。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【慈恩】</span>1、唐朝法相宗的祖师玄奘，住在京兆大慈恩寺，后人叫他做慈恩大师。2、唐法相宗窥基，住京兆大慈恩寺，后世称之曰慈恩大师。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【清凉】</span>华严宗第四祖澄观，居五台山清凉寺，唐德宗诞辰，讲经内殿，以妙法清凉帝心，赐号为清凉国师。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【国学】</span>古代指国家设立的学校。国子监：我国封建时代的教育管理机关和最高学府。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【仕途】</span>1.谓仕进之路。2.指官场。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【曲尽】</span>1.委曲而详尽。2.竭尽。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【婆心】</span>《景德传灯录·临济义玄禅师》：“黄蘖问云：‘汝回太速生。’师云：‘只为老婆心切。’”后以“婆心”指仁慈之心。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【无所不至】</span>犹言无微不至。极言其周到。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【拳拳服膺】</span>诚恳信奉；衷心信服。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【一茶】</span>客套语。意谓所赠钱物轻微，只可供一茶之用。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【定章】</span>规定的法令、章程。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【陈企】</span>予同郡望江陈企。尝妄杀人。后见鬼现。企畏惧。急念阿弥陀佛。鬼不敢近。企念佛不已。鬼遂不现。后常念佛。临终坐化。后半年。附本家孙女名妙光云。我因念阿弥陀佛。已生极乐世界。举动言语。一如平生。亲戚相知皆来看。至两三日。家人云。惜乎尔在生时。不曾传得喜神供养。企遂现。俨然如平生。唯面带少颜。盖西方长生不老。其头如佛之螺髻。盖成佛之渐也。望江士人周宪叔为予言之。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【剞劂】</span>1.刻镂的刀具。2.雕板；刻印。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

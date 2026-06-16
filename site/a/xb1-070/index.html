@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>致阮和卿居士书（民国二十年） · 印光法师文钞</title>
+<meta name="description" content="前者陈豫堂寄信来，言有六善女人求皈依，令其回信寄于阁下，为其分交。又言前次皈依之阮戚氏，法名德正者，即其夫人。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-070/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="致阮和卿居士书（民国二十年） · 印光法师文钞">
+<meta property="og:description" content="前者陈豫堂寄信来，言有六善女人求皈依，令其回信寄于阁下，为其分交。又言前次皈依之阮戚氏，法名德正者，即其夫人。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-070/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">致阮和卿居士书（民国二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前者陈豫堂寄信来，言有六善女人求皈依，令其回信寄于阁下，为其分交。又言前次皈依之阮戚氏，法名德正者，即其夫人。</p><p class="p-trans">前些天陈豫堂寄信来，说有六位善女人求皈依，令我将写给她们的回信寄给你，你分别交给她们。又说，前次皈依的阮戚氏，法名德正的，就是他的夫人（阮和卿）。</p></div>
+<div class="para-pair"><p class="p-orig">知居士学佛多年，家人悉皆循化，为可钦佩也。不知居士于净土横超之法，能谛信否。今既有此因缘，不妨略摅心怀。</p><p class="p-trans">我知道居士学佛多年，家人全都遵循佛法教化，值得钦佩啊！不知道居士对于净土这一横超法门，能真实起信吗？今天既然有这个因缘，不妨略微表达一下我的心怀。</p></div>
+<div class="para-pair"><p class="p-orig">如来一代所说法门，无量无边。求其最直捷者，莫过于参禅。倘系上根，一闻千悟，得大总持，然此尚是悟，不是证。</p><p class="p-trans">如来一代时教所说的法门，无量无边。如果寻求里面最直截、最快速成就的法门，就没有超过参禅的了。倘若是上根之人，能一闻千悟，得大总持，然而这样还只是开悟，并不是证悟。</p></div>
+<div class="para-pair"><p class="p-orig">能真大彻大悟，明心见性者，末世实不多见。其他多多皆是错认消息。其所云悟，多是错误，少有真悟。即是真悟，去了生死，尚大远在。</p><p class="p-trans">能够真正大彻大悟，明心见性的人，末法时代，实在不多见。其他绝大多数都是错认消息。他们所说的“悟”，大多是错误，很少有真正开悟的。即使是真正开悟，距离了生死，还很遥远。</p></div>
+<div class="para-pair"><p class="p-orig">以虽得开悟，而历劫以来之烦恼习气，须以种种方便对治，令其净尽无余，则可了生脱死，超凡入圣。倘烦恼已断若干，犹有丝毫未尽，则生死依旧莫出。</p><p class="p-trans">因为虽然开悟了，但历劫以来的烦恼习气，还需要用种种的方便来对治，把这些烦恼习气，清除得干干净净，才可以了生脱死，超凡入圣。如果烦恼已经断了一些，但还有一丝毫没有断尽，那么依旧不能出离生死轮回。</p></div>
+<div class="para-pair"><p class="p-orig">若只当做识得自心就是道，此外便无所修持，则其误非小。以识得，而无烦恼可得，则可谓得道，此人已将生死根本斩断，故能了生脱死。若识得，而烦恼未断，何能了生脱死耶。</p><p class="p-trans">如果只认为识得自心就是得道，此外就没什么可修了，那么这个谬误就不小了。因为如果真正识得自心本性，而没有烦恼可得，那么可以说是得道，这个人已经将生死根本斩断，所以能够了生脱死。如果只是识得，而烦恼没有断，怎么能了生脱死呢？</p></div>
+<div class="para-pair"><p class="p-orig">此人虽比不识得者高超，然生死不了，再一受生，或反迷昧，则可怕之至，此谓真开悟者。其以误为悟者，更不须说矣。良以参禅一法，乃仗自力法门，故比念佛法门之利益，奚啻天渊悬殊。</p><p class="p-trans">这个人虽然比没有识得自心的人高超，可是生死不了，再一转世受生，或许反而迷惑暗昧，这就可怕到极点了，这是说真正开悟的人。其他那些误认为自己开悟的人，就更没必要说了。实在因为参禅这个法门，是依仗自力的法门，所以与念佛法门（依仗佛力）所得的利益相比，差距就太悬殊了，何止是天渊之别。</p></div>
+<div class="para-pair"><p class="p-orig">念佛法门，乃如来一代法门中之特别法门。三根普被，利钝全收。上上根如文殊普贤之大菩萨，不能超出其外。下下根如五逆十恶之大罪人，亦可预入其中。</p><p class="p-trans">念佛法门，是如来一代法门中的特别法门。三根普被，利钝全收。上上根如文殊菩萨，普贤菩萨这样的大菩萨，不能超出净土法门之外。下下根如造作五逆、十恶这样的大罪人，也可以参与其中。</p></div>
+<div class="para-pair"><p class="p-orig">但具真信切愿，皆可仗佛慈力，带业往生。若或已得三昧，及已断烦恼者，则一得往生，即入大菩萨位。一切法门，皆从此法门流出。一切法门，悉皆还归此法门（谓往生西方，以期圆满佛果也）。</p><p class="p-trans">只要具足真信切愿，都可以仗佛慈力，带业往生。如果有已经得三昧，以及已经断烦恼的圣者，那么一旦往生，就进入大菩萨位次。一切法门，都从这个法门流出。一切法门，全都还归这个法门（是指往生西方，以期圆满佛果）。</p></div>
+<div class="para-pair"><p class="p-orig">似浅而深不可测，似小而大无不包。十方三世一切诸佛，上成佛道，下化众生，无不资此以为成始成终之道。恐居士未遇真知净土之人，或视为浅近，而专致力于明心见性之禅，谓其能识得自心，即算了手，故不禁络索一上也。</p><p class="p-trans">这个法门好像浅显但却深不可测，好像很小但却大无不包。十方三世一切诸佛，上成佛道，下化众生，无不借助这个法门，作为成始成终的大道。我怕居士没有遇到真正懂得净土的人，可能将净土法门看作浅近，而专门致力于明心见性的禅宗，认为能够识得自心，就算完事了，所以不禁啰嗦地说了上面这番话。</p></div>
+<div class="para-pair"><p class="p-orig">光言不足为凭，请详阅净土十要，净土圣贤录，并光之文钞，当不以光为谬妄也。若真知佛力自力之优劣，则断不至犹执著于唯究自心，谓识得即是道，而不须念佛求生西方也。</p><p class="p-trans">我的话不足为凭，请你详细阅读《净土十要》、《净土圣贤录》，以及我的《文钞》，这样就不会认为我的话是荒谬虚妄了。如果真正知道佛力、自力的优劣，那么断然不至于还只是执著在参究自心上，认为识得自心就是得道，而不须要再念佛求生西方了。</p></div>
+<div class="para-pair"><p class="p-orig">古人如圆观，知过去未来，尚不能了。五祖戒，草堂清所悟之禅，今人何能仿佛，而且又复受生。</p><p class="p-trans">古人如圆泽禅师，知道过去未来，但还是不能了生死。五祖戒，草堂清两位禅师所悟的禅法，当今的人谁能赶得上，然而他们还是得再转世受生。</p></div>
+<div class="para-pair"><p class="p-orig">是知凡夫决定要修佛所开示之特别法门，则无论何等根性，均可了生脱死，以仗佛力故也。若仗自力，恐梦也梦不著，不知居士肯信此说乎。</p><p class="p-trans">由此可知，凡夫决定要修佛所开示的特别法门，那么无论什么根性，都可以了生脱死，因为是依仗佛力的缘故。如果依仗自力，恐怕梦也梦不到，不知居士肯相信我说的这些道理吗？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【了手】</span>完毕；完了。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【圆观】</span>释圆观。不知何许人。居于洛。率性疏简。时与李源为忘形之友。同止慧林寺但日给一器。随众僧饮食而已。如此三年。一日源忽约观游蜀青城峨眉等山洞求药。观欲游长安由斜谷路。李欲自荆入峡。争此二途。半年未决。李曰。吾已不事王侯。行不愿历两京道矣。观曰。行无固必请从子命。遂自荆上峡。行次南浦泊舟。见数妇女条达锦裆负罂而汲观俯首而泣曰。某不欲经此者。恐见此妇人也。李问其故。观曰。其孕妇王氏者。是某托身之所也。已逾三戴尚未解娩。唯以吾未来故。今既见矣。命有所归。释氏所谓循还者也。请君用符咒遣其速生。且少留行舟葬吾山谷。其家浴儿时亦望君访临。若相顾一笑是识君也。后十二年当中秋月夜。专于钱唐天竺寺外。乃是与君相见之期也。李追悔此一行。召孕妇告以其事。妇人喜跃还。顷之李往授符水。观沐浴而化。妇生一子焉。李三日往看。新儿果致一笑。明日李回桌归慧林寺。询问弟子方知已理命矣。李常念杭州之约。至期到天竺寺。其夜月明忽闻葛洪井耕有牧童歌竹枝者。乘牛扣角。双髻短衣。徐至寺前乃观也。李趋拜曰。观公健否。曰李公真信士。我与君殊途。慎勿相近。君俗缘未尽但且勤修。不堕即遂相见。李无由序语。望之澘然。观又歌竹枝前去。词切调高。不知所终。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【仿佛】</span>1效法。2相似；近似。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

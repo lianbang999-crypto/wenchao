@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复明性大师书 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。誉我过甚，令人不安。光之为人，心直口快。不过誉人，不受人誉。年虽八十，一无所知。故止以念佛为自了计。但以业重，绝无所得，由有六十年之阅历，所说不至误人耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-019/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复明性大师书 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。誉我过甚，令人不安。光之为人，心直口快。不过誉人，不受人誉。年虽八十，一无所知。故止以念佛为自了计。但以业重，绝无所得，由有六十年之阅历，所说不至误人耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-019/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复明性大师书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。誉我过甚，令人不安。光之为人，心直口快。不过誉人，不受人誉。年虽八十，一无所知。故止以念佛为自了计。但以业重，绝无所得，由有六十年之阅历，所说不至误人耳。</p><p class="p-trans">你的来信，我都看过了。过分地赞誉我，令人不安。我的为人，心直口快。不过分赞誉他人，也不接受他人的赞誉。年纪虽已八十岁，却一无所知，所以只以念佛来作为自我了脱的计策，但因为业障深重，绝对没有所得，由于有六十年的阅历，所说的还不至于贻误他人。</p></div>
+<div class="para-pair"><p class="p-orig">座下既不以文钞芜秽见弃，当依文钞所说而修，决不至误汝大事。至于来山一事，实可不必。</p><p class="p-trans">你既然不因为《文钞》芜秽杂乱而遗弃不看，就应当依《文钞》中所说的来修持，绝对不至于耽误你的大事。至于来灵岩山这件事，实在可以不必来。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，绝无口传心授之事。任人于经教著述中自行领会，无不得者。莲宗九祖，非各宗之一一亲传，乃后人择其宏净功深者而称之，实则尚不止九十也。</p><p class="p-trans">净土法门，绝对没有什么口传心授的事情，任凭人们在经教著述中自行领会，无不得益。莲宗九位祖师，并不是像其他各个宗派的祖师，都是代代亲传的那样，而是后人选择宏扬净土、功绩深广的人而尊称他，实际上，还不止九祖、十祖。</p></div>
+<div class="para-pair"><p class="p-orig">光出家后，发愿不收徒众，不作住持，不作讲师，亦不接人之法。当唐宋时，尚有传佛心印之法。今则只一历代源流而已。名之为法，亦太可怜，净宗绝无此事。</p><p class="p-trans">我出家后，发愿不收徒众、不作住持、不作讲师，也不接人的法脉。在唐宋时，还有传佛心印之法，今则只是一种历代源流罢了，称它为法，也太可怜。净土宗绝对没有这种事。</p></div>
+<div class="para-pair"><p class="p-orig">来山尚不如看书之有益。古人云，见面不如闻名。即来与座下说者，仍是文钞中话，岂另有特别奥妙之秘法乎。</p><p class="p-trans">你来灵岩山看我，还不如在家看书更有益。古人说：“见面不如闻名。”即使你来了，我能与你说的，也仍然是《文钞》中的话，难道另外还有什么特别奥妙的秘法吗？</p></div>
+<div class="para-pair"><p class="p-orig">十余年前与吴璧华书末云，有一秘诀，剀切相告，竭诚尽敬，妙妙妙妙。又楞严经势至圆通章末后云，佛问圆通，我无选择，都摄六根，净念相继，得三摩地，斯为第一。</p><p class="p-trans">十多年前，我曾在给吴璧华的信中末后说：“有一秘决，恳切相告。竭诚尽敬，妙妙妙妙。”另外，《楞严经·大势至菩萨念佛圆通章》末后说：“佛问圆通，我无选择，都摄六根，净念相继，得三摩地，斯为第一。”</p></div>
+<div class="para-pair"><p class="p-orig">无选择者，遍用根尘识大以念佛也。念佛仗佛力了生死。禅仗自力了生死。今人能悟者，尚不可多见。况证四果（藏教）及七信（圆教）乎（四果七信，方了生死）。</p><p class="p-trans">“无选择”，就是遍用六根、六尘、六识、七大来念佛。念佛仗佛力了生死。参禅仗自力了生死。现在的人中，能够开悟的，尚且不可多见。何况证藏教四果以及圆教七信位呢（藏教四果，圆教七信位，方才了生死）？</p></div>
+<div class="para-pair"><p class="p-orig">都摄六根，入手在听。无论大声念，小声念，不开口心中默念，均须字字句句听得清楚，此念佛之秘诀也。信愿行三，为净土纲要。都摄六根，为念佛秘诀。知此二者，更不须再问人矣。</p><p class="p-trans">“都摄六根”，入手处在听。无论大声念、小声念、不开口心中默念，都必须字字句句，听得清楚，这是念佛的秘诀。信愿行三资粮，为净土纲要；都摄六根，为念佛秘决。知道纲要、秘诀这二者，就不必再问人了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

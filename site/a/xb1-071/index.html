@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复沈授人居士书（民国二十年） · 印光法师文钞</title>
+<meta name="description" content="三日前接汝书，知令郎荷生，念佛往生。虽于世谛，似为不幸，然既往生，则已超凡入圣，实为大幸。当从实际上论，不当执著世相，以生悲感也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-071/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复沈授人居士书（民国二十年） · 印光法师文钞">
+<meta property="og:description" content="三日前接汝书，知令郎荷生，念佛往生。虽于世谛，似为不幸，然既往生，则已超凡入圣，实为大幸。当从实际上论，不当执著世相，以生悲感也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-071/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复沈授人居士书（民国二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">三日前接汝书，知令郎荷生，念佛往生。虽于世谛，似为不幸，然既往生，则已超凡入圣，实为大幸。当从实际上论，不当执著世相，以生悲感也。</p><p class="p-trans">三天前接到你的信，知道你的儿子沈荷生，念佛往生了。虽然在世俗之见看来，似乎是不幸，然而既已往生，就已经超凡入圣，这实在是大幸啊。所以应当从实际理地上论，不应当执著世间表相，而生起悲痛感伤啊！</p></div>
+<div class="para-pair"><p class="p-orig">今之瞎捣乱者，皆其父母望其兴家立业，光宗耀祖者，然不知所养，皆为自害害人害世之恶类也。是以人要放开眼界一观，则心中便坦然无虑。</p><p class="p-trans">现在这些瞎捣乱的青年，都是他们的父母指望其兴家立业、光宗耀祖的人。却不知道所养的孩子，都成为了自害、害人、害世的败类啊！所以，人要放开眼界一看，那么心中就坦然无虑了。</p></div>
+<div class="para-pair"><p class="p-orig">报国寺共有六七僧，各有职责，不能做佛事。所寄之百圆，令灵岩寺立一牌位于念佛堂。</p><p class="p-trans">报国寺一共有六七位僧人，各有职责，不能做佛事。你所寄的一百圆，已让在灵岩寺在念佛堂里立了一个牌位。</p></div>
+<div class="para-pair"><p class="p-orig">灵岩念佛，于江浙可算第一。每日功课，与打佛七无异，打七但加早中晚三次回向耳。</p><p class="p-trans">灵岩山念佛，在江浙一带，可算是第一。每天的功课，与打佛七没有两样，打七只是加上早中晚三次回向而已。</p></div>
+<div class="para-pair"><p class="p-orig">此山系太平寺真达和尚地方，近来改作十方，专门念佛。凡念经，拜忏，放焰口，做水陆，讲经，传戒，收徒，传法等，通不行。常年念佛，夏月随便讲净土法门，不招外人来听。</p><p class="p-trans">灵岩山是太平寺真达和尚的地方，近来改作十方丛林，专门念佛。凡是念经、拜忏、放焰口、做水陆、讲经、传戒、收徒、传法等法会，通通不做。常年念佛，夏天随方便宣讲净土法门，也不招外人来听。</p></div>
+<div class="para-pair"><p class="p-orig">接信之次日，令弘化社将近一二年所出之书，各寄一分，想已收到。又加人情于新年放假，致多来望，现在无暇，待明正为荷生念佛三天，以了汝心愿。汝所送之十圆，当为印书之费。</p><p class="p-trans">接到信的第二天，我让弘化社将最近一二年所出的书，各寄一份给你，想必已经收到。又加上新年放假期间，世俗人情往来，以致有很多人来探望，所以现在没有空，等明年正月为沈荷生念佛三天，以了你的心愿。你所送的十圆钱，会作为印书的费用。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

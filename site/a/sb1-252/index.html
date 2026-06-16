@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书二十五 · 印光法师文钞</title>
+<meta name="description" content="当此时局危险之时，只好静守。若万不能守，再行逃避。若轻于妄动，一经离家，家业半属别人。欲回而又整顿，复原则难如登天矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-252/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书二十五 · 印光法师文钞">
+<meta property="og:description" content="当此时局危险之时，只好静守。若万不能守，再行逃避。若轻于妄动，一经离家，家业半属别人。欲回而又整顿，复原则难如登天矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-252/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书二十五</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">当此时局危险之时，只好静守。若万不能守，再行逃避。若轻于妄动，一经离家，家业半属别人。欲回而又整顿，复原则难如登天矣。</p><p class="p-trans">在这时局危险之时，只好静守待变。如果实在不能守了，再逃走避难。如果轻举妄动，一旦离家逃难，家业多半就属于别人了。想再回来整顿家业，恢复原来的样子则难如登天。</p></div>
+<div class="para-pair"><p class="p-orig">所言川僧听脉念佛者，民十七年，其徒以其师所作之文与偈，持至太平寺，祈光为改削流通，又祈作序。</p><p class="p-trans">所说四川有位僧人，提倡听脉念佛，民国十七年，他的徒弟将他师父所作的文章和偈颂，拿到太平寺，请我删改流通，还请我写序。</p></div>
+<div class="para-pair"><p class="p-orig">光阅之，谓汝师倒是有所悟者，但以禅净宗旨不明，以禅为净，以净为禅。俾念佛者不致力于信愿，而致力于参究。纵有所悟，由无信愿，不能仗佛力往生西方。由未断惑，不能仗自力了生脱死。</p><p class="p-trans">我看后，对他说：你师父倒是有所悟的人，但因为对禅宗、净土的宗旨不明，以禅宗为净土，以净土为禅宗。使得念佛的人，不致力于信愿，而致力于参究。即使有所悟，但由于没有信愿，不能仗佛力往生西方；又由于未断惑业，不能仗自力了生脱死。</p></div>
+<div class="para-pair"><p class="p-orig">汝要流通，我也不打破，汝自为之，我亦不为汝改削，亦不作序，汝印出来也不要送我，我也不肯为汝施送，其人遂去。</p><p class="p-trans">你要流通，我也不阻拦，你自己去流通，我也不为你删改，也不作序，你印出来也不要送我，我也不肯为你施送给别人，这个人便离去。</p></div>
+<div class="para-pair"><p class="p-orig">向大中书局排印数千本，从前之名不记得，大中书局老板，送光两本，名禅净言行录。其偈居半，似有道理，但宗旨混滥，亦可令无知之人种善根，亦可令真修净土人弃信愿，此种书，光不肯干预。</p><p class="p-trans">他到大中书局排印了几千本，从前的书名不记得了，大中书局的老板，送我两本，名《禅净言行录》。书中有一半是偈颂，看似有道理，但宗旨混滥，既可让无知的人种善根，也可让真修净土的人舍弃信愿。这种书，我不肯干预。</p></div>
+<div class="para-pair"><p class="p-orig">川中每出异人，有刘某者，皈依宝一法师，宝一庵中有湖南二女居士。刘为伪撰自知录石印若干送人，专门以大菩萨所得不思议境界，为此女人所经历之境界。</p><p class="p-trans">四川常出奇异之人，有位刘某人，皈依宝一法师，宝一庵中有二位湖南的女居士。刘某为她们伪撰《自知录》，石印若干本送人，专门以大菩萨所得的不可思议境界，来作为这两个女人所经历的境界。</p></div>
+<div class="para-pair"><p class="p-orig">意欲由此抬高其师之声价，其师亦于顶格批之以流通。有丁某寄光，祈光详批作序。光阅之云，此书万不可流通。</p><p class="p-trans">想要由此抬高他师父的声价，他师父也在顶格批注，予以流通。有位丁某人将书寄给我，请我详细批阅并写序。我看了之后说，这本书千万不可流通。</p></div>
+<div class="para-pair"><p class="p-orig">虽无外道话，但专谈自己所得之境界，绝不说如何用工。初心人看之，均想此境界，必至著魔。此女人既能得此境界，何得不知误人乎。祈通通烧之，勿再送人。</p><p class="p-trans">书中虽然没有外道的话，但是专门谈论自己所得的境界，绝对不说如何用工。初发心的人看了，都会想得到这种境界，必定导致着魔。这两个女人既然能够得到这种境界，怎么会不知道这样会误害他人呢？请通通烧掉，不要再送人。</p></div>
+<div class="para-pair"><p class="p-orig">现在时局危险，不必专以打观音七为事。七固不可不打，当令城乡老幼男女，日常念观音圣号。以期冥为加被，俾匪焰消灭。此时提倡，人必信从。</p><p class="p-trans">现在时局危险，不必专以打观音七为事。观音七固然不可不打，但更应当令城乡的老幼男女，每天常念观世音菩萨圣号。以期菩萨冥冥中加被，使得土匪的气焰消灭。在这个时候提倡，他人必定信从。</p></div>
+<div class="para-pair"><p class="p-orig">若大家都怕死肯念，当有大效。若只以打七为事，乃少数人所为。若令人民各各常念，则其益大矣。</p><p class="p-trans">如果大家都怕死肯念观世音菩萨圣号，定会有大的奇效。如果只以打七为事，这只是少数人的所为。如果能令所有人民，各各常念，那么这个利益就很大了。</p></div>
+<div class="para-pair"><p class="p-orig">彼不知世务者，动必援古。不知因时制宜，随分随力以设法，则用力多而获益少矣。（九月十六）</p><p class="p-trans">那些不知世务的人，动不动就必援引古法。不知道因时制宜，随分随力地来想办法，就会用力多而获益少了。（九月十六日）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

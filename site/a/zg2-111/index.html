@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>释迦如来真身舍利来仪记（代撰） · 印光法师文钞</title>
+<meta name="description" content="中天调御，释迦世尊，尘点劫前，早成正觉。泯三际而住寂光，常享四德。愍九界而示受生，频垂八相。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-111/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="释迦如来真身舍利来仪记（代撰） · 印光法师文钞">
+<meta property="og:description" content="中天调御，释迦世尊，尘点劫前，早成正觉。泯三际而住寂光，常享四德。愍九界而示受生，频垂八相。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-111/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">释迦如来真身舍利来仪记（代撰）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">中天调御，释迦世尊，尘点劫前，早成正觉。泯三际而住寂光，常享四德。愍九界而示受生，频垂八相。</p><p class="p-trans">天人中尊，调御丈夫，释迦牟尼世尊，早在尘点劫前，就已成佛。泯灭过去、现在、未来三际，而安住在常寂光土，常享常、乐、我、净四德；怜悯九法界众生而示现凡夫受生，多次垂示八相（降兜率、托胎、出生、出家、降魔、成道、转轮、涅槃）成道。</p></div>
+<div class="para-pair"><p class="p-orig">从初出世，乃至涅槃。演偏圆顿渐之法，施种熟解脱之益。六道四生，三乘五性，聆圆音而悟道，睹妙相以明心者，虽尽世界微尘，莫能穷其数量。</p><p class="p-trans">从最初出世，乃至入于涅槃，演说偏、圆、顿、渐诸种教法，施与众生种下善根、成熟善根，乃至最终解脱的利益。六道四生（胎卵湿化），三乘五性之中，聆听佛陀圆音而悟道，仰睹庄严妙相而明心的众生，即使将整个世界充满微尘，也不能穷尽其数量。</p></div>
+<div class="para-pair"><p class="p-orig">然机薪既尽，应火亦息。晦迹归真，示现灭度。又以利益未来，悲心无尽。碎定慧所生丈六之金身，成金刚不坏八斛之舍利。</p><p class="p-trans">然而众生得度的机缘既然竭尽，佛陀应化的火光也就熄灭了。隐晦行迹，归于真寂，示现灭度。又因为利益未来众生的悲心无穷无尽，所以焚碎定慧所生的丈六金身，成为金刚不坏的八斛舍利。</p></div>
+<div class="para-pair"><p class="p-orig">于是八国均分，各起宝塔，普令含识，广种福田。后一百年，摩竭提国有阿育王，统王阎浮，威德自在。一切鬼神，皆为臣属。</p><p class="p-trans">于是八个国家平均分配这些舍利，各各建起宝塔加以供奉，普令众生，广种福田。释迦佛灭度后一百年，摩竭提国有一位阿育王，统领南阎浮提，威德自在。一切鬼神，都是他的臣子属下。</p></div>
+<div class="para-pair"><p class="p-orig">启其祖阿阇世王所藏舍利，役使鬼神，以七宝众香为末，造成八万四千宝塔，供养舍利，散布南洲。</p><p class="p-trans">开启他的先祖阿阇世王所藏的舍利，命令鬼神，将七宝众香碎为粉末，用来造就八万四千座宝塔，供养舍利，散布在南瞻部洲。</p></div>
+<div class="para-pair"><p class="p-orig">凡佛法未至之处，则安置于地中。东震旦国，有十九处。大教西来，次第出现，即今五台育王等是也。</p><p class="p-trans">凡是佛法没有传播到的地方，就安置在地下，中国有十九处。佛教传到中国之后，这些舍利塔依次出现，就是现在的五台山塔院寺的白塔、宁波阿育王寺舍利塔等等。</p></div>
+<div class="para-pair"><p class="p-orig">涅槃经云，若人以深信心，供养如来全身舍利，或供半身，四分之一，万分之一，乃至如芥子许，是人福德，与供养佛，无二无别。</p><p class="p-trans">《涅槃经》中说：“若人以深信心，供养如来全身舍利，或供半身，四分之一，万分之一，乃至如芥子许，是人福德，与供养佛，无二无别。”</p></div>
+<div class="para-pair"><p class="p-orig">以佛舍利，即佛色身，皆由无作誓愿，同体慈悲之所示现。是以人天获得，悲喜交流，竭尽心力，恭敬供养。</p><p class="p-trans">因为佛的舍利，就是佛的色身，都是由无作誓愿、同体慈悲所示现的。所以人天获得佛的舍利之后，都悲喜交集，竭尽心力，恭敬供养。</p></div>
+<div class="para-pair"><p class="p-orig">福如来出世，尚在沉沦。今得人身，法已衰替。昔人履险涉危，尚多往求正法。现今水陆俱通，敢不巡礼圣迹。</p><p class="p-trans">清福我，如来出世的时候，还沉沦在恶道，现今得到人身，然而佛法已经衰败。古人面临种种艰难险阻，尚且还有很多人去西天求取正法。现在水陆道路都畅通了，怎敢不去巡礼佛陀的足迹。</p></div>
+<div class="para-pair"><p class="p-orig">遂于光绪三十年乘轮西迈，观光暹罗，次及缅甸，后至锡兰。此三国者，佛法大兴。僧众虽多，不立烟爨。举国奉佛，设食待僧。</p><p class="p-trans">于是光绪三十年（1904年），我乘轮船向西迈进。先到泰国，次到缅甸，最后到达斯里兰卡。这三个国家，佛法都很兴盛。僧人数量虽然很多，却不需要生火做饭。全国的人都信奉佛教，都会施设食物招待僧人。</p></div>
+<div class="para-pair"><p class="p-orig">凡遇礼拜之日，商贾悉皆罢市，同礼宝塔，共植来因。佛世芳规，庶几仿佛。次至中印度，伽耶王舍，恒河双林，显著圣迹，逐一巡礼。</p><p class="p-trans">凡是到礼拜的日子，商贩店主全都停下生意，一同去礼拜宝塔，共同种植未来的善因。佛陀在世时的美好仪规，仿佛重现了。后来又到了中印度，菩提伽耶、王舍城，恒河、娑罗双树林等显著的圣迹，都逐一巡行礼拜。</p></div>
+<div class="para-pair"><p class="p-orig">惜世远人亡，法替教弛。不闻降魔制外之音，但见荒烟蔓草之迹。缅想昔年，为之痛息。回至锡兰都城，适值重修宝塔，中藏舍利，百有余粒。恳祈数粒，福我东人。</p><p class="p-trans">可惜佛世久远，圣人离去，法道衰落，教网废弛。听不到降伏天魔外道的法音，只见到杂草丛生荒芜的迹象。遥想当年，心中悲痛。回到斯里兰卡都城之后，正巧遇到他们重修宝塔，塔中藏有一百多颗舍利。我恳祈他们惠施给我几粒，以便福佑我国人民。</p></div>
+<div class="para-pair"><p class="p-orig">彼言舍利我国福田，此塔国王所建，何敢违佛犯法，私与外人。因日日礼塔，冀佛冥加。辄痛哭流涕，悲不自胜。如是十有二日，感动彼心，禀明国王，许十二粒。</p><p class="p-trans">他们说：“舍利是我国的福田，这座宝塔是国王所建造，怎敢违背佛意，违犯王法，私自将舍利送给外人呢。”于是我每天礼拜佛塔，希望佛陀冥冥中加被，时常痛哭流涕，悲伤不能自已。这样过了十二天，感动了他们的心。他们向国王禀明，答应施送我十二粒。</p></div>
+<div class="para-pair"><p class="p-orig">既满我愿，弥感佛恩。即回中国，相宜安置。普陀山灵石庵，乃善财参观音之圣道场地，因留三粒，监院静明，修木浮图而供养之。</p><p class="p-trans">心愿满足之后，更加感念佛恩。即刻回到中国，妥善进行安置。普陀山的灵石庵，是善财童子参礼观音菩萨的圣道场地，因此留下三粒，由监院静明法师，修建木塔加以供养。</p></div>
+<div class="para-pair"><p class="p-orig">请九粒于四川宝光，龙兴，广德三寺供养。按西域记，僧伽罗国，即古师子国，在大海中，近南印度，即锡兰国也。</p><p class="p-trans">另外九粒奉请到四川，由宝光、龙兴、广德三座寺院供养。按：“《大唐西域记》记载，僧伽罗国，即古师子国，在大海中，靠近南印度，也就是斯里兰卡。</p></div>
+<div class="para-pair"><p class="p-orig">国东南隅，有楞伽山，岩谷幽峻，乃如来说楞伽经处。昔阿育王弟摩醯因陀罗出家证道，游化此国，建立塔庙，大兴佛法。此塔乃其创建耳。</p><p class="p-trans">该国的东南角，有一座楞伽山，谷幽岩峻，是如来宣说楞伽经的地方。往昔阿育王的弟弟摩酰因陀罗出家证道，游化到这里，建立塔庙，大兴佛法。这座宝塔就是他创建的。”</p></div>
+<div class="para-pair"><p class="p-orig">夫如来舍利，神变无方。济度幽显，覆被人天。见闻瞻礼，皆植福寿之因。供养恭敬，并感尊贵之果。迷云尽而性天朗耀，罪雾消而慧日昭彰。三觉圆满于初心，万德具足于当念。以如是因，获如是果。凡我同伦，幸鉴愚忱。</p><p class="p-trans">如来舍利，神变莫测，济度冥阳二界，覆被人天二道。见到、听到、瞻睹、礼拜，都能植下福寿的因缘；如果加以供养恭敬，都会感得尊贵的善果。迷云散尽，性天朗耀；罪障消除，慧日昭彰。三觉（自觉、觉他、觉行圆满）圆满于最初发心，万德具足于当下一念。以如是因，得如是果。凡我同伦，希望鉴察我的一片愚诚。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【天中天】</span>谓诸天中之最胜者。又作天人中尊、天中王。为佛尊号之一。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【调御丈夫】</span>佛十号之一。意指可化导一切丈夫之调御师。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【世尊】</span>如来十号之一。即为世间所尊重者之意，亦指世界中之最尊者。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【尘点劫】</span>尘，指微尘；劫，为极大之时限。尘点劫，为譬喻时间甚长久远之词。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【四生】</span>胎生、卵生、湿生、化生。胎生是在母胎内成体之后才出生的生命，如人类是；卵生是在卵壳内成体之后才出生的生命，如鸟类是；湿生是依靠湿气而受形的生命，如虫类是；化生是无所依托，只凭业力而忽然而生的生命，如诸天和地狱及劫初的人类是。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【五性】</span>法相宗将一切众生的根机，分为五类，叫做五性。一、有可修成阿罗汉果的无漏种子者，名定性声闻。二、有可修成辟支佛的无漏种子者，名定性缘觉。三、有可修成佛果的无漏种子者，名定性菩萨。四、兼有以上二种或三种的无漏种子，则将来所证之位，遇缘成熟，并不一定证何种果者，名不定性。五、并无以上三乘的无漏种子，但有可修成人天果的有漏种子者，名为无性。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【斛】</span>量词。多用于量粮食。古代一斛为十斗，南宋末年改为五斗。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【五台】</span>据史书记载，塔院寺内的高耸入云尼泊尔式的大白塔是建于元大德五年（1301年），系尼泊尔匠师阿尼哥设计建造。相传释迦牟尼火葬后炼成的舍利子被皈依佛门的印度阿育王供奉在八万四千座塔内。它分布在大千世界，中国有十九座，五台山台怀镇慈寿塔为八万四千座中的一座，明永乐五年（1407年）修塔时，将慈寿塔藏在了大白塔的腹内，所以大白塔也被称为释迦牟尼佛真身舍利塔。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【芥子】</span>原系芥菜之种子，颜色有白、黄、赤、青、黑之分，体积微小，故于经典中屡用以比喻极小之物，如谓“芥子容须弥，毛孔收刹海”即为常见于佛典中之譬喻。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【烟爨】</span>1.烧火煮饭。2.炉灶。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【无方】</span>犹言不拘一格。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

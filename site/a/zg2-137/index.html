@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>徐母杨太夫人生西记 · 印光法师文钞</title>
+<meta name="description" content="一切众生，皆有佛性，皆堪作佛，固无论天，人，修罗，鬼，畜，地狱，况男女贵贱，智愚贤否乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-137/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="徐母杨太夫人生西记 · 印光法师文钞">
+<meta property="og:description" content="一切众生，皆有佛性，皆堪作佛，固无论天，人，修罗，鬼，畜，地狱，况男女贵贱，智愚贤否乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-137/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">徐母杨太夫人生西记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">一切众生，皆有佛性，皆堪作佛，固无论天，人，修罗，鬼，畜，地狱，况男女贵贱，智愚贤否乎。</p><p class="p-trans">一切众生，都有佛性，都能作佛。不论是天道、人道、阿修罗道、饿鬼道、畜生道、地狱道中的众生都是如此。就更不用说男女、贵贱、智愚、贤与不肖的人了。</p></div>
+<div class="para-pair"><p class="p-orig">其升沉六道，轮回不息者，由迷之浅深，与业之善恶，以为因缘，而一念佛性，固未尝因此或有增减也。</p><p class="p-trans">众生升沉六道，轮回不息的原因，是由于迷惑的浅深，与业力的善恶，并以此为因缘才如此的。然而本有的一念佛性，并不会因此而有所增减。</p></div>
+<div class="para-pair"><p class="p-orig">以迷而不知，不但不得受用，反承此佛性功德之力，作起惑造业，因业感苦之本。岂不大可哀哉。</p><p class="p-trans">因为迷惑不知，不但得不到佛性的受用，反而把这佛性功德之力，当作起惑造业，因业感苦的根本。岂不是太悲哀了吗。</p></div>
+<div class="para-pair"><p class="p-orig">如来愍之，令其返迷归悟，断惑证真，以迄亲证本具佛性而后已。又以众生无力断惑，纵有修持，不能现生即了生死，再一受生，多皆迷失，则尽未来际，解脱无期矣。</p><p class="p-trans">如来慈悲怜愍，令众生返迷归悟，断惑证真，直到亲自证得本具的佛性而后已。又因为众生没有力量断除惑业，纵然有一点修持，因为不能在现生中了脱生死，再一转世受生，大都会再次迷失。那么穷尽未来，都没有解脱的时候了。</p></div>
+<div class="para-pair"><p class="p-orig">于是以大慈悲，特开一信愿念佛求生西方法门，俾一切若凡若圣，同于现生，仗佛慈力，了生脱死，校彼专仗自力者，其难易迟速，天渊悬殊也。以故自古迄今，缁素四众，修此法门，往生西方者，不胜其多，即近时亦常见之。</p><p class="p-trans">于是如来大慈大悲，特别开示了一个信愿念佛，求生西方的法门。使得一切凡夫或圣人，共同在现生之中，仗着佛的大慈悲力，了脱生死轮回。相比于那些专仗自力的法门，难易快慢的程度，如同天渊一般悬殊。因此从古到今，僧俗四众弟子中修习这个法门往生西方的人，多得数不清。即便是近些年，也经常见到。</p></div>
+<div class="para-pair"><p class="p-orig">安徽石埭县徐母杨太夫人者，徐居士国治之生母也。其性情孝慈柔善，明敏果决，事父母，事舅姑，相夫教子，持家处事，一一皆悉堪作闺阁典型，女流师范，方之古烈女母仪，贤仁，明智诸传，殆无愧焉。</p><p class="p-trans">安徽石埭县徐母杨太夫人，是徐国治居士的母亲。太夫人性情孝顺慈爱、柔和善良、聪明机敏、坚决果断，服侍父母，伺候公婆，相夫教子，持家处事，一一都可以作为妇德的典型，女流学习的榜样。如果将她的事迹列录在古代《烈女传》中的《母仪》、《贤明》、《仁智》等传记中，想必也是够格的。</p></div>
+<div class="para-pair"><p class="p-orig">幼即奉佛，老而弥笃。其子三，曰国华，国钧，国治，各受职于政商二界。国治在天津，欲长侍膝下，于民国十年，迎养至津，遂持长斋，受优婆夷戒。从兹念佛益精进，颇有瑞征，恐不求一心，专希瑞相之愚人受病，故不录。</p><p class="p-trans">太夫人幼年时就信奉佛法，年老之后则更加诚笃。她有三个儿子，分别叫徐国华、徐国钧、徐国治，各自在政商两界担任职务。徐国治在天津任职，因为想要长期侍奉母亲，所以民国十年（1921年）将母亲接到天津奉养。太夫人到天津后就开始持长斋，并且受了优婆夷戒。从此念佛更加精进，有不少瑞象征兆。因为担心会有念佛不求一心，而专门期盼见到瑞相的愚人，会因此受到影响，所以这里不作记录。</p></div>
+<div class="para-pair"><p class="p-orig">是秋，安徽水旱奇灾，省长电调国治襄办赈务，以八年在京，办有成绩故也。国治不忍远离，夫人责以大义，促令速去，以救灾黎。</p><p class="p-trans">这年秋天，安徽省发生罕见的水灾和旱灾。省长发来电报，调派徐国治前去协助办理救灾事务。因为他民国八年（1919年）曾在北京办理救灾，很有成绩。徐国治不忍心远离母亲，太夫人让他以大义为重，催促他快去救济灾民。</p></div>
+<div class="para-pair"><p class="p-orig">国治在皖年余，夫人有病，不许书信言及，恐远道来省，致误赈务，并嘱国华国钧劝募，以己私蓄，倾囊相助，蒙大总统题颁匾额，与慈惠徽章。</p><p class="p-trans">徐国治在安徽停留一年多，期间太夫人有病，不许（家人）在信中说起。因为担心徐国治远道赶回来看望，从而耽误了救灾。并且嘱咐徐国华、徐国钧发起募捐，又将自己的私人积蓄，全部拿出来帮助救灾。大总统为此向太夫人题写颁发了匾额，还授予她慈惠徽章。</p></div>
+<div class="para-pair"><p class="p-orig">十一年，赈务毕，皖宪仍絷维国治，乃复迎养皖垣。以年已七十有四，精神衰颓，亲戚中有劝开斋者。夫人曰，我宁茹素而死，决不食肉而生也。</p><p class="p-trans">民国十一年（1922年），救灾事务完毕，安徽省政府仍然挽留徐国治，于是又将太夫人接到安徽奉养。因为当时太夫人已经七十四岁，精神衰颓。亲戚中有人劝她吃肉，太夫人说：“我宁可吃素而死，决不吃肉而生“。</p></div>
+<div class="para-pair"><p class="p-orig">至今春，病日笃，而神智清明，念佛不辍。谓国治曰，余于世事，艰苦备尝，故无恋慕，心中唯有念佛一事而已。</p><p class="p-trans">到今年春天，太夫人病情一天天严重，然而神智清楚明朗，念佛不停。她对徐国治说：“世间的艰苦，我都尝遍了，所以没有什么留恋，心中就只有念佛这一件事而已。”</p></div>
+<div class="para-pair"><p class="p-orig">又曰，每一发热，痛苦异常，一想到西方极乐世界，则顿觉清凉矣。二月廿一，命请僧来寓念佛，以助往生。令将己衣物，尽行变卖，供养三宝。</p><p class="p-trans">又说：“每次一发烧都非常痛苦，可是一想到西方极乐世界，就立刻觉得清凉了。”二月二十一日，太夫人让国治请僧人来寓所念佛，帮助自己往生。又让家人把自己的衣物全都变卖，用来供养三宝。</p></div>
+<div class="para-pair"><p class="p-orig">问国治曰，何日去最好。国治答以后天是斋日，最好。历数时曰，余已见释迦牟尼佛，及在津所供之佛菩萨，何独不见接引佛乎。国治曰，时至则见矣。</p><p class="p-trans">太夫人问国治说：“哪一天去最好？”国治回答：“后天是斋日，最好。”过了几个小时，太夫人又说：“我已经见到释迦牟尼佛，以及在天津所供奉的佛菩萨，为何偏偏不见来接引我的佛呢？”徐国治说：“时间到了就看见了。”</p></div>
+<div class="para-pair"><p class="p-orig">次日，仍复随僧念佛，至廿三黎明，念佛僧福海师曰，夫人神志气象如常，一二日内，尚不能去。至巳刻，国治请一接引佛供床前，曰，阿弥陀佛来矣。</p><p class="p-trans">第二天，太夫人仍旧随着助念的僧人念佛。二十三日黎明时，助念的僧人福海法师说：“太夫人气色神情像平常一样，一二天之内，还不会往生。”到了巳时（9:00am-11:00am），徐国治请了一尊阿弥陀佛接引像供在床前，说：“阿弥陀佛来了。”</p></div>
+<div class="para-pair"><p class="p-orig">夫人闻之，生大欢喜，起坐瞻视，高声念南无阿弥陀佛数声，即结印含笑而逝。国治与诸师，及眷属，犹高声念佛三句钟，始举哀，及沐浴换衣。香气馥郁，有友来吊，于门外即闻之，叹为稀有。</p><p class="p-trans">太夫人听了非常欢喜，坐起来瞻视佛像，高声念了几句南无阿弥陀佛，就结手印含笑往生了。徐国治和诸位法师、家中眷属一起，又高声念佛三个钟头，才开始举哀哭泣，为亡者洗澡换衣。房间里香气浓郁，有朋友来吊丧，在门外就闻到了，感叹说真的很罕见。</p></div>
+<div class="para-pair"><p class="p-orig">三日入殓，面貌比生时更加光彩，顶犹微温，四肢柔软，以数珠置手中，乃屈指握之。猗欤懿哉，若夫人者，可谓宿根深厚，现行精纯，又得其子国治，多方辅助，故令净业成熟，得遂往生之愿。</p><p class="p-trans">三天后入殓，面貌比活着时候更加光彩，头顶还微微温热，四肢柔软。把念珠放在她手中，竟然弯曲手指握住了。真是美好啊！像太夫人这样，可以说是宿世善根深厚，现生行持精纯。又得到她的儿子徐国治多方面的辅助，所以净业成熟，完成了往生西方的心愿。</p></div>
+<div class="para-pair"><p class="p-orig">世之不念佛者不必论，即志心念佛者，其子女多皆于将终时，号哭，洗濯，换衣等，俾彼既生悲伤，又生瞋恨，遂致打失正念，仍复永劫轮回于三途六道中，莫之能出。彼犹自谓为尽孝，不知误亲往生之罪，校杀亲为更甚，而举世不知，良可悲伤。</p><p class="p-trans">世间不念佛的人，就不必说了。即使是专心念佛的人，他们的子女大都在临命终时，号哭、洗澡、换衣等等。使得他们既生悲伤，又生瞋恨，从而失掉了正念，仍旧永劫轮回在三途六道当中，不能出离。而那些子女们还自认为是在尽孝，殊不知耽误父母往生的罪过，比杀死父母更为严重。而整个世间的人却都不知道这一点，实在悲哀啊。</p></div>
+<div class="para-pair"><p class="p-orig">国治法母慈仁奉佛，故长斋学佛，屡办赈务，悉皆竭尽心力。今夏来山，以夫人行状见示，祈为作记，以为后世子孙遗范。余以固陋冗忙辞，后复函祈，因约略叙其平生，而于末后事实，稍加详悉，冀世之为人母，为人子者，咸取法焉。</p><p class="p-trans">徐国治效法母亲仁慈奉佛的德范，自己也吃素学佛。多次办理救灾，全都竭尽心力。今年夏天他来普陀山，将太夫人的行状拿给我看，请我写篇传记，作为后世子孙的遗范。我因为自己知见固陋、事务繁忙所以推辞了。后来他又来信请求，因此大略叙述太夫人的生平，而对于往生的事实，叙述得稍微详细一些，希望世间为人母、为人子的，都能效法啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【石埭】</span>旧县名。在安徽省南部。唐置县。1959年并入太平县（今黄山市），1965年又析出与贵池县部分地区合并改高石台县。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【烈女】</span>《烈女传》，西汉刘向编，共七卷（母仪传、贤明传、仁智传、贞顺传、节义传、辩通传和孽嬖传），记载了上古至西汉约一百位左右具有通才卓识，奇节异行的女子。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【受病】</span>遭受损伤。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【襄办】</span>帮助办理。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【慈惠】</span>犹仁爱。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【徽章】</span>犹证章。佩戴身上用以旌别的标志。徐珂《清稗类钞·服饰·徽章》：“今谓凡可旌别之记号者，曰徽章。常用者以金银铜为之，暂用者以绸缎绫为之。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【絷维】</span>语出《诗·小雅·白驹》：“皎皎白驹，食我场苗，絷之维之，以永今朝。”谓绊马足、系马缰，示留客之意。后以“絷维”指挽留人才。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【行状】</span>文体名。专指记述死者世系、籍贯、生卒年月和生平概略的文章。也称状、行述。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

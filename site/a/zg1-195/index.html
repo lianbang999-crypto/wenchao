@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>天台山上方广寺募修三圣殿疏 · 印光法师文钞</title>
+<meta name="description" content="天台，为东南第一名山。上方广，乃天台开山之第一古寺也。溯自东晋昙猷尊者，以神通道力，降伏山神，而为开山，创建此寺。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-195/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="天台山上方广寺募修三圣殿疏 · 印光法师文钞">
+<meta property="og:description" content="天台，为东南第一名山。上方广，乃天台开山之第一古寺也。溯自东晋昙猷尊者，以神通道力，降伏山神，而为开山，创建此寺。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-195/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">天台山上方广寺募修三圣殿疏</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">天台，为东南第一名山。上方广，乃天台开山之第一古寺也。溯自东晋昙猷尊者，以神通道力，降伏山神，而为开山，创建此寺。</p><p class="p-trans">天台山，是东南的第一名山。上方广寺，是天台开山的第一座古寺。追溯到东晋的昙猷尊者，以神通道力，降伏山神，而开辟这座山，创建这座寺院。</p></div>
+<div class="para-pair"><p class="p-orig">初名石桥寺，以在石桥之侧，过石桥则有方广寺，乃五百应真寄居之圣寺，非道邻应真者，莫能一见。猷师曾入其寺，受斋而出，知其为应真之所示现无疑。后人慕应真之胜迹，遂名石桥为方广云。</p><p class="p-trans">最初名为石桥寺，因为寺院在石桥的旁边。过了石桥就是方广寺，乃五百罗汉居住的圣寺，如果不是修道接近证阿罗汉果的人，是不能见到的。昙猷法师曾经进入这座寺院，接受供斋而出，知道这座寺院，是罗汉所示现无疑。后人仰慕阿罗汉的胜迹，于是将石桥寺改名为方广寺。</p></div>
+<div class="para-pair"><p class="p-orig">方广寺之最高处，为西方三圣殿，向为念佛堂，正殿三楹，供三圣像，以作礼念之所，两边二楹，以作念佛僧安住之舍。</p><p class="p-trans">方广寺的最高处，是西方三圣殿，一向作为念佛堂，正殿三间，供西方三圣像，作为礼佛念佛的处所，两边二间，作为念佛僧人安住的寮舍。</p></div>
+<div class="para-pair"><p class="p-orig">窃以法门无量，皆须断尽烦惑，方可了生脱死。唯念佛一法，但具真信切愿，皆可仗佛慈力，往生西方。以故古今出格高人，莫不注重此法，自行化他，以期一切同人，咸于现生超凡入圣也。</p><p class="p-trans">我认为法门无量，都必须要断尽烦惑，才可以了生脱死。唯有念佛法门，只要具足真信切愿，都可以仰仗佛的慈力，带业往生西方。因此古今杰出的高人，没有不注重此念佛法门，自行化他，期望一切同人，都在这一生超凡入圣啊！</p></div>
+<div class="para-pair"><p class="p-orig">方广寺之三圣殿，历年久远，材木腐朽，早宜重新，奈住持以资斧无出，且待时机。今年三月初，来一客僧，住其中念佛，颇著勤恳。至四月初四夜，自化其身于三圣殿，及寺众咸知，则火已大炽，无法挽救矣。然幸只烧此处，余未延及。</p><p class="p-trans">方广寺的三圣殿，历年久远，材木腐朽，早应该重修，无奈住持因为资财无法筹出，暂且等待时机。今年三月初，来了一位客僧，住在当中念佛，很是勤恳。到四月初四的夜晚，自己焚化在三圣殿，等到寺里大众都知道的时候，火已经烧的太大，无法挽救了。然而万幸只烧到三圣殿，其余的地方没有延及到。</p></div>
+<div class="para-pair"><p class="p-orig">不知此僧特欲重新此殿而为此举耶，抑山灵欲重新而使彼为此举耶，抑佛菩萨五百应真欲大宏净土法门，俾一切出资助修诸善信，同仗此善根，出此苦娑婆国土，生彼极乐世界，而令彼为此举耶。</p><p class="p-trans">不知道这位僧人，是特别想要重建这座三圣殿而做出这个举动呢？还是山神精灵想要重建三圣殿而使得他做出这个举动呢？又或者是佛菩萨、五百阿罗汉，想要大宏净土法门，使得一切出资助修的诸位善信，共同仗此善根，出离这个苦恼的娑婆国土，往生极乐世界，而令他做出这个举动呢？</p></div>
+<div class="para-pair"><p class="p-orig">今住持即欲重修，祈光作疏。乃述其开山建寺，及此殿早宜重修，而适逢此因缘，以祈一切檀越，念净土法门具契理契机之妙，此僧有为法捐躯之诚，各舍净资，赞襄胜举，其为功德，唯佛能知矣。</p><p class="p-trans">现在住持想要马上重新修建，请我来写一个疏文。于是叙述开山建寺，以及这座三圣殿早就应该重修，而恰好遭逢到这个因缘，来祈盼一切檀越，念净土法门具契理契机的高妙，这位僧人有为法捐躯的诚心，各各捐舍清净资财，赞助胜举，这个功德，唯有佛才能够了知啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【竺昙猷】</span>或云法猷。炖煌人。少苦行习禅定。后游江左止剡之石城山。乞食坐禅。……赤城岩与天台瀑布灵溪四明。并相连属。而天台悬崖峻峙峰岭切天。古老相传云。上有佳精舍。得道者居之。虽有石桥跨涧而横石断人。且莓苔青滑自终古以来无得至者。猷行至桥所。闻空中声曰。知君诚笃今未得度。却后十年自当来也。……猷每恨不得度石桥。后洁斋累日复欲更往。见横石洞开度桥少许。睹精舍神僧。果如前所说。因共烧香中食。食毕神僧谓猷曰。却后十年自当来此。今未得住。于是而返。顾看横石还合如初。（昙猷（晋始丰赤城山）《高僧传》卷十一）</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【应真】</span>阿罗汉之旧译。应受人天供养之真人。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【出格】</span>超出常规；异乎寻常。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【资斧】</span>货财器用。《易·旅》：“得其资斧。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【重新】</span>再次装修使面貌一新。如：庙宇重新。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【赞襄】</span>辅助，协助。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

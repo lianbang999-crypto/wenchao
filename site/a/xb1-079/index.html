@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复江景春居士书（二）（民国二十二年） · 印光法师文钞</title>
+<meta name="description" content="扶乩，乃灵鬼作用，其言某佛，某菩萨，某仙，皆假冒其名。真仙，或偶尔应机，恐千百不得其一，况佛菩萨乎。以乩提倡佛法，虽有小益，根本已错，真学佛者，决不仗此以提倡佛法。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-079/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复江景春居士书（二）（民国二十二年） · 印光法师文钞">
+<meta property="og:description" content="扶乩，乃灵鬼作用，其言某佛，某菩萨，某仙，皆假冒其名。真仙，或偶尔应机，恐千百不得其一，况佛菩萨乎。以乩提倡佛法，虽有小益，根本已错，真学佛者，决不仗此以提倡佛法。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-079/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复江景春居士书（二）（民国二十二年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">扶乩，乃灵鬼作用，其言某佛，某菩萨，某仙，皆假冒其名。真仙，或偶尔应机，恐千百不得其一，况佛菩萨乎。以乩提倡佛法，虽有小益，根本已错，真学佛者，决不仗此以提倡佛法。</p><p class="p-trans">扶乩，是灵鬼的作用，它自己说是某佛、某菩萨、某仙，都是假冒其名。如果是真仙，或许偶尔有来应机来的，但恐怕千百次中，也不到一次，何况佛菩萨呢？用扶乩来提倡佛法，虽然有小小的利益，但其根本已经错了，真正学佛的人，绝对不会依仗扶乩来提倡佛法。</p></div>
+<div class="para-pair"><p class="p-orig">何以故，以是鬼神作用。或有通明之灵鬼，尚可不致误事。若或来一糊涂鬼，必致误大事矣。人以其乩误大事，遂谓佛法所误，则此种提倡，即伏灭法之机。汝以为失利益，而问有罪无罪，是知汝完全不知佛法真义，可叹孰甚。</p><p class="p-trans">为什么呢？因为这是鬼神的作用。如果赶上通晓佛法道理的灵鬼，还不至于导致误事。如果来一个糊涂鬼，必会导致耽误大事啊！人们因为他扶乩耽误大事，于是就容易认为是佛法所误。那么用这种方式提倡佛法，就潜藏下了毁灭佛法的隐患。你认为失去弘扬佛法的利益，而来问有罪无罪，就知道你完全不知道佛法的真义，还有什么比这个更可叹的呢？</p></div>
+<div class="para-pair"><p class="p-orig">清道咸间，江西广信府，有一翰林，名徐谦，字白舫。其人活九十六岁，死时天乐鸣空，盖生天耳。彼不知净土法门，将佛，菩萨，天，仙地位，皆分不清。</p><p class="p-trans">清朝道光、咸丰年间，江西广信府，有一位翰林，名徐谦，字白舫。这个人活到九十六岁，死的时候，天空有美妙的音乐，大概是生天了。他不知道净土法门，对于佛、菩萨、天、仙的地位，全都分不清楚。</p></div>
+<div class="para-pair"><p class="p-orig">普陀一老僧，乃其最小之门人，与光说其事实甚详。其人著有海南一勺，将伪造之心经中下卷，与心经同视。又录四川祷雨乩文，言观音跪玉帝殿前求雨。</p><p class="p-trans">普陀山一位老僧，是他最小的门人，与我详细地述说过这件事情。这个人著有《海南一勺》，将伪造的《心经》中下卷，与《心经》同等对待。又录出《四川祷雨乩文》，说观音菩萨跪在玉帝殿前求雨。</p></div>
+<div class="para-pair"><p class="p-orig">可知乩之胡说巴道，与其人之知见，皆邪正不分矣。汝尚以不扶乩而失利益，不知其祸或至灭法也。</p><p class="p-trans">由此可知扶乩是胡说八道，与这个人的知见，都是邪正不分啊！你还认为不扶乩，会失去弘法的利益，不知扶乩的这个祸患，或许导致毁灭佛法啊。</p></div>
+<div class="para-pair"><p class="p-orig">徐谦，其人好善信佛，而实不明佛理。不乐仕进，家居教人为善，自亦扶乩，教其门弟子扶乩。大家皆不知乩之所以然，及佛之所以然。</p><p class="p-trans">徐谦，这个人好善信佛，然而却实在不明白佛理。他不好仕途当官，在家乡教人行善，自己也扶乩，也教他的门人弟子扶乩。大家都不知道扶乩的道理，以及佛法的道理。</p></div>
+<div class="para-pair"><p class="p-orig">当时南昌一举人，与徐谦同一行为。此举人之门人，在省城扶乩看病，很灵。巡抚之母有病，医药不效，有言某人扶乩看病甚灵，因请令看。开一方，药服后，人即死矣。</p><p class="p-trans">当时南昌的一位举人，与徐谦做同样的事情。这个举人的门人，在省城扶乩看病，很灵验。巡抚的母亲有病，医药无效，有人就说，某人扶乩看病很灵，于是请他去看。开了一个药方，药服下以后，人立刻就死了。</p></div>
+<div class="para-pair"><p class="p-orig">急令医看方，则内有反药，因拏其人来问。其人言，此吾师某教我者。巡抚因令其师抵偿，谓汝诬世害人，遂杀其师。徐谦闻其事，诫饬门徒等，此后勿再扶乩。</p><p class="p-trans">巡抚急忙令医生察看药方，发现药方内有产生毒性的反药，于是捉拿这个人来审问。这个人说：这是我老师某人教我的。巡抚因此令他的老师抵偿，说：你欺骗祸害世人，于是杀了他的老师。徐谦听到这件事后，就告诫他的门徒，以后不要再扶乩了。</p></div>
+<div class="para-pair"><p class="p-orig">汝以不扶乩无缘法，心中漾漾动。不知扶乩之祸，其大如天，非彼劝人出功德所能弥补。正人君子决不入此坛场。</p><p class="p-trans">你认为不扶乩会失去种种与佛法结缘的机会，心中就漾漾浮动。却不知道扶乩的灾祸，如天一样大，不是他劝人有点功德所能弥补的。正人君子决不进入这个扶乩坛场。</p></div>
+<div class="para-pair"><p class="p-orig">明末，苏州有扶乩者，其门徒有七八人。一日，扶乩说佛法，劝人念佛求生西方，与前之所说，绝不相同。此后又来二十多次。末后乃说，扶乩乃鬼神作用，吾乃某人，此后不复再来，汝等不得再扶乩。此事载西方确指中。</p><p class="p-trans">明朝末年，苏州有个扶乩的人，他的门徒有七八个人。有一天，扶乩请来的大仙说起了佛法，劝在场的人都念佛求生西方，与之前所说的内容，截然不同。此后这位大仙又来了二十多次。最后才说：扶乩是鬼神的作用，我是某某人，以后不会再来，你们不可以再扶乩了。这件事就是记载在《西方确指》一书中的觉明妙行菩萨的故事。</p></div>
+<div class="para-pair"><p class="p-orig">民国初年，香港有扶乩者，言其仙为黄赤松大仙，看病极灵。有绝无生理之人，求彼仙示一方，其药，亦随便说一种不关紧之东西，即可痊愈。</p><p class="p-trans">民国初年，香港有个扶乩的人，说这个仙是黄赤松大仙，看病很灵。即使绝对没有存活希望的人，求这位大仙开示一个药方，他的用药，也是随便说一种无关紧要的东西，病就可以痊愈。</p></div>
+<div class="para-pair"><p class="p-orig">黄筱伟羡之，去学，得其法而扶，其乩不动。别人问之，令念金刚经若干遍再扶。依之行，遂亦甚灵。因常开示念佛法门，伟等即欲建念佛道场，云，尚须三年后办。</p><p class="p-trans">黄筱伟很羡慕，就去学，得到这个方法而扶乩，乩笔却不动。于是别人去问什么原因，说是要让他念《金刚经》若干遍，再扶乩。黄筱伟依照所说的去做，于是也就很灵验了。因为常常开示念佛法门，黄筱伟等人就想要马上建立念佛道场，乩文说：还须要三年之后再办。</p></div>
+<div class="para-pair"><p class="p-orig">三年后，彼等四五人来上海请经书，次年来皈依，遂立哆哆佛学社，以念佛章程寄来。念佛后，观音势至后，加一哆哆诃菩萨。光问，何得加此名号。彼遂叙其来历，谓前所云黄赤松大仙，后教修净土法门，至末后显本，谓是哆哆诃菩萨，且诫其永不许扶乩。</p><p class="p-trans">三年后，他们四、五个人来到上海请经书，第二年来皈依，于是建立哆哆佛学社，将念佛章程寄来。念佛、念观音、大势至菩萨之后，再加上一位哆哆诃菩萨。我问他们：你们为什么要加上这个名号。他们于是叙述其中的来历，说前面所说的黄赤松大仙，后来教他们修习净土法门，到了最后显示本形，说自己是哆哆诃菩萨，而且告诫他们以后永远不许再扶乩。</p></div>
+<div class="para-pair"><p class="p-orig">此二事，因一弟子辑净土法语，名净土辑要，光令将前二事附之于后。今为汝寄三本，阅之，可以自知。（哆哆诃菩萨，光令另为立一殿供养，不可加入念佛仪规中，免致起人闲议。）</p><p class="p-trans">这两件事，因为一位弟子编辑净土法语，起名《净土辑要》，我让他将前面两件事附录在书后。现在为你寄三本，读了，自然可以知道了。（关于哆哆诃菩萨，我让他们另外设立一间殿堂来供养，不可以加入念佛的仪规中，免得引起他人的闲话议论。）</p></div>
+<div class="para-pair"><p class="p-orig">入社念佛，一受奔波，二废时事。在家随分随力念佛，其益甚大。每月或一次，或二次，于社内提倡演说，俾大家知其法则利益，平常何须日日往社中念佛乎。此光从来提倡建筑念佛林社之本旨也。</p><p class="p-trans">来念佛社念佛，第一受奔波之苦，第二荒废时事要务。在家中，随分随力地念佛，这个利益很大。每个月，或者一次，或者二次，在念佛社内提倡并讲解净土法门的道理，使得大家知道念佛法门的法则和利益就可以了。平常何须天天到社中来念佛呢？这是我一向提倡成立念佛林、念佛社的根本宗旨。</p></div>
+<div class="para-pair"><p class="p-orig">佛弟子，何得祝道教诞期。即谓俗传难断，仍当以念佛为事。道教，乃在天，仙，鬼神三者之中。为彼念佛，正所以增长彼出世之善根，消灭彼宿世之恶业。</p><p class="p-trans">作为佛弟子，怎么能够参与庆祝道教的圣诞节日呢？即使是所谓的世俗传统难以断除，形式上仍然应当以念佛为主。道教，还在天、仙、鬼神三者之中。为他们念佛，正可以增长他们出世的善根，消灭他们宿世的恶业啊。</p></div>
+<div class="para-pair"><p class="p-orig">汝不见朝课回向云，回向护法众龙天，守护伽蓝诸圣众乎。南方通作三宝，北方通作护法，于义为顺。天，仙，鬼神，皆在护法之列，为护法龙天念佛，乃属正理。</p><p class="p-trans">你难道没有看见早课回向文中说：“回向护法众龙天，守护伽蓝诸圣众”吗？南方将这些全当作三宝，北方全当作护法，在义理上是通顺的。天、仙、鬼神，都在护法的行列，为护法龙天念佛，这是属于正理。</p></div>
+<div class="para-pair"><p class="p-orig">若念伪造之皇经等，则成邪见矣。佛法之衰，皆因俗僧不知佛法，将伪造之血盆经，寿生经，作求财之要道。从此破血湖，破地狱，还寿生，寄库等佛事，日见其多。</p><p class="p-trans">如果念伪造的《玉皇经》等，就成为邪见了。佛法的衰败，都是因为世俗之僧不知道佛法，将伪造的《血盆经》、《寿生经》，当作求财的重要手段。从此破血湖、破地狱、还寿生、寄库等不如法的佛事，一天天增多。</p></div>
+<div class="para-pair"><p class="p-orig">虽骗到愚人之钱，却引起有学问，明世理，而不知佛法之真理者之毁谤。俗僧只顾得钱，不顾此种佛事，深伏灭法之祸。遇有真正知见者，当令以此种佛事之费念佛，其利益大矣。</p><p class="p-trans">这么做的人，虽然骗到了愚痴人的钱，却引起了有学问，明世理，而不知佛法真理之人的毁谤。这些俗僧只顾赚钱，却不顾这种不如法的佛事，已经深深埋下了毁灭佛法的祸根。如果遇到有真正知见的人，应当让他们将做这种佛事的费用支持大众念佛，这个利益就大了。</p></div>
+<div class="para-pair"><p class="p-orig">●（其二）手书备悉。二十四人法名，各另纸书之。皈依虽易，不可仍守外道章程。光目力精神不给，不能多开示，今寄嘉言录二十四本，人各一本。一函遍复三十张，人各一张，余随便送。净土辑要三本，饬终津梁三本，此二种作提倡之备。</p><p class="p-trans">●（第二封信）来信尽知。二十四人的法名，各在另外的纸上写好。皈依虽然容易，但不可仍旧遵守外道的章程。我的视力、精神不足，不能多加开示，现在寄《嘉言录》二十四本，每人各一本。《一函遍复》三十张，每人各一张，其余的随便送人。《净土辑要》三本，《饬终津梁》三本，这两种书作为提倡、宣讲用的预备。</p></div>
+<div class="para-pair"><p class="p-orig">当为彼等说，既皈依佛法，为佛弟子，必须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。存好心，说好话，行好事。如此行去，方为真佛弟子。</p><p class="p-trans">应当向他们说，既然皈依佛法，作为佛弟子，必须敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。存好心，说好话，行好事。如此去做，才是真正的佛弟子。</p></div>
+<div class="para-pair"><p class="p-orig">若口虽念佛，心存不善，则与佛气分相反，不能得念佛之实益。当常看嘉言录，则所有法门利益，修持法则，一一皆知。</p><p class="p-trans">如果口中虽然念佛，却心存不善，这样便与佛的气分相反，不能得到念佛的真实利益。应当常看《嘉言录》，那么所有的法门利益，修持的法则，就一一全都知道了。</p></div>
+<div class="para-pair"><p class="p-orig">而一函遍复，又为日用修持简便仪规。此一篇文，文虽浅近，理实渊深，当为永远传家之宝。余详嘉言录，此不备书。</p><p class="p-trans">而且《一函遍复》，又是日用修持的简便仪规。这篇文章，文字虽然浅近，道理却很渊深，应当作为永远的传家之宝。其余详看《嘉言录》，此处不再具体写出。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【广信府】</span>元末至清末的行政区划名，治所在今江西省上饶市信州区。元朝至正二十年（1360年）朱元璋攻下信州路，改信州路为广信府。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【反药】</span>在中药配伍禁忌中有中药“十八反”。即两种药物同用，发生剧烈的毒性反应或副作用，称相反。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【诫饬】</span>训诫整肃；告诫。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【玉皇经】</span>道教经典。全称《高上玉皇本行集经》，3卷。道士斋醮祈禳及道门功课的必诵经文。作者与成书年代不详。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【破血湖等】</span>参考下面一段文：每个人必须念诵《金刚经》代替《寿生经》，以还清投胎前所借欠之“经债”，否则将来就要做畜生抵债。还说什么“要趁人现在还活着的时候，应该抓紧时间多念些佛号和经咒，多折些黄纸纸锭、锡箔元宝，多搞些佛柴经图、冥钞、纸银圆等等，用几个纸箱装着，再贴上封条，万无一失，焚化后寄存在阴间的仓库里，准备自己死后享用”。又说什么“女人有月经，临产时更是血污天地造业深重，死后被打入阴间血湖受苦，因此，务必要在死前，人活着之时，念《血湖经》，拜《血湖忏》，加以赎罪，否则在血湖池永远不得超升”。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

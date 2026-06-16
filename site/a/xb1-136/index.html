@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复慧龙居士书（民国二十一年　即窦存吾） · 印光法师文钞</title>
+<meta name="description" content="手书，备悉。避地之事，乃大富翁之行为。吾人乃一穷和尚，何得预先即避。倘果战及苏，亦非决定不避，避亦易易，何得将此事看得如此重大乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-136/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复慧龙居士书（民国二十一年　即窦存吾） · 印光法师文钞">
+<meta property="og:description" content="手书，备悉。避地之事，乃大富翁之行为。吾人乃一穷和尚，何得预先即避。倘果战及苏，亦非决定不避，避亦易易，何得将此事看得如此重大乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-136/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复慧龙居士书（民国二十一年　即窦存吾）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书，备悉。避地之事，乃大富翁之行为。吾人乃一穷和尚，何得预先即避。倘果战及苏，亦非决定不避，避亦易易，何得将此事看得如此重大乎。</p><p class="p-trans">来信尽知。躲到外地而避开灾祸的事，是大富翁的行为。我是一个穷和尚，怎么可能预先就躲避呢？如果战争真的打到苏州，也不是一定不躲避，躲避也很容易，何必将这件事看得这样重大呢？</p></div>
+<div class="para-pair"><p class="p-orig">若战事可停，印书局开工，尚大有事。若离苏远行，则诸难接洽耳。富贵人子弟，多多一事不做，一旦遇祸乱，则必至无以自立。</p><p class="p-trans">如果战事可停，印书局开工，还有很多事要做。如果离开苏州远行到外地，那么一切就很难接洽办理了。富贵人家的子弟，大多什么事都不做，一旦遇到祸乱，就必定会导致无法自立。</p></div>
+<div class="para-pair"><p class="p-orig">今全去用人，亲自操作，一则习劳，而能和血脉，二则少闲，而消诸妄念，实为爱儿女之根本办法，善何如之。</p><p class="p-trans">你现在辞去全部的佣人，让家里人亲自来操持家务，一是可以养成劳动的习惯，从而能够畅和血脉；二是减少闲暇时间，因而能消除各种妄念，这的确是疼爱儿女的根本办法，还有比这更好的事吗？</p></div>
+<div class="para-pair"><p class="p-orig">儒道之衰，其源由于理学之破斥三世因果，六道轮回，俾善无以劝，恶无以惩，以致演出目下之现象，实乃理学之学说导之也。</p><p class="p-trans">儒道的衰微，其源由在于宋朝理学破斥三世因果、六道轮回，使大众没有了劝人行善、惩戒作恶的依据，以致演出了眼下混乱的现象，这实在是宋朝理学的学说所导致的啊！</p></div>
+<div class="para-pair"><p class="p-orig">欲振兴儒宗，当以躬行孝慈友恭为事（天下之乱，均由为父母者，不知教儿女所致。故慈之一字，举世皆不识其真相，使其真知，世自太平矣）。</p><p class="p-trans">想要振兴儒宗，应当以亲身实践子孝、父慈、兄友、弟恭为事（天下大乱，都是由于做父母的人，不知道教育儿女所导致的。所以“慈”这个字，全世界的人都不知道其中的真相，假使他们真的知道，世界自然就太平了）。</p></div>
+<div class="para-pair"><p class="p-orig">令严之不生信，亦理学学说所使。然近年，及沪战，由念佛而获种种不可思议之感应事迹者，甚多。何不曲为陈述，俾其因兹生信乎。</p><p class="p-trans">你父亲对佛法不生信心，也是宋朝理学学说所导致的。然而近些年来，以及上海的战事中，由于念佛而获种种不可思议感应事迹的人很多。为什么你不详细地给他讲述，使他因此生起信心呢？</p></div>
+<div class="para-pair"><p class="p-orig">若明知此事，犹不生信，则只可向佛代彼忏悔宿业。而以己念佛功德，皆为回向，则或可有生信发愿之日矣。果能生信，修持净业，俾得往生净土，可谓大孝尊亲矣。</p><p class="p-trans">如果明白知道了这些感应事迹，还是不生信心，就只可代老人向佛忏悔宿业。而且以自己念佛的功德，全都为他回向，那么他或许有生信发愿的那一天啊！果真能够生信，修持净业，使得他往生净土，这样就可以说是大孝尊亲了啊！</p></div>
+<div class="para-pair"><p class="p-orig">全家均吃素，固不必特别办荤，但素菜办得有味好吃，亦非不可。若以杀众生，而悦亲口腹，俾亲实受后世之杀报。此之孝，在完全不知佛法者则可。然既不以朴素为意，又何必自心不安耶。</p><p class="p-trans">如果全家都吃素，当然没有必要特别制作荤菜来侍奉父母，只要素菜办得有味、好吃，也不是不可以全素的。如果以杀害众生，来取悦父母的口腹，使得父母实际上遭受后世的杀报。这种孝，对于完全不知道佛法的人来说，还情有可原。既然老人不在意生活朴素，你又何必自心不安呢？</p></div>
+<div class="para-pair"><p class="p-orig">若儿女辈仍旧吃荤，非完全全家净素，则亦不宜独令老人吃素也。然亦不得令尽量吃，以徒积杀业于吾亲也。</p><p class="p-trans">如果儿女辈仍旧吃荤，还没有做到全家完全吃净素，那么也不应该单独让老人吃素。然而也不可让老人尽量吃，因为这样做只会使父母亲毫无意义地积累杀业啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【避地】</span>谓迁地以避灾祸。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

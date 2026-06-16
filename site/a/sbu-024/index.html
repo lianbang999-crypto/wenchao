@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复江易园居士书一 · 印光法师文钞</title>
+<meta name="description" content="昨由味农转来手书，知令夫人正念往生，不胜感叹。阁下与夫人殆宿有因缘，相助入道者，诚所谓德配也。其临终之相，可以决定往生，则固无足悲伤。所惜者，阁下失一道伴，有朋不能常亲抚育教诲。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-024/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复江易园居士书一 · 印光法师文钞">
+<meta property="og:description" content="昨由味农转来手书，知令夫人正念往生，不胜感叹。阁下与夫人殆宿有因缘，相助入道者，诚所谓德配也。其临终之相，可以决定往生，则固无足悲伤。所惜者，阁下失一道伴，有朋不能常亲抚育教诲。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-024/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复江易园居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨由味农转来手书，知令夫人正念往生，不胜感叹。阁下与夫人殆宿有因缘，相助入道者，诚所谓德配也。其临终之相，可以决定往生，则固无足悲伤。所惜者，阁下失一道伴，有朋不能常亲抚育教诲。</p><p class="p-trans">昨天由江味农转来你的信，知道你夫人正念往生，非常感叹。阁下与夫人大概宿世有因缘，所以相互帮助而入道，实在是所谓的德行相配之妻啊！她临终的瑞相，可以决定往生，原本就不需要悲伤。所可惜的是，阁下失去了一位修道的伴侣，儿子江有朋不能常常亲自抚育教诲。</p></div>
+<div class="para-pair"><p class="p-orig">所言汇款，普陀不便，以小邮局无汇款事。直汇上海陈家浜太平寺，交真达和尚，祈代光存之即已。</p><p class="p-trans">所说的汇款，普陀山不方便，因为小邮局没有汇款的事务。直接汇到上海陈家浜太平寺，交真达和尚，请他代我保存就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">昨以阁下信令法雨主人看，祈尽此钱做佛事。乃令打一佛七，放一焰口。法雨寺特立念佛堂，现止十六人，多则二十二人，系有道心者。光昨下午特到堂中，叙说其意，并念佛之利益等，约一点余钟。彼等闻之，悉皆欢喜。</p><p class="p-trans">昨天将阁下的信给法雨寺的主人看，请他尽这些钱来做佛事。于是令众僧打一堂佛七，放一堂焰口。法雨寺特立念佛堂，现在只有十六人，多则二十二人，都是有道心的人。我昨天下午，特地到念佛堂中，叙说其中的意义，以及念佛的利益等，大约一个多钟头。他们听了，全都非常欢喜。</p></div>
+<div class="para-pair"><p class="p-orig">令夫人已得往生，仗佛力，法力，大众念佛力，当必品位高升，见佛更速耳。然光以与阁下友谊，亦于朝暮课诵时，称阁下与夫人之名，为之回向，聊表寸心。念佛于今弥陀诞日起，至二十三日圆满。光之回向，亦限此一七为度。</p><p class="p-trans">你夫人已得往生，依仗佛力、法力、大众念佛力，必当品位高升，见佛更加快速。然而我因为与阁下的友谊，也在朝暮课诵时，称念阁下与夫人之名，为她回向，聊表寸心。念佛是从今天弥陀诞日开始，到二十三日圆满。我的回向，也限定在这一七。</p></div>
+<div class="para-pair"><p class="p-orig">现今之掌权人，多不知因果报应，只顾眼前煊赫，不顾来生头面。以致不为国，不为民，只为自己权势利益，互相战斗，使国失元气，民不聊生。八月间，南京魏梅荪避难上海，因将迪吉录将吏好杀不杀三十六条录出，欲刊布。</p><p class="p-trans">现今掌权的人，大多不知因果报应，只顾眼前煊赫一时，不顾来生的头面生处。以致不为国家、不为人民，只为自己的权势和利益，互相战斗，使得国家失去元气，民不聊生。八月份，南京的魏梅荪避难到上海，因此将《迪吉录》（注1）中将士官吏好杀、不杀的三十六条录出，想要刊印流布。</p></div>
+<div class="para-pair"><p class="p-orig">光谓现祸已成，无可救药。欲息来祸，宜广搜史事，俾一切人同知因果。遂以二十二史感应录寄去，彼极欢喜。光又令博为搜集，俾成一大观，限一年纂集成。当排印数万，遍布全国，或可因之挽回矣。此事尚祈阁下提倡，俾有力者任印施送，方能普遍流通矣。</p><p class="p-trans">我说现在灾祸已经酿成，无可救药。想要止息未来的灾祸，应该广泛搜集历史实事，使一切人同知因果报应。于是将《二十二史感应录》寄去，他极为欢喜。我又让他广泛搜集，使这部书规模宏大、内容齐备，限定一年时间纂集完成。当会排印数万部，遍布全国，或许可以因此而挽回劫运啊！这件事还请阁下提倡，使得有能力的人任资印书布施赠送，才能够普遍流通。</p></div>
+<div class="para-pair"><p class="p-orig">又人之临终，只可念佛，不宜持咒。以念佛令彼听，彼虽不能念，听见佛声，心即清净。若持咒，则止有加持力，彼无由随诵。此从古以来之定例。助念于将去时为最要。岂持咒毕，方以念佛为回向乎。</p><p class="p-trans">另外，人在临终时，只能念佛，不宜持咒。因为念佛令临终人听，他虽然口不能念，但听见佛声后，内心就会清净。如果是持咒，就只有加持力，他没有办法跟随念诵。这是自古以来的常规。在人将要离去时助念，是最重要的。哪里是持咒完毕，才以念佛为其回向呢？</p></div>
+<div class="para-pair"><p class="p-orig">光文钞中亦有其说，凡一切念佛不念佛人，临终俱宜念佛以助，切勿另诵别种经咒，则不能令彼心中默随也。关系非小，故为补书于后。</p><p class="p-trans">我的《文钞》中也有这种说法，凡是一切念佛、不念佛人，临终都应该念佛来帮助他，千万不要另外诵其他的经咒，而不能令他心中默念跟随。这件事关系不小，所以特地补写在后。</p></div>
+<div class="para-pair"><p class="p-orig">又人之临终，助往生念佛，只宜击引磬，不可击木鱼。木鱼声浊，引磬声清。阁下试于朝暮念佛时，息心谛听，自知优劣。</p><p class="p-trans">还有，人临终时，念佛帮助其往生，只宜敲击引磬，不可敲击木鱼。因为木鱼的声音混浊，引磬的声音清亮。阁下试着在早晚念佛之时，息心谛听，自然知道优劣。</p></div>
+<div class="para-pair"><p class="p-orig">现今之世，无法能救。幸有因果，尚可挽回。因果一事，高明者每厌闻。此种高明，实为卑暗。如来成正觉，众生堕三途，皆不出因果之外。由高明之人，专谈理性，不说因果，其弊遂成今日之景象。祈见一切人，皆以因果为劝导，则其利大矣。</p><p class="p-trans">现今的世道，没有其他办法能够挽救。所幸还有因果，尚可挽回。因果这件事，高明的人常常厌恶听闻。这种高明，实际是卑暗。如来成等正觉，众生堕落三途恶道，都不超出因果之外。由于高明的人，专门谈论理性，不讲说因果，其流弊便成了今天的景象。请你见到一切人，都用因果的事理来劝导，那么这个利益就大了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【迪吉录】</span>《迪吉录》共九卷，明颜茂猷撰。茂猷，字壮其，又字仰子，平湖人。崇祯甲戌特赐进士。是编分官鉴、公鉴二门，皆杂录诸书因果之事。
+迪吉：《书·大禹谟》：“惠迪吉，从逆凶。”孔传：“迪，道也。顺道吉，从逆凶。”后因以“迪吉”表示吉祥，安好。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

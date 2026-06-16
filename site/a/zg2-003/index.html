@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>重刻弥陀略解圆中钞劝持序 · 印光法师文钞</title>
+<meta name="description" content="念佛求生净土一法，乃十方诸佛普度众生之要道，九界众生速证佛果之妙门。诸大乘经，皆启斯要。净土三经，专明其致。世多习矣不察，视为浅近。谓不若教海之宏深，禅宗之直捷。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-003/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重刻弥陀略解圆中钞劝持序 · 印光法师文钞">
+<meta property="og:description" content="念佛求生净土一法，乃十方诸佛普度众生之要道，九界众生速证佛果之妙门。诸大乘经，皆启斯要。净土三经，专明其致。世多习矣不察，视为浅近。谓不若教海之宏深，禅宗之直捷。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-003/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">重刻弥陀略解圆中钞劝持序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">念佛求生净土一法，乃十方诸佛普度众生之要道，九界众生速证佛果之妙门。诸大乘经，皆启斯要。净土三经，专明其致。世多习矣不察，视为浅近。谓不若教海之宏深，禅宗之直捷。</p><p class="p-trans">念佛求生净土这一法门，是十方诸佛普度众生的要道，九界众生速证佛果的妙门。诸大乘经典，都开示了这个要旨。“净土三经”，则专门阐说这一法门。世人大多习以为常而不能深察，反倒将净土法门看作是浅近之法，认为它不如教下那样广大深奥，不如禅宗那样直捷了当。</p></div>
+<div class="para-pair"><p class="p-orig">每扬宗教而抑净土，尚自力而恶佛加。当仁固让，见义不为。致如来彻底悲心，郁而不畅。众生出苦捷径，塞而罔通。今不避罪责，略引证据。冀见闻随喜，同生莲邦。</p><p class="p-trans">每每褒扬宗门、教下而贬抑净土法门，崇尚自力修证而厌恶佛力加被。当仁而固执退让，见义而不肯作为。致使如来的彻底悲心，抑郁而不舒畅；众生出离苦海的捷径，堵塞而不通达。在此我不避罪责，简单援引一些证据，希望见到、听到、随喜的人，共同往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">如来初成正觉，为四十一位法身大士，演大华严。及至入法界品，善财以十信满心，受文殊教，遍参知识。初见德云，一闻念佛法门，即证初住。</p><p class="p-trans">释迦如来初成正觉时，为四十一阶位法身大士，演说了《华严经》。说到“入法界品”时，善财童子以十信满心位，受到文殊菩萨的教导，而依次参学诸位善知识。最初参见德云比丘，刚一听到念佛法门，当下就证入初住位。</p></div>
+<div class="para-pair"><p class="p-orig">从兹随参随证。及五十三至普贤所，普贤以威神加被，即时善财所证，与普贤等，与诸佛等。普贤乃为说十大愿王，劝进善财，并华藏海众，回向往生西方极乐世界。</p><p class="p-trans">之后，每参访一位善知识，就证入一阶菩萨位次。第五十三参时，到了普贤菩萨那里，普贤菩萨用大威神力加被善财童子，使他所证的位次，当下就与普贤菩萨齐等，与诸佛齐等。普贤菩萨于是宣说了十大愿王，劝进善财童子，以及华藏世界的大海众菩萨，共同回向往生西方极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">而观经五逆十恶，地狱相现，十称佛名，即得往生。夫法身大士，悉愿往生。阿鼻罪人，尚预末品。法门之宏深直捷，孰有过于此者。诚可谓教海之南针，禅宗之北极。</p><p class="p-trans">而《观无量寿佛经》中，造作五逆十恶重罪的人，临命终时地狱相已经现前，称念南无阿弥陀佛的名号十声，就得以往生极乐世界。法身大士，都愿意往生西方；将堕阿鼻地狱的罪人，尚且能往生下品。若论法门的宏大深远、直捷了当，还有什么能超过这个法门的呢？净土法门实在可以说是，教下的指南针，禅宗的北极星啊。</p></div>
+<div class="para-pair"><p class="p-orig">一切诸法，无不从此法界流。河沙妙义，无不还归此法界。以故西天文殊，普贤，马鸣，龙树，东土远公，智者，善导，永明，或发愿而说经（文殊有发愿经，普贤说行愿品），或注经而造论。莫不以此法门自行化他，普利含识。</p><p class="p-trans">一切诸法，无不是从这个法界流出；恒河沙般的妙义，无不是回归到这个法界。所以西天的文殊菩萨、普贤菩萨、马鸣菩萨、龙树菩萨，东土的慧远大师、智者大师、善导大师、永明大师，或者发弘愿而说经典（文殊菩萨有《文殊师利发愿经》，普贤菩萨说《普贤菩萨行愿品》），或者注经文而作论著。无不是自己修行净土法门，也用净土法门来教化众生，让众生普遍得到利益。</p></div>
+<div class="para-pair"><p class="p-orig">而古人欲令举世咸修，故以阿弥陀经列为日课。以其言约而义丰，行简而效速。宏法大士，注疏赞扬。自古及今，多不胜数。于中求其至广大精微者，莫过于莲池之疏钞。极直捷要妙者，莫过于蕅益之要解。</p><p class="p-trans">古人想让一切世人都来修习这个法门，所以将《阿弥陀经》列为每日功课。因为这部经，言辞简约而义理深广，行持简便而成效迅速。古往今来，宏法的大菩萨们，注疏而赞扬这部经的，多得不可胜数。种种注疏当中，若论广大精微，莫过于莲池大师的《阿弥陀经疏钞》；若论直捷要妙，莫过于蕅益大师的《弥陀要解》。</p></div>
+<div class="para-pair"><p class="p-orig">幽溪法师，握台宗谛观不二之印，著略解圆融中道之钞。理高深而初机可入，文畅达而久修咸钦。奈流通既久，错讹甚多。因校订重刻，俾复旧观。</p><p class="p-trans">幽溪法师，握持天台宗谛观不二的法印，撰著了《弥陀略解圆中钞》一书。义理高深，然而初学的人也可以契入；文辞畅达，然而久学之人也都很钦服。无奈流通得久了，错误讹谬很多。所以校订之后重新刻印，使它恢复旧时模样。</p></div>
+<div class="para-pair"><p class="p-orig">弥陀一经，得此三疏，法无不备，机无不收。随研一种，亦可知其指归。遍阅三书，方堪彻其阃奥。自此圆发三心，执持圣号。期出五浊之恶世，冀证四德之玄猷。</p><p class="p-trans">《佛说阿弥陀经》有了这三种注疏，没有一法不具备，没有根机不收摄。研究其中任何一种，也可以知道法门的指归；三种全都拜读之后，才能彻底明白其精微奥妙。之后，就圆满发起三心（至诚心、深心、回向发愿心），执持弥陀圣号，期望出离五浊恶世，证得常乐我净的大道。</p></div>
+<div class="para-pair"><p class="p-orig">如是则临命终时，定蒙弥陀接引，圣众偕迎。托质莲胎，离险道以安居宝所。闻法受记，由同居而顿证寂光。撩起便行，阿谁无分。书此愚忱，敢告同人。</p><p class="p-trans">这样，临命终时必定蒙阿弥陀佛垂慈接引，海会圣众共同来迎。托生莲花之中，出离生死险路，安然居住在极乐宝所；蒙阿弥陀佛亲自说法授记，由凡圣同居土而顿时证入常寂光土。听到之后，立即修行，谁会没有份呢？谨此写下一片愚诚，告知大家。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【当仁不让】</span>《论语·卫灵公》：“当仁不让于师。”朱熹集注：“当仁，以仁为己任也；虽师亦无所逊。言当勇往而必为也。”后泛指遇到应该做的事主动去做，绝不推诿。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【阃奥】</span>比喻学问或事理的精微深奥所在。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【三心】</span>1．观无量寿经说：“一者至诚心，二者深心，三者回向发愿心。具三心者，必生彼国。”2.【又】无量寿经第十八愿中所说至心，信乐，欲生我国之三者，谓之三心。3.【又】道绰禅师，依净土论注之意而立三心：一、淳心，信心深厚也。二、一心，信心纯一也。三、相续心，信心相续不杂余念也。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【玄猷】</span>指先圣的大道。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【撩起便行】</span>禅宗术语。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【阿谁无分】</span>禅宗术语。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

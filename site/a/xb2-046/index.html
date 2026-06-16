@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>放生杀生现报录戒杀放生各文合编序（民十八年） · 印光法师文钞</title>
+<meta name="description" content="凡有血气者，必有知觉。既有知觉，则必贪生怕死，趋吉避凶。鸟兽昆虫蚤虱，莫不皆然。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-046/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="放生杀生现报录戒杀放生各文合编序（民十八年） · 印光法师文钞">
+<meta property="og:description" content="凡有血气者，必有知觉。既有知觉，则必贪生怕死，趋吉避凶。鸟兽昆虫蚤虱，莫不皆然。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-046/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">放生杀生现报录戒杀放生各文合编序（民十八年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">凡有血气者，必有知觉。既有知觉，则必贪生怕死，趋吉避凶。鸟兽昆虫蚤虱，莫不皆然。</p><p class="p-trans">凡是有气血的众生，必定有知觉。既然有知觉，就必定贪生怕死，趋吉避凶。鸟兽、昆虫、跳蚤、虱子，无不全都如此。</p></div>
+<div class="para-pair"><p class="p-orig">若忽尔捕而杀之，则其力虽不能敌，无可如何，其心之仇恨，殆不能以语言文字形容。若将欲杀，或有赎之放之令生者，则其心之感激，亦复难以形容。</p><p class="p-trans">如果突然捕捉并杀害它们，那么它们的力量虽然不能抵抗，无可奈何，但它们心中的仇恨，必定不能用语言文字来形容。如果它们将要被杀时，有人把它们赎下放生的话，那么它们内心的感激，也是难以形容的。</p></div>
+<div class="para-pair"><p class="p-orig">纵彼现时虽无报恩报怨之力，然善恶之缘既结，或于现生，或于未来，必有不期然而然之报应。即彼等不能即报，而常行放生，常行杀生，天地鬼神，常为鉴临，必当降以祸福，且勿忽其弱而欺之。</p><p class="p-trans">即使它们现在这一世没有报恩、报怨的能力，然而善恶的因缘已经结下了，或者在今生，或者在未来，必定有不期然而然的报应。即使它们不能立即来报恩、报怨，而一个人常行放生或杀生，天地鬼神，也会常常来审察监视，必定会降福或降祸，所以千万不要因为它们弱小，就藐视、欺凌它们。</p></div>
+<div class="para-pair"><p class="p-orig">世人不知因果，以杀生食肉为正理，为应该。而不知刀兵匪寇，水旱疾疫之惨灾，多多皆由杀生食肉而得。若果慈念真纯，虽同在此时劫，而其受报，自能各别。</p><p class="p-trans">世人不知道因果，认为杀生吃肉是正理，是应该的。却不知道刀兵、土匪、流寇，水旱、疾疫的惨烈灾祸，大多都是由于杀生吃肉所感召来的。如果慈悲之念真纯，即使同在此（灾难不断的）时劫中，而人们所遭受的果报，自然能够与共业有别。</p></div>
+<div class="para-pair"><p class="p-orig">昔一小儿，其父携来皈依。余问，汝欢喜吃肉否。曰，欢喜。余以彼指置彼口中，曰，此肉甚好，试吃吃看。彼极力拒之曰，吃不来，吃不来。余曰，汝自己之肉则吃不来，别种生灵之肉何得又吃得来乎。汝现在吃得来他，他将来亦吃得来汝，较比自吃其肉，则更加苦毒万倍也。</p><p class="p-trans">以前，曾经有一个小孩，由他的父亲带他来皈依。我问：“你欢喜吃肉吗？”小孩说：“欢喜。”我将他的手指放在他的口中，说：“这个肉很好，你吃吃看。”他极力抗拒说：“吃不来，吃不来。”我说：“你自己的肉就吃不来，别的生灵的肉，为何又吃得来呢？你现在吃得来它，它将来也吃得来你，比起自己吃自己的肉，会更加苦毒万倍。”</p></div>
+<div class="para-pair"><p class="p-orig">是以圣人以忠恕教人，施诸己而不愿，亦勿施于人。无如世人弱肉强食，习以为常。殆不知杀生食肉为罪恶，为非礼。见不食肉者，则诮之为迂腐，为迷信。</p><p class="p-trans">所以圣人以忠恕来教导人们，不愿意施加在自己身上的事情，也不要施加到别人身上。无奈世人弱肉强食，已经习以为常。这是不知道杀生吃肉是罪恶，是非礼。看见不吃肉的人，就讥笑认为是迂腐，是迷信。</p></div>
+<div class="para-pair"><p class="p-orig">设使其人忽尔变为鸟兽鱼虾，被人捕而欲杀，彼心中谓为正理，为应该，而欢喜充彼口腹耶。抑谓为罪恶，为非礼，而怀恨莫释耶。</p><p class="p-trans">假使这个人忽然变成鸟兽鱼虾，被人捕捉而将要被杀，他的心中会认为这是正理，是应该的，而欢喜填充人的口腹吗？还是认为这是罪恶，是非礼，而怀恨在心无法释怀呢？</p></div>
+<div class="para-pair"><p class="p-orig">设或其时，有戒杀护生不食肉之人，劝其勿杀，将欲买而放之，其心中为诮其为迂腐，为迷信耶。抑感其救命之德，而毕世莫忘耶。使其人，设身处地，反复思之，余恐宁食己肉，不肯食众生之肉矣。</p><p class="p-trans">假设在这个时候，有戒杀护生不吃肉的人，劝将要杀生的人不要杀，并将它买来放生，它的心中还会讥诮，认为这种行为是迂腐，是迷信吗？还是感激这个人的救命恩德，而终生不忘呢？假使这个人，设身处地，反复思考，我恐怕他宁肯吃自己的肉，也不肯吃众生的肉了。</p></div>
+<div class="para-pair"><p class="p-orig">呜呼，人皆可以为尧舜，人皆可以作佛。何背觉合尘，一至此极。</p><p class="p-trans">唉！人人都可以成为尧舜，人人都可以作佛。为何背离觉性，合于六尘，到了如此极端的程度呢。</p></div>
+<div class="para-pair"><p class="p-orig">江慎修先生，乃前清之隐君子。学问渊博，品行纯正。虽未研穷佛理，然能深信因果。故于杀生放生报应之见闻者，录之成集。</p><p class="p-trans">江慎修先生，是前清的隐士君子。学问渊博，品行纯正。虽然没有深入钻研佛理，然而却能够深信因果。因此将杀生放生报应的所见所闻，辑录成集。</p></div>
+<div class="para-pair"><p class="p-orig">其族裔孙易园，于民十一年为排印，光为作序，此不多述。现今杀劫弥漫，加以水旱种种灾祸，民不聊生，莫可救药。</p><p class="p-trans">由他的宗族后裔孙易园，在民国十一年将这本书排印，我为此写过序，此处不多说。当今世道杀劫弥漫，加上水旱种种灾祸，民不聊生，无可救药。</p></div>
+<div class="para-pair"><p class="p-orig">同人欲从根本上解决，拟广印现报录，以为挽回劫运之据。又以现报录于理致尚欠发挥，因将光前附万善先资后之戒杀放生各文，与之合编。</p><p class="p-trans">大家希望从根本上来解决，打算广印《现报录》，作为挽回劫运的依据。但是又因为《现报录》在戒杀的道理上阐发得不够深入，所以就把我以前附在《万善先资》后的、有关戒杀放生的各篇文章，与《现报录》合编。</p></div>
+<div class="para-pair"><p class="p-orig">于以见儒佛之心法不二，所汲汲于救物者，实汲汲于救人也。此之挽救，系从根本上致力，切勿以缓急轻重失当为诮。</p><p class="p-trans">通过这部书，就可以了解到，儒家、佛教的心法没有二样，那些急急忙忙救动物的人，实际上是在急急忙忙地救人。因果教育这种挽救世道的方法，正是从根本上努力的方法，千万不要讥讽这样做是缓急轻重失当。</p></div>
+<div class="para-pair"><p class="p-orig">莲池，慈云，曾端甫诸文，皆精金百炼，美玉无瑕。阅之，令人残忍之心，砉然消灭。慈悲之念，油然发生。</p><p class="p-trans">其中，莲池大师、慈云大师，以及曾端甫居士有关戒杀护生的各篇文章，都是精金百炼，美玉无瑕。读了令人的残忍之心，霍然消灭。慈悲之念，油然而生。</p></div>
+<div class="para-pair"><p class="p-orig">唯光南浔一疏，难免金鍮非类之诮。然竭我愚诚，勉尽天职，毁誉所不计也。</p><p class="p-trans">唯有我的《南浔极乐寺放生池疏》这篇疏文，难免有金子与黄铜，非同一种类的讥诮。不过，只是竭尽我的愚诚，努力尽到天职，毁誉就不计较了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【鉴临】</span>审察，监视。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【无如】</span>无奈。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【砉然】</span>1.象声词。常用以形容破裂声、折断声、开启声、高呼声等。2.超脱流俗貌。3.恍然大悟的样子。4.分明貌。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【鍮】</span>黄铜。鍮石，一种黄色有光泽的矿石，即黄铜矿或自然铜。鍮石似金而非金也。——唐·慧琳《一切经音义》</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

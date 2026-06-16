@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复卓智立居士书二 · 印光法师文钞</title>
+<meta name="description" content="接手书，知能反躬自勘，颇为欣慰。但其问词，多有固执偏见，不达经常达变之道。若一一俱释，则非十余纸不能尽了。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-210/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复卓智立居士书二 · 印光法师文钞">
+<meta property="og:description" content="接手书，知能反躬自勘，颇为欣慰。但其问词，多有固执偏见，不达经常达变之道。若一一俱释，则非十余纸不能尽了。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-210/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复卓智立居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知能反躬自勘，颇为欣慰。但其问词，多有固执偏见，不达经常达变之道。若一一俱释，则非十余纸不能尽了。</p><p class="p-trans">接到信，知道你能够反省自察，很是欣慰。但是信中所问的问题，有许多固执偏见，不达日常通权达变之道。如果一一全都解释，那么没有十多页纸就不能说得透彻。</p></div>
+<div class="para-pair"><p class="p-orig">今只与汝说其概，则自能体会，以光近来，直是日不暇给。因目力不给，二十年来，夜不用目。以夜若用目，次日便不能用矣。</p><p class="p-trans">现在只对你说说其中的梗概，那么你自然能够体会，因为我最近，每天忙得简直是没有一点空闲时间。因为视力不好，二十年来，夜晚不能用眼。因为夜晚如果用眼，第二天就不能用了。</p></div>
+<div class="para-pair"><p class="p-orig">于十月半，以信札校对者，鉴订者，索题跋者，堆积累累，仅于夜间了之。幸三宝加被，日间仍能照常，此盖出乎意料之外。自兹夜了二三点钟事，然后做功课。睡三点多钟，仍起做功课，尚不至目觉吃力，而复不能悉了。</p><p class="p-trans">在十月半，因为信件、校对、鉴订、索求题跋等事，堆积累累，仅能在夜晚来了结。幸亏三宝加被，白天仍然能够照常，这也是出乎意料之外的事。从此，夜晚了结二三个钟头的事，然后做功课。睡三点多钟，仍然起来做功课，还不至于觉得眼睛吃力，而又不能全都了结。</p></div>
+<div class="para-pair"><p class="p-orig">十月十一月，来信有百数十封。只此一事，已不暇了，况校对等乎。汝闲无所事，想出种种当理不当理之问。虽是好学，亦显不知深思。何以故。世间饮食衣服，人资之以活命者。若不知按己所宜，则饮食衣服，皆能杀人。及其已死，则得令世间人，尽弃饮食衣服乎。将令人酌量其宜，而为服食乎。</p><p class="p-trans">十月、十一月，来信有一百几十封。就这一件事，已经应接不暇了，何况还有校对等事呢？你闲着无事，想出种种合理、不合理的问题。虽然是好学，但也显出你不知道深思。为什么呢？世间的饮食衣服，人靠它们来活命的事物。如果不知道按照自己所适宜的来使用，那么饮食衣服，都能杀人。等到他死了，就得让世间人，全都不要吃饭穿衣了吗？还是要让人酌量适宜，而来吃饭穿衣呢？</p></div>
+<div class="para-pair"><p class="p-orig">佛法大无不包，细无不举，何得执一而论。汝所问者，似乎有理。实则皆属不善用心。汝若信得及，请认真行持。待业消智朗时，不禁自笑其愚执而惭愧不已耳。若不见信，即不复以佛为师。仍旧入彼外道，亦只可任汝而已。</p><p class="p-trans">佛法广大，无所不包；佛法微细，无所不举，怎么能执着一定来讨论。你所问的，似乎有理。但实际都是不善用心。你如果信得及，请认真行持。等到业消智朗之时，不禁自笑问这些问题的愚蠢执著而惭愧不已。如果不相信，就不再是以佛为师。仍旧进入那些外道之中，也只能随任你。</p></div>
+<div class="para-pair"><p class="p-orig">回也，闻一以知十。赐也，闻一以知二。知二者，因此而达彼也。非崖板止二，而不至于三也。闻一知十，则闻其始而知其终也。举一隅不以三隅反，圣则弃之。汝必欲一一执崖而详问之，光以衰老多事，能与汝作纸墨之闲谈乎。</p><p class="p-trans">“回也，闻一以知十。赐也，闻一以知二。”“知二”的意思，是因这件事而通达其他的事。不是崖板只有两件事，而不能推知三件事。“闻一知十”，则是听到开始，就知道终了。“举一隅不以三隅反”，圣人就放弃教导他。你必定想要一一死执崖板地详问，我因衰老、事务繁多，能与你作纸墨上的闲谈吗？</p></div>
+<div class="para-pair"><p class="p-orig">至于外道谤佛之语，何可据以为是（汝若见过释迦应化事迹，便知其概。即未见过，何得闻谤即便怀疑乎）。不见盗跖之骂尧不仁，舜不孝，禹淫佚，汤武放弑，孔子盗道乎。</p><p class="p-trans">至于外道谤佛的话，怎么能作为依据（你如果看过《释迦如来应化事迹》，就知道其中的大概。既然没有看过，怎么能一听到诽谤，就心生怀疑呢）。你没看过盗跖骂唐尧不仁，虞舜不孝，大禹淫佚，商汤放逐了他的君主夏桀，周武王出兵征讨商纣，孔子盗道吗？</p></div>
+<div class="para-pair"><p class="p-orig">汝又所问者多不当理，已概示之，不欲详释。继思汝正信未固，正智未开。或经呵斥，便怀怨望，而生退悔。以故不得不略为点示，以尽我老婆诱子归家之心耳。</p><p class="p-trans">你所问的又大多不合理，我已经大概说明，不想再详细解释。接着想到你正信不坚固，正智没有开启。或许经过一次的呵斥，就心怀埋怨，而生退悔。所以不得不略微点示你一下，以尽我老婆诱导儿子归家之心而已。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【经常】</span>1.常道；常法。2.谓遵循常制。3.平常；日常。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【达变】</span>通晓事物的变化并能适应之。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【日不暇给】</span>暇：空闲；给：丰足；够。每天都没有一点空闲。形容非常繁忙。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【闻一知十】</span>听到一件事，可以推知十件事。多用以形容聪明而善于类推。语出《论语·公冶长》，原文：子谓子贡曰：“女与回也孰愈？”对曰：“赐也何敢望回？回也闻一以知十，赐也闻一以知二。”子曰：“弗如也，吾与女弗如也。”（译文）孔子对子贡道：“你和颜回，哪一个强些？”子贡答道：“我么，怎敢和回相比？他啦，听到一件事，可以推演知道十件事；我咧，听到一件事，只能推知两件事。”孔子道：“赶不上他；我同意你的话，是赶不上他。”（《论语译注》，杨伯峻）</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【闻一知二】</span>语出《论语·公冶长》，本与闻一知十对比，谓听到一事只能推及两事。后多用以形容聪明而善类推。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【举一隅不以三隅反】</span>语出《论语·述而》，原文：子曰： “不愤不启，不悱不发，举一隅不以三隅反，则不复也。”
+（译文）孔子说：“教导学生，不到他想求明白而不得的时候，不去开导他；不到他想说出来却说不出的时候，不去启发他。教给他东方，他却不能由此推知西、南、北三方，便不再教他了。”（《论语译注》，杨伯峻）</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【孔子盗道】</span>语出《庄子·杂篇·盗跖》，原文：“今子脩文武之道，掌天下之辩，以教后世，缝衣浅带，矫言伪行，以迷惑天下之主，而欲求富贵焉，盗莫大于子。天下何故不谓子为盗丘，而乃谓我为盗跖？……世之所高，莫若黄帝，黄帝尚不能全德，而战涿鹿之野，流血百里。尧不慈，舜不孝，禹偏枯，汤放其主，武王代纣，文王拘羑里。此六子者，世之所高也，孰论之，皆以利惑其真而强反其情性，其行乃甚可羞也。”意思是：“如今你研修文王、武王的治国方略，控制天下的舆论，一心想用你的主张传教后世子孙，穿着宽衣博带的儒式服装，说话与行动矫揉造作，用以迷惑天下的诸侯，而且一心想用这样的办法追求高官厚禄，要说大盗再没有比你大的了。天下为什么不叫你作盗丘，反而竟称我是盗跖呢？……世上所尊崇的，莫过于黄帝，黄帝尚且不能保全德行，而征战于涿鹿的郊野，流血百里。唐尧不慈爱，虞舜不孝顺，大禹偏瘫，商汤放逐了他的君主，武王出兵征讨商纣，文王曾经被囚禁在羑里。这以上的六个人，都是世人所尊崇的，但是仔细评论起来，都是因为追求功利迷惑了真性而强迫自己违反了自然的禀赋，他们的做法实在是极为可耻的。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

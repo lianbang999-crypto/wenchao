@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>地藏菩萨本迹灵感录序（民十八年） · 印光法师文钞</title>
+<meta name="description" content="地藏菩萨，誓愿宏深。虽则久已证穷法性，而复不住寂光，不证佛果。以大慈悲，遍周尘刹，随类现身，度脱有情。而复常居幽冥，救拔地狱极苦众生。以菩萨往昔曾发大愿，众生度尽，方证菩提，地狱未空，誓不成佛。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-017/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="地藏菩萨本迹灵感录序（民十八年） · 印光法师文钞">
+<meta property="og:description" content="地藏菩萨，誓愿宏深。虽则久已证穷法性，而复不住寂光，不证佛果。以大慈悲，遍周尘刹，随类现身，度脱有情。而复常居幽冥，救拔地狱极苦众生。以菩萨往昔曾发大愿，众生度尽，方证菩提，地狱未空，誓不成佛。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-017/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">地藏菩萨本迹灵感录序（民十八年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">地藏菩萨，誓愿宏深。虽则久已证穷法性，而复不住寂光，不证佛果。以大慈悲，遍周尘刹，随类现身，度脱有情。而复常居幽冥，救拔地狱极苦众生。以菩萨往昔曾发大愿，众生度尽，方证菩提，地狱未空，誓不成佛。</p><p class="p-trans">地藏菩萨，誓愿宏深。虽然久远劫前，已经彻底圆证法性，但是却又不住常寂光净土，不证佛果。发大慈大悲的菩提心，周遍一切世界，随类现身，度脱有情。而且还常居幽冥界，救拔地狱极苦众生。因为菩萨往昔曾经发下大愿：“众生度尽，方证菩提，地狱未空，誓不成佛。”</p></div>
+<div class="para-pair"><p class="p-orig">良以众生心性，与佛无二。由迷昧故，于真常中，妄生迷惑，起贪瞋痴，造杀盗淫，以致轮回六道，了无出期。生人天时少，堕三途时多。</p><p class="p-trans">虽然众生的心性，的确与佛没有两样。但是由于迷惑愚昧的缘故，从真常中，妄生迷惑，起贪瞋痴三毒，造杀盗淫三业，以致轮回六道，没有出离之期。生到人天善道的时间少，堕入三途恶道的时间多。</p></div>
+<div class="para-pair"><p class="p-orig">菩萨特垂慈愍，多方救济。冀彼返妄归真，祛迷得悟，以复其本具之真如佛性而后已。譬如无价摩尼宝珠，堕于圊厕，愚人视同粪秽，不加爱惜。</p><p class="p-trans">菩萨特别垂慈怜愍，多方加以救济。希望众生返妄归真，去迷开悟，以恢复本具的真如佛性而后已。譬如无价摩尼宝珠，堕入厕所之中，愚昧的人视之如同粪秽一样，不加爱惜。</p></div>
+<div class="para-pair"><p class="p-orig">智者知是无价宝珠，从厕取出，拭除粪秽，香汤洗涤，悬之高幢，则光照天地，普雨众宝。</p><p class="p-trans">但是有智慧的人，知道这是无价宝珠，于是从厕所中取出，将粪秽除去，用香汤洗涤，悬在高幢之上，就能光照天地，普雨众宝了。</p></div>
+<div class="para-pair"><p class="p-orig">众生心性，亦复如是。虽复迷昧造业，堕落恶道。而本具之真如佛性，仍复湛寂常恒，不生不灭，了无迁变损失之相。</p><p class="p-trans">众生的心性，也是如此。虽然不断迷昧造业，堕落恶道。然而本具的真如佛性，却仍然湛寂常恒，不生不灭，完全没有迁变、损失的相状。</p></div>
+<div class="para-pair"><p class="p-orig">是故菩萨任何业重罪深之人，终无一念弃舍之心。而于最苦众生，偏垂怜愍，急欲度脱也。</p><p class="p-trans">因此，菩萨对于任何业重、罪深的人，始终没有一念弃舍的心。而且对于最痛苦的众生，特别垂慈怜愍，急切地想要度脱他们。</p></div>
+<div class="para-pair"><p class="p-orig">李圆净居士，感菩萨之慈悲，惜众生之迷昧，因将菩萨本迹事实，以白话体，编纂叙述。又从日本续藏，录其感应事迹十八章，排印流布。冀一切有情，同知菩萨从无量劫来，兴慈运悲，以期一切众生，得度生死，证本佛性。</p><p class="p-trans">李圆净居士，深感菩萨的慈悲，怜悯众生的迷昧，因此将菩萨的本迹事实，以白话文体，编纂叙述出来。又从日本的续藏中，录出菩萨的感应事迹十八篇，排印流布。希望一切有情，同知菩萨从无量劫来，兴无缘慈，运同体悲，想要让一切众生，得度生死苦海，圆证本有的佛性。</p></div>
+<div class="para-pair"><p class="p-orig">从兹咸皆归命，恭敬供养，称念洪名，以作怙恃。得出此五浊，生彼九莲。上求佛道，下化众生。以菩萨之心为心，以菩萨之事为事。庶可不孤佛化，不负己灵也已。爰书缘起，以告来哲。</p><p class="p-trans">从此全都归命，恭敬供养，称念菩萨洪名，来作为依靠。从而能够出离这个五浊恶世，往生西方极乐世界，高登九品莲台。向上求证佛道，向下度化众生。以菩萨的心愿为自己的心愿，以菩萨的事业为自己的事业。这样才能不辜负佛的教化、不辜负自己的灵性。于是书写了这个缘起，告诉将来的有智之士。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>吴淞佛教居士林发隐序 · 印光法师文钞</title>
+<meta name="description" content="佛法广大如法界，究竟如虚空，大无不包，细无不举，本一心以建立，随机宜而说法。虽则名为出世间法，实则圆具世间一切善法。虽则毫善弗遗，而复一法不著（不著，谓不以为德，不自满足，若以不认真行为不著，其误大矣）。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-082/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴淞佛教居士林发隐序 · 印光法师文钞">
+<meta property="og:description" content="佛法广大如法界，究竟如虚空，大无不包，细无不举，本一心以建立，随机宜而说法。虽则名为出世间法，实则圆具世间一切善法。虽则毫善弗遗，而复一法不著（不著，谓不以为德，不自满足，若以不认真行为不著，其误大矣）。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-082/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">吴淞佛教居士林发隐序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法广大如法界，究竟如虚空，大无不包，细无不举，本一心以建立，随机宜而说法。虽则名为出世间法，实则圆具世间一切善法。虽则毫善弗遗，而复一法不著（不著，谓不以为德，不自满足，若以不认真行为不著，其误大矣）。</p><p class="p-trans">佛法广大如法界，究竟如虚空，广大而无所不包，细小而无所不穷。本着一念真心而建立，随顺众生根机而说法。虽然名为出世间法，实际上圆满具备了世间一切善法。虽然一丝毫的善法都不遗漏，而又任何一法也不住著（不住著：就是不将它当作自己的功德，不自我满足。如果把不认真实行当作是不住著，错误就大了）。</p></div>
+<div class="para-pair"><p class="p-orig">唯其不著，故其行得至究竟，古今凡懿行过人者，多由学佛得力而致。由是即凡夫心，契如来藏，于一一法，悉能达本穷源，亲证实相。</p><p class="p-trans">唯有不住著，所以实行起来才能到究竟彻底。古往今来，凡是德行超群的人，大多是从学佛得力而来。即此凡夫之心，契合如来秘藏，从而对种种法，都能通达根本，穷尽源头，亲证实相妙理。</p></div>
+<div class="para-pair"><p class="p-orig">虽则理致幽深，而复随根大小，悉皆能入，尽世间无一人不堪修，亦无一人不能修，以人同此心，心同此理故也。</p><p class="p-trans">虽然佛法义理幽微深奥，而众生随着自己根机的不同，又全都能够契入。整个世间，没有一个人不能够修行，也没有一个人不应当修行。因为人人同具此心，心心同具此理。</p></div>
+<div class="para-pair"><p class="p-orig">须知无量法门，皆须自力断惑证真，方出生死。求其摄生普遍，利济无方，上中下三根同修，初中后始本不二，不断烦惑，不历异生，即得了生脱死，超凡入圣者，唯净土法门为然也。</p><p class="p-trans">必须知道，无量无边的法门，都必须依靠自己的力量断惑证真，才能出离生死轮回。如果要寻求一个法门，普遍收摄、救济众生，不拘泥于方式，上中下三种根机都能修行，初中后始本不二，不须彻底断除烦恼惑业，不经历转世受生，就能了脱生死，超凡入圣。那就只有净土法门能够如此了。</p></div>
+<div class="para-pair"><p class="p-orig">以故上根如文殊普贤之俦，下根如五逆十恶之辈，皆为净土法门所摄之机。以其至简至易，至顿至圆，故能如大地之普载万象，大海之普纳众流也。</p><p class="p-trans">所以像文殊、普贤这样的等觉菩萨，以及犯下五逆十恶重罪的众生，都是净土法门所收摄的根机。因为这个法门，最简单容易，最圆满快捷，所以能够像大地一般普载万物，像大海一般普纳百川啊。</p></div>
+<div class="para-pair"><p class="p-orig">凡学佛修净业之人，必须力敦伦常，恪尽己分，父慈子孝，兄友弟恭，夫倡妇随，主仁仆忠，唯其无愧天职，方立学佛基址。进而敬受三归，谨修十善，诸恶莫作，众善奉行（莫作奉行，当在起心动念处论，若徒在事实上论，则是自欺欺人矣），戒杀护生，爱惜物命，信愿念佛，求生西方。</p><p class="p-trans">凡是学佛修习净业的人，必须努力敦行伦理纲常，恪守竭尽自己的本分，父慈子孝，兄友弟恭，夫倡妇随，主仁仆忠。唯有无愧于职责本分，才能建立学佛的基础。进而再恭敬地受持三归，严谨地修习十善，诸恶莫作，众善奉行（诸恶莫作、众善奉行，应当在起心动念上讲求，如果只在言行事实上讲求，那就是自欺欺人了），戒杀护生，爱护动物，信愿念佛，求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">如是之人，世间之宝，生获令名，没归佛国。又须以此，普化一切，由亲及疏，由近及远，俾一切人，同为善人。</p><p class="p-trans">这样的人，是世间的珍宝。在生时获得美名，去世后回归佛国净土。又必须用这些事理普遍化导一切人，从关系亲近的，到关系疏远的。使得一切人都成为善人。</p></div>
+<div class="para-pair"><p class="p-orig">即俗修真，居廛为政，化残暴于已著，消祸乱于未萌。由兹俗美风淳，人心丕变，灾消福萃，天眷常临，其为功德，莫能名焉。</p><p class="p-trans">在俗修真，居家为政，转化已经发生的残暴，消除尚未萌芽的祸乱。世间由此风俗淳美，人心转变，灾难消除，福报聚集，常常受到上天的眷顾。这个功德，难以用语言描述啊。</p></div>
+<div class="para-pair"><p class="p-orig">若或徒窃学佛之名，不务学佛之实，则成佛法之罪人，不但无虚名之可得，且将有实祸以随其后。</p><p class="p-trans">如果徒然窃取学佛的名义，而不从事学佛的实修，那就成了佛法的罪人。不但得不到虚名，而且会有灾祸跟随在后。</p></div>
+<div class="para-pair"><p class="p-orig">譬如童子无知，以价值三千大千世界之摩尼宝珠，换取一根糖吃，糖不饱腹，而失毕生恃怙，欲不饥寒而死，其可得乎。</p><p class="p-trans">比如无知的小孩，用价值三千大千世界的摩尼宝珠，换取一根糖吃。糖并不能填饱肚子，而他却失去了毕生的依靠。想要不饥寒而死，怎么可能呢。</p></div>
+<div class="para-pair"><p class="p-orig">吴淞诸居士，特开佛教居士林，欲令同人，励志修持，以期各获实益，祈光著语，以作警策，因为述其大意云。</p><p class="p-trans">上海吴淞的各位居士，特开佛教居士林，想让大家励志修持，以期各各都获得真实利益。请我写几句话作为警策，因此就叙述学佛的大意如上。</p></div>
+<div class="para-pair"><p class="p-orig">观此，则知佛法为世间诸法之本，彼拘墟者，由无智眼，不能彻见，遂谓佛灭伦理，无益人国，是何异生盲承天日覆照之恩，得以为人，以不见故，谓之为无，岂不大可哀哉。</p><p class="p-trans">看后，就知道佛法是世间万法的根本。那些知见偏执浅薄的人，由于没有智慧眼，看不彻底。所以就说佛教消灭伦理，无益于国家人民。这正如生来眼盲的人，承受着天空覆盖和太阳照耀的恩泽，从而成长为人。只因为自己看不见，所以就说天空和太阳是不存在的。岂不是太悲哀了吗。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【利济】</span>救济；施恩泽。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【无方】</span>犹言不拘一格。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【天职】</span>指人应尽的义务。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【令名】</span>美好的声誉。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【廛】</span>古代平民一家在城邑中所占的房地。后泛指民居、市宅。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【丕变】</span>大变。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周伯遒居士书七 · 印光法师文钞</title>
+<meta name="description" content="接手书，并香珠，谢谢。此珠久则开裂，光于光绪卅年曾买过，未月余即破，商人唯利是图，何可受此诓骗。去年所寄，并今所寄皆送人，而且言其久则或破，免致人不满意。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-210/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周伯遒居士书七 · 印光法师文钞">
+<meta property="og:description" content="接手书，并香珠，谢谢。此珠久则开裂，光于光绪卅年曾买过，未月余即破，商人唯利是图，何可受此诓骗。去年所寄，并今所寄皆送人，而且言其久则或破，免致人不满意。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-210/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复周伯遒居士书七</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，并香珠，谢谢。此珠久则开裂，光于光绪卅年曾买过，未月余即破，商人唯利是图，何可受此诓骗。去年所寄，并今所寄皆送人，而且言其久则或破，免致人不满意。</p><p class="p-trans">接到信，以及香珠，谢谢。这种香珠时间久了就会开裂，我在光绪三十年（1904年）曾经买过，不到一个多月就破了，商人唯利是图，怎能受这种欺骗。去年所寄的，以及今年所寄的都送人了，而且告知这种香珠时间久了或许会破裂，免得招致他人不满意。</p></div>
+<div class="para-pair"><p class="p-orig">甥妇纯姑，可谓女中丈夫，若能于尽孝之际，婉劝其祖父姑嫜，令其信愿念佛，求生西方，可谓真佛弟子。今为取法名为慧纯，果能如我所说（详在文钞）而行，即是极乐之嘉宾，娑婆之导师。</p><p class="p-trans">外甥媳妇纯姑，可说是女中丈夫，如果能够在尽孝之际，委婉地劝导她的祖父公婆（注1），令他们信愿念佛，求生西方，就可说是真正的佛弟子。现在为她取法名为慧纯，果真能够如我所说（详细在《文钞》中）而行，就是极乐世界的嘉宾，娑婆世界的导师。</p></div>
+<div class="para-pair"><p class="p-orig">但以旅寓冗繁，不能详说，令熟读文钞，则不异长与彼说，上师虞之二妃，周之三太，与命妇大家（音太姑）之法矣，祈以此书示之。</p><p class="p-trans">只是因为旅居客地，事务繁忙，不能详说，令她熟读《文钞》，就如同长时对她讲说，向上效法虞舜的娥皇、女英二妃，周朝的太姜、太任、太姒三太，与命妇（注2）大家（读音：太姑）（注3）的法道了，请将这封信给她看。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【姑嫜】</span>丈夫的母亲与父亲。 汉  陈琳 《饮马长城窟行》：“善事新姑嫜，时时念我故夫子。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【命妇】</span>泛称受有封号的妇女。朝廷诰命之妇，亦即大臣的正配夫人，受朝廷的封诰，为第一品夫人、二品夫人等，有其固定封赐之衣袍、冠带、饰物等。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【大家】</span>1.读音太姑，古代指女子的尊称。《后汉书·曹世叔妻传》说：班昭(班固之妹)，博学高才，有节行法度，皇帝数召之入宫，令皇后及诸贵人都拜她为师，尊称她为“曹大家”。2.妇称夫之母。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

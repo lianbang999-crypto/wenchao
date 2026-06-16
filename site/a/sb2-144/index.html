@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复王（雨，雪）夕居士书 · 印光法师文钞</title>
+<meta name="description" content="佛法法门无量，无一不以戒为基址，净土为归宿者。汝二人既欲皈依三宝，当须认真持佛净戒。在家人以五戒为根本。五戒前之杀盗淫妄四条，乃性戒，无论受戒不受戒，皆不可犯。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-144/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复王（雨，雪）夕居士书 · 印光法师文钞">
+<meta property="og:description" content="佛法法门无量，无一不以戒为基址，净土为归宿者。汝二人既欲皈依三宝，当须认真持佛净戒。在家人以五戒为根本。五戒前之杀盗淫妄四条，乃性戒，无论受戒不受戒，皆不可犯。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-144/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复王（雨，雪）夕居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法法门无量，无一不以戒为基址，净土为归宿者。汝二人既欲皈依三宝，当须认真持佛净戒。在家人以五戒为根本。五戒前之杀盗淫妄四条，乃性戒，无论受戒不受戒，皆不可犯。</p><p class="p-trans">佛法法门无量，没有一法不是以戒律为基础，以净土为归宿的。你们二人既然想要皈依三宝，应当要认真持佛净戒。在家人以五戒为根本。五戒前面的杀、盗、淫、妄四条，是性戒，无论受戒、不受戒，都不可违犯。</p></div>
+<div class="para-pair"><p class="p-orig">但未受戒者犯之，则按事论罪过。受戒者犯之，则于事上论罪之外，又有犯戒一层罪过。酒戒乃名遮戒，以佛遮止，不许人喝。未受戒者喝，无罪过。若喝而妄为，则在所为之事上论罪。故虽未受戒，亦不宜喝。若受戒者喝，则止得犯戒之罪耳。</p><p class="p-trans">只是没有受戒的人违犯了，则按照所犯的事来论罪过。受戒的人违犯了，在事上论罪之外，又有犯戒的一层罪过。酒戒名为遮戒，因为佛制戒遮止，不许人喝。未受戒的人喝了，没有罪过。如果喝了酒而妄为，则在所做的事上来论罪。所以，即使未受戒，也不应该喝酒。如果受戒的人喝了，就只得一个犯戒罪。</p></div>
+<div class="para-pair"><p class="p-orig">然既发心皈依三宝，固当五戒全持。佛大慈悲，虽有一二三四随人意受之例。然此系有势不能持之事，不可以此自宽。言事不能持者，如屠儿不能持杀戒，酒保不能持酒戒等。</p><p class="p-trans">然而既已发心皈依三宝，本就应当五戒全持。佛陀大慈大悲，虽然有随各人的心意受持一戒、二戒、三戒、四戒的例子。然而这里面有形势所迫不能受持的事，不能以此来自我宽容。说到有事不能持戒的情形，例如屠夫不能持杀戒，酒保不能持酒戒等等。</p></div>
+<div class="para-pair"><p class="p-orig">皈依佛法修持净业之人，必须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，信愿念佛，求生西方。以此自行，复以化他。俾内而父母，兄弟，夫妻，儿女，姊妹，妯娌，男女仆使，外而乡党，邻里，亲戚，朋友，以及一切相识有缘之人，皆以此为劝。</p><p class="p-trans">皈依佛法、修持净业的人，必须敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，信愿念佛，求生西方。以此自行，再以此教化他人。使得家内的父母、兄弟、夫妻、儿女、姐妹、妯娌、男女仆人，家外的乡亲、邻里、亲戚、朋友，以及一切相识有缘的人，都以此来劝导他们。</p></div>
+<div class="para-pair"><p class="p-orig">凡欲劝人，必须自己实行其事，则人自依从。世出世间事，无不以身为本者。所谓以言教者讼，以身教者从。又须知念佛一法，乃佛一代所说一切诸法中之特别法门。其道理超出一切禅教律密之上。</p><p class="p-trans">凡是想要劝导他人，必须自己真实行持这些事，那么他人自然会依从。世间、出世间的事，没有不是以自身的行持为根本的。所谓“以空泛的言语说教，他人就会争辩是非；以自身行为教导他人，他人就会听从”。另外，必须知道念佛这一法门，是佛陀一代时教所说一切诸法中的特别法门。其道理超出一切禅、教、律、密等法门之上。</p></div>
+<div class="para-pair"><p class="p-orig">一切法门欲了生死，必须断尽烦惑，方有了生死分。若烦恼惑业未断，任凭你见地高，工夫深，智慧大，皆不济事。此各法门，皆仗自力故难。净土法门，全仗佛力故易。</p><p class="p-trans">一切法门想要了生死，必须断尽烦恼惑业，才有了生死的分。如果烦恼惑业未断，任凭你见地高、工夫深、智慧大，都不管用。这些法门，都是依仗自力，所以很难。净土法门，完全依仗佛力，所以容易。</p></div>
+<div class="para-pair"><p class="p-orig">若有真信切愿志诚念佛者，临终蒙佛接引，往生西方。既生西方，则烦恼不期断而自断。以西方所有境界，皆令人增长功德智慧，了无令人起贪瞋痴者。故龙树菩萨称为易行道。马鸣菩萨称为最胜方便。然此不但普度凡夫，实则普度一切凡圣。</p><p class="p-trans">如果有真信切愿、志诚念佛的人，临终蒙佛接引，往生西方。既已往生西方，那么烦恼不期望断除而自然就断除了。因为西方所有的境界，都是令人增长功德智慧，没有一点令人生起贪瞋痴的。所以龙树菩萨称净土法门为“易行道”。马鸣菩萨称净土法门为“最胜方便”。然而这个法门，不但普度凡夫，实际上是普度一切凡夫圣者。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝等寄各经书，阅之自知。光老矣，目力甚衰，不能详为开示。此诸书则为普遍开示，以汝之二十元作书价邮费。</p><p class="p-trans">现在给你们寄去各种经书，看后自知。我老了，视力很衰弱，不能详细为你们开示。这些书就是给你们的普遍开示，用你的二十元作为书价、邮费。</p></div>
+<div class="para-pair"><p class="p-orig">除自存外，送通文理有信心能恭敬者。若漫无恭敬之人，切莫与彼。免得彼亵渎造罪，反为有损无益也。</p><p class="p-trans">除自己存留之外，送给通文理、有信心、能恭敬的人。如果是散漫没有恭敬心的人，千万不要给他。免得他亵渎经书造罪，反而有损无益。</p></div>
+<div class="para-pair"><p class="p-orig">机械厂，以制造杀具，如能谢事，或改制别种用器，则为上策。今为汝二人各取法名。雨夕法名智泽。雪夕法名智净。以净土法门，普泽一切，普净一切，庶不负此生此遇也。</p><p class="p-trans">机械厂，因为是制造杀具的地方，如果能够辞职，或者改制其他的用器，那么才是上策。现在为你们二人各取法名。雨夕，法名智泽。雪夕，法名智净。用净土法门，普泽一切，普净一切，才能不辜负此生此遇啊！</p></div>
+<div class="para-pair"><p class="p-orig">近来念佛之人，多多不识净土法门之宗旨，以故不是夹杂禅宗，便是崇尚密宗。舒次范处，祈为说之，不另。（六月廿六）</p><p class="p-trans">近来念佛的人，大多不知道净土法门的宗旨，所以不是夹杂禅宗，便是崇尚密宗。舒次范那里，请为他说明，我不另外再说。（六月二十六日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【谢事】</span>辞职；免除俗事。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

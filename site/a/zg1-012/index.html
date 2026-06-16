@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复泰顺谢融脱居士书一 · 印光法师文钞</title>
+<meta name="description" content="吾有知乎哉，无知也，有鄙夫问于我，空空如也，我叩其两端而竭焉。此圣人以己之心无念虑，而随机说法示人也。断断不可会作谦词。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-012/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复泰顺谢融脱居士书一 · 印光法师文钞">
+<meta property="og:description" content="吾有知乎哉，无知也，有鄙夫问于我，空空如也，我叩其两端而竭焉。此圣人以己之心无念虑，而随机说法示人也。断断不可会作谦词。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-012/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复泰顺谢融脱居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">吾有知乎哉，无知也，有鄙夫问于我，空空如也，我叩其两端而竭焉。此圣人以己之心无念虑，而随机说法示人也。断断不可会作谦词。</p><p class="p-trans">《论语·子罕》中说：“吾有知乎哉，无知也，有鄙夫问于我，空空如也，我叩其两端而竭焉”。这是孔圣人因为自己的内心没有妄念思虑，而能随机说法教导他人。千万不可以理解认为这是谦虚之词。</p></div>
+<div class="para-pair"><p class="p-orig">夫圣人之心，犹如明镜。空空洞洞，了无一物，有何所知。鄙夫致问，如胡来汉来。叩两端而竭，如胡现汉现。叩字，义当作即。两端者，所问与其机也。而竭焉者，恰恰合宜，无过无不及也。即佛门所谓契理契机之谓也。</p><p class="p-trans">圣人的心，犹如明镜。空空洞洞，了无一物，有什么所知呢？无知的人提问，如同佛法中的：明镜当前，胡人、汉人来到镜前。“叩两端而竭”，如同佛法中的：胡人、汉人显现在镜中。“叩”字，意义应当作“即”字。“两端”，是所问的问题与提问人的根机。“而竭焉”：恰好合适，没有过分，也没有不及。就是佛门中所说的：契理契机。</p></div>
+<div class="para-pair"><p class="p-orig">若唯契于理，而不契机，于彼无益，便成闲言语矣。如问仁，问孝，问政等，所问是同，而所答各异。乃即彼之机，答彼之问，看孔著楔，对病发药，恰恰合宜，了无一毫机教不投之弊。若非心空如镜，安能使之若是乎。</p><p class="p-trans">如果只是契理，而不契机，对于提问的人没有利益，就成了无用的言语了。例如《论语》中有问仁、问孝、问政等，所提问题相同，而孔子的回答各有差异。这就是针对提问人的根机，来回答他的问题，如看着孔的形状大小而钉下相应的木楔，又如对症给药，恰恰合适，没有一点机教不投的弊病。如果不是心空如镜，又怎能做到这样呢？</p></div>
+<div class="para-pair"><p class="p-orig">讲章以空空属于鄙夫，可谓枉读圣贤书矣。孔子之心，至诚无妄，故曰空空如也。颜子去圣一等，虽未能究竟无妄，而其妄亦无几何，故亦得屡至于空。</p><p class="p-trans">讲章中认为“空空”之状属于提问的鄙夫，可说是枉读圣贤书。孔子的心，至诚无妄，所以说“空空如也”。颜回距离圣人还差一等，虽然未能究竟无妄，而他的妄想也不多，所以也能多次做到“空空如也”的境界。</p></div>
+<div class="para-pair"><p class="p-orig">三月不违，即是其事。故夫子许之以庶。若以为箪食瓢饮屡至空乏，而不改其乐，故许以庶。则是舍本逐末，大失圣人因机定评之至论也。</p><p class="p-trans">《论语·雍也》中说颜回三月不违仁，就是“屡空”这件事。所以孔夫子赞许他说：“回也其庶乎。屡空。（颜回，差不多接近圣人之心了。屡次心空。）”如果认为仅是因为“颜回多次处于一箪食一瓢饮这样空乏其身的地步而不改其乐”，孔子才赞许他说：“回也，其庶乎”。那就是舍本逐末，太误解孔子根据颜回的根机而做出的这番完全中肯的论断了。</p></div>
+<div class="para-pair"><p class="p-orig">至于子贡货殖，乃随类论及，何可以令其针锋相对。圣人因人论人，岂效后世做试帖诗，必须对得恰好，方为合格乎。然此乃以阁下志慕佛法，不妨将圣人之心，随机指点。</p><p class="p-trans">至于后面说到子贡经商。是根据人的不同做出相应的评论，怎么可以将颜回、子贡二人针锋相对。圣人是按照人的（根机、习性等）不同给予契机而有益的评论，哪里会效仿后世人做试帖诗，必须对得恰好工整，方为合格呢？然而这是因为阁下您心中仰慕佛法，我不妨将圣人之心，随机按照佛法至理指明一二。</p></div>
+<div class="para-pair"><p class="p-orig">若向三家村里训蒙，当以朱注是守。否则守文之徒，谤焰四起。不但不能知圣人之心，反因之毁谤佛法，由是永沉苦海。大失圣人叩两端而竭焉之深旨矣。</p><p class="p-trans">如果是向偏僻乡村里教育儿童，应当遵守朱熹（所作普通的训诂考据之类）的注解。否则死执文字的人，将到处煽起诽谤的火焰。不但不能让他们了知圣人的心法，反而因此来毁谤佛法，由此永沉苦海。那么，将大失圣人“叩两端而竭焉”（契理契机）的深深意旨啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【泰顺】</span>浙江泰顺县。</p>
+<p class="note-item"><span class="note-n">[2]</span>【吾有知乎哉，无知也，有鄙夫问于我，空空如也，我叩其两端而竭焉。】此句义为：我无所不知吗？我一无所知。有粗人来问我一些事情。我的心里空空荡荡的，只不过我针对所提的问题与提问人的，给予一个合适的回答罢了。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【胡来汉来】</span>禅林用语。赵州语录曰：“此事如明珠在掌，胡来胡现，汉来汉现。老僧把一茎草，作丈六金身用，把丈六金身，作一茎草用。佛即是烦恼，烦恼即是佛。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【屡至于空】</span>《论语·先进》子曰：“回也其庶乎，屡空。赐不受命，而货殖焉，亿则屡中。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【三月不违】</span>《论语·雍也》子曰：“回也，其心三月不违仁，其馀则日月至焉而已矣。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【不改其乐】</span>《论语·雍也》子曰：“贤哉，回也！一箪食，一瓢饮，在陋巷，人不堪其忧，回也不改其乐。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【试帖诗】</span>清朝自乾隆二十二年（1757年）在乡试、会试时增试五言八韵诗一首。自此以后，院试、乡试、会试都必须考诗，称为试帖诗。这也是一种形式古板的诗体，其内容也依然不能随意抒发情感，而要严格依题写作。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【三家村】</span>“三家”，言人户之少。三家村形容偏僻未开化之小乡村。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【训蒙】</span>教育儿童。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

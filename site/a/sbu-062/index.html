@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复念佛居士书二（附原问） · 印光法师文钞</title>
+<meta name="description" content="●问，大儿因本身夙业，与弟子夫妇遗传之关系，缺少慈和，异常偏执。本拟寄托江易园居士教化，家庶祖母虑其路远，倘有疾病，无人料理，不欲令行，故遂中辍。盖亦此子福薄，不得早受善知识之陶镕。然心愿已发，或终有遂顺之日欤。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-062/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复念佛居士书二（附原问） · 印光法师文钞">
+<meta property="og:description" content="●问，大儿因本身夙业，与弟子夫妇遗传之关系，缺少慈和，异常偏执。本拟寄托江易园居士教化，家庶祖母虑其路远，倘有疾病，无人料理，不欲令行，故遂中辍。盖亦此子福薄，不得早受善知识之陶镕。然心愿已发，或终有遂顺之日欤。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-062/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复念佛居士书二（附原问）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">●问，大儿因本身夙业，与弟子夫妇遗传之关系，缺少慈和，异常偏执。本拟寄托江易园居士教化，家庶祖母虑其路远，倘有疾病，无人料理，不欲令行，故遂中辍。盖亦此子福薄，不得早受善知识之陶镕。然心愿已发，或终有遂顺之日欤。</p><p class="p-trans">●问：大儿子因为本身的宿业，以及弟子夫妇遗传的关系，缺少慈爱、平和，非常偏执。本打算寄托到江易园居士那里加以教化，然而家中的庶祖母考虑路途太远，倘若生病，无人照顾，不想让他去，所以便中止了。这也是他的福薄，不能早受善知识的培育。然而这个心愿已发，或许终究有实现的一天吧。</p></div>
+<div class="para-pair"><p class="p-orig">○答，远从易园，不如在家自教好，祈永息此念。光于世故阅历已熟，汝尚难教，易园当更难教，以不敢认真苛责故。彼果是有根器的，在外也好，在家也好。否则，在外不如在家多多矣。</p><p class="p-trans">○答：远送到江易园那里，不如在家自己教育好，请永远止息这个念头。我对于世故阅历已熟，你尚且很难教化他，江易园当更难教化，因为不敢认真苛责的缘故。他果真是有根器的，在外面也会好，在家里也会好。否则，在外面就不如在家里太多了。</p></div>
+<div class="para-pair"><p class="p-orig">●问，谚云，家富不如家和。至于一家之内，不和之端，起于夫妇，延及子孙。忿争之习已成，改之极难。惟有全家吃长素，庶几日相熏习，化戾迎祥。弟子家中除弟子与大女二人，现吃长素。其余子女，亦未敢十分违拗。但因内人不愿长素，故诸子女亦随之吃荤。使内人改吃长素，即可全素矣。</p><p class="p-trans">●问，谚语说：家富不如家和。至于一家之中，不和睦的苗头，从夫妇二人而起，延及子孙。忿怒争执的习性若已养成，想改掉会极其困难。惟有全家吃长素，或许能够每天熏习，化解戾气、迎来祥和。弟子家中，除弟子与大女儿二人，现在吃长素。其余的子女，也不敢十分违背。但因为内人不愿吃长素，所以子女们也随她吃荤。假使内人改吃长素，就可以全都吃素了。</p></div>
+<div class="para-pair"><p class="p-orig">又弟子儿女林立，用度浩繁，而内人不知大体，常到各房赌博，每月总有十余元浪费。且渐使儿女效尤，更觉危惧。弟子屡次劝渠吃长素，戒赌博。且常喻渠，别家兵少，筹粮尚可从容。我们兵多，筹粮必须早足，方免溃乱，渠总不听。</p><p class="p-trans">另外，弟子的儿女很多，开支繁多，然而内人不知大体，常到各房赌博，每月总有十多元的浪费。而且渐渐使儿女们仿效这种坏行为，更觉得担心和恐惧。弟子多次劝她吃长素，戒掉赌博。而且常常开导她说：别人家的兵少，筹粮还能从容。我们家的兵多，筹粮必须提早备足，才能免生溃乱，她总是不听。</p></div>
+<div class="para-pair"><p class="p-orig">兹拟一法与渠言明，此后如再不从，即将家务统行脱卸，潜避他方，一切由汝自负责任。俟汝修改之后，方始回家。如此主张，未知可否。敬求慈悲明示。</p><p class="p-trans">现在想出一个办法对她讲明：此后如果再不听从，就将家务全都推脱，躲避到他方，一切由你自己负责。等到你改正之后，方才回家。如此主张，不知可不可以。敬求师父慈悲明示。</p></div>
+<div class="para-pair"><p class="p-orig">○答，彼等不能如法，一须以言劝谕，二须于佛前代为忏悔，祈求加被，令彼回心转意也。当以平心和气，说世间富贵人逸乐致苦，贫穷人勤俭致乐等事，当做闲话说，久久或可以动心。若加以严厉声色，则便成抵抗矣。不唯无益，且致更甚。</p><p class="p-trans">○答：她们不能如法，一是必须用言语劝导晓谕，二是必须在佛前代她们忏悔，祈求佛菩萨加被，令她们回心转意。应当平心和气，讲说世间富贵人安逸享乐导致变得贫苦，贫穷人勤劳节俭导致安乐等事，当做闲话来说，时间久了，或许能够打动她的心。如果加以严厉的声音、脸色，那么对方就会抵抗。不仅无益，而且会使情况变得更严重。</p></div>
+<div class="para-pair"><p class="p-orig">又此话只可弯弓，不可放箭。倘汝真走出不理，则不一二年，子女失教，不可成器。家资家规，当一败涂地。汝何想出如此坏章程乎。宜永莫说，但用劝谕祈祷二法即已。</p><p class="p-trans">另外，离家出走这些话，只可弯弓（吓唬），不可放箭（实行）。倘若你真的出走，不理家事，那么不到一二年，子女失去教导，不能成材。家资家规，当会一败涂地。你怎么会想出这样的坏章程呢？应该永远不要说，只用劝谕、祈祷这两个办法就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">●问，弟子德薄才疏，局量褊浅，此后拟即谢绝外缘，在家孝亲课子，虔修净业。倘遇有缘，随机劝化。终身如此，亦无所憾。区区之诚，当荷许可。</p><p class="p-trans">●问：弟子德薄才疏，气量狭小，以后打算马上谢绝外缘，在家中孝养双亲、教育子女，虔修净业。倘若遇到有缘人，随机劝导教化。终身如此，也没有遗憾。区区诚心，当会蒙师父许可。</p></div>
+<div class="para-pair"><p class="p-orig">○答，谢绝外缘，在家奉亲教子。随机劝化，实为莫善之务。</p><p class="p-trans">○答：谢绝外缘，在家中奉亲、教子。随机劝化，实在是最善的事务。</p></div>
+<div class="para-pair"><p class="p-orig">●问，冤冤相报，是否为怨怨相报之误。</p><p class="p-trans">●问：“冤冤相报”，是否是“怨怨相报”的讹误？</p></div>
+<div class="para-pair"><p class="p-orig">○答，怨怨，仇也。冤冤，屈也。儒释经典中多混用之。华严经有一半是怨，一半是冤。若过细讲究，固当分用。</p><p class="p-trans">○答：“怨怨”，仇的意思。“冤冤”，屈的意思。儒家、佛教经典中大多混用。《华严经》中有一半用的是“怨”字，一半用的是“冤”字。如果仔细讲究，固然应当分辨使用。</p></div>
+<div class="para-pair"><p class="p-orig">●问，弟子或与人发生忤意事，即起抵抗仇复之心。又遇女色，不净观提不起，当因夙世瞋淫二习太重故耶。</p><p class="p-trans">●问：弟子有时与人发生冲突的事，马上就生起抵抗、报复的心。另外，遇到女色，不净观提不起来，应当是因宿世瞋、淫两种习气太重的缘故吗？</p></div>
+<div class="para-pair"><p class="p-orig">○答，此病当于无事时思量，有事自然不发此恶念。女色不净观提不起，当从因果上想。或想母姐妹女等，则便消灭矣。</p><p class="p-trans">○答：瞋心这个毛病应当在无事的时候思量，有事情的时候，自然不会生起这些恶念。遇女色，不净观提不起来，应当从因果上来想。或者将对方想成母亲、姐姐、妹妹、女儿等，那么恶念就消灭了。</p></div>
+<div class="para-pair"><p class="p-orig">●问，昔年恩师复谕云，净土法门，修有专圆。由众生根器不一，致诸祖立法不同。善导令人一心持名，莫修杂业者，恐中下人以业杂致心难专一，故示其专修也。永明令人万善齐修，回向净土者，恐上根人行堕一偏，致福慧不能称性圆满，故示其圆修。</p><p class="p-trans">●问：过去恩师回信中说，净土法门，修持有专修、圆修。由于众生根器不一，致使诸位祖师立法不同。善导大师令人一心持名，不修杂业的原因，是怕中下根人因业杂导致心难专一，所以开示他们要专修。永明大师令人万善齐修，回向净土的原因，是怕上根人行持堕入一边，导致福慧不能称性圆满，所以开示他们要圆修。</p></div>
+<div class="para-pair"><p class="p-orig">窃闻一句弥陀，普被诸根。竖彻五时，横赅八教。六度万行，无不包罗。依之成佛，绰有余裕。何以专修仅限于中下，上根又虑其堕偏，则与普被赅彻等义，似有抵牾乎。弟子愚昧，敬请明诲。</p><p class="p-trans">我听说，一句弥陀，普被诸根。竖彻五时，横赅八教。六度万行，无不包罗。依之成佛，绰绰有余。为什么专修仅限于中下根人，上根人又怕他们堕入一边，那么这就与普被、横赅、竖彻等义，似乎有矛盾。弟子愚昧，敬请师父明示教诲。</p></div>
+<div class="para-pair"><p class="p-orig">○答，汝何得以圆话作偏说。一句阿弥，法法全该。上根不能超出其上，中下则由其专精，故能获圆益。上根能圆修，若偏专修，亦非不可。但于建化门头，或恐不能普摄诸根也。汝先之志，其大无外，至今尚作此偏见，则其见理未能透彻之所致也。</p><p class="p-trans">○答：你怎么能将圆融的话当作偏执的话来说。一句阿弥陀佛，法法全部该摄。上根人不能超出这句佛号之上，中下根人则由于其专一精进，所以能够获得圆修的利益。上根人能够圆修，如果偏于专修，也不是不可以。但对于建立教化门头，或许恐怕不能普摄诸根。你先前的志向，广大无边，至今还作这种偏见，这是你见理未能透彻所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">●问，敬问各寺中每有阿弥圣像，安东向西塑立。若课毕对之回向，适背正西，心殊不安。想以另至他处，回向为妥耶（约弟子一人言，非谓寺僧悉如此）。</p><p class="p-trans">●问：敬问各寺中常有阿弥陀佛圣像，安东向西塑立。如果功课完毕，面对佛像回向，正好背对正西向，心中很不安。是否能观想另至其他的方位，回向为妥呢（这是就弟子一个人来说，不是说寺僧全都如此）？</p></div>
+<div class="para-pair"><p class="p-orig">○答，西方极乐世界，方方皆有阿弥陀佛。能如法固好。否则，作此想则无碍。</p><p class="p-trans">○答：西方极乐世界，方方都有阿弥陀佛。能够如法固然好。否则，作如此观想也没有妨碍。</p></div>
+<div class="para-pair"><p class="p-orig">●问，大女性欠慧敏，却尚静笃。如阿弥陀经，感应篇，大学，论语，均已成诵。普贤行愿品，女论语，亦能循读。每日礼佛四十八拜，读弥陀经行愿品，感应篇各一遍，念佛千声。尚拟授以毛诗，使其多识字。再课以地藏，普门品，玉耶女，四十八愿，九品章等，未知太繁否。不如专令念佛，易致一心乎。并求指点，曷胜感激。</p><p class="p-trans">●问：大女儿禀性欠缺智慧敏捷，却喜好安静笃学。如《阿弥陀经》、《感应篇》、《大学》、《论语》，都已经会背诵了。《普贤行愿品》、《女论语》，也能跟着读诵。每天礼佛四十八拜，读《阿弥陀经》、《行愿品》、《感应篇》各一遍，念佛千声。还打算教授她《诗经》（注1），使她多认些字。再教以《地藏经》、《普门品》、《玉耶女经》、《无量寿经》四十八愿、《观无量寿佛经》九品章等，不知是否太繁。还是不如专让她念佛，更容易得一心呢？一并请求指点，非常感激。</p></div>
+<div class="para-pair"><p class="p-orig">○答，毛诗万不可读，以国风多属男女感情。彼女子未能立定脚，一读此书，或开情窦。切记切记。女子有女子之事业，刺绣不学亦无碍，裁缝决不可不学。若专一修行，或守贞，或出家，不学尚无大关系。然亦须学会方好。或从夫，断断不可不学裁缝。否则，后来必受其制，及受人欺侮。</p><p class="p-trans">○答：《诗经》千万不能读，因为《国风》大多是讲男女感情。那女孩子没能立定脚跟，一旦读了这本书，或许开启情窦。千万牢记，千万牢记！女子有女子的事业，不学刺绣也没有妨碍，绝对不能不学裁缝。如果专心修行，或者守贞节，或者出家，不学裁缝还没有大关系，然而也必须学会才好。或者嫁人，就断断不能不学裁缝。否则，将来必定受人牵制，以及受人欺侮。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【毛诗】</span>指西汉时鲁国毛亨和赵国毛苌所辑和注的古文《诗》，也就是现在流行于世的《诗经》。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

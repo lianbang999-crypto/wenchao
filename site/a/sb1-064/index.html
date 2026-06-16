@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复丁福保居士书十二 · 印光法师文钞</title>
+<meta name="description" content="适接惠书，不胜愧怍。光任意狂言，何堪奉为圭臬。但一念愚诚，深为阁下悯纳耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-064/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复丁福保居士书十二 · 印光法师文钞">
+<meta property="og:description" content="适接惠书，不胜愧怍。光任意狂言，何堪奉为圭臬。但一念愚诚，深为阁下悯纳耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-064/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复丁福保居士书十二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">适接惠书，不胜愧怍。光任意狂言，何堪奉为圭臬。但一念愚诚，深为阁下悯纳耳。</p><p class="p-trans">刚接到你的信，不胜惭愧。我的任意狂言，哪堪奉为准则。只是我的一念愚诚，深受阁下的怜悯接纳罢了。</p></div>
+<div class="para-pair"><p class="p-orig">佛学指南，光但累阅其上编及下编之余论。余皆未能遍阅。随便见其不次第者，累标一二。</p><p class="p-trans">《佛学指南》，我只连续看了其中的上编以及下编的余论。其余的都没能遍阅。随便见到其中有不顺的地方，连带标出一二。</p></div>
+<div class="para-pair"><p class="p-orig">近来目力更加衰劣，全书遍阅，似觉吃力，实难奉命（作序一事，光学业肤浅，笔墨疏淡，数十年来，一切知交，皆未开此一端。祈原谅）。</p><p class="p-trans">近来视力更加衰劣，遍阅全书，似乎感觉吃力，实在难以奉命（写序这件事，我学业肤浅，笔墨疏淡，几十年来，一切知交好友，都没有开过这个头。还请原谅）。</p></div>
+<div class="para-pair"><p class="p-orig">时事报馆，亦令备将上编及下编余论，逐一登报。下编正文，但言有已登于佛学丛报者。有三国佛教略史中累录者，似不必登（光又为云雷言，丁君所著少年进德录，少年之模范，大有益于世道人心，宜于佛学栏外备登之，以为挽回世道人心之助）。</p><p class="p-trans">时事报馆，也准备将上编以及下编的余论，逐一登报。下编的正文，只说已经有登在《佛学丛报》上的了。有从《三国佛教略史》中连续录出的，似乎不必再登（我又对张云雷说，丁福保居士所著的《少年进德录》，是少年的模范，大大有益于世道人心，适合在佛学栏目之外，全部刊登出来，作为挽回世道人心的帮助）。</p></div>
+<div class="para-pair"><p class="p-orig">大藏大略，何以知其为端甫手笔。佛学丛报出此文时，端甫亲任编辑。且已应频伽华园之聘大半年矣。</p><p class="p-trans">《大藏大略》，如何知道这是黎端甫的手笔？《佛学丛报》刊登这篇文章的时候，黎端甫亲自担任编辑。而且已经应上海频伽精舍、哈同花园的聘请大半年了。</p></div>
+<div class="para-pair"><p class="p-orig">端甫学识高明，笔墨超妙，近时缁素，罕有其匹。摘录成言，以辅教理。纵不标名，亦非掠美。若冒以己名，堪作是说。未标己名，何须过谦。</p><p class="p-trans">黎端甫的学识高明，笔墨超妙，近时的僧俗，罕有与他相当的。他摘录成言，来辅助教理。纵然不标著者的名字，也不是掠夺他人之美。如果冒昧写上自己的名字，才能这样说（即掠美）；没有标上自己的名字，何须过分谦虚（虽然不是黎端甫居士所作，但为黎居士所编辑）。</p></div>
+<div class="para-pair"><p class="p-orig">因果报应，乃儒佛二教入道之前导。亦儒佛二教证道之纲宗。世人但以浅近视之，致令芸芸庶类，不出断常二见。不是追踪阐提，便是说食数宝。</p><p class="p-trans">因果报应，是儒佛二教入道的前导。也是儒佛二教证道的纲宗。世间人只以浅近来看待因果报应，致使芸芸众生，不能超出断灭见、常见。不是追踪一阐提（意为“不具信”，或称“断善根”），就是说食数宝。</p></div>
+<div class="para-pair"><p class="p-orig">刘君之书，早已送去，功德无量。此书之害，有不堪详言者。虽赞法华，不得赞之之道。其悖叛法华，已属可焚。况破三世诸佛究竟三根普被，直使各各现生了脱之净土法门乎哉。</p><p class="p-trans">刘演宗的书，早已经送去，功德无量。这本书的危害，有不能详说的地方。虽然是赞颂《法华经》，却没得到赞颂之道。其书悖叛《法华经》，已经属于可以焚烧之列。何况破斥三世诸佛究竟三根普被，直使各各现生了脱生死的净土法门呢？</p></div>
+<div class="para-pair"><p class="p-orig">友人之痛心疾首，含泪告光。光故有二次再陈利害之书。如不信者，倘来普陀，当以原书及回光之书取而阅之，自知光非妄语。</p><p class="p-trans">友人痛心疾首，含泪告诉我。我因此有二次再陈利害的书信。如果不相信，倘若来普陀山，应当将原信以及回复我的信，取出来阅读，自然知道我并非妄语。</p></div>
+<div class="para-pair"><p class="p-orig">光无学无德，迫不得已，但效集字扫叶之迹以应之。唯企塞责了事，何堪过誉，不任惭惶。</p><p class="p-trans">我没有学识、德行，迫不得已，只是效仿集字校勘的行迹来应付。只希望塞责了事，哪能承受过分的赞誉，不胜惭愧惶恐。</p></div>
+<div class="para-pair"><p class="p-orig">居士为现今第一极力宏扬佛法之人。化他须以自行，固宜常斋。即其妻子朋友，亦宜令其长斋。纵入道未深，不能全断。当令由渐而断，此为要义。</p><p class="p-trans">居士是现今第一极力宏扬佛法的人。化导他人必须自己先行，固然应该吃长斋。即使是妻子朋友，也应该令他们吃长斋。纵然入道未深，不能全断肉食。应当由渐渐减少而至永断，这是要义。</p></div>
+<div class="para-pair"><p class="p-orig">世人不知物类皆由业力所致，谓天生此种，原为养人。若知一切众生，皆是过去父母未来诸佛之一番深理，当有食之不能下咽者。</p><p class="p-trans">世间人不知道动物都是由业力所致，认为上天生出这种动物，原本就是养活人类的。如果知道一切众生，都是过去父母、未来诸佛的一番深理，应当有吃而不能下咽的情形。</p></div>
+<div class="para-pair"><p class="p-orig">居士固宜以身率物，当即永断肉食。即肉边菜，亦不须效往昔大士之迹。以宏法之人，须识时机。今之时非古之时。如滴水成冰之日，断不可以夏间之服食示人，以致误人性命耳。</p><p class="p-trans">居士固然应该以身作则、为大家做榜样，应当立即永断肉食。即使是肉边菜，也不必效仿过去菩萨的行迹。因为宏法之人，必须认识时节机缘。现今之时不是古时候。如在滴水成冰的寒冷天，断然不可以拿夏天的衣服饮食给他人，以致误人性命。</p></div>
+<div class="para-pair"><p class="p-orig">贫民教育社之举行，具见婆心真切。惜光一贫如洗，不能随喜，歉甚怅甚。佛学小辞典，虽未见其书，观其序，知其便于稽考，大益同伦。</p><p class="p-trans">贫民教育社的举行，具见仁慈之心真切。可惜我一贫如洗，不能随喜资助，很抱歉、很惆怅。《佛学小辞典》，虽然没有见到这本书，看其中的序文，知道这本书方便查考，大大有益同修。</p></div>
+<div class="para-pair"><p class="p-orig">但有光纸落墨，药水轻者，只可经十余年。能经二十余年者甚少。药水重者，数年即落。光曾试之屡矣。</p><p class="p-trans">但是有光纸落墨，药水轻的，只可以经过十多年。能经过二十多年的很少；药水重的，几年后字迹就脱落了。我曾经试过多次了。</p></div>
+<div class="para-pair"><p class="p-orig">光昔上佛学丛报书，特为此事，随便兼呈九条。前年为周孟由寄，著法雨幼僧抄录。彼懒于写字，故前之书信，及后之三条，悉略之耳。亦将此意陈于端甫。时事报中登出，当知鄙怀。彼唯利是图之商人，固不堪与言此意矣。</p><p class="p-trans">我过去写给《佛学丛报》的信，特地为这件事，随便兼带呈上了九条建议。前年为周孟由寄，著法雨幼僧抄录。他懒得写字，所以前面的书信，以及后面的三条，全都忽略了。也将这个意思陈述给黎端甫。《时事新报》中登出了，应当知道我的心意。那些唯利是图的商人，固然不能对他们说明这个意思了。</p></div>
+<div class="para-pair"><p class="p-orig">阁下唯欲宏法利生，须以久久不落，方有实益而获溥利。若落则徒费资财，致失实益。敢请阁下大发慈悲，一切有益世道人心之书，皆勿用此纸。唯一阅即作废纸者，用之无伤。</p><p class="p-trans">阁下只想要宏法利生，必须以时间长久不脱落字迹的纸来印书，才有真实利益而获得广大的利益。如果字迹脱落，就白白浪费资财，导致失去真实利益。敢请阁下大发慈悲，一切有益世道人心的书，都不要用这种有光纸。唯独看完就当作废纸的书，用这种纸无妨。</p></div>
+<div class="para-pair"><p class="p-orig">光无力作功德，拟以此言当做施经书于天下后世之信心佛子。或亦可以仗此消业累而获往生耳。</p><p class="p-trans">我无力作功德，打算将这些话当做施印经书留给天下后世的信心佛子。或许也可以仗此功德，消除业障而获得往生啊！</p></div>
+<div class="para-pair"><p class="p-orig">时事报馆，亦开标示瑕疵一纸，与阁下书同，无须抄寄。</p><p class="p-trans">时事报馆，也开了一张标示瑕疵的纸，与阁下所写的相同，不必抄录寄给我。</p></div>
+<div class="para-pair"><p class="p-orig">教育刍议，文理俱佳。但末后一段，似有致人轻蔑三教之弊。夫教会中人，孰能所作所为超乎三教之上。</p><p class="p-trans">《教育刍议》，文字义理都好。但在末后一段，似乎有使人轻蔑儒、佛、道三教的弊病。教会中人，谁的所作所为能超出三教之上？</p></div>
+<div class="para-pair"><p class="p-orig">孰能于三教外自立一教，以为敌抗。纵其热心至极，亦只遵三教圣人之意，而极力奉行而已。</p><p class="p-trans">谁能在三教之外，自立一教，作为抵抗。纵然是他热心到了极点，也只是遵守三教圣人的意志，而竭力奉行而已。</p></div>
+<div class="para-pair"><p class="p-orig">纵令外洋各教及回教之不信三教者，岂其教果出于三教之外，不被三教如天如地之道理所覆载乎。不过圣人随方设教之迹，稍有不同耳。</p><p class="p-trans">即使外国各个宗教以及回教中那些不相信三教的人，难道他们的宗教果真超出于三教之外，不被三教如天如地的道理所覆盖承载吗？这只不过是圣人随各方（众生的）因缘、施设教法的行迹，稍有不同罢了。</p></div>
+<div class="para-pair"><p class="p-orig">以愚见观之，似宜云，吾国圣教，大宗有三。曰儒，曰佛，曰道。儒以己立立人为怀。佛以自觉觉他为事。道虽恬退，大体同儒。而修炼家，尤以积德累功济世救民为要务。</p><p class="p-trans">以我的愚见来看，似乎应该说：“我国的圣教，有三大宗。就是儒教、佛教、道教。儒教以自己成就、成就他人作为本怀；佛教以自己觉悟、觉悟他人作为事业；道教虽然恬退（淡于名利、安于退让），大体同于儒教。而修炼的人，尤其把积德累功、济世救民作为要务。</p></div>
+<div class="para-pair"><p class="p-orig">今教会中人，仰体三教一视同仁，天下为公之心。发而为老安少怀，不独各亲其亲，各子其子之事。其赤诚热心，直可以塞天地而贯日月。</p><p class="p-trans">现今教会中人，仰体三教一视同仁，天下为公的心。（心）发而成为使老人获得安逸、少年得到关怀，不只是实行各自侍奉自己的父母，养育自己子女的事。他们的赤诚热心，简直可以充塞天地而贯通日月。</p></div>
+<div class="para-pair"><p class="p-orig">倘举国之人同发此心，同行此事，则无一人不得其所。俾大同之世，复见今日，其利溥哉。吾愿各省。（下如文）</p><p class="p-trans">倘若全国的人，共同发起此心，共同实行此事，那么没有一人不得其所。使得大同世界，又见于今日，其中的利益广大啊！我祈愿大众，各自省察。（下面如原文）</p></div>
+<div class="para-pair"><p class="p-orig">近人著述，每有扬摅过当。其意实欲人谛信其法。其蔑古破法之弊，亦基乎此。孔子所谓一言而兴邦，一言而丧邦者。一则伏其后益，一则伏其后患之所致也。</p><p class="p-trans">近人的著述，常常有宣扬抒发过当的情形。这些人的用意实际是想使人深信其法。其中轻蔑古德、破斥法道的弊病，也是基于此。孔子所说：“一言而兴邦，一言而丧邦。”这是因为一言伏下了国家以后的利益，一言伏下了国家以后的祸患所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">笔之于泛常不关紧要之书尚不可。况笔之于宏法利生之书乎。古德谓，此事如金鈚刮翳，稍不如法，则其目立坏矣。可不慎哉。</p><p class="p-trans">写在泛泛平常、不关紧要的书中，尚且不可以。何况是写在宏法利生的书中呢？古德说：“著书立说的事如金鈚刮眼翳，稍稍不如法，那么他的眼睛，立刻就毁坏了。能不谨慎吗？”</p></div>
+<div class="para-pair"><p class="p-orig">纪文达谓，遍观秘书，知后人之著述，远不及前人。纵有似乎精微者，乃依前人蓝本而脱出耳。</p><p class="p-trans">纪晓岚说，看遍秘藏新奇的书籍，知道后人的著述，远远不及前人。纵然有似乎精深微妙的，还是依照前人的蓝本而脱出罢了。</p></div>
+<div class="para-pair"><p class="p-orig">敢自诩为千古第一无侣，及谓前人皆悉纰谬乎哉。阁下虚心为法，故敢献此谠论。</p><p class="p-trans">胆敢自许为千古第一、无人能比，并且认为前人的著述全都错误荒谬吗？阁下虚心为法，所以我才敢献出这些直言。</p></div>
+<div class="para-pair"><p class="p-orig">印光于教育学校一事，实属外行。但感公直欲备取天下之善法以立法，因以愚见上呈清览。</p><p class="p-trans">我对于教育学校这件事，实在是外行。但是被你一直想备取天下的善法来立法的精神所感动，因此将我的愚见上呈给你阅览。</p></div>
+<div class="para-pair"><p class="p-orig">贫儿教育，似宜提一班天姿高者，异日必能为官为绅，辅国善民，专以平常学校之法教之。其止能为工为商自食其力者，似宜教艺两兼。</p><p class="p-trans">贫困儿童的教育，似乎应当提拔一班天姿高的，他日必定能成为官员、士绅，辅佐国家治理、使人民良善，专门用平常学校的方法来教导他们。其中只能成为工人、商人等自食其力的人，似乎应当教学、才艺两方面都要兼顾。</p></div>
+<div class="para-pair"><p class="p-orig">如近来孤儿院之章程，似乎校会省费，而贫儿获益实深也。光见宁波佛教会孤儿院之法则，凡孤儿能自穿衣吃饭，不需人照应者，方许入院。</p><p class="p-trans">如近来孤儿院的章程，似乎学校方面节省了费用，而贫困儿童所获利益却很深。我看到宁波佛教会孤儿院的法则，凡是孤儿能够自己穿衣吃饭，不需人照应的，才允许入院。</p></div>
+<div class="para-pair"><p class="p-orig">其教之之法，则读书，写字，学算，学画，打草鞋，编凉席，凉枕，凉帽，石印，订书，裁缝等，一体兼学。待其十五六出院时，即能自食其力。即去学工学商，亦自易易。</p><p class="p-trans">其教育的方法，是读书，写字，学算，学画，打草鞋，编凉席、凉枕、凉帽，石印，订书，裁缝等，全都要学习。等到他十五六岁走出孤儿院的时候，就能够自食其力。即使去学习做工、学习经商，也自然很容易。</p></div>
+<div class="para-pair"><p class="p-orig">平常学校，七日一假，及节假年假暑假。一年之内，除假期外，只剩六个多月。况一日之中，八句钟上校，四句钟出校，此中止七句钟，又有空时。</p><p class="p-trans">平常的学校，是七天放一次假，还有节假、年假、暑假。一年之内，除了假期之外，只剩下六个多月（的学习时间）。何况一天之中，八点钟入校，四点钟出校，这当中只有七个钟头，其中又有空闲的时间。</p></div>
+<div class="para-pair"><p class="p-orig">若非十分天姿，学得成个甚么。只是虚度光阴，枉费办理诸人一番苦心。而天下学校，悉以为例。止利其教员，而不利于校中学生，良可慨叹。</p><p class="p-trans">如果不是十分的天姿，能学得成个什么？只是虚度光阴，枉费经营办理人的一番苦心。而天下的学校，都以此作为范例。只利益了学校的教员，而不利于学校中的学生，实在感慨长叹。</p></div>
+<div class="para-pair"><p class="p-orig">孤儿院中，不立假期。其日中所学时刻，当亦加长。以兼作工艺，短则一项不能了办耳。其所制造种种物件，自用之外，悉以出卖。此种出息，亦可少助校费。</p><p class="p-trans">孤儿院中，不设假期。每天学习的时间，也应当加长。因为要兼作工艺，时间短了，一项功课也不能完成。孩子们所制造的种种物品，除自己使用之外，全都拿出来卖。这项收入，也可以稍微补助学校的费用。</p></div>
+<div class="para-pair"><p class="p-orig">贫儿孤儿，相去几何，真欲令其上中下根，悉能自立。似此一法，最为得宜。但须经理之人真实办理。否则只有虚名，一事无成。此吾国向来办公事者之通弊也。</p><p class="p-trans">贫儿与孤儿，相差不多，真想令他们中的上、中、下根人，全都能自立。似乎用这个方法，最为得当适宜。但必须经营办理的人真实办理。否则只有虚名，一事无成。这是我国向来办理公事之人的通病啊！</p></div>
+<div class="para-pair"><p class="p-orig">倘以佛菩萨度人，圣贤经济之心，全副用之于此。则吾国之兴，可立待矣。况贫民得益乎。</p><p class="p-trans">倘若以佛菩萨度人、圣贤经世济民的心，全部用在这个地方。那么我国的兴盛，就可以立即等到了。何况是贫民得到利益呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【扫叶】</span>喻校勘书籍。前人有“校书如尘埃风叶，随扫随有”之语。见四部丛刊本《战国策校注》序附言。又：古人常把书中的讹误比喻为尘埃风叶，校书则如扫尘或扫叶。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【老安少怀】</span>《论语·公冶长》子曰：“老者安之；朋友信之；少者怀之。”使年老的人们得到安康舒适，使朋友们互相得到信任，使年青的孩子们得到关怀养护。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【不独各亲其亲，各子其子】</span>《礼记·礼运》：“大道之行也，天下为公，选贤与能，讲信修睦。故人不独亲其亲，不独子其子。”在大道施行的时候，天下是人们所共有的，把品德高尚的人、有才能的人选出来（为人办事），（人人）讲求诚信，培养和睦（气氛）。因此人们不单独奉养自己的父母，不单独养育自己的子女。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【鈚】</span>古代治眼病用的一种器具。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【谠论】</span>正直之言，直言。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【立等】</span>立着等候。多指时间短暂。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

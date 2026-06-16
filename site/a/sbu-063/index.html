@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复念佛居士书三 · 印光法师文钞</title>
+<meta name="description" content="某君闻其书价甚大，若以千佛图征文石印卖重价，则于理不合。似宜略有微利，则与世有益。以重价卖，则题跋之人，便成利媒。说甚流通，直是求利。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-063/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复念佛居士书三 · 印光法师文钞">
+<meta property="og:description" content="某君闻其书价甚大，若以千佛图征文石印卖重价，则于理不合。似宜略有微利，则与世有益。以重价卖，则题跋之人，便成利媒。说甚流通，直是求利。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-063/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复念佛居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">某君闻其书价甚大，若以千佛图征文石印卖重价，则于理不合。似宜略有微利，则与世有益。以重价卖，则题跋之人，便成利媒。说甚流通，直是求利。</p><p class="p-trans">听说某君的书卖的价钱很高，如果将《千佛图》征集文章石印来卖高价，那么在道理上便不合适。似乎应该略有微利，这样就对世人有益了。如果卖高价，那么题跋的人，就成了求利的介绍人。还说什么流通佛法，简直就是求财。</p></div>
+<div class="para-pair"><p class="p-orig">又闻彼画之佛，随己意作异相，亦属不法。佛与罗汉不同，罗汉可人各异相。佛唯手印少能有异，何能佛佛各异。若各各异，便成戏侮，其过非小。光序颂作好，方闻此说。使先闻之，则便不作。</p><p class="p-trans">另外，听说他画的佛像，随自己的私意画成不同的形相，这也是不如法的。佛与罗汉不同，罗汉可以每尊各有不同的形相。佛像就只有手印稍能有所不同，怎么能每尊佛各各不同。如果各各不同，便成了戏弄侮辱，这个罪过不小。我的序颂写好之后，才听到这些说法。假使先前就听到，那么就不会写了。</p></div>
+<div class="para-pair"><p class="p-orig">灵峰之劝人夜礼观音，不可死执，便谓定须夜礼。不过以夜静心净，最易见效。</p><p class="p-trans">灵峰蕅益大师劝人夜晚礼拜观音，不可死板执着，便认为一定要夜晚礼拜。不过是因为夜晚安静内心清净，最容易见效。</p></div>
+<div class="para-pair"><p class="p-orig">不使人知，亦不可执，乃治好名之念。若不能不令人知，则人知亦有何过。若炫卖自己修持，则便求名闻矣。</p><p class="p-trans">（修持）不让他人知道，也不可执着，这是对治喜好美名的心念。如果不能不让他人知道，那么别人知道又有什么过失。如果是炫耀卖弄自己的修持，那么就成求名闻了。</p></div>
+<div class="para-pair"><p class="p-orig">今人不修法华忏法，何须简察法华三昧修证之相。凡修一切法门，总以至诚恭敬，求心与道合，心与佛合。不以见胜妙境界为事，即可不堕魔事。若以躁妄心，欲见胜妙境界，其心之冀望，如饥如渴，即堕魔之由。纵令不丧心病狂，亦幸耳。非所应也。</p><p class="p-trans">现今的人不修法华忏法，何必检察法华三昧的修证之相。凡修一切法门，总以至诚恭敬，求心与道合，心与佛合。不以见到胜妙境界为目的，就能不堕魔事。如果以躁妄心，想要见到胜妙境界，这个希望的心，如饥如渴，就是堕魔的因由。纵然不丧心病狂，也是侥幸。不应该这样。</p></div>
+<div class="para-pair"><p class="p-orig">二子懒读，亦夙业使然，宜令礼念观世音，消其愚痴，则自肯读矣。又宜为彼作功德，及念观音，为彼祈祷，庶易见效。</p><p class="p-trans">两个儿子懒于读书，也是宿业使然，应该让他们礼念观世音菩萨，消除他们的愚痴，那么就自然肯读书了。另外，应该为他们作功德，以及念观世音菩萨，为他们祈祷，才容易见效。</p></div>
+<div class="para-pair"><p class="p-orig">汝友之病，光有绝妙之方，若肯服无不立愈。但其方极枯淡，不但彼不肯服，恐其妻亦不许服，则便难为回春矣。汝只知彼之病后未复原，又病又未复原。不知彼致病，及不复原之所以然，何能令彼病愈身健乎哉。</p><p class="p-trans">你朋友的病，我有绝妙的方子，如果肯服，没有不立刻痊愈的。但是这个方子极为质朴平淡，不但他不肯服，恐怕他妻子也不许他服，那么就很难回春了。你只知道他病了以后没有复原，（接着）又生病，又没有复原。却不知道他之所以生病，以及不能复原的原因，如何能让他的病痊愈、身体健康呢？</p></div>
+<div class="para-pair"><p class="p-orig">观汝所说，光遂豫断彼殆于房事过度，因致得病。病尚未复原，又行房事。故心体萎顿，心神昏昧，睡不能醒，作事紊乱。即未能在家与妻常亲，或有邪淫，或有手淫。或心念女色，精泄出，或复梦遗。</p><p class="p-trans">看你信中所说，我便预先断定他大概是由于房事过度，因此导致得病。病还没有复原，又行房事。所以身心疲乏，心神昏昧，睡不能醒，作事紊乱。即使没能在家中与妻子常亲近，或有邪淫，或有手淫。或者心念女色（即意淫），精宝泄出，或者又梦遗。</p></div>
+<div class="para-pair"><p class="p-orig">此少年聪明人之通病。此病不治，或将死亡，说甚康健。况今在家与妻同居，其险甚于临深履薄。妻若贤淑，尚不至甚。倘亦以此为乐，恐不久便呜呼哀哉。与罗济同同一结果矣。</p><p class="p-trans">这些是少年聪明人的通病。这个病不治好，或许将会因此而死，还说什么健康。何况现今在家中与妻子同居，这个危险程度超过了站在悬崖边、踩在薄冰上。妻子如果贤淑，还不至于太严重。倘若也以房事为乐，恐怕他不久就会呜呼哀哉了。与罗济同是同一种结果。</p></div>
+<div class="para-pair"><p class="p-orig">汝若愿汝友康健长寿，当详示男女情欲之害。令彼与其妻同生兢惕，二人各相勉勖，立誓约断欲一年。此一年内，不但不可与妻同居一室，宜令永不相见。令其妻常居母家，庶不至因见而动情，或不能自制，或强制而随即泄精，则无益矣。</p><p class="p-trans">你如果希望你朋友健康长寿，就应当详细讲述男女情欲的危害。让他与他妻子共同生起警惕戒惧，二人互相勉励，立定誓约，断欲一年。这一年内，不但不能与妻子同居一室，应令他们永不见面。让他妻子常住娘家，才不至于因见面而动情，或者不能自我克制，或者强忍克制而随即泄精，那么就无益了。</p></div>
+<div class="para-pair"><p class="p-orig">又当常念观世音菩萨，以祈阴相。普门品所谓若有众生多于淫欲，常念观世音菩萨，便得离欲。又将寿康宝鉴，令彼夫妻皆熟看，则彼此自知自爱，不至以身命为快乐而殒灭矣。</p><p class="p-trans">另外，应当常念观世音菩萨，以祈冥冥中加持。《普门品》中所说：“若有众生多于淫欲，常念恭敬观世音菩萨，便得离欲。”此外，再将《寿康宝鉴》，让他夫妻二人都熟看，那么彼此自知自爱，不至于以自身性命为快乐而殒灭了。</p></div>
+<div class="para-pair"><p class="p-orig">宁波马契觉民国十年带病娶妻，未半年即得汝友之症。与人司帐，不能支持。次年春，乃避居法雨寺，日持观音圣号半年，尚未复原。其母恐出家，挽其岳父与店中主人叫回，遂复司帐。</p><p class="p-trans">宁波的马契觉，民国十年（1921）带病娶妻，不到半年就得了你朋友那样的病症。他为人管帐，身体不能支持。第二年春天，就避居到法雨寺，每天持诵观世音菩萨圣号（持续了）半年，尚未复原。他母亲怕他出家，拉着他岳父与店中主人将他叫回去，于是他又回到店中管帐。</p></div>
+<div class="para-pair"><p class="p-orig">然每一回家，便形憔悴。彼自云数月不归，面相甚好。至家住三几日，则直同另是一人。以病体实未大复原，复经亏损，故致如此。</p><p class="p-trans">然而每回一次家，便形容憔悴。他自己说几个月不回家，面相很好。到家住上三五天，就简直如同另一个人一样。因为他的病体实际并未完全复原，又经亏损，所以导致如此。</p></div>
+<div class="para-pair"><p class="p-orig">去年九月，光至上海，彼来见光，面色甚好。及光回山，至宁波，则面色已远不及先。光问，汝回家去过。曰，师何知之。光曰，见汝面色，知汝又有犯房事耳。</p><p class="p-trans">去年九月，我到上海时，他来见我，面色很好。等到我回普陀山，到宁波见到他，他的面色已经远不如先前。我问他：“你回家去过？”他说：“师父怎么知道？”我说：“看你脸上的气色，知道你又有犯房事。”</p></div>
+<div class="para-pair"><p class="p-orig">彼曰，我到家住四天，只行两次，便大现相。何也。光曰，强壮之人，七日方能来复。况汝系先受伤，四日便亏两次乎。彼辄自叹自惭。此子颇有善根，长斋念佛。虽未多读书，所写信札，文义甚通。然亦幸而不死。稍一不慎，则骨已枯也久矣。尚得有今日乎。</p><p class="p-trans">他说：“我到家住了四天，只行两次，就成了现在这付模样。这是为什么呢？”我说：“强壮的人，七天才能恢复。何况你先前就已受伤，四天就亏了两次呢？”他就自己叹息惭愧，这个人很有善根，吃长斋念佛。虽然没读过很多书，但所写的信，文词义理很通顺。然而也是侥幸不死。稍有不慎，早就身死骨枯了。还能有今天吗？</p></div>
+<div class="para-pair"><p class="p-orig">彼妻不识字，不通文理。汝友之妻识字明理，若肯以道卫夫，则汝友可卜寿康矣。光以汝等以光为师，如医生治病，必须详说忌事。勿谓光以僧人详论人男女房室事为失所宜，则光一番苦心，不付东流。而汝爱友之心，得其实效矣。</p><p class="p-trans">他的妻子不识字，不通文理。你朋友的妻子识字明理，如果肯以修道来护卫丈夫，那么你朋友就可预卜寿康了。我因你们以我为师，如同医生治病，必须详说忌讳之事，不要认为我以僧人的身份，详细论说俗人男女的房室事，有失所宜，那么我的一番苦心，就不会付之东流了。而你爱护朋友的心，也能得到实际效果。</p></div>
+<div class="para-pair"><p class="p-orig">祈以此字与汝友看，并宜再抄一份，与其妻看。又须各各存之，久则又看。将见夫妻偕老，子女悉皆庞厚而健壮耳。</p><p class="p-trans">请将这封信给你朋友看，同时应该再抄一份，给他的妻子看。另外，必须各自保存起来，时间久了再看。这样将会见到夫妻白头偕老，子女全都庞厚而健壮了。</p></div>
+<div class="para-pair"><p class="p-orig">光说汝友之病，或恐彼犹不以为然，再引孟老夫子为彼说之。孟子曰，养身者，莫善于寡欲。其为人也寡欲，虽有不存焉者寡矣（言少欲死者少）。则其为人也多欲，虽有存焉者寡矣（言多欲则不死者少）。少年只知淫欲为乐，不知其戕身殒命之本。乐在乎一刻，苦在于永劫。可不哀哉。</p><p class="p-trans">我所说你朋友的病症，可能他还不以为然，再引孟老夫子的话为他说明。孟子说：“修养身心，没有比减少欲望更好的了。一个人欲望少，即使有丧身失命的，但却是很少的（是说少欲而早死的人少）；一个人欲望多，即使有长寿的，但也是很少的（是说多欲而不早死的人少）。”少年人只知道淫欲快乐，不知道它是伤身丧命的根本。快乐在一时，痛苦在永劫。能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">民国十年，往扬州，绕道到南京，望王幼农。彼留住一日，因会一未晤面之友刘圆照。圆照请其友魏梅荪来，系翰林，又系富家，故其嗜好独重。</p><p class="p-trans">民国十年，我前往扬州，绕道到了南京，看望王幼农。他留我住一天，因此见到从未谋面的朋友刘圆照。刘圆照请他的朋友魏梅荪来，是个翰林，又是富家子弟，所以他的嗜好很重。</p></div>
+<div class="para-pair"><p class="p-orig">彼云，我也信佛法，也肯念佛。师文钞也看过，就是不能吃素。光云，富贵难学道。然欲吃素，我也有法子。彼云，有甚么法子。光云，请将光南浔放生池疏熟读，决定就能吃素矣。若一二次读，则不可。须读了又读，读了又读方可。此十年八月十二日话。至十月彼六十生辰，恐杀生，躲到金山过生日，回来即长斋矣。</p><p class="p-trans">他说：“我也信佛法，也肯念佛。法师的《文钞》也看过，就是不能吃素。”我说：“富贵难学道，但是你想吃素，我也有方法。”他说：“有什么方法？”我说：“请将我所写的《南浔极乐寺重修放生池疏》（收录于《增广印光法师文钞》卷二）熟读，决定就能吃素了。如果只读一次两次，是不行的。必须读了再读，读了再读，才行。”这是民国十年八月十二日的话。到了十月份，是他六十岁的生日，他怕杀生，便躲到金山过生日，回来就吃长斋了。</p></div>
+<div class="para-pair"><p class="p-orig">次年，即发心开放生道场。彼不能吃素者，一知其所以然，便即直下顿除嗜好。汝友若能熟读此疏，及光文钞中诸戒杀文字，当亦有所不忍。不但不敢买活的杀，亦将并死者，亦不忍下咽矣。</p><p class="p-trans">第二年，就发心开办（南京法云寺）放生道场。他是个不能吃素的人，一旦知道其中的所以然，便直下顿除嗜好。你朋友如果能熟读这篇疏，以及我《文钞》中诸多戒杀的文字，应当也会有所不忍。不但不敢买活的来杀，而且也将一并连死的，也不忍下咽了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【若以千佛图征文石印卖重价】</span>千佛图见《千佛图颂并序》，增广·卷三。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【则其为人也多欲，虽有存焉者寡矣】</span>《孟子·尽心下》：孟子曰：“养心莫善于寡欲。其为人也寡欲，虽有不存焉者，寡矣；其为人也多欲，虽有存焉者，寡矣。”义为：孟子说：“修养善心的方法，没有比减少求利的欲望更好的了。一个人求利的欲望少，那么即使善心有些丧失，也是很少的；一个人求利的欲望多，那么即使善心有所保存，也一定是很少的。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【请将光南浔放生池疏熟读】</span>见《南浔放生池疏》，增广·卷二。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

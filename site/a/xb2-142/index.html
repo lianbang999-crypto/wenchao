@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>学医发隐（民二十七年为弟子朱清泰说） · 印光法师文钞</title>
+<meta name="description" content="佛为大医王，普治众生身心生死等病。然生死大病，由心而起，故先以治心病为前导。果能依法修持，则身病即可随之而愈。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-142/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学医发隐（民二十七年为弟子朱清泰说） · 印光法师文钞">
+<meta property="og:description" content="佛为大医王，普治众生身心生死等病。然生死大病，由心而起，故先以治心病为前导。果能依法修持，则身病即可随之而愈。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-142/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">学医发隐（民二十七年为弟子朱清泰说）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛为大医王，普治众生身心生死等病。然生死大病，由心而起，故先以治心病为前导。果能依法修持，则身病即可随之而愈。</p><p class="p-trans">佛是大医王，普治众生身、心、生死等病。然而生死大病，是由心引起的，所以首先把治疗心病作为前导。果真能够依法修持，那么身病就可以随着心病的治愈而痊愈。</p></div>
+<div class="para-pair"><p class="p-orig">身病有三，一宿业，二内伤，三外感。</p><p class="p-trans">身病有三种，一、宿业病；二、内伤病；三、外感病（外感，中医指由风﹑寒﹑暑﹑湿﹑燥﹑火等外邪而引起的疾病）。</p></div>
+<div class="para-pair"><p class="p-orig">此三种病，唯宿业难治。倘能竭诚尽敬，发自利利他之大菩提心，念南无阿弥陀佛，及念南无观世音菩萨圣号，超度宿世所害之怨家对头，彼若离苦得乐，病者即可业消病愈。不但不复为祟，反感超度之恩，而阴为护佑。凡婴此病，及医此病者，均不可不知此义。</p><p class="p-trans">这三种病，唯有宿业病最难治。倘若能够竭诚尽敬，发起自利利他的大菩提心，念“南无阿弥陀佛”，以及念“南无观世音菩萨”圣号，超度宿世所害的怨家对头，他们如果离苦得乐，病人就可以业障消除，疾病痊愈。不但不再来作祟，反而还会感激超度的恩德，并在暗中护佑。因此，凡是生这种宿业病，以及医治这种病的人，都不能不知道这个义理。</p></div>
+<div class="para-pair"><p class="p-orig">二内伤，或用心过度，或于酒，色，财，气，各有嗜好。若能敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，兼用药治，必易痊愈。倘不注意于根本，唯仗医药，亦难见效。纵效，亦不能永不复发。</p><p class="p-trans">二、内伤病，或是用心过度，或是由于对酒、色、财、气，有所嗜好所引起。如果病人能够敦伦尽分（敦笃人伦、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，兼用药物治疗，必定容易痊愈。倘若不注意做人的根本，只靠医药，也很难见效。纵然有效，也不能做到永不复发。</p></div>
+<div class="para-pair"><p class="p-orig">三外感，但能依前内伤所说之法而行，纵有外受风寒暑湿之患，亦极易治。若不注意于惩忿窒欲，闲邪存诚，即外感亦不易治。以根本受伤，徒治枝末，殊难得益。</p><p class="p-trans">三、外感病，只要能够依前面内伤病所说的方法来治疗，即使有外受风寒暑湿等患，也很容易治好。如果不注重于惩忿窒欲（克制愤怒、抑制嗜欲），闲邪存诚（防止邪念、心怀诚敬），即使是外感病，也不容易治好。因为做人的根本受了伤，只是医治枝末，实在很难获益。</p></div>
+<div class="para-pair"><p class="p-orig">所以圣人致治于未乱，保身于未病，虽无治保之奇绩，其为治保也大矣。</p><p class="p-trans">所以圣人在还没有出现混乱之前便将国家治理好；在还没有生病之前便将身体保养好，虽然没有治国保身的奇功伟绩，然而这种治国保身的功绩也很大了。</p></div>
+<div class="para-pair"><p class="p-orig">余素不知医，颇欲世人咸皆无病，日持大悲咒，加持净水。有久婴痼疾，中西医士均不能治者，令其戒杀护生，吃素念佛，及念观音。</p><p class="p-trans">我向来不懂医理，但是却非常想让世人全都没有疾病，所以每天持诵大悲咒，加持大悲净水。如果有久患痼疾，中西医都不能治好的人，我就让他戒杀护生，吃素念佛，以及念观世音菩萨（并施大悲净水让他喝）。</p></div>
+<div class="para-pair"><p class="p-orig">果真至诚，即可立刻回机，不久自愈。纵不即愈，决无加重之理。且能消除恶业，增长善根，又无所费。</p><p class="p-trans">病人果真发心至诚，病情就能立刻出现转机，不久就自然痊愈。即使不立即痊愈，也绝对没有加重病情的道理。而且病人既能消除恶业，增长善根，又不用花费什么钱。</p></div>
+<div class="para-pair"><p class="p-orig">汝欲学医，虽以针灸药品为事，须以大菩提心，常以佛菩萨圣号，及大悲咒，普为自他持诵。以期彼此同获现生身心安乐，临终决生西方。则不负为佛弟子，随分随力，普利自他之道。</p><p class="p-trans">你想要学医，虽然以针灸药品为事，但是必须要发大菩提心，常以阿弥陀佛、观世音菩萨圣号，以及大悲咒，普遍为自己、他人持诵。以期彼此同获现生身心安乐，临终决定往生西方的大利益。就不辜负为佛弟子，随分随力，普利自他的大道了。</p></div>
+<div class="para-pair"><p class="p-orig">若如世之庸医，唯期得利，不以救人病苦为事。纵令财发巨万，亦只得其自身永堕恶道，子孙或成败类，或竟灭绝。徒得自利利他之机，反成害人害自之果，可不哀哉，可不畏哉。</p><p class="p-trans">相反，如果像世间的庸医那样，只想要获得利益，却不以救人病苦为目的。纵然能发巨万之财，但也只会落得让自身永堕恶道，子孙成为败类，甚至灭绝的恶果。白白地得到自利利他的机会，却反而铸成害人害己的恶果，能不令人悲哀吗？能不令人畏惧吗？</p></div>
+<div class="para-pair"><p class="p-orig">感应篇云，祸福无门，唯人自召。独世之大聪明人，多多皆是欲得福乐，反召祸殃。汝能不随彼流，当可得大国手之名实，否则便是民贼而已。何取何舍，祈自择焉。</p><p class="p-trans">《太上感应篇》中说：“祸福无门，唯人自召。”唯独世间的大聪明人，大多都是想得到福乐，却反而召来祸殃。如果你能做到不随波逐流，当可得到大国手的名誉和实质，否则就只不过是民贼而已。如何取舍，请你自己选择。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【祟】</span>鬼神的祸害。古人以为想象中的鬼神常出而祸人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【国手】</span>一国中某项技艺最为出众的人。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【名实】</span>1.名称与实质、实际。2.名誉与事功。《孟子·告子下》：“先名实者，为人也；后名实者，自为也。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【民贼】</span>残害人民的人。《孟子·告子下》：“今之所谓良臣，古之所谓民贼也。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

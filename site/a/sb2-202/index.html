@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复崔益荣居士书二 · 印光法师文钞</title>
+<meta name="description" content="前接汝募铸钟之信，以冗忙不能即复。旋致书梅荪，彼极赞成。又以铸之铜钟之量，去信相商。以妙莲往赤山，迟二十余日。梅荪来书言，初以妙师未在，今令商酌妥贴。所用之铜，并钟之量，方可致书，祈师作疏。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-202/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复崔益荣居士书二 · 印光法师文钞">
+<meta property="og:description" content="前接汝募铸钟之信，以冗忙不能即复。旋致书梅荪，彼极赞成。又以铸之铜钟之量，去信相商。以妙莲往赤山，迟二十余日。梅荪来书言，初以妙师未在，今令商酌妥贴。所用之铜，并钟之量，方可致书，祈师作疏。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-202/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复崔益荣居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前接汝募铸钟之信，以冗忙不能即复。旋致书梅荪，彼极赞成。又以铸之铜钟之量，去信相商。以妙莲往赤山，迟二十余日。梅荪来书言，初以妙师未在，今令商酌妥贴。所用之铜，并钟之量，方可致书，祈师作疏。</p><p class="p-trans">前天接到你募化铸钟的信，因为繁忙不能马上回复。不久写信给魏梅荪，他极力赞成。又将所铸铜钟的重量，去信商量。因为妙莲法师去了山东赤山，推迟了二十多天。魏梅荪来信说，最初因为妙莲法师不在，现今要商量斟酌妥贴，所用的铜质，以及钟的重量，才能写信，请师父写疏文。</p></div>
+<div class="para-pair"><p class="p-orig">昨接汝书，知汝于此事尚未了然。必须说其若干斤，并用甚么铜。该铜每斤需若干钱，方可令人取信。凡铸钟宜用响铜，则音声自好。响铜甚贵，如不全用，也须用一半，大约连工带料每斤总在一元以上。汝若以为难，即便取消。如纵二三千元亦须要铸，则待南京信来便可作疏寄汝矣。</p><p class="p-trans">昨天接到你的信，知道你对于这件事，还不是很清楚。必须说明钟有多少斤的重量，并用什么铜铸造。这种铜每斤需要多少钱，才能令人相信。凡是铸钟应该用响铜，那么声音自然好。响铜很贵，如果不能全用响铜，也必须用一半，大约连工带料每斤总在一元以上。你如果觉得困难，立刻取消。如果即使是二三千元，也必须要铸，那么等南京的信来了，就可以写疏文寄给你了。</p></div>
+<div class="para-pair"><p class="p-orig">汝侄之不知努力做人，乃从小失教所致。小时失教，大了便难成器。汝际遇如是，但当仰念汝父母，汝兄之故，勿生烦恼，认真念佛，求佛加被于彼，俾开知识，自可做好人矣。若自己生烦恼，则于彼无益，于汝之身，并教养侄之德，皆有损矣。</p><p class="p-trans">你的侄儿不知道努力做人，这是从小有失教导所导致的。小时候失教，大了便很难成器。你的际遇是这样，只应当仰念你父母，你兄长的缘故，不要生烦恼，认真念佛，求佛慈悲加被你侄儿，使他开知识，自然就能做个好人了。如果自己生烦恼，那么对他没有利益，对于你自身，以及教养侄儿之德，都有损害了。</p></div>
+<div class="para-pair"><p class="p-orig">汝果志诚念佛兼念观音，一心恳求加被于彼，诚之所至，金石为开，彼当渐渐转变为好人，不至长作浪子及废人耳。宜勿分别，作己子不才想，但求佛菩萨怜悯加被，此是唯一不二之转变妙法。</p><p class="p-trans">你果真志诚念佛，兼念观世音菩萨，一心恳求佛菩萨加被他，诚之所至，金石为开，他应当渐渐转变为好人，不至于一直做浪子和废人。应该不要起分别心，当作自己的儿子不成才来想，但求佛菩萨怜悯加被，这是唯一不二的转变妙法。</p></div>
+<div class="para-pair"><p class="p-orig">沙居士所作之二篇文，当寄之上海净业社，登月刊中。光之劝戒杀吃素文，所该者广。聂云台曾照样排单张送人，光令附于龙舒净土文后。龙舒文彼印三千留板。但此次甚贵，合三角多一部，以后印时当省一半。观音颂有七万多部，文钞亦另排。此文，文虽不好，颇将一切不宜杀生之理由说明矣。</p><p class="p-trans">沙居士所作的二篇文稿，应当寄到上海净业社，登在《净业月刊》中。我写的《普劝戒杀吃素挽回劫运说》，该摄的范围很广。聂云台曾经照样排印成单张送人，我令他附在《龙舒净土文》之后。《龙舒净土文》，他印了三千册，留存刻板。但这次很贵，合三角多一部，以后印的时候，应当会省一半的钱。《观音颂》（即《观世音菩萨本迹感应颂》）有七万多部，《文钞》也另外再排。这篇文章，文辞虽然不好，但将一切不应该杀生的理由都说明白了。</p></div>
+<div class="para-pair"><p class="p-orig">拜经愈疾，乃业消灾灭之祥。申江之行，以时局不靖，拟待九十月或来年耳。大士颂尚未付排，欲往申江，正为此事。倘时局有变，则恐有误，故不敢付排，即付排，至少亦须上十月方可出书。若出，自当寄汝及沙，范李诸君，不须再说。</p><p class="p-trans">拜经治愈疾病，这是业消灾灭的祥瑞。上海之行，因为时局不宁，打算等到九十月份，或者来年再去。《大士颂》（即《观世音菩萨本迹感应颂》）还没有交付排印，想到上海，正是为了这件事。倘若时局有变，就恐怕有误，所以不敢交付排印，即使交付排印，至少也须十个月左右才能出书。如果书印出了，自当寄给你以及沙居士、范居士、李居士诸位，不必再说。</p></div>
+<div class="para-pair"><p class="p-orig">关帝皈依智者大师（在隋文帝时），开玉泉山，此事出佛祖统纪。佛教以关帝为护伽蓝神，亦本此。待有暇，当为文以表彰之。</p><p class="p-trans">关帝皈依智者大师（在隋文帝时），开玉泉山，这件事出自《佛祖统纪》。佛教把关帝作为护伽蓝神，也是依据此处。等到有空了，我当会撰文来表明彰显这件事。</p></div>
+<div class="para-pair"><p class="p-orig">吃素不难，难于不肯舍贪口腹之心。若不贪口腹，有何吃素之不便乎。虽吃华素，不吃素日，亦须少吃。以一切物类，皆是贪生怕死，皆知疼痛苦楚。但以口不能言，故为人作食料。倘其能言，其临杀之悲哀怨恨，尚忍闻之乎。思及此，则肉自不便下咽矣。</p><p class="p-trans">吃素不难，难在不肯舍弃贪图口腹之心。如果不贪口腹，吃素有什么不方便的呢？虽然是吃花素，不吃素的日子，也必须少吃肉。因为一切动物，都是贪生怕死，都知道疼痛苦楚。只是因为口不能说话，所以被人们当作食料。倘若它们能说话，它们临杀时的悲哀怨恨，还能忍心听吗？想到这里，肉自然就不能下咽了。</p></div>
+<div class="para-pair"><p class="p-orig">拜经念佛，当以恭敬至诚为本。恭敬大，则功德利益大。恭敬小，则功德利益小。若不恭敬，但做道场，则是自欺。欲欺人尚不能，况欺佛菩萨乎。祈真实恭敬行去，其利益莫大焉。</p><p class="p-trans">拜经念佛，应当以恭敬至诚为根本。恭敬大，那么功德利益就大。恭敬小，那么功德利益就小。如果没有恭敬，只是做道场，那么就是自己欺骗自己。想要欺骗他人尚且不能，何况是欺骗佛菩萨呢。请真实恭敬行持，这样的利益就太大了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

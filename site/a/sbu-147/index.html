@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>心经经义略说 · 印光法师文钞</title>
+<meta name="description" content="此经要义，在照见五蕴皆空，度一切苦厄二句。乃结集经者，撮取菩萨所说之纲要，而著此二语耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-147/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="心经经义略说 · 印光法师文钞">
+<meta property="og:description" content="此经要义，在照见五蕴皆空，度一切苦厄二句。乃结集经者，撮取菩萨所说之纲要，而著此二语耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-147/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 论文</div>
+      <h1 class="art-title">心经经义略说</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">此经要义，在照见五蕴皆空，度一切苦厄二句。乃结集经者，撮取菩萨所说之纲要，而著此二语耳。</p><p class="p-trans">此经的要义，在照见五蕴皆空，度一切苦厄两句。是结集经的人，撮取（观世音）菩萨所说的纲要，而著此两句。</p></div>
+<div class="para-pair"><p class="p-orig">色不异空之空，不可作空无之空解。以空无之空，是顽空故。此所谓空，即是真如实相。无名无相，而能显现世出世间一切诸相，所谓诸法实相者是也。</p><p class="p-trans">色不异空的空，不可作空无的空解。因为空无的空，是顽空的缘故。这里所说的空，就是真如实相。无名无相，却能显现世间、出世间一切相，所以称为诸法实相。</p></div>
+<div class="para-pair"><p class="p-orig">言色不异空等者，以五蕴六入十二处十八界，当体即是如来藏性。但以迷而未悟，遂成五蕴等法（合之即是五蕴，开之则为六入十二处十八界。实则五蕴悉皆圆具）。</p><p class="p-trans">所言色不异空等句，是因为五蕴（注1）、六入（注2）、十二处（注3）、十八界（注4），当体就是如来藏性。但因为迷而未悟，便成了五蕴等法（合起来讲就是五蕴，分开来说就是六入、十二处、十八界。实际上五蕴全都包括了）。</p></div>
+<div class="para-pair"><p class="p-orig">下文是诸法空相，即指此五蕴不异空，空不异五蕴，五蕴即是空，空即是五蕴之相。此相即是真如实相。此相无相，故以六不显之。</p><p class="p-trans">下文是诸法空相，就是指此五蕴不异空，空不异五蕴，五蕴即是空，空即是五蕴之相。此相就是真如实相。此相无相，所以用六不（注5）来显明。</p></div>
+<div class="para-pair"><p class="p-orig">又恐但执理性，不务事修，复以十三无显之。以见迷此真如实相，则为五蕴六根六尘六识。由此而有苦集二谛，流转十二因缘，轮回生死，了无出期。</p><p class="p-trans">又怕只执着理性，不务事相修持，再用十三无（注6）来显明。使人明白迷惑了这个真如实相，则成为五蕴、六根、六尘、六识。由此而有了苦集二谛，流转十二因缘，轮回生死，没有出离的日期。</p></div>
+<div class="para-pair"><p class="p-orig">悟此真如实相，以此五蕴根尘识法，修道灭二谛，及还灭十二因缘，以至六度万行，由兹彻证无余涅槃（智，即六度之般若度。得，即所证之大般涅槃，亦即究竟涅槃）。虽有生死剧苦，涅槃常乐，而于真如实相之中，了无所有。</p><p class="p-trans">悟了这个真如实相，用这五蕴、六根、六尘、六识之法，修“道”“灭”二谛，以及返还灭除十二因缘，以至六度万行，由此彻证无余涅槃（智，就是六度的般若。得，就是所证的大般涅槃，也就是究竟涅槃）。虽然有生死剧苦，涅槃常乐，而在真如实相之中，却完全没有。</p></div>
+<div class="para-pair"><p class="p-orig">迷者谓有此凡圣苦乐诸相。悟者谓此诸相，一一皆是真如实相，故无所得。而菩萨诸佛，依此皆得究竟涅槃，成无上道也。此一经之大义也。（此文原载朱柏年般若波罗蜜多心经浅注篇首，原篇名为经义，署普陀印光法师撰。）</p><p class="p-trans">迷惑的人认为有这些凡圣、苦乐诸相。觉悟的人认为这些诸相，一一都是真如实相，所以是无所得。而菩萨、诸佛，依此全都得到究竟涅槃，成就无上道啊！这是心经的大义啊！（此文原载于朱柏年的《般若波罗蜜多心经浅注》篇首，原篇名为经义，署名“普陀印光法师撰”。）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【五蕴】</span>五蕴的“蕴”是“坎蕴”(巴利语:khandha)的简称，意义是积聚或者和合。五蕴分别是色蕴、受蕴、想蕴、行蕴、识蕴。在五蕴中，除了第一个色蕴是属物质性的事物现象之外，其余四蕴都属五蕴里的精神现象。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【六入】</span>佛教术语，指色声香味触法。与六根一一对应。“入”是吸入，有专注之义。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【十二处】</span>六根六尘合称为十二处。六根，指眼耳鼻舌身意。六尘，指色声香味触法。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【十八界】</span>六根六尘合称为十二处。处是出生之义，即由六根六尘出生六识。则六根、六尘，六识便合成十八界。六识，指眼识，耳识，鼻识，舌识，身识，意识也。唯识学派则加上末那识与阿赖耶识，称为八识。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【六不】</span>不生不灭，不垢不净，不增不减。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【十三无】</span>是故空中无色，无受想行识，无眼耳鼻舌身意，无色声香味触法，无眼界乃至无意识界，无无明亦无无明尽，乃至无老死，亦无老死尽，无苦集灭道，无智亦无得。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复江易园居士书五 · 印光法师文钞</title>
+<meta name="description" content="前接手书，知令慈念佛往生，不胜为令慈庆，为阁下悲。虽然，令慈既已超凡入圣，固不宜效世俗人徒作无益之悲伤也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-042/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复江易园居士书五 · 印光法师文钞">
+<meta property="og:description" content="前接手书，知令慈念佛往生，不胜为令慈庆，为阁下悲。虽然，令慈既已超凡入圣，固不宜效世俗人徒作无益之悲伤也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-042/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复江易园居士书五</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前接手书，知令慈念佛往生，不胜为令慈庆，为阁下悲。虽然，令慈既已超凡入圣，固不宜效世俗人徒作无益之悲伤也。</p><p class="p-trans">之前接到你的信，知道你母亲已念佛往生了，很为你母亲感到庆幸，为你感到悲伤。虽然如此，你母亲既然已经超凡入圣，本就不应再效仿世俗之人徒然地作无益的悲伤。</p></div>
+<div class="para-pair"><p class="p-orig">阁下提倡净土，初则令夫人往生，今则令慈往生。足见一切众生皆有佛性，道在人宏，倡必有和。但以光冗繁之极，不能即为撰述，殊觉歉仄之至。</p><p class="p-trans">你提倡净土法门，最初是你夫人（即汪含章，印祖曾作《汪含章夫人往生记》）往生，现在是你母亲往生。足见一切众生皆有佛性，法道在于人的弘扬，提倡必定有人依随。但是因为我极其繁忙，不能即刻为你母亲撰述（往生记），实在觉得抱歉之至。</p></div>
+<div class="para-pair"><p class="p-orig">三字镜，略为笔削。前日雪惺来持去，彼拟录之，即代为寄。令慈之传，殊多疏漏。今将原稿随函寄回，祈为添补改削，俾归完备。再令有朋抄几份，分寄各佛报。以光近来冗务颇多，不能详悉斟酌耳。</p><p class="p-trans">《三字镜》，大略做了些修订。前天雪惺来带去，他打算抄录下来后，就代为邮寄。你母亲的传略，有很多疏漏。现在将原稿随信寄回，请你为此添补修改，使传略趋于完备。再让江有朋抄几份，分别寄给各个佛教报刊。因为我近来的杂务很多，不能详细斟酌。</p></div>
+<div class="para-pair"><p class="p-orig">前所寄之八捆书，收到，慰甚。光定于九月底灭踪长隐。以应酬日多，精神日减，若不长隐，则将穷年终日，为他人忙，了无止期。</p><p class="p-trans">上次所寄的八捆书，收到了，很欣慰。我定于九月底灭迹，长期隐居。因为应酬一天天增多，精神一天天衰减，如果不长期隐居，就将整年整日，为他人忙碌，没有停止的一天。</p></div>
+<div class="para-pair"><p class="p-orig">所有近印之书板，通交居士林。彼拟开佛学书局，以广流通。不过彼带有营业性质，比光之只算成本者，当贵近一半耳。</p><p class="p-trans">所有近来刻印的书板，通通交给居士林。他们打算开办佛学书局，来广泛流通。不过他们带有营业性质，比起我只算成本价的做法，（书价）应当贵了将近一半。</p></div>
+<p class="p-orig">【附：】</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【民国汪夫人】</span>汪夫人，安徽婺源江易园居士之妻也。生平孝顺慈惠，济急救贫。淡薄自奉，勤俭持家。自归居士三十三年，凡有善愿，夫妇必同心同德以助成。晚年，见居士学佛，夫人亦虔心皈依，戒杀放生，诵经念佛。民国癸亥秋，病滞床褥，不能如常礼拜诵念，乃专念阿弥陀佛，及观音势至二菩萨名。逝之先日夜，语侍疾者，取烛置床上，两手作举香状。谓楼上佛堂，木鱼声甚清越，床壁间，皆金字经卷，光耀烛目，汝见闻乎。及晨，预告家人，今日卯未亥三时，须为我供佛。自是不复语，有问疾者，颔之而已。果至未时，端坐而逝，神色自在，如入禅定，无愁苦相。数时后，通身冰冷，顶端犹温，肢体柔软。居士率家属与友人轮流助念，自未至亥，佛声不绝。时民国甲子，十一月初一未时，年五十。（近代往生传）——《净土圣贤录》三编</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【民国江母】</span>江母汪太夫人，安徽婺源江易园居士之母也。一生辛苦持家，孝事翁姑，相夫教子，孝慈兼尽。民国七年，年已六十，闻其子易园居士，提倡佛法，演说净土，即持斋念佛，日课佛号万余声。兼持观音普门品，普贤行愿品，大悲咒等。暇则令儿孙辈，讲说经典，及因果等事，以为助行。至庚午岁，五月末，示微疾。三十日，闻其孙有朋讲四十八愿，犹令侍疾者谛听，因问明日是六月初一乎。及夜半睡醒，觉痰闭力微，欬 （kài）吐不畅，乃令举家念佛。易园复以佛法宏深，佛慈广大，能专诚归向，定蒙佛来接引慰劝。江母力疾颔之，念佛历一时许，至辰刻，遂安然坐逝。逝时虽不能出声，仍尚默念佛名。遗言，不含钱，不著华冠绣服，不用纸钱冥器，惟项挂念珠，易园一一遵行。自辰至申，历五时许，众仍助念佛号。（胡元吉述）——《净土圣贤录》三编</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

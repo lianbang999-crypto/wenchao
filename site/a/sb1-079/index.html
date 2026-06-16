@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复潘对凫居士书三 · 印光法师文钞</title>
+<meta name="description" content="接手书，不胜感叹。阁下厚德及人之深，以致溃兵土匪，亦相戒勿扰。此非真有可动人者，曷能得也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-079/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复潘对凫居士书三 · 印光法师文钞">
+<meta property="og:description" content="接手书，不胜感叹。阁下厚德及人之深，以致溃兵土匪，亦相戒勿扰。此非真有可动人者，曷能得也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-079/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复潘对凫居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，不胜感叹。阁下厚德及人之深，以致溃兵土匪，亦相戒勿扰。此非真有可动人者，曷能得也。</p><p class="p-trans">接到你的信，不胜感叹。阁下厚德泽及他人之深，以至于溃兵、土匪，也互相告诫，不要打扰。这如果不是真实有可以感动人的德行，怎么能如此呢？</p></div>
+<div class="para-pair"><p class="p-orig">食为民天，能惠民者，天必佑之。此种溃兵土匪，岂有道义之心。但天地鬼神加被之，令彼存其道义耳。</p><p class="p-trans">民以食为天，能够惠泽人民的人，上天必定庇佑他。这种溃兵、土匪，哪有道义之心。但是天地鬼神加被他们，令他们保存他们的道义罢了。</p></div>
+<div class="para-pair"><p class="p-orig">曾见阴骘文注证载一事，与阁下之事气分相类。今钞以呈览。乾隆辛巳，豫省黄河溃决，陆地水深丈余，民间庐舍，半被淹没。陈留县有曹姓者，居宅沉没，已三昼夜，咸谓无生理矣。</p><p class="p-trans">曾经见过《阴骘文注证》中记载一件事，与阁下的事相类似。现今钞录呈给你阅览。乾隆辛巳年（1761年），河南省黄河溃堤决口，陆地水深一丈多深，民间的房舍，一半被淹没。陈留县有一位姓曹的人，住宅沉没，已经三天三夜了，大家都说，没有生还的道理了。</p></div>
+<div class="para-pair"><p class="p-orig">及水退，墙舍并未崩塌，眷口亦安然无恙。众问之，云日来唯觉雾气弥漫，不见天日，初不知在水中也。</p><p class="p-trans">等到洪水退却，房屋墙舍并没有崩塌，家眷人口也安然无恙。众人问他们，回答说：近来只觉得雾气弥漫，看不见天空太阳，最初不知道在水中。</p></div>
+<div class="para-pair"><p class="p-orig">有司见而异之，询其有何善行。曰每年租课所入，除衣食足用外，尽以济邻里之贫乏者，至今未尝少替。已历五世，百有余年矣。宪司俱赐匾额，以嘉其异。</p><p class="p-trans">有司见了觉得惊异，询问他们有什么善行。说：每年租课的收入，除了衣食足用之外，全都拿来救济邻里那些贫穷困乏的人，至今没有一点的更改废弃。已经过了五世，一百多年了。宪司都赐下匾额，以嘉奖他们的神异。</p></div>
+<div class="para-pair"><p class="p-orig">水固无情，而有鬼神护佑，虽全体淹没，而未见其水。是知人有实德，天有奇报。彼剥削百姓脂膏，以求子孙富贵者，率皆灭门绝户。而其神识，当永堕恶道，无有出期，可哀也已。</p><p class="p-trans">洪水固然无情，而有鬼神的护佑，虽然全体淹没，而没有见到这个洪水。所以知道，一个人有真实的德行，上天必定有神奇的报应。那些剥削百姓脂膏，以求子孙富贵的人，大都灭门绝户。而他们的神识，必当永堕恶道，无有出期，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">是以欲救世人，非极力提倡因果报应，断断不能收实效。</p><p class="p-trans">所以想要挽救世人，非极力提倡因果报应，绝对不能收到实效。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【有司】</span>官吏。古代设官分职，各有专司，故称。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【宪司】</span>1.魏晋以来御史的别称。2.宋代官名。即诸路提点刑狱公事。3.犹上司。元代习用语。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

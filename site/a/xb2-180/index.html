@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>答曾怡芝居士四问 · 印光法师文钞</title>
+<meta name="description" content="（一）灵岩佛七，多一次回向（他处亦多如此行者）。即每日正午前，上供后，接连至牌位前荐食（即延生佛七，亦无妨附供追荐祖先等位），亦为一次回向。每日除早晚课外，六枝香，此在第二枝香后。上供荐食毕，稍停片刻，即午斋。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-180/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="答曾怡芝居士四问 · 印光法师文钞">
+<meta property="og:description" content="（一）灵岩佛七，多一次回向（他处亦多如此行者）。即每日正午前，上供后，接连至牌位前荐食（即延生佛七，亦无妨附供追荐祖先等位），亦为一次回向。每日除早晚课外，六枝香，此在第二枝香后。上供荐食毕，稍停片刻，即午斋。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-180/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 附录</div>
+      <h1 class="art-title">答曾怡芝居士四问</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">（一）灵岩佛七，多一次回向（他处亦多如此行者）。即每日正午前，上供后，接连至牌位前荐食（即延生佛七，亦无妨附供追荐祖先等位），亦为一次回向。每日除早晚课外，六枝香，此在第二枝香后。上供荐食毕，稍停片刻，即午斋。</p><p class="p-trans">（一）灵岩佛七，多加一次回向（别处也有很多寺院这样做）。就是每天正午前，上供后，接着就到牌位前超荐施食（即使是为某人延长寿命打的佛七，也无妨附供、追荐祖先等位），也为灵位做一次回向。每天除了早、晚课外，上六枝香，这次回向是在第二枝香后。上供、超荐施食完毕，稍停片刻，就用午斋。</p></div>
+<div class="para-pair"><p class="p-orig">（二）早晚功课，为亡人称名回向。森则按照普通丛林功课，每朔望早课完，礼祖时，将礼毕，有各代为生身父母，礼佛三拜，求生净土之语。故每朔望，即一人独行之早课完，亦照常礼祖（比随众时多而详备）。</p><p class="p-trans">（二）早、晚功课，为亡人称名回向。德森我就按照普通丛林功课的仪轨，每月初一、十五早课完毕，在礼祖将要礼毕时，有“各人代为生身父母，礼佛三拜，求生净土”这样的话。因此每当初一、十五，即使一人独自做早课，做完时也照常礼祖（这个仪轨比随众礼祖时的内容多而且详备）。</p></div>
+<div class="para-pair"><p class="p-orig">礼毕，即逐一称名礼佛，为之回向。如为父母回向，则拜时心中默念观想云，代为生身父母，礼佛三拜（若一拜者，则云一拜），忏悔业障，解除无边罪业，销释愆尤，出离苦趣，求佛慈悲哀愍摄受，早垂接引往生净土（随拜随默念，心中随想父母形仪，同在佛前随行礼拜。一拜如是，拜拜皆然）。</p><p class="p-trans">礼毕，就逐一称名礼佛，为他们回向。比如，为父母回向，就在拜时心中默念、观想说：“代为生身父母，礼佛三拜（如果一拜，就说一拜），忏悔业障，解除无边罪业，销释愆尤（罪过），出离苦趣，求佛慈悲哀愍摄受，早垂接引往生净土（随拜、随默念，心中随想父母形仪，一同在佛前随自己做礼拜。一拜是这样观想，之后的每一拜也都是这样观想）。”</p></div>
+<div class="para-pair"><p class="p-orig">父母既尔，余人亦然。甚至怨亲平等，以及法界一切众生，次第普为称名礼佛回向。即非朔望，如每日早晚功课，至三皈依完，不礼祖，亦当代生身父母，及大有关系之恩人（或有特别因缘，如新逝亲友等），均如此回向。</p><p class="p-trans">为父母回向是这样做，为其他人回向也是这样做。甚至怨亲平等，以及法界一切众生，都按顺序普为称名礼佛回向。即使不是初一、十五，比如每天的早、晚功课，到了三皈依做完后不礼祖，也应当代生身父母，以及与己很有关系的恩人（或有特别因缘，比如新去逝的亲友等），都是这样回向。</p></div>
+<div class="para-pair"><p class="p-orig">此森之未有师承，全依己见而行者（灵岩山每晚大回向，亦有三拜），准理当无所碍。回向已毕，或即礼佛三拜而退，亦可。</p><p class="p-trans">这个仪轨，德森我没有师承，是完全依照自己的见解来做的（灵岩山，每晚大回向后，也有三拜），按照常理来衡量应该没有什么妨碍。回向完毕后，或者就礼佛三拜而退，也可以。</p></div>
+<div class="para-pair"><p class="p-orig">森乃再行礼观世音菩萨，持大悲，往生咒等，为求世界和平，自他同免厄难等功课（灵岩功课，名曰灵岩念佛仪规，今年夏早已出版。惜此时不能寄，待可寄时，随寄数本，便知）。</p><p class="p-trans">德森我是再加做礼观世音菩萨，持大悲、往生咒等，为求世界和平、自他同免厄难等功课（灵岩功课，名为《灵岩念佛仪规》，今年夏天早已出版。可惜此时不能邮寄，等到能寄时，随信寄几本，就可以了解了）。</p></div>
+<div class="para-pair"><p class="p-orig">（三）荼毗之事，僧俗皆无碍。西域人死之后，葬法有四。</p><p class="p-trans">（三）荼毗这件事，僧俗都没有妨碍。西域人死之后，葬法有四种。</p></div>
+<div class="para-pair"><p class="p-orig">一，水漂，投诸江河，以喂鱼鳖也（此须近大江河乃可，山僻小溪，则非所宜）。</p><p class="p-trans">一、水葬，把尸体投入江河，来喂鱼鳖（这个葬法必须靠近大江大河才可以，山里偏僻的小溪，就不适用）。</p></div>
+<div class="para-pair"><p class="p-orig">二，火焚，火焚其尸，冀破我执也（此则随处皆可）。</p><p class="p-trans">二、火葬，火焚尸体，希望亡人能破除我执（这种方法随处都可以实行）。</p></div>
+<div class="para-pair"><p class="p-orig">三，土埋，穴土掩藏，俾无暴露也（此亦普通）。</p><p class="p-trans">三、土葬，在土中挖穴，掩盖埋藏，使尸体无所暴露（这也是普遍的方法）。</p></div>
+<div class="para-pair"><p class="p-orig">四，林施，置之林间，俾鸟兽食也（此须深山大泽乃可。究不及前三种妥善）。</p><p class="p-trans">四、林葬，把尸体放置在树林间，让鸟兽来吃（这种方法必须在靠近深山、大泽的地方才可以实行。终究没有前三种方法妥善）。</p></div>
+<div class="para-pair"><p class="p-orig">吾国向主土埋（读孟子盖上世常有不葬其亲者一篇，即知所由），其实仍不如火化之美满。且佛法东来，僧皆火化，即取破除我执之意义。</p><p class="p-trans">我们国家向来主张土埋（读《孟子·滕文公》中“盖上世常有不葬其亲者”这一篇，就知道原因了），其实还是不如火化那样美满。而且佛法东来，僧人都火化，就是取破除我执的意义。</p></div>
+<div class="para-pair"><p class="p-orig">人之烦恼生死，完全我执身见为根本。即淫欲等大患，亦仍从我执身见而生。身见我执若破，淫欲又从何而生。故唐宋时代，深知佛法之高人达士，虽未出家，亦每主火化。</p><p class="p-trans">人的烦恼、生死，完全是以我执身见为根本的。就是淫欲等大患，也仍然是从我执身见产生的。身见我执如果能破除，那么淫欲又从何而生呢？所以唐、宋时代，深知佛法的高人达士，虽然没有出家，但是也往往主张火化。</p></div>
+<div class="para-pair"><p class="p-orig">后世多不乐从者，即为固守身见我执。身见太重，实属修行之一大障碍。而来示所谓，居士多未断欲，为色身不清洁，不宜火化，亦非通论。</p><p class="p-trans">后世大多数人之所以不乐意依从，就是因为固守身见我执。身见太重，实在是修行的一大障碍。而来信中所谓“居士大多没有断欲，色身不清洁，所以不宜火化”，这样说也不是通达之论。</p></div>
+<div class="para-pair"><p class="p-orig">博地凡夫，四大假合之身，未至业尽情空地位，不拘僧俗，皆是腥臊臭秽之脓血而成。身虽断欲，依凡愚浅近情见论，则较之贪欲之人，略似清洁。然心欲未尽，即污秽仍存。</p><p class="p-trans">博地凡夫，四大假合之身，如果没有修行到业尽情空的地步，不论僧俗，都是腥臊臭秽的脓血所构成。身体虽然已经断欲，如果依照凡愚的浅近情见来论，好像比贪欲的人，略微清洁。但是，心欲没有断尽，那么污秽就仍然存在。</p></div>
+<div class="para-pair"><p class="p-orig">若据高深谛理论，四大本空，五蕴非有，诸法因缘，皆无自性。诸佛正遍知海，在一切众生心想中。一念回光，便同本得。遮那妙体，遍界全彰。本无生灭增减之殊，又何有僧俗垢净之异。</p><p class="p-trans">如果根据高深的谛理来论，四大本空，五蕴非有。诸法因缘所生，都没有自性。诸怫正遍知海，在一切众生心想中。只要一念回光，就和本来得到的一样。毗卢遮那妙体，遍法界完全彰显。本来就没有生灭、增减的不同，又哪里会有僧俗、垢净的差异呢？</p></div>
+<div class="para-pair"><p class="p-orig">故心经云，不生不灭，不垢不净，不增不减，即指此心佛众生，三无差别之真如实相之本体也。吾人迷真逐妄，背觉合尘，以致流浪生死，了无出期。</p><p class="p-trans">所以《心经》说“不生不灭，不垢不净，不增不减”，指的就是这个心、佛、众生，三无差别的真如实相的本体。我们迷真逐妄，背觉合尘，以至于流浪生死，完全没有出离的日期。</p></div>
+<div class="para-pair"><p class="p-orig">今欲返妄归真，背尘合觉，了生脱死，超凡入圣，必须破除身见我执，为最初下手工夫。因此故凡学佛之士，如知求神识得所，不拘僧俗，均当火化。</p><p class="p-trans">现在想要返妄归真，背尘合觉，了生脱死，超凡入圣，就必须破除身见我执，这是最初的下手工夫。由于这个缘故，凡是学佛的人士，如果懂得追求使神识适得其所，就会不拘僧俗，都应当火化。</p></div>
+<div class="para-pair"><p class="p-orig">不特无碍，确有实益（对今后之环境，尤为适宜。为铁路之经过，多致暴尸露骨。即大都会，棺材价昂，觅土尤难，恐非佛弟子亦当就范，但须求得焚化之良法为要）。</p><p class="p-trans">不仅没有妨碍，而且的确会有实益（这种方法对今后的环境，也特别适合。因为修铁路所经过的地方，大多导致暴尸露骨。再拿大城市来说，不仅棺材价高，坟地也特别难找，恐怕不是佛弟子的人也会就范。只是需要寻找到好的焚化方法，这很重要）。</p></div>
+<div class="para-pair"><p class="p-orig">至眷属不忍，亦仍不知注重神识得所，及身见我执为患等义之所致也。若稍有知，在本人则弃之唯恐不速，在眷属亦当善体亲心，又何至稍生留恋。</p><p class="p-trans">至于眷属不忍心这样做，也仍然是不懂得注重使神识适得其所，以及身见我执为患等原因所导致的。如果稍微懂得这些道理，要是将要去世的本人，就会弃之唯恐不速；要是亡人的眷属，也会善体亲心，又怎么会导致稍生留恋呢？</p></div>
+<div class="para-pair"><p class="p-orig">（四）在家二众入殓之衣冠，既知必须破除身见我执，而衣冠之随便皆可，更不待言。一生赖以作为一切之色身，尚可弃之如遗。</p><p class="p-trans">（四）在家二众，入殓时穿戴的衣服、帽子，既然懂得必须破除身见我执，衣服、帽子随条件的方便来穿戴都可以，就没有必要再多说了。一生都依赖它做一切事业的这个色身，尚且可以丢弃，就像丢弃没有价值的东西；</p></div>
+<div class="para-pair"><p class="p-orig">而包裹幻身之身外衣冠，又何足重视（孔子对人之在世，尚不以恶衣恶食为耻。况人之已死，随腐烂之死尸而入殓者乎）。</p><p class="p-trans">那么在外面包裹幻身的衣服、帽子，又何足重视呢（孔子对活在世上的人，尚且不认为恶衣、恶食就可耻。更何况人已死，随着腐烂的死尸而入殓的衣服、帽子呢）？</p></div>
+<div class="para-pair"><p class="p-orig">依愚见，必以节省为上策。宁可将新制衣冠等费，省来做弘法利生及救济饥寒困苦等慈善事业之用，为之资益亡者神识得所，较之糜费厚殓，得失自属天渊。</p><p class="p-trans">依我的愚见，一定要以节省为上策。宁可把制作新衣、新帽等费用省下来，用做弘法利生，以及救济饥寒困苦等慈善事业，从而帮助、增益亡人的神识来适得其所，这样做与浪费厚葬相比，得失自然有天渊之别。</p></div>
+<div class="para-pair"><p class="p-orig">即须稍顺人子俗情，不能因重神识，而废弃形仪，即可从亡者之心愿，僧服俗服，俱无不可。但总要不涉糜费。</p><p class="p-trans">即使必须要稍微随顺为人子的世俗之情，不能因为注重神识，就废弃了应有的形仪，也可以听从亡人的心愿，穿僧服、俗服，都可以。但总的要求是不奢靡浪费。</p></div>
+<div class="para-pair"><p class="p-orig">即亡者主张，有近糜费从厚，亦须善为解释，令其不著身见而后可。若顺其贪著厚殓，助其身见我执，亦属往生之障，仍非所宜。</p><p class="p-trans">即使亡者的要求，有些近于浪费厚葬，也必须好好解释，一直到使他放弃这种想法、不再执著身见为止。如果顺从他贪著厚葬的要求，助长他的身见我执，这也是往生的障碍，仍然是不合适的。</p></div>
+<div class="para-pair"><p class="p-orig">如亡者自主薄殓，则无身见之累，而僧装俗装，俱无所碍也。愚见如是，不知高明以为如何。</p><p class="p-trans">如果亡人自己主张薄葬，那么就没有身见的拖累，而且僧装、俗装，就都没有什么妨碍了。我的意见就是这些，不知道您怎样看呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【山僻】</span>山中僻远之地。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【读孟子盖上世常有不葬其亲者一篇】</span>《孟子·滕文公》篇：“盖上世常有不葬其亲者，其亲死，则举而委之于壑。”意思是：世上常常有不埋葬自己亲人的人，他们的亲人死了，就把尸体抬起来扔到山沟里。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【通论】</span>通达的议论。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【四大本空】</span>乃佛教术语，四大是地水火风，为一切万法的原素，一切万法均由此四大合成，四大分散，万法即归于坏灭，四大所成的一切法，没有真实的自体，所以说四大本空。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【五蕴非有】</span>指色受想行识五蕴所构成的人身是虚妄不实的，因为当五蕴分散时，人身也就没有了，所以说五蕴非有。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【孔子对人之在世，尚不以恶衣恶食为耻】</span>《论语·里仁》篇：“士志于道，而耻恶衣恶食者，未足与议也。”意思是：读书人立志于追求真理，但又以穿破衣、吃粗糙的饭食为耻，这种人就不值得和他谈论什么了。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

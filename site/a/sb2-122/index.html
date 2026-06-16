@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复某居士书 · 印光法师文钞</title>
+<meta name="description" content="人生世间，数十年光阴，瞬息即过。若或虚度，则欲再得此光阴，决无可得之时。人之成败，全在幼时。幼时若已空过，若至二十岁时，已经失其机会。汝父母俱以余为师。余于汝，颇存希望成一真正淳善之器，以慰汝父母爱汝之心。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-122/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复某居士书 · 印光法师文钞">
+<meta property="og:description" content="人生世间，数十年光阴，瞬息即过。若或虚度，则欲再得此光阴，决无可得之时。人之成败，全在幼时。幼时若已空过，若至二十岁时，已经失其机会。汝父母俱以余为师。余于汝，颇存希望成一真正淳善之器，以慰汝父母爱汝之心。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-122/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复某居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人生世间，数十年光阴，瞬息即过。若或虚度，则欲再得此光阴，决无可得之时。人之成败，全在幼时。幼时若已空过，若至二十岁时，已经失其机会。汝父母俱以余为师。余于汝，颇存希望成一真正淳善之器，以慰汝父母爱汝之心。</p><p class="p-trans">人生世间，数十年的光阴，眨眼呼吸间就过去了。如果虚度，那么想要再得到这个光阴，绝对没有能得到的时候。人的成败，全在幼年的时候。幼年的时间如果已经空过，如果到了二十岁时，便已经失去了机会。你父母都以我为师。我对于你，心存很大的希望，希望你成为一个真正淳厚和善的人，来安慰你父母疼爱你的心。</p></div>
+<div class="para-pair"><p class="p-orig">汝宜立大志向，学做好人。切不可随顺恶少，胡作非为。凡行一事，说一话，必须要于己于人有益。汝现在已成人娶妻矣。不一二年即为人父矣。汝若无真正志向，则将来汝之儿女，便学汝之随顺庸流，无所成就矣。</p><p class="p-trans">你应该立大志向，学做好人。千万不可以随顺品行恶劣的年轻人，胡作非为。凡是做一件事，说一句话，必须要对于自己、对于他人有益。你现在已经成人娶妻了。不到一二年就将成为他人的父亲。你如果没有真正的志向，那么将来你的儿女，就会学你随顺庸流，无所成就了。</p></div>
+<div class="para-pair"><p class="p-orig">父母者，儿女之模范也。譬如铸器，模范不好，决不能令所铸之器好。人虽至愚，决无不愿儿女好者。不知儿女之好否，当在自己心行中求。况汝生于富贵，了未受过艰苦。须知汝之安乐，过上二十年，乃汝父之力之所加被耳。倘汝不立志，汝父在则犹可依靠。然已六十多矣，断不能照应汝一生。此时不立志，汝父若一去世，汝一事不能为。将有倾家破产，不免饥寒之忧。到此纵能知悔，已经来不及了。</p><p class="p-trans">父母，是儿女的模范。譬如铸造器具，模型不好，绝对不能让所铸造的器具好。一个人即使愚痴到了极点，也绝无不愿意自己儿女好的。你不知道儿女的好坏，应当在自己的存心、行为中去求。何况你生在富贵之家，从来没有受过一点艰苦。必须知道你的安乐，过上二十年，那是你父亲的力量所加被。倘若你不立志，你父亲在世，那么还可以依靠他。然而他已经六十多岁了，断然不能照应你一生。此时你不立志，如果你父亲一去世，你一件事都不能做。将有倾家破产，不免饥寒困苦的忧虑。到这个时候，纵然能够知道悔改，已经来不及了。</p></div>
+<div class="para-pair"><p class="p-orig">汝宜每日将太上感应篇，文昌阴骘文，关帝觉世真经，日读三五遍，至少须一遍。亦令汝妻日日读之，自可知为人之道理。既知为人之道理，则便可继汝父之家风。凡一切人皆钦仰汝，以为汝父素好善，故有此令郎。此其荣为何如也。光宗耀祖，成家立业，只在能立志学好而已。岂有甚么难行难做处。祈详审思之。（民十八十一月十六日）</p><p class="p-trans">你应该每天将《太上感应篇》、《文昌帝君阴骘文》、《关帝觉世真经》，每天读三五遍，至少必须读一遍。也令你妻子天天读这些书，自然能够知道做人的道理。既然知道了做人的道理，就能够继承你父亲的家风。凡一切人都钦佩景仰你，认为你父亲一向好善，所以有这样一个好儿子。这个荣耀，有什么能与之相比呢？光宗耀祖，成家立业，只在能够立志、学做好人而已。哪有什么难行难做的地方。请详细审察思维。（民国十八年&lt;1929 &gt;十一月十六日）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

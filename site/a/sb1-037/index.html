@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>上段执政书 · 印光法师文钞</title>
+<meta name="description" content="夙钦盛德，灼具正知。现国主之身，行如来之事。护持佛法，功德难量。逖听下风，莫名欢赞。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-037/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="上段执政书 · 印光法师文钞">
+<meta property="og:description" content="夙钦盛德，灼具正知。现国主之身，行如来之事。护持佛法，功德难量。逖听下风，莫名欢赞。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-037/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">上段执政书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">夙钦盛德，灼具正知。现国主之身，行如来之事。护持佛法，功德难量。逖听下风，莫名欢赞。</p><p class="p-trans">早就钦敬您崇高的品德，灼然具有正知正见。现国主之身，行如来之事。护持佛法，功德难量。我们早已远远听闻您的的德风，非常欢喜赞叹。</p></div>
+<div class="para-pair"><p class="p-orig">乃闻近日内务部将应薛京兆尹之请，颁布寺产登记条例。山野愚见，窃谓不可。夫苛法扰民，仁者不为。</p><p class="p-trans">听闻近日内务部将要应京兆尹薛笃弼的请求，颁布《寺产登记条例》。我们山野愚僧的见解，认为绝对不可以。苛刻的律法扰乱人民，是仁德者所不为的事。</p></div>
+<div class="para-pair"><p class="p-orig">况寺庙财产，所以供养三宝，实为众生福田，尤非寻常可比。民国十年修正管理寺庙条例文中，明载与普通人民受同等保护。既曰同等，岂宜别订苛条。</p><p class="p-trans">何况寺庙财产，所用来供养三宝，实在是众生的福田，尤其不是寻常的资财可比的。民国十年(1921年)，《修正管理寺庙条例》文中，明文记载佛教与普通人民受同等保护。既然说是同等，哪里适宜另外制订苛刻的条例呢？</p></div>
+<div class="para-pair"><p class="p-orig">且以宗教言之，似亦不应稍有歧视。乃今所拟登记条例，专属寺产，而不及教会财产，甚非所以示政令之大公也。</p><p class="p-trans">而且以各大宗教来说，似乎也不应该稍有歧视。而如今所拟定的《登记条例》，专门指寺庙财产，而不涉及教会财产，也不是显示政令公正的适宜举动。</p></div>
+<div class="para-pair"><p class="p-orig">查前颁管理寺庙条例中，又云寺庙财产，当向地方官厅登记。虽未明定登记之法，然既言各宗教与普通人民同受保护，则当然与民产登记事同一例。</p><p class="p-trans">查看以前颁布的《管理寺庙条例》中，又说到寺庙财产，应当向地方政府机关登记。虽然没有明文规定登记的办法，然而既然说各个宗教与普通人民，共同受政府保护，就当然与民产登记的事（适用）同一个规则。</p></div>
+<div class="para-pair"><p class="p-orig">明文已见，何庸更由内部重行颁定，致与前令抵触。为特不避冒昧，上渎钧听。恳请广运慈心，迅予饬部将是项建议取销，以免苛扰。</p><p class="p-trans">明文已见，何须再由内务部重行颁定，致使与前面的政令抵触。为此特地不避冒昧，上书亵渎您的视听。恳请您广运慈心，迅速饬令内务部，将这项建议取销，以免苛政扰民。</p></div>
+<div class="para-pair"><p class="p-orig">深仁厚泽，宁惟缁流感戴不忘。一切诸佛，当亦同声赞善也。无任迫切待命之至。</p><p class="p-trans">您的深仁厚泽，哪里只是僧众感戴不忘。一切诸佛，应当也同声赞善啊！非常迫切等待您的命令。</p></div>
+<div class="para-pair"><p class="p-orig">僧谛闲印光谨启</p><p class="p-trans">僧人谛闲、印光谨启</p></div>
+<div class="para-pair"><p class="p-orig">附复函</p><p class="p-trans">附回信</p></div>
+<div class="para-pair"><p class="p-orig">迳启者，奉执政发下来函一件，内称内务部将应薛京兆尹之请，颁布寺产登记条例，恳请饬部取销等情。奉批，查止等因。除函内务部外，特此函复，即希慧照。</p><p class="p-trans">迳启者，奉段执政发下来的一封信，信内称内务部将要应京兆尹薛笃弼的请求，颁布《寺产登记条例》，恳请饬令内务部取消等情况。奉上级批示，查明停止等原因。除函告内务部外，特此回复，希望您能知道。</p></div>
+<div class="para-pair"><p class="p-orig">临时执政府秘书厅启</p><p class="p-trans">临时执政府秘书厅启</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【段祺瑞】</span>（1865-1936），原名启瑞，字芝泉，晚号正道老人，汉族，安徽合肥人，生于1865年3月6日（同治四年二月初九日），为民国时期政治家，皖系军阀首领。段祺瑞信佛吃素，为人严肃刻板，不苟言笑，生活朴素，清廉如水，无积蓄房产，不抽、不喝、不嫖、不赌、不贪、不占，人称“六不总理”；一生酷爱围棋，资助过大批围棋手（包括吴清源），被称作“中国围棋的大后台”，还好打牌；段祺瑞喜用私人，刚愎自用，在军事上并无出色战功和理论，有非凡的组织才能，善于利用政治手腕和军事手腕维护自己的统治，因致电逼迫清帝退位、抵制袁世凯称帝和讨伐张勋复辟这三件事，有“三造共和”的美誉。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【逖听】</span>犹逖闻。常表示恭敬。汉司马相如《封禅文》：“率迩者踵武，逖听者风声。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【下风】</span>比喻处于下位，卑位。有时作谦辞。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【薛笃弼】</span>（1890-1973）运城人。山西法政学校毕业。早年参加同盟会。1911年后任临汾地方审判厅厅长。1923年后任北洋政府司法部次长、国务院代秘书长。1924年任内务部次长、京兆尹。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【京兆尹】</span>京兆尹是中国古代官名，为三辅（治理京畿&lt;jī&gt;地区的三位官员，即京兆尹、左冯&lt;píng，本意：马跑得快&gt;翊&lt;yì，辅佐之意&gt;、右扶风）之一。相当于今日首都的市长。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【何庸】</span>何用，何须。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【钧听】</span>对尊长听闻的敬称。宋陆游《上二府论都邑札子》：“干冒钧听，下情恐惧之至。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【饬】</span>旧时亦指上级对下属的一种公文。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【径启者】</span>直接收读信函的人。旧时书信中套词，不作寒暄恭维，直接陈事时用之。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

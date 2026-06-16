@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周法利居士书（三） · 印光法师文钞</title>
+<meta name="description" content="汝书看过，但汝之所说，通是排场作戏之派，绝非由阅历实行中来。现今时局不好，商业凋敝，汝以不能即发大财，便不欲为商，而又欲为儒。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-149/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周法利居士书（三） · 印光法师文钞">
+<meta property="og:description" content="汝书看过，但汝之所说，通是排场作戏之派，绝非由阅历实行中来。现今时局不好，商业凋敝，汝以不能即发大财，便不欲为商，而又欲为儒。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-149/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复周法利居士书（三）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝书看过，但汝之所说，通是排场作戏之派，绝非由阅历实行中来。现今时局不好，商业凋敝，汝以不能即发大财，便不欲为商，而又欲为儒。</p><p class="p-trans">你的信看过了，但是你所说的，全都是讲排场，作大戏的派头，绝对不是从实修的阅历中得来的。现在的时局不好，商业衰败萧条，你因为不能马上发大财，就不想从商，而又想做儒生治学。</p></div>
+<div class="para-pair"><p class="p-orig">然商场滥污，当不至于随波逐浪以陷溺。儒与商，大势相等。商之滥污，人所易知。儒之滥污，人尚景仰。汝若无出格知见，必致陷于此之漩涡。</p><p class="p-trans">可是商场虽然龌龊卑污，你当不至于随波逐浪地沉溺变坏。儒界与商界，大势相同。商界的龌龊卑污，人们容易知道。儒界的龌龊卑污，人们还很是景仰。你如果没有杰出卓越的知见，必会陷于这个漩涡之中。</p></div>
+<div class="para-pair"><p class="p-orig">汝只学得说大话，不知尧舜之道，孝弟而已，君子之道，在子臣弟友间。穷尽天下事物之理，虽圣人亦决做不到。但能格除自己心中私欲之物，则天下事物之理，悉可穷尽矣。</p><p class="p-trans">你只学到了说大话，却不明白尧舜圣人之道，只是孝敬父母，敬爱兄长而已；君子之道，在于做人的儿子、臣下、弟弟、朋友之间。穷尽天下事物的道理，即使是圣人也绝对做不到。只要能够格除自己心中的私欲这个物，那么天下事物的道理，就都可以全部、彻底地了解了。</p></div>
+<div class="para-pair"><p class="p-orig">心之私欲，举其重者，即贪，瞋，痴，财，色，货利，声名，势位，凡有嗜好者，皆为私欲。即理学违理说理，尤为私欲之大者（此时国家多难，人民痛苦，皆理学破因果，孕育而来），不可不知。</p><p class="p-trans">心中的私欲，举出其中严重的，就是贪、瞋、痴、财、色、货物财利、名声、权势地位，凡是有所嗜好的，都是私欲。现在的理学家违背正理而宣说歪理，这更是最大的私欲（现在国家多难，人民痛苦，都是因为理学家排斥因果报应，慢慢孕育而来的），不可不知。</p></div>
+<div class="para-pair"><p class="p-orig">圣人教人格致诚正修齐治平之法，乃教人从近至远，从亲至疏，令心中之人欲格除，则本具之良知自现。</p><p class="p-trans">古圣先贤教导人们的格物、致知、诚意、正心、修身、齐家、治国、平天下的方法，是教导人们根据关系从近至远，从亲至疏，使心中的私欲格除，那么本具的良知就会自然显现。</p></div>
+<div class="para-pair"><p class="p-orig">从兹意诚，心正，身修，家齐，国治，天下平。岂穷尽天下事物之理，方能诚意正心乎。如此而言，非读尽世出世间一切书，游遍各国者，便无诚意正心之希望矣。</p><p class="p-trans">从此之后意念得以真诚，内心得以端正，自身得以修养，家庭得以管理，国家得以治理，天下得以太平。哪里是只有穷尽天下事物的道理，方才能够诚意正心呢？要是按照这种说法，不读尽世间、出世间的一切书籍，游遍世界各国的人，就没有诚意正心的希望了。</p></div>
+<div class="para-pair"><p class="p-orig">须知格除私欲，以致良知，而诚意正心，虽一字不识之人，亦做得到。若穷尽天下事物之理，以求至于其极，虽圣人也做不到。</p><p class="p-trans">要知道格除私欲，以使本具的良知显现，这样诚意正心，即使是一个字都不认识的人，也可以做得到。如果穷尽天下事物的道理，来追求达到极致，即使是圣人也做不到。</p></div>
+<div class="para-pair"><p class="p-orig">汝不知朱子认错了物与格，故辟佛，破因果轮回。又剽窃禅宗参究之法以自雄，故曰，而一旦豁然而贯通焉。汝若以彼所说之格物为是，汝一生也格不到穷尽处，说什么豁然贯通。</p><p class="p-trans">你不知道朱熹认错了“物”与“格”的意思，所以他驳斥佛法，破除因果轮回。又剽窃禅宗参究的方法自以为了不起，所以他说：“一下子豁然而贯通了”。你如果认为他解释的“格物”（朱熹认为格物是：认识研究万事万物）是对的，你一生也“格”不到穷尽之处，还说什么豁然贯通。</p></div>
+<div class="para-pair"><p class="p-orig">此一上络索，关系甚大，故为汝说，亦令汝父看。至汝之为商为儒，汝自审察。若看见前段说汝之毛病，不生感激，反生烦恼，则汝之为商也是伪商，为儒也是伪儒。</p><p class="p-trans">这上面的一番啰嗦，关系很大，所以才对你讲说，也让你父亲看看。至于你是为商还是为儒，你自己仔细考虑好。如果看到前面说你毛病的一段话，你不但不生起感激心，反而生起烦恼，那么你从商也会是个奸商，学儒也会是个伪儒。</p></div>
+<div class="para-pair"><p class="p-orig">离伦常因果，而作事教人，亦只落得自误误人之实际。恐汝尚梦不及此，故为预说。如不相信，不妨存之，以为后来依违成败之鉴。</p><p class="p-trans">离开伦理纲常，因果轮回，来作事情，教导他人，也只会落得一个自误误人的真实境地。担心你还梦不到这些道理，所以才预先对你讲说。如果你不相信，不妨保存这封信，作为将来依之则成功，违之则失败的借鉴。</p></div>
+<div class="para-pair"><p class="p-orig">无锡国学专修馆，乃前清翰林唐文治所办。其人双目不见。彼所注之十三经读本，施省之出数万金为刻板，印二百部，祈光作序，光因祈送一部。</p><p class="p-trans">无锡国学专修馆，是前清翰林唐文治所创办的。这个人双目失明。他所注解的《十三经读本》，施省之出了几万元钱为他刻板流通，印了二百部，请我写序，我因此请他送我一部。</p></div>
+<div class="para-pair"><p class="p-orig">一部八十多本，不贴书签，不印书根，此八十多本，将何以检收乎。以此知但守古法，不知利人。</p><p class="p-trans">一部有八十多本，书面不贴上书签，书的下切口不印上书根，这八十多本书，如何来验收呢？因此知道他们只知道遵守古法，不知道利益眼前人。</p></div>
+<div class="para-pair"><p class="p-orig">光冗事多，不能备阅。略翻一翻，见其书经之舜典，太甲，咸有一德，说命等篇，咸指为伪。</p><p class="p-trans">我杂事很多，不能全部阅读。大略翻一翻，看见《尚书》中的《舜典》、《太甲》、《咸有一德》、《说命》等篇章，他都认为是伪造的。</p></div>
+<div class="para-pair"><p class="p-orig">于咸有一德，皆指其所引之书以为证。而不思作伪者，可引咸有一德之后之文，作此诸书之人，何得不引从前咸有一德之文乎。</p><p class="p-trans">对于《咸有一德》，都指出《咸有一德》成文之后，引用《咸有一德》语句的书来做证明。而不想想作伪者，固然可以引用《咸有一德》成文之后的文章，那些引用《咸有一德》语句的各种书籍的作者，怎会不引用从前真正的《咸有一德》的语句呢？</p></div>
+<div class="para-pair"><p class="p-orig">光于是大惧。后见施省之，说彼欲为千古第一高人，而立异以邀后世之名，致自己之目，不见天日，可不哀哉。</p><p class="p-trans">我于是大为恐惧。后来见到施省之，告诉他，唐文治想要成为千古第一高人，才标新立异来求取后世的名声，致使自己的眼睛，不能见到天日，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">●（其二）前日接汝书，备悉。汝已娶妻，当常以悦亲之心为念。夫妻互相恭敬，不可因小嫌隙，或致夫妻不睦，以伤父母之心。</p><p class="p-trans">●（第二封信）前几天收到你写来的信，详情都清楚了。你已经娶妻，应当常常想着要如何让父母高兴。夫妻之间要互相恭敬，不可因为小的矛盾，导致夫妻不和睦，从而伤了父母的心。</p></div>
+<div class="para-pair"><p class="p-orig">中庸云，妻子好合，如鼓瑟琴，兄弟既翕，和乐且耽，宜尔室家，乐尔妻孥。子曰，父母其顺矣乎。盖言夫妻兄弟和睦，则父母心中顺悦也。</p><p class="p-trans">《中庸》中说：妻子儿女感情和睦，就像弹琴鼓瑟一样。兄弟关系融洽，和顺又快乐。使家庭美满，使妻子儿女安乐和美。孔子说：这样，父母也就称心如意了啊！这是说夫妻兄弟关系和睦，父母的心中就和顺愉悦。</p></div>
+<div class="para-pair"><p class="p-orig">现为人子，不久则又为人父。若不自行悦亲之道，必生忤逆不孝之儿女。譬如瓦屋檐前水，点点滴滴照样来。</p><p class="p-trans">你现在在家庭里的身份是儿子，不久又要做父亲。如果不自己实行愉悦双亲之道，必定生下忤逆不孝的儿女。譬如瓦屋檐前的雨水，点点滴滴都是照着原来样子落下来的。</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，不能常训示汝。汝肯努力尽子道，则便可以入圣贤之域，将来往生西方，乃汝所得之法利也。汝妻法名法益，肯依法而行，自得真实利益也。</p><p class="p-trans">我老了，不能常常训导开示你。你肯努力恪尽为人之子的孝道，就可以达到圣贤的地位，将来往生西方，这是你所得的“法利”（周法利）。你的妻子法名“法益”，肯依照佛法去实行，自然会得到真实的利益。</p></div>
+<div class="para-pair"><p class="p-orig">麻疯病，为不易治之痼疾。去年因庞性存放赈，得以发明。今寄此方（即初机先导后，所载之大麻疯方），以期遍布。若贵地亦有此病，不妨大家提倡熬膏耳。</p><p class="p-trans">麻疯病，是不容易治好的顽固疾病。去年因在庞性存放赈期间，得到一个方子，而为之提倡。今天寄上这个药方（就是《初机先导》一书的后面，所记载的《大麻疯方》），期望能够广泛流布。如果贵地也有这种病，不妨大家提倡，照方子熬药膏救人。</p></div>
+<div class="para-pair"><p class="p-orig">●（其三）汝在银行，当一切时，小心勤慎。且莫学说大话，不认真用心于小事。须知此种派头，乃系败子之派头。以未做大事，便忽略小事，以为我是大才，何拘拘于此。须知此系自欺欺人之下流种子。</p><p class="p-trans">●（第三封信）你在银行工作，当在一切时候，都要小心勤勉谨慎。千万不要学说大话，在小事上不认真用心。要知道这种派头，是败家子的派头。因为还没做大事，就忽略小事，认为自己是大才，怎能拘束在这些小事上。要知道这都是自欺欺人的下流种子。</p></div>
+<div class="para-pair"><p class="p-orig">凡做大事的人，于小事决不肯轻忽。凡轻忽小事的人，决定不能担任大事。何以知之。以君子素其位而行。</p><p class="p-trans">凡是做大事的人，在小事上决不会轻视疏忽。凡是轻视疏忽小事的人，绝对不能担任大事。何以知之呢？因为君子都是按照他的身份地位来做事。</p></div>
+<div class="para-pair"><p class="p-orig">汝在做小事的地位，不肯尽职尽分，以为我何用心于此。及乎一得大事，便骄奢淫泆起来。良由根本未立，何由枝节畅茂发达乎哉。</p><p class="p-trans">你在做小事的地位，不肯尽职责、尽本分，认为自己何必要把心思花在这些地方。等到一旦做大事的时候，就会生起骄奢淫逸之心。实在就像树的根和本还没有长好，如何能使枝叶旺盛繁茂呢？</p></div>
+<div class="para-pair"><p class="p-orig">喻如一人，小有才，亦小有修持，心中便觉得我很高明，很有修持。因此贡高我慢之心，招起宿世曾受怨害之怨家对头，为其现身，入其心窍。弄得才不成才，修不成修。</p><p class="p-trans">譬如一个人，有一点小才华，也有一点小小的修持，心中便觉得我很高明，很有修持。因此生起贡高我慢的心，招来宿世曾受到他伤害的怨家对头，显现出身相，进入他的心窍之中。弄得他才不成才，修不成修。</p></div>
+<div class="para-pair"><p class="p-orig">使此人谦恭孝顺，由此修持之力，当能消灭夙业，增长善根。将来临终，往生西方，得超凡入圣之真利益。校彼以贡高自误，其利害何止天渊悬殊。此事汝固知，故以此为汝前途之鉴。</p><p class="p-trans">假使这个人谦恭孝顺，由此修持之力，当能消灭宿世的罪业，增长善根。将来临终的时候，往生西方，得到超凡入圣的真实利益。相比于因为贡高我慢而耽误自己的人，其中的利害何止是天渊之别。这些事理你一定要明白，所以我才说这些话作为你前途的借鉴。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【凋敝】</span>衰败；困苦。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【滥污】</span>犹龌龊，卑污。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【陷溺】</span>浸润，影响；使变坏。比喻深深陷入错误的泥淖而无法自拔。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【锡国学专修馆】</span>1920年12月，由施省之、陆勤之等捐款创办。近代国学大师唐文治任馆长。1930年改名为无锡国文专修学校，按当时大学要求办学，实行学分制，学制3年。解放后改名为中国文学院，1952年全国院系调整后并入江苏师范学院（苏州大学），该校提倡厚植基础，博览专精。办学30余年培养出不少国学大师，在海内外享有声誉。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【唐文治】</span>（1865-1954），字颖侯，号蔚芝，晚号茹经，清同治四年（1865年）十月十六日生，原籍江苏太仓，民国元年（1912年）定居无锡。父亲唐若钦为清贡生，以课徒教书为业。唐文治自幼从父攻读经书，……民国9年，唐文治因目疾加深，辞去上海工业专门学校校长职务，回无锡前西溪寓所休养。是年夏，应学生高阳之请，担任私立无锡中学校长。年底，又应聘任无锡国学专修馆（后改为无锡国学专修学校）馆长。这时他已双目失明，但仍亲自授课。朗诵古文，抑扬顿挫，时称“唐调”，并录制唱片。……1954年4月9日，唐文治病逝于上海，终年89岁。著有《茹经堂文集》、《茹经堂奏书》、《茹经先生自订年谱》等。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【书签】</span>悬于卷轴一端或贴于封面的署有书名的竹、牙片，纸或绢条。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【书根】</span>书籍下端的切口部分。线装书卧置，为便于检阅，常利用书根书写或加印书名、卷次和册数。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【尚书】</span>《尚书》是我国最早的一部史书，也是古代世界著名的历史典籍之一。古人“尚”与“上”通用，“书”原来就是史，上古时，史为记事之官，书为史官所记之史，由于这部书所记载的是上古的史事，所以叫做《尚书》。《尚书》也就是上古史的意思，“尚书者，上古帝王之书，或以为上所为，下所书，故谓之《尚书》。”（王充《论衡·正说篇》）《尚书》也是我国最早的一部文件汇编，它的“典”、“谟”、“训”、“诰”、“誓”、“命”六体，有的是讲演辞，有的是命令、宣言，有的是谈话记录。《尚书》记事的内容，上起原始社会末期的唐尧，下至春秋时的秦穆公。《尚书》按时代先后，分为《虞书》、《夏书》、《商书》、《周书》四个部分，共100篇。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【舜典】</span>《尚书》篇章之一，记载了虞舜的言行，具有很高的历史研究价值。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【太甲】</span>是伊尹教导太甲的训辞。据《史记·殷本纪》记载：太甲继承帝位后三年，凶恶残酷，不遵守先祖成汤制定的法典，胡作非为，于是伊尹把他放逐到桐宫替中壬守丧。伊尹代理太甲处理国事，接受诸侯的朝见。太甲在桐宫守丧三年，悔过自新，于是，伊尹又把太甲迎接回国都，交还政权。从此，太甲注重品德修养，诸侯都归附殷商，百姓过着安居乐业的生活。伊尹嘉许太甲，就作了《太甲》这三篇训辞。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【咸有一德】</span>伊尹作《咸有一德》。号召商朝的君臣要有良好的品德。伊尹既复政厥辟，将告归，乃陈戒于德。曰：“呜呼！天难谌，命靡常。常厥德，保厥位。厥德匪常，九有以亡。夏王弗克庸德，慢神虐民。皇天弗保，监于万方，启迪有命，眷求一德，俾作神主。惟尹躬暨汤，咸有一德，克享天心，受天明命，以有九有之师，爰革夏正。”</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【说命】</span>《说命》是古文《尚书》中专门论述教育问题的篇章。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

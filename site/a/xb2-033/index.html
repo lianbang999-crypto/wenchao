@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>晋莲宗初祖庐山慧远法师文钞序（民二十四年） · 印光法师文钞</title>
+<meta name="description" content="如来大法，弥纶法界，包括空有。示本具之真心，显随缘之妙用。其心体则生佛一如，圣凡不二，真常不变，寂照圆融。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-033/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="晋莲宗初祖庐山慧远法师文钞序（民二十四年） · 印光法师文钞">
+<meta property="og:description" content="如来大法，弥纶法界，包括空有。示本具之真心，显随缘之妙用。其心体则生佛一如，圣凡不二，真常不变，寂照圆融。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-033/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">晋莲宗初祖庐山慧远法师文钞序（民二十四年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来大法，弥纶法界，包括空有。示本具之真心，显随缘之妙用。其心体则生佛一如，圣凡不二，真常不变，寂照圆融。</p><p class="p-trans">如来大法，统摄法界，包括空有。显示本具的真心，以及随缘的妙用。心的本体，众生与佛一如，圣者凡夫不二，真常不变，寂照圆融。</p></div>
+<div class="para-pair"><p class="p-orig">佛以究竟证故，故得五蕴皆空，诸苦悉度，一尘不立，万德圆彰。众生以彻底迷故，故致迷真逐妄，背觉合尘，轮回生死，了无出期。</p><p class="p-trans">佛因为究竟证得的缘故，所以五蕴皆空，度尽一切苦厄，一尘不立，万德圆彰。众生因为彻底迷惑的缘故，所以导致迷失真心，追逐妄境，背离觉性，合于六尘，轮回生死苦海，没有出离的日期。</p></div>
+<div class="para-pair"><p class="p-orig">于是如来，随众生机，说种种法，令彼各各就路还家，亲见本生之父母。探衣出珠，即获无尽之家珍。上根固得解脱，中下仍在轮回。特开净土法门，令其横超三界。普使中下，追踪上根。其为利益，莫能名焉。</p><p class="p-trans">于是如来，随众生的根机，宣说种种法，令众生各各就路还家，亲见本生的父母（见自性）。从自己的衣中，取出宝珠，即刻获得无尽的家珍。上根固然可以得到解脱，但中下根机的众生，却仍旧在生死轮回之中。所以特别开启了净土法门，令众生横超三界。普使中下根人，追随上根人得到解脱。此等利益，无法用语言来表达。</p></div>
+<div class="para-pair"><p class="p-orig">此义虽出方等，其道实肇华严。但以凡小不能预会，莫由禀承。当华严未来之前，率目为方便小道。迨行愿既译之后，方知为成佛真诠。</p><p class="p-trans">这个义理虽然出于方等经中，但这个法道实际上起始于《华严经》。因为凡夫小乘，不能参加华严法会，没有办法禀承会上所说的净土法门。当《华严经》还未传来之前，大家都将净土法门，看成是方便法、小乘道。等到《普贤行愿品》译出之后，才知道净土法门是成佛的真谛。</p></div>
+<div class="para-pair"><p class="p-orig">庐山远公，宿承佛嘱，乘愿再来。未睹涅槃，即著法性常住之论。未见华严，便阐导归极乐之宗。</p><p class="p-trans">庐山慧远大师，宿世承佛嘱咐，乘愿再来。还没有读过《涅槃经》，就撰著了《法性论》，谈法性常住的道理。还没有读过《华严经》，就阐明导归极乐的宗旨。</p></div>
+<div class="para-pair"><p class="p-orig">立法暗与经合，其道普被三根。契理契机，彻上彻下。畅如来出世之本怀，了含识生死之大事。若非大权示现，其孰能预于此。</p><p class="p-trans">他所立之法暗中与经典相合，他所弘扬的法道普被上中下三种根机。契合佛理和众生的根机，彻上彻下。畅达如来出世的本怀，了脱众生生死的大事。如果不是大权菩萨示现，有谁能预先说出这些法呢？</p></div>
+<div class="para-pair"><p class="p-orig">故罗什法师曰，经言，末后东方，当有护法菩萨，勖哉仁者，善弘其事。西域僧众，咸称汉地有大乘开士，辄东向稽首，献心庐岳。其神理之迹，未可测也。</p><p class="p-trans">所以鸠摩罗什法师说：“经中言，‘末后东方，当有护法菩萨’，勉励呀！仁者，你善于弘扬佛法。”西域僧众，都称汉地有大乘菩萨，经常向东稽首，向庐山慧远大师表达真诚归敬之心。其中的一些神通事迹，不可测度。</p></div>
+<div class="para-pair"><p class="p-orig">按远公，于东晋孝武帝太元九年甲申，始至庐山，住同门慧永法师之西林寺。后以来学者多，西林隘不能容，故复开东林寺。经始之时，山神效灵，材木自至。刺史桓伊，乃为建造，名其殿为神运，表灵异焉。</p><p class="p-trans">据史籍记载，慧远大师，在东晋孝武帝太元九年甲申（384年），才到达庐山，住在同门师兄弟慧永法师的西林寺。后来因为来学习的人众多，西林寺狭隘，不能容纳，所以又开建了东林寺。开始营建的时候，山神来效劳，木材自然备齐运至。刺史桓伊，于是为之建造，命名这座殿为神运殿，以显示这件事情的灵异。</p></div>
+<div class="para-pair"><p class="p-orig">由是缁素高贤，来者益众。至太元十五年庚寅，七月二十八日，与缁素一百二十三人，结社念佛，求生西方。</p><p class="p-trans">从此僧俗高人贤士，来的人一天天多起来。到了太元十五年庚寅（390年），七月二十八日，与僧俗一百二十三人，结莲社念佛，求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">此诸人等，于临终时，皆有瑞应，皆得往生。良由诸人，均具出类拔萃之智，又蒙远公开导，及诸友切磋琢磨之力，故获此益。</p><p class="p-trans">这一百二十三人，在临终时，都有祥瑞的感应，全都得以往生。实在是由于这些人，都具有出类拔萃的智慧，又承蒙慧远大师的开导，以及诸位道友的切磋琢磨之力，所以才获得了这样的利益。</p></div>
+<div class="para-pair"><p class="p-orig">此系最初结社之人。若终公之世，三十余年之内，其蒙法化而修净业，得三昧而登莲邦者，何可胜数。</p><p class="p-trans">这还只是最初结社的人。如果按慧远大师在世来算，三十多年之内，其中蒙受法化而修习净业，证得三昧而登入莲邦的人，又怎能数得清呢。</p></div>
+<div class="para-pair"><p class="p-orig">溯远公于太元九年甲申至庐山，于义熙十二年丙辰，八月初六日西逝，凡三十二年，影不出山，迹不入俗。</p><p class="p-trans">上溯慧远大师于太元九年甲申（384年）到达庐山，于义熙十二年丙辰（416年），八月初六日西逝，一共三十二年，身影从未出过庐山，行迹从未入过尘俗。</p></div>
+<div class="para-pair"><p class="p-orig">其弘扬法化，护持佛教之著述，备载庐山集。以屡经沧桑，佚失殆尽。幸弘明集，广弘明集，各有所录，犹令古德芳徽，永传于世。</p><p class="p-trans">他弘扬法化，护持佛教的著述，全都记载在《庐山集》中。因为屡经沧桑，散失殆尽。幸而《弘明集》、《广弘明集》中，各自有所收录，还能令古德的美好功德事迹，永远流传于世。</p></div>
+<div class="para-pair"><p class="p-orig">如皋沙健庵太史，晚年笃信佛法，专修净业。博览群书，凡远公著述，及后人所作传赞记颂等，悉备录之，题曰慧远法师文钞。</p><p class="p-trans">江苏如皋沙健庵太史，晚年深信佛法，专修净业。博览群书，凡是慧远大师的著述，以及后人所作的传赞记颂等，全都辑录下来，题为《慧远法师文钞》。</p></div>
+<div class="para-pair"><p class="p-orig">分正附二编。其门人项智源，又为补录，委光校订而排印焉。窃以远公为莲宗初祖，其书广布，阅者必能兴起。但以资斧不给，先印万册以为之倡，则后之源源相继而印者，又何可计其数耶。</p><p class="p-trans">分为正附二编。他的学生项智源，又作了补录，委托我校订排印。我想到，慧远大师是莲宗初祖，他的书能够广泛流布，读者必定能够因感动而奋起。但因为资费不足，先印一万册，作为提倡，那么将来源源相继而倡印这本书的人，又怎么能数得过来呢？</p></div>
+<div class="para-pair"><p class="p-orig">后之学者，由此书故，悉知净土法门之所以然，必至当仁不让，追踪先觉，同出五浊，同登九莲也。故于付排之前，略叙来历。至于远公之道德，功业，文章，感通，备载文钞正附二编，兹不繁述。</p><p class="p-trans">将来的学人，由于这本书的缘故，全都了知了净土法门的所以然，必定会当仁不让，追随效法先觉，同出五浊恶世，同登九品莲邦。所以在交付排版之前，大略叙述了本书的来历。至于慧远大师的道德、功业、文章、感通，全都记载在《文钞》的正附二编中，这里就不多加叙述了。</p></div>
+<div class="para-pair"><p class="p-orig">世传远公，与十八高贤，一百二十三人结社。十八人中，远公居首，余十五人，多系最初结社之人。</p><p class="p-trans">世人相传慧远大师，与十八位高人贤士，一百二十三人结莲社念佛。十八人当中，慧远大师居首，其余十五人，大多是最初结社之人。</p></div>
+<div class="para-pair"><p class="p-orig">若佛驮跋陀罗，系安帝义熙二年始入社，乃结社后第十七年。佛驮耶舍，系义熙十年入社，乃结社后第二十五年。</p><p class="p-trans">像佛驮跋陀罗尊者，是安帝义熙二年（406年）才入社的，这已是结社后的第十七年。佛驮耶舍尊者，是义熙十年（414年）入社，这已是结社后的第二十五年。</p></div>
+<div class="para-pair"><p class="p-orig">飞锡法师宝王论，谓远公从佛驮跋陀罗受念佛三昧，与缁素高贤结社念佛。盖尊西僧，而未详考其入社之年时耳。</p><p class="p-trans">飞锡法师的《宝王论》中说，慧远大师从佛驮跋陀罗尊者受念佛三昧，与僧俗高人贤士结社念佛。这大概是尊敬西土僧人，而没有详细考证佛驮跋陀罗尊者入社的年代、时间。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【弥纶】</span>统摄；笼盖。《易·系辞上》：“《易》与天地准，故能弥纶天地之道。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【追踪】</span>追随；效法。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【法性论】</span>东晋庐山慧远撰。今已失佚，仅于梁高僧传卷六慧远传中引用一部分。内容旨在论述佛陀之常住不变。然慧远之时代，世人尚不知“涅槃常住”之说，故鸠摩罗什亦赞誉本论见识之高卓。又本论可略窥阿毗昙（偏指佛教经律论三藏中的论藏）之精神，故推论其著作年代约于太元六年至太元十六年（381年-391年）之间，即慧远辞别其师道安而入庐山，至译出阿毗昙心论之间。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【开士】</span>音译菩提萨埵。又作阐士。开，明达之意。指开正道，以引导众生者；特指菩萨。盖菩萨明解一切真理，能开导众生悟入佛之知见，故有此尊称。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【经始】</span>开始营建；开始经营。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【神运殿】</span>传说在东林建寺之初，慧远大师为筹集木材而发愁。一日，远公寐至夜半，梦中忽见一位自称“庐山之神”的白须老人对远公言道：“此处幽静足以栖。”这天夜里，天空雷电交加、风雨大作，等到天明的时候一看，殿前的池塘中已涌出了许多上好的木材，解了慧远大师的燃眉之急。这都是慧远大师诚心鉴于天地，德行有感于神灵，故有此神助。后来，慧远大师以此木料所建之殿堂就命名为“神运殿”，涌出木材的那口池塘就叫“出木池”。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【弘明集】</span>（书名）十四卷，梁释僧佑撰。凡十篇。皆东汉以下至于梁代阐明佛法之文。其辩难攻诘者，亦具载其往复之语。六代遗编。流传最古。梁以前名流著作，今无专集行世者，颇赖以存。佛教中雅驯之言也。唐释道宣有广宏明集三十卷。虽为此书之续编。而体例小殊。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【广弘明集】</span>（书名）三十卷，唐释道宣撰。其书续梁僧佑弘明集而体小殊。分十一篇：一曰归正，二曰辨惑，三曰佛德，四曰法义，五曰僧行，六曰慈济，七曰戒功，八曰启福，九曰悔罪，十曰统归。每篇各为小序，大旨与僧佑书相同。见四库提要。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【兴起】</span>因感动而奋起。《孟子·尽心下》：“奋乎百世之上，百世之下，闻者莫不兴起也。非圣人而能若是乎？”</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【佛驮跋陀罗】</span>（359-429）梵名Buddhabhadra。又作佛陀跋陀罗、佛度跋陀罗、佛大跋陀、佛陀跋陀。意译作觉贤、佛贤。五世纪之译经僧。北印度那呵利城人，姓释，为迦维罗卫城甘露饭王之后裔。十七岁出家，修业精勤，博学群经，特精禅、律，后与同参僧伽达多游罽宾，依从佛大先受禅法。后应智严之请，于后秦弘始十年（408）顷入长安，弘传禅术之学，以不习长安世俗，又与罗什门下不合，故与弟子慧观等四十余人离长安，滞留庐山慧远处数年，译出达摩多罗禅经；义熙十一年（415）至建康（今南京），止住道场寺，从事翻译，与法显合译摩诃僧祇律、大般泥洹经，又独译出大方广佛华严经六十卷等，凡十三部，一二五卷。刘宋元嘉六年示寂，世寿七十一。世称天竺禅师，为庐山十八高贤之一。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【佛陀耶舍】</span>东晋译经家。庐山十八贤之一（印祖已经说明不是）。又译佛驮耶舍。意译觉明、觉名、觉称。北印度罽宾人，属婆罗门种。因赤髭，且精通毗婆沙，故又被称为“赤髭毗婆沙”或“大毗婆沙”。十三岁出家，十九岁即能持诵大、小乘经数百万言。二十七岁始受具足戒。仍以读诵为务，精进不懈。后居沙勒国十余年，深受太子达磨弗多所敬重。鸠摩罗什游学至该国时，曾从师学《阿毗昙》、《十诵律》。
+姚秦·弘始十年（408），师应鸠摩罗什之请，抵长安助其译出《十住经》。十二年（一说十年）至十四年间，应校尉姚爽之请，于长安中寺译出《四分律》六十卷、《长阿含经》二十二卷（与竺佛念合译）、《四分僧戒本》一卷。义熙八年（412）入庐山。后归罽宾，途中偶得《虚空藏菩萨经》一卷，托商贾携致凉州诸僧。其后不知所终。生卒年不详。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

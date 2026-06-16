@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>致谛闲法师问疾书 · 印光法师文钞</title>
+<meta name="description" content="二月下旬，闻公自温归来，身婴笃疾，手足不便运动。光固知我公悲心深重，欲令现在诸学子，及一切四众，及早努力修行。勿待病魔临身时，则不易摆脱矣。其直以口说，尚恐不亲切，遂现身以说。可谓深慈大悲无以复加矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-060/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="致谛闲法师问疾书 · 印光法师文钞">
+<meta property="og:description" content="二月下旬，闻公自温归来，身婴笃疾，手足不便运动。光固知我公悲心深重，欲令现在诸学子，及一切四众，及早努力修行。勿待病魔临身时，则不易摆脱矣。其直以口说，尚恐不亲切，遂现身以说。可谓深慈大悲无以复加矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-060/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">致谛闲法师问疾书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">二月下旬，闻公自温归来，身婴笃疾，手足不便运动。光固知我公悲心深重，欲令现在诸学子，及一切四众，及早努力修行。勿待病魔临身时，则不易摆脱矣。其直以口说，尚恐不亲切，遂现身以说。可谓深慈大悲无以复加矣。</p><p class="p-trans">二月下旬，听说您从温州回来，身患重病，手脚行动不便。我固然知道您悲心深重，想要使得现在的诸位学人，以及一切四众弟子，及早努力修行。不要等到病魔缠身时，就不容易摆脱了。直接以口说，恐怕不够亲切，于是您现身来说法。可说是深慈大悲，无以复加了。</p></div>
+<div class="para-pair"><p class="p-orig">光自愧财法两缺，欲效愚忱，直无其力。但只旁问于根祺然云辈。后闻佛曦谓病已复原，但足尚不能大行。意谓行固能行，但艰于出外而已。</p><p class="p-trans">我很惭愧财法两方面都缺乏，想要奉效一点微薄真诚之心，简直没有力量。只能在一旁问问根祺、根然、根云等人。后来听佛曦说，您的病已经复原了，但是脚还不能多走动。我以为走应该能走几步，只是很难出门而已。</p></div>
+<div class="para-pair"><p class="p-orig">昨万年寺住持了悟见访，问及，言吃饭说话，与好人无异。唯手足绝不能动，虽饮食便利，一一须人代为周旋。光窃念病体如此，何以弘法。或令浅见之人，谓佛法无灵。</p><p class="p-trans">昨天万年寺的住持了悟来访，向他打听您的情况，说：吃饭说话，与好人无异。只是手脚完全不能动，即便饮食便利，一一都须有人代为照顾。我想到您病成这样，如何弘法。或许令浅见的人，认为佛法不灵验。</p></div>
+<div class="para-pair"><p class="p-orig">以故数十年讲经，天下闻名之大法师。身婴痼疾，只管求医服药，亦不见愈。彼素谓依教修持，能转定业，及阿伽陀药，万病总持者，皆诳人耳。若其不诳，彼当依教转彼定业。彼素崇净土，以弥陀名号为阿伽陀药，何不服之。</p><p class="p-trans">因为（浅见之人会认为）几十年讲经且天下闻名的大法师，竟身患重病，而且任凭求医服药，也不见好。他一向都说：依教修持，能转定业，以及阿伽陀药，万病总持，都是骗人罢了。如果他不是诳骗，他应当依教转他自己的定业。他一向崇奉净土，以阿弥陀佛名号为阿伽陀药，为什么自己不服呢？</p></div>
+<div class="para-pair"><p class="p-orig">又普门品，观音圆通，讲时不晓得多有道理。直是菩萨跟到称名求救者。彼既如此，何不放下身心，拌一条穷性命，志心念观音菩萨，以求身心悉皆安隐。以及得大解脱，获真圆通也。</p><p class="p-trans">另外，《普门品》，《观世音菩萨耳根圆通章》，讲的时候，不晓得多有道理。简直是菩萨跟着称名求救的人。他既然如此，为什么不放下身心，拼一条穷性命，志心念观世音菩萨，以求身心都得安隐。以及得大解脱，获真圆通呢？</p></div>
+<div class="para-pair"><p class="p-orig">光念世人多有此见。倘我公能仰求大士垂慈，即令贵体复原，福慧崇朗。则彼浅知浅见者，将断尽狐疑，增长正信。当相率而出邪途，入佛道，以期普利自他于无既也。是诚所谓以大慈悲，现身说法也。其利益大矣。</p><p class="p-trans">我想到世间人，大多有这些见解。倘若您能仰求观世音大士垂慈，令您的贵体健康复原，福慧崇朗。那么那些浅知浅见的人，将断尽狐疑，增长正信。应当相率而走出邪途，进入佛道，以期普利自他于无穷啊！这是真正的所谓以大慈悲，现身说法！这个利益就太大了。</p></div>
+<div class="para-pair"><p class="p-orig">按周克复观音持验记，载一事。其病与公稍同，其人品与公天地悬殊。彼尚能蒙菩萨加被，令其宿业顿消，痼疾立愈。况我公为现在法门第一人，其法道之兴衰，系于一身之存亡。</p><p class="p-trans">按周克复的《观音持验记》中，记载一件事。他的病与您稍有相同，这个人的人品与您是天地悬殊。他尚且能够蒙菩萨的加被，令他宿业顿消，痼疾立刻痊愈。何况您现在是法门中的第一人，法道的兴衰，系在您一身的存亡。</p></div>
+<div class="para-pair"><p class="p-orig">倘能将平日与人讲普门品，及观音圆通之全幅精神，用称念洪名。当不离此心，即蒙消宿业而获安隐。转使先生讥诮，谓为佛法不灵者，皆相援而皈依信奉，唯恐或后也。</p><p class="p-trans">倘若能够将平时与人讲《普门品》，以及《观音圆通》的全付精神，用来称念万德洪名。必当不离此心，就蒙菩萨慈佑，消宿业而获安隐。转变先前那些冷言讥讽，认为佛法不灵的人，都相互而来皈依信奉，唯恐落在后面啊！</p></div>
+<div class="para-pair"><p class="p-orig">明崇祯辛巳，当涂县官圩，有山东一瘫子至。以手代足，乞食于市，人多厌之。瘫者虽病而负气，被骂詈，辄不平。闻塘桥庵，有修行僧曰水谷，往诉以乞食艰难之苦。谷曰，汝能发心出家，仗慈悲大力，或有施主。</p><p class="p-trans">明朝崇祯辛巳年（1641年）。安徽省当涂县官圩镇，有山东的一个瘫子来，用手代脚走路，在集市乞讨食物，人们大多讨厌他。瘫子虽然有病却不肯向人低头，被人骂后，心中不平。听说塘桥庵，有一位修行僧人名叫水谷，前往诉说乞食艰难之苦。水谷说：你能发心出家，仗菩萨慈悲大力，或许有施主来供养你。</p></div>
+<div class="para-pair"><p class="p-orig">瘫子从之，遂剃发，受斋戒。虽行乞，不茹荤血。虽被辱骂，安忍而受。谷又教以念观世音名号，兼持准提咒。受持逾二年。戊子秋，忽梦一老妪呼之曰，汝起汝起。瘫子云，我是瘫子，何能起。老妪以手扯其两足，觉直而不拳。晨起瘫病遂愈，居然一昂藏之僧矣。取号曰半崖，遂有供养之者。出唐宜之己求书。</p><p class="p-trans">瘫子就听从了，于是剃发，受斋戒。虽然行乞，不吃荤血。虽被辱骂，安然忍受。水谷又教他念观世音名号，兼带持准提咒。受持超过二年。戊子年（1648年）秋天，忽然梦到一位老妇人对他呼叫说：你起来！你起来！瘫子说：我是瘫子，如何能起来。老妇以手扯他的双脚，觉得腿脚伸直而不拳曲。早晨起来，瘫病竟然痊愈，居然成了一位气宇轩昂的僧人了。取名号为半崖，于是有人发心供养他。这个故事出自唐宜之的《己求书》。</p></div>
+<div class="para-pair"><p class="p-orig">观音大士，唯以寻声救苦为事。从古至今，其蒙感应而离苦恼者，何止百千万亿也。而载籍所传，乃亿万中略见一二而已。然公之本心，光固不得而知，且约己浅见为论。即实受安乐，绝无苦恼。亦当以求菩萨救苦，为大众作榜样也。</p><p class="p-trans">观世音菩萨，唯以寻声救苦为事。从古至今，蒙受感应而离苦恼的人，何只百千万亿。而记载在书籍中所传下来的，是千亿万中，略见一二而已。然而您的本心，我固然无法知道，暂且依照我的浅见来说。即使您实际是享受安乐，完全没有苦恼。那也应当祈求菩萨救苦，为大众作个榜样啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【笃疾】</span>1.重病。2.不治之病。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【见访】</span>谦辞。访问我。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【便利】</span>1.敏捷；灵活。2.排泄屎尿。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【周旋】</span>照顾；周济。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【周克复】</span>清初周克复居士，著《观世音菩萨经咒持验记》上下卷，见卍绩藏一三四册。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【讥诮】</span>冷言冷语地讥讽。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【当涂】</span>当涂县位于安徽省东沿，长江下游东岸，介于南京、芜湖之间，紧倚并隶属于钢城马鞍山。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【负气】</span>凭恃意气，不肯屈居人下。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【昂藏】</span>气度轩昂。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【唐宜之】</span>著名居士，明末嘉靖时进士。蕅益大师有《复唐宜之书》。《径中径又径征义译注》曰：“唐宜之，名叫唐时，专修佛观。他路过南京长干寺，礼塔念佛时，看见塔顶放出白光，佛为他现相，像黄金一样颜色。一天他在禅堂，推开窗户，忽然看见大海之中涌出一座山，佛坐在上面，光芒四射。一时，墙壁林木，全都空无所见。这是他的精诚所感如此。”   《观世音持验纪》明崇祯辛巳。当涂县官圩。有山东一瘫子至。以手代足。乞食于市。人多厌之。瘫者虽病而负气。被詈骂。辄不平。闻塘桥庵有修行僧曰水谷。往诉以乞食艰难之苦。谷曰。汝能发心出家。仗慈悲大力。或有施主。瘫者从之。遂剃发受斋戒。虽行乞。不茹荤血。虽被辱骂。安忍而受。谷又教之念观世音名号。兼持准提咒。受持踰二年。戊子秋。忽夜梦一老妪呼之曰。汝起。汝起。瘫者云。我是瘫子。何能起。老妪以手扯其两足。觉直而不拳。晨起瘫病遂愈。居然一昂藏之僧矣。取号曰半崖。遂有供养之者。（出唐宜之己求书）</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

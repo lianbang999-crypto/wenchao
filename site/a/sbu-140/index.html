@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>在南京佛教慈幼院开幕式上的报告（概要） · 印光法师文钞</title>
+<meta name="description" content="民国十一年秋冬之交，冯梦老，魏梅荪，王幼农，庞性存诸居士，妙莲，心净两师，以天地大德曰生，因有组织放生会之举。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-140/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在南京佛教慈幼院开幕式上的报告（概要） · 印光法师文钞">
+<meta property="og:description" content="民国十一年秋冬之交，冯梦老，魏梅荪，王幼农，庞性存诸居士，妙莲，心净两师，以天地大德曰生，因有组织放生会之举。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-140/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 法语开示</div>
+      <h1 class="art-title">在南京佛教慈幼院开幕式上的报告（概要）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">民国十一年秋冬之交，冯梦老，魏梅荪，王幼农，庞性存诸居士，妙莲，心净两师，以天地大德曰生，因有组织放生会之举。</p><p class="p-trans">民国十一年（1922）秋冬之际，冯梦老（注1）、魏梅荪、王幼农、庞性存诸位居士，妙莲、心净两位法师，因“天地大德曰生”（注2），因此有组织放生会的举动。</p></div>
+<div class="para-pair"><p class="p-orig">方峻生居士昆仲曾将祖遗三汊河下庄之地相让，只收半价，余作功德。在观音庵商定之际，印光适来宁，赞成斯议，遂承魏王诸君，推与冯梦老领衔发起。</p><p class="p-trans">方峻生居士兄弟曾将祖上遗留的三汊河下庄的土地相让，只收半价，其余的作功德。他们在观音庵商定的时候，我刚好来到南京，赞成这个议定，于是承蒙魏梅荪、王幼农诸君，推举我与冯梦老领衔发起这件事。</p></div>
+<div class="para-pair"><p class="p-orig">数年之间，蒙诸大善信踊跃乐助，先后建筑殿舍，浚池多处。规模初具，工程营造，心净师劳苦功多。</p><p class="p-trans">几年之间，承蒙诸大善信踊跃乐助，先后建筑殿舍，疏浚多处放生池。初具规模，工程的营造，心净法师劳苦功多。</p></div>
+<div class="para-pair"><p class="p-orig">十二年春间，任心白君迭函提议就放生池区域之内，建慈幼院一所。冯梦老，王一老，徐积老，魏，王，庞诸公一致赞成，因又有组织佛教慈幼院之举。荷诸大善信慷慨乐助，集款亦有数万，院宇早经落成。</p><p class="p-trans">民国十二年（1923）春天，任心白居士多次写信提议，在放生池的区域之内，建立一所慈幼院。冯梦老、王一老（注3）、徐积老（注4）、魏梅荪、王幼农、庞性存诸公一致赞成，因此又有组织佛教慈幼院的举动。承蒙诸位大善信慷慨乐助，所募集的钱款也有几万，院宇早已经落成。</p></div>
+<div class="para-pair"><p class="p-orig">适梦老筹办淮徐兵灾，遴送灾童三十余名，益以金陵城厢无依孤儿，共得五十余名。已于正月初，开始授课。兹值印光来宁，举行开幕。蒙省长，县长，诸大善信，莅临指教，不胜感幸。</p><p class="p-trans">正值冯梦老筹办淮徐兵灾，挑送三十多名灾童，加上南京城厢无依无靠的孤儿，一共五十多名。已经在正月初，开始授课。现正值我来到南京，举行开幕典礼。承蒙省长、县长、诸位大善信，莅临指教，非常感激荣幸。</p></div>
+<div class="para-pair"><p class="p-orig">本院经营方始，甚属幼稚。更愿省长，县长，诸大善信时赐督策，尤为企祷。诸生大半来自灾区，离苦得乐，务须牢记苦因，奋发向学。庶不负省长，县长，诸大善信之厚望。</p><p class="p-trans">本院经营才刚刚开始，非常缺乏经验。更希望省长、县长、诸位大善信，时时给予督促鞭策，这是我们更加盼望的。诸位学生大半来自灾区，离苦得乐，必须牢记苦因，奋发向上、好好学习。才能不辜负省长、县长、诸位大善信的厚望。</p></div>
+<div class="para-pair"><p class="p-orig">法云寺基址未定，得方峻生居士昆仲又以中上两庄完全售让，邓朴老发起四十八愿，建筑大殿。任捐亦已过半，不久即可兴工。难舍能舍，难行能行，均为无上稀有因缘。</p><p class="p-trans">法云寺的地址未定，得到方峻生居士兄弟，又将中上两庄完全售让，邓朴老（注5）发起四十八愿，建筑大殿。任资捐助也已经超过一半，不久就能动工。难舍能舍，难行能行，都是无上稀有的因缘。</p></div>
+<p class="p-orig">【参考】</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【冯梦华】</span>（1842-1927），名冯煦，号蒿庵，江苏金坛人。母朱氏，梦僧拈花入室，遂寤而生，故字曰梦华。少好词赋，有江南才子之目。累举不第，久寓江宁，与顾云齐名。年四十五，始成光绪十二年探花。历凤阳守，四川按察使。累官安徽巡抚，上疏请核名实，明赏罚，忤朝旨罢斥。民国政府命督办江淮赈务，江苏省长聘纂《江南通志》，年已八十，犹能作蝇头小楷。煦工诗词骈文，尤以词名，所著《蒙香室词》。书宗钟繇，虞世南及孙过庭，醇朴劲厚，有骨有肉，神采晔然。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【天地大德曰生】</span>“天地之大德曰生，生生之谓易”，是孔子在《易经》里的话。此句中有三个“生”字，且意思完全一致，都指的生生不息。我们常人觉得世界有生物，有非生物，比如矿物即没有生命，这是人的理解，实际上不是这样，大自然的每一处都是生生不息的，没有生命的东西是不存在的！只是生命的样式不完全一样。天地的最大恩德，是为宇宙和人类提供了生生不息的环境，让各类生命各得其所，安身立命。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【王一亭】</span>（1867-1938），号白龙山人、梅花馆主、海云楼主等，法名觉器。祖籍浙江吴兴（今湖州市），生于上海周浦。清末民国时期海上著名书画家、实业家、杰出慈善家、社会活动家与宗教界名士。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【徐积余】</span>（1869-1943），徐乃昌，字积余，晚号随庵老人，南陵工山汤村徐人，出身望族。伯父徐文达曾任两淮盐运使、福建按察使，堂兄徐乃光曾任驻美国纽约首席领事。徐乃昌自幼熟读经史。光绪十九年（1893年）中举，二十七年任淮安知府，特授江南盐巡道。曾主办积谷、厘捐、赈捐和督察通海垦务。约于光绪二十八年受命考察日本学务，回国后提调江南中、小学堂事务，总办江南高等学堂，督办三江师范学堂（南京大学前身）。徐为官清正，以礼待人，重视录用、提拔有才识的人。清亡后，隐居著述和校刊古籍，成为近代著名的藏书家、学者。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【邓际昌】</span>（1856-1930），原名来琛，字璞君（朴君），如皋县东马塘镇人，贡生。为同治七年（1868）进士、直隶临清知州邓瑛后人。光绪卅一年（1905）任山东正四品道台兼直隶济宁知州，努力推行“新政”。1908年，邓际昌代青州镇总兵，民国元年（1912）任登州总兵。1914年又任山东政务厅长。1919年回任济宁道尹。三年后辞官归田。此后一直从事佛教和慈善活动。</p>
+<p class="note-item"><span class="note-n">[1]</span>民国十五年六月一日，即丙寅四月二十一日，上午十一时，南京佛教慈幼院举行开幕式。陈陶遗省长、曹翰庭县长以及政、商界来宾六十余人出席。印光大师担任会议主席，率慈幼院教职员和全体院生顶礼三宝，向国旗和院旗行鞠躬礼，然后报告慈幼院筹建经过。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

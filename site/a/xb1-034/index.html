@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复闵宗经居士书（民国二十年　原名永濂） · 印光法师文钞</title>
+<meta name="description" content="读与明道师书，具知为民为法之心，不胜欣慰。凡有犯法议罚，当须按其罪，并须量其力。若无财力，罚多，则一蹶不振，亦未免伤为民父母之谊。有力则可，无力则示警而已，庶几两适其适。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-034/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复闵宗经居士书（民国二十年　原名永濂） · 印光法师文钞">
+<meta property="og:description" content="读与明道师书，具知为民为法之心，不胜欣慰。凡有犯法议罚，当须按其罪，并须量其力。若无财力，罚多，则一蹶不振，亦未免伤为民父母之谊。有力则可，无力则示警而已，庶几两适其适。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-034/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复闵宗经居士书（民国二十年　原名永濂）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">读与明道师书，具知为民为法之心，不胜欣慰。凡有犯法议罚，当须按其罪，并须量其力。若无财力，罚多，则一蹶不振，亦未免伤为民父母之谊。有力则可，无力则示警而已，庶几两适其适。</p><p class="p-trans">读了你写给明道师的信，完全知道了你为民众、为佛法的一片心，非常欣慰。凡是有人犯法，在议定处罚的额度时，应当按照犯人所犯罪行的大小，并衡量其财力来处理。如果犯人没有财力，罚的太多，那么他就会一蹶不振，也未免有伤身为人民父母官的形象。有财力，可以量罪罚钱，没有财力就警示他一下算了，或许这样能使得两方面都合适。</p></div>
+<div class="para-pair"><p class="p-orig">至于寺门改向，殿亦改立，旧殿之本师石像不能动，又何须虑。正殿既供本师，偏殿岂不可又供本师乎。此固不须过虑。</p><p class="p-trans">至于改变寺门的方向，同时改建大殿，旧殿本师释迦牟尼佛的石像不能移动，又何须多虑。正殿既然可以供奉本师，难道偏殿就不可以又供奉本师吗？这些无须过虑。</p></div>
+<div class="para-pair"><p class="p-orig">汝已辞职，若上峰不许，则固宜照旧整理。但只取简朴，不取华美。只期大家实信实行，不必定要作何建筑，撑何场面。</p><p class="p-trans">你已经辞职了，如果上司不允许改建，那么就应该照原来的结构整理。只要本着简朴而不华美的原则就行了。只期望大家真实相信，真实修行，不必一定要作什么建筑，撑什么场面。</p></div>
+<div class="para-pair"><p class="p-orig">净土一法，人人可修，修之均有感应。今人多多皆是好高务胜，以致或因撑场面，反累实益也。</p><p class="p-trans">净土法门，人人都可以修习，修了都有感应。现在的人大多都是好高务胜，以致或因撑场面，反而拖累了获得真实利益。</p></div>
+<div class="para-pair"><p class="p-orig">现今之人，一动手先讲建筑。未知净土之所以，便欲遍研大乘经论。或慕禅宗之玄妙，或慕相宗之精微，或慕密宗之神通。将仗佛力了生死之法，视之若不济事者。</p><p class="p-trans">现今的人，一动手修行，就先讲建筑。不知净土法门的所以然，便想要全面研究大乘经论。或者仰慕禅宗的玄妙，或者仰慕相宗的精微，或者仰慕密宗的神通。将这个依仗佛力了生死的法门，看作好像不顶用一样。</p></div>
+<div class="para-pair"><p class="p-orig">禅宗，纵能悟，谁到业尽情空地位。相宗，纵能记清名相，谁能真破我法二执。密宗之神通，及现身成佛，亦实有其事，然非尔我之根性所可冀及。有欲得神通，欲即成佛，而由兹著魔发狂者甚多。</p><p class="p-trans">禅宗，纵然能够开悟，有谁能达到业尽情空的地位。相宗，纵然能够记清名相，有谁能够真正破除我、法二执。密宗的神通，以及现身成佛，也确实有这样的事，然而这不是你我的根性可以期望达到的。有想要得神通，想要即身成佛，却由此而著魔发狂的人倒是有很多。</p></div>
+<div class="para-pair"><p class="p-orig">显荫，既通台宗，又得密宗真传，已是灌顶大阿阇黎。凡所与灌顶之人，通皆现身成佛。彼到死时，咒也不会念，佛也不会念。在彼平时，心中，语意中，每以法身大士相拟。到了临终，尚不如一字不识之老太婆，老实念佛者，为能安然念佛而逝之为愈也。</p><p class="p-trans">显荫，既通达天台宗，又得到密宗的真传，已经是灌顶的大阿阇黎。凡是由他灌顶的人，全都可现身成佛。显荫到死的时候，咒也不会念，佛也不会念。在他平时，心中，语意中，每每以法身大士相比拟。到了临终，还不如一字不识的老太婆，老实念佛的人，能够安然念佛往生做得好。</p></div>
+<div class="para-pair"><p class="p-orig">成都有刘某，妄以一女人为证果，唯此女人之言是听。凡有驳者，即绝交不与通函。重庆一喇嘛，谓依彼之法，七日即可往生。一往生即成佛，并不须再行修习。此种知识，当敬而远之，勿一亲近，庶不至未得彼之益，先受彼之损。</p><p class="p-trans">成都有一位刘某，错妄地认为一个女人证了果，因而只听这个女人的话。凡是有批驳她的人，就绝交不与其通信。重庆有一位喇嘛，说依他的法修持，七天就可以往生。一往生就成佛，并不须要再行修习了。这种所谓的知识，应当敬而远之，一次都不要亲近，才不至于没有得到他的利益，却先受其损害。</p></div>
+<div class="para-pair"><p class="p-orig">否则，得损处可保稳当，得益处恐怕在驴年。若明年便属驴年，则亦可为大幸，恐明年不是，则或至绝望。</p><p class="p-trans">否则的话，得损害，可以保证是稳得；得益处，恐怕却要在驴年了。如果明年就是驴年，那么还算是非常幸运。若明年不是驴年，那么或许就要绝望了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>净土指要（民二十年） · 印光法师文钞</title>
+<meta name="description" content="净土法门，乃如来一代时教中之特别法门。三根普被，利钝全收。等觉菩萨，不能超出其外。逆恶罪人，亦可预入其中。不断惑业，得出轮回。即此一生，定登佛国。末世众生，根机陋劣，舍此法门，其何能淑。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-136/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="净土指要（民二十年） · 印光法师文钞">
+<meta property="og:description" content="净土法门，乃如来一代时教中之特别法门。三根普被，利钝全收。等觉菩萨，不能超出其外。逆恶罪人，亦可预入其中。不断惑业，得出轮回。即此一生，定登佛国。末世众生，根机陋劣，舍此法门，其何能淑。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-136/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">净土指要（民二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，乃如来一代时教中之特别法门。三根普被，利钝全收。等觉菩萨，不能超出其外。逆恶罪人，亦可预入其中。不断惑业，得出轮回。即此一生，定登佛国。末世众生，根机陋劣，舍此法门，其何能淑。</p><p class="p-trans">净土法门，是如来一代时教中的特别法门。三根普被，利钝全收。即使是等觉菩萨，也不能超出其外。即使是五逆十恶的罪人，也可以预入其中。不断惑业，也可出离轮回。就在这一生，必定能登上极乐佛国。末法时代的众生，根机陋劣，若舍弃此法门，如何能了脱生死呢？</p></div>
+<div class="para-pair"><p class="p-orig">凡修净业者，第一必须严持净戒，第二必须发菩提心，第三必须具真信愿。戒为诸法之基址，菩提心为修道之主帅，信愿为往生之前导。</p><p class="p-trans">凡是修净业的人，第一必须严持净戒，第二必须发菩提心，第三必须具有真实的信愿。戒是诸法的基址，菩提心是修道的主帅，信愿是往生的前导。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，以信，愿，行三法为宗。非信何由发愿，非愿何由起行，非持名妙行，何由证所信而满所愿。得生与否，全由信愿之有无。品位高下，全由持名之深浅。</p><p class="p-trans">净土法门，以信、愿、行三法为纲宗。没有真信，如何能发愿？没有切愿，如何起行持？没有持名妙行，如何由此来证得自己所相信的法门，满足自己的大愿。蕅益大师说：“得生与否，全由信愿之有无。品位高下，全由持名之深浅。”</p></div>
+<div class="para-pair"><p class="p-orig">信愿行，如鼎三足，缺一则蹶。若不注重信愿，唯期持至一心，纵令深得一心，亦难了生脱死。何以故。以烦惑未尽，不能仗自力了生死。信愿既无，不能仗佛力了生死。</p><p class="p-trans">信、愿、行，就像鼎的三足，缺一就会倒下。如果不注重信愿，只期望执持佛号到一心不乱，纵然令你深得一心不乱，也很难了生脱死。为什么呢？因为烦惑并未断尽，所以不可能依仗自力了生脱死。而且又无信愿，所以也不可能依仗佛力了生脱死。</p></div>
+<div class="para-pair"><p class="p-orig">世有好高务胜者，每每侈谈自力，藐视佛力。不知从生至死，无一事不仗人力，而不以为耻。何独于了生死一大事，并佛力亦不愿受，丧心病狂，一至于此。净宗行者，所当切戒。</p><p class="p-trans">世上有些好高务胜的人，常常喜欢侈谈自力，轻视佛力。他们哪里懂得，人从生到死，没有一件事是不依仗他人之力的，而他们却不以为耻。为何唯独对于了生脱死这件大事，连佛力也不愿意接受呢？这些人丧心病狂，竟然到了如此地步。净宗的修行人，务必要戒除这种思想。</p></div>
+<div class="para-pair"><p class="p-orig">至于修持法则，常当如子忆母，行住坐卧，语默周旋，一句佛号，绵绵密密，任何事缘，不令间断。都摄六根，净念相继。能如是者，决定往生。</p><p class="p-trans">至于修持的法则，应当恒常如子忆母，无论行住坐卧、言语静默、与人周旋，都要一句佛号，绵绵密密，任何事缘，不令佛号间断。都摄六根，净念相继。能这样做的人，一定可以往生。</p></div>
+<div class="para-pair"><p class="p-orig">又须心念仁恕，气象浑穆。忍人所不能忍，行人所不能行。代人之劳，成人之美。常思己过，莫论人非。</p><p class="p-trans">还必须心念仁慈忠恕，气质质朴淳和。忍人所不能忍，行人所不能行。代人之劳，成人之美。常思己过，莫论人非。</p></div>
+<div class="para-pair"><p class="p-orig">等觉菩萨，二六时中，礼十方佛，忏除宿业。况在凡地，常当惭愧，何敢自恃。若自恃者，纵有修持，皆属魔业。如是之人，切勿亲近，免致日久，与之俱化。</p><p class="p-trans">即使是等觉菩萨，还要二六时（昼夜）中，礼拜十方诸佛，忏除宿业。更何况我们这些身在凡夫地位的人，应当恒常惭愧，如何敢自负。自负的人，纵然有一些修持，也都属于魔业。这样的人，千万不要亲近，免得日子久了，被他同化。</p></div>
+<div class="para-pair"><p class="p-orig">直须守定宗旨，不随经教及善知识语言所转，舍此别修也。此之法门，乃十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门。</p><p class="p-trans">必须守定宗旨，不被经教以及善知识的语言所转，从而舍弃净土法门，去修其他法门。这个净土法门，是十方三世一切诸佛，向上成就佛道，向下度化众生，成始成终的总持法门。</p></div>
+<div class="para-pair"><p class="p-orig">一切法门，无不从此法界流。一切行门，无不还归此法界。故得九界同归，十方共赞，千经俱阐，万论均宣。</p><p class="p-trans">一切法门，无不从此法界流。一切行门，无不还归此法界。故得九法界同归，十方佛共赞，千部经都来阐扬，万部论全都宣讲。</p></div>
+<div class="para-pair"><p class="p-orig">吾辈末学，何可立异，以取自误误人之罪愆乎。愿深思之，愿深思之。</p><p class="p-trans">我们这些末学，怎么可以标新立异，获取自误误人的罪过呢？希望大家深思，希望大家深思啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【其何能淑】</span>《诗经·大雅·桑柔》：“其何能淑，载胥及溺”。淑，善，好；载，句首语助词，无义；胥，相；及，与；溺，落水。意思是：那如何做得好，不过是相率落水罢了。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【蹶】</span>颠仆；跌倒。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【二六时】</span>十二时辰。旧时以地支分一昼夜为十二时辰，因用以谓一天到晚，整天整夜。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>安徽马其昶之女听金刚经病愈坐脱记 · 印光法师文钞</title>
+<meta name="description" content="安徽马其昶，字通白，乃现今之文学大家，著述甚富。初则唯究儒宗，不知佛法。近十数年，方知佛为大圣人，其教有不可思议之事。因日诵金刚经，兼持佛号，求生西方。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-181/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安徽马其昶之女听金刚经病愈坐脱记 · 印光法师文钞">
+<meta property="og:description" content="安徽马其昶，字通白，乃现今之文学大家，著述甚富。初则唯究儒宗，不知佛法。近十数年，方知佛为大圣人，其教有不可思议之事。因日诵金刚经，兼持佛号，求生西方。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-181/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 传记记事祭文</div>
+      <h1 class="art-title">安徽马其昶之女听金刚经病愈坐脱记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">安徽马其昶，字通白，乃现今之文学大家，著述甚富。初则唯究儒宗，不知佛法。近十数年，方知佛为大圣人，其教有不可思议之事。因日诵金刚经，兼持佛号，求生西方。</p><p class="p-trans">安徽马其昶（注1），字通白，是现今的文学大家，著述很丰富。起初他只是研究儒家学问，不知道佛法。近十多年，才知道佛是大圣人，其教法有不可思议的事。因此每天持诵《金刚经》，兼持佛号，求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">其第三女，名君干，适方氏，颇聪明，通文理，有古烈女风，通白甚爱之。其于提倡女学，不遗余力，初肄业于沪上务本女塾，继受北洋大臣袁公聘，开女子师范学校于天津，后又游学日本，以广见闻。唯于佛法，绝无信向。</p><p class="p-trans">他的三女儿，名君干，嫁到方家，人很聪明，通达文理，有古代烈女的风范，马通白很疼爱她。君干对于提倡女子教育（注2），不遗余力，起初在上海务本女塾（注3）学习，接着受北洋大臣袁公（袁世凯）的聘请，在天津开办女子师范学校，后来又游学日本，以增广见闻。只是对于佛法，绝无信心归向。</p></div>
+<p class="p-trans">民国五年五月，产后得病，苦难忍受。通白悯之，对彼念金刚经。彼一闻经声，身心安乐，及至经歇，复觉苦痛，通白遂彻夜为念。忽坐起，止令勿念，若好人然。</p>
+<p class="p-trans">民国五年（1916年）五月，产后得病，痛苦难忍。马通白怜悯她，就对着她念《金刚经》。她一听到诵经声，就身心安乐，等到诵经一停下来，又开始觉得苦痛，马通白于是便整夜为她念经。她忽然坐起来，让父亲不要再念，如同好人一样。</p>
+<div class="para-pair"><p class="p-orig">且曰，我于金刚经所说道理，悉皆悟到。便欲现大人相，说无生法，冀一切见闻之人，同种善根，诡言家中褊隘，欲往医院将养。以通白与其婿方时简，同寓京师，租屋共住，故不能过为宽敞幽雅也。通白见其志决，乃令其夫送之德国医院，择极超胜之屋安置之，令其夫与医院侍人各去，彼则合掌坐脱矣。</p><p class="p-trans">而且说：我对于《金刚经》中所说的道理，全都悟到了。便想要示现大人相，演说无生法，希望一切见闻之人，同种善根，假装说家里太狭小，想要到医院调养。因为马通白与她的女婿方时简，一同寓居北京，租屋共住，所以不能十分宽敞幽雅。马通白见她意志坚决，就令她的丈夫送她到了德国医院，选择非常舒适高级的房间安置她，等到她的丈夫与医院的护士等人各自离去后，她就合掌坐脱了。</p></div>
+<div class="para-pair"><p class="p-orig">噫嘻异哉。此与庞居士女灵照，以日蚀绐其父离座，彼即踞座以坐脱者何异。李木公素不信佛，闻通白说此因缘（木公，通白门生，十年秋，通白回安徽，过沪，至木公家说之），全家归依三宝。普门品所谓应以何身得度者，即现何身而为说法，讵不信欤。而其夫时简所作行状，反湮没之，其罪过实非浅鲜。</p><p class="p-trans">唉呀！实在是奇异啊！这与庞居士的女儿庞灵照（注4），用日食哄骗他的父亲离座，她就坐到父亲的蒲团上坐脱的事情，有什么不同呢？李木公一向不信佛，听马通白讲说了这段因缘（李木公，是马通白的门生，民国十年&lt;1921&gt;秋&lt;注6&gt;，马通白回安徽，经过上海，到李木公家谈到此事），全家归依三宝。《普门品》中所谓的：应以何身得度者，即现何身而为说法，怎能不相信呢？而她的丈夫方时简所写马君干的传文中（注5），反而湮没了这个奇迹，这个罪过实在不浅。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【马其昶】</span>（1855-1930），近代散文家。安徽桐城人。字通伯，晚号抱润翁。光绪间曾任学部主事、京师大学堂教习。辛亥革命后，为清史馆总纂，撰有《清史稿》的光宣列传，并修订文苑传等。其散文淡简，是桐城派末期的代表人物。著作有《抱润轩文集》、《毛诗学》等。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【女学】</span>旧时指以妇德、妇言、妇功、妇容四项内容教育妇女。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【务本女塾】</span>1902年10月，吴馨将家塾迁至上海小南门内，扩大规模，改名务本女塾。该校以培养学生成为贤母良妻为宗旨，注重家政，认为“女子为国民之母，欲陶冶健全国民，根本须提倡女教”，故该校取名“务本”。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【庞灵照】</span>（人名）庞蕴居士之女也。庞蕴居士语录曰：“居士将入灭，谓女灵照曰：视日早晚，及午以报，灵照出户。遽报曰：日已中矣，而有蚀焉，可试暂观，居士避席临窗，灵照乃据榻趺坐而逝。居士回见，笑曰：吾女锋疾矣。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【行状】</span>文体名。专指记述死者世系、籍贯、生卒年月和生平概略的文章。也称状、行述。</p>
+<p class="note-item"><span class="note-n">[6]</span>本篇可参考《增广文钞》卷四《马母姚夫人往生事实发隐》。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复永嘉某居士书四 · 印光法师文钞</title>
+<meta name="description" content="兹知欲居通州之意。虽志在成就子弟，而不知子弟之成，唯在家教。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-049/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复永嘉某居士书四 · 印光法师文钞">
+<meta property="og:description" content="兹知欲居通州之意。虽志在成就子弟，而不知子弟之成，唯在家教。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-049/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复永嘉某居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">兹知欲居通州之意。虽志在成就子弟，而不知子弟之成，唯在家教。</p><p class="p-trans">知道你有想要移居江苏南通的想法。虽然志在成就家里的子弟，然而却不知道子弟的成就，唯在家教。</p></div>
+<div class="para-pair"><p class="p-orig">凡属子女，必须从幼教以孝弟忠信，勤俭温恭。至其长而入学读书，方有受益之基。倘自幼任性而惯。且无论无天姿无善教。即有天姿有善教，亦只成得个文字工人，儒门败类而已。</p><p class="p-trans">凡是子女，必须从小时候，教导他们要孝、悌、忠、信、勤、俭、温、恭。到他们长大，进入学校读书，方才有受益的根基。倘若从小任性娇惯。且不要说，小孩子没有天赋姿质，没有受到家长良好的教导。即使是小孩子有天姿，并受到家长良好的教导，也只能成为一个文字工人，儒门的败类而已。</p></div>
+<div class="para-pair"><p class="p-orig">世有才高北斗，学富五车，而其所作所为，皆仗此聪明，以毒害生灵，毁灭道义者。其原皆由初无家教以为之肇也。</p><p class="p-trans">世间有的人，才高北斗，学富五车，而他的所作所为，都依仗此聪明，来毒害众生，毁灭道义。这个原因都是由于最初没有家教作为开始的啊！</p></div>
+<div class="para-pair"><p class="p-orig">文王刑于寡妻，至于兄弟，以御于家邦。与大学欲治天下国家者，必从格物致知诚意正心而起，同一臭味。此儒门教人希圣希贤之无上秘诀。舍是而求，皆其末耳。</p><p class="p-trans">周文王以礼法对待妻子，以身作则，以及为兄弟作出表率典范，来管理好家庭，治理好国家。与《大学》中说：想要治理天下国家的话，必须从格物（格除私欲）、致知（显明良知）、诚意（真诚心意）、正心（中正内心）做起，是同一个味道。这是儒家教导学人仰慕效法圣贤的无上秘诀。舍弃这个来求成圣成贤，都是枝末啊！</p></div>
+<div class="para-pair"><p class="p-orig">为今之计，子女当能言语知人事时，即于家庭先令认字块（女子虽不必令其造大学问，断不可不识字，不通文理。母尚宜胎教。若识字通文理，则所生子女，便易为学矣）。</p><p class="p-trans">就现在来考虑，子女应当在会说话，懂人事的时候，就让他在家庭中先学认字块（女孩子虽然不一定要她做大学问家，但断然不可不识字，不通文理。母亲还应进一步胎教子女。如果认识字，通文理，那么所生的子女，就容易教导他们学习了）。</p></div>
+<div class="para-pair"><p class="p-orig">每一块纸方，只写一字，不可两面俱写。若两面写，则便同记口歌矣。日限几字，每日将认过熟字，又须遍认一二过。不上年余，便认许多。后读书时，凡读过者，通皆认得，不致有只记口歌之弊。</p><p class="p-trans">每一张方纸，只写一个字，不可两面都写。如果两面都写，就如同记诵口头儿歌了。每天限定认几个字，每天将认过的熟字，又必须全部再认一二遍。不到一年，便会认得许多字。将来读书的时候，凡是读过的字，全都认得，不会有只记得口头儿歌的弊病。</p></div>
+<div class="para-pair"><p class="p-orig">凡彼力能为者，必须令其常做以习勤（如洒扫执侍等）。凡饮食衣服，勿令华美。但凡抛撒五谷及损坏什物，无论物之贵贱轻重，必须告其来处不易，及折福损寿等义。倘再如此，定遭扑责，决不放过。如此则自能俭约，断不至奢侈暴殄。</p><p class="p-trans">凡是小孩力所能做的事，必须让他常做，培养勤劳的美德（如洒水扫地，拿物侍奉等）。凡是饮食衣服，不要太华美。只要遇到他抛弃丢撒五谷食物以及损坏器物，无论东西的贵贱轻重，都必须告诉他来之不易，以及折福损寿等道理。倘若他再这样做，定要其遭受杖打责罚，绝不轻易放过。如此他长大后自然能够勤俭节约，断然不至于奢侈浪费。</p></div>
+<div class="para-pair"><p class="p-orig">及能读书，即将阴骘文，感应篇，令其熟读，为其顺字面讲演之。其日用行为，合于善者，则指其二书之善者而奖之。合于不善者，则指其二书之不善者而责之（彭二林居士家，科甲冠于江浙，历代以来，遵行二书，其家状元甚多，然皆终身守此不替）。如金入模，如水有堤。岂有不能成器，仍旧横流之理乎。</p><p class="p-trans">到了能够读书的年龄，就将《文昌帝君阴骘文》，《太上感应篇》，令他们熟读，为他们顺着字面来加以讲说。他们的日常行为，符合善的地方，对照这两本书中指出的善加以奖励。行为如果不善，对照这二本书中指出的不善，而加以责罚（彭二林居士的家族，是江浙一带的科举冠军，历代以来，都遵行这两本书，他的家里，状元很多，然而都是终身守持这两本书不改）。如熔金倒入模器，如流水围有堤防。哪有金不能成器具，水仍旧横流的道理呢？</p></div>
+<div class="para-pair"><p class="p-orig">人之为人，其基在此。此而不讲，欲成全人，除非孟子以上之天姿则可矣。然读书之时，不可即入现设学校。宜合数家请一文行兼优，深信因果之师，令其先读四书及五经耳。待其学已有几分，举凡文字道理，皆不被邪说俗论所惑。然后令其入现学校，以开其眼界，识其校事。不致动与时乖，无由上进矣。</p><p class="p-trans">人之所以成为人，根基就在此处。这些做人的基本道理不讲，想要具备完美的人格，除非天资高过孟子以上的人才可能做到。然而在读书的时候，不可马上进入现在的学校。应该联合几个家庭，请一位文才品行兼优，深信因果的老师，令孩子们先读《四书》和《五经》。等到他们学业已经有几分成效，凡是文字道理，都不被邪说俗论所迷惑了。然后让他们进入现在的学校，来开阔他们的眼界，增长他们的见闻。不致于举动与时代乖离，没有办法上进啊！</p></div>
+<div class="para-pair"><p class="p-orig">能如是，则有天姿者，自能有为。无天姿者，亦为良善。独善兼善，自利利他，实不外此老僧常谈也。</p><p class="p-trans">能够这样，那么有天姿的孩子，长大自然能够有所作为。没有天姿的孩子，也能成为一个良善的人。穷困时修养身心，显达时兼善天下，自利利他，实在不超出这些老僧常谈的话。</p></div>
+<div class="para-pair"><p class="p-orig">又前在扬州请感应汇编十三部送人，云雷亦送一部。次日云雷至寓，令为汝带一部去。彼令送余人，言当于有正书局去请。不知已请与否。此书文笔议论，悉皆超妙（有三几处微有碍，然大体俱好，故可取）。但不如安士全书之贯通佛法耳。除安士全书之外，当推此为第一。然此不易与妇孺开导。</p><p class="p-trans">另外，前些时候，在扬州请《感应汇编》十三部送人，张云雷也送了一部。第二天张云雷到我的住处，我让他也为你带一部过去。他让送给其他人，说会在有正书局去请这本书。不知道已经请过这本书了没有？这本书文笔议论，都非常超妙（有三个地方稍微有些妨碍，然而大体都好，所以可取）。但不如《安士全书》那样能够贯通佛法罢了。除了《安士全书》之外，应当推这本书为第一。然而这本书不容易与妇女小孩开导。</p></div>
+<div class="para-pair"><p class="p-orig">光于扬州，因见此书首未刻感应篇文，令其补刻。因寻其书，遂遇一本感应篇直讲。此书系大通家所著，其注直同白话。但顺文一念，其义自显。最宜于幼年子女。今将此寄来，以企依此训诲其子女，将来必能得实用而释亲忧矣（王雷夏曾刻彭希涑二十二史感应录，系正史事实，最易令人警惕，止有二本）。</p><p class="p-trans">我在扬州，因为见到这本书的开头没有刻《感应篇》的原文，令他们补刻。因此寻找《感应篇》这本书，于是找到一本《感应篇直讲》。这本书是一位大通家所写，他的注解同白话一样。只要顺着文一念，其中的道理自然显明。最适合幼年的子女。现在将这本书寄来，希望依着这本书来教导训诲你的子女，将来必定能够得到真实受用而解除双亲的忧虑啊（王雷夏曾经刻印彭际清的《二十二史感应录》，这是历代正史中的事实，最容易让人生起警惕，只有两本）。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【通州】</span>在今江苏省南通市。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【格物】</span>推究事物之理。《礼记·大学》：“致知在格物，物格而后知至。”印祖认为格物是格除私欲，见《印光法师文钞·三编·复念佛居士书》：“光近来作一格物致知确解，今为陈之。解曰，格除幻妄私欲物，致显中庸秉彝知。此物，即心中不合天理人情之私欲。一有私欲，则所知所见皆偏而不正。若格除此幻妄不实之私欲，则不偏不易，即心本具之正知自显。一举一动，悉合情理，了无偏僻。此圣人为天下后世所立修己治心之大法。修齐治平在是。超凡入圣亦在是。于此用功最省力。而其所得之利益，随各人之工夫浅深，为贤为圣，乃至为佛，悉由是得。况其下焉者乎。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【致知】</span>儒家哲学用语。语出《礼记·大学》：“致知在格物。”历代儒家学者对此有不同解释。汉郑玄认为“致知”是使人“知善恶吉凶之所终始”；宋朱熹认为“致，推极也；知，犹识也。推极吾之知识，欲其所知无不尽也”。明王阳明则认为“致知”即“致吾心之良知”。印祖对格物致知的解释为：“若格除此幻妄不实之私欲，则不偏不易，即心本具之正知自显。”具体见上条【格物】。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【诚意】</span>使心志真诚。语出《礼记·大学》：“欲正其心者，先诚其意。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【正心】</span>谓使人心归向于正。语出《礼记·大学》：“欲修其身者，先正其心；欲正其心者，先诚其意”。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【臭味】</span>气味。比喻同类。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【扑责】</span>杖击责罚。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【暴殄】</span>任意浪费、糟蹋。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【四书】</span>《论语》、《大学》、《中庸》、《孟子》的合称。南宋理学家朱熹注《论语》，又从《礼记》中摘出《中庸》、《大学》，分章断句，加以注释，配以《孟子》，题称《四书章句集注》，“四书”之名始立，后用作学习的入门书。元皇庆二年定考试课目，必须在“四书”内出题，发挥题意规定以朱熹的《集注》为根据。明清相沿不改。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【五经】</span>儒家典籍《诗经》《尚书》《礼记》《周易》《春秋》的合称，为历代儒客学子核心研习书经。《诗》温柔宽厚，《书》疏通知远，《礼》恭俭庄敬，《易》洁静精微，《春秋》属词比事。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【校事】</span>三国时魏、吴所置掌侦察刺探官民情事的官名。是皇帝或执政的耳目。吴也称校官。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【警惕】</span>保持警觉，小心戒备。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

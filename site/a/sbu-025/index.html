@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复江易园居士书二 · 印光法师文钞</title>
+<meta name="description" content="接手书，不胜感愧。辟邪集今与三大士实录，寄一包来，祈查收。傅大士录中多禅机，初心人不得其意，或错会，非通家不可令看。辟邪集只可自知，不可依此以与彼辩。亦不须说与学者，以彼势盛，或起野蛮故也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-025/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复江易园居士书二 · 印光法师文钞">
+<meta property="og:description" content="接手书，不胜感愧。辟邪集今与三大士实录，寄一包来，祈查收。傅大士录中多禅机，初心人不得其意，或错会，非通家不可令看。辟邪集只可自知，不可依此以与彼辩。亦不须说与学者，以彼势盛，或起野蛮故也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-025/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复江易园居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，不胜感愧。辟邪集今与三大士实录，寄一包来，祈查收。傅大士录中多禅机，初心人不得其意，或错会，非通家不可令看。辟邪集只可自知，不可依此以与彼辩。亦不须说与学者，以彼势盛，或起野蛮故也。</p><p class="p-trans">接到信，非常感激惭愧。《辟邪集》（注1），现在与《三大士实录》，寄一包来，请查收。《傅大士录》中有许多禅机，初学人不能领会其中的意思，或许会错误理解，若不是大通家，不可让他看。《辟邪集》只可自知，不可依此来与他们辩论。也不必说给学者听，因为他们势力强盛，或许会引起野蛮冲突的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">四书蕅益解，现已刻成，尚未寄来。待光阅后，再令铸板，即可出书。前几年新棠校颇有来信问者，今则可随意请矣。彼作七角价，邮费在内，尚未知系何纸，系浙江省城金刚寺巷四十二号迦音社出版。以原底是光所存，彼祈光校，寄去六七年，今方了事。</p><p class="p-trans">《四书蕅益解》，现在已经刻成，还没有寄来。等我看完后，再令他们铸板，就能出书了。前几年，新棠村师范学校（注2）有不少写信来问的人，现在就可以随意请了。他们作七角的价钱，邮费在内，还不知道用的是什么纸，是浙江省城金刚寺巷四十二号迦音社出版。因为原书底本是我所存，他们请我校对，寄去有六七年了，现今才了结此事。</p></div>
+<div class="para-pair"><p class="p-orig">令慈日持名二万声，可庆孰甚。又当常为宣说净土要义，庶可信愿真切，决定往生。以副阁下谕亲于道之至意。罗汉诸天像欲改，须有大匠。此间虽有巧匠，然路遥远，不便去看能改与否。</p><p class="p-trans">你母亲每天持名念佛二万声，还有比这更值得庆贺的吗？另外，应当常常为她宣说净土要义，才能信愿真切，决定往生。以符合阁下谕亲于道的极深情意。罗汉、诸天像想要改动，必须有技艺高超的工匠。这里虽然有巧匠，然而路途遥远，不方便去看能否改动。</p></div>
+<div class="para-pair"><p class="p-orig">二十四史感应录尚未成书。本欲印，不能预定。如有欲印者，不妨先任若干部。待价估好，再按价交钱。固无碍也。</p><p class="p-trans">《二十四史感应录》尚未成书。本来打算印，不能预定。如果有人想要印这本书，不妨先任印若干部。等到价格估算好，再按价交钱。就没有妨碍了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【辟邪集】</span>《辟邪集》是明朝的儒者和僧侣辩驳当时流布的天主教教理书的一本“破邪显正”的论文集。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【新棠校】</span>1913年，胡晋接（&lt;1870-1934&gt;字子承，号梅轩，晚号止澄，安徽绩溪人，是近代徽州有较大影响的学者与教育家）承紫阳学堂之后，受命创建省立第五师范学校，次年改名为省立第二师范学校。经过三次迁移，校址最后定在休宁县万安镇新棠村（今休宁中学前身，被誉为“皖南学府”）。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

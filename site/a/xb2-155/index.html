@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>赣州寿量寺重兴缘起疏（民二十二年） · 印光法师文钞</title>
+<meta name="description" content="实际理地，历尘劫而不变不迁。佛事门中，随因缘而有兴有败。虽否极泰来，属于天运。而革故鼎新，实赖人为。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-155/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="赣州寿量寺重兴缘起疏（民二十二年） · 印光法师文钞">
+<meta property="og:description" content="实际理地，历尘劫而不变不迁。佛事门中，随因缘而有兴有败。虽否极泰来，属于天运。而革故鼎新，实赖人为。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-155/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">赣州寿量寺重兴缘起疏（民二十二年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">实际理地，历尘劫而不变不迁。佛事门中，随因缘而有兴有败。虽否极泰来，属于天运。而革故鼎新，实赖人为。</p><p class="p-trans">真如无相的境界，经历尘点劫而不会改变。佛事门中，随因缘而有兴衰成败。虽然说否极泰来，属于天运。但是革故鼎新，的确要靠人为。</p></div>
+<div class="para-pair"><p class="p-orig">昔世尊将入涅槃，以法道付嘱国王大臣，令其护持流通，盖预鉴后世法弱魔强，非仗有权力之伟人，保绥御侮，则人天眼目，如来慧命，或几乎息矣。</p><p class="p-trans">昔日，世尊将要入涅槃时，把法道付嘱给国王、大臣，让他们护持流通，原因就是预见了后世法弱魔强，如果不依仗有权力的伟人，保卫安定、抵御外侮，那么人天眼目、如来慧命，恐怕就几乎要断绝了。</p></div>
+<div class="para-pair"><p class="p-orig">寿量寺者，赣州千五百年之古道场也。当萧梁时，防御使卢光禂，为僧道成所建。初名卢兴延寿，寻改圣寿。至宋祥符间，真宗特敕赐今名。</p><p class="p-trans">寿量寺，是赣州一千五百年的古道场，在南北朝萧梁时，防御使卢光禂，为僧人道成法师修建的。最初名叫卢兴延寿寺，不久改叫圣寿寺。到了赵宋祥符年间，真宗特地下诏赐了现在寿量寺这个名。</p></div>
+<div class="para-pair"><p class="p-orig">元，明，清来，代有兴复。至清光绪间，忽罹回禄。民国四年，又遭洪水。致庄严佛刹，竟成丘墟。唯丈六铁观音像，巍然无恙。</p><p class="p-trans">元、明、清以来，历代都有修复、兴建。到了清光绪年间，忽然遭受火灾。民国四年，又遭洪水。致使庄严的佛刹，竟成了废墟。只有一丈六尺高的铁观世音菩萨像，巍然耸立、安然无恙。</p></div>
+<div class="para-pair"><p class="p-orig">地方正绅，请光孝寺大春和尚，兼任住持。遂与住僧德森大师，竭力经营，建观音殿。后大春去世，德森离赣。</p><p class="p-trans">地方上正直的乡绅，请光孝寺大春和尚，兼任住持。于是与常住僧德森大师，竭力经营，建起观音殿。后来大春和尚去世，德森大师也离开了赣州。</p></div>
+<div class="para-pair"><p class="p-orig">继住僧无状，致市政公署，视为废地，拟改菜市场，开马路。当地缁素，通知德森，因函请各界伟人，展转恳求保护。</p><p class="p-trans">继任的常住僧由于不守清规，导致市政公署，将寺院视为废地，打算改为菜市场，开通马路。当地的出家、在家佛弟子，通知了德森大师，大师于是函请各界伟人，辗转恳求保护。</p></div>
+<div class="para-pair"><p class="p-orig">幸蒙军事委员会蒋委员长，及广东陈总司令，与余军长，均电驻赣李师长旋空先生，设法保存。</p><p class="p-trans">幸好承蒙军事委员会蒋（介石）委员长，以及广东陈（济棠）总司令，和余（汉谋）军长，都发电给驻扎赣州的李师长旋空（名振球，字旋空）先生，设法保存。</p></div>
+<div class="para-pair"><p class="p-orig">中国佛教会，亦一再函电祈李师长维护，兼遴选妥人，前往负责，规画整理。李公遂令取消前议，且愿护持，令速恢复。而当地士绅刘君汲甫等，力任斡旋，并愿作后盾，助成兴复。</p><p class="p-trans">中国佛教会，也一再函电祈请李师长维护，同时还挑选合适人选，前往负责，规划整理。李师长于是下令取消了以前的决议，并愿意护持，使寺院迅速恢复。而且当地的士绅刘汲甫先生等，努力协调，并愿作后盾，协助完成寺院的兴复。</p></div>
+<div class="para-pair"><p class="p-orig">盖法道之兴，各有因缘，不因经此风潮，则此寺殆将湮没矣。唯现今时值末法，人根陋劣，匪仗弥陀大誓愿力，往生西方，孰能现生断尽烦惑，了脱生死。</p><p class="p-trans">法道的兴盛，各有因缘，如果不经过这场风波，那么这座古寺几乎就要湮没了。只是因为现在正值末法时代，人根陋劣，如果不依仗阿弥陀佛的大誓愿力，往生西方，谁能在今生就断尽烦惑、了脱生死呢？</p></div>
+<div class="para-pair"><p class="p-orig">是故此次恢复，专修净土法门，并附设居士林，流通处，俾当地人士，咸知出五浊，登九品之要道。与敦伦常，尽己分，知因果，慎修持之良谟。</p><p class="p-trans">因此这次把寺院恢复成专修净土法门的道场，并附设居士林、流通处，使当地人士，都了解出离五浊恶世、高登九品莲台这个重要法门，以及敦笃伦常、竭尽己分，明白因果、谨慎修持这个好方法。</p></div>
+<div class="para-pair"><p class="p-orig">如是则莲社启而宗风丕振，礼教兴而国运昌明。庶可副古人建刹命名之意，亦可慰诸公一番保护维持之热心也。</p><p class="p-trans">这样的话，就会莲社开启、宗风大振，礼教兴盛、国运昌明。这才能符合古人建刹命名的用意，也可以抚慰诸公一番保护维持寺院的热心。</p></div>
+<div class="para-pair"><p class="p-orig">但以寺无恒产，僧无积储。祈不慧代为疏引，用恳诸大护法，及各善信，发菩提心，行方便事，输金输粟，转劝转募。</p><p class="p-trans">但是因为寺院没有固定的财产，僧人也没有积储。所以祈请我代为写疏，用来恳请各位大护法，以及各位善信人士，发菩提心，行方便事，捐钱捐粮，辗转劝募。</p></div>
+<div class="para-pair"><p class="p-orig">俾含空宝殿，指日成功。满月金容，经劫常住。净宗兴行，人知出苦之道。因果彰显，群趋希圣之途。</p><p class="p-trans">使寺院的含空宝殿，指日成功；佛陀满月金容，经劫常住不变。净宗兴盛流行，人人懂得出苦的大道；因果道理彰显明了，都能走上追求学习圣贤的道路。</p></div>
+<div class="para-pair"><p class="p-orig">将见佛天云护，吉庆骈臻，家门清泰，人眷平安。富寿康宁，现身获箕畴之五福。兰桂芬芳，后裔纳伊训之百祥。唯冀同发随喜，共登芳衔。</p><p class="p-trans">到那时将会见到，诸佛和天神如云聚集拥护，吉祥、福庆一并到来，家门清净安泰，家人眷属平安。现生就能够富贵长寿、健康安宁，获得箕子在《尚书·洪范》之“九畴”中所说的五福；后世子孙将兰桂芬芳，纳取伊尹在《尚书·伊训》中说的百种吉祥。衷心希望大家共同发起随喜心，在功德碑上都能登记上芳名。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【保绥】</span>1.安适，安宁。2.使得到保全，获得安定。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【防御使】</span>官名。唐代开始设置的地方军事长官。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【遴选】</span>慎重地选拔；慎重选择。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【疏引】</span>旧时募捐簿前的简短的说明文字。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【兰桂】</span>1.兰和桂。二者皆有异香，常用以比喻美才盛德或君子贤人。2.比喻子孙。兰桂齐芳：喻子孙兴旺发达。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【芬芳】</span>比喻美好的德行或名声。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

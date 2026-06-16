@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普陀体仁施棺会缘起序 · 印光法师文钞</title>
+<meta name="description" content="掩骼埋胔，政出月令，泽及枯骨，恩施周文，而况身心并济，存没咸恤之佛法乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-087/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普陀体仁施棺会缘起序 · 印光法师文钞">
+<meta property="og:description" content="掩骼埋胔，政出月令，泽及枯骨，恩施周文，而况身心并济，存没咸恤之佛法乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-087/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">普陀体仁施棺会缘起序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">掩骼埋胔，政出月令，泽及枯骨，恩施周文，而况身心并济，存没咸恤之佛法乎。</p><p class="p-trans">《礼记·月令》当中，有着关于掩埋尸骨的政令。周文王对人民普施恩泽，路边的枯骨也受到了恩惠。更何况是身体心性一并救济，生前死后全都体恤的佛法呢。</p></div>
+<div class="para-pair"><p class="p-orig">普陀为观音大士道场，历朝钦敬，举世尊崇，故得三寺鼎立，众庵棋布。中外朝谒者，实繁有徒。凡工匠仆使负贩鬻力之人，常逾千数，若至香会，则其数加倍。</p><p class="p-trans">普陀山是观音大士的道场，历代以来都受到全天下的尊崇和敬仰。所以才有普济、法雨、慧济三大寺宇鼎足而立，又有众多寺庵星罗棋布。国内外赶来朝礼的人非常多。山上从事工匠、仆从、小贩、苦力的人，常常数以千计。如果是香会期间，人数则成倍增加。</p></div>
+<div class="para-pair"><p class="p-orig">是故山中诸长老，体佛慈怀，特开医院，以疗治一切有疾病人。或有负贩鬻力之人，卒遇死亡，无有棺材，殊难妥亡灵而宏慈化。</p><p class="p-trans">是故山上的诸位长老，体念佛陀的慈怀，特地开办医院，来治疗一切生病的人。山上偶尔有小贩、苦力等人突然死亡，没有棺材，很难妥善安抚亡灵而宏扬慈悲教化。</p></div>
+<div class="para-pair"><p class="p-orig">况复海中屡有漂来之死尸，兼夫远方苦行进香者，偶有死亡，即宜殡殓。否则或致溃烂，其于恤死卫生之道，皆有遗憾。真达大师遂发心施棺，又念若不设法，后难永继。</p><p class="p-trans">况且海中屡有漂来的死尸，又有远方艰苦赶来进香的人，偶然死亡。这类情况应该给予殡葬。否则或许导致尸体溃烂，一来有失对死者的体恤，二来不利于清洁卫生。真达大师于是发心施舍棺材。又想到如果不事先谋划好，后面很难长久持续下去。</p></div>
+<div class="para-pair"><p class="p-orig">民国五年，杨君叔英，祝君兰舫，袁君祖怀，曹君振声等来山，因与谈及此事，诸君共输洋二千元。真达大师自捐四千元。</p><p class="p-trans">民国五年，杨叔英，祝兰舫，袁祖怀，曹振声等人来到普陀山，因此和他们谈到这件事。诸位居士一共捐出二千元大洋。真达大师自己捐出四千元。</p></div>
+<div class="para-pair"><p class="p-orig">去年又与普济了信，法雨达圆，海岸莲曦，紫竹广德，洪筏愿来，洪筏戒如，报本莹照，鹤鸣清福，普慧坤山，柏子极得诸师，及刘君寄亭，张君宗富二居士，共同商酌办法，因起一会，名曰体仁。</p><p class="p-trans">去年又与普济寺的了信，法雨寺的达圆，海岸庵的莲曦，紫竹林的广德，洪筏寺的愿来、戒如，报本寺的莹照，鹤鸣庵的清福，普慧寺的坤山，柏子庵的极得诸位法师，以及刘寄亭、张宗富二位居士，共同商量办法。由此发起一个协会，名叫体仁会。</p></div>
+<div class="para-pair"><p class="p-orig">以仰体佛慈，仁济亡灵，俾亡者无暴尸之惨，山僧无伤慈之诮。诸公皆各出洋一百元，并上所捐，共七千二百元，用置恒产，请示立石。</p><p class="p-trans">仰体佛陀慈怀，仁爱救济亡灵。使亡人不会有尸骸暴露的凄惨，山僧不会受毁伤慈悲的讥诮。诸公各各都捐出一百元大洋，加上前面所捐的，总共七千二百元，用于置办永久产业，（相关事宜）立碑进行公示。</p></div>
+<div class="para-pair"><p class="p-orig">特请本山在会诸师，轮流经理，以岁所收租金，尽数作施棺之费，庶可永传无替。如是则以后之贫穷亡者，咸受其福，而圆通道场，预有光荣。</p><p class="p-trans">特别请本山当中参加体仁会的诸位法师，轮流经理这件事。将每年所收的租金，全都作为施舍棺木的费用，想必可以永远延续下去了。这样一来，今后山上所有贫穷的死者，都会蒙受到这件事的恩惠。而观音大士的圆通道场，也将因此而荣光。</p></div>
+<div class="para-pair"><p class="p-orig">凡出资及经理置办之人，同皆消除宿业，增长善根。现生则福寿双隆，为斯世之表率，临终则形神俱妙，入佛国之封疆。</p><p class="p-trans">凡是出资以及经理置办的人，共同消除宿业，增长善根。现生中福寿双增，成为世间表率；临终时形神俱妙，进入佛国净土。</p></div>
+<div class="para-pair"><p class="p-orig">欲后之人悉知，故为述其缘起，俾亿万斯年，永用施行，以副大士救度众生之心，亦不负诸大师，诸居士，恤亡护教之一番至意云。</p><p class="p-trans">想让后来的人都知道这件事，所以叙述其中的缘起。使这一善举经历亿万年，永远施行下去。以配合观音大士救度众生的慈心，也不辜负诸位大师、居士，存恤亡人，护持佛教的一番诚意啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【掩骼埋胔】</span>骼：枯骨；尸骨。亦为骨的通称。胔：肉还没有烂尽的骨殖。亦泛指人的尸体。《礼记·月令》：“﹝孟春之月﹞掩骼埋胔。”郑玄注：“骨枯曰骼，肉腐曰胔。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【泽及枯骨】</span>恩泽施及死去的人。形容恩情深厚。周史纪：文王尝行于野，见枯骨，命吏瘗之。吏曰：“此无主矣。”王曰：“有天下者，天下之主；有一国者，一国之主。我固其主矣。”葬之。天下闻之，曰：“西伯之泽及于枯骨，况于人乎?”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【鬻】</span>卖。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【香会】</span>旧时民间朝山进香的盛会。亦指民间为朝山进香而组织的群众团体。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【商酌】</span>商量斟酌。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【无替】</span>不废；无尽。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【封疆】</span>界域之标记；疆界。疆域；疆土。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

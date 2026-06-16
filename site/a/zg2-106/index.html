@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>药师如来本愿经重刻跋 · 印光法师文钞</title>
+<meta name="description" content="佛与众生，心体是一。而其所受用，天渊悬殊者，以其用心不同之所致也。佛则唯以无缘大慈，同体大悲，度脱众生为怀，了无人我彼此之心。纵度尽一切众生，亦不见能度所度之相。故得福慧具足，为世间尊。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-106/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="药师如来本愿经重刻跋 · 印光法师文钞">
+<meta property="og:description" content="佛与众生，心体是一。而其所受用，天渊悬殊者，以其用心不同之所致也。佛则唯以无缘大慈，同体大悲，度脱众生为怀，了无人我彼此之心。纵度尽一切众生，亦不见能度所度之相。故得福慧具足，为世间尊。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-106/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 跋</div>
+      <h1 class="art-title">药师如来本愿经重刻跋</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛与众生，心体是一。而其所受用，天渊悬殊者，以其用心不同之所致也。佛则唯以无缘大慈，同体大悲，度脱众生为怀，了无人我彼此之心。纵度尽一切众生，亦不见能度所度之相。故得福慧具足，为世间尊。</p><p class="p-trans">佛与众生，心性本体相同。然而所得到的受用，却有天渊之别。这是佛与众生用心不同所导致的。佛则只是以无缘大慈、同体大悲，度脱众生为本怀，丝毫没有人我彼此的分别心。纵然度尽一切众生，也不见能度的佛与所度的众生等相。所以才会福慧具足圆满，被一切世间所尊崇。</p></div>
+<div class="para-pair"><p class="p-orig">众生则唯以自私自利为事，虽父母兄弟之亲，尚不能无彼此之相，况旁人世人乎哉。故其所感业报，或生贫穷下贱，或堕三途恶道。</p><p class="p-trans">众生则只是以自私自利为事，即使父母兄弟这样的亲人，尚且不能没有彼此分别，更何况是旁人、陌生人呢。所以众生所招感的果报，或者生到贫穷下贱处，或者堕落于三途恶道中。</p></div>
+<div class="para-pair"><p class="p-orig">即令戒善禅定自修，得生人天乐处。但以无大悲心，不能直契菩提。以致福报一尽，仍复堕落，可不哀哉。</p><p class="p-trans">即使让这些众生以持戒、修善、禅定等来自修，得以生到人天乐处。但是因为没有大悲心，所以不能够直接契入菩提，以致福报享尽之后，仍旧堕落恶道，能不悲哀吗。</p></div>
+<div class="para-pair"><p class="p-orig">是则唯欲利人者，正成就其自利。而唯欲自利者，乃适所以自害也。药师如来本愿经者，乃我释迦世尊，愍念此界一切罪苦众生，为说药师如来，因中果上利生之事，实为究竟离苦得乐之无上妙法也。</p><p class="p-trans">所以，只想着利益他人的人，却正好利益了自己；而只想着利益自己的人，却恰恰害了自己啊。《药师如来本愿经》，是本师释迦世尊，愍念娑婆世界一切罪苦众生，而为众生宣说的药师如来因地中、果地上利益众生的事，实在是究竟离苦得乐的无上妙法啊。</p></div>
+<div class="para-pair"><p class="p-orig">众生果能发慈悲喜舍之大菩提心，受持此经，此咒，及此佛名号。推其功效，尚可以豁破无明，圆成佛道。况其余种种果位，种种福乐乎哉。</p><p class="p-trans">众生如果能够发起慈、悲、喜、舍的大菩提心，来受持这部经、药师咒，以及药师佛的名号。推究其中的功效，尚且可以豁然破除无明，圆满成就佛道，更何况是种种其他的果位和福乐呢。</p></div>
+<div class="para-pair"><p class="p-orig">然在佛心，固欲以无上觉道，全体授与一切众生。而众生智有浅深，固不得不随其所乐，令彼所求各各如愿也。</p><p class="p-trans">然而就佛陀的本心而言，自然是想把无上的觉道，全体教授给一切众生。然而众生的智慧有浅有深，自然不得不随顺众生的喜好，令他们各各所求如愿。</p></div>
+<div class="para-pair"><p class="p-orig">须知药师一经，及与佛号，并其神咒，即释迦药师，所得之阿耨多罗三藐三菩提法。凡至诚受持者，即是以佛庄严而自庄严也。</p><p class="p-trans">必须知道，《药师如来本愿经》、药师佛号、药师神咒，就是释迦如来和药师如来，所得的阿耨多罗三藐三菩提法。凡是至诚受持的人，就是以佛陀的庄严而自我庄严啊。</p></div>
+<div class="para-pair"><p class="p-orig">故玉琳琇国师，常持此经，及此佛号，以是禅教律净之总持法门。故受持者，或生净琉璃世界，或生极乐世界。</p><p class="p-trans">所以玉琳通琇国师，常时受持这部经，以及药师佛的名号，因为这是禅、教、律、净的总持法门，所以受持的人，或者生到东方净琉璃世界，或者生到极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">待至豁破凡情，圆成圣智，则直契寂光，东西俱泯。而复东西历然，随愿往生。则与弥陀药师，同归秘藏。是名诸佛甚深行处。</p><p class="p-trans">等到豁然破除凡情，圆满成就圣智，那就直下契入寂光真境，东方西方全都泯灭，而又东方西方历然分明，随自己的意愿而往生。与阿弥陀佛、药师如来，同归秘藏。是则名为诸佛甚深行处。</p></div>
+<div class="para-pair"><p class="p-orig">圣聪大师，以心安和尚所书之本，刻板流通。欲令受持者发起正信，祈简明以告之。又此经系唐玄奘法师所译。其八菩萨，但举其目，未标其名。说咒一段，又复缺略。</p><p class="p-trans">圣聪大师，将心安和尚手写的药师本愿经本，刻板流通。想要让受持的人发起正信，请我进行简要的说明。另外，这部经是唐朝玄奘法师所翻译的，其中的八大菩萨，只是列举了类目，并没有标出具体名号。而药师如来宣说神咒的一段经文，又省略缺失了。</p></div>
+<div class="para-pair"><p class="p-orig">后之知识，欲令经义完全，故依七佛本愿经，添入说咒一段，共四百二十八字。依灌顶第十二经，添入八菩萨名。以三经原是一经故也。</p><p class="p-trans">后来的善知识想要让经义完整，所以依据《七佛本愿经》，添入了说咒这一段经文，一共四百二十八个字。依据《佛说大灌顶神咒经卷第十二》，添入了八大菩萨的名号。因为这三部经，原本就是同一部经。</p></div>
+<div class="para-pair"><p class="p-orig">须知在昔贝叶，唯属钞写，或有遗亡，以致译文全缺互异。后人添入，深契佛心。故诸注者，咸皆宗之。恐以藏本对校，致生疑虑。故并书缘起，以庆完璧云（说咒一段从说咒前复次曼殊室利起，至所求愿满乃至菩提止）。</p><p class="p-trans">必须知道，过去的贝叶经，都是用手抄写的。偶尔会有遗漏缺失，从而导致不同版本的译文有的完整，有的缺略，各不相同。后人将缺失的经文补充进来，这样的做法深深契合佛心。所以诸位注释的人，都宗主于这个（补全后的）版本。因为担心后人用大藏经中的版本来校对，（发现内容详简不同）从而生起疑虑。所以在此兼带地叙述其中的缘起，作为经文补充完整的庆贺（宣说神咒一段，指的是从说咒前“复次，曼殊室利”起一直到“所求愿满乃至菩提”为止）。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【药师琉璃光如来本愿功德经】</span>（经名）一卷，唐玄奘译，五译之一，常称药师经者是也。本经汉译有五种（一说四种），依其译出时间之先后为：(一)东晋帛尸梨密多罗译（317-322 ）本，(二)刘宋慧简译（457）本，(三)隋代达磨笈多译（615）本，(四)唐代玄奘译（650 ）本，(五)唐代义净译（707）本。其中前三译系强调药师佛之功德，称为药师随愿经。义净所译者，称为药师琉璃光七佛本愿功德经，或七佛药师经；详述七佛药师之本愿及其陀罗尼。一般最通行者为玄奘译本，具有密教性质，以说明现世利益与净土往生之思想为其特质。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【秘藏】</span>隐而不传于人，称为秘；蕴蓄于内，称作藏。秘藏者，谓诸佛之妙法，以诸佛善为守护，不妄宣说。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【药师琉璃光七佛本愿功德经】</span>（经名）二卷，唐义净译。说药师七佛之本愿并净土。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【灌顶第十二经】</span>《佛说灌顶拔除过罪生死得度经卷十二》共十二卷。东晋帛尸梨蜜多罗译。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

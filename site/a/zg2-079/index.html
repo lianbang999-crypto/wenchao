@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>栖真常住长年念佛序 · 印光法师文钞</title>
+<meta name="description" content="念佛法门，其来尚矣。以吾人一念心性，犹如虚空，常恒不变，虽常不变，而复念念随缘。不随佛界之缘，便随九界之缘，不随三乘之缘，便随六道之缘，不随人天之缘，便随三途之缘。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-079/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="栖真常住长年念佛序 · 印光法师文钞">
+<meta property="og:description" content="念佛法门，其来尚矣。以吾人一念心性，犹如虚空，常恒不变，虽常不变，而复念念随缘。不随佛界之缘，便随九界之缘，不随三乘之缘，便随六道之缘，不随人天之缘，便随三途之缘。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-079/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">栖真常住长年念佛序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">念佛法门，其来尚矣。以吾人一念心性，犹如虚空，常恒不变，虽常不变，而复念念随缘。不随佛界之缘，便随九界之缘，不随三乘之缘，便随六道之缘，不随人天之缘，便随三途之缘。</p><p class="p-trans">念佛法门，由来已久。因为我们的一念心性，像虚空一样，永久不变。虽然永久不变，而又念念随缘。不随佛界的净缘，就随九界的染缘。不随三乘的圣缘，就随六道的凡缘。不随人天的善缘，就随三途的恶缘。</p></div>
+<div class="para-pair"><p class="p-orig">由其缘之染净不同，致其报之苦乐迥异，虽于本体了无改变，而其相用固已天渊悬殊矣。譬如虚空，日照则明，云屯则暗，虽虚空之本体，不因云日而为增减，而其显现障蔽之相，固不可以同年而语也。</p><p class="p-trans">因为所随境缘有着染净的不同，导致所受果报有着苦乐的差别。虽然本体丝毫没有改变，而事相和功用自然已经天差地别了。如同虚空，太阳照耀就明朗，乌云密布就昏暗。虽然虚空的本体，不会因为乌云或阳光而有所增减，但是它显现出来的明朗或者昏暗的外相，自然不能同年而语。</p></div>
+<div class="para-pair"><p class="p-orig">如来以是义故，普令众生缘念于佛，故曰若众生心，忆佛念佛，现前当来，必定见佛，去佛不远。又曰诸佛如来，是法界身，入一切众生心想中，是故汝等心想佛时，此心即是三十二相，八十随形好，是心作佛，是心是佛，诸佛正遍知海，从心想生。</p><p class="p-trans">因此，如来让一切众生缘念于佛。所以《楞严经》中说：“若众生心，忆佛念佛，现前当来，必定见佛，去佛不远。”《观无量寿佛经》中又说：“诸佛如来，是法界身，入一切众生心想中。是故汝等心想佛时，此心即是三十二相、八十随形好，是心作佛，是心是佛。诸佛正遍知海，从心想生。”</p></div>
+<div class="para-pair"><p class="p-orig">夫随佛界之缘，则是心作佛，是心是佛矣，若随众生各界之缘，则是心作众生，是心是众生矣。了此而不念佛者，未之有也。</p><p class="p-trans">心随佛界之缘，就“是心作佛，是心是佛”了。如果心随众生各界之缘，那就是心作众生，是心是众生了。明白了这一点而不肯念佛的人，从没有过。</p></div>
+<div class="para-pair"><p class="p-orig">念佛一法，乃以如来万德洪名为缘，即此万德洪名，乃如来果地所证之无上觉道。由其以果地觉，为因地心，故得因该果海，果彻因源。</p><p class="p-trans">念佛法门，是以阿弥陀佛的万德洪名为缘。这一句万德洪名，乃是如来果地当中所证得的无上觉道。由于这是以阿弥陀佛的果地觉证，作为众生的因地发心，所以能够因行该摄果海，果证通彻因源。（由于这是以阿弥陀佛的果地觉，作为众生的因地心，所以说众生因地念佛的心，每一念都成就佛觉果海，而未来成佛的果报源自当下念佛的因中，因果同时交互作用，不隔毫厘。）</p></div>
+<div class="para-pair"><p class="p-orig">如染香人，身有香气，如蜾蠃之祝螟蛉，久则化之。即生作佛，转凡成圣，其功能力用，超过一代时教一切法门之上。</p><p class="p-trans">“如染香人，身有香气。”又如同蜾蠃虫祈祷螟蛉虫“像我、像我”一样，久而久之，螟蛉虫卵真的能变成蜾蠃虫。念佛法门，使众生即此一生成就佛果，转凡成圣。这样的功能作用，超过如来一代时教所宣说的一切法门之上。</p></div>
+<div class="para-pair"><p class="p-orig">以一切法门，皆仗自力，断惑证真，方得了生脱死。念佛法门，自力佛力，二皆具足。故得已断惑业者，速证法身，具足惑业者，带业往生。其法极其平常，虽愚夫愚妇，亦能得其利益，而复极其玄妙，纵等觉菩萨，不能出其范围。</p><p class="p-trans">因为其他一切法门都必须依靠自己的力量，来断除惑业证得真常，才能了脱生死。而念佛法门，自力、佛力二者都有。所以已经断除惑业的众生，能迅速证得法身；而具足惑业的众生，可以带业往生到西方极乐世界。净土法门的修行方法极其平常，即使愚夫愚妇也能从中得到利益。然而又极其玄妙，就连等觉菩萨也不能超出它的范围。</p></div>
+<div class="para-pair"><p class="p-orig">故无一人不堪修，亦无一人不能修。下手易而成功高，用力少而得效速，实为如来一代时教中之特别法门，固不可以通途教理而为论判也。</p><p class="p-trans">所以，没有一个人不应当修持，也没有一个人不能够修持。下手容易而成就高超，用力很少而得效迅速。实在是如来一代时教中的特别法门，自然不可以用通途教理来加以论断。</p></div>
+<div class="para-pair"><p class="p-orig">末法众生，福薄慧浅，障厚业深，不修此法，欲仗自力断惑证真，以了生死，则万难万难。</p><p class="p-trans">末法时期的众生，福慧浅薄，业障深厚。如果不修净土法门，想凭着自己的力量断除惑业，证得真常，从而了脱生死，就万难万难了。</p></div>
+<div class="para-pair"><p class="p-orig">栖真住持莲仁和尚，有见于此，特于三圣殿，立长年念佛道场，祈余序其意致，以期见闻发心，故为书其大纲如此。</p><p class="p-trans">栖真寺的住持莲仁和尚，见到这种情况，于是特别在三圣殿当中，建立了长年念佛道场。和尚请我写一篇序文，来述说其中的大意，期望见者闻者由此而发心。所以在此写下念佛法门的大纲如上。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【蜾蠃】</span>寄生蜂的一种。亦名蒲卢。腰细，体青黑色，长约半寸，以泥土筑巢于树枝或壁上，捕捉螟蛉等害虫，为其幼虫的食物，古人误以为收养幼虫。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【螟蛉】</span>1.螟蛾的幼虫。泛指棉蛉虫、菜粉蝶等多种鳞翅目昆虫的幼虫。《诗·小雅·小宛》：“螟蛉有子，蜾蠃负之。”清黄遵宪《番客篇》：“螟蛉不抚子，犬羊且无鞹。”2.蜾蠃常捕螟蛉喂它的幼虫，古人误认为蜾蠃养螟蛉为己子。后因以为养子的代称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

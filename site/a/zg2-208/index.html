@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>王欣甫居士懿行颂 · 印光法师文钞</title>
+<meta name="description" content="於穆王公，宿植德本，赋性纯笃，制行唯谨。孝以奉亲，慈以睦族，化被闾阎，俗转淳淑。居官行政，唯务利民，所治七邑，群颂至仁。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-208/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="王欣甫居士懿行颂 · 印光法师文钞">
+<meta property="og:description" content="於穆王公，宿植德本，赋性纯笃，制行唯谨。孝以奉亲，慈以睦族，化被闾阎，俗转淳淑。居官行政，唯务利民，所治七邑，群颂至仁。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-208/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">王欣甫居士懿行颂</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">於穆王公，宿植德本，赋性纯笃，制行唯谨。孝以奉亲，慈以睦族，化被闾阎，俗转淳淑。居官行政，唯务利民，所治七邑，群颂至仁。</p><p class="p-trans">王於穆居士，宿植德本，天性纯朴笃实，德行一向严谨。孝顺侍奉双亲，仁慈和睦家族，教化被及邻里，风俗转为淳良。做官行政，只求利益人民。他所治理的七个城镇，群众赞颂他为至仁。</p></div>
+<div class="para-pair"><p class="p-orig">凡所折狱，不须繁词，实理实情，俱得其宜。上官倚重，下民感戴，有清末叶，循声无再。但以率真，不事攀援，致令职分，终止县官。</p><p class="p-trans">凡是他判的案子，不须要繁冗言词，根据实理实情，都判得合情合理。上面的长官依赖器重他，下面的百姓感激爱戴他。清朝末年，再没有像他这样的好官了。但因为他天性率真，不会攀援，致使官职，只做到县官。</p></div>
+<div class="para-pair"><p class="p-orig">期尽天职，无意名闻，只此一事，足征素心。知命赋归，企尽孝养，兴学敦本，为世模仿。及至晚年，阅历愈深，笃修净业，冀出苦轮。</p><p class="p-trans">他只希望尽到天职，无意于名闻利养。只这一件事，足以显出他的纯净之心。五十岁时辞官归乡，希望尽到为人子的孝养本分，兴办学校，崇尚注重根本，为世人所效仿。等到了晚年，阅历更加深广，笃实修持净业，希望出离苦轮。</p></div>
+<div class="para-pair"><p class="p-orig">迨及临终，果符宿愿，得生西方，顶暖可验。睹公之像，读公行状，实为斯世，最上榜样。</p><p class="p-trans">等到临终，果然符合他的宿愿，得以往生西方，头顶暖热，可以作为验证。看居士的遗像，读居士的生平，实在是这个世上，最好的榜样。</p></div>
+<div class="para-pair"><p class="p-orig">爰取大义，述为颂文，以期懿范，仪型后昆。</p><p class="p-trans">于是摘取大义，叙述成为颂文，以期这美好的风范，作为后人的楷模典范。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【制行】</span>1.规定道德和行为准则。2指德行。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【闾阎】</span>1.里巷内外的门。后多借指里巷。2.泛指民间。3.借指平民。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【折狱】</span>判决诉讼案件。《易·丰》：“君子以折狱致刑。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【循声】</span>指为官有循良之声。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【赋归】</span>《论语·公冶长》：“子在陈曰：‘归与，归与！’”后因以“赋归”表示告归，辞官归里。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【仪型】</span>做楷模，做典范。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【后昆】</span>后嗣；子孙。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

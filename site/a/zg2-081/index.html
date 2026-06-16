@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>台湾佛教会缘起序 · 印光法师文钞</title>
+<meta name="description" content="佛教者，一切诸法，一切诸教之大本也。何以言之，一切诸法，由心建立，一切凡圣，由心出生。世间一切诸教，虽皆说心，然其所说，皆属心之作用，至于不变随缘，随缘不变之体，是心作佛，是心是佛，心作三乘，心是三乘，心作六道，心是六道，所以然之极致，悉皆未能发挥。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-081/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="台湾佛教会缘起序 · 印光法师文钞">
+<meta property="og:description" content="佛教者，一切诸法，一切诸教之大本也。何以言之，一切诸法，由心建立，一切凡圣，由心出生。世间一切诸教，虽皆说心，然其所说，皆属心之作用，至于不变随缘，随缘不变之体，是心作佛，是心是佛，心作三乘，心是三乘，心作六道，心是六道，所以然之极致，悉皆未能发挥。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-081/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">台湾佛教会缘起序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛教者，一切诸法，一切诸教之大本也。何以言之，一切诸法，由心建立，一切凡圣，由心出生。世间一切诸教，虽皆说心，然其所说，皆属心之作用，至于不变随缘，随缘不变之体，是心作佛，是心是佛，心作三乘，心是三乘，心作六道，心是六道，所以然之极致，悉皆未能发挥。</p><p class="p-trans">佛教，是一切万法、一切宗教的大根本。为何这么说呢？因为一切诸法，都是由心而建立，一切凡夫圣人，都是由心而出生。世间其他一切宗教，虽然都会说到心，然而所说的都属于心的作用。至于不变随缘，随缘不变的心体，是心作佛，是心是佛，心作三乘，心是三乘，心作六道，心是六道，这其中最终极的道理，全都没能发挥出来。</p></div>
+<div class="para-pair"><p class="p-orig">唯我释迦世尊，彻悟自心，知一切众生之心，与如来之心，无二无别，但以迷而未悟，枉作众生。故曰一切众生，皆具如来智慧，但因妄想执著，而不证得，若离妄想，则一切智，无碍智，则得现前。</p><p class="p-trans">唯我释迦世尊，彻底证悟了自心，从而知道一切众生的心体，与如来的心体，毫无差别。只是因为迷惑而不觉悟，所以枉然成为众生。所以佛说：“一切众生，皆具如来智慧德相，但因妄想执著，而不证得，若离妄想，则一切智，自然智，无碍智，则得现前。”</p></div>
+<div class="para-pair"><p class="p-orig">又曰一切众生，皆有佛性，我是已成佛，汝是未成佛。此皆最初成佛，于华严梵网所说者。由是大根众生，顿悟自心，入佛知见，小机未能即入，以故俯顺机宜，而成熟之。</p><p class="p-trans">又说：“一切众生，皆有佛性。”“我是已成佛，汝是未成佛。”这都是释迦世尊最初成佛时，在《华严经》、《梵网经》中所宣说的。由此，大根机众生顿时悟明自心，入佛知见。小根机众生没能即刻悟入。所以如来俯察随顺他们的根机，而让他们逐渐成熟。</p></div>
+<div class="para-pair"><p class="p-orig">又欲一切若凡若圣，同于现生，出离生死，特开一信愿念佛，往生西方法门，普令一切无力断惑，不能超出轮回之外者，悉皆仗佛慈力，带业往生，高预九品之嘉会，亲炙弥陀之休光，以迄于究竟彻证自心而后已。</p><p class="p-trans">又想让一切或凡或圣的众生，共同在现生当中，出离生死轮回。因此特别开启了一个信愿念佛，往生西方的法门。普遍使一切没有能力断除烦惑，不能超出轮回之外的众生，全都仗着佛的大慈悲力，带业往生西方。加入九品莲池海会，亲受阿弥陀佛的佛光熏陶，以至于究竟彻底证得自心而后已。</p></div>
+<div class="para-pair"><p class="p-orig">如来抚育劣机，其真慈大悲，可谓至极无加矣。然佛法虽名出世间法，实于世间伦常孝弟之道，与夫格致诚正修齐治平之法，悉皆发挥罄尽，毫善弗遗。</p><p class="p-trans">如来抚育劣机众生的真慈大悲，可以说到了极点，无以复加了。然而佛法虽然名为出世间法，实际上对于世间的伦理道德，以及格物、致知、诚意、正心、修身、齐家、治国、平天下的法则，全都发挥得究尽无余，丝毫善法也没有遗漏。</p></div>
+<div class="para-pair"><p class="p-orig">故古今立大功，建大业，浩气充天地，精诚贯日月，言为世法，行为世则者，多由学佛得力而来。</p><p class="p-trans">所以古往今来，那些立大功，建大业，浩气充塞天地，精诚通贯日月，言语成为世人的典范，行为成为世人的法则的人，大多是由于学佛得力而来。</p></div>
+<div class="para-pair"><p class="p-orig">而聪明睿智，首出庶物之人，莫不恭敬崇奉，护持流通，以其有阴翼世道，显淑民情，使民日迁善而不知所以为之者之实效故也。</p><p class="p-trans">而那些聪明睿智、杰出优秀的人，没有不恭敬尊奉，护持流通佛法的。因为佛法有着暗中辅佐世道，明处改善民风，使人民在不知不觉中一天天渐渐向善的实际效果。</p></div>
+<div class="para-pair"><p class="p-orig">拘墟之儒，无此智眼，每肆辟驳，谓佛法蔑伦理而无益于国家，是徒执舍俗出家一机之迹，而不知佛教教人，力敦伦常，恪尽己分，主敬存诚，克己复礼，诸恶莫作，众善奉行，戒杀护生，信愿念佛，以期生入圣贤之域，没归极乐之邦，尽世间一切富贵贫贱智愚贤否之老幼男女，无不皆堪依之而修，岂独为出家者立乎。</p><p class="p-trans">一些浅薄偏执的儒生，因为没有智慧眼，所以每每大肆辟驳佛法，说佛法违背伦理，无益于国家。这是徒然执著于舍俗出家的一种行迹，却不知道佛教教导人要努力敦行伦理纲常，恪守自己本分，主敬存诚，克己复礼（战胜己私、还归真理），诸恶莫作，众善奉行，戒杀护生，信愿念佛，以期在生时进入圣贤行列，去世后回归极乐世界。世间一切贫富贵贱、智愚贤劣的老幼男女，没有谁不能够依照佛法而修习的，哪里只是为出家人建立的呢。</p></div>
+<div class="para-pair"><p class="p-orig">倘一切人果能依之而修，自可近得出离三界之乐，远证福慧二严之果矣。须知由如来发明心具佛性之理，三世因果之事，不知令许多愚夫愚妇以成贤智，令许多大恶元凶而息阴毒，以故举行佛法，天地鬼神悉示休征，而况于人乎。</p><p class="p-trans">倘若一切人真的能够依照佛法而修，近而言之，可以得到出离三界的快乐；远而言之，可以证得福慧二严的妙果啊。必须知道，由于如来阐发显明了（一切众生）自心本具佛性之理，以及三世因果之事。不知道让多少愚夫愚妇，成为了贤人智者；让多少大恶元凶的人，止息了阴毒之心。所以提倡实行佛法之后，连天地鬼神都显示出吉祥的征兆，更何况是人呢。</p></div>
+<div class="para-pair"><p class="p-orig">然即出家一法，亦非蔑伦，以其禀亲出家，精修梵行，以己修持功德，为亲回向，以冀亲之神识，出三界以登九品，悟无生而证本性，校彼徒能奉养，与亲长劫轮回于三途六道而无所恃怙者，不亦多乎。</p><p class="p-trans">然而即使是舍俗出家这一法，也并不违背伦常。因为禀询双亲，而后出家，精进修行，以自己修持的功德，为双亲回向。希望双亲的神识，出离三界轮回，高登九品莲台，悟入无生法忍，证得真如本性。比起那些只能够奉养双亲的身体，与双亲一起无依无靠，长劫轮回在三途六道当中的人，不是强得多吗。</p></div>
+<div class="para-pair"><p class="p-orig">而况佛令弟子视一切众生，皆作过去父母亲属想，以慈悲心，行放生业，岂但现生之亲，不忍漠然置之，即一切水陆空行诸生物，亦不忍漠然置之，纵令力有不及，犹以悲心善念，为之念佛，以冀彼速出恶道，速生西方而后已。</p><p class="p-trans">何况佛让弟子将一切众生，都看作过去世中的父母亲属。用慈悲心，来放生行善。哪里只是现生的双亲，不忍心冷漠对待。就连一切水陆空行等种种动物，也不忍心漠然不管。即使能力达不到，仍然要用悲心善念，来为它们念佛，希望它们快快出离恶道，速速往生西方而后已。</p></div>
+<div class="para-pair"><p class="p-orig">由是言之，人果皆依佛法而行，则胜残去杀，世道太平矣。近十余年来，杀劫遍于中外，由兹戾气，复召天灾，水旱风震，相继降作，世运危岌，民不聊生，忧世之士，思为救援，乃以提倡佛学为急务。</p><p class="p-trans">由此说来，如果人人都能依照佛法而行，那么就会胜残去杀（感化残暴的人使其不再作恶，死刑便可废除），世道就太平了。近十多年来，杀劫遍于中外。又因为这残杀的戾气，而感召来天灾——水灾、干旱、风灾、地震，相继发生。世运危急，民不聊生。忧心于世道的人想要进行救援，于是将提倡佛学作为急务。</p></div>
+<div class="para-pair"><p class="p-orig">人果知三世因果，六道轮回之实事，与夫吾人一念心性，与佛无二之妙道，谁肯以是心作佛，是心是佛之资，以之作生死业，永堕恶道乎哉。</p><p class="p-trans">人如果知道了三世因果、六道轮回的实事，以及我们一念心性与佛无二的妙道，谁还肯用自己“是心作佛，是心是佛”的资质，来造作生死恶业，让自己永久堕落恶道呢。</p></div>
+<div class="para-pair"><p class="p-orig">台湾腾照大师愍世之不知者多，誓欲普利同人，拟立一佛教会，为之提倡讲说，俾大众悉知。</p><p class="p-trans">台湾的腾照大师，悲愍世间不知道佛法事理的人很多。立下誓愿，想要普遍利益大众。因此打算建立一个佛教会，来倡导和宣讲佛法，使得大众全都了解。</p></div>
+<div class="para-pair"><p class="p-orig">初于本会，按期修持，用作表率，以期风行全境，庶可家家观世音，处处弥陀佛矣。</p><p class="p-trans">最开始先在本会内部按期修持，以作表率。进而希望普遍推行到全台湾，想必可以实现“家家观世音，处处弥陀佛”的盛况啊。</p></div>
+<div class="para-pair"><p class="p-orig">兼复流通各处所刊之经典，俾有信心识文义者，咸得读诵受持，以实行力敦伦常，恪尽己分，主敬存诚，克己复礼，诸恶莫作，众善奉行，戒杀护生，信愿念佛，以期生入圣贤之域，没归极乐之邦，其为利益，莫能名焉。知光具有同心，函祈作序，乃为述其佛教普利一切有情之大致云。</p><p class="p-trans">同时又想要流通各地所刊印的经典，使得有信心有文化的人，都能读诵受持。从而敦行伦常，恪守本分，主敬存诚，克己复礼（战胜己私、还归真理），诸恶莫作，众善奉行，戒杀护生，信愿念佛，以期在生时进入圣贤行列，去世之后回归极乐世界。其中的利益，宣说不尽啊。腾照大师知道我有着和他相同的心愿，所以来信请我写序。就此大概叙述佛教普利一切众生的事理，如上。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【亲炙】</span>谓亲受教育熏陶。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【休光】</span>盛美的光华。亦比喻美德或勋业。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【世法】</span>世人的典笵，社会沿用的习惯常规。汉桓宽《盐铁论·相刺》：“居则为人师，用则为世法。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【世则】</span>当世的法则。宋苏轼《父池赠太师追封温国公》：“德为世范，言为世则。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【首出庶物】</span>出自《易·干》：“保合大和，乃利贞。首出庶物，万国咸宁。”原意为：阳气周流不息，又开始重新萌生万物。此处似为：杰出超出万人之上的意思。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【一机】</span>（术语）一类之机缘也，谓当受同一种教之动机也，碧岩四十六则评唱曰：“古人垂示一机一境，要接人。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【举行】</span>措施；施行；进行。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【休征】</span>吉祥的征兆。《书·洪范》：“曰休征。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

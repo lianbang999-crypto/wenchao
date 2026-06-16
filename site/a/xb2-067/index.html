@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>祭祖用素序（民二十五年） · 印光法师文钞</title>
+<meta name="description" content="食肉一事，大是怪事，但以习行既久，不知其非，反以为礼。故祭天地，祭祖宗，奉父母，待宾客，皆以肉为表示诚孝恭敬之物。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-067/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="祭祖用素序（民二十五年） · 印光法师文钞">
+<meta property="og:description" content="食肉一事，大是怪事，但以习行既久，不知其非，反以为礼。故祭天地，祭祖宗，奉父母，待宾客，皆以肉为表示诚孝恭敬之物。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-067/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">祭祖用素序（民二十五年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">食肉一事，大是怪事，但以习行既久，不知其非，反以为礼。故祭天地，祭祖宗，奉父母，待宾客，皆以肉为表示诚孝恭敬之物。</p><p class="p-trans">食肉这件事，真是一件大怪事，但因为人们养成习惯已经太久了，不知道食肉是错误的，反而认为有肉才算是礼节。所以祭拜天地，祭祀祖宗，奉养父母，接待宾客，都以肉作为表示诚孝、恭敬的物品。</p></div>
+<div class="para-pair"><p class="p-orig">世间圣人，不说三世因果，六道轮回之事理，亦随顺俗情而行，又复谆谆于仁民爱物之道。推圣人爱物之仁，可知以肉表诚孝恭敬之非义也。</p><p class="p-trans">世间的圣人，不说三世因果、六道轮回的事理，虽然也随顺世俗人情来做，但是，却又再谆谆教诲人们仁慈人民、爱惜物命的大道。推究圣人爱惜物命的仁慈，可知用肉来表示诚心、孝道、恭敬并非圣人的本义。</p></div>
+<div class="para-pair"><p class="p-orig">夫表我诚孝恭敬，当以极慈祥清净之物方可。何可以猪，羊，鸡，鸭，鱼，虾等极秽污之物，又复活活杀死。此等诸物死时，其惨痛怨恨，难以言宣。有仁心者，何忍以杀彼诸物，表我诚敬乎。</p><p class="p-trans">表示我们的诚心、孝道、恭敬，应当以极其慈祥清净的东西才可以。怎么能用猪、羊、鸡、鸭、鱼、虾等极为秽污的动物，而且还要活活杀死它们呢。这些动物死时的惨痛、怨恨，难以用语言来宣说。有仁慈之心的人，怎么能忍心以杀害这些动物，来表示自己的诚敬呢？</p></div>
+<div class="para-pair"><p class="p-orig">试思此之诚敬，为顺理之诚敬乎，抑悖德之诚敬乎。仁人祭祖，尚求仁者之粟，今求屠刽之肉，是焉得为诚敬乎。</p><p class="p-trans">试想，这样的诚敬，是顺天理的诚敬呢？还是悖天德的诚敬呢？仁慈的人祭祀祖宗，还要去求仁者家中的粟米，来祭祀祖宗，现今却去求屠夫刀下的肉，哪里还能称得上是诚敬呢？</p></div>
+<div class="para-pair"><p class="p-orig">由是言之，杀生以祭天地，是逆天地好生之德，天神地祇，岂以此诸秽物为香洁，而歆飨之乎。盖祭者，欲藉此以食其祭品耳。</p><p class="p-trans">由此说来，杀生来祭拜天地，是违逆了天地的好生之德，天神地祇，哪会将这些污秽的东西当作香洁，而来享用这些供品呢？大概是这些祭拜的人，想要借这个仪式来自己享用这些祭品罢了。</p></div>
+<div class="para-pair"><p class="p-orig">至于祭祖宗，奉父母，待宾客，当思有益于祖宗，父母，宾客，方为合理。今以极惨酷之杀业，为我致诚敬之表示，令祖宗，父母，宾客同膺杀祸，此之诚敬，是祸害，非诚敬也。而况一切众生，皆是过去父母，未来诸佛，不加救济，反为表我之诚而加杀害乎。</p><p class="p-trans">至于祭祀祖宗，侍奉父母，接待宾客，应当考虑要有益于祖宗、父母、宾客，才合道理。现今以极为惨酷的杀业，作为自己诚敬的表示，而令祖宗、父母、宾客共同承担杀生之祸，这样的诚敬，是祸害，不是诚敬。何况一切众生，都是过去父母，未来诸佛，哪有不去救济，反而为了表达自己的诚敬而加以杀害的呢？</p></div>
+<div class="para-pair"><p class="p-orig">梵网经云，若佛子，以慈心故，行放生业。一切男子是我父，一切女人是我母，我生生无不从之受生。故六道众生，皆是我父母。而杀而食者，即杀我父母。</p><p class="p-trans">《梵网经》中说：“若佛子，以慈心故，行放生业。一切男子是我父，一切女人是我母，我生生无不从之受生。故六道众生，皆是我父母。而杀而食者，即杀我父母。”</p></div>
+<div class="para-pair"><p class="p-orig">楞严经云，以人食羊，羊死为人，人死为羊，死死生生，互来相啖，恶业俱生，穷未来际。汝负我命，我还汝债，以是因缘，经百千劫，常在生死。</p><p class="p-trans">《楞严经》中说：“以人食羊，羊死为人，人死为羊，死死生生，互来相啖，恶业俱生，穷未来际。汝负我命，我还汝债，以是因缘，经百千劫，常在生死。”</p></div>
+<div class="para-pair"><p class="p-orig">入楞伽经，断食肉品云，一切众生，从无始来，在生死中，轮回不息，靡不曾作父母，兄弟，男女，眷属，乃至朋友，亲爱，侍使，易生而受鸟兽等身，云何于中杀之而食。</p><p class="p-trans">《入楞伽经·断食肉品》说：“一切众生，从无始来，在生死中，轮回不息，靡不曾作父母，兄弟，男女，眷属，乃至朋友，亲爱，侍使，易生而受鸟兽等身，云何于中杀之而食。”</p></div>
+<div class="para-pair"><p class="p-orig">世人只知现世，不知过去未来，故杀彼之身，充我之腹，以为理所应当。若知其生生世世，互相酬偿，及我与此诸物类，互为父母，兄弟，眷属，互生。互为怨家对头，互杀。勿道不敢自食，即祭天地，祖宗，奉父母，待宾客，亦不敢用肉。</p><p class="p-trans">世人只知道现世，不知过去及未来世，所以杀害它们的色身，来填充自己的口腹，还认为是理所应当。如果知道它们生生世世，互相酬报偿还，以及自己与这些动物，互为父母、兄弟、眷属，互相生养。互为怨家对头，互相杀害。不要说不敢自己吃，即使是祭祀天地、祖宗，侍奉父母，接待宾客，也不敢用肉了。</p></div>
+<div class="para-pair"><p class="p-orig">以肉乃精血所成之物，谓天地神祇飨此，何异诬人食污。祭祖，奉亲，待客，何异杀过去祖宗，父母，宾客，奉现在祖宗，父母，宾客，又令祖宗，父母，宾客，永劫常受杀报乎。</p><p class="p-trans">因为肉是精血所成的东西，认为天地神祇会吃这些东西，就如同诬陷一个人吃肮脏的东西一样。用肉来祭祖、奉亲、待客，就如同杀过去的祖宗、父母、宾客，来奉养现在的祖宗、父母、宾客，又再使祖宗、父母、宾客，永劫常受杀报啊！</p></div>
+<div class="para-pair"><p class="p-orig">且勿谓人畜轮回，渺茫难稽，史鉴所载，多难胜数。即就近见闻，亦复不少。固当深信，勿造杀业，以既造杀业，必受杀报。</p><p class="p-trans">暂且不要说人畜轮回，虚无渺茫，难以稽考，而史籍中所记载的，多得难以数清。即使是眼前的所见所闻，也有不少。所以一定要深信不疑，不要再造杀业，因为造了杀业，必定遭受杀报。</p></div>
+<div class="para-pair"><p class="p-orig">经云，菩萨畏因，众生畏果。畏因，则不造杀因，自无杀报。畏果，则徒劳畏惧，了无所益。</p><p class="p-trans">经中说：菩萨畏因，众生畏果。畏因，则不会造作杀因，就自然没有被杀的果报。畏果，则只是徒劳地害怕畏惧，没有一点利益。</p></div>
+<div class="para-pair"><p class="p-orig">余姚周善昌，自归依后，不食荤腥。以明年值办二十九世祖柳庵公祭，向之祭品，均有定例，不许改革。彼预与其族叔祖楚瑺公，议其办法。瑺公，乃明理通人，极为赞成。</p><p class="p-trans">浙江余姚的周善昌，自从归依后，不吃荤腥。因为明年正值他来操办二十九世祖柳庵公的祭典，而向来所用的祭品，都有固定的旧例，不许改革。他预先与他的族叔祖楚瑺公，商议解决的办法。瑺公，是个明理通达的人，极为赞成。</p></div>
+<div class="para-pair"><p class="p-orig">遂于冬至日，聚合族通过，从明年起，以后祭祖，概用素品，不用荤腥，大家通皆允许，永为定例。</p><p class="p-trans">于是在冬至这一天，聚合族人通过决议，从明年起，以后祭祖，一概用素食祭品，不用荤腥，大家全都允许，永久作为定例。</p></div>
+<div class="para-pair"><p class="p-orig">祈余为序，使后世子孙，及见闻之人，各行真孝，因略说其所以云。</p><p class="p-trans">请我来给这个办法作序，使得后世子孙，以及见闻到的人，每个人都能实行真正的孝思，于是就简略地说了一下用素祭祖的原因。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【仁人祭祖，尚求仁者之粟】</span>《礼记》：“父母既没，必求仁者之粟以祀之。此之谓礼终。”比喻孝子虽贫，尚不取恶人之粟，祀其先人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【歆飨】</span>神灵享受供物。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>历史感应统纪序（民十八年） · 印光法师文钞</title>
+<meta name="description" content="历史者，古今治乱贤愚之陈迹也。感应者，古今得失吉凶之征验也。历史多矣，孰能一一遍读。故特撮取感应事迹之显著者，统而纪之，以贡同伦，用作格致，诚正，修齐，治平之鉴。庶可心与道合，心与佛合，天下太平，人民安乐矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-013/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="历史感应统纪序（民十八年） · 印光法师文钞">
+<meta property="og:description" content="历史者，古今治乱贤愚之陈迹也。感应者，古今得失吉凶之征验也。历史多矣，孰能一一遍读。故特撮取感应事迹之显著者，统而纪之，以贡同伦，用作格致，诚正，修齐，治平之鉴。庶可心与道合，心与佛合，天下太平，人民安乐矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-013/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">历史感应统纪序（民十八年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">历史者，古今治乱贤愚之陈迹也。感应者，古今得失吉凶之征验也。历史多矣，孰能一一遍读。故特撮取感应事迹之显著者，统而纪之，以贡同伦，用作格致，诚正，修齐，治平之鉴。庶可心与道合，心与佛合，天下太平，人民安乐矣。</p><p class="p-trans">历史，是记述古往今来，国家安定与动乱，人物贤明与愚昧的过去事迹。感应，是古往今来，得失吉凶的征验。历史太多了，谁能够一一读遍。所以特地撮取了其中显著的感应事迹，统一纪录下来，贡献给各位同修，作为格物、致知、诚意、正心、修身、齐家、治国、平天下的借鉴。希望大家都能够心与道合，心与佛合，天下太平，人民安乐啊！</p></div>
+<div class="para-pair"><p class="p-orig">须知感应云者，即因果之谓也。修如是因，得如是果。如种瓜得瓜，种豆得豆。若欲免恶果，必须修善因。倘或造恶因，断难得善果。</p><p class="p-trans">要知道所谓的感应，就是因果的意思。修如是因，得如是果。如同种瓜得瓜，种豆得豆。如果想要免除恶果，必须修习善因。倘若造作恶因，断然难以得到善果。</p></div>
+<div class="para-pair"><p class="p-orig">余常谓因果者，世出世间圣人，平治天下，度脱众生之大权也。若无因果，则善无以劝，恶无以惩，遑论明明德以止至善，断烦惑以证菩提乎。</p><p class="p-trans">我常常说：因果，是世间、出世间圣人，治理天下，度脱众生的大道关键。如果没有因果，那么行善无法加以劝导，作恶无法得到惩罚，更不要说“明明德”“止于至善”的儒家修行，以及断烦惑而证菩提的佛教修持了。</p></div>
+<div class="para-pair"><p class="p-orig">由其知有因果也，则必趋吉避凶，改过迁善，闲邪存诚，克己复礼，冀入圣贤之域，期登极乐之邦。</p><p class="p-trans">由于人们知道有因果，那么必定趋吉避凶，改过向善，闲邪存诚（防止邪念、心怀诚敬），克己复礼（战胜己私、还归真理），希望自己在世时可以成为圣贤，临终时登上极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">上焉者安而行之，中焉者利而行之，下焉者勉强而行之，同得格物欲以显良知，出迷途以登觉岸。</p><p class="p-trans">上根的人，自觉自愿地实行；中根的人，为利益而实行；下根的人，勉强地实行，都同样可以格除私欲而显现良知，出离迷途而登上觉岸。</p></div>
+<div class="para-pair"><p class="p-orig">于以知圣贤佛菩萨，参赞化育之道，其原始要终，不外因果二字。而为天下古今治乱持危，淑身觉世，超凡入圣，了生脱死之一大根据。</p><p class="p-trans">因而知道圣贤、诸佛菩萨，协助天地化育的大道，自始至终，不外乎“因果”二字。而且因果一直是天下古今安定动乱、扶持危局，以善修身、觉悟世人，超凡入圣，了生脱死的一大根据。</p></div>
+<div class="para-pair"><p class="p-orig">若欲挽回世道人心，舍提倡因果报应，纵令其学识道德，神通智慧，与圣贤佛菩萨相齐，亦无如之何矣，况其下焉者乎。</p><p class="p-trans">如果想要挽回世道人心，舍弃提倡因果报应的教育，即使是让一个人的学识道德，神通智慧，与圣贤、诸佛菩萨相等，也没有任何办法，何况在这之下的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">然世人每每于因果之泯而无迹者，多忽略而不深体察。于显而易见者，或有别种因果夹杂，致难见报应。肉眼凡夫，不知所以，遂谓善恶皆空，无有因果。</p><p class="p-trans">然而世人常常在因果幽微，看不见痕迹的时候，大多忽略而不去深刻体察。对于显而易见的因果，或有其它因果的夹杂，致使难以见到报应。肉眼凡夫，不知道其中的所以然，于是就认为善恶皆空，没有因果。</p></div>
+<div class="para-pair"><p class="p-orig">由是以一己之偏见，谓为的确无谬。而圣贤佛菩萨之所说，皆以为荒唐无稽，不可依从。从兹逞己邪见，妄充通家，发为议论，自误误人。</p><p class="p-trans">因此把自己的偏见，认为是正确无误的。而圣贤、诸佛菩萨所说的，都认为是荒唐无稽，不可依从。从此放纵自己的邪见，狂妄地冒充大通家，发表议论，自误误人。</p></div>
+<div class="para-pair"><p class="p-orig">以一传诸，变本加厉，以驯至于废经废伦，废孝免耻，争城争地，互相残杀之恶剧，一一皆为演出。以致天灾人祸，日见降作，国运危岌，民不聊生。究其根源，总由不知因果报应之所致也。</p><p class="p-trans">以一人传多人，到后来变本加厉，蔓延到现在，废儒经、废伦理、废孝道、无羞耻，争夺城地，互相残杀的恶剧，一一都上演出来。以至于天灾人祸，每天都有发生，国运危急，民不聊生。究其根源，都是由于不知道因果报应所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">民十三年，江浙交战，魏梅荪居士，避居上海，思所以息杀劫而弭祸乱于将来者。余劝其遍阅二十四史，择其因果报应之显著者，录为一书，以为天下后世一切各界之殷鉴。梅荪颇欢喜，曾屡商办法。</p><p class="p-trans">民国十三年（1924年），江苏浙江两军交战，魏梅荪居士，避居上海，思考如何在将来可以消除杀劫、平息祸乱。我就劝他读遍二十四史，选择其中因果报应，最为显著的事例，辑录为一本书，作为天下后世、各行各业一切人的借鉴。魏梅荪很欢喜，曾经多次与我商量办法。</p></div>
+<div class="para-pair"><p class="p-orig">以年老精神不给，又无力请人代劳，怅然中止。幸十六年九月，聂云台居士，请许止净居士编辑，奉太夫人命，供其薪水。</p><p class="p-trans">但是因为年老，精神不足，又没有财力请人代劳，就怅然中止了。幸好民国十六年（1927）九月，聂云台居士，请许止净居士编辑，奉他母亲之命，提供编辑的薪水。</p></div>
+<div class="para-pair"><p class="p-orig">至今年八月脱稿，适云台养病庐山，余遂越樽代庖，为之料理排印等事。因喜云台之克遂我愿，故乐为校定，并集资广为刊印。</p><p class="p-trans">到今年八月份才脱稿，正赶上聂云台在庐山养病，我于是就越权代理，为此料理排印等事务。因为欢喜聂云台满了我的心愿，所以很乐意校定这本书，并集资广为刊印流布。</p></div>
+<div class="para-pair"><p class="p-orig">前次印二万部，今又排四号小字报纸本一部，以期青年学子，同得购阅也。此二种各打三付纸型，尽量可印数十万部，使世人咸知因果报应，丝毫不差。</p><p class="p-trans">上一次印了二万部，现今又排成四号小字的报纸本一部，期望青年学子，都能购买阅读。这二种版本的书，各打了三付纸型，最大量可印数十万部，使世人都知道因果报应，丝毫不差这个道理。</p></div>
+<div class="para-pair"><p class="p-orig">由是而敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，庶可天下太平，人民安乐，见诸实事，非徒希望而已也。</p><p class="p-trans">从此敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，从而能够真正实现天下太平、人民安乐，不再只是希望而已。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【治乱】</span>安定与动乱。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【原始要终】</span>原：探究，追究。要：求。指探求事物发展的起源和结果。出自《周易·系辞下》：“《易》之为书也，原始要终，以为质也。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【持危】</span>扶持危局。《礼记·中庸》：“继绝世，举废国，治乱持危，朝聘以时，厚往而薄来，所以怀诸侯也。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【淑身】</span>以善修身。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【越樽代庖】</span>原意指人各有专职，庖人虽不尽职，主祭者也不越过戉俎去替他办席。比喻超越自己的职分而代人做事。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复温光熹居士书一 · 印光法师文钞</title>
+<meta name="description" content="妄想起时，只一个不理，便不会妄上生妄。譬如小人撒赖，若主人不理，彼即无势可乘。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-025/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复温光熹居士书一 · 印光法师文钞">
+<meta property="og:description" content="妄想起时，只一个不理，便不会妄上生妄。譬如小人撒赖，若主人不理，彼即无势可乘。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-025/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复温光熹居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">妄想起时，只一个不理，便不会妄上生妄。譬如小人撒赖，若主人不理，彼即无势可乘。</p><p class="p-trans">妄想生起的时候，只一个不理会，便不会妄上生妄。譬如小人耍赖，如果主人不理他，他就没有机会可乘。</p></div>
+<div class="para-pair"><p class="p-orig">若用刚法抵制，彼亦以刚法从事。若以柔法安慰，彼必谓主人怕他，又必益加决烈。二者皆损多而益少。只置之不见不闻，彼既无势可乘，只得逡巡而去。</p><p class="p-trans">如果用刚强的方法去抵制，他也会以刚强的方法来对峙。如果以柔和的方法来安慰，他一定认为主人怕他，肯定又会更加决烈。两者都损害多而利益少。只要置之不见不闻，他就无机可乘，只得退却而去。</p></div>
+<div class="para-pair"><p class="p-orig">汝尚不能自利，何得便筹度利人之事乎。君子思不出乎其位。须知此心虽好，亦是学道之障。</p><p class="p-trans">你还不能自利，怎能就去筹度利人的事呢。君子考虑事情不超出自己的职责、能力范围。必须知道这种心虽然是好的，但也是学道的障碍。</p></div>
+<div class="para-pair"><p class="p-orig">古人云，只怕不成佛，勿愁佛不会说法。汝但自行有得，如神龙一滴水，即可遍洒全国。若非神龙，纵得全江之水，亦无所济矣。</p><p class="p-trans">古人云，只怕不成佛，不用愁佛不会说法。你只要自己修行有所得了，就像神龙以一滴水，就能遍洒全国。如果不是神龙，即使得到全江的水，也无济于事啊。</p></div>
+<div class="para-pair"><p class="p-orig">作恶有因缘。自心，因也。外境，缘也。若深信因果，知小恶必受大苦。纵遇极大之缘，亦不能作恶。古今作恶者，皆是信因果心微弱之所致也。否则外缘再刚烈，亦无如我何。</p><p class="p-trans">作恶有因缘。自心是因。外境是缘。如果深信因果，知道做小恶也必然会受大苦。即使遇到极大的缘，也不能作恶。古今作恶的人，都是信因果的心微弱所导致的。否则外缘再怎么强烈，也奈何不了我。</p></div>
+<div class="para-pair"><p class="p-orig">念佛知有妄，是念佛之好处。若不念佛，汝何由知如是之多妄乎。</p><p class="p-trans">念佛知道有妄念，这是念佛的好处。如果不念佛，你如何能知道有那么多妄念呢。</p></div>
+<div class="para-pair"><p class="p-orig">密宗实为不可思议之法门，实有现身成佛之事。彼宏密宗者，皆非其人。有几个真上根，皆自命为上根耳。</p><p class="p-trans">密宗实际是不可思议的法门，也真有现身成佛的事。但那些宏扬密宗的人，都不是现身成佛的人。有几个是真上根？都是自命为上根罢了。</p></div>
+<div class="para-pair"><p class="p-orig">妄借此事，以诱彼好高务胜，贡高我慢之流，便成自误误人，害岂有极也。余不须提。</p><p class="p-trans">妄借这种事，来诱惑那些好高务胜，贡高我慢之类的人，便成了自误误人，祸害还有比这个更大的吗？其余的就不用再提了。</p></div>
+<div class="para-pair"><p class="p-orig">□□及□□气焰甚盛，自命固已超诸上根之上。其骂孔孟，更甚于市井小儿骂人。不知骂孔子，即是骂尧舜禹汤文武，即是灭世间伦常正理。</p><p class="p-trans">某某和某某气焰很盛，自以为已经超过诸位上根人之上。他们骂孔子、孟子，更是超过了市井小儿骂人。不知道骂孔子，就是骂唐尧、虞舜、夏禹、商汤、周文王、周武王，就是灭世间伦常正理。</p></div>
+<div class="para-pair"><p class="p-orig">吾不知彼所学之密宗，欲何所用，为尽传于废经废伦废孝免耻杀父杀母之人乎。为复传于孝弟忠信礼义廉耻之人乎。</p><p class="p-trans">我不知道他们所学的密宗，是想来做什么用的，是要来传给废儒经、废伦理、废孝道，无羞耻、杀父、杀母的人呢？还是要传给孝弟忠信礼义廉耻的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">若为传于废经杀父之人，彼说尚能强立。若传于孝弟忠信之人，彼已欲打倒废灭，铲除孔子所禀承之二帝三王之道，复取以为善而教之密，则彼亦莫能自解。</p><p class="p-trans">如果是为传给废经杀父的人，他们的这些说法还能够勉强成立。如果是传给孝弟忠信的人，他们已经要打倒和废灭，并铲除孔子所禀承的二帝三王之道，再取为善的人来教导密宗，那么他们这些说法也不能自解。</p></div>
+<div class="para-pair"><p class="p-orig">若□□及□□者，真可谓败坏佛法之魁首矣。此人现身亦好成佛，不妨到阿鼻地狱，受毗卢遮那之自受用三昧于刀山剑树镬汤炉炭中也。</p><p class="p-trans">好像某某和某某这种人，真可说是败坏佛法的罪魁祸首。这种人现身也好成佛，不妨到阿鼻地狱，在刀山剑树鑊汤炉炭中受毗卢遮那佛的自受用三昧吧。</p></div>
+<div class="para-pair"><p class="p-orig">又显荫之根性，约时人论之，亦可云上根矣。自己发心出家，未几年台教要旨，亦颇悉知。往东洋学密宗，东洋人极佩服崇重。死后尚为修塔于高野山，谓得密宗之正传。</p><p class="p-trans">另外，显荫的根性，以当时的人来说，也可说是上根。自己发心出家，没几年天台教观的要旨也已相当了解。去日本学密宗，日本人很佩服崇重他。死后还为他在高野山修塔，说是得到了密宗的正传。</p></div>
+<div class="para-pair"><p class="p-orig">亦不能说彼不能现身成佛。及至临死，佛也不能念，咒也不能念。比愚夫妇之念佛安坐而逝者，退半多多矣。此又上根人得密宗正传之结果矣。其余又何足论。</p><p class="p-trans">也不能说他不能现身成佛。但到了临死，佛也不能念，咒也不能念。比愚夫愚妇安坐念佛而死的人，差太多太多了。这就是上根人得密宗正传的结果啊！其他人（非上根）还用说吗？</p></div>
+<div class="para-pair"><p class="p-orig">现身成佛，与宗门明心见性，见性成佛之语大同。仍须断惑，方能证真，方可了生脱死。若谓现生即已三惑净尽，二死永亡，安住寂光，了无事事，则为邪说，为魔话。</p><p class="p-trans">现身成佛，和禅宗的明心见性，见性成佛的话大致相同。仍然需要断惑，才能证真，才能了生脱死。如果说现生即已三惑断尽，二死永亡，安住寂光净土，了无事事了，那就是邪说，就是魔话。</p></div>
+<div class="para-pair"><p class="p-orig">彼嫌净土偏小迟钝，让彼修圆大直捷之法，现身成佛去。吾人但依净土言教以修，彼此各不相妨。何必引往生咒阿弥陀佛，以为即彼密宗乎。</p><p class="p-trans">他们嫌净土是偏小乘迟钝之法，那么让他们修圆大直捷的法，现身成佛去。我们只依净土言教来修，彼此各不相妨。何必要引往生咒阿弥陀佛，认为是他们密宗的呢？</p></div>
+<div class="para-pair"><p class="p-orig">须知佛随众生之机，说各种教，其语言虽有不同，其精神悉皆融通。譬如大地分与一切人民，虽有此疆彼界，不能彼此截然斩断，绝不许人到我界上来。以若斩断，则彼亦无生路可走矣。</p><p class="p-trans">必须知道佛随众生的根机，宣说各种教法，其语言虽然有不同，但其精神都是融通的。譬如大地分给一切人民，虽然有这疆土那国界之分，但却不能彼此截然斩断，也绝对不能不允许他人到我的国界来。因为如果斩断，那么他们自己也无生路可以走了。</p></div>
+<div class="para-pair"><p class="p-orig">彼以往生咒等即密，何得又谓念佛不如修密乎。今简直说，文殊普贤马鸣龙树等，则名上根，则可现身真实成佛。若不及者，且勿以上根自误误人。以蹈□□之邪见，及□□之糊涂而死之结果，令愚夫愚妇见诮也。</p><p class="p-trans">他们认为往生咒等就是密宗，怎么能又说念佛不如修密宗呢？现在简单直说吧，文殊菩萨、普贤菩萨、马鸣菩萨、龙树菩萨等，才能说是上根，才能现身真实成佛。如果不及这些菩萨的，千万不要用上根人来自误误人。以致重蹈□□的邪见，以及□□糊涂而死的结果，令愚夫愚妇见笑了。</p></div>
+<div class="para-pair"><p class="p-orig">汝继祖母柴老太夫人事，已忘记。汝果真发孝心，即柴老太夫人堕于恶道，汝能以至诚心为彼念佛，亦可仗佛慈力，往生西方。况未必堕恶道乎。是在汝之诚否。不宜以柴老太夫人之去时景相为断也。</p><p class="p-trans">你的继祖母柴老太夫人一事，已经忘记了。你如果真发孝心。即使柴老太夫人堕于恶道，你能以至诚的心为她念佛，也可仗佛慈力，往生西方。何况她未必堕恶道呢。重要的在于你的心是否真诚。不应该以柴老太夫人去世时的景相来断定。</p></div>
+<div class="para-pair"><p class="p-orig">起法名，亦是场面上事。世俗为亡人说幽冥戒，则起法名。然必以竭诚尽敬，为彼念佛，为最上之策。切勿只取世俗场面上事，以了结其孝思，则于汝有大利益。非为柴老太夫人念，汝便不得其益。</p><p class="p-trans">起法名，也是场面上的事。世俗做法，为亡人说幽冥戒，则起法名。然而必须以竭诚尽敬的心，为她念佛，作为最上之策。千万不要只取世俗场面上的事，来了结自己的孝思，那么对你有大利益。并不是为柴老太夫人念，你便得不到其中的利益。</p></div>
+<div class="para-pair"><p class="p-orig">当知汝以孝心报恩心，为柴老太夫人念，比专为己念功德更大。是以要人普为四恩三有法界众生回向。况受大恩之老太夫人乎。汝能随类以推，则亦可随机导引矣。</p><p class="p-trans">应当知道，你以孝心、报恩心，为柴老太夫人念佛，比专为自己念佛的功德更大。因此，要修行人普为四恩三有法界众生回向。更何况为受过她的大恩的老太夫人回向呢。你能以此类推，那么也能以此随机导引他人。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【温光熹】</span>又名温启伦，上海复旦大学教授，东方人文学院教授，国民党国防部二厅少将高参，从事佛学研究多年，有大量著作在国外发表。岳父嵇祖佑，又名嵇述裕，曾任中华民国四川省警察厅长，民政厅长，和成银行董事长。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【逡巡】</span>1.却行，恭顺貌。2.退避；退让。3.顷刻；极短时间。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【筹度】</span>谋划；想办法。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【魁首】</span>首领；位居首者。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【简直】</span>1.简朴质直；直截了当。2.副词。犹索性，干脆。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

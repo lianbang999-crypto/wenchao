@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>致自觉居士书（民国十六年） · 印光法师文钞</title>
+<meta name="description" content="天下事有定理，无定事，当以理定事，以事论理，俾合乎天理人情，则得之矣。孟子所谓，男女授受不亲为礼，谓嫂溺不援为豺狼，当此之时，固不能依平常之礼为论也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-086/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="致自觉居士书（民国十六年） · 印光法师文钞">
+<meta property="og:description" content="天下事有定理，无定事，当以理定事，以事论理，俾合乎天理人情，则得之矣。孟子所谓，男女授受不亲为礼，谓嫂溺不援为豺狼，当此之时，固不能依平常之礼为论也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-086/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">致自觉居士书（民国十六年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">天下事有定理，无定事，当以理定事，以事论理，俾合乎天理人情，则得之矣。孟子所谓，男女授受不亲为礼，谓嫂溺不援为豺狼，当此之时，固不能依平常之礼为论也。</p><p class="p-trans">天下事，理有一定，事却无绝对，应当以理来决定事，以事来衡量理，使得合乎天理人情，就会正确得当了。孟子认为：男女授受不亲为礼，又认为嫂嫂落水，小叔不救乃是豺狼所为，在这个性命攸关的时刻，就不能依照平常的礼节来衡量了。</p></div>
+<div class="para-pair"><p class="p-orig">孝子事亲，无所违逆。若亲生毒疮，犹须以针锥刀鎞刺割，又须狠力挤其脓，以至见血方止，此亦是孝之发露处。若畏其犯逆，则亲命已矣。</p><p class="p-trans">孝子奉事双亲，没有一点违逆。如果双亲生了毒疮，还必须用针锥刺破、用刀鎞割开，还必须狠心用尽全力挤出其中的毒脓，以至见到鲜血，方才停止，这也是孝顺双亲的显露之处。如果害怕那样做是冒犯忤逆，那么双亲的命就没了。</p></div>
+<div class="para-pair"><p class="p-orig">然不可见有如此行者，谓之为孝，乃于无毒疮之父母，亦作如此刺割，则成大逆不道，天雷当殛。</p><p class="p-trans">可是也不可看见有这样做的人，也认为他是尽孝，比如在没有毒疮的父母身上，也这样的刺割，就成了大逆不道，当遭雷劈。</p></div>
+<div class="para-pair"><p class="p-orig">女子经期，乃大半世之痼疾，发必数日，何可以因此遂停念佛乎。平时必须致洁致诚，至此虽身体不能致洁，当倍致诚。小衣内必厚衬布，勿令污血流于佛堂。凡手若摸下体，必须洗净。礼拜若不便，当少礼。</p><p class="p-trans">女子的经期，是大半生的痼疾，一发必定要好几天，怎么可以因此就停止念佛呢？平时必须非常洁净诚敬，到这个时候，虽然身体不能洁净，但心应当加倍的诚敬。内裤里面必须有厚衬布，不要让污血流在佛堂里。凡是用手摸过下体后，必须把手洗干净。礼拜如果不方便，就应当少作礼拜。</p></div>
+<div class="para-pair"><p class="p-orig">至于念佛，诵经，则固以志诚恭敬心行之，其功德与平常了无减少。以佛为一切众生之大慈悲父母，当此病发时，能至诚念佛，则当倍生怜愍。</p><p class="p-trans">至于念佛，诵经，则要以志诚恭敬的心来做，这个功德与平常一样，没有减少。因为佛陀是一切众生的大慈悲父母，在这个病发的时候，能够至诚念佛，佛菩萨必定会倍生怜悯。</p></div>
+<div class="para-pair"><p class="p-orig">若如愚人所执，身有此不洁之病，则不可念佛。若儿女堕于圊厕之中，亦不可呼父母以求救援也，有是理乎。</p><p class="p-trans">如果像愚痴人所执著的：身体有了这种不洁净的病，就不可以念佛。如同儿女堕在厕所之中，也不可以呼叫父母来救援一样，有这样的道理吗？</p></div>
+<div class="para-pair"><p class="p-orig">念佛人，宜行住坐卧，心常忆念。平时须于洁净处，衣冠整齐时，或出声念，或默念皆可。唯睡眠，及大小便，裸体澡浴时，只可默念，不宜出声。若遇刀兵水火灾难，则任是何地，何种形仪，皆须出声念，以出声比默念更为得力故也。</p><p class="p-trans">念佛人，应该行住坐卧，心中常常忆念佛号。平时应当在洁净的地方，衣冠整齐的时候，或者出声念，或者默念都可以。唯有睡眠，以及大小便，裸体澡浴的时候，只可以默念，不应出声念。如果遇到刀兵水火的灾难，那么不管是在什么地方，怎样的形态仪表，都必须出声念，因为出声念比默念更能得到佛力加持的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">若女人生儿子时，当于未生前即念。及至临盆，虽裸体不洁，亦宜出声。此时有性命相关，如堕水火以求救援，不得论仪式不庄，污秽不净等也。</p><p class="p-trans">如果女人生孩子的时候，应当在没有生之前就念。到了临盆，虽然裸体不洁净，也应该出声念。这时候，性命相关，如同堕入水火来求得救援，就不能拿仪式不庄重、污秽不净等论事了。</p></div>
+<div class="para-pair"><p class="p-orig">女人难产，不是与所生儿女有怨，便是宿世怨家，障不许生，令其受苦。能念佛，并旁边料理之人同为念佛，则彼等怨家闻佛声，当即退避，不敢为碍矣。是以女子从小，便当令其念佛，以期预灭此难。</p><p class="p-trans">女人难产，不是与所生的儿女有怨，就是宿世怨家障碍不许生，令她受苦。能够念佛，以及旁边照料的人一同为她念佛，那些怨家听到佛号声，当下就会立即退避，不敢来障碍了。所以女孩子从小，就应当让她念佛，以期预先消除这个灾难。</p></div>
+<div class="para-pair"><p class="p-orig">若平时常念佛之人，断不至有此危难。即平时不念佛之人，能志心念，亦必定易生。愚人执崖理，谓家中女人生子，家中都不可供佛，也不可念佛，否则得罪。此系执死方子医变证者，只知其常，不知其变，可哀也已。</p><p class="p-trans">如果是平时常念佛的人，断然不至于有这个危难。即使是平时不念佛的人，能够专心念，也必定容易生产。愚痴的人执著呆板的道理，认为家中女人生孩子，家中都不可供佛，也不可念佛，否则有罪。这是执著死方子来医治变化的病，只知道其中的常规，不知其中的变通，实在可悲啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝能将此义，与亲邻妇女说，其功德甚大，而毫无所费，可谓拯人于未危。但须详为分别，切不可谓女人生子，裸体污秽皆无碍，平常亦了无敬畏，不须净洁，则又获罪不浅。平常须依常理，月经来，及生产，乃是变理。详审孟子，及光所譬，自可悉知。</p><p class="p-trans">你能够将这个义理，对亲戚、邻居妇女们宣说，这个功德很大，而且丝毫不费钱，可说是在危难来临之前拯救他人。但必须详细加以分别，千万不可以说，女人生孩子，裸体污秽都没有妨碍，就平常也没有了一点敬畏之心，不需要净洁，那么又获罪不浅了。平常需要依照常理，来月经，以及生孩子，这是变理。详细分析上面孟子所说的一段话，以及我的譬喻，自然可以全都知道了。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝寄文钞一部，安士书一部，观音颂一部，寿康宝鉴二本，祈详阅。文钞，不但修持净业有所依凭，即涉世守身，齐家教子等法，皆有发明。</p><p class="p-trans">现在为你寄《文钞》一部，《安士全书》一部，《观音颂》一部，《寿康宝鉴》二本，请详细阅读。《文钞》，不但修持净业有所依凭，即使处世修身，治家教子等方法，也都有阐发说明。</p></div>
+<div class="para-pair"><p class="p-orig">当今之世，必须认真提倡因果报应。教子固属要务，教女更要于教子。以人之幼时，常在母边，母若贤，则儿女自然会贤。以熏陶化育于平时，习已成性，及长而受父教，则顺流而导，实为易易。</p><p class="p-trans">当今之世，必须认真提倡因果报应。教育儿子固然是重要任务，教好女儿比教育儿子更为重要。因为一个人在幼小之时，常常在母亲身边，母亲如果贤良，那么儿女自然会贤良。因为平时的熏陶化育，习惯了就成为天性，等到年龄稍长，受父亲的教导，就会顺流而导，实在容易多了。</p></div>
+<div class="para-pair"><p class="p-orig">今世之乱至如此，皆无上二种之善教所致。光挽劫无力，救世有心，故为此一上络索。倘不以为老僧迂腐之谈，则幸甚。</p><p class="p-trans">当今世道混乱到如此地步，都是没有以上两种善教所导致的。我无力挽救劫运，但有心救世，所以说了上面一番啰嗦话。如果你不认为这是老僧迂腐常谈，那么就很庆幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【鎞】</span>1.旧时妇女插在头发上的一种首饰，即钗。2.古代治眼病用的一种器具。3.犁刃。4.箭镞。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

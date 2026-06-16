@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复宁德晋居士书十七 · 印光法师文钞</title>
+<meta name="description" content="何得说许多空套子话。此种虚浮习气，非学道人所宜。况于师前说之，更为不宜。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-158/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复宁德晋居士书十七 · 印光法师文钞">
+<meta property="og:description" content="何得说许多空套子话。此种虚浮习气，非学道人所宜。况于师前说之，更为不宜。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-158/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复宁德晋居士书十七</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">何得说许多空套子话。此种虚浮习气，非学道人所宜。况于师前说之，更为不宜。</p><p class="p-trans">你怎么能说许多空套子的话。这种虚浮的习气，不是学道人所应该有的。何况在师父面前说，更不应该。</p></div>
+<div class="para-pair"><p class="p-orig">日人以豺虎之心，欲吞吾国。吾国许多人私受日人之贿，为彼作走狗，致彼之凶势益大。使无人为彼用，决不至有如此之横蛮也。</p><p class="p-trans">日本人以豺虎之心，想要吞并我国。我国有许多人私下收受了日本人的贿赂，为他们作走狗，致使他们的凶恶气势更加盛大。假使没有人被他们所用，他们决定不至于有如此的横蛮啊！</p></div>
+<div class="para-pair"><p class="p-orig">苏州日有飞机三五只经过，初曾炸过几处，近来但经过而已。苏人逃去十程之七。然逃之外边，其苦更甚。不逃者，尚安乐些。</p><p class="p-trans">苏州每天有三五架飞机经过，最初曾经炸过几个地方，近来只是经过而已。苏州城内的人，逃走了十分之七。然而逃难在外，更加凄苦。没有逃走的，还安乐一些。</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，一步不能移动。不该死，总不会死。该死则宁受炸死，不以迁移而受此种冤枉苦。</p><p class="p-trans">我老了，一步也不能移动。不该死，总不会死；该死，就宁愿被炸死，也不因为迁移而受这种冤枉苦。</p></div>
+<div class="para-pair"><p class="p-orig">毒乳杀儿，比打胎溺女为多多。惜从古名医，均未言及。不知者均归咎于命，而不知其非命也。</p><p class="p-trans">毒乳杀儿，比打胎、淹死女儿，还多得多。可惜从古以来的名医，都没有说到。不知道的人，都归咎于命，却不知道这不是命。</p></div>
+<div class="para-pair"><p class="p-orig">凡女人气性大者，其儿女多死（生大气则死）。纵不死，亦多病（小气则病）。女子从小，就要习其柔和，则终身受福多矣。</p><p class="p-trans">凡是女人气性大的，她的儿女大多死亡（生大气喂奶，孩子就会死）。纵然不死，也大多生病（生小气喂奶，孩子就会病）。女子从小，就要学习柔和，那么终身受福就多了。</p></div>
+<div class="para-pair"><p class="p-orig">否则不但自己多病，儿女多死多病。家道不和，以致衰祸日现，此实立家立国之基本也。又现今战事酷烈之极，为从来所未有。以后凶器愈精妙，人民愈难生活。</p><p class="p-trans">否则，不但自己多病，儿女也多死多病；家道不和，以致衰败之祸日日呈现，这实在是立家立国的基本。又现在战事酷烈到极点，是从来所没有过的。以后的凶器愈是精妙，人民愈难存活下来。</p></div>
+<div class="para-pair"><p class="p-orig">无论老幼男女，均当念佛求生西方，庶不至生生世世受此苛虐。现在国难甚剧，凡一切人，均当一心念南无观世音菩萨。以祈战事速息，人各安生。</p><p class="p-trans">无论老幼男女，都应当念佛求生西方，才不至于生生世世，遭受这些严苛残暴。现在国难巨大，凡是一切人，都应当一心念南无观世音菩萨。以祈求战事迅速停息，人人都生活安定。</p></div>
+<div class="para-pair"><p class="p-orig">光于六月廿八，以所作普劝全球同胞，同念观音圣号之广告，寄上海新闻报申报馆，令各登十天。</p><p class="p-trans">我在六月二十八，将所作的普劝全球同胞，同念观音圣号的广告（即《普劝全球同胞同念观音圣号启事》，收录于《印光法师文钞三编·卷四》），寄到上海新闻报、申报馆，让他们各登十天。</p></div>
+<div class="para-pair"><p class="p-orig">七月初八开仗，报虽出而发送难周，又令漕河泾习勤所印七寸见方单张五十万，邮寄各省佛教机关，以战事停印。此文不独为战事，平靖后不妨再印。</p><p class="p-trans">七月初八开战（即上海八一三淞沪抗战），报纸虽然出版了，却很难周遍发送，又令上海漕河泾习勤所，印七寸见方的单张五十万，邮寄到各省佛教机关，但因为战事停印。这篇文稿不只为了战事，时局安定后，不妨再印。</p></div>
+<div class="para-pair"><p class="p-orig">达生编后所附，当于平靖后相机而办。战事未息，事事不能进行。劝念观音广告，于报裁寄一分，祈展转普告大众，则利益大矣。（廿六年八月初三）</p><p class="p-trans">《达生编》后面所附的，也应当在时局安定后，看机缘而办理。战事没有停息，什么事都不能进行。劝念观音的广告，在报纸上裁剪了一份寄给你，请辗转普告大众，那么利益就大了。（民国二十六年&lt;1937年&gt;八月初三）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

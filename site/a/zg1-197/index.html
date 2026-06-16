@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>启建普门无遮普度胜会大道场募缘疏（代撰） · 印光法师文钞</title>
+<meta name="description" content="观音大士，乘大愿轮，以普门法，度脱众生。言普门者，以法法头头，皆归实相，根根尘尘，悉证圆通，无有一法，不通涅槃，故曰普门。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-197/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="启建普门无遮普度胜会大道场募缘疏（代撰） · 印光法师文钞">
+<meta property="og:description" content="观音大士，乘大愿轮，以普门法，度脱众生。言普门者，以法法头头，皆归实相，根根尘尘，悉证圆通，无有一法，不通涅槃，故曰普门。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-197/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">启建普门无遮普度胜会大道场募缘疏（代撰）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观音大士，乘大愿轮，以普门法，度脱众生。言普门者，以法法头头，皆归实相，根根尘尘，悉证圆通，无有一法，不通涅槃，故曰普门。</p><p class="p-trans">观世音菩萨，乘大悲愿轮，用“普门”之法度脱众生。之所以说是普门之法，是因为每一法每一事，都归于实相，每一根每一尘，都能证得圆通，没有一法不通于涅槃，所以称为普门之法。</p></div>
+<div class="para-pair"><p class="p-orig">又复上中下根，皆使就路还家，善恶中庸，无不等蒙摄受，无有一人，不垂慈济，故曰普门。</p><p class="p-trans">而且，无论上中下三种根机的人，都使他们找到路返回家乡；无论善人、恶人或中资之人，没有不平等蒙受菩萨的摄受，没有不被菩萨垂慈救济的，所以称为普门。</p></div>
+<div class="para-pair"><p class="p-orig">但以众生在迷，妄于根尘等境，起惑造业，因业受苦，久经长劫，了无出期。故致天灾人祸，更迭而兴，水火刀兵，相继而起。岂天之枉虐斯民，实民之往业所感。</p><p class="p-trans">但是因为众生在迷惑之中，虚妄地对六根六尘等一切境相起执著妄想，并造种种业。因为造业而受苦报，久经长劫，没有出离之日。由此导致天灾人祸，交替而来，水火刀兵等灾，相继而起。这哪里是上天无缘无故虐待人民，实际是人民过去的恶业所招感来的。</p></div>
+<div class="para-pair"><p class="p-orig">若不归命大士，则苦果复生苦因，倘能恳恩莲座，则善缘当获善报。窃念吾潮，近年以来，屡遭瘟疫，又经兵灾，复罹地震，水旱虫蝗，不时见告。因兹数端，以致死亡贫困者，实繁有徒。</p><p class="p-trans">如果不归命观世音菩萨，那么苦果又会成为苦因，倘若能够向观世音菩萨请求恩典，那么善缘应将获得善报。想到民国近年以来，屡遭瘟疫，又经兵灾，又遭地震，水灾旱灾，虫害蝗灾，不时见到报道。因为这些灾害，而导致死亡贫困的人，实在太多了。</p></div>
+<div class="para-pair"><p class="p-orig">纵有幸而获免，未受损伤者，亦复忧怖战兢，如吞棘蓬，如坐针毡，苦毒衷怀，无处吁诉。（某等）由是谨发虔心，归命慈父，企灭已往之愆尤，预培将来之福祉。</p><p class="p-trans">纵然有幸而能免除灾难，不受损伤的人，也是忧虑怖畏，战战兢兢，如同吞下棘剌蓬草，如坐针毡，胸中痛苦不堪，却无处呼喊诉说。某某等人因此谨发虔诚之心，归命佛陀慈父，企望灭除过去的罪过愆尤，预先培植将来的福报。</p></div>
+<div class="para-pair"><p class="p-orig">拟某年月日，于南海普陀山法雨禅寺，启建普门无遮普度胜会大道场七昼夜。仗此良因，俾亡者蒙佛接引，神超极乐之天，存者沐法威力，身享康宁之福。宿业消而在在解脱，谋为顺而事事亨通，转烦恼之逼迫，成自在之逍遥。各各先亡祖祢，俱获超升，人人后代儿孙，常纳吉庆。</p><p class="p-trans">打算在某年、某月、某日，在南海普陀山法雨禅寺，启建普门无遮普度胜会大道场七天七夜。仰仗这个好因缘，使得亡故的人蒙佛接引，神识超升到极乐世界；活着的人，沐浴佛法的威力，自身享受健康安宁的福报。宿业消除而处处解脱，所谋顺利而事事亨通，转烦恼逼迫，成自在逍遥。各人的先亡祖宗，都获得超升；人人的后代儿孙，常获吉祥喜庆。</p></div>
+<div class="para-pair"><p class="p-orig">但此道场，费用实繁，恳祈吾邑善信人等，同发善心，共襄胜事，则功德无量矣。</p><p class="p-trans">但是建这个道场，费用实在太大，恳祈我乡的善信人等，同发善心，共襄胜事，则功德无量啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【恳恩】</span>请求恩典。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【实繁有徒】</span>意谓确实有不少这样的人。一般用贬义。《左传·昭公二十八年》叔游曰：“《郑书》有之：‘恶直丑正，实蕃有徒。’”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【苦毒】</span>痛苦；苦难。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【愆尤】</span>过失，罪咎。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【祖祢】</span>1.祖庙与父庙。2.先祖和先父。亦泛指祖先。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

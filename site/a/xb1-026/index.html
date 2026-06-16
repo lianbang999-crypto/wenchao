@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复杨慧昌居士书（二）（民国二十年　原名宇昌） · 印光法师文钞</title>
+<meta name="description" content="刘汉云君，可谓宿有善根。然既信佛法多年，固当早已茹素，何待年至花甲，方才发心乎。是知俗习之不易转移也，今则竟转之，亦可谓有勇毅力者。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-026/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复杨慧昌居士书（二）（民国二十年　原名宇昌） · 印光法师文钞">
+<meta property="og:description" content="刘汉云君，可谓宿有善根。然既信佛法多年，固当早已茹素，何待年至花甲，方才发心乎。是知俗习之不易转移也，今则竟转之，亦可谓有勇毅力者。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-026/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复杨慧昌居士书（二）（民国二十年　原名宇昌）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">刘汉云君，可谓宿有善根。然既信佛法多年，固当早已茹素，何待年至花甲，方才发心乎。是知俗习之不易转移也，今则竟转之，亦可谓有勇毅力者。</p><p class="p-trans">刘汉云，可说是宿世就有善根。然而既然已经信佛多年，本应早就吃素了，为何等到快六十岁了，方才发心呢？由此可见，世俗的习气实在是不容易转变啊！现今他竟然转过来了，也可以称得上是有勇气、有毅力的人。</p></div>
+<div class="para-pair"><p class="p-orig">彼既常看文钞，其修持方法，固已明白于心。所最要者，当决定求到临命终时，蒙佛接引，往生西方。</p><p class="p-trans">他既然常看《文钞》，那么修持的方法，应该已经明白于心了。最重要的是，应当决定求到临命终时，蒙佛接引，往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">欲生西方，平日当致力于深信，切愿，志诚念佛。欣净土之净妙，厌娑婆之浊恶。自行如是，化人亦然。</p><p class="p-trans">想要往生西方，平时应当致力于深信，切愿，志诚念佛。欣求净土的净妙，厌离娑婆的浊恶。自己行持是这样，教化他人也是这样。</p></div>
+<div class="para-pair"><p class="p-orig">不可有一念求来生得人天福报之心，则便可与佛感应道交，决定可以仗佛慈力，往生西方，超凡入圣，了生脱死矣。</p><p class="p-trans">不可有一念求来生得人天福报的心，就可以与佛感应道交，决定可以仗佛慈力，往生西方，超凡入圣，了生脱死了。</p></div>
+<div class="para-pair"><p class="p-orig">今为彼取法名为慧云。谓以大智慧云，雨甘露法雨，以润自他（此即慧云法雨也）。即所谓真为生死，发菩提心，以深信切愿，持佛名号，求生西方也。</p><p class="p-trans">现今为他取法名为慧云。就是以大智慧云，施甘露法雨，来润泽自己和他人（这就是“慧云法雨”）。也就是所谓的：真为生死，发菩提心，以深信切愿，持佛名号，求生西方啊！</p></div>
+<div class="para-pair"><p class="p-orig">又彼曾愍血产孤魂，而超度之。然亦当于一切女人，作永无血产之法，令其现生离苦得乐也。其法唯何。凡女子于幼时，即当念佛，及念观世音，以期消除业障，增长福寿。</p><p class="p-trans">另外，他曾经怜愍因产难而死的孤魂，而超度她们。然而还应当交给一切女人一个永远免除产难的方法，令她们现生就离苦得乐啊！这个方法是什么呢？就是，凡是女子在幼年的时候，就应当开始念佛，以及念观世音菩萨，以期消除业障，增长福寿。</p></div>
+<div class="para-pair"><p class="p-orig">果于平时能念，自可消此产难。若至临产，仍须志诚恳切念南无观世音菩萨，则决定易生，不会受苦。</p><p class="p-trans">果真在平时能够念佛，自然可以消除这个产难。如果到了临产，仍须志诚恳切念“南无观世音菩萨”，这样孩子肯定容易生下来，不会受苦。</p></div>
+<div class="para-pair"><p class="p-orig">若平素绝不念佛，及念观音者，临产肯念，亦决平安而生。若有难产者，即教彼念。并在旁照应之人，同为彼念，亦决定即平安而生。且勿谓临产裸露污秽，念则获罪。须知此系性命相关之时，不可以平常之道理论。</p><p class="p-trans">产妇如果平时绝不念佛，以及念观音菩萨，而临产肯念，也肯定可以平安生产。如果是有难产的产妇，就教她念观世音菩萨。并让在旁边照应的人，一同为她念，也决定立即平安生下孩子。千万不要说临产时裸露污秽，念观世音菩萨就会获罪。要知道这是性命攸关的时刻，不可用平常的道理来论说。</p></div>
+<div class="para-pair"><p class="p-orig">平常，凡念佛人，若衣冠不整齐，或睡眠，洗澡，抽解等，只可心中默念，不可出声朗念。若生产，不可心中默念，必须出声朗念。以默念力微，若心中努力，或致受病。朗念，则气息舒畅，其益甚大。切不可谓念之有罪。</p><p class="p-trans">平时，凡是念佛人，如果衣冠不整齐，或者睡眠、洗澡、上厕所等，只可心中默念，不可出声念。但如果是生产时，则不可心中默念，必须出声朗念。因为默念的力量微弱，如果心中努力默念，或许会导致产妇受病。出声朗念，则气息舒畅，这个利益很大。千万不可以认为，出声朗念有罪。</p></div>
+<div class="para-pair"><p class="p-orig">须知菩萨视一切众生，直同亲生儿女。儿女若堕水火，求父母救，父母闻之即救，决不会因衣冠不整齐，身体不洁净，而不救也。</p><p class="p-trans">必须知道菩萨看待一切众生，如同亲生儿女。儿女如果堕入水火，向父母求救，父母听到了就会立刻来救，绝不会因为儿女衣冠不整齐，身体不洁净，而不来救啊！</p></div>
+<div class="para-pair"><p class="p-orig">若平常，亦同此裸露而念，则其罪不小。须按事论，不可死执。有不明理者，家有生产事，彼则躲之他处，过一月多方敢回。谓血腥一冲，则从前所念之经咒佛号，皆无功德。此种愚人，可怜之极。宜以光言，遍告于人，则由生产而死者，当可无有矣。</p><p class="p-trans">如果是平常，也如同生产时裸露着身体而出声念，那么这个罪过不小。必须按事情的具体情况来论，不可执死理。有些不明白道理的人，家中有生产的事，就躲到其他地方去，过一个多月，才敢回来。他们认为血腥一冲，那么从前所念的经咒佛号，都没有功德了。这种愚痴的人，可怜到极点。应该将我的话，广泛地向大家宣传，那么由生产而死的产妇就会没有了。</p></div>
+<div class="para-pair"><p class="p-orig">●（其二）内功，是自修。外功，是广行种种方便。如周急济困，拯灾救难等，谓之助道，此须按己力之所能。</p><p class="p-trans">●（第二封信）内功，是自己修持的念佛、禅定等功夫；外功，是广行种种方便。例如周急济困，拯灾救难等，这称为助道，这些外功必须要自己力所能及地来做。</p></div>
+<div class="para-pair"><p class="p-orig">若无其力，或以言指迷，或以言劝众，令其大家凑成其事。若以受人请而念经念佛，此乃一分懒惰人，依佛度生命之行为也。汝何可混于此中，不怕失自己品格乎。唯有一事可以做，然汝有职业，亦不甚便。</p><p class="p-trans">如果没有这个能力，或者以言语为他人指点迷津，或者用言语劝导大众，使大家凑成这些善事。如果因为受人延请去赶赴经忏，为人家念经念佛，这是一些懒惰的人，依赖佛教谋生度日的行为啊！你怎么能混到其中，不怕丧失自己的品格吗？受人邀请赴经忏这类事中，唯有一件事可以做，然而你有职业，也不是很方便。</p></div>
+<div class="para-pair"><p class="p-orig">凡有平素念佛之人，或其人之子孙信佛，于临命终时，请众居士助念，其利益甚大。看看饬终津梁，自知。</p><p class="p-trans">可做的事就是，凡有平时念佛的人，或者这个人的子孙信佛，在临命终时，家人请众居士助念，这个利益很大。看看《饬终津梁》，就自然会知道。</p></div>
+<div class="para-pair"><p class="p-orig">念佛人，于自己父母，及余眷属前，常须说与彼听。迨及有命终人，自家眷属，通为念佛，此人必能仗佛力生西方。纵不生西方，亦必生善道，有大利益，毫无损伤。</p><p class="p-trans">念佛人，在自己的父母，以及其余的眷属面前，要常常将助念的道理说给他们听。等到有人临命终时，自家眷属，全都为他念佛，这个人必定能够依仗佛力，往生西方。纵然不往生西方，也必定生到善道，有大利益，毫无损伤。</p></div>
+<div class="para-pair"><p class="p-orig">若不知此，未死即为洗澡，换衣，若因搬动疼痛，则起瞋心。即不至起瞋，然一经搬动，心便不得清净矣。</p><p class="p-trans">如果不知道这个道理，还没有死就为他洗澡，换衣，如果因为搬动而产生了疼痛，他就会生起瞋心。即使不至于生起瞋心，然而一旦经过搬动，他的心就不得清净了。</p></div>
+<div class="para-pair"><p class="p-orig">倘平素念佛求生西方之人，一经如此，定规打失正念，不得往生。若未死先哭，则令彼生爱恋心，亦是牵令堕落耳。</p><p class="p-trans">就算是平时念佛求生西方的人，一经过这番折腾，也一定会失去正念，不得往生。如果在人还没有死的时候，家人就先哭泣，那么就会使其生起爱恋心，这也是拉他堕落不能往生。</p></div>
+<div class="para-pair"><p class="p-orig">临终一关，要紧之极，固宜为之助念。助念之人，必须熟阅饬终津梁，使其家儿女眷属，通依助念人之指示，庶可不至因孝心，而致亲反受堕落之苦耳。</p><p class="p-trans">临终这一关，极为要紧，一定要为他助念。助念的人，必须熟读《饬终津梁》，使他家里的儿女眷属，全都依从助念人的指示，才可不至于因为孝心，而导致亲人反而遭受堕落的痛苦。</p></div>
+<div class="para-pair"><p class="p-orig">除助念外，均非所宜。倘此风（谓应赴）一行，则念佛之善男信女，不通通成应赴之俗乎。</p><p class="p-trans">除以助念作为佛事之外，其他受请赴经忏的活动都不要参加。倘若这个风气（就是应赴经忏）一盛行，那么念佛的善男信女，不就通通成为应赴经忏的俗人了吗？</p></div>
+<div class="para-pair"><p class="p-orig">明理者，择善而行，不明理者，唯利是趋。有职业人，误其职业，懒惰之人，依此打诨。不但有碍僧家，实为有碍自家。</p><p class="p-trans">明白道理的人，择善而行，不明理的人，唯利是图。有职业的人，因赴经忏耽误了职业；懒惰的人，靠赴经忏赚钱凑热闹。这不但影响了寺院僧众的正常修行，实际上也干扰了你们居士的正常生活。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【指迷】</span>犹解惑。谓指点使不迷惑。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【打诨】</span>1.亦作“打顐”、“打浑”。戏曲演出中演员即兴说趣话逗乐。2.取闹；说趣话哄笑。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复永嘉某居士书三 · 印光法师文钞</title>
+<meta name="description" content="昨接手书，知又得麟儿。喜甚。书中所说，皆有道理。张奂伯教子女之事，乃知体而不知用，不可全取为法。至于幼时，又须以因果报应之事，与净土法门之利益，于学堂回时，谆谆训诲。则子女现时蒙念佛之益，必能免意外之虞。将来以为立家立业，及灭罪得福之本。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-098/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复永嘉某居士书三 · 印光法师文钞">
+<meta property="og:description" content="昨接手书，知又得麟儿。喜甚。书中所说，皆有道理。张奂伯教子女之事，乃知体而不知用，不可全取为法。至于幼时，又须以因果报应之事，与净土法门之利益，于学堂回时，谆谆训诲。则子女现时蒙念佛之益，必能免意外之虞。将来以为立家立业，及灭罪得福之本。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-098/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复永嘉某居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接手书，知又得麟儿。喜甚。书中所说，皆有道理。张奂伯教子女之事，乃知体而不知用，不可全取为法。至于幼时，又须以因果报应之事，与净土法门之利益，于学堂回时，谆谆训诲。则子女现时蒙念佛之益，必能免意外之虞。将来以为立家立业，及灭罪得福之本。</p><p class="p-trans">昨天接到来信，知道你又生贵子，很为你高兴。信中所说的，都有道理。张奂伯教育子女的事情，是只知道理论而不知道实际运用，不可以完全照搬。至于孩子小的时候，又必须以因果报应的故事，与净土法门的利益，在小孩从学校回来的时候，恳切耐心地启发开导。那么子女蒙受念佛的利益，现在必定能够免除意外的灾祸，将来也能以此作为成家立业，乃至灭罪得福的根本。</p></div>
+<div class="para-pair"><p class="p-orig">若全不与学堂交涉，则不谙时务。纵有作为，亦难进步，况庸常者乎。在家人必须先要得一谋生之法。奂伯之举，可用于三十年前，不可用于今日。今之时，是何时也。乃伪妄排挤，互相竞争之时。倘与伊等全无交涉，必受其欺侮，而难以安身矣。</p><p class="p-trans">如果完全不到学校学习，就会不明当下世风和形势。长大后纵然有所作为，也很难进步，更何况平庸普通的那些人呢。在家人必须先要有一个谋生的办法，张奂伯的做法，可以用在三十年前，不可以用在现在。现今是什么样时代啊？是虚伪谄妄、互相排挤、互相竞争的时代。倘若与（学校）那些人完全没有接触往来，将来必定受社会上的人欺侮，而难以安身啊。</p></div>
+<div class="para-pair"><p class="p-orig">至于法名，大儿已经皈依，即不须另取。余者仍以福字为首，慧融渊和明。其母宜名师越。以宋荆王夫人王氏，自行化他，专修净业，为女中之冠。</p><p class="p-trans">至于法名，大儿子已经皈依了，就不须另外再取。其余的还是以福字开头，（福）慧、（福）融、（福）渊、（福）和、（福）明。他们的母亲，应该名叫师越（即效仿越国夫人之意）。因为宋朝的荆王夫人王氏，自行化他，专修净业，为女子中的佼佼者。</p></div>
+<div class="para-pair"><p class="p-orig">若名师王，似不合宜。以夫人亦称越国夫人，故以名越为妥。又离五浊，生净土，乃超越凡俗浊恶。至往生以后之渐渐上升，亦超越事也。名者，实之宾。</p><p class="p-trans">如果取名师王，似乎又不太合适。因为荆王夫人也称越国夫人，所以还是叫师越比较妥当。再加上离开五浊恶世，生到极乐净土，就是超越了凡俗的五浊恶世。乃至往生以后，渐渐上升，也属于超越。名字，应该是实际的体现。</p></div>
+<div class="para-pair"><p class="p-orig">必须常垂训诲，令诸子女知世间道理，知佛法道理。将来为人父母时，自能为子女立规立法。不至虽有上等天姿，如俗某某，僧某某者。皆以堪作佛祖之姿，为自他塞人天之正路，掘地狱之深坑。</p><p class="p-trans">必须要常常的教诲，令每位子女知道世间的道理，知道佛法的道理。将来他们为人父母的时候，自然也能够为他们的子女立规矩。不至于虽然有上等的天姿，却如同世俗的某某人、出家的某某人一样，都有能够成佛作祖的天姿，却为自己和他人阻塞人天正路，掘下地狱的深坑。</p></div>
+<div class="para-pair"><p class="p-orig">其源皆由于乃父乃母初未尝以因果报应之若事若理，以启迪之故也。因果不讲，则名实绝不相应矣。而况欲得为圣为贤，成佛作祖之实效乎哉。因果二字，为今日救国救民之正本清源，决定要义。舍此则无术矣。况教子女乎哉。</p><p class="p-trans">其中的原由都是因为他们的父母，一开始没有用因果报应的事理来启迪他们的缘故。因果报应不讲，那么名字和实际就绝对不相符了。何况想要成圣成贤，成佛作祖的实际效果呢？因果两个字，是现今救国救民、正本清源的决定要义。抛开因果，就没有其他办法了，何况是教育子女呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【越国夫人王氏《善女人传》】</span>越国夫人王氏。哲宗从父荆王之妻也。专修净土。昼夜无间。导诸妾婢。并志西归。中有一婢独懈慢。夫人曰。不可以尔一人坏我规矩。摈之。婢悚悔。遂发愤精进。久之弗倦。一日。谓同事曰。吾其行矣。夜闻异香满室。无疾而逝。越宿。同事者告夫人言。夜梦化去之婢。令致谢夫人。幸蒙训责。得生西方。感德无量。夫人曰。彼能入我梦。乃可信尔。其夕。夫人梦婢致谢如前。夫人曰。西方可至乎。婢曰。可。遂导夫人行。顷之。见一大池。中有莲华。大小间错。或荣或悴。夫人问其故。婢曰。世间修西方者。才发一念。此中便生一华。勤惰不同。荣悴亦异。精进者荣。怠废者悴。若历久不息。念熟观成。形消神谢。决生其中。中有一人。朝服而坐。宝冠璎珞。庄严其身。夫人问曰。何人也。婢曰。杨杰也。又一人朝服而坐。其华颇悴。夫人又问何人。曰。马圩也。时杰已化去。而圩尚存。两人俱修净土。而杰行解具足。悲智双圆。尤弗可及矣。夫人曰。我当生何处。婢导之行可数里。望见一华台。金碧晃耀。光明洞然。婢曰。此夫人生处。乃金台上品上生也。既觉。非喜交至。其年遇生日起晨。秉炉爇香。望观音阁而立。诸眷属方趣前为寿。视之则已化去矣。宣和中直阁黄策传其事。为越国夫人往生记（乐邦文类）</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【名者，实之宾】</span>出自《庄子 逍遥游》：“名者，实之宾也；吾将为宾乎？”一个事物的名称或名声，是事物本体的从属。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

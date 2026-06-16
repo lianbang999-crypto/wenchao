@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书二十八 · 印光法师文钞</title>
+<meta name="description" content="昨接手书，不禁为广安人民庆。所作各学训，通皆契理契机。然或广训，不可不以因果为前提。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-255/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书二十八 · 印光法师文钞">
+<meta property="og:description" content="昨接手书，不禁为广安人民庆。所作各学训，通皆契理契机。然或广训，不可不以因果为前提。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-255/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书二十八</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接手书，不禁为广安人民庆。所作各学训，通皆契理契机。然或广训，不可不以因果为前提。</p><p class="p-trans">昨天接到你的信，不禁为广安县的人民庆幸。所作的各篇学训，全都契理契机。然而广泛训导，不可以不以因果的道理作为前提。</p></div>
+<div class="para-pair"><p class="p-orig">自程朱辟因果以来，儒者皆不敢谈因果。一则固守党同伐异之陋习。二则冀为纯儒入庙之偷心。以致治国，治民，治家，治心，均无根本。</p><p class="p-trans">自从二程（程颢、程颐）、朱熹辟驳因果以来，儒学人都不敢谈因果。一是因为固守党同伐异的陋习。二是希望成为纯正的儒生，死后进入文庙的偷心。以致于治理国家，教化人民，管理家庭，修养身心，都没有了根本。</p></div>
+<div class="para-pair"><p class="p-orig">近来废经废伦，杀父杀母之风，皆由辟因果之学说而来。今则视尧舜禹汤文武周孔，通不如洋人。又何必顾畏固执者之攻击，而不敢说其症结。以致听者犹不知愈病之真诀，岂不大可怜哉。</p><p class="p-trans">近来废儒经、废伦常，杀父、杀母的风气，都是由辟驳因果的学说而来。如今则视古圣人尧、舜、禹、汤，周文王、周武王、周公、孔子，全都不如洋人。又何必顾虑畏惧那些固执之人的攻击，而不敢说明其症结所在。以致听者仍旧不知道治病的真正秘诀，岂不是很可怜吗？</p></div>
+<div class="para-pair"><p class="p-orig">德森师于八月初八离苏，经江西几处瞻观（九江，庐山，吉安），至廿五始到赣。其母尚健。</p><p class="p-trans">德森法师在八月初八离开苏州，经过江西几个地方瞻观（九江，庐山，吉安），到了二十五日，才到赣州。他母亲还健在。</p></div>
+<div class="para-pair"><p class="p-orig">寿量寺观音殿已成，可以安僧行道矣。大约十月半前，可以返苏。许止净近亦来报国。待德森师回，光当出关，仍住报国。明年九华志出后，再定行止。</p><p class="p-trans">寿量寺观音殿已经落成，可以安僧行道了。大约在十月十五之前，可以返回苏州。许止净近来也来到了报国寺。等德森法师回来，我就会出关，仍会住在报国寺。明年《九华山志》出版后，再决定行踪。</p></div>
+<div class="para-pair"><p class="p-orig">今寄净土五经二包，念佛恳辞十包，憨山年谱一包，远公文钞一包，坐花志果十包，安士全书三包，观音颂三包，净业指南五包，人生指津五包，饬终津梁一包，了凡四训一包，嘉言录三包，共四十五包。以助教民之至意。（九月二十一日）</p><p class="p-trans">今寄《净土五经》二包，《念佛恳辞》十包，《憨山年谱》一包，《远公文钞》一包，《坐花志果》十包，《安土全书》三包，《观音颂》三包，《净业指南》五包，《人生指津》五包，《饬终津梁》一包，《了凡四训》一包，《嘉言录》三包，一共四十五包。来助你教化人民的至诚之意。（九月二十一日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【党同伐异】</span>与自己观点相同的就袒护，与自己观点不同就加以攻击。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【症结】</span>比喻事物疑难所在或难于解决的关键。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【瞻观】</span>瞻仰；观看。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

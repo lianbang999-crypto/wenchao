@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复张德田居士书一 · 印光法师文钞</title>
+<meta name="description" content="求子之道，人多背驰。汝欲得身体庞厚，性情贤善，福慧寿三通皆具足之子，须依我说，方可遂心。世人无子，多娶妾媵，常服壮阳之药，常行房事，此乃速死之道，非求子之方也。幸而得子，亦如以秕稻种之，或不出，或出亦难成熟。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-346/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复张德田居士书一 · 印光法师文钞">
+<meta property="og:description" content="求子之道，人多背驰。汝欲得身体庞厚，性情贤善，福慧寿三通皆具足之子，须依我说，方可遂心。世人无子，多娶妾媵，常服壮阳之药，常行房事，此乃速死之道，非求子之方也。幸而得子，亦如以秕稻种之，或不出，或出亦难成熟。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-346/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复张德田居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">求子之道，人多背驰。汝欲得身体庞厚，性情贤善，福慧寿三通皆具足之子，须依我说，方可遂心。世人无子，多娶妾媵，常服壮阳之药，常行房事，此乃速死之道，非求子之方也。幸而得子，亦如以秕稻种之，或不出，或出亦难成熟。</p><p class="p-trans">祈求生儿子的方法，人们大多背道而驰。你想要得到身体庞厚，性情贤善，福、慧、寿三者全都具足的儿子，必须依照我说的去做，才能称心满愿。世人没有儿子，就续娶许多小妾，常服壮阳的药物，常行房事，这是速死的方法，不是求生儿子的方法啊！即使侥幸得到儿子，也如同用不好的稻种来种植，或者不出秧苗，或者长出秧苗也很难成熟。</p></div>
+<div class="para-pair"><p class="p-orig">第一要断房事，或半年，至少或百日，愈久愈好。当与妇说明，彼此均存此念，另屋居住。若无多屋，决须另床。平时绝不以妻作妻想，当作姊妹想，不敢起一念之邪念。</p><p class="p-trans">第一要断绝夫妇房事，或者半年，至少要一百天，越久越好。应当对妻子说明，彼此都存着这个念头，分房居住。如果没有多余的房间，决定要分床睡。平时，绝对不将妻子当作妻子想，要当作姐妹来想，不敢起一念邪念。</p></div>
+<div class="para-pair"><p class="p-orig">待身养足后，待妇月经净后，须天气清明，日期吉祥，夜一行之，必得受孕。从此永断房事，直到生子过百日后，或可再行。</p><p class="p-trans">等到身体养足之后，等妻子月经干净之后，必须天气清明，日期吉祥，在夜晚行一次房，必定能受孕。从此永远断绝房事，一直等到生儿子超过一百天之后，才可以再行房事。</p></div>
+<div class="para-pair"><p class="p-orig">妇受孕后，行一次房，胞厚一次，胎毒重一次。且或因子宫常开，致易堕胎。此种忌讳，人多不知。纵有知者，亦不肯依。故致或不生，或不成，或孱弱短命。不知自己不善用心，反说命不好，反将行房当常事，日日行之，不死就算大幸。</p><p class="p-trans">妻子受孕之后，行一次房，胞衣就厚一次，胎毒就重一次。而且因为子宫常常打开，容易导致堕胎。这种忌讳，人们大多不知道。纵然有知道的，也不肯依从。所以导致或者不生育，或者不成胎，或者孩子孱弱短命。不知道这是因为自己不善用心，反而说自己命不好，反而将行房当作常事，天天行房事，不死就已经算是大幸了。</p></div>
+<div class="para-pair"><p class="p-orig">又要心存慈善，利人利物。利人利物，不一定要钱，存好心，说好话，行好事。凡无利益之心之话之事，均不存不说不行。满腔都是太和元气，生机勃勃。</p><p class="p-trans">另外，要心存慈善，利益他人万物。利益他人万物，不一定要花钱，存好心，说好话，行好事。凡是没有利益的念头、话语、事情，都不存、不说、不做。满腔都是太和元气，生机勃勃。</p></div>
+<div class="para-pair"><p class="p-orig">又须志诚念南无观世音菩萨（就依此念），愈多愈好。早晚礼拜念若干，此外行住坐卧都好念。睡倒虽好念，也要心存恭敬。宜穿衫裤，不可赤体。</p><p class="p-trans">再有，必须志诚念“南无观世音菩萨”（就依照这样来念），愈多愈好。早晚礼拜菩萨、念圣号若干，除此之外，行住坐卧都好念圣号。睡倒后虽然好念，但也要心存恭敬。应该穿好上衣裤子，不能赤身裸体。</p></div>
+<div class="para-pair"><p class="p-orig">宜默念，不宜出声。默念若字多难念，可去南无二字，但念观世音菩萨五字。白衣咒，念也好，不念也无碍。汝如是存心行事念。亦令汝妇也如是存心行事念。</p><p class="p-trans">应该默念，不应该出声。默念，如果字多难念，可去掉“南无”二个字，只念“观世音菩萨”五个字。白衣神咒，念也好，不念也无碍。你这样存心行事、念圣号。也令你妻子这样存心行事、念圣号。</p></div>
+<div class="para-pair"><p class="p-orig">及至临产还念。临产不可默念，要出声念。旁边照应的人，须大声帮他念。管保了无苦痛难产之事。临产默念不得，以用力送子出，默念或受气病。</p><p class="p-trans">等到了临产还念。临产不能默念，要出声念。旁边照应的人，必须大声帮她念。管保没有一点苦痛难产的事发生。临产不能默念，是因为要用力送儿子出来，默念或许导致气不通畅而生病。</p></div>
+<div class="para-pair"><p class="p-orig">女人一受孕，不可生气，生大气则堕胎。兼以乖戾之气，过之于子，子之性情，当成凶恶。又喂儿奶时，必须心气和平。若生大气，奶则成毒。重则即死，轻则半日一日死，决无不死者。小气毒小，虽不死，也须生病。以故爱生气之女人的儿女，死的多，病的多。</p><p class="p-trans">女人一旦受孕，不能生气，生大气就会堕胎。同时将乖戾之气，过到儿子身上，儿子的性情，就会成为凶恶。再者，喂孩子吃奶时，必须心气平和。如果生大气，奶水就会有毒。严重的就会马上死，轻微的就会半天或一天死，决没有不死的；生小气毒小，虽然不死，也会生病。所以爱生气的女人的儿女，死的多，病的多。</p></div>
+<div class="para-pair"><p class="p-orig">自己喂，雇奶母喂，都是一样。生了大气，万不可喂儿奶，须当下就要放下。令心平气和，过半天再喂。喂时先把奶挤半茶碗倒了。乳头揩过再喂，就无祸殃。</p><p class="p-trans">自己喂奶，雇奶母喂奶，都是一样的。生了大气，千万不可以喂孩子吃奶，必须当下就要放下。令心平气和，过半天再喂。喂的时候，先把奶挤出半茶碗倒掉。奶头擦过再喂，就没有祸殃了。</p></div>
+<div class="para-pair"><p class="p-orig">若心中还是气烘烘的，就是一天也喂不得。喂则不死，也须大病。此事古今医书均未发明。近以阅历方知其祸。</p><p class="p-trans">如果心中还是气烘烘的，就是在一天之内，也不能喂奶。喂了奶，就是不死，也会大病。这件事，古今的医书都没有阐发说明。近来因为阅历世事，才知道其中的祸害。</p></div>
+<div class="para-pair"><p class="p-orig">女子从小就要学柔和谦逊，后来生子，必易，必善，必不死，必不病。凡儿女小时死病，多一半是其母生气之故,少一半是自己命该早死。天下古今由毒乳所杀儿女，不知有几恒河沙数，可不哀哉。</p><p class="p-trans">女子从小就要学柔和谦逊，将来生孩子，必定容易，必定贤善，必定不会短命死，必定不会生大病。凡是儿女在小时候就死亡、生病，一大半是由于他母亲生气的缘故，一小半是自己命该早死。天下古今由毒乳所杀的儿女，不知道有多少恒河沙数，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">汝为悦亲，故为汝详说。须劝汝母吃素念佛，求生西方。汝与汝妻，亦各如是。</p><p class="p-trans">你为了取悦母亲，所以为你详细说明。必须劝你母亲吃素念佛，求生西方。你与你的妻子，也都要这样。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【庞厚】</span>宏大深厚。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【妾媵】</span>古代诸侯贵族女子出嫁，以侄娣从嫁，称媵。后因以“妾媵”泛指侍妾。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【秕】</span>中空或不饱满的谷粒。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

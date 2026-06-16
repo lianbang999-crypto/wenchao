@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>朱母任太恭人生西颂 · 印光法师文钞</title>
+<meta name="description" content="猗欤朱母，宿具灵根。幼即奉佛，温恭慈仁。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-170/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="朱母任太恭人生西颂 · 印光法师文钞">
+<meta property="og:description" content="猗欤朱母，宿具灵根。幼即奉佛，温恭慈仁。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-170/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 偈颂愿文对联</div>
+      <h1 class="art-title">朱母任太恭人生西颂</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">猗欤朱母，宿具灵根。幼即奉佛，温恭慈仁。</p><p class="p-trans">朱母任太夫人啊，宿世具有灵慧之根。幼年时就信奉佛法，温良恭敬慈仁。</p></div>
+<div class="para-pair"><p class="p-orig">翁姑父母，各尽孝思。相夫教子，咸适其宜。</p><p class="p-trans">对于公婆父母，全都竭尽孝思。相夫教子，全都做得恰如其分。</p></div>
+<p class="p-orig">秉性严正，待人宽和。年临周甲，顿厌娑婆。</p>
+<p class="p-orig">万缘放下，一心念佛。身居忍界，神栖极乐。</p>
+<p class="p-orig">天性严肃正直，待人宽厚谦和。年届六旬，顿生厌离娑婆之心。</p>
+<p class="p-orig">万缘放下，一心念佛。身居堪忍娑婆世界，神识栖居极乐净土。</p>
+<div class="para-pair"><p class="p-orig">哲嗣调生，及与吉生，三四年来，亦慕西征。</p><p class="p-trans">日与恭人，互相策励。故致净业，功勋纯挚。</p></div>
+<div class="para-pair"><p class="p-orig">儿子（注1）朱调生，及朱吉生，三四年来，也思慕西归。</p><p class="p-trans">每天与母亲（注2），互相策励。所以致使净业，功夫纯熟真挚。</p></div>
+<div class="para-pair"><p class="p-orig">及至临终，梦闻解脱。多年痼疾，顿获勿药。</p><p class="p-trans">到临命终时，梦中听到解脱声。多年的顽疾，顿时不药而愈。</p></div>
+<div class="para-pair"><p class="p-orig">预知时至，兼闻异香。没后日余，顶门始凉。</p><p class="p-trans">预知时至，又闻到奇异香气。过世后一天多，顶门才转凉。</p></div>
+<p class="p-orig">焚化公据，纸灰不散。僧立莲华，纹理彻现。</p>
+<p class="p-orig">弥陀誓愿，普度有情。逆恶十念，尚得往生。</p>
+<p class="p-orig">焚化《西方公据》，纸灰不散。僧人立在莲华中，图像纹理完全显现。</p>
+<p class="p-orig">弥陀誓愿，普度有情。五逆十恶之人临终十念，尚且得以往生。</p>
+<div class="para-pair"><p class="p-orig">何况恭人，一生修持。直登九品，复有何疑。</p><p class="p-trans">何况任太夫人，一生修持。直登九品，又有什么怀疑呢？</p></div>
+<div class="para-pair"><p class="p-orig">有虞二妃，成周三太。懿德芳踪，万世永赖。</p><p class="p-trans">娥皇女英，周朝三太（太姜、太任、太姒）。她们的美德芳踪，万世永远仰赖。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【哲嗣】</span>敬称他人之子。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【恭人】</span>古时命妇封号之一。宋徽宗政和三年定制，中散大夫至中大夫之妻封恭人，亦为元六品、明清四品官员之妻的封号。如系赠封母或祖母，则称太恭人。又清制：宗室之奉恩将军妻亦封恭人。后多用作对官员妻子的尊称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

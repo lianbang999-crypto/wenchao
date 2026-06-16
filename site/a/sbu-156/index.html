@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>新建鼓山涌泉寺放生园碑记 · 印光法师文钞</title>
+<meta name="description" content="天地之大德曰生，故万物并育而不相害。佛视一切众生，犹如一子。故割肉喂鹰，舍身饲虎，种种说法，令得度脱。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-156/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新建鼓山涌泉寺放生园碑记 · 印光法师文钞">
+<meta property="og:description" content="天地之大德曰生，故万物并育而不相害。佛视一切众生，犹如一子。故割肉喂鹰，舍身饲虎，种种说法，令得度脱。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-156/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 论文</div>
+      <h1 class="art-title">新建鼓山涌泉寺放生园碑记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<p class="p-trans">天地之大德曰生，故万物并育而不相害。佛视一切众生，犹如一子。故割肉喂鹰，舍身饲虎，种种说法，令得度脱。</p>
+<p class="p-trans">天地的大德为生，所以万物一并化育而不加害。佛视一切众生，犹如同一孩子。所以割肉喂鹰，舍身饲虎，说种种法，令众生得以度脱。</p>
+<p class="p-trans">良以一切众生，皆具佛性，皆是过去父母，未来诸佛。而况好生恶死，物我同然。我既爱生，物岂愿死。无如饕餮之人，日须食肉，致使屠侩之辈，以杀为事。一日之杀，数逾恒沙。积之久久，遂成杀劫。</p>
+<p class="p-trans">实在是因为一切众生，全都具有佛性，都是过去的父母、未来的诸佛。何况好生恶死，物类与我是一样的。我既然爱惜生命，物类又哪里愿意死呢？无奈贪图口欲（注1）的人，每天必须吃肉，致使屠夫们，把杀生作为事业。一天所杀的物命，数量超过了恒河沙。积累的久了，便成为杀劫。</p>
+<p class="p-trans">仁智之士，知罹劫之因，由于杀生食肉，欲发起杀生食肉者之慈心，故特买物放生，以为先导。冀彼忠恕居心，仁慈在念。俾鸟兽鱼鳖，各得其所。庶弥漫杀劫，速可以熄灭矣。</p>
+<p class="p-trans">仁爱智慧之士，知道遭遇杀劫的原因，是由于杀生吃肉，想要发起杀生吃肉者的慈心，所以特地买来动物放生，来作为先导。希望他们存心忠恕，心怀仁慈。使一切鸟兽鱼鳖，各自得到安身之所；使弥漫的杀劫，快速可以熄灭啊！</p>
+<p class="p-trans">鼓山放生园，原设寺内，狭隘不能广容。倡议别筑，以机缘不熟而止。虚云和尚于己巳莅山，百废俱举。</p>
+<p class="p-trans">福州鼓山放生园，原来设在涌泉寺内，因狭隘不能广容物类。所以倡议另外再建放生园，但因为机缘不成熟便停止了。虚云和尚在己巳年（1929）来到鼓山，将各种废置的事都兴办起来。</p>
+<p class="p-trans">越明年，于阖山耆宿，及诸檀信，几经审度，博采群谋，于寺外罗汉台前，围池一区，倚山瞰江，建佛楼一座，安发菩提心僧四人司香火，朝夕清课，使现前庶类，听闻经法，启发灵觉。</p>
+<p class="p-trans">到第二年的时候，与阖山的耆宿长老，以及诸位檀信居士，经几番审查谋划，博采众人的智谋，在寺外的罗汉台前，围成一个放生池，倚山瞰江，建一座佛楼，安住发菩提心的四位僧人管理香火，早晚课诵，使得现前的畜类，听闻经法，启发它们的灵觉。</p>
+<p class="p-trans">楼下五楹，为大门正厅，为招待室，为僧寮，为客堂，为斋夫宿舍。楼前凿方池，庭左右循石级而降，地渐广倍于上。居中作场，三面筑室，楼上楼下计六十楹，爽垲宏敞。</p>
+<p class="p-trans">楼下的五间，作为大门的正厅、招待室、僧寮、客堂、仆役（注2）宿舍。楼前开凿一个四方池，庭院左右沿着石阶而下，地面渐渐广阔，面积比上面加倍。正中作广场，三面建造屋室，楼上楼下共计六十间，高爽干燥（注3）、高大宽敞。</p>
+<p class="p-trans">上储橐秣杂粮，下列马厩，牛栏，羊牢，鸡埘，豚栅及鹅鸭所，区分类别，牡牝不使混，按时收栖放牧，各有定处。荫有树，饮有泉。分给刍粮，扫除屎溺，则佣任之。防闲管理，稽载存亡，则僧督之。</p>
+<p class="p-trans">上面储放一袋袋的饲料（注4）、杂粮，下面排列马厩、牛栏、羊圈、鸡窝、猪圈以及鹅鸭所在的地方，区分动物的类别，不使公母混住，按时赶回来休息、赶出去放牧，各有固定的地方。热了有树荫，渴了有泉饮。分给动物饲料，扫除屎尿等工作，则由佣工来担任；防备疏漏（注5）、种种管理，清查记载动物的生存死亡等事，则由僧人来监督。</p>
+<p class="p-trans">草创伊始，规模毕具。计是役经始于壬申仲秋，迄癸酉仲夏，需款一万余金，大工始庆落成。旷览神州，频年兵燹。哀我灾黎，肝脑涂地。荡析流离，苦不堪言。</p>
+<p class="p-trans">刚开始创建，规模齐全。统计这件事情，从壬申（1932）仲秋开始，到癸酉（1933）仲夏结束，所需钱款一万多元，大工方才庆祝落成。放眼看神州大地，多年兵火连绵。哀悯我受灾的百姓，肝脑涂地。动荡离散、流离失所，苦不堪言。</p>
+<p class="p-trans">是处尚幸井里无恙，斯园克竟厥功。未始非好生一念所感召。然祸福倚伏，何可自宽。道德不讲，奢靡相尚，实风俗人心之忧。</p>
+<p class="p-trans">这里暂且庆幸井里无恙（注6），这座放生园能够最终完成这个功德，未尝不是一念好生之心所感召。然而祸与福互相依存、转化，怎么能自我宽慰。不讲道德，互相崇尚奢侈浪费，实在是风俗人心的忧虑。</p>
+<p class="p-trans">窃愿在事善信，暨凡百君子，本慈悲爱物之心，而仁民，而尊亲。敦仁尽性，还淳反朴。蠲人我见，忏贪瞋毒。</p>
+<p class="p-trans">我祝愿参与这件事的善信，以及诸位君子，本着慈悲爱护物类的心，进而仁爱民众，进而尊敬双亲。崇尚仁德、竭尽本性，恢复淳朴。去除人我之见，忏悔贪瞋之毒。</p>
+<p class="p-trans">正己化人，背尘合觉。满如来度生之愿，生极乐清净佛国。将见泰和洋溢，物我同春。以兹园功德，为大辂椎轮，作先河指导，不亦懿乎。（癸酉闰五月）</p>
+<p class="p-trans">匡正自己、化导他人，背六尘、合觉性。满如来度生的大愿，往生极乐清净佛国。将会见到泰和洋溢，万物与我，同沐春风。把这个放生园功德，作为渐进阶梯（注7），作为先河指导，不是也很美好吗？（癸酉&lt;1933年&gt;闰五月）</p>
+<p class="p-orig">题 辞</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【饕餮】</span>传说中的一种贪残的怪物。古代钟鼎彝器上多刻其头部形状以为装饰。1.比喻贪得无厌者，贪残者；2.特指贪食者。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【斋夫】</span>旧时学舍中的仆役。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【爽垲】</span>1.高爽干燥；2.指高燥之地。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【橐秣】</span>“橐”，1.口袋；2.即“骆驼”；3.古代的一种鼓风吹火器。“秣”，1.牲口的饲料；2.喂牲口。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【防闲】</span>防，堤也，用于制水；闲，圈栏也，用于制兽。引申为防备和禁阻。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【井里无恙】</span>昔有一国，国中一水，号曰“狂泉”。国人饮此水，无不狂，惟国君穿井而汲，独得无恙。国人既并狂，反谓国主之不狂为狂。于是聚谋，共执国主，疗其狂疾。火艾针药，莫不毕具。国主不任其苦，遂至狂泉所酌水饮之，饮毕便狂。君臣大小，其狂若一，众乃欢然。（《狂泉》）</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【大辂椎轮】</span>大辂：古代大车；椎轮：无辐原始车轮。华美的大车是从无辐车轮的原始车开始的。比喻事物的进化，是从简到繁，从粗到精。南朝·梁·萧统《文选序》：“若夫椎轮为大辂之始，大辂宁有椎轮之质？”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

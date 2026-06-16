@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>示陈生 · 印光法师文钞</title>
+<meta name="description" content="（陈生寄居在普陀山化雨学堂，他父亲是本堂的教习）">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-194/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="示陈生 · 印光法师文钞">
+<meta property="og:description" content="（陈生寄居在普陀山化雨学堂，他父亲是本堂的教习）">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-194/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">示陈生</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<p class="p-trans">（陈生寄居在普陀山化雨学堂，他父亲是本堂的教习）</p>
+<div class="para-pair"><p class="p-orig">孟子以君子三乐，过于王天下。其三则曰得天下英才而教育之。可见教育英才，其事甚大，其任甚重，其关系甚非浅鲜。</p><p class="p-trans">孟子认为君子有三种快乐，胜过统治天下。第三种快乐是说：“得到天下英才而加以教育。”可见教育英才这件事，事关重大，责任很重，其中的利害关系甚是不小。</p></div>
+<div class="para-pair"><p class="p-orig">良由英才得其教育，则可以继往圣，开来学，治国安邦，淑世善民。失其教育，上焉者则无所范围，不能超群拔萃，作一碌碌庸人。下焉者则朋奸比匪，为非作恶，或陷身于乱臣贼子之列，而不自知也。</p><p class="p-trans">实在因为，英才得到了好的教育，就可以继承以往圣贤之道，开启未来学人，治国安邦，使世道淳和，使人民向善。如果缺失了好的教育，上等天资的人，就没有了轨范可以效法，从而不能超群拔萃，只是成为一个碌碌无为的庸人；下等天资的人，就会勾结奸人土匪，为非作恶，或者陷身于乱臣贼子的行列，而自己却不能觉知。</p></div>
+<div class="para-pair"><p class="p-orig">不慧少不努力，老无所成。上负父师教育之心，下失教育英才之乐。唯愿天下英才皆得教育，同享此乐之心，未尝一日忘也。</p><p class="p-trans">不慧我年少时不努力，到老了一无所成。既辜负了父师的教育之心，又失去了教育英才的快乐。唯有希望天下英才都得到好的教育，同享育人之乐的心，一天都不曾忘记啊。</p></div>
+<div class="para-pair"><p class="p-orig">子相貌出众，聪明过人，若肯发愤为学，将来必定大有成就，不可度量。恐以好游，虚度时光。致令拂云干霄之材，反等拱把寻尺之料矣。</p><p class="p-trans">你相貌出众，聪明过人，如果肯发奋学习，将来必定大有成就，不可限量。担心你因为喜好游玩，虚度了时光，致使高耸入云的巨木大材，反而等同于两手合握、一尺来长的小材料了。</p></div>
+<div class="para-pair"><p class="p-orig">昨所说诗，恐子未能记忆，今录以示子。庶可助其发愤为学之心，以作顶天履地，举世无双之士矣。</p><p class="p-trans">昨天所说的诗句，恐怕你没能记住，现在写下来给你。想必有助于你发奋为学的心，从而成为顶天立地、举世无双之士了。</p></div>
+<div class="para-pair"><p class="p-orig">诗曰，年少青春似过驹，窗前事业竟何如。欲为天下无双士，须读人间万卷书。雨露难滋枯根草，风雷但化有鳞鱼。相如不愤题桥志，焉得高乘驷马车。</p><p class="p-trans">诗为：“年少青春似过驹，窗前事业竟何如。欲为天下无双士，须读人间万卷书。雨露难滋枯根草，风雷但化有鳞鱼。相如不愤题桥志，焉得高乘驷马车。”</p></div>
+<div class="para-pair"><p class="p-orig">又曰，三尺龙泉万卷书，老天生我意何如。山东宰相山西将，彼丈夫兮我丈夫。古人此二诗，其劝励英才之心，可谓亲切恳到至极无加矣。祈熟读而深思之，则幸甚幸甚。</p><p class="p-trans">又说：“三尺龙泉万卷书，老天生我意何如。山东宰相山西将，彼丈夫兮我丈夫。”古人的这两首诗中，劝勉英才的心，可以说是亲切诚恳到极点了。祈望你熟读深思，这是我的殷切希望。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【三乐】</span>《孟子·尽心上》：“孟子曰：‘君子有三乐，而王天下不与存焉。父母俱存，兄弟无故，一乐也；仰不愧于天，俯不怍于人，二乐也；得天下英才而教育之，三乐也。’”
+（译文）《孟子·尽心上》：“孟子说：‘君子有三大快乐，称王天下不在其中。父母健在，兄弟平安、没有怨恨，这是第一大快乐；上不愧对于天，下不愧对于人，这是第二大快乐；得到天下优秀的人才进行教育，这是第三大快乐。’”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【范围】</span>1.效法。2.界限。3.限制；概括。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【朋奸】</span>朋比为奸。朋比：阿附；勾结。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【拱把】</span>指径围大如两手合围。《孟子·告子上》：“拱把之桐梓，人苟欲生之，皆知所以养之者。”杨伯峻注：“赵岐注云：‘拱，合两手也；把，以一手把之也’此言树之尚小。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【寻尺】</span>喻微小或微细之物。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【过驹】</span>过隙白驹：比喻光阴易逝，人生短促。语本《庄子·知北游》：“人生天地之间，若白驹之过隙，忽然而已。”
+《成都记》载：司马相如出外谋官，过升仙桥时，在桥柱上题字：“大丈夫不乘驷马车，不复过此桥。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【三尺龙泉】</span>宝剑的代称。“龙泉剑”，创始于春秋战国时代，至今已有二千六百多年历史。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【幸甚】</span>书信中习用语。有表示殷切希望之意。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周群铮居士书三 · 印光法师文钞</title>
+<meta name="description" content="学佛必须专以自了为事，然亦须随分随力以作功德。若大力量人，方能彻底放下，彻底提起。中下之人，以无一切作为，遂成懒惰懈怠。则自利也不认真，利人全置度外。流入杨子拔毛不肯利人之弊。故必须二法相辅而行，但专主于自利一边。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-108/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周群铮居士书三 · 印光法师文钞">
+<meta property="og:description" content="学佛必须专以自了为事，然亦须随分随力以作功德。若大力量人，方能彻底放下，彻底提起。中下之人，以无一切作为，遂成懒惰懈怠。则自利也不认真，利人全置度外。流入杨子拔毛不肯利人之弊。故必须二法相辅而行，但专主于自利一边。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-108/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复周群铮居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">学佛必须专以自了为事，然亦须随分随力以作功德。若大力量人，方能彻底放下，彻底提起。中下之人，以无一切作为，遂成懒惰懈怠。则自利也不认真，利人全置度外。流入杨子拔毛不肯利人之弊。故必须二法相辅而行，但专主于自利一边。</p><p class="p-trans">学佛必须专主于自己了脱生死，然而也必须随分随力地作功德。有大力量的人，才能彻底放下，彻底提起。中下根器的人，因为什么都不做，因而已经养成了懒惰懈怠的习气。这样自利尚且不认真，利益他人就更是置之度外了，以至于流入像杨朱那样“不肯拔一根汗毛来利益他人”的弊端。所以必须自利和利他两方面要相辅相成，但重点是自利。</p></div>
+<div class="para-pair"><p class="p-orig">二林之语，亦不可误会。误会则得罪二林不小。二林之意，乃专主自利，非并随分随力教人修习净土法门全废也。</p><p class="p-trans">彭二林所说的话也不要误会，误会就会得罪彭二林不小。彭二林的意思是着重点在自利，并不是连随分随力教人修习净土法门这样的事也完全不做。</p></div>
+<div class="para-pair"><p class="p-orig">利人一事，唯大菩萨方能担荷。降此谁敢说此大话。中下之人，随分随力以行利人之事，乃方可合于修行自利之道。</p><p class="p-trans">利生的事业，只有大菩萨才能担当得起，大菩萨以下的人，谁敢说这样的大话？中下根器的人，随分随力地做利人的事，才算是符合修行自利之道。</p></div>
+<div class="para-pair"><p class="p-orig">以修行法门，有六度万行故。自未度脱，利人仍属自利。但不可专在外边事迹上做。其于对治自心之烦恼习气，置之不讲，则由有外行，内功全荒。反因之生我慢，自以功利为德，则所损多矣。</p><p class="p-trans">修行法门有六度万行，在自己还没有度脱的情况下，利益他人也仍然属于自利。但是不可以专门去做利生事业，而把对治自己的烦恼习气放在一边，那样由于外在的事业做的太多，内在的修持就全部荒废了。反而因此生我慢心，把功利当作是功德，那么损失就太大了。</p></div>
+<div class="para-pair"><p class="p-orig">譬如吃饭，须有菜蔬佐助。亦如身体，必用衣冠庄严。何于长途修行了生死之道，但欲一门深入，而尽废余门也。一门深入尽废余门，唯打七时方可。</p><p class="p-trans">比如吃饭，必须有蔬菜才好下咽；又比如人的身体，必须要用衣帽来庄严。为什么在漫长的了脱生死的修行道路上，却打算一门深入，完全废弃其他的法门呢？一门深入，尽废余门，这样的做法，只有打佛七的时候才可以。</p></div>
+<div class="para-pair"><p class="p-orig">平时若非菩萨再来，断未有不成懈慢之弊者。以凡夫之心，常则生厌故也。天之生物，必须晴雨调停，寒暑更代，方能得其生成造化之实际。使常雨常晴，常寒常暑。则普天之下，了无一物矣。况吾侪心如猿猴，不以种种法对治。而欲彼安于一处，不妄奔驰者，甚难甚难。人当自谅其力，不可偏执一法，亦不可漫无统绪。</p><p class="p-trans">平常的人，如果不是菩萨再来，绝对没有不形成懈怠散慢习气的。因为凡夫的心，做什么事时间一长就会生厌烦。天生万物，必须晴天和雨天彼此调和，寒冷和暑热相互更替，才能孕育出大自然的勃勃生机。假如一直下雨或一直天晴，一直冷或一直热，那么普天之下，就不会有一个生物了。何况我们这些人的心像猿猴一样，如果不用种种办法来对治，而希望它安住在一处，不胡思乱想，是很难很难的。人应当了解自己的能力，修行不可以偏执一法，也不可以随意修各种法门而没有主旨。</p></div>
+<div class="para-pair"><p class="p-orig">以持戒念佛，求生西方为主。遇一切人，上而父母，中而兄弟朋友，下而妻子奴仆，皆以此为导，将谓非自利乎。</p><p class="p-trans">以持戒念佛，求生西方作为主要的修持。同时，遇到一切人，上对父母，中对兄弟朋友，下对妻子奴仆，都用这持戒念佛，求生西方来加以引导，难道说这不是自利吗？</p></div>
+<div class="para-pair"><p class="p-orig">一灯只一灯，一灯传百千万亿灯，于此一灯，了无所损。孰得孰失，何去何从。岂待问人方了知乎。</p><p class="p-trans">一盏灯只不过是一盏灯的光亮，如果用这盏灯点亮百千万亿盏灯，对于这一盏灯，没有丝毫的损失。孰得孰失，何去何从，哪里需要问人才知道啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【杨子】</span>指杨朱。《孟子·尽心上》：“杨子取为我，拔一毛而利天下，不为也。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【调停】</span>协调和谐。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【更代】</span>替换。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【统绪】</span>头绪；系统。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

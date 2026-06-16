@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复张智甲居士书 · 印光法师文钞</title>
+<meta name="description" content="数日前接汝书，并益贵之书，因令寄赤城，紫光二念佛堂各一百廿五包经书，交赵俊峰与王信甫。昨日方与彼二人书，只一书，令二人同观之。益贵之书，附之于内，非图省费，为少转折耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-071/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复张智甲居士书 · 印光法师文钞">
+<meta property="og:description" content="数日前接汝书，并益贵之书，因令寄赤城，紫光二念佛堂各一百廿五包经书，交赵俊峰与王信甫。昨日方与彼二人书，只一书，令二人同观之。益贵之书，附之于内，非图省费，为少转折耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-071/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复张智甲居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">数日前接汝书，并益贵之书，因令寄赤城，紫光二念佛堂各一百廿五包经书，交赵俊峰与王信甫。昨日方与彼二人书，只一书，令二人同观之。益贵之书，附之于内，非图省费，为少转折耳。</p><p class="p-trans">几天前接到你的信，以及益贵的信，因此令人给赤城、紫光两处念佛堂，各寄了一百二十五包经书，交赵俊峰与王信甫。昨天才给他们二人写信，只写了一封，令他们二人同看。益贵的信，附在信封内，并非图省钱，而是为了减少转递而已。</p></div>
+<div class="para-pair"><p class="p-orig">三日前又接赵武坤（俊峰之弟）等三人之信，谓欲明春来苏，光于俊峰函中，详陈来苏之祸，令彼与大家说之，以免彼此同受其累，了无所益。</p><p class="p-trans">三天前，又接到赵武坤（赵俊峰的弟弟）等三人的信，说想明年春天来苏州，我在给赵俊峰的信中，详细陈述了来苏州的祸患，让他对大家说明，以免彼此同受拖累，而没有一点利益。</p></div>
+<div class="para-pair"><p class="p-orig">南来一次，百元不足为用，彼等办得到数十元者，恐不易易。若来，光将何以处。又况素不相识，只用乡族之名而来，一人已不好支应，人多则将何以处。即完全给彼盘费，在光则力不能支，在彼则空跑一回，尚花数十元。</p><p class="p-trans">来一趟南方，一百元都不够用，他们能凑得到几十元的数目，恐怕都不容易。如果来了，我将如何应付呢？又何况素不相识，只用乡族之名而来，一个人都已不好应付，这么多人又将如何应付呢？即使是完全给他们路费，对于我来说实属力不能及，对于他们来说则是空跑一趟，而且白花几十元。</p></div>
+<div class="para-pair"><p class="p-orig">世间无知识人，每每由穷而生此等希望，反成穷上加穷，彼此同受其损。祈居士发慈悲心，亦与俊峰，信甫信，劝一切人勿萌南来之念，但按所寄之嘉言录等书修持，即便能得真实利益。</p><p class="p-trans">世间没有知识的人，常常由于穷困而生出这等希望，反成穷上加穷，彼此同受损害。请居士发慈悲心，也给俊峰、信甫二人写信，劝一切人不要萌生到南方来的念头，只要按照所寄的《嘉言录》等书修持，马上就能得到真实利益。</p></div>
+<div class="para-pair"><p class="p-orig">居士若能详叙利害，彼无知者，当不至特来讨苦吃耳。况光明年当离苏远隐，我一身尚嫌多，无地可安，何况彼等素不相识之乡人族人，何能令彼均得满愿而归乎。此事关系甚大，若不设法极力阻止，则由此受累，或致死亡于外者多多矣。祈为发慈悲心，庶光与乡族，同沾实惠矣。</p><p class="p-trans">居士如果能够详叙其中的利害，他们那些无知的人，应当不至于特地来讨苦吃了。何况我明年当会离开苏州，到很远的地方隐居，我自己这一色身尚且嫌多，没有地方可以安顿，何况他们那些素不相识的乡人、族人，如何能够让他们都满愿而归呢？这件事关系很大，如果不想办法极力阻止，那么由此受到拖累，或许导致死亡在外的人会很多啊！请你发慈悲心，使我与乡人、族人，同沾真实惠利。</p></div>
+<div class="para-pair"><p class="p-orig">九华志出期不能定，大约在夏间，出当即为汝寄一包，何须预问其日期乎。此系工人作主之工作，非专为此事令彼立即按期交货之工作，彼所应事甚多，各各都为慢慢作之故也。</p><p class="p-trans">《九华山志》出书的日期不能确定，大约在夏天，出书后，马上就会为你寄一包，何须预先问出书的日期呢？这是工人作主的工作，并非专为这件事令他们立即按期交货的工作，他们所接的事情很多，各各都要慢慢来做的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">又吾家立嗣，完全失宜。光已出家，何可立嗣。已令嗣吾大兄，兼祧二兄。光系僧人，家堂决不可立牌位。立则僧俗混滥，尊卑各失其宜矣。</p><p class="p-trans">另外，我们家立嗣（注1），完全失当。（印祖大兄、二兄均无子嗣）我已经出家，怎么能（为我）立嗣。已经让人承继我大哥，同时承继（注2）我二哥。我是个僧人，家里祖堂（注3）中决不可以立（我的）牌位。立牌位的话，就成僧俗混滥，尊卑都失宜了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【立嗣】</span>谓无子而以同宗之子承继。无子者择立同宗近支的卑亲属为嗣子，以继承宗祧。中国古代宗法家族制度、继承制度的组成部分。其根本宗旨是传宗接代，保证宗祀、家统不绝。嗣子在封建时代有很高的法律地位，不仅能够继承所嗣者的财产，而且更重要的是能够继承所嗣者在家族中的身份和地位。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【祧】</span>承继为后嗣。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【家堂】</span>本指安放祖先神位的屋宇，多借指祖先的神位。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

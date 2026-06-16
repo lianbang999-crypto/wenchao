@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复江易园居士书二 · 印光法师文钞</title>
+<meta name="description" content="久未通信，歉甚。前接油印之佛光一周纪念特刊，见周孟由之印光赞，直令人惭愧欲死。孟由无知妄作，阁下何得录此，以深印光之罪。祈以后凡带此派者，皆为删削，免致阅者议论。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-039/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复江易园居士书二 · 印光法师文钞">
+<meta property="og:description" content="久未通信，歉甚。前接油印之佛光一周纪念特刊，见周孟由之印光赞，直令人惭愧欲死。孟由无知妄作，阁下何得录此，以深印光之罪。祈以后凡带此派者，皆为删削，免致阅者议论。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-039/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复江易园居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">久未通信，歉甚。前接油印之佛光一周纪念特刊，见周孟由之印光赞，直令人惭愧欲死。孟由无知妄作，阁下何得录此，以深印光之罪。祈以后凡带此派者，皆为删削，免致阅者议论。</p><p class="p-trans">很久没有通信了，非常抱歉。上次接到油印的《佛光一周纪念特刊》，看到周孟由写的《印光赞》，简直让人惭愧得要死。周孟由无知瞎写，阁下怎么能收录刊登，来加深我的罪过。请以后凡是这类文字，全都删除，免得让阅读的人议论。</p></div>
+<div class="para-pair"><p class="p-orig">兹接手书，并吴君蜨卿之款，及佛光社刊，备悉。吴太夫人福寿两全，所欠者不知净土法门耳。今令嗣蜨卿诚心追荐，当必承佛慈力，得以往生。</p><p class="p-trans">现在接到你的信，以及吴蜨卿的钱款，还有《佛光社刊》，全部尽知。吴太夫人福寿两全，所欠缺的，就是不知道净土法门。现今令他的儿子吴蜨卿诚心追思超荐，吴太夫人当必会承佛慈力，得以往生极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">其洋二百，以一百打佛七，念佛僧十六位。现在炎热非常，光拟每人格外奉䞋一元，共十六元。余八十四元，待新排文钞，及寿康宝鉴（即增广校订不可录，拟印数万，以拯青年于未得病之前），明年印出，尽数寄吴宅，以期结缘。</p><p class="p-trans">二百元钱，用一百元来打佛七，有十六位念佛僧人。现在天气非常炎热，我打算每人另外供奉一元钱，一共十六元。其余的八十四元，等到新排的《文钞》，以及《寿康宝鉴》（就是增广校订的《不可录》，打算印几万册，在青年人没有得病之前加以拯救），明年书印出来，全都寄到吴家，以期与大众结缘。</p></div>
+<div class="para-pair"><p class="p-orig">观音颂，二次印十余日。七月初二，工人全体罢工。此次以要求非理，中华书局势难应许，恐一时不能了决。致若印若排，皆悉稽迟也。</p><p class="p-trans">《观音颂》，二次印了十多天。七月初二，工人全体罢工。这次因为工人的要求不合理，中华书局势必很难答应，恐怕一时不能解决。导致印刷排版，全都延迟了。</p></div>
+<div class="para-pair"><p class="p-orig">社刊甚好。但字过小，老眼颇难看。纸厚邮费须多若干。冯不疚书，光无有稿。今既登社刊，光令录之附入文钞。</p><p class="p-trans">《佛光社刊》很好。但是字号太小，老眼昏花，很难看清。纸张厚，邮费又需增多一些。《复冯不疚书》，我没有底稿。现在既然已登在《佛光社刊》上，我让他们钞录下来，附入《文钞》中。</p></div>
+<div class="para-pair"><p class="p-orig">余皆无大关系。唯慎修先生造天地日月不运行，得婢阴气方运行一段，颇有关系。附入文钞，亦可破除邪见，令知正法。但其中所录多脱文，余俱不要紧，唯第二段一阴一阳之谓道，上层六行，混入诚即明德，明即明明德之明诚明，十三字，其中亦有讹字，然无大关系。余略一阅，尚无多讹。唯此一篇颇多耳。</p><p class="p-trans">其余都没有大问题。只有江慎修先生的“造天地日月不运行，得婢阴气方运行”这一段，很有问题。附入《文钞》，也可以破除邪见，令大众知道正法。但是其中所录的大多有脱漏的文字，其余都不要紧，唯有第二段“一阴一阳之谓道”，上面的第六行，混入“诚即明德，明即明明德之明诚明”，这十三字，其中也有错字，不过没有什么大关系。其余的大略翻阅一下，尚无很多错误的地方。只有这一篇错误比较多。</p></div>
+<div class="para-pair"><p class="p-orig">光目力心力俱欠，而冗务繁重，致于社中不能效笔墨之力，歉甚。阁下既极力提倡，故群贤毕集，实为人生一大乐事，亦为贵地一大幸福也。</p><p class="p-trans">我的视力心力，都欠佳，而且琐务繁重，以致对于佛光社中，不能效笔墨之力，很抱歉。阁下既然极力提倡，所以群贤毕集，实在是人生的一大乐事，也是贵地的一大幸运福祉。</p></div>
+<div class="para-pair"><p class="p-orig">吴宅念佛收据，随函寄来，并祈以余百元之用告之。真达师拟助百元经典于社中，令光开一普通多看者之经书，待月底到上海，当请以寄来，勿念。</p><p class="p-trans">吴家打念佛七的收据，随信寄来，并请将其余一百元的用处告诉他们。真达师打算捐助一百元的经书给你们佛光社，让我开出一些普通人能多看的经书，等到月底到了上海，应该会请书寄来，不要挂念。</p></div>
+<div class="para-pair"><p class="p-orig">光于明年新印增广文钞及增广之寿康宝鉴出，亦拟寄社若干，以结净缘。阁下与友人书赞誉不慧，有以凡滥圣之愆。祈以后万勿用此一派，则彼此各适其适矣。</p><p class="p-trans">我在明年新印的《增广文钞》以及增广的《寿康宝鉴》印出后，也打算寄给佛光社一些，用来结清净法缘。阁下与朋友的信中赞誉我，有以凡滥圣的过失。请以后千万不要用这一类说辞，那么彼此就各得其宜了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【油印】</span>一种简便的印刷方法。先在特制的蜡纸上用打字机打字，或者用铁笔刻画出文字图画，然后让蜡纸附在普通纸面上，在上面涂施油墨，透过打字或者刻写的图纹孔洞，而印刷到下面的普通纸上。又叫“誊写印刷”，是孔版印刷的一种。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【佛光社社刊】</span>佛教团体安徽婺源佛光社社刊。以“为佛宣化，宏法利生”为宗旨。内容有：佛经讲释、佛学理论及经书研究文章，佛门知名人士传，宣传因果、轮回、报应、护生的著述及诗偈，还有主张佛教教国的论述，教育和礼俗。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【䞋】</span>通嚫。谓施舍财物给僧尼。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【冯不疚书】</span>指《复冯不疚居士书》见《增广文钞》卷二。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【群贤毕集】</span>各种贤人聚集在一起。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【各适其适】</span>指各自适合于其所感到舒适、切合的东西。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

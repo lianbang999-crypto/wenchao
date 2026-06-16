@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复游有维居士书（民国二十六年） · 印光法师文钞</title>
+<meta name="description" content="观来书，词义均好，无可改，故不批。汝年二十一，能诗能文，乃宿有善根者。然须谦卑自牧，勿以聪明骄人，愈学问广博，愈觉不足，则后来成就，难可测量。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-074/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复游有维居士书（民国二十六年） · 印光法师文钞">
+<meta property="og:description" content="观来书，词义均好，无可改，故不批。汝年二十一，能诗能文，乃宿有善根者。然须谦卑自牧，勿以聪明骄人，愈学问广博，愈觉不足，则后来成就，难可测量。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-074/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复游有维居士书（民国二十六年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观来书，词义均好，无可改，故不批。汝年二十一，能诗能文，乃宿有善根者。然须谦卑自牧，勿以聪明骄人，愈学问广博，愈觉不足，则后来成就，难可测量。</p><p class="p-trans">看了你的来信，文词义理都很好，没什么可修改的地方，所以不加批改。你现在才二十一岁，就能写诗作文，是宿世有善根的人。然而必须谦虚谨慎、修身养性，不要因为聪明就高傲自负轻视他人，越是学问广博，越要觉得自己不足，那么将来的成就，就难以测量了。</p></div>
+<div class="para-pair"><p class="p-orig">十年前，谛闲法师有一徒弟，名显荫，人极聪明，十七八岁出家。但气量太小，一点屈不肯受。</p><p class="p-trans">十年前，谛闲法师有一个徒弟，名显荫，人极为聪明，十七八岁出家。但是气量太小，一点委屈都不肯受。</p></div>
+<div class="para-pair"><p class="p-orig">初次讲小座毕，拜其师，其师并未说他讲得不好，但云音声太小，由此一语便生病。而谛公之人，一味令彼心常欢喜，故傲性日增月盛。</p><p class="p-trans">第一次讲完小座后，回来拜师父，他的师父并没有说他讲得不好，只是说声音太小，因这一句话他就病了。而谛闲法师，一味地让他心里常常欢喜，所以他骄傲的习性就日增月盛。</p></div>
+<div class="para-pair"><p class="p-orig">后由日本学密宗，彼所发挥密宗之文字，通寄上海居士林登林刊。其自高位置，已是唯有我高。后回国，至观宗看其师。</p><p class="p-trans">后来到日本学习密宗，他所发挥阐扬密宗的文字，全都寄到上海居士林，刊登在《上海佛教居士林林刊》上。他自己抬高自己的位置，已经是唯有我最高了。后来回国，到观宗寺看他师父。</p></div>
+<div class="para-pair"><p class="p-orig">谛公云，汝声名很大，惜未真实用功，当闭三年关，用用功方好。彼一闻此语，如刀割心，即日便病。次日带病往上海居士林，年余而死。</p><p class="p-trans">谛闲法师说：你的名声很大，可惜没有真实用功，应当闭三年关，用用功才好。他一听到这句话，心如刀割，当天就病了。第二天带病前往上海居士林，一年多就死了。</p></div>
+<div class="para-pair"><p class="p-orig">死后不久，光到上海太平寺，林员朱石僧来，问其死时景象。言糊糊涂涂，佛也不会念，咒也不会念。</p><p class="p-trans">死后不久，我到上海太平寺，居士林林员朱石僧来探访，我便向他询问显荫死时的景象。他说：糊糊涂涂，佛也不会念，咒也不会念。</p></div>
+<div class="para-pair"><p class="p-orig">此乃显密圆通，自觉世无与俦之大法师，以不自量，仗宿慧根，作二十二三岁短命而死之糊涂鬼，岂不大可哀哉。设使显荫能不自高，谦卑自牧，中国学者，未能或超出其上者。光愍显荫以因此而死，为汝作前车之鉴。</p><p class="p-trans">这就是显密圆通，自己觉得世间无人可与他相比的大法师，因为不自量力，依仗宿世的慧根，作了二十二三岁短命而死的糊涂鬼，岂不是太悲哀了吗？假设显荫能够不自高，谦虚谨慎、修身养性的话，中国的学者，或许没有能超过他的。我怜愍显荫，以其因自傲而死，作为你的前车之鉴。</p></div>
+<div class="para-pair"><p class="p-orig">光现在已是苦不堪言，目力精神均不给。日间尚有人来，又有四方之信，勿道复，看也要许多工夫。</p><p class="p-trans">我现在已是苦不堪言，视力、精神都不足。白天还有人来，又有四方来的信，不要说回复，就是看也要许多工夫。</p></div>
+<div class="para-pair"><p class="p-orig">光在普陀，由光绪十九年，至民国五年，二十余年颇安乐。经年无一人来会，无一信来投。</p><p class="p-trans">我在普陀山，从光绪十九年（1893年），到民国五年（1916年），二十多年比较安乐。整年没有一个人来拜会，没有一封信寄来。</p></div>
+<div class="para-pair"><p class="p-orig">自民国六年，王幼农以一信印数千，徐蔚如以三信印数千。次年又印文钞。从兹一人传虚，万人传实。又以不自量，刻排各书，以期利人。二十年来，直是专为人忙。</p><p class="p-trans">自从民国六年（1917年），王幼农将一封信印了几千册，徐蔚如将三封信印了几千册。第二年（1918年）又印了《文钞》。从此一人传虚，万人传实。又因为自己不自量力，刻印各种佛经善书，以期利益他人。二十年来，简直是专门为他人忙碌。</p></div>
+<div class="para-pair"><p class="p-orig">今老矣，且以闭关作躲烦计。至朝暮功课，依丛林全堂功课外，每晚加念大悲咒，五十或二十五遍。此外有空则念佛，不记数，以记数费力故。</p><p class="p-trans">如今我老了，暂且以闭关作为躲避烦劳的计策。早晚功课，除依照丛林全堂功课外，每天晚上加念大悲咒，五十遍，或者二十五遍。此外有空就念佛，不记数，因为记数费力的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">汝年富力强，当先将净土一法，认真研究修持，此是凡夫即生了生死之大法。此法若无宿根，勿道普通人不能了彻，即彻悟自心，深入经藏之出格高人，亦多半不能了彻。</p><p class="p-trans">你年富力强，应当先将净土法门，认真地研究修持，这是凡夫当生了生脱死的大法。这个法门，如果没有宿世慧根，不要说普通人不能彻底地搞明白，即使是彻悟自心，深入经藏的杰出高人，也多半不能彻底搞明白。</p></div>
+<div class="para-pair"><p class="p-orig">以彼不知此是佛法中特别法门，皆按普通法门之义，致不肯信。或有信者，恐专宏净土，怕人小看自己，故不肯提倡。</p><p class="p-trans">因为他们不知道，这是佛法中的特别法门，因而都按照普通法门的义理来理解，导致不肯相信。或有一些相信的人，因担心专门宏扬净土，怕他人小看自己，所以也不肯提倡。</p></div>
+<div class="para-pair"><p class="p-orig">须知无论修何法门，烦惑不断，决无了生死分。唯此一法，但具信愿，即可仗佛慈力，往生西方。汝且勿以看过为事，当以熟读深思，方知光言无谬。</p><p class="p-trans">必须知道无论修什么法门，烦恼惑业不断，决定没有了生死的分。唯有这个净土法门，只要具足真信切愿，就可以仗佛慈力，往生西方。你千万不要看过信就完事了，应当熟读深思，才知道我的话没有错。</p></div>
+<div class="para-pair"><p class="p-orig">现今讲经者亦不少，然各随自意。汝且在易园处自修持，至有主宰后，不妨随喜各法师之讲筵。汝且自爱，光之爱汝，止此二纸，以后亦无暇屡屡诫说。</p><p class="p-trans">现今讲经的人也不少，然而却大都是随着自己的意思来讲。你暂且在江易园那里自己修持，等到自己心中有了主见之后，不妨随喜参加各位法师的讲席。你要自己爱惜自己，我爱惜你的，只有这二张纸，以后也没有空屡次地告诫教说了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【讲小座】</span>佛教教学方法。据清仪润《百丈清规证义》载《讲堂规约》规定，“讲小座，先鸣钟三下，内外俱到，倘小座讲错含糊处，不得戏唉轻慢，有贡高不听者罚。讲小座人，上方丈告座，乃至大众前，总告座，大众亦同站班，当值一人亦上香，小座人须回礼，至讲完后，仍如前告座。每日轮次小座外，抽签讲小座，以验日进，除真愚钝者。”据文分析，讲小座之人由学僧担任，目的在于检验学业长进与否。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

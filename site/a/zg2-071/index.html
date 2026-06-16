@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>教观纲宗释义纪重刻序 · 印光法师文钞</title>
+<meta name="description" content="教海汪洋，莫测深广，不有指归，则茫无所趣。故陈隋智者大师，以五时八教，判释如来一代所说之法，具显如来出世本怀，唯欲一切众生同成觉道。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-071/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="教观纲宗释义纪重刻序 · 印光法师文钞">
+<meta property="og:description" content="教海汪洋，莫测深广，不有指归，则茫无所趣。故陈隋智者大师，以五时八教，判释如来一代所说之法，具显如来出世本怀，唯欲一切众生同成觉道。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-071/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">教观纲宗释义纪重刻序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">教海汪洋，莫测深广，不有指归，则茫无所趣。故陈隋智者大师，以五时八教，判释如来一代所说之法，具显如来出世本怀，唯欲一切众生同成觉道。</p><p class="p-trans">佛法如同大海，深广莫测。如果没有指归，就茫然没有方向。所以陈隋朝的智者大师，用五时八教，来判别释迦如来一代时教所说之法，完全显明了释迦如来出世的本怀，只希望一切众生共同成就觉道。</p></div>
+<div class="para-pair"><p class="p-orig">但以机器不一，故复随顺机宜，循循善诱，为实施权，以接引之。待其既得权益，则开权显实，同归秘藏，方知心佛众生，三无差别，佛如众生如，一如无二如之所以然。</p><p class="p-trans">只是因为众生根机各各不同，所以又随顺众生的根机，循循善诱，为了宣说实教而施设权教，来接引众生。等众生得到权教的利益之后，就开权显实（开除权教执著，显示真实之义），共同归于如来秘藏。方才知道“心、佛、众生，三无差别”，以及“佛如众生如，一如无二如”的所以然。</p></div>
+<div class="para-pair"><p class="p-orig">可谓揭佛日于中天，普照大地，授穷子以果觉，令绍法王。但以文繁，不便初机，蕅益大师，撮取要义，述为纲宗，有意义隐晦者，复为略释。俾学者悉知如来说教之意，与夫禀教修观之法，有如导归宝山，直授摩尼宝珠。</p><p class="p-trans">可以说是揭示佛法慧日于当空，从而普照大地，授记穷子以成佛的果觉，令他继任法王。只是因为原书内容繁多，不便于初学。蕅益大师撮取书中精义，编述为《教观纲宗》一书。遇到原书中意义隐晦不明的地方，简略加以解释。使学习的人完全知道佛宣说教法的意义，以及禀持教法来修习止观的方法。如同引导众生归入宝山，直接授与他摩尼宝珠。</p></div>
+<div class="para-pair"><p class="p-orig">从兹不但了知不生不灭，非有非空之圆妙第一义谛，为如来心印。即人天权小等法，与治世语言，资生业等，无不皆是第一义谛，皆为如来心印。喻如画龙点睛，立刻飞腾，以法无自性，转变由心，圆人受法，无法不圆故也。</p><p class="p-trans">从此不但了知不生不灭，非有非空的圆妙第一义谛，是如来心印。（同时也知道），即使是人、天、权教、小乘等法，以及治世语言，资生业等，全都是第一义谛，全都是如来心印。如同画龙点睛，龙就立刻飞腾。因为法无自性，转变由心，圆人受法，法法圆融。</p></div>
+<div class="para-pair"><p class="p-orig">默庵法师，以释义分注各条之下，又为之纪，以期一目了然。学者得此，既省心力，又易领会，何幸如之。维扬宝轮寺法裕长老，欲重刻广布，命光校其讹字，兼为叙其缘起云。</p><p class="p-trans">默庵法师，将蕅益大师的释义分别列在每条原文之下，又作了纪文，希望读者一目了然。学习的人得到这本《教观纲宗释义纪》，既省心省力，又容易领会，何等幸运啊。扬州宝轮寺的法裕长老，想要重新刻印这本书，以便于广泛流布。让我校正书中的错字，并且叙述事情的缘起。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【教观纲宗】</span>全一卷。明代智旭（1599-1655）述。收于大正藏第四十六册。概说天台教义枢要之化仪、化法四教及十乘观。原名一代时教权实纲要图，因长幅难阅，乃改为书册。卷头有云（大四六·九三六下）：“观非教不正，教非观不传。”故知本书系以教观兼备之天台教学立场阐释教观二门之纲要。智旭鉴于“天台四教仪”之修行止观部门过于简略，故作本书补充之。若将本书与天台四教仪并读，即可把握天台教义之真髓。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【指归】</span>主旨；意向。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【五时八教】</span>天台智者大师，判释尊所说之法，为五时八教。五时是就时间的先后分出，即华严时、阿含时、方等时、般若时、法华涅槃时。八教是就法的性质分出，八教中又分为化法四教与化仪四教，化法是教化众生的法门，即三藏教、通教，别教、圆教；化仪是教化众生的仪式，即顿教、渐教、秘密教、不定教。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【秘藏】</span>隐而不传于人，称为秘；蕴蓄于内，称作藏。秘藏者，谓诸佛之妙法，以诸佛善为守护，不妄宣说。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【一如】</span>真如之理乃不二不异、平等无差别，故称一如。一者，绝待唯一；如者，不异。谓真如界内，生佛之假名泯绝，平等性之中，无自他之形相。宝积经曰：“众生如即如来如，如来如即众生如，众生如来无二无别。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复陈士牧居士书四 · 印光法师文钞</title>
+<meta name="description" content="接手书，不胜欣慰。自知录，凡外行人看之，无不欣跃欲为流通。而不知其为著魔之过多，令人真修之功，被此境界所阻。如置毒于醍醐之中，食之则必至杀人，可叹孰甚。黄涵之利济为怀，必能代办。但去年闻有病，现不知已愈否也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-337/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复陈士牧居士书四 · 印光法师文钞">
+<meta property="og:description" content="接手书，不胜欣慰。自知录，凡外行人看之，无不欣跃欲为流通。而不知其为著魔之过多，令人真修之功，被此境界所阻。如置毒于醍醐之中，食之则必至杀人，可叹孰甚。黄涵之利济为怀，必能代办。但去年闻有病，现不知已愈否也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-337/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复陈士牧居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，不胜欣慰。自知录，凡外行人看之，无不欣跃欲为流通。而不知其为著魔之过多，令人真修之功，被此境界所阻。如置毒于醍醐之中，食之则必至杀人，可叹孰甚。黄涵之利济为怀，必能代办。但去年闻有病，现不知已愈否也。</p><p class="p-trans">接到你的信，非常欣慰。《自知录》，凡是外行的人看了，无不欣喜踊跃，想要加以流通。却不知这本书让人著魔的过失太多，令人真修之功，被这些境界所阻。如同放毒药在醍醐之中，吃了就必定会杀人，实在可叹。黄涵之以利益救济他人为怀，必定能够代为办理。只是去年听说他有病，现在不知道是否已痊愈。</p></div>
+<div class="para-pair"><p class="p-orig">汝父母之不发心，一则自视渺小，不发了生脱死，超凡入圣之心。二则不知其所以然，故不发心。倘汝妻通文义，日以文钞中义，为之讲说，自可感动其心。如汝妻不能讲说，侄女甥女能看文钞，当能讲说。又宜请初机净业指南寄去，此亦黄涵之白话，当易于领会矣。</p><p class="p-trans">你父母不发心，一是因为自视渺小，不能发起了生脱死，超凡入圣的心。二是因为不知其中的所以然，所以不发心。倘若你妻子通达文义，每天将《文钞》中的义理，为你父母讲说，自然可以感动他们的心。如果你妻子不能讲说，侄女、外甥女能看《文钞》，也应当能讲说。另外，应该请《初机净业指南》这本书寄去，这也是黄涵之编写的白话文，应当容易领会。</p></div>
+<div class="para-pair"><p class="p-orig">天下不治，由于家庭无善教。而家庭善教，母教最为吃紧。以人之小时，日在母边，果有贤母，儿女日熏陶之，其习与性成，虽欲令为不肖，亦不可得。</p><p class="p-trans">天下得不到治理，是由于家庭中没有善教。而家庭的善教，以母教最为要紧。因为人在小的时候，每天在母亲身边，果真有贤良的母亲，儿女每天受到熏陶，受到习染而养成贤良的品性，即使想让他们不成材，也不可能。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝妻取法名为智育。谓以智慧自育其德，俾人欲净尽，明德显著。又以此智教育儿女，俾儿女同为诸恶莫作，众善奉行之成德君子。由兹推而广之，其利益有不可思议者。</p><p class="p-trans">现今为你妻子取法名为智育。就是以智慧自己培育德行，使得人的私欲净除究尽，明德显著。又以此智慧来教育儿女，使得儿女共同成为“诸恶莫作，众善奉行”的盛德君子。由此推广开来，这样的利益是不可思议的。</p></div>
+<div class="para-pair"><p class="p-orig">世之愚人，不知修德，唯欲借奉佛以灭罪。乃徒取其名，不务其实，岂可亲得实益乎哉。</p><p class="p-trans">世间的愚人，不知道修德，只想借信奉佛法来消灭罪过。这是徒劳地取得一个佛教徒的名称，却不从事佛教徒的实修，哪里能够亲得真实利益呢？</p></div>
+<div class="para-pair"><p class="p-orig">君英，闺英，既有宿根，再读文钞，当必有大发善根之时。不妨预为授记，令彼懋修厥德，以为女流师范。即彼无心皈依，但能按文钞所说而修，亦是莲池海会中人。</p><p class="p-trans">君英，闺英，既然有宿世善根，再读《文钞》，应当必定有大发善根的时候。不妨预先为她们授记，令她们勤勉修养道德品行，成为女流的师范榜样。即使她们无心皈依，只要能够按照《文钞》中所说的来修持，也是莲池海会中的人。</p></div>
+<div class="para-pair"><p class="p-orig">彼再能发自利利他之心，则岂止女界蒙益乎哉。今为君英取名莲英。闺英取名净英。以彼果能克治女习，专修净业，以己所知，将来以之饷彼翁姑夫婿，及与妯娌儿女。</p><p class="p-trans">她们若再能发起自利利他的心，那么何止妇女界蒙受利益呢？现今为君英取法名为莲英。闺英取法名为净英。因为她们果真能够克服对治女人的习气，专修净业，将自己所知道的，将来以此利益她们的公婆夫婿，以及妯娌儿女。</p></div>
+<div class="para-pair"><p class="p-orig">则一家仁而乡邑悉相观而善。则现生即为女中之英。英者超群出众之谓，即所谓女中丈夫也。</p><p class="p-trans">那么一家仁善以致村镇的人全都受到感化而向善。那么现生就成为女中的英杰。英，超群出众的意思，就是所谓的女中丈夫啊！</p></div>
+<div class="para-pair"><p class="p-orig">将来往生西方，为阿弥陀佛弟子，观音势至眷属，所谓于莲华清净世界，同为如来真子，英之实义，如是如是。彼肯信行此语，当不付诸空谈。</p><p class="p-trans">将来往生西方，成为阿弥陀佛的弟子，观世音菩萨、大势至菩萨的眷属，就是所谓的在莲华清净世界中，同为如来真净佛子，英的真实之义，如此如此。她们肯相信实行这些话，当不会付于空谈。</p></div>
+<div class="para-pair"><p class="p-orig">晨朝十念，忙人决定须用。即闲人能作正课，于正课前，用晨朝十念，亦可。非能作正课，便不可用也。古人多有毕生用晨朝十念法，然后再作正课者，何妨碍之可云。</p><p class="p-trans">晨朝十念，忙的人决定必须要用。即使是闲人，能够作正式功课，在正课之前，用晨朝十念，也可以。并不是能够作正式功课，便不可用晨朝十念。古人多有一辈子用晨朝十念法，然后再作正课的，有什么妨碍的呢？</p></div>
+<div class="para-pair"><p class="p-orig">今之世道人心，陷溺已极，皆由家庭不以因果报应为教。又今之女校，多皆怂动学生，拟操政权，作督军省长大总统，全不在相夫教子处提倡。</p><p class="p-trans">现今的世道人心，陷溺到了极点，都是由于家庭中，不以因果报应来教导子女。另外，现今的女校，大多都是怂动学生，准备操持政权，作督军、省长、大总统，完全不在相夫教子的地方来提倡。</p></div>
+<div class="para-pair"><p class="p-orig">致一班学生如颠如狂，近为家庭之累，远贻社会之殃，为可惜耳。祈以此与君英闺英详说之。（乙丑二月二十四日）</p><p class="p-trans">致使一班学生如颠如狂，近的来说，成为家庭的拖累；远的来说，成为社会的祸殃，很是可惜。请将这些道理，对君英、闺英详细讲说。（乙丑年&lt;1925年&gt;二月二十四日）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

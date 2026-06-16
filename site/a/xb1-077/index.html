@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复唐能诚居士书 · 印光法师文钞</title>
+<meta name="description" content="昨接手书，知川中土匪之惨，不禁令人浩叹。吾常曰，因果者，圣人治天下，佛度众生之大权也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-077/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复唐能诚居士书 · 印光法师文钞">
+<meta property="og:description" content="昨接手书，知川中土匪之惨，不禁令人浩叹。吾常曰，因果者，圣人治天下，佛度众生之大权也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-077/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复唐能诚居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接手书，知川中土匪之惨，不禁令人浩叹。吾常曰，因果者，圣人治天下，佛度众生之大权也。</p><p class="p-trans">昨天接到你的信，知道四川土匪的惨无人道，不禁令人长叹。我常常说：因果教育，是圣人治理天下，佛陀度化众生的关键所在。</p></div>
+<div class="para-pair"><p class="p-orig">自宋程朱，由读佛大乘经，亲近禅宗善知识，略知全事即理，一切唯心之义，遂强作主宰，执理废事，以显自己见识超迈，深恐后人得其所得。</p><p class="p-trans">自从宋朝二程（程颢、程颐）、朱熹，由于阅读佛教大乘经，亲近禅宗善知识，略微知道“全事即理，一切唯心”的义理，于是强作主张，执著义理、废除事修，来显示自己的见识卓越高超，生怕后人得到他们学法的门路。</p></div>
+<div class="para-pair"><p class="p-orig">因昧心辟佛，谓佛所说之三世因果，六道轮回，乃为骗愚夫妇奉彼教之根据，实无其事。人既死矣，形既朽灭，神亦飘散，纵有锉斫舂磨，将何所施。又神已散矣，令谁托生。</p><p class="p-trans">因此昧着良心驳斥佛法，说什么：佛所说的三世因果，六道轮回，这是为了欺骗愚夫愚妇信奉佛教的根据，实际上并没有这回事。人既然死了，身形也就腐朽毁灭了，神识也随之飘散，纵然有地狱的锯砍捣磨，又如何能施加在这个人身上呢？还有，神识已经飘散了，又让谁再去投胎托生呢？</p></div>
+<div class="para-pair"><p class="p-orig">自此以后，凡儒者智识高者，皆偷看佛经，皆极力辟佛。智识低者，便随人起倒，从生至死，不蒙佛法之益，从生至死，常造谤佛之业。</p><p class="p-trans">从此以后，凡是儒家才智见识高超的人，都偷看佛经，都极力驳斥佛法。才智见识低劣的人，就随他人所说而附合听从，从生到死，不能蒙受佛法的利益；从生到死，常常造作诽谤佛法的罪业。</p></div>
+<div class="para-pair"><p class="p-orig">程朱之学说一行，儒者奉之为金科玉律。程朱违悖先圣（儒教圣人），举世无肯言者。后儒违悖程朱，则不能立于天地之间。</p><p class="p-trans">程朱的学说一盛行，儒家学人就奉为金科玉律。程朱违悖先圣（指儒教圣人），全天下没有一个人敢说一句话。后来的儒者，如果违悖程朱的学说，就不能立于天地之间。</p></div>
+<div class="para-pair"><p class="p-orig">以故儒者，不敢说因果轮回，说则受人攻击。又欲后来或有树立，企其入乡贤祠文庙，若一说因果轮回，则两俱绝望。</p><p class="p-trans">所以儒家学人，不敢说因果轮回，一说就会受人攻击。另外还想将来或许有所建树，期望在身后自己的牌位能进入乡贤祠、文庙，如果一说因果轮回，那么这两方面的希望就都断绝了。</p></div>
+<div class="para-pair"><p class="p-orig">从此将治国平天下之根本，完全取消，徒恃正心诚意以为治。须知有因果轮回，不能正心诚意者，亦当勉力而为。无因果轮回，而正心诚意者，唯大贤能之。余则谁以无所畏惧，无所希冀，而孜孜于正心诚意乎。</p><p class="p-trans">从此把治国平天下的根本（因果轮回），完全取消，徒然依靠“正心诚意”作为治国、治家、治身的方法。要知道接受因果轮回的教育，不能做到“正心诚意”的人，也当会努力去做。如果没有接受因果轮回的教育，那么做到“正心诚意”的人，只有大贤人才能做到。其余的人，谁会因为无所畏惧、无所希求，而孜孜不倦地追求“正心诚意”呢？</p></div>
+<div class="para-pair"><p class="p-orig">程朱乃提倡正心诚意者，得佛法之妙义，以显己智，反极力辟佛。是于无关紧要处正诚，于大关紧要处完全了无一毫正诚。以此成己之名，而贻害于天下后世。近来灾祸频仍，民不聊生，皆宋儒学说之毒暴发也，汝知之乎。</p><p class="p-trans">程朱是提倡“正心诚意”的人，他们在得到佛法的妙义，来显示自己的才智后，却反过来极力驳斥佛法。这是在无关紧要的地方，讲究正心诚意，在大关紧要的地方，完全没有一丝毫的正心诚意。以提倡这个“正心诚意”来成就自己的名声，却遗留下祸害给天下后世。近来灾祸频频不断，民不聊生，都是宋儒学说的遗毒暴发的缘故，你知道吗？</p></div>
+<div class="para-pair"><p class="p-orig">念佛诵经，以至诚为本，唱赞与否，绝无关系。至于念法华经一卷，甚好。然以身忙及老之人，当宜常念净土五经，则净土法门之所以然，悉可略知。</p><p class="p-trans">念佛诵经，以至诚恭敬为根本，与唱不唱赞绝对没有关系。至于念《法华经》一卷，很好。不过自身忙碌以及年老之人，则应当常念净土五经，那么净土法门的所以然，都能大体知道了。</p></div>
+<div class="para-pair"><p class="p-orig">念佛要心中念得清楚，口中念得清楚，耳中听得清楚。从朝至暮念，从朝至暮听。比贪多贪快，而含糊不清，功效悬殊也。</p><p class="p-trans">念佛，要心中念得清楚，口中念得清楚，耳中听得清楚。从早到晚念，从早到晚听。相比贪图多念，贪图快念，而含糊不清的念，其功效差别非常悬殊啊。</p></div>
+<div class="para-pair"><p class="p-orig">今为寄净土五经一包，有信心能恭敬者，则以余者送之。令勿以读儒书之例读佛经，则方可得利益而免罪愆。否则，亵渎之罪，比读诵之功为大也。</p><p class="p-trans">现在为你寄去一包《净土五经》，有信心、能恭敬的人，就将剩余的书送给他们。让他们不要像读儒书那样漫不经心、毫无恭敬地来读佛经，才可以得到利益而免除罪愆。否则，亵渎的罪过，比读诵的功德还要大啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【起倒】</span>谓随俗俯仰、浮沉。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

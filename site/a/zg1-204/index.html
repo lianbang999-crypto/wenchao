@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>法雨寺罗汉装金募缘疏　（代撰） · 印光法师文钞</title>
+<meta name="description" content="大觉法王，出现世间，随机说法，度脱众生。必有菩萨声闻，辅弼法化，方能普使群伦，悉蒙利益。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-204/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="法雨寺罗汉装金募缘疏　（代撰） · 印光法师文钞">
+<meta property="og:description" content="大觉法王，出现世间，随机说法，度脱众生。必有菩萨声闻，辅弼法化，方能普使群伦，悉蒙利益。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-204/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">法雨寺罗汉装金募缘疏　（代撰）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大觉法王，出现世间，随机说法，度脱众生。必有菩萨声闻，辅弼法化，方能普使群伦，悉蒙利益。</p><p class="p-trans">大觉法王，出现在世间，随机说法，度脱众生。必定有菩萨、声闻众，来辅佐佛法的弘化，方能普使一切大众，都蒙受利益。</p></div>
+<div class="para-pair"><p class="p-orig">譬如一人御极，百辟辅理，方能垂衣拱手，坐致太平。故有道超十地，德迈等觉者出世，必有三祇果满，万德因圆者，隐其实德，权示小果。</p><p class="p-trans">譬如一个人登王位，治理天下，有百官的辅助料理，才能够垂衣拱手，无为而治，天下太平。所以有道行超越十地，福德超过等觉的佛陀出现于世来宣教度脱众生，必定有三阿僧祇果满，万德因行圆成的古佛，刻意隐藏其真实的果位境界而权巧示现小乘圣果境界，以此身份来辅佐出世之佛的教化。</p></div>
+<div class="para-pair"><p class="p-orig">如法华所说诸阿罗汉，悉皆内秘菩萨行，外现是声闻，非到佛地，谁能测度。又佛敕诸阿罗汉，常住世间，受人天供，为世福田，如五百大阿罗汉等。</p><p class="p-trans">如《法华经》中所说的诸多阿罗汉，全都是内秘菩萨行，外现是声闻，不到佛地，谁能测度呢？又佛敕教诸位阿罗汉，要常住世间，接受人天供养，作为世间众生的福田，如五百大阿罗汉等。</p></div>
+<div class="para-pair"><p class="p-orig">而十八罗汉，乃其首领，故丛林佛殿，咸塑形仪，令瞻礼者，灭罪增福。法雨常住，乃观音大士圆通道场，历朝敕建，举世尊崇。是故殿启九龙盘拱之制，圣塑大士慈悲之容，而十八罗汉，分坐两傍，如星拱辰，羽翼慈化。</p><p class="p-trans">而十八罗汉，是其中的首领，所以大丛林的佛殿中，都塑立他们的形仪，令瞻仰礼拜的人，灭罪增福。法雨寺是观世音菩萨的圆通道场，历朝皇帝敕令修建，举世尊仰崇敬。所以大殿启用了九龙盘拱的建造，塑立观世音大士的慈悲之容，而十八罗汉，分坐两傍，如众星拱卫北斗星，辅佐菩萨的慈悲教化。</p></div>
+<div class="para-pair"><p class="p-orig">但以久历岁月，金色剥落，非徒不副瞻仰，实为难妥圣灵。衲拟欲重装金身，俾得永镜三千，无奈屡搜囊资，何能稍完一二。用是具述愚诚，仰祈十方善信，倘随缘以乐助金币，自圣像以大放光明。</p><p class="p-trans">但因为经历长久的岁月，外面的金色剥落，不但不适合瞻仰，实在是难以安置圣者之灵。我打算重装金身，使得金容永照三千世界，无奈虽多次搜索钱袋，也不足以完成一两分的工作。因此具述我的愚诚，仰祈十方善信，倘若能随分随力乐捐金银钱币，将使圣像得以大放光明。</p></div>
+<div class="para-pair"><p class="p-orig">将见以如是因，感如是果，未来亦当证金色身，为世福田。至其现生灾障消灭，福寿增崇，前程远大，后裔绵延，乃其小焉者耳。</p><p class="p-trans">将可见到，以如是因，感得如是果，未来也当证得金色身，为世间福田。至于现生灾障消灭，增福增寿，前程远大，后世子孙绵延不绝，这还是其中小小的福报而已。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【御极】</span>登极；即位。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【百辟】</span>百官。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【垂衣】</span>谓定衣服之制，示天下以礼。后用以称颂帝王无为而治。《易·系辞下》：“黄帝尧舜垂衣裳而天下治，盖取诸乾坤。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【拱手】</span>谓无为而治。宋苏轼《御试制科策》：“拱手垂裳而天下向风，动容变色而海内震恐。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【坐致】</span>轻易获得；轻易达到。《孟子·离娄下》：“天之高也，星辰之远也，苟求其故，千岁之日至，可坐而致也。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【拱辰】</span>拱卫北极星。语本《论语·为政》：“为政以德，譬如北辰，居其所，而众星共（拱）之。”后因以喻拱卫君王或四裔归附。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【羽翼】</span>辅佐；维护。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

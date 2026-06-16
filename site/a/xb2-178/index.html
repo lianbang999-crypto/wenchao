@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>答周群铮居士书 · 印光法师文钞</title>
+<meta name="description" content="来示云，时当末法，彼邪见魔党，往往身泰体健。而正信之士，反致多病多恼。岂非定业使然，有令人太息不置等语。森殊反是。何也。一由宿生定业所使，加之因果复杂，吾人肉眼凡夫，究竟不能明了。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-178/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="答周群铮居士书 · 印光法师文钞">
+<meta property="og:description" content="来示云，时当末法，彼邪见魔党，往往身泰体健。而正信之士，反致多病多恼。岂非定业使然，有令人太息不置等语。森殊反是。何也。一由宿生定业所使，加之因果复杂，吾人肉眼凡夫，究竟不能明了。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-178/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 附录</div>
+      <h1 class="art-title">答周群铮居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">来示云，时当末法，彼邪见魔党，往往身泰体健。而正信之士，反致多病多恼。岂非定业使然，有令人太息不置等语。森殊反是。何也。一由宿生定业所使，加之因果复杂，吾人肉眼凡夫，究竟不能明了。</p><p class="p-trans">来信说：“正当末法时劫，那些邪见魔党，往往身体健康、安泰。而有正信的人士，反而多疾病、多苦恼。这难道不是定业使其如此的吗？”（信中）有“令人感到叹息不止”这样的话。德森我的看法正与之相反。为什么呢？一是由于宿生定业所使，再加上因果的复杂，我们这些肉眼凡夫，不能究竟明了。</p></div>
+<div class="para-pair"><p class="p-orig">戒贤论师，玄奘法师，宿种现行，善根福德，究为如何。尚须受重病苦，偿清往昔杀业，方得上生兜率内院，次第进修，圆满菩提。</p><p class="p-trans">戒贤论师（注1）、玄奘法师（注2），宿生业种起现行。他们的善根、福德多么高啊！但还必须承受重病的痛苦，来还清过去世的杀业，才能向上往生到兜率陀天内院（当来下生的弥勒尊佛即在此讲经说法），次第进修，才能圆满菩提（即成佛）。</p></div>
+<div class="para-pair"><p class="p-orig">吾人业障深重，论正信功行，福德智慧，皆不能望戒，奘诸古德之肩背。况身恶虽少，意恶实多（此森自述心行，则口过亦仍常犯。每阅俞净意公遇灶神记，不禁毛骨悚然）。纵有发心，亦难真切。</p><p class="p-trans">而我们却业障深重，论正信、功行，福德、智慧，都赶不上戒贤论师、玄奘法师等诸位古德。更何况我们身恶虽然少，但是意恶实在很多（这只是德森我自述自己的心行，而且口过也仍旧常犯。每次阅读《俞净意公遇灶神记》（注3），都不禁毛骨悚然）。即使有发心，也难以真切。</p></div>
+<div class="para-pair"><p class="p-orig">今则欲依净土横超法门，全仗佛力，带业往生。便感得佛慈加被，俾沉沦三途剧苦之后报重报，转作今生疾病缠绵之现报轻报。庶即此一生，了却百千万劫不易了得之生死大事。正是佛慈摄受，有求必应，感而遂通</p><p class="p-trans">现在我们既然想依靠净土这个横超法门，全仗佛力，带业往生，便会感得佛慈加被，使将来沉沦三途剧烈痛苦的后报、重报，转为今生疾病缠绵的现报、轻报。这样才能就在这一生，了结百千万劫不容易了结的生死大事。这正是佛慈摄受，有求必应，有感就有通啊</p></div>
+<div class="para-pair"><p class="p-orig">（许止净，聂云台二居士之菩提心，与一切实行，森常觉惭愧不及。而二位之病苦缠绵，实远在吾人之上。</p><p class="p-trans">（许止净、聂云台，二位居士的菩提心和一切真实行持，德森我常常觉得惭愧不及。但是，两位居士的病苦缠绵，确实远在我们之上。</p></div>
+<div class="para-pair"><p class="p-orig">森经久深思，再以社会人心事实证明，始知作业容易，酬偿实难。方信其二位之病苦，确为重业轻报，而得超凡入圣之殊胜利益也。</p><p class="p-trans">德森我经过长久的深思，再用社会、人心这些事实来证明，才明白造业容易，酬偿实在是太难了！我这才相信二位居士的病苦，确实是重业轻报，从而得到了超凡入圣的殊胜利益啊！</p></div>
+<div class="para-pair"><p class="p-orig">至邪魔康健，一或现生恶果未熟，宿福所持。二或因其恶心猛厉，天道巧妙，厚其凶德，俾其速入三途。不拘如何，即其将来苦果，吾人亦决不愿承受。</p><p class="p-trans">至于邪魔身体康健，第一，或许是现生恶果没有成熟，还依持着宿世的福分；第二，或许是因为他的恶心猛厉，天道巧妙，加厚他的凶德（注4），使他迅速堕入三途。不管怎样，就拿他将来受到的苦果来说，我们也绝对不愿意承受。</p></div>
+<div class="para-pair"><p class="p-orig">世无无因之果，亦无无果之因。且报应之冥显迟速，实为因果复杂所致。吾人肉眼凡夫，不易辨明，切勿误会）。</p><p class="p-trans">世间没有无因之果，也没有无果之因。而且，报应的冥显、迟速，的确是因果复杂所导致的。只是我们肉眼凡夫，不容易辨明，千万不要误会）。</p></div>
+<div class="para-pair"><p class="p-orig">深知如此，故虽病魔缠扰，痛苦经年，身虽难受，心实庆快，毫无怨尤嗟叹之意。唯依随缘消业，不造新殃，必期重债轻还，怨家债主，一一宽恕，同遂往生而后已。愚见如是，不知高明以为如何。</p><p class="p-trans">因为正信之士深刻理解了这个道理，所以虽然病魔缠扰，痛苦经年，身体虽然难受，但是心里实际上很庆幸、喜悦，毫无怨恨责怪、感叹的意念。只依从随缘消业、不造新殃的道理，一定期望自己能够重债轻还，使怨家债主，都能一一宽恕自己，直到共同实现往生的目标为止。这是我的愚见，不知道您怎样认为呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【戒贤论师】</span>昔西域戒贤论师，德高一世，道震四竺（四天竺国）。由宿业故，身婴恶病，其苦极酷，不能忍受，欲行自尽。适见文殊，普贤，观世音三菩萨降，谓曰，汝往昔劫中，多作国王，恼害众生，当久堕恶道。由汝宏扬佛法，故以此人间小苦，消灭长劫地狱之苦，汝宜忍受。大唐国有僧，名玄奘，当过三年，来此受法。戒贤论师闻之，遂忍苦忏悔，久之遂愈。至三年后，玄奘至彼，戒公令弟子说其病苦之状。其说苦之人，哽咽流泪，可知其苦太甚。使不明宿世之因，人将谓戒贤非得道高僧。或将谓如此大修行人，尚得如此惨病，佛法有何灵感利益乎。汝等心中所知者小，故稍见异相，便生惊疑。无善根人，遂退道心。倘造恶之人现得福报，亦复如是起邪见心。不知皆是前因后果，及转后报重报，为现报轻报，及转现报轻报，为后报重报等，种种复杂不齐之故也。(《印光法师文钞续编·卷上·复周颂尧居士书（民国二十年　附原函）》</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【玄奘法师】</span>玄奘法师临终亦稍有病苦，心疑所译之经，或有错谬。有菩萨安慰言，汝往劫罪报，悉于此小苦消之，勿怀疑也。（《增广印光法师文钞·卷二·复周孟由昆弟书》）</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【《俞净意公遇灶神记》】</span>作者是明朝江西人罗祯。该书补充了一些《了凡四训》中没有说到的地方。该书教人如何修身“意净无染，君子有终”，影响广泛深远。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【凶德】</span>违背仁德的恶行。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

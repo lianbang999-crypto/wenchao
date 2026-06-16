@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复李圆净居士书三 · 印光法师文钞</title>
+<meta name="description" content="光常谓家庭教育，为治安之本。因果报应，为制心之法。家庭母教为要。果有贤母，又于儿女幼时常为讲谈因果。其儿女长大，决定不至作伤天损德等事。惜在家出家之倡导者皆不致意于此，可叹也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-052/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复李圆净居士书三 · 印光法师文钞">
+<meta property="og:description" content="光常谓家庭教育，为治安之本。因果报应，为制心之法。家庭母教为要。果有贤母，又于儿女幼时常为讲谈因果。其儿女长大，决定不至作伤天损德等事。惜在家出家之倡导者皆不致意于此，可叹也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-052/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复李圆净居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光常谓家庭教育，为治安之本。因果报应，为制心之法。家庭母教为要。果有贤母，又于儿女幼时常为讲谈因果。其儿女长大，决定不至作伤天损德等事。惜在家出家之倡导者皆不致意于此，可叹也。</p><p class="p-trans">我常说家庭教育，是治国安邦的根本；因果报应，是制伏恶心的办法；家庭教育中，母亲的教育最为重要。果真有贤良的母亲，又在儿女幼小的时候，常为他们讲说因果报应的道理。她的儿女长大后，决定不至于做出伤天损德等事。可惜在家、出家的倡导者都不在这个地方注意，实在可叹。</p></div>
+<div class="para-pair"><p class="p-orig">昨信已封，邮差来又接手书，因勉作题词四十韵。但以向不作诗，诸多牵强，祈为改正。</p><p class="p-trans">昨天的信已经封好，邮差来，又接到你的信，因此勉强作题词四十韵（《嘉言录题词》，见《增广印光法师文钞·卷四》）。但因为向来不写诗，题词有很多牵强之处，希望你加以改正。</p></div>
+<div class="para-pair"><p class="p-orig">临终舟楫要语，传之已久，多有错讹。而且其中有意义不圆之处，遂僭为补足。后之论偈，光曾见者皆有，不知何意删去，致语成无根。但原文亦未将本论之名标出，为一憾事。祈为裁度。又此偈恐是宗瑜伽论而作。</p><p class="p-trans">《临终舟楫要语》（收录于《印光法师嘉言录》中，后改为临终舟楫（附录）），流传已久，有许多错误。而且其中有意义不圆满的地方，于是大胆越分地加以补足。后面的论偈，我曾经见过的本子都有，不知因为什么删去了，致使言语没有了根据。但是原文也没有将本论的名称标出，这是一件遗憾的事。请衡量断定。另外，这些偈颂恐怕是依《瑜伽师地论》而作。</p></div>
+<div class="para-pair"><p class="p-orig">临终舟楫，只低一字。要语二字，似宜去之。仍用同样字，以过小则老人看时，多有吃力。当于题上加附录二字，则正附清楚矣。</p><p class="p-trans">“临终舟楫”，只低了一个字。“要语”二字，似乎应该删去。仍然用同样的字号，因为字太小（的话），那么老年人看的时候，很吃力。应当在题目上加上“附录”二个字，那么正文、附录就都清楚了。</p></div>
+<div class="para-pair"><p class="p-orig">现因战事，纸不能来。安士书，文钞，皆一时不能即印。祈缓编，勿著急。则人既省力，事且从容。光所排书，皆打四付纸板。此书排成，亦宜多打纸板，庶可一劳永逸。</p><p class="p-trans">现在因为战争，纸张不能运来。《安士全书》、《文钞》，都一时间不能即刻印出。希望你慢慢编辑，不要着急。那么人既能省力，且事情也不急迫。我所排印的书，都打四付纸板。这本书（即《印光法师嘉言录》）排好了，也应多打几付纸板，才能一劳永逸。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【因勉作题词四十韵】</span>指《嘉言录题词》，见《增广印光法师文钞》卷四。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

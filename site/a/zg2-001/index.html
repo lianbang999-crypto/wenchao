@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>印施极乐图序（代撰） · 印光法师文钞</title>
+<meta name="description" content="大矣哉，净土法门之为教也。是心作佛，是心是佛，直指人心者，犹当逊其奇特。即念念佛，即念成佛，历劫修证者，益宜挹其高风。普被上中下根，统摄律教禅宗。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-001/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="印施极乐图序（代撰） · 印光法师文钞">
+<meta property="og:description" content="大矣哉，净土法门之为教也。是心作佛，是心是佛，直指人心者，犹当逊其奇特。即念念佛，即念成佛，历劫修证者，益宜挹其高风。普被上中下根，统摄律教禅宗。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-001/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">印施极乐图序（代撰）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大矣哉，净土法门之为教也。是心作佛，是心是佛，直指人心者，犹当逊其奇特。即念念佛，即念成佛，历劫修证者，益宜挹其高风。普被上中下根，统摄律教禅宗。</p><p class="p-trans">真是博大精深啊，净土法门作为佛陀的一代时教！此心作佛，此心是佛，就是直指人心的禅宗，也比不上它的奇特。即念念佛，即念成佛；历史上多少人有修有证，更加仰慕它的高妙。广收上，中，下根，统摄律，教，禅，宗。</p></div>
+<div class="para-pair"><p class="p-orig">如时雨之润物，如大海之纳川。偏圆顿渐一切法，无不从此法界流。大小权实一切行，无不还归此法界。不断惑业，得预补处。即此一生，圆满菩提。</p><p class="p-trans">如春雨那样滋润万物，像大海那样接纳百川。偏，圆，顿，渐一切法，无不从此法界流；大，小，权，实一切行，无不还归此法界。不必断除惑业，就可以得补佛位；即此一生，圆满菩提。</p></div>
+<div class="para-pair"><p class="p-orig">九界众生离是门，上不能圆成佛道。十方诸佛舍此法，下不能普利群萌。是以华严海众，尽遵十大愿王。法华一称，悉证诸法实相。</p><p class="p-trans">九界众生离此法门，上不能圆成佛道；十方诸佛舍此法门，下不能普利众生。因此，华严会上所集会的大众，全部遵从普贤菩萨十大愿王，发愿往生极乐世界；《法华经》说“一称南无佛，皆已成佛道”，都可以证得诸法实相。</p></div>
+<div class="para-pair"><p class="p-orig">最胜方便之行，马鸣示于起信。易行疾至之道，龙树阐于婆沙。释迦后身之智者，说十疑论而专志西方。弥陀示现之永明，著四料简而终身念佛。</p><p class="p-trans">马鸣菩萨在《起信论》中开示，净土法门是最胜方便之行；龙树菩萨在他的论著《婆沙》中阐述，净土法门是易行速归之道；释迦佛后身的智者大师，说《十疑论》而专志西方；阿弥陀佛示现的永明大师，著《四料简》而终身念佛。</p></div>
+<div class="para-pair"><p class="p-orig">汇三乘五性，总证真常。导上圣下凡，同登彼岸。故得九界咸归，十方共赞，千经并阐，万论均宣。</p><p class="p-trans">汇集声闻、缘觉、菩萨三乘；定性声闻、定性缘觉、定性菩萨、不定种性、无种性这五种种性众生，总的证入真常佛性。化导上等圣人，下劣凡夫，共同登到极乐彼岸。所以九法界众生都归向极乐世界，十方诸佛共同赞叹弥陀净土，千部经典一并阐扬，万部论书都在宣扬。</p></div>
+<div class="para-pair"><p class="p-orig">诚可谓一代时教之极谈，一乘无上之大教也。不植德本，历劫难逢。既获见闻，当勤修习。不慧生值末世，幸遇斯门。愧无自利利他之力，颇有己立立人之心。欲令贵贱智愚，僧俗男女，回客途以归本国，舍秽土而生莲邦。</p><p class="p-trans">确实可以说是一代时教的极谈，一乘无上的大教啊！如果没有培植善根，则经历多少劫难也难以遇到；既然已经遇到了净土法门，就应当勤奋精进地去修习它！我出生在末法时代，幸运地遇到了净土法门。惭愧自己没有自利利他的能力，却又很有己立立人的心愿。想要让富贵、贫贱、智慧、庸愚、出家、在家等一切男子女人，回转娑婆客途而还归极乐本国，舍弃五浊秽土而求生极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">因绘极乐世界依正庄严图，明示净境，用生信向。傍书念佛起止仪，及十念法门，令随分随力，逐日修持。</p><p class="p-trans">因此绘画了《极乐世界依正庄严图》，明白显示极乐净土的庄严境相，（从而让观者）生起信心向往。又在图旁边写上念佛的起止仪轨，以及十念法门，使（观者）能够根据自己的情况能力，每日修持。</p></div>
+<div class="para-pair"><p class="p-orig">明初鄞江有大禅师，厥名妙叶，彻悟禅宗，深通教理，自行化他，专主净宗。所著宝王三昧念佛直指，文理兼畅，今古绝伦。其极乐依正篇，揭示乐邦妙境，包括净土诸经，与上图像，交光相映，一际无痕。</p><p class="p-trans">明朝初年浙江鄞江有一位大禅师，法名妙叶。他彻悟禅宗，深通教理，无论自己修行还是教化他人，都专主于净土法门。所著作的《宝王三昧念佛直指》，文辞义理通畅，今古绝伦。其中的“极乐依正篇”，揭示了极乐世界殊妙的境相，包罗涵盖了诸多净土经典（中关于极乐世界的描述），与上面的依正庄严图交光相映，融通无碍。</p></div>
+<div class="para-pair"><p class="p-orig">遂依原本，录于其下。庶见闻礼诵者，知出苦之要道，修成佛之真因。信愿任运发生，佛号执持不已。从兹同离秽土，同生净邦，同侍弥陀于九莲，同圆种智于一念。</p><p class="p-trans">于是依照原文，抄录在下面。想必见到、听到、礼拜、持诵的人，都能知晓出苦的要道，都能修习成佛的真因。自然生起真信和切愿，不间断地持念阿弥陀佛圣号。从此共同离开五浊秽土，共同往生极乐世界，在九品莲池共同随侍阿弥陀佛，在一念之中共同圆满一切种智。</p></div>
+<div class="para-pair"><p class="p-orig">如斯利益，何可名言。良由以果地觉，为因地心，故得因该果海，果彻因源也。</p><p class="p-trans">这样的利益，怎能用言语宣说呢。实在由于净土法门，是以阿弥陀佛果地的觉证，作为修行人因地的发心，所以能够因行该摄果海，果证通彻因源啊！</p></div>
+<div class="para-pair"><p class="p-orig">石印万张，用结净缘。又祈善信展转流通，俾十方法界一切有情，齐还本有之家乡，常住寂光之净土云尔。</p><p class="p-trans">现在石印一万张，用来广结净土法缘。又祈望善男信女辗转流通，使得十方法界一切众生，一齐回到极乐家乡，一同常住寂光净土。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【是心是佛】</span>观无量寿经说：“诸佛如来是法界身，入一切众生心想中。是心即是三十二相，八十随形好。是心作佛，是心是佛。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【挹】</span>指吸取。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【高风】</span>1.高尚的风操。2.高雅的艺术风格。3.美善的风教、政绩。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【五性】</span>法相宗将一切众生的根机，分为五类，叫做五性。一、有可修成阿罗汉果的无漏种子者，名定性声闻。二、有可修成辟支佛的无漏种子者，名定性缘觉。三、有可修成佛果的无漏种子者，名定性菩萨。四、兼有以上二种或三种的无漏种子，则将来所证之位，遇缘成熟，并不一定证何种果者，名不定性。五、并无以上三乘的无漏种子，但有可修成人天果的有漏种子者，名为无性。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【立人】</span>扶持、造就人。《论语·雍也》：“夫仁者，己欲立而立人，己欲达而达人。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【鄞江】</span>浙江省鄞县。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【一际】</span>佛家语。谓彼此间无差别。《大智度论》卷十九：“涅槃不异世间，世间不异涅槃，涅槃际世间际，一际无有异故。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【名言】</span>称说；描述。《书·大禹谟》：“名言兹在兹，允出兹在兹，惟帝念功。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

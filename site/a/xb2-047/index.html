@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>圆瑛法汇序（民二十二年） · 印光法师文钞</title>
+<meta name="description" content="如来知见，众生同具，佛若不说，谁能自知。故我世尊，示生世间，成等正觉，普为九界众生，随机宣说妙法。必使机理双契，解行俱圆，以致断惑证真，复本心性而已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-047/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="圆瑛法汇序（民二十二年） · 印光法师文钞">
+<meta property="og:description" content="如来知见，众生同具，佛若不说，谁能自知。故我世尊，示生世间，成等正觉，普为九界众生，随机宣说妙法。必使机理双契，解行俱圆，以致断惑证真，复本心性而已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-047/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">圆瑛法汇序（民二十二年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来知见，众生同具，佛若不说，谁能自知。故我世尊，示生世间，成等正觉，普为九界众生，随机宣说妙法。必使机理双契，解行俱圆，以致断惑证真，复本心性而已。</p><p class="p-trans">如来知见，众生同样具有，但如果佛不宣说，有谁能够自己知道呢。所以我佛世尊，示生于世间，成等正觉，普为九法界众生，随顺根机、时机宣说妙法。必定使根机、谛理两方面契合，解悟、行持全都圆满，以致断惑证真，恢复本有的心性而已。</p></div>
+<div class="para-pair"><p class="p-orig">又以钝根众生，断证难期，一经再生，进一退万。一乘上士，亲证法身，不历僧祇，速成佛道等因缘，特开一信愿念佛求生西方法门。俾九法界上圣下凡，同于现生，往生西方。上士则圆满菩提，下根亦亲登不退，其保护抚育之恩，穷劫说不能尽矣。</p><p class="p-trans">又因为钝根众生，断惑证真的时间难以预料，一经再次投生，进步的只有一个，而退步的则有万人；（另外，也为了）一佛乘的上根菩萨，亲证法身，不必经历阿僧祇劫，快速圆成佛道等因缘，特别开启一个信愿念佛求生西方的法门。使得九法界众生，上至圣人、下至凡夫，同在今生，往生西方。上根的菩萨则圆满菩提，下根之人也可亲登不退位，这个保护抚育的恩德，真是穷尽劫数也无法言尽啊！</p></div>
+<div class="para-pair"><p class="p-orig">是知净土一法，乃十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门也。当此末法，人根陋劣，寿命短促，知识稀少，魔外纵横，若无此法，其何能淑。</p><p class="p-trans">所以知道，净土法门，是十方三世一切诸佛，上成佛道，下化众生，成始成终的总持法门。在这个末法时代，人根陋劣，寿命短促，善知识稀少，邪魔外道纵横，如果没有这个净土法门，那该如何是好呢。</p></div>
+<div class="para-pair"><p class="p-orig">以故法流震旦，二千年来，所有知识，或专或兼，或显或潜，各修此法，以期究竟自利利他也。</p><p class="p-trans">因此，佛法流传到中国，二千年来，所有的善知识们，或者专修，或者兼修，或者显修，或者密修，各自修习这个法门，以期究竟地自利利他。</p></div>
+<div class="para-pair"><p class="p-orig">圆瑛法师，宿具慧根，久研教观。迹虽住持宗门，心实注重净土。然圆人受法，无法不圆，随人意乐，为讲诸经。佛学书局，汇集诸著，排印流通，名为圆瑛法汇。</p><p class="p-trans">圆瑛法师，宿世具有慧根，久研天台教观。行迹上虽然是禅宗寺院的住持，但内心实际上注重于净土。而且，圆根之人无论接受什么法门，没有一个法门不圆通，所以法师还随人的心意和喜好，为大众宣讲各种经典。佛学书局，汇集他的著作，排印流通，名为《圆瑛法汇》。</p></div>
+<div class="para-pair"><p class="p-orig">首以阿弥陀经注，以示法师注重净土之意。窃以浙江，昔有云栖法汇，近有谛闲讲录，圆瑛法汇，同为险道之导师，苦海之慈航，有缘遇者，何幸如之。</p><p class="p-trans">开头是《阿弥陀经注》，用来显示法师注重净土的用意。我想到在浙江，过去曾有《云栖法汇》，近代有《谛闲讲录》，《圆瑛法汇》，这些都是娑婆险道的导师，生死苦海的慈航，有缘遇到的人，是何等的庆幸啊！</p></div>
+<div class="para-pair"><p class="p-orig">光粥饭庸僧，除念佛外，一无所知。承师不弃，命为序引，只得略陈所知，以塞其责。而文不贴题，一任大通家之指斥讥诮耳。</p><p class="p-trans">我是一个只会吃饭的庸僧，除念佛外，一无所知。承蒙法师不嫌弃，命我作序，只得大略陈述我所知道的，来勉强塞责。而所写文字不贴切题目，任凭大通家们去指责、讥讽吧。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【其何能淑】</span>《诗经·大雅·桑柔》：“其何能淑，载胥及溺淑。”淑：善，好。那如何做得好。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

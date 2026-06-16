@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与康泽师书 · 印光法师文钞</title>
+<meta name="description" content="光宿业深重，现行劣弱。虽起长期，绝无进步。妄念胜于佛念，业识障彼智识。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-037/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与康泽师书 · 印光法师文钞">
+<meta property="og:description" content="光宿业深重，现行劣弱。虽起长期，绝无进步。妄念胜于佛念，业识障彼智识。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-037/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">与康泽师书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光宿业深重，现行劣弱。虽起长期，绝无进步。妄念胜于佛念，业识障彼智识。</p><p class="p-trans">我宿业深重，现在的行持劣弱。虽然起长期念佛，但绝无什么进步。妄念胜过佛念，业识障蔽智识。</p></div>
+<div class="para-pair"><p class="p-orig">佛慈普被，犹不蒙益。每一思及，惭赧无喻。然佛既不以摄受诳人，光必以死期败烈（死期败烈，北方土语，烈者功烈，败者败坏。如张巡守睢阳，誓立灭贼功烈，以死为期，决不退败，若不死必定要成此功烈，若死才见败坏耳。此语北人常谈，南方来曾未闻，故标其意致耳），哀求加被。即当时不蒙加被，终有加被之日。</p><p class="p-trans">佛陀的慈光虽然普遍加被，但还是不能蒙受利益。每每想到这些，就脸红的无法言说。然而佛陀既然不以摄受往生来欺诳我们，我必定以“死期败烈”（死期败烈：是北方的土话，烈：功烈，败：败坏。例如张巡守睢阳城，立誓要成就灭贼的功勋业绩，以死为期，决不退败，若不死，必定要成就这个功勋业绩，如果死了，才见败坏。这句话北方人常说，南方从来没有听说过，所以指出这个意思罢了），哀求佛陀慈光加被。即使当时不蒙加被，终究会有加被的一天。</p></div>
+<div class="para-pair"><p class="p-orig">今拟三十随众过年，至初一日仍复起期，直至和尚退院，方始解期，再定后来章程。决定要得心佛相应，方可稍安此心。现在法道日见倾颓，后来事体，将有不忍言者。宜著力念佛求生西方，庶不虚此出家修行矣。否则恐后来虽欲修行，无地可修，虽欲求法，无法可求矣。奈何奈何。</p><p class="p-trans">现在打算，大年三十，随众过年，至正月初一，仍旧再起期，直到方丈和尚退居，才会解期，然后再定以后的规划章程。决定要得到心佛相应，方才可以稍微安心。现在的法道，一天比一天倾颓，以后的事情，将有不忍心说的情形。应该努力念佛求生西方，才不虚这一生出家修行啊！否则恐怕到了以后，虽然想要修行，没有地方可以修行，虽然想要求法，没有佛法可求啊！无可奈何！无可奈何啊！</p></div>
+<div class="para-pair"><p class="p-orig">期中略将无量寿经疏，细阅两遍。其玄谭总判，虽不及台宗。而消释文义，甚是清楚。不可不看。</p><p class="p-trans">专修期中，略将隋朝慧远法师的《无量寿经疏》，仔细阅读了两遍。其中经文前的玄谈总判，虽然不及天台宗的完备。而消释文义，很是清楚。不可不看。</p></div>
+<div class="para-pair"><p class="p-orig">观经疏，阅三遍。善导和尚专以平实事相法门，接引末世凡夫。不用观心约教等玄妙法门，其慈悲可谓至极无加矣。良以业识未消，三昧未成，纵谈理性，终成画饼。</p><p class="p-trans">善导大师的《观无量寿经疏》，阅读了三遍。善导和尚专门以平实的事相法门，接引末世的凡夫。不用观心、约教等玄妙的法门，他的慈悲可以说是到了极点而无以复加了。实在是因为众生的业力情识没有消除，三昧没有成就，纵然高谈实相理体以及真如本性，终究只会成为画饼而得不到实际的利益。</p></div>
+<div class="para-pair"><p class="p-orig">又以古人闻理性当体便是，则进行弥速。今人闻此等语言，则废弛道业，但欲任己业识茫茫之天真耳。其书经中外抄录，错讹不胜其多。</p><p class="p-trans">又因古人听到“理性当体便是”这样的道理，功夫则增进得更加快速。现在的人听到这些言语，则会荒废松弛道业，只是想随任自己业识茫茫的天真罢了。《观无量寿经疏》这部书经过国内国外的辗转抄录，错误的地方有很多。</p></div>
+<div class="para-pair"><p class="p-orig">仁山杨子，凡点句读处皆恰当。至于校讹，亦只照样校对，并未厘正错讹，如所刻弥陀疏钞等。光不惜获罪，略为正订。</p><p class="p-trans">杨仁山居士，一切标点句读之处都很恰当。至于校对讹误，也只是照原样校对，并没有厘清匡正错误之处，例如他所刻的《弥陀疏钞》等等。我不惜获罪，大略做了一些订正。</p></div>
+<div class="para-pair"><p class="p-orig">觉善导婆心，更加亲切。然不敢与杨子及今之当道弘法者观。彼若见之，将又如通公之骂聪明人耳。</p><p class="p-trans">觉得善导大师的慈悲婆心，更加亲切。然而不敢给杨仁山居士以及现今正在世间弘法的人看。他们如果见到了，将又要如同通智大师那样骂聪明人了。</p></div>
+<div class="para-pair"><p class="p-orig">往生论注，阅一遍。文义显豁直捷。真能上继匡庐，下启天台，西河，长安等。宜细看之。此三种讹字皆标于顶格。待明春解期时当呈上一览。</p><p class="p-trans">昙鸾大师的《往生论注》，阅读了一遍。文字义理显豁直捷。真正能够向上继承慧远祖师，向下开启智者大师、道绰大师、善导大师等祖师。应该仔细去看。这三种书中错讹的字，都标在书的顶格。等到明年春天解期的时候，当会呈给你一看。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【起长期】</span>谓制定一长久的修行期限。起期的期限有长有短，例如常行三昧之修行，其期限为七日至九十日。中国禅宗丛林，以元月十五日至七月十五日为一期，再由七月十五日至元月十五日又为一期。尤以七月十五日前后数日为调换各序职事之期限。每一职事任职时间必以一年两期为限。律宗道场，每年必传戒两次，春季传戒为春期，冬季传戒，称冬期。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【张巡守睢阳】</span>“在唐玄宗安禄山造反时，值天下大乱，各武将固守城池，张巡守睢阳（今河南开封），忠贞不二，谈到张巡守睢阳，不禁泪下，当时情况危急，四面伏兵，援军不来，军民无粮，吃树叶，嚼树根，啖老鼠，最后易子而食，眼见手下一个个饿死，巡杀爱妾，烹尸为食，将士含泪相向，迟不举箸，巡求大家，为守城故，不得不食。虽如是用心，仍无法支持，终使敌军破城而入，张巡将死，遥礼皇上曰：“臣已力竭，生不能报国恩，死当为厉鬼杀贼。”含恨而亡。（见会性法师《佛说阿弥陀经讲录（二）》）</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【退院】</span>禅院住持之隐退。或称退居。依敕修百丈清规卷三住持章载，住持若年老有疾，或心力疲倦，或诸缘不顺，自宜知退时，须将常住钱物、方丈什物点交清楚，又备单目两份，以寺记印押，住持、库司各收一本为照。至退日，公请一人看守方丈，遂上堂叙谢，辞众下座，待挝鼓三下而退。住持之制，始创于我国，出世入院之例，或住持生活之清洁、经济等，皆有明文规定，故所谓退院，亦须按规遵行。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【事体】</span>体制；体统。事情；情况。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【玄谈】</span>宣讲经、论、释时，在本文之前先论其大意、义例、题号、撰者等。又称为悬谈、悬谭。“玄”与“悬”同义，如《华严经疏钞玄谈》、《华严悬谈会玄记》等书，即“玄谈”与“悬谈”混用。大体而言，佛典经疏通例皆先设玄谈，分门讲说。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【观心约教】</span>智者大师解释“法华经”有四种释义。1.因缘释：以四悉檀为因缘，解释教法兴起。2.约教释：以如来一代教为藏、通、别、圆四教，由浅至深，解其经文。3.本迹释：即置迹化（垂迹）现相而明本门（本地）实性。4.观心释：依如来所说法义，作观心之对境，由观己心而入实相妙理。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【通公】</span>“通公法师其人焉。师讳寻源，字通智，别号忆莲沙门。俗姓阮，系扬州仪征，中堂元公之幼子也。于道光二十二年癸卯，三月初八日未时示生。至同治十二年，年二十一。偶至龙泉寺，遇首座本然和尚。本公因为剃发于本京七塔寺”。（卷三 通智法师公堂序（代悟开大师作））</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【匡庐】</span>晋朝慧远大师，莲宗初祖，于庐山创兴念佛社。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【天台】</span>陈隋智者大师，天台为智者弘法道场，尝著净土十疑论，又称天台大师。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【西河】</span>唐道绰禅师，于西河建净土九品道场，又称西河禅师。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【长安】</span>唐善导大师，莲宗二祖，善导在长安劝化念佛，致“念佛之声，盈于道路，其往生者，当不止百千万亿。”(见印光大师《净土圣贤录序（民二十二年）》)</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

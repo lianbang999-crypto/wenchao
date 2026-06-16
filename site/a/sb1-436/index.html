@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复杨典臣居士书一 · 印光法师文钞</title>
+<meta name="description" content="由山转来手书，以排印历史感应统纪，日不暇给，所有信札，概不能复。阁下既于佛法及净土法门深生信心，理应拜高明者为师。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-436/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复杨典臣居士书一 · 印光法师文钞">
+<meta property="og:description" content="由山转来手书，以排印历史感应统纪，日不暇给，所有信札，概不能复。阁下既于佛法及净土法门深生信心，理应拜高明者为师。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-436/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复杨典臣居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">由山转来手书，以排印历史感应统纪，日不暇给，所有信札，概不能复。阁下既于佛法及净土法门深生信心，理应拜高明者为师。</p><p class="p-trans">由普陀山转来你的信，因为排印《历史感应统纪》，每天忙得时间不够用，所有的信件，一概不能回复。阁下既然对于佛法及净土法门，深生信心，理应拜高明的人为师。</p></div>
+<div class="para-pair"><p class="p-orig">如光之庸劣，人固多不见重，若以为师，当成屈辱矣。虽然，既是有缘，不妨相交以道。</p><p class="p-trans">像我这样的平庸陋劣，人们大多不看重，如果拜为师父，就成屈辱了。虽然如此，既然有缘，不妨以道相交。</p></div>
+<div class="para-pair"><p class="p-orig">今将文钞等寄上，以为日后自行化他之据。令郎幼典，欲得灾障消灭，福慧增长。当令日日礼拜持念观音圣号。则是自求多福，聿修厥德。</p><p class="p-trans">现今将《文钞》等书寄给你，作为以后自行化他的依据。你的儿子幼典，想要求得灾障消灭，福慧增长。应当令他每天礼拜、持念观世音菩萨圣号。就是自求多福，继承发扬先人的德业。</p></div>
+<div class="para-pair"><p class="p-orig">何得效愚俗故例，以袋挂菩萨手，以求默佑乎。此袋于菩萨前禀明，代为焚之，以免后来遗弃。</p><p class="p-trans">怎么可以效仿愚昧俗人的惯例，用口袋挂上菩萨手，来求菩萨默佑呢？这个口袋在菩萨面前禀明，代为焚化，以免将来遗弃。</p></div>
+<div class="para-pair"><p class="p-orig">若阁下夫妻及与令郎常念观音，则是心系观音。心系观音，自蒙观音护佑。以菩萨之心，与众生之心，息息相通。但以众生迷背，自形隔碍，故不蒙佑耳。咎在自己，非菩萨有所偏私也。</p><p class="p-trans">如果阁下夫妻与儿子常念观世音菩萨，就是心系观世音菩萨。心系观世音菩萨，自然会蒙观世音菩萨护佑。因为菩萨的心，与众生的心，息息相通。但是因为众生迷惑背离，自己形成阻隔障碍，所以不蒙菩萨庇佑罢了。过错在自己，不是菩萨有所偏袒循私啊！</p></div>
+<div class="para-pair"><p class="p-orig">光行将灭迹长隐，所有不关紧要之物，概置度外。所言尊照，恐普陀友人知光此意，故为留之，亦未可知。此后不复往普陀去。灭迹亦无地可指明，以免信札应酬之烦耳。</p><p class="p-trans">我将要灭迹长期隐居，所有无关紧要的事物，一概置之度外。所说的照片，恐怕是普陀山友人知道我的这个心意，故意为你留的，也不可知。从此以后，不再到普陀山去。灭除行迹，也没有地方可以指明，以免信件应酬的烦扰。</p></div>
+<div class="para-pair"><p class="p-orig">历史感应统纪，由工人不细心，于校对二次打纸板时，须将其所排之字极力挤紧，每有碰磕字。或跃出，则随手乱插。以致错讹甚多。十余日后当有校勘表印出，即可备知。</p><p class="p-trans">《历史感应统纪》，由于工人不细心，在校对二次打纸板的时候，必须将他们所排的字用力挤紧，常常有碰磕的字。或者碰出来，就随手乱插。以致错误的地方很多。十多天后，应当有校勘表印出，就能全部知道了。</p></div>
+<div class="para-pair"><p class="p-orig">普门品图证，足为仰求观音之前导。文钞，嘉言录，文虽拙朴，而涉身处世，治家治国，即俗修真，居尘学道之要，当可悉知。</p><p class="p-trans">《普门品图证》，足以作为仰求观世音菩萨的前导。《文钞》、《嘉言录》，文字虽然拙朴，然而对于涉身处世，治家治国，即俗修真，居尘学道的大要，当可全知。</p></div>
+<div class="para-pair"><p class="p-orig">若能实行，何善如之。若不实行，惟欲谈玄说妙，以图口快活，其所得利益，亦只此口快活而已。（十二月初八日）</p><p class="p-trans">如果能够实行，就没有比这更好的了。如果不实行，只想要谈玄说妙，以图口头快活，那么所得的利益，也只是口头快活而已。（十二月初八日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【日不暇给】</span>意思是天天没有空闲，时间仍不够用，形容事物繁忙。出自《汉书·高帝纪下》：“虽日不暇给，规摹弘远矣。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【自求多福】</span>求助自己比求助他人会得到更多的幸福。出处《诗经·大雅·文王》：“无念尔祖，聿修厥德。永言配命，自求多福。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

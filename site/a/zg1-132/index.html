@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与谢融脱居士书 · 印光法师文钞</title>
+<meta name="description" content="贵乡之知有净土法门，由林介生之请净土典章。倘诸居士于宿世中，向此法门，未种善根。何能以古为师，一闻之下，即便生信发愿，自行化他。不十五年，其道大行之若是乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-132/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与谢融脱居士书 · 印光法师文钞">
+<meta property="og:description" content="贵乡之知有净土法门，由林介生之请净土典章。倘诸居士于宿世中，向此法门，未种善根。何能以古为师，一闻之下，即便生信发愿，自行化他。不十五年，其道大行之若是乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-132/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">与谢融脱居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">贵乡之知有净土法门，由林介生之请净土典章。倘诸居士于宿世中，向此法门，未种善根。何能以古为师，一闻之下，即便生信发愿，自行化他。不十五年，其道大行之若是乎。</p><p class="p-trans">你家乡的人之所以知道净土法门，是由于林介生居士迎请了许多净土经典。倘若诸位居士在过去世中，对于净土法门，没有种下善根，怎能以古人为师，一听之后，马上就生信发愿，自己修行并且化导他人，不到十五年，净土法门就在你家乡大为盛行呢？</p></div>
+<div class="para-pair"><p class="p-orig">观阁下之天姿境缘，及现在之法运时机，似宜以持五戒而护持三宝，宏净土而普劝往生，为契理契机之第一要义。何以言之。阁下年已过四十，天姿非上等。欲研穷经藏，参访知识。恐有法门无量，光阴不多，纵欲钻研，措手不及之叹。又现今虽有知识，而僧多滥污，同行乏人（同行，名为内护，能互相磋磨，挟持进道）。若向上之志一衰，则懒惰懈怠随之，而不复振矣。</p><p class="p-trans">看你的天姿和境缘，结合现在的法运时机来考虑，你似乎应当以受持五戒而护持三宝，宏扬净土而普遍劝导大家往生极乐，作为上契佛理，下契众机的第一要义。为什么这样说呢？你年纪已经过了四十岁，天姿并非上等。如果想要研究学习三藏经典，参访善知识。恐怕会面临“法门无量无边，而光阴所剩不多，想要钻研经教，却不知从何下手”的感叹。另外，现今虽然有善知识，而僧人中许多都滥污，并且也缺乏同参道友（同行，名为内护，能够互相磋磨，勉励增进道业）。如果向上用功的志向一有衰退，那么懒惰懈怠的习气就跟随而来，不再振作精进了。</p></div>
+<div class="para-pair"><p class="p-orig">如不慧二十一岁，辞亲出家。亦可谓发心真而立行猛矣。至今五十三岁，若宗若教，毫无所得。徒负亲恩，空为佛子。所幸者净土一法，于出家学弥陀经时，已生信心。实未蒙一知识开示。以当时业师，与诸知识，皆主参究。所有开示，皆破净土。吾则自量己力，不随人转。虽佛祖现身，犹不改作，况知识所说乎。</p><p class="p-trans">比如我，二十一岁就辞别亲人出家。也可以说是发心真切而立志勇猛了。可是到如今五十三岁了，对于宗门、教下，丝毫没有收获。白白蒙受了亲人的恩德，空为佛子。所庆幸的是，对于净土法门，我在出家学习《阿弥陀经》的时候，已经生起了信心。（这方面）实在没有蒙受哪一位善知识的开示。因为当时的授业师，与诸位善知识，都主张参究。他们所有的开示，都破斥净土。我切实衡量了自己的能力，所以不会随他人所转。即使是佛祖现身（劝我更改志向），我也不会改变自己所修的净土法门，更何况只是善知识所说呢？</p></div>
+<div class="para-pair"><p class="p-orig">又现今法弱魔强，欲护持佛法，在俗则易，在僧则难。阁下若能严持五戒，专念弥陀。克己复礼，言行相应。然后广行化导，普利群伦。不可居师位而自高，不可受钱财而自益。</p><p class="p-trans">又者，现今法弱魔强，想要护持佛法，在家人比较容易，而僧人则比较困难。你如果能够严格持守五戒，专念阿弥陀佛名号。克己复礼（战胜己私、还归真理），言行相应。然后广泛地化导他人，普遍利益大众。不可居于师位而自我尊高，不可接受钱财而自我得利。</p></div>
+<div class="para-pair"><p class="p-orig">在家为一家演说，对众为大众详陈。则人皆仰其德而信从其言。所谓其身正不令而行，草上之风必偃也。令郎不信此道，亦不可强。俟其遇境逢缘，天机发现时，一启迪之，自有沛然莫御之势矣。</p><p class="p-trans">在家庭中为一家人演说，面对大众就为大众详细陈说。那么每个人都仰慕你的德行而相信你，听从你所说的言语。所谓“在上位的人行的正，即使不发布命令，下面的人也会跟随而行。君子的德风，吹在百姓言行的小草上，小草一定顺着风的方向倒伏。”你的儿子不相信佛法，也不可以勉强。等待他遇到境界，逢到机缘，天机善根发现的时候，再开导启发他，他的信心，自然有如决口的江河，汹涌澎湃不能阻挡了。</p></div>
+<div class="para-pair"><p class="p-orig">莲社初开，须有定规。女人入社，断乎不可。切不可效他方之漫无检约，以致一法才立，而百弊丛生矣。至要至要。舍利不能礼拜，丛林不能亲炙，有何所欠。但能见佛像，即作真佛想。见佛经祖语，即作佛祖面命自己想。必恭必敬，无怠无忽。则终日见佛，终日亲炙诸佛菩萨祖师善知识。舍利丛林云乎哉。</p><p class="p-trans">莲社刚刚成立，必须要有一定的规矩。女人断断不可以入社。千万不要仿效其它地方散漫没有约束，以至于一法才刚建立，各种弊端就都随着产生了。这一点至关重要。舍利不能够礼拜，大丛林不能亲自去参学，又有什么欠缺呢。只要见到佛像就当作真佛去想；见到佛经、祖师语录，就当作佛陀祖师当面教导自己来想。必恭必敬，不怠惰，不悠忽。那就是每天见佛，每天亲近诸佛菩萨，祖师善知识，不就相当于是见了舍利，到了丛林吗。</p></div>
+<div class="para-pair"><p class="p-orig">市井习气，出家若不真修，更甚于俗。若欲远离，先须了知世间一切诸法，悉皆是苦，是空，是无常，是无我，是不净。则贪瞋痴三毒，无由而起矣。倘犹不能止，则以忠恕忍辱治之，则自止矣。若又不止，则设想于死，自然无边热恼，化为清凉矣。</p><p class="p-trans">出家人如果不真实修行，市井习气会超过在家人。如果想要远离市井习气，先必须了知世间一切万法，全都是苦，是空，是无常，是无我，是不净。那么贪瞋痴三毒，就没有途径生起了。倘若还不能够止息，就用忠恕忍辱来对治，那么自然就止息了。如果还不能止息，那么就设想自己将死，无边的热恼，自然就转化为清凉了。</p></div>
+<div class="para-pair"><p class="p-orig">报恩经谓次第受戒。今出家受戒者，亦先三皈，次五戒，次十戒，次具戒，次菩萨戒。但古之受戒者，是发心为了生死。今之受戒者，多是为充大僧而图体面。得戒之言，从未措怀。故外方之蟒流子，下流坯，无不皆是受过三坛大戒之僧。</p><p class="p-trans">《报恩经》中说到要按次第来受戒。现今出家受戒，也是先受三皈，其次受五戒，再受十戒，而后受具足戒，最后受菩萨戒。但是古时候受戒的人，是发心为了脱生死。而现今受戒的人，大多是为了充当大僧而贪图体面。得了受戒的名头，从来没有往心里去。所以外地的二流子，下流坯，没有哪个不是受过三坛大戒的僧人。</p></div>
+<div class="para-pair"><p class="p-orig">此其弊由于清世祖罢试僧，免度牒。与近世之为师者贪名利，喜眷属之所致也。吾恐贵地诸僧，不知此义。谓度人出家，是第一好事。致匪类入法，法随以灭。故不避繁琐，而覙缕言之也。</p><p class="p-trans">这个弊病是由于清世祖顺治皇帝罢除了僧人考试的制度，免除了度牒手续。以及近世做师父的人贪图名利，喜欢眷属所导致的。我担心你那里的僧人，不知道这个道理，而认为度人出家，是第一等的好事。导致行为不端的人进入佛门，佛法随之而灭。所以不怕繁琐，而详细陈说。</p></div>
+<div class="para-pair"><p class="p-orig">须知净土一法，乃如来一代时教，最玄最妙，至圆至顿之法门（一法具一切法名圆，即生修，即生证名顿）。博地凡夫，亦能入此法中。等觉菩萨，不能出此法外。实上圣下凡，速成佛道之一条捷径。诸佛诸祖，普度众生之一只慈航。于此不生信心，或信不真切，便是业深障重，不合了生脱死，超凡入圣。永世永劫在此世界，常轮六道，无有出期。</p><p class="p-trans">必须知道净土法门是如来一代时教中最玄最妙、至圆至顿的法门（一法含摄一切法门，名圆。当生修行，当生证果，名顿）。博地凡夫也能进入此法门中，等觉菩萨也不能超出这个法门以外。确实是上圣下凡速成佛道的一条捷径，诸佛诸祖普度众生的一艘慈航。对于这样的法门如果不生信心，或者信不真切，那就是业障深重，了生脱死、超凡入圣的因缘还不具备，将永劫永世在此世界六道当中轮回，没有出离的日期。</p></div>
+<div class="para-pair"><p class="p-orig">纵得人天，为时甚少，如客邸寄居。一堕三途，则其时甚长，如安住家乡。每一思及，衣毛皆竖。不惜苦口，恳告同人。今为阁下引一明证。庶可策发信愿之心，而鼓励宏赞之力耳。</p><p class="p-trans">纵然得生人天两善道，也会像暂时寄住在旅店一样时间短暂；一旦堕入地狱、恶鬼、畜生三恶道中，却好像住在自己家乡一样时间漫长。每次想到这些，心惊胆战，寒毛直竖。所以不惜苦口婆心，恳切地告诉同修们。现在为你引出一个明确的证据，想必可以使你策励自己发起信愿念佛之心，进而振奋自己来弘扬赞叹净土法门了。</p></div>
+<div class="para-pair"><p class="p-orig">此之法门，唯阿弥陀经，观无量寿佛经，无量寿经，专说。其余一切大乘经中，无不发明此事。其他勿论。华严一经，乃佛初成道，为十住，十行，十回向，十地，等觉，四十一位法身大士，直说界外大法，不与凡夫二乘所共。</p><p class="p-trans">净土法门，有《阿弥陀经》，《观无量寿佛经》，《无量寿经》，专门予以阐说。而其余一切大乘经中，没有不显发阐明净土事理的。其它的且不说，《华严经》，这是佛陀最初成道，为十住，十行，十回向，十地，等觉，四十一阶位法身大士，直接宣说的超出三界之外的菩萨大法，凡夫及二乘无法一同听受。</p></div>
+<div class="para-pair"><p class="p-orig">末后入法界品，善财童子（童子，乃断惑证真，破无明复本性之美称，非如塑像作小孩子，为童子也。文殊菩萨，华严有处亦称文殊童子，余经亦有作此称者），受文殊教，遍参知识。</p><p class="p-trans">最后的入法界品，善财童子（童子，是断惑证真，破除无明，恢复本性的美称，不是塑像是小孩子的模样，所以才叫童子。对于文殊菩萨，《华严经》中有的地方也称文殊童子，其余经中也有这样称谓的），受文殊菩萨的教导，普遍参访善知识。</p></div>
+<div class="para-pair"><p class="p-orig">初见德云，即闻念佛法门，遂证初住。从此随参随证。至五十三普贤菩萨所。普贤以威神加被，令善财所证与普贤等，与诸佛等（是名等觉菩萨）。然后普贤令善财，与华藏海众，一切诸大菩萨，发十大愿王。以此十大愿王功德，回向往生西方极乐世界，以期圆满佛果。</p><p class="p-trans">最初参见德云比丘，就听闻到念佛法门，于是证得初住位。从此每参访一位善知识，随即就证得一个位次。第五十三参到了普贤菩萨的处所。普贤菩萨以威神加被，使善财童子所证的果位与普贤菩萨相等，与诸佛相等（这名为等觉菩萨）。然后普贤菩萨教善财童子，与华藏世界一切诸大菩萨，同发十大愿王。以此十大愿王的功德，回向往生西方极乐世界，以期圆满成就佛果。</p></div>
+<div class="para-pair"><p class="p-orig">又观无量寿佛经，下品下生章云，下品下生者，或有众生，作不善业。五逆十恶，具诸不善。如此愚人，应堕恶道，经历多劫，受苦无穷。临命终时，遇善知识，教称佛名。满十声已，灭罪往生。</p><p class="p-trans">又者，《观无量寿佛经》，下品下生章说：下品下生者，或有众生，作不善业。五逆十恶，具诸不善。如此愚人，应堕恶道，经历多劫，受苦无穷。临命终时，遇善知识，教称佛名。满十声已，灭罪往生。</p></div>
+<div class="para-pair"><p class="p-orig">龙舒净土文中张善和，张钟馗等，即是其人。上之则文殊（文殊有发愿经）普贤，久成佛道之大菩萨。下之则五逆十恶，将堕地狱之恶众生。皆承弥陀接引之力，皆为净土所摄之机。</p><p class="p-trans">《龙舒净土文》中的张善和，张钟馗等人，就是这样的情况（生前作恶，十念往生）。就上位来说，有文殊菩萨（文殊菩萨有《文殊发愿经》）、普贤菩萨这样久成佛道的大菩萨；下劣来说，有五逆十恶，将要堕入地狱的恶业众生。都承阿弥陀佛接引的力量，全都是净土法门所收摄的根机。</p></div>
+<div class="para-pair"><p class="p-orig">可见法门广大，了无弃物。佛愿宏深，等视众生。吾尝有联云，舍西方捷径，九界众生，上何以圆成佛道。离净土法门，十方诸佛，下不能普利群萌。</p><p class="p-trans">可见净土法门广大无边，不遗弃任何一物。阿弥陀佛愿力宏深，平等看待一切众生。我曾经有一副对联写道：“舍西方捷径，九界众生，上何以圆成佛道。离净土法门，十方诸佛，下不能普利群萌。”</p></div>
+<div class="para-pair"><p class="p-orig">阁下当发大勇猛，发大精进，担荷此法。取古人宏扬净土之逗机言论，为乡里倡。居尘不染，即俗修真。方合融脱命名之义。盖融脱者，乃和光而不同其尘之谓也。鄙见如此，不知阁下以为何如。祈自裁度。</p><p class="p-trans">你应当发大勇猛，发大精进，担荷起净土法门。摘取古人宏扬净土契合时机的言论，来为乡里作倡导。居在尘俗，不染凡情，在世俗烦恼中来修真常，方才符合“融脱”这个名字的意义。融脱，就是“和光不同尘”（与众生和谐共处而不被众生烦恼所染）的意思。我的浅见是这样的，不知你认为如何呢，祈望你自己定夺吧。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【典章】</span>1.制度法令等的统称。2.章法，法则。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【其身正，不令而行】</span>出自《论语·子路》：“其身正，不令而行；其身不正，虽令不从。”如果长官自己清正廉明，不用发布政令，人们也会按照他的意图去做；如果他自己不是清正廉明，即使他强下政令，人们也是不会服从的。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【草上之风必偃】</span>《论语·颜渊》：“君子之德风，小人之德草，草上之风必偃”。上层的道德好比风，平民百姓的言行表现像草，风吹在草上，草一定顺着风的方向倒。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【沛然莫御之势】</span>《孟子·尽心》:“及其闻一善言，见一善行，若决江河，沛然莫之能御也。”等到他听到一句好话，见到一件好事，从中获得的力最就像决了口的江河，汹涌澎湃没有人能够阻挡的了。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【亲炙】</span>指直接受到传授、教导。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【云乎哉】</span>助词。用于句末，表示反诘。《论语·阳货》：“子曰：‘礼云礼云，玉帛云乎哉？乐云乐云，钟鼓云乎哉？’”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【大方便佛报恩经】</span>（经名）七卷，失译。佛在罗鹫山，阿难，闻外道讥佛非孝，以白佛，佛乃放光，集十方之菩萨，说尝为须阇提太子，以身肉济父母之难，或升忉利天为母说法等。有九品，系结集家之手草。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【蟒流】</span>象二流子那样游游荡荡、不务正业的懒汉僧人。蟒，这里同氓。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【匪类】</span>行为不端正的人。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【覙缕】</span>亦作“覶缕”。 1.犹言弯弯曲曲。2.谓详述。3.指事情的原委。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【客邸】</span>旅舍。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【宏赞】</span>大力辅佐。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【文殊师利发愿经】</span>（经名）一卷，东晋佛陀跋陀罗译，与普贤行愿品中之偈文大略相同，是五言颂也。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【和光同尘】</span>出自老子“和其光，同其尘”一语，谓与尘俗相合而不自立异。于佛教，指佛菩萨为救度众生，须隐藏菩提之智慧光，以应化身权假方便，生于充满烦恼之尘世，与众生结缘，次第导引众生入佛法。摩诃止观卷六下，即称此种权巧施设为和光同尘。然北本涅槃经卷六，称此种施设为“和光不同尘”，意谓佛菩萨为达救度目的而兴尘世众生和合，却不为恶浊所染。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【裁度】</span>判断确定。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

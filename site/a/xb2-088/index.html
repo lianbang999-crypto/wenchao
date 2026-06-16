@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>灵岩山寺启建四众普同塔碑记（民二十七年） · 印光法师文钞</title>
+<meta name="description" content="人生世间，直同幻化，纵寿百年，亦弹指顷。其生也随夙因而来，其死也随现因而去。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-088/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="灵岩山寺启建四众普同塔碑记（民二十七年） · 印光法师文钞">
+<meta property="og:description" content="人生世间，直同幻化，纵寿百年，亦弹指顷。其生也随夙因而来，其死也随现因而去。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-088/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">灵岩山寺启建四众普同塔碑记（民二十七年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人生世间，直同幻化，纵寿百年，亦弹指顷。其生也随夙因而来，其死也随现因而去。</p><p class="p-trans">人生在世，简直如同幻化一般，即使有百年的寿命，也像弹指间那么短暂。人的出生，随过去的因而来；人死亡后，随现在的因而去。</p></div>
+<div class="para-pair"><p class="p-orig">虽具常住不变，寂照圆融之佛性，由迷而未悟，反承此佛性功德之力，起惑造业，轮回六道，岂不大可哀哉。</p><p class="p-trans">虽然具有常住不变，寂照圆融的佛性，但是由于迷惑没有觉悟，反而承着这个佛性的功德之力，起惑造业，轮回六道，岂不是太令人悲哀了吗？</p></div>
+<div class="para-pair"><p class="p-orig">如来愍之，于其生时，令修净行，期其返迷归悟，返妄归真，以复本具之佛性。于其死后，焚化尸体，为示六尘无体，五蕴皆空，亲证常住之妙心耳。</p><p class="p-trans">如来怜愍众生，在人活着的时候，使其修习净行，期望大家返迷归悟，返妄归真，来恢复本具的佛性。在人死后，焚化尸体，是为了使人知道六尘无体，五蕴皆空，从而使大家亲身证得常住的妙明真心。</p></div>
+<div class="para-pair"><p class="p-orig">西域葬法有四。</p><p class="p-trans">西域的葬法有四种。</p></div>
+<div class="para-pair"><p class="p-orig">一，水漂，投诸江河，以喂鱼鳖也。</p><p class="p-trans">第一种，水漂，把尸体投入江河，来喂鱼鳖。</p></div>
+<div class="para-pair"><p class="p-orig">二，火焚，火焚其尸，冀破我执也。</p><p class="p-trans">第二种，火焚，用火焚烧掉尸体，希望死者的神识破除我执。</p></div>
+<div class="para-pair"><p class="p-orig">三，土埋，穴土掩藏，俾无暴露也。吾国皆主土埋，然沧桑互变，地路屡更，掘墓暴骨，极为惨伤。</p><p class="p-trans">第三种，土埋，挖坑掩土埋藏，使得尸骨不被暴露。我国都以土埋为主，但是沧海桑田互相转变，田地道路屡有变更，一旦掘到坟墓使骨骸暴露，就是极其惨伤的事。</p></div>
+<div class="para-pair"><p class="p-orig">四，施林，置之林间，俾鸟兽食也。今外蒙古，置之旷野，以饲鸟兽。</p><p class="p-trans">第四种，施林，把尸体放置在林间，使鸟兽来食用。现在的外蒙古，是把尸体放置在旷野中，来喂鸟兽。</p></div>
+<div class="para-pair"><p class="p-orig">自佛法东来，僧皆火化。而唐宋崇信佛法之高人达士，每用此法。以佛法重神识，唯恐耽著身躯，不得解脱。焚之，则知此不是我，而不复耽著。又为诵经念佛，期证法身。</p><p class="p-trans">自从佛法东来，僧人的遗体都是火化。而且唐宋年间，崇信佛法的高人达士，也常用这种方法。因为佛法注重神识的解脱，唯恐亡者的神识耽著身躯，不得解脱。焚化掉遗体，亡者的神识就会明白这个不是我，从而不再耽著。再为他诵经念佛，期望他能证得法身。</p></div>
+<div class="para-pair"><p class="p-orig">儒教重形迹，其神识之升降，绝不致意，而厚其棺椁，以冀常不变坏。现今全国开通火汽车路，掘出之无主骨骸，不胜其多，惨不忍视。智识高者，皆欲改革葬法。</p><p class="p-trans">儒教只注重形骸遗迹，而对于亡者神识的升降，却一点都不关注，所以才加厚亡者的棺椁，来希望尸体常久不变坏。现如今全国开通火车、汽车道路，挖掘出来无主的骨骸，非常多，令人惨不忍睹。因此，智慧学识高的人，都想要改革葬法。</p></div>
+<div class="para-pair"><p class="p-orig">常州天宁寺，有四众普同塔，系开一大穴，中作四隔，于上塔四面，各开洞户。凡比丘，比丘尼，优婆塞，优婆夷，以各骨袋投诸穴中。</p><p class="p-trans">常州天宁寺，有座四众普同塔，是在塔身开设一个大穴，从中间分作四隔，在上塔四面，分别开洞设门。凡是去世的比丘、比丘尼、优婆塞、优婆夷，就把各自的骨灰袋投到对应的穴中。</p></div>
+<div class="para-pair"><p class="p-orig">去春，灵岩寺造此塔，仿其法而变通之，作普通，特别两种。普通者，其塔下开四穴，上竖四塔，是何众骨，由何众塔背洞口，将骨袋投入。特别者，上建西方三圣佛龛，后作小龛，供入塔者牌位。</p><p class="p-trans">去年春天，灵岩寺也建造了普同塔，仿效天宁寺的做法并作了变通，建成普通和特别两种样式。普通样式的塔，塔下部开设四个洞穴，上面竖四塔，是四众中哪一众的骨灰，就从哪一众的塔背洞口，将骨灰袋投入。特别样式的塔，上面建西方三圣的佛龛，后面作小龛，供奉入塔者的牌位。</p></div>
+<div class="para-pair"><p class="p-orig">下用水泥作地室，分东西两序。每序四弄，每弄对面两向，每向六格，每格若干号，共计一千三百九十九号。</p><p class="p-trans">下面用水泥作地下室，分作东西两序。每序有四弄，每弄对面两向，每向有六格，每格有若干号，共计一千三百九十九号。</p></div>
+<div class="para-pair"><p class="p-orig">龛室分为四部，一比丘，二比丘尼，三优婆塞，四优婆夷。化者之骨，装瓷坛中，由佛龛下入室安置。若预先纳费报名，订安某格某号者，无论何时入塔，皆依所订而安。否则先入者在前，次入者在后。</p><p class="p-trans">龛室分为四部，一比丘，二比丘尼，三优婆塞，四优婆夷。火化者的骨灰，装在瓷坛中，由佛龛下入地下室安置。如果是预先交费报名，预订安置某格某号，无论何时入塔，都依照所预订的格号来安置。否则，就先入者在前，次入者在后。</p></div>
+<div class="para-pair"><p class="p-orig">上盖五间大屋，正中三间佛龛，下即特别制塔。龛后东西四塔，即普通制塔。两边二间，为香灯，司水，及年老不能随众者所住。</p><p class="p-trans">上面盖五间大屋，正中三间是佛龛，下面是特别样式的塔。龛后东西四塔，是普通样式的塔。两边二间屋，给香灯、司水，以及年老不能随众上早晚课的人居住。</p></div>
+<div class="para-pair"><p class="p-orig">长年专一念佛，俾亡者常闻佛号，莲品高升。存者痛念无常，急求往生。冥阳两利，同沐契理契机之深恩。见闻发心，共修心作心是之妙道。</p><p class="p-trans">长年专一念佛，使得亡者常闻佛号，莲品高升。活着的人，痛念无常，急求往生。冥阳两界都得到利益，共同沐浴佛说这个契理契机的净土法门的深恩。见者闻者共同发心，共同修行这个心作心是的妙道。</p></div>
+<div class="para-pair"><p class="p-orig">庶博地凡夫，仗佛力而超凡入圣。既预海会，即此生而断惑证真。实了生死之最胜因缘，亦寿终后之极善归宿也。</p><p class="p-trans">这样才能使博地凡夫，依仗佛力超凡入圣。预入莲池海会之后，就在此生就能断惑证真。这的确是了生脱死的最殊胜因缘，也是寿终之后的极善归宿。</p></div>
+<div class="para-pair"><p class="p-orig">颂曰。净土大法门，十方佛共赞。存亡勤修持，速得登觉岸。</p><p class="p-trans">于是作颂说：净土大法门，十方佛共赞。存亡勤修持，速得登觉岸。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【棺椁】</span>棺材和套棺（古代套于棺外的大棺），泛指棺材。棺：指的是装殓尸体的器具。椁：套在棺外的外棺，就是棺材外面套的大棺材。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【香灯】</span>寺庙中掌管佛堂之焚香、燃灯等工作者，亦称为香灯。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【司水】</span>丛林职事。担任禅堂用水事务。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

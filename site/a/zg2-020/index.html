@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拣魔辨异录重刻序 · 印光法师文钞</title>
+<meta name="description" content="学道之人，居心立行，必须质直中正，不可有丝毫偏私委曲之相。倘稍有偏曲，则如秤之定盘不准，称诸物而轻重咸差。如镜之体质不净，照诸像而妍媸莫辨。差之毫厘，失之千里。展转淆讹，莫之能止。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-020/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拣魔辨异录重刻序 · 印光法师文钞">
+<meta property="og:description" content="学道之人，居心立行，必须质直中正，不可有丝毫偏私委曲之相。倘稍有偏曲，则如秤之定盘不准，称诸物而轻重咸差。如镜之体质不净，照诸像而妍媸莫辨。差之毫厘，失之千里。展转淆讹，莫之能止。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-020/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">拣魔辨异录重刻序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">学道之人，居心立行，必须质直中正，不可有丝毫偏私委曲之相。倘稍有偏曲，则如秤之定盘不准，称诸物而轻重咸差。如镜之体质不净，照诸像而妍媸莫辨。差之毫厘，失之千里。展转淆讹，莫之能止。</p><p class="p-trans">学道修行之人，存心行事，都必须质直中正，不可有丝毫偏私和委曲之相。如果稍有偏私委曲，则如同秤的定盘星不准，称量物品的轻重就有偏差了；又如同镜子的体质不清净，照一切物体就分不出美丑了。差之毫厘，失之千里，错上加错，无法停止。</p></div>
+<div class="para-pair"><p class="p-orig">故楞严经云，十方如来，同一道故，出离生死，皆以直心。心言直故，如是乃至终始地位，中间永无诸委曲相。书曰，人心惟危，道心惟微，惟精惟一，允执厥中。</p><p class="p-trans">所以《楞严经》中说：“十方如来，同一道故，出离生死，皆以直心。心言直故，如是乃至终始地位，中间永无诸委曲相。”《尚书》中说：“人心惟危，道心惟微，惟精惟一，允执厥中”。</p></div>
+<div class="para-pair"><p class="p-orig">法藏宿世，固有灵根。即现生之悟与见地，亦非卑浅。但以我慢根深，欲为千古第一高人。特意妄立种种宗旨名相，著五宗原。以企后学推尊于己，竟成魔外知见。</p><p class="p-trans">法藏法师宿世之中，固然种植了慧根。就是这一生中的所悟与见地，也不低浅。只因为他贡高我慢的习气根深蒂固，想要成为千古第一高人。所以妄自设立了种种宗旨名相，写了《五宗原》这本书。希望后学之人推崇尊敬自己，最终成了邪魔外道知见。</p></div>
+<div class="para-pair"><p class="p-orig">使当日直心直行，允执厥中。将见密云会下，无人能敌。道风之振，何难超越诸方。惜乎不以实悟实证为事，而预先设法，以为超越一切之计。遂致密云七辟三辟，以正其非。</p><p class="p-trans">假如当年他能“直心直行，允执厥中”，将会见到密云大师座下，没有人能和他匹敌。道风远振，超越诸方又有什么困难。可惜他不从事于真实的参悟和修证，而是预先设置一个方法，借此来超越一切人。致使密云大师写了《七辟》、《三辟》，来匡正他的错误。</p></div>
+<div class="para-pair"><p class="p-orig">然人非圣贤，孰能无过。果是英烈汉子，自当惭愧忏悔，知非改过，以期实悟实证。则临济法脉，如来慧命，岂不直接其传。何得慢幢高竖，护短饰非。引起其徒宏忍等，更加狂妄。逞己臆见，著五宗救。挽正作邪，以邪为正。谤法谤僧，自误误人。较之法藏，更深十倍。盲引盲众，相牵入火。噫。可哀也已。</p><p class="p-trans">人非圣贤，孰能无过。如果他真是个英烈汉子，这时自然应当惭愧忏悔，改正过错，以期能够有真实的参悟和修证。那么临济宗的法脉，如来的慧命，难道不是直接传给他吗。何必要高竖傲慢的幢幡，掩护短处、矫饰过错呢。进而又引起他的徒弟弘忍等人更加狂妄，随任自己的想法，写了《五宗救》一书。将正法拉入邪法，把邪法当作正法。诽谤佛法，诽谤僧人，误了自己，误了他人。其罪过比法藏本人，还要深十倍。如同一个盲人引着一群盲人，相互牵引着走入火坑。悲哀啊。</p></div>
+<div class="para-pair"><p class="p-orig">藏忍平生，刻意文饰。致令门庭甚盛，士大夫多为外护。故彼父子之语录，并五宗原，五宗救之僻谬邪说，悉皆续入大藏。</p><p class="p-trans">法藏、弘忍平生当中，刻意进行表面修饰。因而他们的门庭很兴盛，士大夫官僚大多是他们的外护。所以他们师徒的语录，以及《五宗原》、《五宗救》这些谬论邪说，全都续入了《大藏经》。</p></div>
+<div class="para-pair"><p class="p-orig">至雍正十一年，世宗欲选语录。遍阅彼等著作，知其意见僻谬，必至瞎人正眼。著令尽毁其板。又敕天下丛林，凡有此书及板，尽行毁除。倘有私藏者，发觉以违律论。又恐或有深受其毒，莫能尽吐。因将五宗救中狂悖甚者，摘录八十余条，逐条驳正。</p><p class="p-trans">雍正十一年，清世宗雍正皇帝想要摘选禅宗语录。周遍阅读了他们二人的著作，从而知道他们的见解错谬偏邪，必然会害瞎别人的正眼。于是下令将他们二人的书板全部销毁，又命令全天下的寺院，凡是存有这些书以及刻板的，全部要销毁。如果有私藏的，一经发现就按照违反律法来论处。世宗又担心有人中他们的邪毒很深，不能全部吐尽。因此又将《五宗救》一书中狂妄悖谬特别严重的地方，摘录出八十多条，逐条进行批驳匡正。</p></div>
+<div class="para-pair"><p class="p-orig">命续入大藏，以企开人正眼，报佛祖恩。但以万几无暇，至十三年春，方始脱稿。未及誊清，龙驭上宾。高宗继立，方始刊板。只因未委通人，凡草书替代之字，许多竟作本字。如以谓作为，多至百余。</p><p class="p-trans">并且下令续入大藏经，希望借此开启众人的正法眼，报答佛祖恩德。只因为日理万机，没有闲暇，所以到了雍正十三年春天才完稿。还没来得及誊写清楚，自己就驾崩了。直到清高宗乾隆皇帝继位时，这本书才开始刊板。因为没有委托通达佛法的人来负责，所以但凡书中草书简写的替代字，许多竟然刻成了替代字本身。例如将“谓”字当作“为”字的情况，有一百余处之多。</p></div>
+<div class="para-pair"><p class="p-orig">世宗所刻书册经板，悉皆校对精严。唯此一书，错讹甚多。故知的系宾天之后所刻。又雍正十三年春，开工刊大藏板。此书上谕，命入藏流通。而竟未入者，以高宗御极未久，殚精政治，无暇提倡。</p><p class="p-trans">雍正皇帝主持刊刻的书册经板，全都校对得精准严密。唯有这本书，错误很多。从而知道的确是雍正皇帝驾崩之后所刻的。再者，雍正十三年春天，开工刊刻大藏经板。这本书雍正皇帝下诏要入藏流通，而最终却没能入藏，是因为当时乾隆皇帝登基不久，全部心力都在政治事务上，没有闲暇提倡的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">其余缁素，以法藏徒党甚盛。恐其一经提倡，或致招祸，因皆置之不论，以故未入。书册殿板，存于大内。除皇帝有敕，无由刷印，因兹不传于世。</p><p class="p-trans">其余的僧俗二众，因为法藏的徒众党羽势力庞大，从而担心他们如果提倡这本书，或许会招来祸患，因此都把这件事放在一边不提，因而就没能续入藏经。这本书的殿刻板保存在皇宫中，除非皇帝有命令，否则不可以印刷。所以这本书在世间也没有流传。</p></div>
+<div class="para-pair"><p class="p-orig">然此法宝，必有神物守护。令其久秘复出，得广流通。其因缘具于石印序中。兹拟重刻木板，因息心校阅，俾还世宗本来面目。应季中居士，愿任刻资。遂序其颠末，以告来哲。</p><p class="p-trans">然而这一法宝，必定有神物在守护。所以才会在长久隐秘之后，又重现于世间，得以广泛流通。其中的因缘，在石印版的序文中有详细说明。现在准备将这本书重新刊刻木板，因此又息心进行了校对，使这本书恢复原有面貌。应季中居士，愿意承担刻印的资费。就此写下事情的经过，告知将来的学人。</p></div>
+<div class="para-pair"><p class="p-orig">夫欲了生死，必须实证。若唯悟而未证，则烦惑尚在，大须努力。倘能兢兢业业，历缘煅炼。则觉照存心，冥符圣智。人我是非之凡情，无由而起。若不加觉照，依旧凡情炽然。功行愈高，情见愈重。由悟入迷，在所难免。</p><p class="p-trans">要想了脱生死，必须实修实证。如果只是开悟而没有实证，那么烦恼惑业还在，必须要大加努力。如果（开悟之后）能兢兢业业修持，经历事缘的锻炼。那么心中就会觉照常存，暗合圣智。人我是非的凡情，就无从生起了。如果不加觉照，依旧凡情炽盛，功夫行持越高超，人我是非的情见就越重。那么由悟而重新入迷，在所难免。</p></div>
+<div class="para-pair"><p class="p-orig">如人睡惺不起。久复睡著。古人谓大事已明，如丧考妣。正以烦惑未断，或恐复迷。须知断惑之人，便无凡情。既无凡情，何有生死。</p><p class="p-trans">就如同一个人朦胧睡醒而不起床，时间久了又会睡着。古人说：生死大事悟明之后，（随后的修持）就会像丧失父母一般痛切。这正是因为烦惑还没有断除，担心再次入迷的缘故。必须知道，断除了烦惑的人，就不再有凡夫情见。既然没有凡夫情见，哪里还有生死呢。</p></div>
+<div class="para-pair"><p class="p-orig">大悟之人，其悟纵与佛同，其惑犹未断除。必须念念觉照，庶免凡情用事。藏忍父子，虽则悟处高深。只因我慢过甚，全体埋没于人我情见之中。而犹欲为续佛慧命之第一高人。以致一错永错，而莫之能反。尽其智力，只做得个平侍者之身分。可不哀哉。</p><p class="p-trans">大彻大悟的人，即使他所悟的境界与佛相同，然而烦惑还没有断除。必须念念觉照自心，想必才能避免凡情用事。法藏、弘忍师徒，虽然所悟的境界高深，只因为贡高我慢太严重，全体埋没在人我情见当中。却还想成为续佛慧命的第一高人。导致一错永错，不能回头。穷尽他们一生的智力，只做了个平侍者那样的身分，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">如来深知末世众生，烦惑难断。特开一信愿念佛，求生净土法门。令其于临终时，蒙佛接引，往生西方。既得往生，则超凡入圣，了生脱死。承侍弥陀，追随海众。从兹圆破无明，彻证自心。直至成佛而后已。</p><p class="p-trans">如来深知末世的众生，烦惑难以断除。所以特地开启了一个信愿念佛，求生净土的法门。让修行的人在临命终时，蒙佛接引，往生极乐世界。往生之后，就超越凡伦，加入圣流，了脱生死了。承侍阿弥陀佛，追随海众菩萨，从此圆破无明烦恼，彻底证得自心，直至成就佛果而后已。</p></div>
+<div class="para-pair"><p class="p-orig">使藏忍知此，当即上品往生，证无生忍。普现色身，广度群迷。又何至妆点文饰，欲得超师越祖之虚名，企其流芳百世。一经明眼人看破，竟落得个邪魔外道之实号，而遗臭万年。呜呼哀哉。</p><p class="p-trans">假如法藏、弘忍知道这个法门，应当就会上品往生，证得无生法忍。随后普现色身，广度群迷。又何至于妆点修饰，想要得到超越祖师的假名声，而让自己流芳百世。一经明眼人看破，竟然落下一个邪魔外道的真实称号，遗臭万年。实在悲哀啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【居心】</span>心地；存心。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【立行】</span>行为举动。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【偏曲】</span>不公正。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【定盘星】</span>原指戥子或秤杆上的第一星儿（重量为零）。多用以比喻正确的基准或一定的主意。《古尊宿语录·洞山第二代初禅师语录》：“师云：‘千斤秤不住。’云：‘鸟道不存也？’师云：‘错数定盘星。’”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【妍媸】</span>美好和丑恶。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【淆讹】</span>搅乱，弄错。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【人心惟危，道心惟微，惟精惟一，允执厥中】</span>[人心惟危]惟：是；危：险恶。指人的嗜欲之心是危险的。[道心]指天理，义理。《书·大禹谟》：“人心惟危，道心惟微。”蔡沈集传：“心者，人之知觉，主于中而应于外者也。指其发于形气者而言，则谓之人心，指其发于义理者而言，则谓之道心。”[微]精深；奥妙。[惟精惟一]精纯专一。[允执厥中]谓言行符合不偏不倚的中正之道。允：真诚。厥：其。或：真诚地遵守不偏不倚的中庸之道。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【法藏】</span>（1573-1635）明代临济宗僧。梁溪（位于江苏无锡）人，俗姓苏。号汉月，字于密。十五岁出家，长好禅旨，读高峰语录有疑，潜心参究，历十余年。一日，闻折竹声大悟。天启四年（1624），至金粟寺参诣密云圆悟，蒙其印可付法。开法于苏州虞山中之三峰清凉禅寺（三峰禅院），世称三峰藏公。其后，历住北禅大慈寺、杭州安稳寺，苏州圣恩寺等名刹。师聪敏绝伦，负操任气，学贯佛儒。潜心禅修，沉思有年，见地遂异，倡为新说。著五宗源，指责当世曹洞宗抹杀五家宗旨，仅单传释迦拈华一事，而强调自威音王以来，无一言一法非五家宗旨之符印。一时诸方惊疑，论诤遂起。圆悟曾寄书告诫之，然不能夺其意。后于崇祯八年七月示寂，世寿六十二。清代雍正年间，帝以政令指其教为魔说，毁其书，黜其徒，三峰一脉遂绝。其所著广录三十卷、弘戒法仪三卷、语录三十卷等，迄今仍流传于丛林间。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【五宗原】</span>全一卷。又作五宗源、五宗元。明代汉月法藏撰。崇祯元年（1538）刊行。今收于卍续藏第一一四册。密云圆悟之法嗣汉月法藏由于反对曹洞宗抹杀五家宗旨，仅单传释迦拈花一事，故评之为室中密授之死法，乃强调自威音王以来，无一言一法非五家宗旨之符印，为纠正曹洞宗之误而著此书。书成之后，其法弟木陈道忞著“五宗辟”，呵骂汉月。其门人潭吉弘忍则撰“五宗救”非难木陈，极力为师辩护。此外，汉月之师密云圆悟，斥其为名利之徒，撰“辟妄救略说”十卷。清雍正帝亦著“拣魔辨异录”，破斥潭吉之五宗救。故五宗原遂成为卷起师徒法眷间论争之书，可见明代禅风之一斑。其内容有临济宗、两脉合宗其来有据、云门宗、沩仰宗、法眼宗、曹洞宗、总结、传衣法注等八章，并附录济宗颂语。
+汉月将书上呈其师密云圆悟，然为密云所斥。密云并撰〈九辟〉、〈三辟〉辟之。汉月法弟木陈道忞亦著《五宗辟》，呵骂汉月。对此，汉月法嗣潭吉弘忍撰《五宗救》，支持汉月的说法。由是，密云又撰《辟妄救略说》，列举佛祖语句辟斥彼等之妄。故此师弟法眷之间的法诤，可谓皆由本书所起。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【密云】</span>天童密云悟禅师禅师。讳圆悟。字觉初。自号密云。宜兴人也。明嘉靖丙寅。生于蒋氏。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【会下】</span>（术语）犹言门下。法会之下所列之第子辈也。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【慢幢】</span>谓我慢心一起，便自高自大，好像幢旗高耸一样。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【文饰】</span>掩饰，遮盖。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【门庭】</span>派别。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【外护】</span>（术语）二护之一。佛所制之戒法，护吾身口意之非为内护。族亲檀越，供衣服饮食为外护。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【僻谬】</span>乖僻荒谬，违背正理。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【狂悖】</span>狂妄悖逆。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【万几】</span>《书·皋陶谟》：“无教逸欲有邦，兢兢业业，一日二日万几。”孔传：“几，微也，言当戒惧万事之微。”后以“万几”指帝王日常处理的纷繁的政务。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【誊清】</span>誊写清楚。</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【龙驭】</span>指天子车驾。借指皇帝。</p>
+<p class="note-item"><span class="note-n">[21]</span><span class="note-term">【宾天】</span>委婉语。谓帝王之死，亦泛指尊者之死。</p>
+<p class="note-item"><span class="note-n">[22]</span><span class="note-term">【通人】</span>学识渊博通达的人。</p>
+<p class="note-item"><span class="note-n">[23]</span><span class="note-term">【本字】</span>表示本义的字。与借字相对。如《诗·小雅·六月》：“以奏肤公。”“公”是“功”的借字，“功”是本字。</p>
+<p class="note-item"><span class="note-n">[24]</span><span class="note-term">【精严】</span>精细严密。</p>
+<p class="note-item"><span class="note-n">[25]</span><span class="note-term">【上谕】</span>即诏书。</p>
+<p class="note-item"><span class="note-n">[26]</span><span class="note-term">【御极】</span>登极；即位。</p>
+<p class="note-item"><span class="note-n">[27]</span><span class="note-term">【殚精】</span>竭尽精思；精心。</p>
+<p class="note-item"><span class="note-n">[28]</span><span class="note-term">【颠末】</span>本末；前后经过情形。</p>
+<p class="note-item"><span class="note-n">[29]</span><span class="note-term">【来哲】</span>后世智慧卓越的人。</p>
+<p class="note-item"><span class="note-n">[30]</span><span class="note-term">【觉照】</span>用觉悟的心来观照一切。</p>
+<p class="note-item"><span class="note-n">[31]</span><span class="note-term">【如丧考妣】</span>像死了父母一样。形容极度悲伤和着急。</p>
+<p class="note-item"><span class="note-n">[32]</span><span class="note-term">【平侍者】</span>北宋平侍者久侍湖北太阳山警玄禅师，自称有所悟入。不料他后来首先提出异议，毁坏警玄禅师的灵骨塔，并将禅师的遗体拉出来，惨毒地用锄头镢破其天灵盖，结果现生报应死于虎口，死后堕入地狱。由此可知他所悟的不过依稀见解得少为足罢了，哪有真正彻悟的人会做出这样大逆不道的事呢？把浅解当作悟入，祸害竟然惨酷至此，学人当引以为戒啊。（以上摘自《竹窗随笔白话注译》）
+另有简介：在北宋禅宗有三大老，曹洞宗的大老是大阳警玄，云门宗的大老是雪窦重显，临济宗的老大是汾阳善昭。汾阳昭有天说到：“云门禅我也知道，沩仰禅我也知道，法眼禅我也知道，就是没有参过曹洞禅。”就派他的徒弟，包括有名的浮山法远、琅邪慧觉等去参大阳警玄。大阳警玄很喜欢他们，当时就要把曹洞宗的法传给他们。当时大阳警玄有个侍者叫平侍者，非常利害，他们就不敢接曹洞宗的法，因为他们已经接了汾阳的法、汾阳善昭临济宗的法，他们不敢随便去接法。就说：“有平侍者在，我们不敢接法，你老人家有个大徒弟，比我们利害的多了，在禅上我们都不是他的对手。”等平侍者下去后，大阳和尚手指着胸口说：“平侍者此处不好。”又捏拇指叉中说到：“他以后的落处在这。”拇指叉即虎口，平侍者以后将死于虎口，会被老虎吃掉。
+后来大阳和尚八十多岁圆寂的时候，说到：“我可以留肉身，保寺院两百年的香火。”平侍者接班，当了方丈，当了一年，不知道哪个风水师说到，大阳和尚的塔对新方丈不利，平侍者就要把塔给推掉，撤掉以后把老和尚的遗身拿来火化，哪知老和尚的金刚身不着火，烧不了。平侍者就把脑袋砍破，脑髓放了，把肚子破了，把内脏掏出来，浇上油，这下终于把老和尚的肉身烧掉了。烧掉了，别人就要和他打官司呀。他的那些徒弟，老和尚事先做了安排，怕平侍者会做类似的事情，在塔铭上写着，某某送了多少珠子，某某送了多少钱财，都放在塔里，算是做了个埋伏。常住就去告方丈，一是说他叛经灭道、欺师灭祖，二说他盗窃常住物。官府追究下来，觉得令人发指，怎么能把师父的肉身给毁了呢？这也是个真身，可以给地方造福了。你看看南华寺六祖的真身给当地造多大的福呀。勒令平侍者还俗，永远不许穿袈裟。
+后来他先后去找浮山法远和琅琊广照等禅师，自称是黄秀才，希望能到他们的庙里去。这些人都婉拒了：“昔日平侍者，今日黄秀才。你在大阳山的事情我们都知道。我们的庙小哪里装的下你这条龙呀。”没有一个寺院敢接受他，毕竟在寺院呆了几十年，他在社会上也不怎么会过日子了，有一天，他走到三叉路口，一只老虎跳出来，把他吃掉了。你说警玄老和尚有没有神通？当然有神通，知道平侍者的下场在这儿。所以曹洞宗的传承在大阳警玄这儿断了，但是大阳祖师在圆寂之前，就把从洞山祖师传下来的曹洞宗的信物交给了浮山法远，说到：“你虽然不接我的法，但是你以后代我传法。”</p>
+<p class="note-item"><span class="note-n">[33]</span><span class="note-term">【无生忍】</span>把心安住在不生不灭的道理上。忍就是把心安住在道理上而不再动摇的意思。或为初地之证名，或为七八九地之悟名。</p>
+<p class="note-item"><span class="note-n">[34]</span><span class="note-term">【妆点】</span>指修饰文字。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

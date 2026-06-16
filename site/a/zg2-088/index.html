@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>三圣堂万年簿序 · 印光法师文钞</title>
+<meta name="description" content="法不孤起，道在人弘，胜地名蓝，唯人是赖。得其人，则荆棘林便成旃檀林，失其人，则狮子窟转作野狐窟。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-088/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三圣堂万年簿序 · 印光法师文钞">
+<meta property="og:description" content="法不孤起，道在人弘，胜地名蓝，唯人是赖。得其人，则荆棘林便成旃檀林，失其人，则狮子窟转作野狐窟。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-088/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">三圣堂万年簿序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">法不孤起，道在人弘，胜地名蓝，唯人是赖。得其人，则荆棘林便成旃檀林，失其人，则狮子窟转作野狐窟。</p><p class="p-trans">法不会孤自生起，道在于人的弘扬。胜地名寺，都离不开合适的人的领导。得到合适的人，那么荆棘丛林就会变成旃檀香林；没有合适的人，那么狮子法窟就会变成野狐邪窟。</p></div>
+<div class="para-pair"><p class="p-orig">三圣堂者，创自明万历三十年，时僧大方结茅于此，适张随，党礼二太监，奉旨督造藏经阁，闲步其地，饮其泉而甘之。</p><p class="p-trans">三圣堂创建于明朝万历三十年。当时僧人大方在这里搭建茅篷修行。恰好遇到张随、党礼二位太监奉旨监造藏经阁，闲游到这里，喝了这里的泉水，觉得十分甘美。</p></div>
+<div class="para-pair"><p class="p-orig">乃询其由，知其极旱不涸，寺中遇旱祈雨，必取水于此泉，而辄获膏雨，遂题之为八功德泉。因出资命建西方三圣殿，以八功德水，乃西方极乐世界七宝池中所有也。</p><p class="p-trans">二位于是询问其中的缘由，才知道即使遇上大旱，此泉也不会干涸。遇到旱年寺院中祈雨，必定要到此泉来取水，而不久就有甘霖从天而降，于是将此泉水题名为八功德泉。于是二位就出资建造了西方三圣殿。因为八功德水，是西方极乐世界七宝池中才有的啊。</p></div>
+<div class="para-pair"><p class="p-orig">至清康熙间，僧海安重建，自后年久倾颓。咸丰初，承恩堂显法公居此潜修，改名如意庵，乃数楹小屋而已。光绪初，四世孙华德公，募诸沪上洪君某，遂建三圣殿，复原名。</p><p class="p-trans">清朝康熙年间，僧人海安曾经重建寺院，后来年久失修就颓败了。咸丰初年，承恩堂的显法老人住在这里潜心静修，改名为如意庵，也就只有几间小屋而已。光绪初年，老人的四世法孙华德和尚，从上海一位洪居士那里募化善资，建成了三圣殿，又恢复了原来的寺名。</p></div>
+<div class="para-pair"><p class="p-orig">自后世道太平，兼以轮船，火车俱通，菩萨香火，日见兴盛，庵中工事，略有端倪。华德公欲息心以专修净业，以庵事交其徒长汀师，令其孙真达师辅之，遂大为建造。</p><p class="p-trans">从那之后，世道太平，又加上轮船火车都开通了。菩萨的香火，一天比一天兴盛。寺里的工程事务，也大略有了眉目。华德和尚想安下心来专修净业，就将寺中的事务交给徒弟长汀师，又让法孙真达师来辅佐长汀师。于是寺院就大大建造起来。</p></div>
+<div class="para-pair"><p class="p-orig">及汀师去世，达师更不惜心力，宜修者修，宜建者建，遂成一大精蓝。后以操劳既久，意欲静养，因交与明教师监理数年。</p><p class="p-trans">长汀师去世之后，真达师更是不惜心力。该修葺的就修葺，该兴建的就兴建，终于成就了一个庄严胜妙的大伽蓝。后来真达师因为操劳太久，想要静养，所以交给明教师监理了几年。</p></div>
+<div class="para-pair"><p class="p-orig">今明教师又退，达师因念人寿几何，本庵经几代住持，用数十年之心力，方得殿宇巍峨，寮舍宏敞，庵僧得以清修，香客得以寄寓。</p><p class="p-trans">现在明教师又将退居。真达师从而想到，人的寿命能有多长。本寺经过几代住持，花费数十年的心力，如今才得以殿宇巍峨，寮舍宽敞。寺中僧人得以清净修行，外来香客也得以寄托住宿。</p></div>
+<div class="para-pair"><p class="p-orig">当此之时，不将庵中规矩课程，与夫经像庄严，法器什物，书之于册，以遗来者。恐年岁既久，来者不知，或至规矩废弛，什物遗失，致前人建立道场一番苦心，悉付东流。徒令后人安住其中，虚消信施，不修道业，岂不为前人之遗憾。</p><p class="p-trans">这个时候，如果不将寺中的规矩课程，以及佛像、佛经、法器、庄严物品以及杂物记录在书册上，留给将来的住持。那么恐怕年岁久了，后来的人不知道，或许会导致规矩废弛，器物遗失。致使前人建立道场的一番苦心，全都付之东流。徒然令后人安住其中，虚妄地消耗信众的布施，却不修持道业。难道不是前人的遗憾吗。</p></div>
+<div class="para-pair"><p class="p-orig">而圆通道场，因之削色，致普门大士含悲于常寂光中也。因令光略叙此庵之缘起，而凡诸规矩什物等，一一详记，庶后之人有所遵守焉。</p><p class="p-trans">而观音大士的圆通道场，也会因此减损光彩，致使观音大士在常寂光之中心含悲痛啊。因此真达师让我大略叙述本寺的缘起，而凡是各类规矩器物等，都一一详细记载，想必后人就有所遵守了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【膏雨】</span>滋润作物的霖雨。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【削色】</span>犹减色。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

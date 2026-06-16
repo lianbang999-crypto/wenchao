@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普贤行愿品校勘记序（丽，古麗字，取其易刻耳） · 印光法师文钞</title>
+<meta name="description" content="此即大方广佛华严经最后一品经也。具云入不思议解脱境界普贤行愿品，略云入法界品，即晋译华严六十卷之最后十六卷，唐译华严八十卷之最后二十一卷。二译文略，兼未具来。至唐德宗贞元间，梵本全品经文始至，译为四十卷。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-116/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普贤行愿品校勘记序（丽，古麗字，取其易刻耳） · 印光法师文钞">
+<meta property="og:description" content="此即大方广佛华严经最后一品经也。具云入不思议解脱境界普贤行愿品，略云入法界品，即晋译华严六十卷之最后十六卷，唐译华严八十卷之最后二十一卷。二译文略，兼未具来。至唐德宗贞元间，梵本全品经文始至，译为四十卷。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-116/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 序跋疏</div>
+      <h1 class="art-title">普贤行愿品校勘记序（丽，古麗字，取其易刻耳）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">此即大方广佛华严经最后一品经也。具云入不思议解脱境界普贤行愿品，略云入法界品，即晋译华严六十卷之最后十六卷，唐译华严八十卷之最后二十一卷。二译文略，兼未具来。至唐德宗贞元间，梵本全品经文始至，译为四十卷。</p><p class="p-trans">这是《大方广佛华严经》的最后一品经。全名《入不思议解脱境界普贤行愿品》，略名《入法界品》，就是晋译六十卷华严的最后十六卷，唐译八十卷华严的最后二十一卷。这两种翻译的经文简略，同时《华严经》还没有来全。到了唐德宗贞元年间，梵本全品经文才传到中土，翻译为四十卷。</p></div>
+<div class="para-pair"><p class="p-orig">灵峰大师阅藏知津云，此经末后，普贤菩萨既为善财称叹如来胜功德已，复说十大愿王，导归极乐世界。今时但取此最后一卷，续于唐译八十卷后，并广流通。</p><p class="p-trans">灵峰大师的《阅藏知津》说：这品经的最后，普贤菩萨已经为善财童子称扬赞叹如来胜功德，复说十大愿王，导归极乐世界。现在只取这最后一卷，续接在唐译八十卷之后，并广泛流通。</p></div>
+<div class="para-pair"><p class="p-orig">然此一译，文理俱优，不让实叉难陀。而知识开示中，更为详明。切于日用，切救末世流弊，最宜一总流通。文惜久局大藏，未能广传。当宋元时，尚未大讹。至明初刻南藏时，以未加详校，故致错讹屡见迭出。以后北藏，清藏，及明末书册藏，悉皆袭其讹谬，实堪痛伤。</p><p class="p-trans">然而这一次的翻译，文辞义理都非常优美，不亚于实叉难陀八十卷华严的翻译。而经中善知识开示中，更加详明。切合日用，切救末世流弊，最适合总为一册流通。可惜经文很久都隐在大藏经中，没能广泛流传。在宋、元时期，还没有什么大错。到了明初雕刻南藏的时候，因为没有详细校对，所以导致错误屡见迭出。以后的北藏、清藏，以及明末的书册藏（注1），全都沿袭这些差错谬误，实在让人痛伤。</p></div>
+<div class="para-pair"><p class="p-orig">此书册本，实依明书册藏重刻。量于光绪末年，取明南，清两藏，及华严入法界品，略微校正，标于顶格。今春与海盐蔚如徐居士谈及，彼遂发心修板。因取量的，及宋，元，丽，南，北，清六藏对阅。其用心颇为辛勤。</p><p class="p-trans">这个书册本，实际是依明朝的书册藏重刻。我在光绪末年，取明朝南藏、清藏两种藏经，以及《华严经·入法界品》，略微校正，在顶格标明。今年春天与海盐的徐蔚如居士谈起，他于是发心修改刻板。因此取我标明的本子，以及宋、元、丽、南、北、清六种藏经对着校阅。他的用心颇为辛勤。</p></div>
+<div class="para-pair"><p class="p-orig">而六藏之中，唯丽藏最善，故多依之。其错讹互异者，书之于签，黏于顶格，转致于量。因即订校勘记，依之修板。凡错讹定须修改者，用大字开明某卷几纸几行某字。下用小字注其所讹，并依某藏改正。亦有唯注其讹，不标某藏者，乃与宋，元，丽藏相同，不须详述耳。</p><p class="p-trans">而六种藏经之中，只有高丽藏是最完善的，所以大多依高丽藏改正。其中错误互有不同的地方，写在书签上，粘在顶格，转给我。因此即刻订校勘记，依之修板。凡是错误一定须要修改的，用大字开列清楚：某卷几页几行某字。下面用小字注明错误之处，并依某藏改正。也有只注明错讹，不标明某藏的，是与宋、元、丽藏相同，不须详述。</p></div>
+<div class="para-pair"><p class="p-orig">其有某字当作某字，并或衍，或脱，义甚的确，但以各藏无证，不敢妄擅改正增删，以昭慎重。只用大字书其纸数行数，下用小字标其讹正意义，以为研究地步。</p><p class="p-trans">其中有某字应当作某字，或者多余，或者脱漏，义理非常明确的，但因为各种藏经没有明证，不敢妄自擅加改正增删，以表明慎重。只用大字写明它的页数行数，下面用小字标明那讹字正字的意义，作为研究的参考。</p></div>
+<div class="para-pair"><p class="p-orig">又义实无讹，彼似稍优者，又彼此各异，义实平等者，皆不修板，亦于纸数行数下，用小字标之。以免后贤依各藏校对者，复生疑议。兹于修板之次，遂刻斯记，附于经末以传。庶后之阅者，省心力而无疑念云。</p><p class="p-trans">另外，义理实在没有错讹，其它藏经中似乎稍微好些的，又有彼此不同，义理实际平等的，都不修正刻板，也在页数行数下面，用小字标明。以免将来贤者中依各种藏经校对的人，又生疑惑异议。现于修正刻板之后，刻下这个记文，附在经文最后流传。使将来的读者，省心力而没有疑念。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【明末书册藏】</span>嘉兴大藏经：中国晚明开雕的私版大藏经。这部藏经先在各处分刻，最后集中版片储藏于径山（现浙江省余杭县境内）化城寺，还有它的版式改变了向来沿用的烦重的梵筴式而采取轻便的方册，即一般书本式，因此得名为《径山方册藏》。又此藏后来全部由嘉兴楞严寺经坊印造流通，所以也称《嘉兴藏》。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

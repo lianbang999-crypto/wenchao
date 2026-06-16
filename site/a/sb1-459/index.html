@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复郁智朗居士书 · 印光法师文钞</title>
+<meta name="description" content="汝欲令慈往生西方，超凡入圣，当竭力供养，至诚顶礼。何可止一香炉，而灯烛时花，一概不用乎。且汝于起首一日礼拜，以后何可不以礼拜为事乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-459/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复郁智朗居士书 · 印光法师文钞">
+<meta property="og:description" content="汝欲令慈往生西方，超凡入圣，当竭力供养，至诚顶礼。何可止一香炉，而灯烛时花，一概不用乎。且汝于起首一日礼拜，以后何可不以礼拜为事乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-459/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复郁智朗居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝欲令慈往生西方，超凡入圣，当竭力供养，至诚顶礼。何可止一香炉，而灯烛时花，一概不用乎。且汝于起首一日礼拜，以后何可不以礼拜为事乎。</p><p class="p-trans">你想令你的母亲，往生西方，超凡入圣，应当竭力供养，至诚顶礼。怎么能只供一香炉，而灯烛鲜花，一概不用呢？而且你在开始的头一天礼拜，以后的日子，为什么就不以礼拜为事了呢？</p></div>
+<div class="para-pair"><p class="p-orig">当于每早礼佛三拜，或多拜。念弥陀经一遍。往生咒三遍，或七遍。念赞佛偈毕，念南无西方极乐世界大慈大悲阿弥陀佛。（随即绕念）南无阿弥陀佛或一千声，或五百声。然后坐念半点钟。欲拜即在坐毕时。</p><p class="p-trans">应当在每天早晨礼佛三拜，或者多拜。念《阿弥陀经》一遍。往生咒三遍，或者七遍。念赞佛偈完毕，念“南无西方极乐世界大慈大悲阿弥陀佛”。（随即绕念）“南无阿弥陀佛”，或者一千声，或者五百声。然后坐着念佛半个钟头。想要礼拜，就在坐着念佛完毕时再礼拜。</p></div>
+<div class="para-pair"><p class="p-orig">拜佛，或二十四拜，或四十八拜。观音势至清净大海众各三拜。念发愿文，或先莲池文，后发愿偈。或先偈后文，均可。毕，念三皈依。礼佛三拜退。</p><p class="p-trans">拜佛，或者二十四拜，或者四十八拜。观世音菩萨、大势至菩萨、清净大海众菩萨，各三拜。念西方发愿文，或者先念莲池大师的发愿文，后念西方发愿偈。或者先念发愿偈，后念发愿文，都可以。念完后，再念三皈依。最后礼佛三拜而退。</p></div>
+<div class="para-pair"><p class="p-orig">朝暮各如是。日间定四时，或六时。但念赞佛偈起，念佛与前一样。若一七只一起落，也不以礼拜为事，久则懈怠漫无章程，便难精进。</p><p class="p-trans">早晚都是如此。白天固定四时，或者六时。从念赞佛偈开始，念佛与前面一样。如果一七，只有一次依念佛仪轨，也不以礼拜为事。久了，就会懈怠散漫，没有章程，这样就很难精进。</p></div>
+<div class="para-pair"><p class="p-orig">礼拜不须出声，但心里念。绕念当出声，不可音声太大，以免伤气。坐念不昏沉，则默念。昏沉，则朗念。</p><p class="p-trans">礼拜不须出声，只在心里念佛即可。绕念，应当出声，声音不可以太大，以免伤气。坐着念佛，如果不昏沉，就默念。如果昏沉，就出声念。</p></div>
+<div class="para-pair"><p class="p-orig">无论念经念佛念往生咒，都要心口念得清楚，耳朵听得清楚，不使有一切念头。犹如就要死了，任事通置之度外。</p><p class="p-trans">无论念经、念佛、念往生咒，都要心里、口中，念得清清楚楚，耳朵听得清清楚楚，不使自己有一切其他的念头。好像就要死了，任何事都置之度外。</p></div>
+<div class="para-pair"><p class="p-orig">每顿吃饭，须先供佛，供过再吃。不可吃过饱，饱则昏沉。所言一心，并非专念一句佛号，就会一心。心若肯一，即念经念咒礼拜，也是一心。</p><p class="p-trans">吃每顿饭，必须先供佛，供过后再吃。不可以吃得太饱，吃饱了就容易昏沉。所说的“一心”，并不是专念一句佛号，就会一心不乱。心如果肯专一，即使念经、念咒、礼拜，也是一心。</p></div>
+<div class="para-pair"><p class="p-orig">且汝在此七日内，吃饭喝水起坐时，不碍一心。何念经咒礼拜，便碍一心乎。</p><p class="p-trans">况且你在这七天之内，吃饭喝水，行住坐卧的时候，都不妨碍一心。为什么念经、念咒、礼拜，就妨碍一心了呢？</p></div>
+<div class="para-pair"><p class="p-orig">未入关前七日，须与女人另宿。须吃净素。夜卧不可脱衣，或止脱外衣。靠身衫裤，切不可脱。</p><p class="p-trans">没有入关的前七天，必须与女人分房睡。必须吃净素。夜晚睡觉，不可以脱衣服，或者只脱外衣。贴身的内衣，千万不能脱。</p></div>
+<div class="para-pair"><p class="p-orig">凡大小便后，须先洗手，务取精洁。凡小孩妇女，概勿令来。便桶当另放一屋，切不可在本屋中放。</p><p class="p-trans">凡是大小便后，必须先洗手，务必要非常洁净。凡是小孩妇女，一概不要让她们来。便桶应当放在其它房中，千万不能放在自己的关房中。</p></div>
+<div class="para-pair"><p class="p-orig">七日之中，概不会人。即护关之人，亦只说交代事之一二句话，不得随便谈心。既是汝兄护关，彼在外边，亦当念佛。但不宜音声太大耳。（十一月二十九日）</p><p class="p-trans">七天之中，一概不见人。即使护关的人，也只在交代事情时，说一二句话，不能随便谈心。既然是你哥哥护关，他在外边，也应当念佛。只是声音不要太大了。（十一月二十九日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【或先莲池文】</span>莲池大师发愿文：“稽首西方安乐国，接引众生大导师。……法界众生，同圆种智。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【发愿偈】</span>发愿偈有二种：一：大慈菩萨发愿偈：“十方三世佛 阿弥陀第一……誓愿度众生 总愿成佛道 虚空有尽 我愿无穷 情与无情 同圆种智。”二：回向发愿偈：“愿我临终无障碍 阿弥陀佛远相迎……我愿如斯佛自知 毕竟当来得成就。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【起落】</span>1.始末。2.指跪下与起立。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复费范九居士书 · 印光法师文钞</title>
+<meta name="description" content="数日前，由山转来手书，知慕道心切，修持唯谨，不胜欣羡。但以沪地冗繁，未能即复。昨因事来杭，略有暇晷，遂书大概。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-133/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复费范九居士书 · 印光法师文钞">
+<meta property="og:description" content="数日前，由山转来手书，知慕道心切，修持唯谨，不胜欣羡。但以沪地冗繁，未能即复。昨因事来杭，略有暇晷，遂书大概。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-133/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复费范九居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">数日前，由山转来手书，知慕道心切，修持唯谨，不胜欣羡。但以沪地冗繁，未能即复。昨因事来杭，略有暇晷，遂书大概。</p><p class="p-trans">几天前，由普陀山转来你的信，知道你慕道的心很迫切，修持很是严谨，非常欣慰羡慕。但因为在上海的杂事繁多，没能立即回复。昨天因为有事来到杭州，有一点闲暇，于是才回信写了个大概。</p></div>
+<div class="para-pair"><p class="p-orig">孝养父母，奉事师长，慈心不杀，修十善业，为三世诸佛净业正因。汝能孝亲，能俭朴，则必不至取非义之财，其行其心，颇与佛合。若再加以信愿求生西方，必可如愿。</p><p class="p-trans">孝养父母，奉事师长，慈心不杀，修十善业，这是三世诸佛成就净业的正因。你能够孝敬父母，能够节俭朴素，就必定不会收取不义之财，这种行为和用心，与佛心很相合。如果再加上以真信切愿，求生西方，必定能够如你所愿。</p></div>
+<div class="para-pair"><p class="p-orig">然既为人子，人父，当思所以究竟令我亲，我儿女，得究竟安隐之道。可不力劝吾亲，与吾儿女，令其同修净业乎。此且约亲而论。</p><p class="p-trans">可是，既然为人子、为人父，就应当思考怎样才能彻底地让自己的父母、自己的儿女，获得究竟安隐的解脱方法。能不尽力劝自己的父母、自己的儿女，让他们来共同修习净业吗？这只是从家人方面来说。</p></div>
+<div class="para-pair"><p class="p-orig">而一切众生，皆是佛子，我既知之，忍不令我弟兄，姊妹，亲戚，乡党，一切相接之人，一一咸知乎。汝欲皈依，以期往生，可不发宏誓，以预行随分随力度人之道乎。</p><p class="p-trans">而一切众生，都是佛子，自己既然知道了这个道理，能忍心不让自己的弟兄、姐妹、亲戚、乡党，一切相识的人，一一全都知道吗？你想要皈依，以期往生，能不发大誓愿，来预先行持随分随力度人的菩萨道吗？</p></div>
+<div class="para-pair"><p class="p-orig">今为汝取法名为慧茂。谓以大智慧，行自利利人之道。所言自利利人之道，即为一切人，说敦笃伦常，恪尽己分，闲邪存诚，克己复礼，诸恶莫作，众善奉行，信愿念佛，求生西方。</p><p class="p-trans">现在为你取法名为慧茂。意思是以大智慧，实践自利利人的菩提大道。所说的自利利人的大道，就是为一切人，宣说敦笃伦常、恪尽己分（敦伦尽分），闲邪存诚（防止邪念、心怀诚敬），克己复礼（战胜己私、还归真理），诸恶莫作，众善奉行，信愿念佛，求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">文钞中屡说之，今复为说者，恐或不注意，以致错过，以故不妨再说也。又今日世道之乱，为开辟所未有。究其根源，总由家庭无善教，及不讲因果报应之所致也。</p><p class="p-trans">《文钞》中多次说到，现在又给你提出来，是担心你或许不注意，以致错过，所以不妨再说一遍。另外，今日世道的混乱，是开天辟地以来所未曾有过的。究其根源，都是由于家庭中没有良好的教育，以及不讲因果报应所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">天下不治，匹夫匹妇，与有其责。能注重家庭教育，及因果报应，则贤才自然蔚起，而天下渐可太平矣。祈与一切人，皆以此说恳切告之，亦居尘学道，自未得度，即行度人之一大要事也。祈慧察是幸。余详文钞，此不备书。</p><p class="p-trans">天下不能得到好的治理，平民男女，都有责任。如果能够注重家庭教育，以及因果报应的教育，那么贤才自然会蔚然兴起，而天下就能逐渐太平了。请对一切人，都将这个道理恳切地告诉他们，这也是在家学道，自己还没有得度，就实行度人的一件非常要紧的事啊！请智慧体察，就太令人高兴了。其余详细看《文钞》，此处不再多说。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【慕道】</span>向往修道。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【欣羡】</span>非常羡慕。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【暇晷】</span>指空闲的时日。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

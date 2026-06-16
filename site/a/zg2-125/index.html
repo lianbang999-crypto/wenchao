@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>常明庵万年念佛会碑记 · 印光法师文钞</title>
+<meta name="description" content="即彼凡情，显如来藏。以果地觉，为因地心。导六趣以登九莲，超三界以享四德。于五浊炽盛之际，作一生圆满之宗者。唯兹念佛一法为然也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-125/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常明庵万年念佛会碑记 · 印光法师文钞">
+<meta property="og:description" content="即彼凡情，显如来藏。以果地觉，为因地心。导六趣以登九莲，超三界以享四德。于五浊炽盛之际，作一生圆满之宗者。唯兹念佛一法为然也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-125/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">常明庵万年念佛会碑记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">即彼凡情，显如来藏。以果地觉，为因地心。导六趣以登九莲，超三界以享四德。于五浊炽盛之际，作一生圆满之宗者。唯兹念佛一法为然也。</p><p class="p-trans">即众生凡情，显示如来藏；以阿弥陀佛的果地觉海，作为念佛众生的因地发心；引六趣众生登上九品莲台，超出三界之外常享四德（常、乐、我、净）；在五浊（劫浊、见浊、烦恼浊、众生浊、命浊）炽盛的恶世，作一生圆满的宗乘。唯有此念佛法门能够如此啊。</p></div>
+<div class="para-pair"><p class="p-orig">昔立山老人，重兴法雨，十有余年。既欲退居静室，专修净业，因筑是庵。以为己及徒辈，尽报投诚，期归安养之所。境界寂静，隔绝尘嚣。规矩严肃，毫无方便。非不贪世缘，甘受淡薄，笃志修持，求生净土者，不能住焉。</p><p class="p-trans">当年立山老人用了十几年的时间，重兴法雨寺。之后想要退居静室，专修净业，因此建了这座寺庵。作为自己和徒弟们，尽此报身，归命投诚，回归极乐世界的处所。庵中环境寂静，隔绝尘世喧闹，规矩严肃，不开方便。如果不是不贪恋世间境缘，甘愿承受清苦淡薄，坚定志向修持净业，求生西方的人，就不能在这里安住。</p></div>
+<div class="para-pair"><p class="p-orig">前清宣统二年，值了谛师当家。有居士陈乐之，顾寿彭等，来山进香，寄居是庵。见其肃肃庵规，济济僧众。远接匡庐之莲社，近承云栖之净宗。</p><p class="p-trans">清朝宣统二年（1910年），了谛法师担任庵中当家。陈乐之，顾寿彭等居士来普陀山进香，寄住在庵内。见到庵中规矩严肃，僧人众多，道风远接庐山慧远大师之莲社，修持近承云栖莲池大师之净宗。</p></div>
+<div class="para-pair"><p class="p-orig">了谛师又为详谈念佛一法，事虽简易，理极圆顿。三根普被，利钝全收。为如来一代时教无量法门中之最上宗要。一切法门，恒沙妙义，无不从此法界流，无不还归此法界。以故吾祖立山老人，建立此庵，用接后昆。</p><p class="p-trans">了谛法师又为他们详细讲说了念佛法门，事相虽然简易，义理极为圆顿。三种根机普遍覆盖，或利或钝全都收摄，是如来一代时教无量法门中的最上宗要。一切法门，无量妙义，无不从这一法界流出，无不还归这一法界。所以本庵的师祖立山老人，建了这座庵，用来接引后世的法子法孙。</p></div>
+<div class="para-pair"><p class="p-orig">彼等一闻，遂发大心，纠合同志数十人，人各输洋若干圆，立一万年念佛会。即于次年二月十九日为始，至二十五日圆满。其夜设放施食，普济孤魂。永为定例，一无容改。</p><p class="p-trans">他们听了之后，就发起大心，集合几十位道友，每人捐出若干圆，建立了一个万年念佛会。就从次年二月十九日开始，到二十五日圆满。念佛期间，夜里设施食法会，普遍救济孤魂。永远定为常规，绝不容许更改。</p></div>
+<div class="para-pair"><p class="p-orig">其庵将此净资，除建会费用外，尽数置产。所收租课，充续建之法费。其有余盈，助常住之道粮。诚恐岁久无稽，用勒贞珉。庶亿万斯年，无或废弛。</p><p class="p-trans">庵中将这笔善款，除去建立念佛会的费用之外，剩余部分全都用于置办田产。所收的租税，作为延续念佛会的法费。如果有所盈余，就用来添补常住僧人的道粮。担心以后时间久了无从查证，于是就刻成石碑。想必亿万年之后，也不会荒废松弛了。</p></div>
+<div class="para-pair"><p class="p-orig">将见常明道场，香火日盛。十方檀越，信心愈隆。同入佛会，同念佛名，同生佛土，同成佛道。功德利益，何能名焉。其规矩等，详列于后。</p><p class="p-trans">将会见到常明庵这个道场，香火一天天兴盛。十方善信施主，信心越来越隆厚。共同加入佛会，共同称念佛名，共同往生佛土，共同成就佛道。这个功德利益，哪能用语言表达呢。念佛会的规矩细则，详列在后。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【后昆】</span>后嗣；子孙。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【定例】</span>常规；惯例。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【贞珉】</span>石刻碑铭的美称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

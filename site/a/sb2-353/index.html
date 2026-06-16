@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>百丈清规序辨讹 · 印光法师文钞</title>
+<meta name="description" content="按百丈禅师，生于唐玄宗九年，寿九十五岁，至宪宗元和九年正月归寂。所著清规，首章即祝厘，次章即报恩，又次章即报本，此种极严重之佛事，若无佛殿，向何处举行乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-353/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百丈清规序辨讹 · 印光法师文钞">
+<meta property="og:description" content="按百丈禅师，生于唐玄宗九年，寿九十五岁，至宪宗元和九年正月归寂。所著清规，首章即祝厘，次章即报恩，又次章即报本，此种极严重之佛事，若无佛殿，向何处举行乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-353/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">百丈清规序辨讹</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">按百丈禅师，生于唐玄宗九年，寿九十五岁，至宪宗元和九年正月归寂。所著清规，首章即祝厘，次章即报恩，又次章即报本，此种极严重之佛事，若无佛殿，向何处举行乎。</p><p class="p-trans">按：百丈禅师（注1），生于唐玄宗九年（720年），世寿九十五岁，到唐宪宗元和九年（814年）正月圆寂。所著的《百丈清规》（注2），第一章为祝厘（注3），第二章为报恩，第三章为报本（注4），这种极为严肃庄重的佛事，如果没有佛殿，能在什么地方举行呢？</p></div>
+<div class="para-pair"><p class="p-orig">自百丈寂后，历二百余年，至宋真宗景德元年，杨億为清规作序。有不立佛殿，唯树法堂者，表佛祖亲嘱受，当代为尊也。窃疑乃前立佛殿，后树法堂，正合佛祖亲嘱受之意，而近千年来，无人改正。今弘储禅师，亦据此为论断，不禁痛心疾首。</p><p class="p-trans">自百丈禅师圆寂后，历经二百多年，至宋真宗景德元年（1004年），杨亿（注5）为《百丈清规》作序。有“不立佛殿，唯树法堂者。表佛祖亲嘱受，当代为尊也”（注6）的语句。我疑惑的是：前立佛殿，后树法堂，正合佛祖亲嘱受之意，然而近千年来，无人改正。现今的弘储禅师，也依据杨亿的序文作为依据论断，不禁痛心疾首。</p></div>
+<div class="para-pair"><p class="p-orig">禅寺无佛殿，将绝无佛耶，抑傍边小屋供佛耶，奉旨祝厘于偏傍小屋，不唯轻佛，其轻君也大矣。以此一事，知此不字，唯字，乃前字，后字之讹。扬州所刻清规证义，已令改正。</p><p class="p-trans">禅寺无佛殿，将绝对没有佛像了，难道在傍边的小屋供奉佛像吗？奉圣旨祝祷祈福在偏傍的小屋中，不仅轻慢佛陀，而且也大为轻视国君。就这件事来说，就知道这个“不”字，“唯”字，是“前”字，“后”字的讹误。扬州所刻的《清规证义》，已经令他们改正了。</p></div>
+<div class="para-pair"><p class="p-orig">今避难寓灵岩，见所录储公所作宝王殿记，深恐以讹传讹，将人天师表之百丈，竟以魔外之行为诬之。因略为辩论，以期后之来哲，各各尊佛尊祖，以维持法道于无既也。知我罪我，所不计焉。</p><p class="p-trans">现今避难到灵岩山，见到所录弘储禅师所作的《宝王殿记》，深恐以讹传讹，将人天师表的百丈禅师，竟以邪魔外道的行为来诬陷他。因此略为辩论，以期后来智慧卓越的人，各各尊仰佛陀，尊敬祖师，来维持法道于无穷啊！即使了解我的人还来怪罪我，我也不会计较。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【百丈怀海】</span>（720-814）唐代僧。福州长乐人，俗姓王（一说姓黄）。自幼即喜游访寺院，年二十，从西山慧照出家，后从南岳之法朝律师受具足戒，未久至庐江（位于四川）研读经藏。适逢马祖道一在南康弘法，乃倾心依附，遂得道一之印可。因与西堂智藏、南泉普愿同入室，时称三大士。后出主新吴（江西奉新）百丈山，自立禅院，制订清规，率众修持，实行僧团之农禅生活。尝曰（大四八·一一一九中）：“一日不作，一日不食”。元和九年入寂，世寿九十五。敕谥“大智禅师”，塔号“大宝胜轮”。座下以黄檗希运、沩山灵祐居首。其后，宋、元诸帝又谥号“觉照禅师”、“弘宗妙行禅师”。另据全唐文卷四四六唐洪州百丈山故怀海禅师塔铭并序所载，师之生年为天宝八年（749），故世寿六十六。
+师所订清规，世称百丈清规，天下丛林无不奉行，为禅宗史上划时代之功绩。宋儒仿效而创立书院，元明清三朝，更以书院为乡学，充作养士之所，皆师之赐。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【百丈清规】</span>凡二卷。又称敕修百丈清规。收于大正藏第四十八册。原为百丈怀海（720～814）所制订之清规（世称古清规）。禅宗形成初期，禅林尚无制度、仪式，故该清规设有法堂、僧堂、方丈等制度，又规定众僧分别担任东序、寮元、堂主、化主等各种职务，为八、九世纪间中国禅宗脱离律寺，维持独自教团生活之必要规范。
+本书内容分上、下两卷，计有九章。卷上有祝厘章第一、报恩章第二、报本章第三、尊祖章第四、住持章第五。卷下有两序章第六、大众章第七、节腊章第八、法器章第九。其中，祝厘章记载圣节、景命四斋日祝赞、旦望藏殿祝赞、每日祝赞、千秋节、善月等对帝王圣寿万岁之祈愿，此系国家权力统制下之宗教教团仪礼。尊祖章叙述祖师忌辰之典礼。大众章收录坐禅仪方法、禅院修业生活规范与百丈清规制定之沿革。
+怀海所订之清规原型于宋代失轶，直至元顺帝至元元年（1335），东阳德辉奉顺帝之敕命，以宗赜之“禅苑清规”及惟勉之“丛林校定清规”等为蓝本，重新编辑本书，由全悟大欣校正，此即二卷本敕修百丈清规。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【祝厘】</span>《史记·孝文本纪》：“今吾闻祠官祝厘，皆归福朕躬，不为百姓，朕甚愧之。”裴骃 集解引 如淳 曰：“厘，福也。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【报本反始】</span>受恩思报，不忘本源。亦省作“报本”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【杨亿】</span>（974-1020）北宋浦城（福建建瓯）人。字大年。少时以文章名世，太宗尝召入面试，叹为神童。真宗时，历任翰林学士、侍郎、修撰等官。持身清正，不畏权势。初不知佛，学士李维勉以宗门事相策发，遂生深信，后礼汝州广慧禅师得法。每翼护法门，多著洪力，一时学佛士夫推为领袖。又屡奉诏命编制大藏目录，校刊景德传灯录，于译经院任润文一职。天禧四年有疾，书偈遗李遵勖而逝，享年四十七，谥号“文”。有文集行世。
+6、【有不立佛殿，唯树法堂者，表佛祖亲嘱受，当代为尊也】“不立佛殿，唯树法堂者。表佛祖亲嘱受，当代为尊也。”---《古清规序》</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

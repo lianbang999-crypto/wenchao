@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与泉州大同放生会书 · 印光法师文钞</title>
+<meta name="description" content="放生一事，以提倡戒杀护生为本。凡入会者，俱宜吃素，方可以吃素之利益，与一切人说。纵不能人各依从，而人以贵会诸公，皆盛德君子，实行吃素，自然潜移密化，悉皆不杀生，不食肉矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-164/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与泉州大同放生会书 · 印光法师文钞">
+<meta property="og:description" content="放生一事，以提倡戒杀护生为本。凡入会者，俱宜吃素，方可以吃素之利益，与一切人说。纵不能人各依从，而人以贵会诸公，皆盛德君子，实行吃素，自然潜移密化，悉皆不杀生，不食肉矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-164/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">与泉州大同放生会书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">放生一事，以提倡戒杀护生为本。凡入会者，俱宜吃素，方可以吃素之利益，与一切人说。纵不能人各依从，而人以贵会诸公，皆盛德君子，实行吃素，自然潜移密化，悉皆不杀生，不食肉矣。</p><p class="p-trans">放生这件事，以提倡戒杀护生为根本。凡是加入放生会的人，都应该吃素，才可以将吃素的利益，对一切人来宣说。纵然不能让每个人都能听从，而他人因为放生会的诸位会员，都是有道德的君子，都实行吃素，自然也会潜移密化，都不杀生、不吃肉了。</p></div>
+<div class="para-pair"><p class="p-orig">若仍旧食肉，放生之功德，亦不可思议，但自己所行，尚自矛盾，尚不能依慈悲忠恕之道而实行，况欲令见闻者潜移密化乎。光无道德财力，不能助贵会之善举，谨献愚诚，以当布施。</p><p class="p-trans">如果仍然照旧吃肉，放生的功德，也是不可思议的。但是自己的行为，尚且自相矛盾，尚且不能够依照慈悲忠恕之道来实行，更何况想要令见闻的人潜移默化呢？我没有道德钱财，不能帮助贵会的善举，谨献我的一点愚诚，当作布施。</p></div>
+<div class="para-pair"><p class="p-orig">上海诸居士，立常斋会，凡入会者，无论冠婚丧祭，概不用荤。前年关絅之居士，令光作一序，观之，自知其概。欲详知者，当致书上海白克路怀安里关絅之居士，彼有章程，祈寄来一览。</p><p class="p-trans">上海诸位居士，建立常斋会，凡是入会的人，无论冠礼婚嫁、丧事祭礼，一概都不用荤菜。前年关絅之居士，令我写了一个序，你看了自然能知道一个大概。想要详细了解的话，当写信给上海白克路怀安里关絅之居士，他有章程，请他寄给你一看。</p></div>
+<div class="para-pair"><p class="p-orig">光文钞中，劝人戒杀之文字，有十多篇，但以文词拙朴，不堪雅目所睹，然其意故有可取者，倘不以芜秽见弃，亦可作轻尘益岳之一笑具。</p><p class="p-trans">我的《文钞》中，劝人戒杀的文字，有十多篇，但因为文词拙朴，不值得雅目阅读，然而其中的意理还是有可取之处，倘若不因为杂乱而嫌弃，也可以作为微尘增益高山的一个笑料。</p></div>
+<div class="para-pair"><p class="p-orig">又贵会提倡佛学，而推尊晋苏先生，不遗余力。且为广施其道味录，又为介绍欲学道者，求彼传授真经妙诀，以期同登觉岸。其心志可谓诚恳笃实，期于利人，惜未知佛法之所以然，以炼丹运气之长生法，当作佛法。</p><p class="p-trans">又者，贵会提倡佛学，而推崇尊高晋苏先生，不遗余力。而且广泛布施他所写的《道味录》，又介绍想要学道的人，求他传授真经妙诀，以期同登觉岸。这个发心志向可说是诚恳笃实，只希望利益他人。可惜不知道佛法的所以然，将道家炼丹运气的长生法，当作佛法。</p></div>
+<div class="para-pair"><p class="p-orig">若曰，凡欲求长生者及卫生者，则为介绍，固无所碍。以炼丹法，大得之则可延年益寿，小得之亦可葆养色身，实为有益于人之一法。若儱侗名之为道，驱佛弟子而求得彼之真诀，则名实大有相反者。</p><p class="p-trans">如果说凡是想要求长生的人，以及想养生的人，为他们介绍，倒没什么妨碍。因为炼丹法，大的成就，可以延年益寿，小的成就，也可以葆养色身，实在是有益于人的一种修炼方法。可如果笼统地称为道，驱使佛弟子来求他炼丹的真诀，那就名称和实质大为相反了。</p></div>
+<div class="para-pair"><p class="p-orig">何以故，佛法具足世间，出世间一切诸法，毫善弗遗。唯炼丹一法，绝不言及，且深以为戒。以佛入手先教人修四念处观，一观身不净，二观受是苦，三观心无常，四观法无我，欲看破此之幻妄身心，以期悟证本具之真心妙性也。</p><p class="p-trans">为什么呢？佛法具足世间、出世间一切诸法，善法一丝一毫都没有被遗漏。唯独对于炼丹这一法，绝对没有提到，而且深以为戒。因为佛法开始入手处，先教人修四念处观，一：观身不净，二：观受是苦，三：观心无常，四：观法无我。是要看破这个幻妄的身心，以期悟证本具的真心妙性。</p></div>
+<div class="para-pair"><p class="p-orig">炼丹者唯以葆养色身为事，与佛之宗旨不合。然各修各法，随人自取其益，固彼此不相碍。</p><p class="p-trans">炼丹的人，只以保养色身为事，与佛法的宗旨不相符合。然而各修各的法，各取其中的利益，自然彼此不相妨碍。</p></div>
+<div class="para-pair"><p class="p-orig">观道味录晋苏先生自叙，至以抽添火候口诀，为佛门了性了命之道，会三教以同归，亘万古而不绝，离乎此道，即为外道，出乎此门，即为旁门，此先天道脉，历代一贯相承，自达摩初祖，移西过东，至白马七祖，衣钵传于火宅等。则是借佛法名目，而传炼丹法，且反谤毁佛法。</p><p class="p-trans">《观道味》中辑录晋苏先生的自叙，他将道家抽添火候的口诀，当作是佛门了性了命之道，融会儒释道三教而殊途同归，亘通万古而不会断绝。还说：＂离开这个道，就是外道，出了这个门，就是旁门。此先天道脉，历代一贯相承，从达摩初祖，自西域带到东土，到了白马七祖，衣钵相承传给世俗中人等等＂。这都是借佛法的名目，来传炼丹法，而且反过来谤毁佛法。</p></div>
+<div class="para-pair"><p class="p-orig">彼前月曾以二本寄来，光以彼自诩过深，彼岂肯以光之不才而依从之乎，故置之不论。今见贵会提倡佛学，犹复不知彼非佛学，固不得不尽我愚诚相告也。如以光为多事，谓光知见错谬，未闻大道，则亦任之。鸱守腐鼠，凤凰决不能令其勿食也。</p><p class="p-trans">他在上个月曾经寄来过两本《观道味》。因为他自夸过深，哪会听从我不才的知见，所以就放在一边没去理会。现今见到贵会提倡佛学，仍然不知道他所说的不是佛学，所以不得不尽我的一点愚诚来相告。如果认为我是多事，认为我的知见错误，没能听到大法，也随任你们。鸱鸟守住死老鼠，凤凰决定不能够让它不要吃啊。</p></div>
+<div class="para-pair"><p class="p-orig">今寄来文钞一包，共三部，祈贵会大家看，并与周子秀居士看。如谓为是，未始非贵会之幸，如谓为非，亦任其覆瓿代薪。从兹加工用行，以扩充晋苏先生炼丹运气之道，使天下之人，同得长生，亦好。</p><p class="p-trans">现今寄来《文钞》一包，共三部，祈望贵会大家阅看，并给周子秀居士看。如果认为我说的对，未必不是贵会的幸运。如果认为我说的不对，也随任你们将文钞拿来覆盖瓶口，当柴烧。从此加功用行，来扩充晋苏先生炼丹运气之道，使得天下之人，同得长生，也挺好。</p></div>
+<div class="para-pair"><p class="p-orig">但谓此为佛法，则虽不谤佛法，亦得谤佛法之咎。窃以贵会未能分别邪正，故致如是。既以光为法门中人，光若仍以待晋苏者待贵会，则光便有负于贵会之意，故多此一番络索也。</p><p class="p-trans">但是如果认为这就是佛法，那么虽然不想诽谤佛法，却也得到诽谤佛法的罪过。我认为贵会没能分别邪正，所以导致如此。既然认我为佛法同门中人，我如果仍像对待晋苏先生一样来对待贵会，那就有负于贵会的美意，所以多说了上面一番啰嗦话。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【冠婚】</span>指冠礼与婚礼，《礼记》各有专篇记述。冠礼：古代男子二十岁（天子、诸侯可提前至十二岁）举行的加冠之礼，表示其成人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【丧祭】</span>古丧礼。葬后之祭称丧祭。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【芜秽】</span>1.荒芜。谓田地不整治而杂草丛生。2.冗杂；杂乱。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【轻尘】</span>尘土。尘土质轻，易于飞扬，故称。亦作“岳”。泛指高山。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【笑具】</span>笑柄，笑料。亦指取笑、嘲弄的对象。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【进退抽添】</span>道教金丹修炼的基本术语。在炼丹过程中，“火候”的掌握是最为关键的。在月亮“晦、朔、弦、望”现象的启发下，道教认为炼丹的过程就是阴阳转换变化的过程。因此，火候的操持，必须注意阴阳的进退。所谓“进”就是“进阳火”，这包括起火以及逐步增进火势的过程；所谓“退”就是“退阴符”，这包括减弱火势、文火温养以及中止烧炼；所谓“抽”就是抽去旧火，所谓“添”就是添加新火。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【火候】</span>指方士炼丹的功候。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【性命】</span>中国古代哲学范畴。指万物的天赋和禀受。《易·干》：“干道变化，各正性命。”孔颖达疏：“性者，天生之质，若刚柔迟速之别；命者，人所禀受，若贵贱天寿之属也。”朱熹本义：“物所受为性，天所赋为命。”</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【先天】</span>指宇宙的本体，万物的本原。道脉：犹道统。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【火宅】</span>喻烦恼的世俗人间。依据一贯道的说法，他们认为在梁武帝时代，达摩来到东土，是将一贯道的道脉心法传回中国，因此达摩为东土初祖，道脉心法一直传至六祖惠能后，六祖惠能（公元637-713）将“心法”传给白马七祖二人……一直至十六祖刘清虚……乃至第十八代祖“活佛师尊”张天然。引述《性理题释》第五章〈大道之沿革〉一文：“……六祖惠能渡白祖马祖二人，道降传火宅，白、马二人是为七祖，而后又续传罗八祖、黄九祖、吴十祖、何十一祖、袁十二祖、徐杨十三祖、姚十四祖、王十五祖、刘清虚十六祖，此乃红阳，十六代圆满，道转白阳之期，弥勒应运，路中一为初祖，大开普渡，大阐玄机，弓长子系继续办理末后一着，三曹普渡，万教归一……”。此处指的“白马七祖”，一贯道说“白”指的是白玉蟾，而“马”指的是马祖道一。
+事实上，马祖道一（公元709-788）是六祖惠能的再传弟子，师承南岳怀让（公元677-744），而南岳怀让师承六祖惠能，马祖道一非六祖惠能所渡。部份一贯道以为，六祖是在避难于猎人队伍时将道脉心法传承予马祖道一与白玉蟾，然而，六祖惠能避难于猎人队伍之时，马祖道一与白玉蟾尚未出生。
+白玉蟾（生于公元1194年）是宋代时期道教丹鼎派祖师，与六祖相差480年左右，一贯道此说与事实差异甚大。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【腐鼠】</span>腐烂的死鼠。典出《庄子·秋水》：“惠子相梁，庄子往见之。或谓惠子曰：‘庄子来，欲代子相。’于是惠子恐，搜于国中三日三夜。庄子往见之，曰：‘南方有鸟，其名为鹓鶵，子知之乎？夫鹓鶵发于南海而飞于北海，非梧桐不止，非练实不食，非醴泉不饮。于是鸱得腐鼠，鹓鶵过之，仰而视之曰：吓！今子欲以子之梁国而吓我邪？’”后遂用为贱物之称。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【覆瓿】</span>喻著作毫无价值或不被人重视。亦用以表示自谦。瓿：古代容器名。陶或青铜制。圆口、深腹、圈足，用以盛物。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

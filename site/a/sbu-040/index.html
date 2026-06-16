@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复戒尘法师书 · 印光法师文钞</title>
+<meta name="description" content="接手书，不胜痛息。佛教之灭，皆由于有法道之责者，贪名利，喜眷属。举凡宏法之事，皆伏灭法之基。如滥剃度，滥传戒，滥挂海单。彼以此三事为行道，为宏法，而不知通通以滥，遂致真僧日少，坏僧日多。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-040/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复戒尘法师书 · 印光法师文钞">
+<meta property="og:description" content="接手书，不胜痛息。佛教之灭，皆由于有法道之责者，贪名利，喜眷属。举凡宏法之事，皆伏灭法之基。如滥剃度，滥传戒，滥挂海单。彼以此三事为行道，为宏法，而不知通通以滥，遂致真僧日少，坏僧日多。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-040/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复戒尘法师书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，不胜痛息。佛教之灭，皆由于有法道之责者，贪名利，喜眷属。举凡宏法之事，皆伏灭法之基。如滥剃度，滥传戒，滥挂海单。彼以此三事为行道，为宏法，而不知通通以滥，遂致真僧日少，坏僧日多。</p><p class="p-trans">接到信，非常痛息。佛教的灭亡，都是由于有弘扬法道责任的人，贪图名利，喜欢眷属。凡是弘法的事，都伏下了灭法的祸根。例如滥剃度、滥传戒、滥挂海单（注1）。他们将这三件事认为是行道，认为是弘法，而不知道通通泛滥（成灾），于是导致真修的僧人一天天减少，坏僧人一天天增多。</p></div>
+<div class="para-pair"><p class="p-orig">今之蟒流僧，下流坯，何一非受大戒之比丘乎。而况河南佛法，只有庙宇及秃发等男女。是以遇如此之人，则致遭此奇祸，亦势使然也。</p><p class="p-trans">如今不务正业的僧人（注2）、行为卑鄙龌龊的僧人，哪一个不是受过（三坛）大戒的比丘呢？更何况河南的佛法，只有庙宇以及秃头等男女。所以遇到这样的人，便导致遭遇这样的奇祸（没收僧产、毁除佛像），也是情势造成的。</p></div>
+<div class="para-pair"><p class="p-orig">上冯之文，实为剀切，由邮寄去，纵彼不见听，亦可表示诸公护法之心。不但河南如是，浙江黄岩，永康及某县，并泰顺，已经组织一致进行，没收僧产，毁除神像。</p><p class="p-trans">上书给冯（国璋）的请愿文，实在很恳切，由邮局寄去，纵然不被他们听取，也可以表示诸位长老的护法之心。不但河南如此，浙江的黄岩，永康以及某某县，以及泰顺，已经组织起来一致进行，没收僧产，毁除神像。</p></div>
+<div class="para-pair"><p class="p-orig">前十余日，泰顺城中三峰寺僧深仪，将彼等之公事抄以寄来。光谓大劫临头，无法可设，将彼公事仍寄回。如诸公深心护法，不妨将此书上诸政府。</p><p class="p-trans">十多天前，泰顺城中三峰寺的僧人深仪，将他们的请愿文抄写寄来。我认为是大劫临头，无法可想，将他的请愿文仍旧寄回。如果诸位长老有深心来护法，不妨将这请愿文上交给政府。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【挂海单】</span>僧人住在云水堂是没有时间限制的。除非犯规，否则不可强制他移往他所，或要他离寺。少数僧侣会长年累月地继续住在那里，毋需再有什么形式，而他们的名字，却不会登记在号簿内。这样无限期的留住，叫做“挂海单”。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【蟒流僧】</span>像二流子那样游游荡荡、不务正业的懒汉僧人。蟒，这里同“氓”。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

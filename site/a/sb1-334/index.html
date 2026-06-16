@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复陈士牧居士书一 · 印光法师文钞</title>
+<meta name="description" content="昨接手书，知宿世深种善根，得遇净土法门，即生信心，慰甚。丁氏所注之经，多皆专找证据，于文义殊未发挥。弥陀经笺注，讹处更多。然彼于征引事迹一边，颇可令初机得益耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-334/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复陈士牧居士书一 · 印光法师文钞">
+<meta property="og:description" content="昨接手书，知宿世深种善根，得遇净土法门，即生信心，慰甚。丁氏所注之经，多皆专找证据，于文义殊未发挥。弥陀经笺注，讹处更多。然彼于征引事迹一边，颇可令初机得益耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-334/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复陈士牧居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接手书，知宿世深种善根，得遇净土法门，即生信心，慰甚。丁氏所注之经，多皆专找证据，于文义殊未发挥。弥陀经笺注，讹处更多。然彼于征引事迹一边，颇可令初机得益耳。</p><p class="p-trans">昨天接到信，知道你由于宿世深种善根，得以遇到净土法门，立即生起信心，非常欣慰。丁福保所注解的佛经，大多都是专门寻找证据，对于经文义理却很少发挥。《弥陀经笺注》，错误的地方更多。然而他对于征录引用事迹这一方面，还是可以令初学人得到很多利益。</p></div>
+<div class="para-pair"><p class="p-orig">宋明诸儒，多取佛经之义，以撑儒者之门庭。但取说得高妙，而绝少实按佛经行者，则其病，在未能深信生死轮回之事理。使彼深信，谁肯以了生死大利益，置之度外。专取佛家发明理性之话，作讲学之冠冕，而又不按此以实行乎。</p><p class="p-trans">宋明的诸位儒者，大多窃取佛经之义，来支撑儒者的门庭。只取说得高超玄妙，但绝对很少有真实按照佛经去行持的人。这个毛病，在于没能深信生死轮回的事理。假使他们深信因果轮回，谁肯将了生死的大利益，置之度外，专门窃取佛法中阐发显明理性的话语，作为他们讲学的招牌，而又不按照所说的这些来实行呢？</p></div>
+<div class="para-pair"><p class="p-orig">净土一法，上圣下凡共由之路，能一闻即信，非宿世种大善根不能。光粥饭僧耳，于宗于教，皆无所知。唯自谅陋劣，专以净土为事。由徐蔚如排印应酬之稿，致一人传虚，万人传实，皆谬以为知识，令人惭愧无既。</p><p class="p-trans">净土法门，是上圣下凡修行过程中共同经过的道路，能够一听闻就相信，不是宿世种有大善根则不能如此。我是个只会吃饭的僧人罢了，对于宗门、教下，都一无所知。只是自己觉得浅陋低劣，于是专门以修习净土法门作为事务。由于徐蔚如排印我应酬来信的文稿，致使一人传说虚名，万人传成真实，都错谬认为我是一个善知识，令人惭愧不已。</p></div>
+<div class="para-pair"><p class="p-orig">汝既谬以光为知识，不妨以谬为是。今为汝取法名曰智牧。汝以士牧，纵能继往圣，开来学，以先觉觉后觉，恐只世间希圣希贤而已。</p><p class="p-trans">你既然错谬地当我是个善知识，我不妨以错为对。现在为你取法名为智牧。你的名字叫士牧，即使能够继承往圣，开启来学，以先觉来觉悟后觉之人，恐怕也只是世间仰慕效法圣贤而已。</p></div>
+<div class="para-pair"><p class="p-orig">须知了生死一法，非以智自牧不可。能以智自牧，则烦恼惑业自可消灭，功德智慧自可显现。以智自牧，亦以智牧人，则其继往开来，自觉觉他，方为究竟实义。</p><p class="p-trans">必须知道了脱生死这个方法，非得以智慧来自我修行不可。能够以智慧来自我修持，那么烦恼惑业，自然可以消灭，功德智慧，自然可以显现。以智慧自我修持，也以智慧教化他人，那么这样来继往圣，开来学，自己觉悟，觉悟他人，才是究竟真实之义。</p></div>
+<div class="para-pair"><p class="p-orig">然欲以智自牧，必须诸恶莫作，众善奉行。凡诸善恶，俱从起心动念处斩除而扩充之，方为实践，不付空谈。</p><p class="p-trans">然而想要以智慧自我修持，必须诸恶莫作，众善奉行。凡是一切善恶，都要从起心动念之处，斩除根本进而扩充广大，方才是实践，不会流于空谈。</p></div>
+<div class="para-pair"><p class="p-orig">若欲以智牧人，须从父母妻子始。父母在，当劝令吃素念佛，求生西方，不可以杀生之业，累及父母，谓为奉甘旨，此世间人之谬见，断断不可依行。如父母不肯吃素，但至诚代父母念佛忏悔，令其消除宿业，便能吃矣。</p><p class="p-trans">如果想要以智慧教化他人，必须从父母妻子开始。父母在，应当劝他们吃素念佛，求生西方，不能以杀生之业，拖累父母。有认为应该以肉味美食奉养父母，这是世间人的错谬见解，千万不可依照而行。如果父母不肯吃素，只要至诚代父母念佛忏悔，令他们消除宿业，就能吃素了。</p></div>
+<div class="para-pair"><p class="p-orig">妻子乃自己最切近者，不能以佛法引导，何能引导世人。刑于寡妻，至于兄弟，以御于家邦，世出世莫不皆然。由家而国，方为行远自迩，登高自卑之道。</p><p class="p-trans">妻子是离自己最近的人，不能以佛法引导她，如何能引导世人。《诗经》中说，给妻子做榜样，以至推及到兄弟，来管理好家庭、国家，世间出世间，都是如此。由齐家而治国，才是行远自迩（走远路必须要从最近的一步走起），登高自卑（登高必须要从最低的山脚开始）的道理。</p></div>
+<div class="para-pair"><p class="p-orig">当念佛时，愍彼苦恼众生，心酸泪流，系善根发现。然不可以此为德，常令如此。若常如此，则堕悲魔，切要切要。</p><p class="p-trans">在念佛的时候，怜愍那些苦恼的众生，自己心酸流泪，这是善根发现。然而不可认为这样是有德行，便常常如此。如果常常如此，就会堕入悲魔，千万要注意。</p></div>
+<div class="para-pair"><p class="p-orig">念佛以信愿为主，有真信切愿，决定得往生。至于证三昧，不可不发此心，实则今人绝少证三昧者。以能证念佛三昧，现生便已超凡入圣矣。切勿等闲视之。</p><p class="p-trans">念佛以信愿为主，有真信切愿，决定能得往生。至于证得念佛三昧，不可不发这种心，但实际上，现今的人很少有证得念佛三昧的。因为能够证得念佛三昧，现生就已经超凡入圣了。千万不要觉得证念佛三昧是容易的事。</p></div>
+<div class="para-pair"><p class="p-orig">光文钞，汝不知有否，今寄一部，祈详阅之。其修持用心法，俱可了然。又现有木刻本，比此多百四十余篇，欲看，当致书扬州大十三湾张瑞曾居士求施一部。彼广施善书，无求不应。所施善书甚多，不止此一种。</p><p class="p-trans">我的《文钞》，不知道你有没有，现今寄一部给你，请详细阅读。那么修持用心的方法，就都可以明白清楚了。另外，文钞还有一木刻本，比这个本子多了一百四十多篇，如果想看，应当写信给扬州大十三湾的张瑞曾居士，求他施赠一部。他广施善书，有求必应。所施赠的善书很多，不止这一种。</p></div>
+<div class="para-pair"><p class="p-orig">又现在商务印书馆排将完工，大约三月底可以出书，比木刻又多百余篇。已由友人任有二万部，排好开印，当印三万，每部大约四角大洋，邮费在外。</p><p class="p-trans">再有，现在商务印书馆排印的文钞也将要完工，大约三月底，可以出书，比起木刻本，又多了一百多篇。已经由友人出资助印二万部，排好开印，应当印三万部，每部大约四角大洋，邮费除外。</p></div>
+<div class="para-pair"><p class="p-orig">如欲利人，宜任若干部，以结净缘。任法，谁出多少钱，即按其钱交书与彼，此中并无丝毫私处，系令大家做真实功德耳。</p><p class="p-trans">如果想要利益他人，随缘出资助印若干部，以结净缘。任印的方法是，谁出多少钱，就按照他出的钱，给他等价的书，这当中并没有丝毫的私利之处，只是令大家做真实功德罢了。</p></div>
+<div class="para-pair"><p class="p-orig">若欲任者，祈将其款汇到上海宝山路华字四十五号商务印书馆总务处，交任心白居士，彼收到即寄一收据，待书出即按钱交书矣。此系按三万部作价，比零买当便宜得一半矣。</p><p class="p-trans">如果想要任资的话，请将钱款汇到：上海宝山路华字四十五号商务印书馆总务处，交任心白居士，他收到了，便会马上寄一张收据，等到书印出来，就按照钱来交书了。这是按照三万部来算价，比零买应当便宜一半。</p></div>
+<div class="para-pair"><p class="p-orig">如来一代所说之法，皆令自力断惑证真，以了生死。唯净土一门，专重佛力。以佛力故，虽罪业深重，若具信愿，皆得往生。若能断证，则所证更高。</p><p class="p-trans">如来一代时教所说的教法，都是令众生自力断惑证真，来了生死。唯有净土法门，专门倚重佛力。因为是佛力的缘故，虽然罪业深重，只要具足深信切愿，都能得以往生。如果能够断惑证真，那么所证的品位更高。</p></div>
+<div class="para-pair"><p class="p-orig">此法普利上中下三根。世多以愚夫愚妇能念，而遂以为愚夫愚妇之事，致不愚者，反为愚者所怜悯，其原皆由无智以自牧也。使能以智自牧，当必圆证即心本具之天真佛性，以成福慧具足之佛道矣。（甲子年正月二十一日）</p><p class="p-trans">这个法门，普利上中下三根。世人大多认为愚夫愚妇也能念佛，于是便认为这是愚夫愚妇的事，以致那些不愚的人，反而被愚人所怜悯，其原因都是由于没有用智慧来自我修持。假使能够以智慧自我修持，必当圆证即心本具的天真佛性，以成就福慧具足的佛道啊！（甲子年&lt;1924年&gt;正月二十一日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【冠冕】</span>犹言体面，光彩。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【甘旨】</span>1.甜美。2.美味的食物。3.指养亲的食物。4.指对双亲的奉养。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【行远自迩】</span>迩：近。走远路必须要从最近的一步走起。比喻做事情都得由浅入深，一步步前进。《礼记·中庸》：“君子之道，譬如行远必自迩，譬如登高必自卑。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【登高自卑】</span>登山要从低处开始。比喻做事情要循序渐进，由浅入深。不能误用为看见高山觉得自己很渺小。《礼记·中庸》：“譬如行远必自迩，譬如登高必自卑。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

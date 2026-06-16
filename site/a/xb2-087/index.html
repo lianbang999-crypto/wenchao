@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>灵岩山寺下院放生池附设放生会缘起碑记（民二十五年） · 印光法师文钞</title>
+<meta name="description" content="天地之大德曰生，人民之大本曰善。生则植物动物并育，善则仁民爱物齐行。乾为大父，坤为大母，民吾同胞，物吾与也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-087/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="灵岩山寺下院放生池附设放生会缘起碑记（民二十五年） · 印光法师文钞">
+<meta property="og:description" content="天地之大德曰生，人民之大本曰善。生则植物动物并育，善则仁民爱物齐行。乾为大父，坤为大母，民吾同胞，物吾与也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-087/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">灵岩山寺下院放生池附设放生会缘起碑记（民二十五年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">天地之大德曰生，人民之大本曰善。生则植物动物并育，善则仁民爱物齐行。乾为大父，坤为大母，民吾同胞，物吾与也。</p><p class="p-trans">天地的大恩德是生养，人民的大根本是善。所谓生，就是植物动物一并养育；所谓善，就是仁民爱物一齐实行。天为大父，地为大母，人民是我们的同胞，万物是我们的朋友。</p></div>
+<div class="para-pair"><p class="p-orig">若不令民物得所，将何以仰副天心。欲常祈天眷垂怜，当急以仁爱是务。能如是，则雨旸时若，谷麦丰登，人民安乐，天下太平矣。即以个人论，亦得业消智朗，障尽福崇，生入圣贤之域，没登极乐之邦。</p><p class="p-trans">如果不使人民、动物，都得到安居之所，将如何来仰副天地之心呢？如果想要常常祈求上天的眷顾垂怜，当务之急就是从事仁慈博爱的事务。能够如此，就会风调雨顺、气候调适，五谷丰登，人民安乐，天下太平。即使对个人来说，也会业消智朗，业障尽、福德增，在世时成为圣贤，临终时登上极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">苏州虎啸桥放生池园，原由苏州济生分会所创办。于民国二十四年，送与灵岩山寺作下院。</p><p class="p-trans">苏州虎啸桥放生池园，原来是由苏州济生分会所创办。在民国二十四年（1935年），送给灵岩山寺作下院。</p></div>
+<div class="para-pair"><p class="p-orig">监院妙真师，以承此厚贶，尤须进行放生之事，以期当地仁人，及见闻者，咸体放生之意，因之戒杀护生，俾鸟兽鱼鳖咸若。庶民胞物与之说，不成空谈，而仁民爱物之风，日益发展矣。</p><p class="p-trans">监院妙真师认为，接受了这样丰厚的赠礼，就更必须进行放生的事业，以期当地的仁人志士，以及见者闻者，都能体会放生的深刻意义，从而能戒杀护生，使得鸟兽鱼鳖，全都得享自然寿命。使得人民是我们的同胞，万物是我们的朋友的说法，不会成为空谈，而且仁民爱物的风尚，就会日益发展了。</p></div>
+<div class="para-pair"><p class="p-orig">于是与前在济生会诸居士，杨君达洤，袁君孝谷，曹君崧乔等及此次发起人真达和尚，慧常居士，诸缁素，组织一放生会。凡入会者，各宜戒杀茹素，以身作则。</p><p class="p-trans">于是就和以前济生会的诸位居士，杨达洤、袁孝谷、曹崧乔等人，以及此次放生的发起人真达和尚、慧常居士，诸位僧俗，组织了一个放生会。凡是入会的人，每个人都应当戒杀吃素，以身作则。</p></div>
+<div class="para-pair"><p class="p-orig">而人之好善，孰不如我，相观而善，其效甚大。如不能顿断，亦当渐减，减至于极，则杀业永息。若一人一生不杀，则所活生命无算，况由一人以至十百千万人，则成不放之普放常放乎。</p><p class="p-trans">而且人们的好善之心，谁和我们不一样呢？互相学习来行善，效果就会非常大。如果不能立刻断掉吃肉，也应当逐渐减少，减到了极点，杀业就会永远止息。如果一个人一辈子不杀生，那么他所救活的生命就已经无法计算了，更何况从一个人开始以至于十人、百人、千人、万人呢？那么就成了没有放生形式的普放、常放了。</p></div>
+<div class="para-pair"><p class="p-orig">近来杀劫弥漫，匪兵一至，人民悉遭涂炭。彼此素不相识，或一见即杀，或拷打炮烙，逼索钱财。约现生论，实为横罹其祸。</p><p class="p-trans">近来杀劫弥漫，匪兵一到，人民全都遭到涂炭。虽然彼此素不相识，但是要么一见面就杀，要么拷打炮烙，逼索钱财。如果就现生来论，的确是横遭灾祸。</p></div>
+<div class="para-pair"><p class="p-orig">然果必有因，因必招果。试思世人为口腹故，杀害生命，种种惨酷，谁能忍受。由习惯故，不但不生怜悯，而且反发欢乐，以致循环报复，成此劫运。</p><p class="p-trans">然而有果必定有因，有因必定招果。试想，世人为了口腹之欲的缘故，杀害生命，种种惨酷的手段，谁能忍受？只是由于已经习惯的缘故，不但不生怜悯，而且反而引发欢乐，以致因果循环报复，造成这样的劫运。</p></div>
+<div class="para-pair"><p class="p-orig">诸佛菩萨，为救杀劫，现身异类，亦受人杀。既杀之后，见诸异相，方知佛现，因各戒杀。</p><p class="p-trans">诸佛菩萨，为了挽救杀劫，现身在异类中，也受到人类屠杀。等到杀死之后，呈现出各种异相，方才知道是佛的示现，因此各各戒杀。</p></div>
+<div class="para-pair"><p class="p-orig">光于民二十年，为贵池刘公鲁，跋猪齿臼佛记赞。文曰，</p><p class="p-trans">我在民国二十年，曾经给安徽贵池的刘公鲁，写了一篇《猪齿臼佛记赞》的跋文。文中说：</p></div>
+<div class="para-pair"><p class="p-orig">一切众生，皆具佛性，由迷背故，遂失其正。起贪瞋痴，造杀盗淫，食他之肉，资己之身。</p><p class="p-trans">一切众生，都具佛性。由于迷惑背离的缘故，以致失去正念。生起贪瞋痴，造作杀盗淫。吃动物的肉，来资养自己的色身。</p></div>
+<div class="para-pair"><p class="p-orig">杀业既结，历劫互戕，如来愍之，为作慈航。大启慈训，人犹不信，特示形仪，以期随顺。</p><p class="p-trans">杀业既已结下，经历多劫互相戕害。如来怜愍众生，为众生作慈航。大启佛陀慈悲的训导，人们还是不相信。佛陀特别显示其他异类的形仪，以期众生来随顺佛的训导。</p></div>
+<div class="para-pair"><p class="p-orig">蛤蜊蚌壳，牛腰羊蹄，猪齿鳖腹，均有佛栖。有宋职氏，杀猪弃首，犬守四日，不敢下口。</p><p class="p-trans">在蛤蜊、蚌壳、牛腰、羊蹄、猪齿、鳖腹这些动物的身上，都有佛陀的栖止示现。有一位宋职氏，杀完猪后，丢弃猪头。有一条狗守了四天，不敢动口去吃。</p></div>
+<div class="para-pair"><p class="p-orig">逐犬析骨，齿臼现佛，绀目螺发，俨然大觉。未杀之前，均谓是畜，已杀之后，方知是佛。</p><p class="p-trans">于是赶走这只狗，剖开骨头，在猪齿的齿臼中出现佛像。绀目螺发，俨然就是一尊佛像。没有杀死这头猪之前，都认为它是畜生。杀死之后，才知道是佛。</p></div>
+<div class="para-pair"><p class="p-orig">是知杀生，不殊杀佛，即非佛现，亦未来佛。杀而食之，罪逾海岳，急宜痛戒，庶可解脱。</p><p class="p-trans">所以应知道杀生，不异于杀佛。即使不是佛陀的示现，众生也是未来佛。杀害来吃，罪过超过了大海高山。要赶紧痛切戒除，才能得到解脱。</p></div>
+<div class="para-pair"><p class="p-orig">晁氏兄弟，为文为赞，义理渊深，文词璀璨。天池书写，诸公题跋，永用警策，启牖后觉。</p><p class="p-trans">晁氏兄弟，写文章来赞扬这件事。义理渊博深广，文词璀璨绚丽。徐渭书写，诸位先生题写跋文。永远作为警策，启发诱导后来的人。</p></div>
+<div class="para-pair"><p class="p-orig">既明此义，孰敢行杀。争地争城，遂息倾轧。贵池刘公，笃信佛法，保存徐书，题跋充洽。</p><p class="p-trans">明白了这个义理之后，谁敢再行杀生？争夺土地城池之事，于是都很快得以止息。安徽贵池的刘居士，笃信佛法。保存徐渭的书法，题写的跋文遍布在书法作品中。</p></div>
+<div class="para-pair"><p class="p-orig">令嗣公鲁，持以相示，敬书数语，藉表我志。愿见闻者，吃素戒杀，定可现生，归极乐刹。</p><p class="p-trans">他的儿子刘公鲁，拿来给我看。我恭敬写下几句话，借此表达我的心志。祈愿见者闻者，戒杀吃素。一定可以就在现生，回归到极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">此跋文虽粗浅，颇可观感，敬录原文，以期息灭嗜杀食肉之痴心，发起戒杀茹素之善念。</p><p class="p-trans">这个跋文虽然粗浅，但是很能引发人们的观感，所以敬录原文，以期能息灭嗜杀吃肉的痴心，发起戒杀吃素的善念。</p></div>
+<div class="para-pair"><p class="p-orig">佛菩萨现身异类，弭世杀劫，散见群书，阅观音本迹颂，物类现相，可知梗概。以佛视一切众生皆是佛，故不忍互相残杀，永沉恶道，乃为此种种惊人视听之示现，可不深长思乎。</p><p class="p-trans">佛菩萨现身为异类，来消弭世间杀劫的事迹，散见于诸多书籍中，如果阅读《观音本迹颂》中的《物类现相》篇，就能知道一个大略了。因为佛视一切众生都是佛，所以不忍众生互相残杀，永沉恶道，才做出这种种惊人视听的示现，我们能不深深长思吗？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【得所】</span>谓得到安居之地或合适的位置。语出《诗·魏风·硕鼠》：“乐土乐土，爰得我所。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【厚贶】</span>丰厚的赠礼。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复方耀廷居士书二 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。近来念佛人多，其感应亦时有所闻。前日淮安观音庵寄一舍利，如粟米大，色如翡翠，云是一莲友佛前灯华所结者，寄来欲为之证明评论，以起人信心。光随即盛一小瓷盒中，令大家看，看毕供于佛前。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-274/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复方耀廷居士书二 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。近来念佛人多，其感应亦时有所闻。前日淮安观音庵寄一舍利，如粟米大，色如翡翠，云是一莲友佛前灯华所结者，寄来欲为之证明评论，以起人信心。光随即盛一小瓷盒中，令大家看，看毕供于佛前。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-274/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复方耀廷居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。近来念佛人多，其感应亦时有所闻。前日淮安观音庵寄一舍利，如粟米大，色如翡翠，云是一莲友佛前灯华所结者，寄来欲为之证明评论，以起人信心。光随即盛一小瓷盒中，令大家看，看毕供于佛前。</p><p class="p-trans">来信尽知。近来念佛的人很多，得到感应的情况也时有所闻。前天，江苏淮安观音庵寄来一颗舍利，如粟米大小，颜色如翡翠，说是一位莲友佛前灯华所结的，寄来给我，想让我为这颗舍利证明评论，以启发人们的信心。我随即盛放到一个小瓷盒中，令大家看，看完就供在佛前。</p></div>
+<div class="para-pair"><p class="p-orig">昨早朝课毕，启盒看，则无有矣。想是回彼庵去，昨已去信问之。有许多人尚只以研究为事，而不肯实行，则是当仁固让之流也，哀哉。</p><p class="p-trans">昨天早上朝课完毕，打开盒子看，舍利没有了。想必是回到观音庵去了，昨天已经写信去问这件事。有许多人仍旧只是以研究佛学作为事务，而不肯真实行持，就是当仁固让之类的人，悲哀啊！</p></div>
+<div class="para-pair"><p class="p-orig">令慈年近八十，尚欲皈依，可谓宿有善根。然当此风烛高年，固当深为计虑。今为寄饬终津梁三本，自存之外，给与王陈二人。</p><p class="p-trans">你母亲年近八十岁，仍想要皈依，可说是宿世有善根。然而在这风烛高年，确实应当为她深深地考虑。现在为你们寄《饬终津梁》三本，自己存留之外，也请送给王、陈二人。</p></div>
+<div class="para-pair"><p class="p-orig">当令家中眷属，换班日陪令慈念佛。一则以娱高堂。二则令彼各种善根。三则练习惯，则令慈归西之时，大家均为助念之人。</p><p class="p-trans">应当令家中的眷属，换班每天陪你母亲念佛。一是使高堂快乐。二是令家中眷属各自都种下善根。三是练习念佛习惯了，那么你母亲归西的时候，大家都会成为为她助念的人。</p></div>
+<div class="para-pair"><p class="p-orig">若不令常练习，并不常为说临终之助念，及瞎张罗哭泣之利害，则所有眷属，通是破坏正念者。此事最为要紧。若无人说，难免贻误，则无边利益，以此失之，殊堪痛心。光不能详说，饬终津梁乃详说之书。</p><p class="p-trans">如果不令家中眷属经常练习，并且不经常为她们讲说临终助念，以及瞎张罗哭泣的利害，那么所有的眷属，全都是破坏正念的人。这件事最为要紧。如果没有人说，难免耽误，那么无边的利益，就会因此而失掉，很令人痛心。我不能详说，《饬终津梁》是详细说明的书。</p></div>
+<div class="para-pair"><p class="p-orig">人子于亲，临终助念，当竭诚从事。故先须要家中眷属预为练习也。既常念，并常闻助念及破坏之利害，则便可一致进行，而为助其往生也。</p><p class="p-trans">为人之子对于母亲，临终助念，应当竭诚从事。所以先须要家中眷属预先来练习。既然常常念，并且常常听闻助念以及破坏正念的利害，就可以一致进行，而成为帮助你母亲往生的人了。</p></div>
+<div class="para-pair"><p class="p-orig">今为取法名为德超。谓以一心念佛，以期超出三界，直登九莲也。此信虽为汝说，然陈王二人，亦当如此教其眷属，以免自己临终误事。亦当令彼各皆看之，光无暇另写。</p><p class="p-trans">现今为她取法名为德超。就是以一心念佛，以期超出三界，直登九品莲。这封信虽然是为你说的，然而陈、王二人，也应当这样来教导他们的眷属，以免自己临终误事。也应当令他们各自都看这封信，我没有空另外再写。</p></div>
+<div class="para-pair"><p class="p-orig">陈明镜法名德明。谓能一心念佛，自可明其明德也。王士林法名德林。林，众也，君也（出尔雅）。君即主义，能以信愿念佛为主，以利大众，则功德大而人各景从也。</p><p class="p-trans">陈明镜，法名德明。就是能一心念佛的话，自然可以明其明德。王士林，法名德林。林，众的意思，君的意思（出自《尔雅》）。君就是主的意思，能够以信愿念佛为主，来利益大众，那么功德就大，而且人人都会景从。</p></div>
+<div class="para-pair"><p class="p-orig">今为二人各寄文钞，嘉言录一部，并饬终津梁各一本，祈为转交。不满包，则以一函遍复凑足分两，此一篇，实为大有关系于现在时世之文。</p><p class="p-trans">现今为他们二人各寄《文钞》，《嘉言录》一部，以及《饬终津梁》各一本，请你转交他们。不满邮包，就以《一函遍复》凑足分量，这篇文稿，对于现在的时世确实有很大的关系。</p></div>
+<div class="para-pair"><p class="p-orig">若能依而行之，其利益当自知之，固不待述说也。国运危岌，天灾人祸，相继降作，不于此书求出生死，则为自负。</p><p class="p-trans">如果能够依照而行，其利益当会自己知道，就不用等他人来述说。国运危急，天灾人祸，相继发生，不在这些书中求出离生死，就是自己辜负自己。</p></div>
+<div class="para-pair"><p class="p-orig">白居易云，余年七十一，不复事吟哦。看经费眼力，作福畏奔波。何以度心眼，一句阿弥陀。行也阿弥陀，坐也阿弥陀。假饶忙似箭，不废阿弥陀。</p><p class="p-trans">白居易说：我年纪七十一岁了，不再从事吟咏诗句。看经书要花费眼力，作福害怕奔波。如何来度心眼，就是一句阿弥陀佛。走路也是阿弥陀佛，坐着也是阿弥陀佛。即使忙碌得如同飞箭，也不荒废念阿弥陀佛。</p></div>
+<div class="para-pair"><p class="p-orig">日暮而途远，吾生已蹉跎。旦夕清净心，但念阿弥陀。达人应笑我，多却阿弥陀。达又作甚么，不达又如何。普愿法界众，同念阿弥陀。（十一月十一灯下）</p><p class="p-trans">天色已晚而路途遥远，我这一生已经蹉跎了。早晚用清净心，只念阿弥陀佛。通达博学的人应该会笑我念阿弥陀佛，我还是以阿弥陀佛回复他。通达博学又如何，不通达又如何。普愿法界众生，同念阿弥陀佛。（十一月十一日灯下）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【当仁】</span>谓勇为不辞。当仁不让：泛指遇到应该做的事主动去做，绝不推诿。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

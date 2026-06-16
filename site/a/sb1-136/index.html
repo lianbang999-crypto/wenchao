@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周善昌居士书四 · 印光法师文钞</title>
+<meta name="description" content="前日任君来，持汝书，并二食物，谢谢。待客以素，是名大敬。以杀生敬客，殊失敬意。而世俗习惯，反以为敬，大可哀怜。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-136/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周善昌居士书四 · 印光法师文钞">
+<meta property="og:description" content="前日任君来，持汝书，并二食物，谢谢。待客以素，是名大敬。以杀生敬客，殊失敬意。而世俗习惯，反以为敬，大可哀怜。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-136/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复周善昌居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前日任君来，持汝书，并二食物，谢谢。待客以素，是名大敬。以杀生敬客，殊失敬意。而世俗习惯，反以为敬，大可哀怜。</p><p class="p-trans">前天任先生来，带来你的信，以及二种食物，谢谢。招待客人用素斋，这叫做大敬。用杀生来奉敬客人，很不符合尊敬之意。然而世俗的习惯，反认为是尊敬，实在哀伤怜悯。</p></div>
+<div class="para-pair"><p class="p-orig">今人多多好大喜功，一动即欲建筑。由欲建筑，而与地方官冲突，其干事之人之傲慢，可想而知。禁止亦是好消息。否则声势日大，或有大祸。以今人不明因果，官长多不详察。若得罪一小人，彼遂造谣肇衅，则无法维持矣。</p><p class="p-trans">现今的人，大多好大喜功，动不动就想要建筑。由于想要建筑，而与地方官起冲突，这个办事人的傲慢，可想而知。禁止也是好消息。否则声势一天天壮大，或许有大祸来临。因为现今的人，不明白因果，长官大多不详细审察。如果得罪了一个小人，他由此造谣挑衅，就无法维持了。</p></div>
+<div class="para-pair"><p class="p-orig">光从来不提倡建设机关事。即欲借此提倡，则宜小不宜大，以免忌者借衅耳。文钞中有与王与楫书，观之可知。</p><p class="p-trans">我从来不提倡成立机关的事。即使想要借此机关提倡佛法，也宜小不宜大，以免忌妒的人借此挑起事端。《文钞》中有《与王与楫书》，看了就可以知道了。</p></div>
+<div class="para-pair"><p class="p-orig">光目力益衰，盖年老精神衰弱之故。至于饮食起居，尚不异昔。明道师死，弘化社亦归光主持。彼善募缘，光一生不喜募缘。随我之力，钱财有助者大办，无助者小办，俾人我各适其适即已。</p><p class="p-trans">我的视力更加衰弱，大概是年老精神衰弱的缘故。至于饮食起居，还与过去一样。明道师死后，弘化社也归我主持。他善于募缘，我一生不喜欢募缘。随我的力量，有捐钱的人，就大办；没有捐钱的人，就小办，使得他人与我各适其适就好了。</p></div>
+<div class="para-pair"><p class="p-orig">时局危险，当劝家人及乡人同念佛号及观音号，以作预防之计。此时之祸，与古不同，避无可避，防不胜防。除念佛及观音外，别无良策。又须认真教儿女于初开知识时，即注意。稍大，则便不受教矣。</p><p class="p-trans">时局危险，应当劝家人以及乡人，共同念佛号以及观音圣号，以作预防之计。此时的灾祸，与古时候不同，避无可避，防不胜防。除了念佛以及念观世音菩萨外，别无良策。又必须认真教导儿女在他们初开知识的时候，就要注意。稍微长大后，就不接受父母教导了。</p></div>
+<div class="para-pair"><p class="p-orig">世间聪明人，每谓自己聪明盖世，无所不知。故古有一事不知，儒者所耻，此话也是空说。何以故，即事事皆知，谁能识得自己。自己尚不知，何得自诩为无所不知乎。</p><p class="p-trans">世间聪明人，常认为自己聪明盖世，无所不知。所以古人有“一事不知，儒者所耻”的说法，此话也是空说。为什么呢？即使事事都知道，谁能识得自己。自己尚且不知，怎么能自诩为无所不知呢？</p></div>
+<div class="para-pair"><p class="p-orig">贤英宿世亦有善根，故生有正信人家。而各姊均归依，彼能踵而皈依，后来当可为闺阁中作一善导。</p><p class="p-trans">贤英宿世也有善根，所以生在有正信的人家。而且每个姐姐都归依了，她能够接着来皈依，以后应当可以为闺阁女流中作一善导。</p></div>
+<div class="para-pair"><p class="p-orig">今为彼取法名为宗贤。宗，主也，本也。贤即莲宗九祖思齐实贤大师。大师劝发菩提心文，好极。</p><p class="p-trans">现今为她取法名为宗贤。宗，主的意思，本的意思。贤，就是莲宗九祖思齐实贤大师。大师的《劝发菩提心文》，好极。</p></div>
+<div class="para-pair"><p class="p-orig">光之名彼为宗贤者，欲彼常依菩提心文而发心也。既能依此文而发心，则其素所执著之常见断见，自不须特破，而便消灭无余矣。</p><p class="p-trans">我之所以为她取名为宗贤，是想让她常依《菩提心文》而发心。既然能够依照这篇文章而发心，那么她平时所执著的常见、断见，自然不须要特别破斥，就消灭无有了。</p></div>
+<div class="para-pair"><p class="p-orig">今为彼寄安士全书一部，祈于吾一十七世为士大夫身一段注及证，及万善先资，欲海回狂，西归直指各书之问答辨惑处，详细研阅。方不至自己把自己当做无根之人。虽暂活几十年，一死便消灭无有，岂不可怜之极。</p><p class="p-trans">现在为她寄去《安士全书》一部，请她详细研读“吾一十七世为士大夫身”一段的注文及证文，还有《万善先资》、《欲海回狂》、《西归直指》各书中问答辨惑的地方。才不至于自己把自己当做无根之人，虽然暂时活了几十年，一死就消灭无有，岂不是可怜之极。</p></div>
+<div class="para-pair"><p class="p-orig">若知身死而神不灭，则其为寿也，何止天长地久。若肯修持，求生西方。则尽未来际，作一切众生之大导师，岂不伟然大丈夫哉。</p><p class="p-trans">如果知道身死而神不灭，那么这个寿命，何止天长地久。如果肯发心修持，求生西方。那么尽未来际，作一切众生的大导师，岂不是伟然的大丈夫吗？</p></div>
+<div class="para-pair"><p class="p-orig">彼诸问答，俱极恰当，此不具书。又寄八德须知二集一部，能依此而敦伦尽分，方为真佛弟子。祈与彼说之。</p><p class="p-trans">《安士全书》中的诸多问答，都极为恰当，此处不再详细罗列。还寄了《八德须知》二集一部，能够依此书而敦伦尽分（敦笃伦常、恪尽己分），才是真佛弟子。请你对她说。</p></div>
+<div class="para-pair"><p class="p-orig">王寅威处，为彼夫妇及小儿，各寄经书共四包。极言人之成就，全在幼时之善教，而母教又居多半。若小时任性惯，大则便难成就正器矣。</p><p class="p-trans">王寅威那里，为他夫妇以及小儿子，各寄经书，一共四包。尽力劝导他们说一个人的成就，全在幼年时的良好教育，而母教又占了一多半。如果小时任性娇惯，大了就很难成就正器了。</p></div>
+<div class="para-pair"><p class="p-orig">所言罗某，三四年前，来一萧老师，系以手向人治病，后无所效，盖邪术炫惑世人者。信萧者尚少，后罗来更加神乎其神，手中能现出佛菩萨相，令童男女或受法者见。</p><p class="p-trans">所说的罗某，三四年前，来过一位萧老师，是用手朝向人来治病，后来没有什么效果，大概是以邪术炫惑世人。相信萧某的人还少，后来罗某来了，更加神乎其神，手中能现出佛菩萨相，令童男童女或者受法的人看见。</p></div>
+<div class="para-pair"><p class="p-orig">一时苏州有学问智识之人，均学其法。然初或有效或无效，此邪术颇涉嫌疑。不如萧之以手向病人，罗盖以两手在其身上推拿，或一小时，后政府禁不许行。彼说光亦受彼法，可知是冒充他人招牌。</p><p class="p-trans">一时间，苏州有学问智识的人，都学他的法。然而刚开始有时有效，有时无效，所以这个邪术很令人怀疑。不像萧某用手向着病人来治病，罗某大概是以两手在病人身上推拿，约一小时，后来政府禁止他这么做。他说我也曾经受过他的法，可知是冒充他人的招牌。</p></div>
+<div class="para-pair"><p class="p-orig">普陀一弟子，在南昌提倡诺那密宗，与一切人说，光也皈依诺那，闻者问德森师，方知彼等借此招摇耳。</p><p class="p-trans">普陀山一位弟子，在南昌提倡诺那密宗，对一切人说，我也皈依诺那活佛，听到的人问德森法师，才知道他们借此招摇罢了。</p></div>
+<div class="para-pair"><p class="p-orig">现在邪魔出世之时，吾人只可自守其道，决不可与彼相校。一经校量，彼必更加黩谤。尔为尔，我为我，汝不来找我，我决不找汝。否则必定更要妄造谣言。</p><p class="p-trans">现在邪魔出世之时，我们只可以自己遵守正道，绝对不可以与他相互较量。一经较量，他必定更加污辱诽谤。你是你，我是我，你不来找我，我绝不找你。否则，他必定更要妄造谣言。</p></div>
+<div class="para-pair"><p class="p-orig">蔡振绅张载阳等所开之明善书局，多半伪造之经书。谁有此精神，理彼之事乎。若上峰官有正知见，理尚有益。否则反受其害，何苦要找苦头吃乎。</p><p class="p-trans">蔡振绅、张载阳等人所开的明善书局，多半是伪造的经书。谁有这些精神，理会他们的事情呢？如果上司长官有正确知见，理会还有些利益。否则，反而受到损害，何苦要找苦头吃呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【干事】</span>办事。《易·乾》：“贞固足以干事。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【肇衅】</span>启衅，挑起争端。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【上峰】</span>旧称上司。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

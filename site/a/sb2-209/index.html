@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复卓智立居士书一 · 印光法师文钞</title>
+<meta name="description" content="光陕西郃阳县人，汝看文钞，岂未见蔚如（名文霨）之跋乎。诗，在洽之阳，即指此也。以县在洽水之南，故名洽阳。水于汉即干，故去水加邑，作郃阳耳。在洽之阳之洽字，音合，不可念作狭音，余皆读狭音，不可读合音。郃阳乃伊尹躬耕之地，故亦名古莘。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-209/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复卓智立居士书一 · 印光法师文钞">
+<meta property="og:description" content="光陕西郃阳县人，汝看文钞，岂未见蔚如（名文霨）之跋乎。诗，在洽之阳，即指此也。以县在洽水之南，故名洽阳。水于汉即干，故去水加邑，作郃阳耳。在洽之阳之洽字，音合，不可念作狭音，余皆读狭音，不可读合音。郃阳乃伊尹躬耕之地，故亦名古莘。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-209/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复卓智立居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光陕西郃阳县人，汝看文钞，岂未见蔚如（名文霨）之跋乎。诗，在洽之阳，即指此也。以县在洽水之南，故名洽阳。水于汉即干，故去水加邑，作郃阳耳。在洽之阳之洽字，音合，不可念作狭音，余皆读狭音，不可读合音。郃阳乃伊尹躬耕之地，故亦名古莘。</p><p class="p-trans">印光我是陕西郃阳县人，你看《文钞》，难道没有看到徐蔚如（名文霨）的跋文吗？《诗经·大雅·大明》中说：“在洽之阳”，就是指这个地方。因为县城在洽水之南，所以名为洽阳。河水到了汉朝干涸了，所以去掉水部，加上邑部，写作郃阳。“在洽之阳”的“洽”字，读音为“合”，不能念作“狭”音，其余的“洽”都读“狭”音，不可以读“合”音。郃阳是（商朝贤相）伊尹从事农业生产的地方，所以又名为古莘。</p></div>
+<div class="para-pair"><p class="p-orig">幼从家兄读书，初则值乱，耽搁两年。次则多病，学无所成。初生半岁，即病目，六个月未曾开眼。除食息外，镇日夜哭，不歇气。后好，尚能见天。十余岁时，见韩欧辟佛之文，颇喜，兼欲学理学，故于时文，俱不愿为。家兄以其长有病也，任之。</p><p class="p-trans">我幼年跟随家兄读书，起初遭遇世乱，耽搁两年。其次因为多病，学无所成。刚生下来半岁，就生了眼病，六个月未曾睁开眼睛。除了饮食、睡觉外，整天整夜地哭，不停息。后来好了，还能见到天日。十多岁的时候，见到韩愈、欧阳修辟佛的文章，很欢喜，又想要学理学，所以对于当时的科举八股文，都不愿意去学。家兄因为我长期有病，就随任我。</p></div>
+<div class="para-pair"><p class="p-orig">二十一出家（光绪七年）。其修净业，由弥陀经，净土发愿文，并龙舒净土文起，绝无一知识开示者。以先师及所交游者，皆禅家宗旨，光绝不受教导，以自量无此智识，故不敢耳。</p><p class="p-trans">二十一岁出家（光绪七年&lt;1881年&gt;）。我修习净业，是由《阿弥陀经》、《净土发愿文》，以及《龙舒净土文》开始的，绝对没有一个善知识开示。因为先师以及所交游的僧人，都是禅家宗旨，我绝不受他们教导，因为自量没有这样的智慧见识，所以不敢。</p></div>
+<div class="para-pair"><p class="p-orig">二十六（十二年）离陕西，至北京红螺山。光绪十九年，由北京至法雨寺，至今已三十一年矣。在法雨作闲废人（因法雨住持请藏经，为其查考，彼遂令同来。以知光不愿任事，故令闲住。以后各住持悉依旧例，故得如此之久耳），凡常住事务，概不预闻。</p><p class="p-trans">二十六岁（光绪十二年&lt;1886年&gt;）离开陕西，到了北京红螺山。光绪十九年（1893年），从北京到法雨寺，至今已经三十一年了。在法雨寺作闲住废人（因为法雨寺的住持&lt;化闻和尚&gt;请藏经，为他查考藏经，他于是令我同来。因为知道我不愿意担任职事，所以令我闲住。以后各任住持全都依照旧例，所以能持续如此之久），凡是常住的事务，一概不参预知情。</p></div>
+<div class="para-pair"><p class="p-orig">初则凡山上有笔墨因缘，多令光作，光则用彼口气。如不便用彼口气，则用一别名。二十余年，印光二字，未曾一露于外，故无一过访与通信者。</p><p class="p-trans">起初，凡是山上有笔墨因缘，大多令我写，我就用他们的口气来写。如果不方便用他们的口气，就用一个别名。二十多年，“印光”二字，没有一次显露在外，所以没有一个来拜访和通信的人。</p></div>
+<div class="para-pair"><p class="p-orig">自民国元年，高鹤年居士绐（音台，上声，欺也）其稿去登佛学丛报，彼以光不欲令人知，因用一常惭之名，此非是名。而徐蔚如，周孟由见之，甚喜其与己之知见合。遍问诸人，皆不知。</p><p class="p-trans">从民国元年（1912年），高鹤年居士欺瞒（绐：读音台，上声，欺骗的意思）带去几篇文稿，登在《佛学丛报》上，他因为我不想令人知道，因此用了一个“常惭”的署名，这也不是法名。而徐蔚如、周孟由见到这几篇文章，很欢喜这些文章与他们自己的知见相合。到处询问别人，都不知道“常惭”是谁。</p></div>
+<div class="para-pair"><p class="p-orig">至四年，蔚如问于谛闲法师，谛师以光告。常惭，谛师亦不知。以鹤年持其稿，令谛闲法师看过故也。从此，蔚如搜罗排印（在北京）。至七年，持初编文钞来山求皈依，光向不收皈依，令彼皈依谛闲法师。八年，又排初编，次编。九年，又令上海商务印书馆排印留板。</p><p class="p-trans">到了民国四年（1915年），徐蔚如问谛闲法师，谛闲法师将我的名字告诉他。“常惭”这个署名，谛闲法师也不知道。因为高鹤年拿着文稿，令谛闲法师看过的缘故。从此，徐蔚如搜罗排印《文钞》（在北京）。到了民国七年（1918年），带着初编《文钞》来普陀山求皈依，我一向不收皈依弟子，令他皈依谛闲法师。民国八年，又排印初编、次编《文钞》。民国九年，又令上海商务印书馆排印留板。</p></div>
+<div class="para-pair"><p class="p-orig">从此以后，日见扰攘。欲求一日之闲，不可得也。自此以后，不能不用印光之名。故凡有求题跋者，皆书常惭愧僧释印光耳。生性刚直，故绝不萌住持道场，剃度徒众之念。近有拌命欲求光出家者，光则拌命辞。皈依初则拒之，今则只好任之矣。</p><p class="p-trans">从此以后，一天比一天忙乱。想求一天的清闲，也不可能。从此以后，不能不用“印光”之名了。所以，凡是有来求题跋的，都写“常惭愧僧释印光”。我生性刚直，所以绝不萌生住持道场，剃度徒众的念头。近来有拼命想求我出家的人，我就拼命推辞。皈依，起初也是拒绝，现今只好随任因缘了。</p></div>
+<div class="para-pair"><p class="p-orig">平生不好华饰，虽名人之字画，亦所不须。照相曾有三几次，有逼到令照者，除彼自取，光绝不要。即送来，亦随便送人，概不留之。汝能依我所说，即我契友，何须要我之丑相。</p><p class="p-trans">我平生不喜欢华丽装饰，虽然是名人的字画，也不须要。照相，曾经有三五次，有人逼着让照的，除他自己取相片，我绝对不要。即使送来照片，也是随便送人，一概不留。你能够依我所说，就是我情投义合的朋友，何必要我的丑相。</p></div>
+<div class="para-pair"><p class="p-orig">念佛人当专精拜佛，拜一粥饭庸僧，有何利益。今年六十有三岁，陕西乡人，及督军屡催回乡。光初以庸辞，及势不能辞，则以现事经手，不能远行告。</p><p class="p-trans">念佛人应当专精拜佛，拜一个粥饭庸僧，有什么利益。我今年（1923年）六十三岁了，陕西的家乡人，以及陕西督军屡次催我回家乡。我起初以庸劣来推辞，等到情势不能再推辞，就以现在经手事务，不能远行来相告。</p></div>
+<div class="para-pair"><p class="p-orig">明年普陀志成，文钞排印好，当回陕一次，尚恐复来。以梵天法云因缘，须待其大成，方可不去关顾。然人命无常，或即陨灭，固不能随己预定也。</p><p class="p-trans">明年，《普陀山志》修成，《文钞》排印好，应当回一次陕西，还恐怕会再回来。因为梵天寺、法云寺的因缘，必须等到寺院大致建成，才能不去关心照顾。然而人命无常，或许随时丧命，本来就不能随自己预定。</p></div>
+<div class="para-pair"><p class="p-orig">六年，陈锡周祈光修普陀山志。光欲将大士感应本迹各事理，搜辑大备，用颂体颂之，仍于每句注其事。但目力不给，尚须忏悔，求大士加被，再行遍阅大藏之大士因缘。岂知从此以后，信札人事，日见增益，了无闲暇。</p><p class="p-trans">民国六年（1917年），陈锡周请我修《普陀山志》。我想将观音大士感应的本地化迹各种事理，搜辑完备，用偈颂体来颂扬，仍在每句颂文后注解大士的感应事迹。但视力不好，还须忏悔，求大士加被，再周遍阅览大藏经中，大士的因缘事迹。哪知从此以后，信函人事，一天比一天增多，完全没有一点空闲。</p></div>
+<div class="para-pair"><p class="p-orig">前三年，知事欲修，光以此意止之。去年之知事，极力护持普陀，亦急欲修。光初犹以此意告彼，彼尚不肯息心，遂令彼托人修。光则无暇料理，无由满我所愿。</p><p class="p-trans">前三年，知事想修《普陀山志》，我用此意阻止。去年的知事（陶在东，名陶镛），极力护持普陀山，也急着想修《普陀山志》。我起初还是将这个意思告诉他，他还是不肯死心，于是令他委托其他人编修。我则无暇料理，无法满我所愿。</p></div>
+<div class="para-pair"><p class="p-orig">岂知大士感应，来一江西居士，系前清翰林，笔墨超妙。见光，光问其吃素否，彼云吃华素（研究佛学已八九年，一心念佛，但未吃长素），光大声喝斥之，彼极佩服。因令彼为之，彼极愿意。</p><p class="p-trans">岂知大士感应，来了一位江西的居士（许止净），是前清的翰林，笔墨高超美妙。见到我，我问他：吃素吗？他说：吃花素（研究佛学已经八九年了，一心念佛，但没有吃长素），我大声喝斥他，他极为佩服。因此令他来做这件事，他非常愿意。</p></div>
+<div class="para-pair"><p class="p-orig">山志请一文学家修，大士一门，许居士修，成则合之。又排印别行以广布，令天下人沐大士恩德。此事今年可成，明迟早可出书。此志乃天下名山志书之冠也，幸何如之。汝所疑所悟者，另纸书之。</p><p class="p-trans">《普陀山志》请一位文学家（王亨彦）编修，观音大士（感应本迹）这一门，许居士编修，修成后就合编入《普陀山志》中。又排印单行本来广泛流布，令天下人沐浴大士的恩德。这件事，今年可以完成，明年迟早可以出书。这部《普陀山志》是天下名山志书之冠，还有比这更庆幸的吗？你的疑惑、悟解，写在另外的纸上。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【洽】</span>古水名。一名瀵水，现称金水河。源出陕西省郃阳县北部，东南流入黄河。《诗·大雅·大明》：“在洽之阳，在渭之涘。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【伊尹】</span>商汤大臣，名伊，一名挚，尹是官名。相传生于伊水，故名。是汤妻陪嫁的奴隶，后助汤伐夏桀，被尊为阿衡。汤去世后历佐卜丙（即外丙）、仲壬二王。后太甲即位，因荒淫失度，被伊尹放逐到桐宫，三年后迎之复位。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【莘】</span>古国名。在今陕西省郃阳县东南，姒姓。周文王妃太姒即此国之女。《孟子·万章上》：“伊尹耕于有莘之野，而乐尧舜之道焉。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【时文】</span>时下流行的文体。旧时对科举应试文体的通称。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【绐】</span>欺诳。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【知事】</span>官名。地方行政长官的名称。宋时分命京官出守列郡，称为权知某府或某州或某县事，知事之名由此而起。明清径称县级地方行政长官为知县，民国改知县为县知事，省称知事，后又改知事为县长。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【光初犹以此意告后，彼尚不肯息心，遂令彼托人修】</span>民国十一年（1922年），定海知事陶镛托邑绅王亨彦重修山志，民国十三年（1924年）书成。
+陶镛（1869年-1941年），原籍浙江省绍兴县陶家堰，字湘茝，又字在东，号伯升，又号千秋、篯秋、龟龄、芷湘等。陶氏是陶家堰望族，素有读经为官之风，士人辈出。陶镛幼年开始读书，饱览经典，有深厚的国学基础。光绪二十年（1894）陶镛参加顺天府甲午恩科乡试，考中举人，成为陶家堰陶氏家族最后一位举人。此后，他又考取宗室官学汉教习，分省试用知县，不久又被推荐参加了经济特科考试。之后，陶镛步入仕途。初为福建督学戴文诚幕僚。入民国，历任浙江鄞县、定海（今舟山）、杭州知事，浙江省属司法秘书。在浙江几地任上，陶镛“为政一贯清廉，守正不阿，精通法律，尤重教育，经常深入基层，视察学校，政绩卓著”。与秋瑾家为世交，著《秋瑾遗事》。又与印光法师友善。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

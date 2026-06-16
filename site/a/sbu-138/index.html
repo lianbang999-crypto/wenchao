@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>戒坐垫打佛菩萨名号印 · 印光法师文钞</title>
+<meta name="description" content="江浙信心妇女，每以白布铺地礼佛，名为手方。间或垫坐，为护衣服，固无不可，但不应列印其上。若已列印，则万万不可铺以礼佛，况垫坐乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-138/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="戒坐垫打佛菩萨名号印 · 印光法师文钞">
+<meta property="og:description" content="江浙信心妇女，每以白布铺地礼佛，名为手方。间或垫坐，为护衣服，固无不可，但不应列印其上。若已列印，则万万不可铺以礼佛，况垫坐乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-138/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 法语开示</div>
+      <h1 class="art-title">戒坐垫打佛菩萨名号印</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">江浙信心妇女，每以白布铺地礼佛，名为手方。间或垫坐，为护衣服，固无不可，但不应列印其上。若已列印，则万万不可铺以礼佛，况垫坐乎。</p><p class="p-trans">江浙一带有信心的妇女，常用白布铺在地上拜佛，名为手方。有时会垫在下面坐，为了保护衣服干净，本来没有什么不可以，但是不应该在这上面打上印（佛菩萨圣号、寺院名等）。如果已经打上印了，就万万不能铺在地上礼佛，何况是垫着坐呢？</p></div>
+<div class="para-pair"><p class="p-orig">彼殆谓半截未列印，坐则无碍。不知以有字之布置之于地，尚属亵渎，况既坐其下半截，上半截亦贴靠自己下体，或有竟坐于列印之处矣。须知印上之字，皆是佛菩萨之圣号，理当格外尊重，何可如此亵渎。</p><p class="p-trans">那些人大概是认为有半截没有打上印，坐坐没有关系。却不知道将印有字的布放在地上，尚且属于亵渎，何况既已坐在布的下半截，上半截也就贴靠了自己的下体，有的人竟然就坐在打印的字上面了。要知道印上去的字，都是佛菩萨的圣号，应当要格外尊重，怎么能如此亵渎。</p></div>
+<div class="para-pair"><p class="p-orig">阿育王之印，则是释迦如来真身舍利宝塔之印。普陀普济寺，则是敕建南海普陀禅寺观音宝印（普陀禅寺，乃明万历三十三年御赐额，至清康熙三十八年始改赐普济禅寺额。如此，谅此印是康熙三十八年以前所铸者）。法雨寺，则是南海普陀天华法雨观音宝印。余可类推。</p><p class="p-trans">阿育王寺的印，就是“释迦如来真身舍利宝塔”之印。普陀山普济寺，则是“敕建南海普陀禅寺观音宝印”（普陀禅寺，是明朝万历三十三年御赐的匾额，到了清朝康熙三十八年，才改赐为普济禅寺的匾额。如此，想来这个印是康熙三十八年以前铸造的）。法雨寺，则是“南海普陀天华法雨观音宝印”。其余可以类推而知。</p></div>
+<div class="para-pair"><p class="p-orig">列印之布，只可藏于家中佛龛，或神龛内，则有功德。若用以铺地拜佛，则其罪非小，况垫坐乎（如已经铺地拜佛用过之手方，则又只好洗净焚化，切不可藏佛龛中）。</p><p class="p-trans">打过印的布，只可珍藏于家中的佛龛内，或者神龛内，这样才有功德。如果用来铺地拜佛，那么这个罪过可不小，何况垫在屁股下面坐呢（如果是已经铺地拜佛用过的手方，就只好洗干净后焚化，千万不可藏于佛龛中）？</p></div>
+<div class="para-pair"><p class="p-orig">譬如子孙，以祖父之名，书之于布，以作拜祖父时垫地之用，及坐地时，恐污衣服，用此布以垫坐，则人必以为不孝，自己心亦不忍。何竟敢以佛菩萨圣号，印于垫地护衣之布上乎。</p><p class="p-trans">譬如子孙，将祖父的名字，写在白布上，当作拜祖父时垫地使用，以及坐在地上时，恐怕弄脏了衣服，用这块布来垫坐，那么他人必定认为这样做为不孝，自己心中也不忍。为何竟敢将佛菩萨圣号，印在垫地护衣的布上呢？</p></div>
+<div class="para-pair"><p class="p-orig">其原由于僧人不知事务，唯欲多列印，则多得钱。不计此布万万不可列印。若此等僧，纵有修持，亦当堕落。以乱为人列印，令一切信心妇女，同作亵渎佛菩萨之大罪故也。</p><p class="p-trans">这样做的原因是由于僧人不知事务，只想多打印，就多得钱。不考虑这铺地拜佛用的布，万万不可打印。像这样的僧人，纵然有一些修持，也应当堕落。因为乱为他人打印，令一切有信心的妇女，共同造作亵渎佛菩萨的大罪的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">愿诸僧俗，各各痛戒。又愿识字之人，见闻此说，逢人劝诫，令一切人改此恶习，则功德无量无边矣。</p><p class="p-trans">祈愿诸位僧人俗众，各各痛切戒除。另外，祈愿识字的人，见到听到这个说法，逢人就劝导告诫，令一切人改掉这个恶习，那么就功德无量无边了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

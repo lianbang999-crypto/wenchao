@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>白矾救命神效方（白矾又名明矾或名矾石） · 印光法师文钞</title>
+<meta name="description" content="凡误食河豚，及其他一切毒物。或因事故逼迫，意欲轻生自尽，吞吃鸦片，砒霜，藤黄，一切能坏人脏腑，令人毙命各毒物，及服错了毒药等。均可用白矾一块，打碎，用开水冲化，再对凉水几碗，只要矾水保存浓厚酸涩性味乃可。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-184/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="白矾救命神效方（白矾又名明矾或名矾石） · 印光法师文钞">
+<meta property="og:description" content="凡误食河豚，及其他一切毒物。或因事故逼迫，意欲轻生自尽，吞吃鸦片，砒霜，藤黄，一切能坏人脏腑，令人毙命各毒物，及服错了毒药等。均可用白矾一块，打碎，用开水冲化，再对凉水几碗，只要矾水保存浓厚酸涩性味乃可。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-184/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 附录</div>
+      <h1 class="art-title">白矾救命神效方（白矾又名明矾或名矾石）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">凡误食河豚，及其他一切毒物。或因事故逼迫，意欲轻生自尽，吞吃鸦片，砒霜，藤黄，一切能坏人脏腑，令人毙命各毒物，及服错了毒药等。均可用白矾一块，打碎，用开水冲化，再对凉水几碗，只要矾水保存浓厚酸涩性味乃可。</p><p class="p-trans">凡是误吃河豚，以及其他一切有毒的食物。或者因为变故的逼迫，想要轻生自杀，吞吃鸦片、砒霜、藤黄，一切能够破坏人的脏腑，令人毙命的各种毒物，以及服错了毒药等等。都可以用一块白矾，打碎，用开水冲化，再对几碗凉水，只要矾水保持浓厚的酸涩性味就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">即令患者，服此矾水几碗，不到一刻钟，便可将所食毒物，呕吐净尽，即得保全生命。纵使服毒时间过久，多灌矾水入肚，或亦仍可救治。即脏腑已坏，挽救不及，亦无所害。</p><p class="p-trans">然后让患者，服用几碗这种矾水，不到一刻钟，就可以将所吃的毒物，呕吐干净，就能保全生命了。即使服毒时间过久，多灌几碗矾水入肚，或许仍然能够救治。即使脏腑已经坏烂，挽救已经来不及了，喝下这些矾水，也没有什么害处。</p></div>
+<div class="para-pair"><p class="p-orig">[按]白矾，性凉，味酸涩，解诸毒，故极对症。霍乱症，亦可以此救治。此由天津冯文符医士，历十余年之经验，百发百中，屡见神效。印单广传，以期普救，实仁人君子之用心。</p><p class="p-trans">[按：]白矾，性凉，味酸涩，化解诸毒，所以极为对症。得了霍乱症，也可以用白矾来救治。这是由天津冯文符医士，经过十多年的经验而发明，百发百中，屡见神效。印发此单，广为流传，希望普救众生，实在是仁人君子的用心。</p></div>
+<div class="para-pair"><p class="p-orig">且白矾随地可买，价又便宜。愿阅者留心，方便救人，功德不可思议。即以此救人功德，回向西方，亦可作增上胜缘。</p><p class="p-trans">而且白矾随处可以买到，价格又便宜。祈愿读者留心，方便救人，功德不可思议。就是以此救人功德，回向西方，也可以作为往生的增上胜缘。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

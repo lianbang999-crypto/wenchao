@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>彻悟禅师一乘决疑论说 · 印光法师文钞</title>
+<meta name="description" content="欲得不招无间业，莫谤如来正法轮。此古德大慈悲心，泪出痛肠语也。良以我释迦如来，为众生故，修证此法，无央数劫，行诸一切难行法行。舍所爱之国城妻子，头目脑髓，不知其几千万亿。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-162/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="彻悟禅师一乘决疑论说 · 印光法师文钞">
+<meta property="og:description" content="欲得不招无间业，莫谤如来正法轮。此古德大慈悲心，泪出痛肠语也。良以我释迦如来，为众生故，修证此法，无央数劫，行诸一切难行法行。舍所爱之国城妻子，头目脑髓，不知其几千万亿。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-162/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 跋</div>
+      <h1 class="art-title">彻悟禅师一乘决疑论说</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">欲得不招无间业，莫谤如来正法轮。此古德大慈悲心，泪出痛肠语也。良以我释迦如来，为众生故，修证此法，无央数劫，行诸一切难行法行。舍所爱之国城妻子，头目脑髓，不知其几千万亿。</p><p class="p-trans">“欲得不招无间业，莫谤如来正法轮。（唐、永嘉《证道歌》）”这是古德大慈大悲，流泪道出的痛彻肝肠的真实语啊。实在是因为我等本师释迦如来为利益众生示现于世间，修证此究竟一乘法，于无央数劫行菩萨道，行一切难行，一切法随法行（法随法行，意为一切法当随顺诸法实相而应机施行）施舍所爱的国土、城邑、妻子、儿女，施舍头颅、眼晴、脑浆、骨髓，不知道有几千万亿次。</p></div>
+<div class="para-pair"><p class="p-orig">至于成道，仍以平等大悲，顺悉檀义而敷衍之。故凡一句一字，皆无明长夜之宝炬，生死苦海之慈航。凡在有情，孰不蒙益。而诸子以依通之见，肆口诋诃，障正法明，瞎将来眼，疑误众生，殊非小小。</p><p class="p-trans">直至成就佛道，依然以平等大悲，恒顺众生，以四种度生方法敷演宣扬大小二乘，权实教法，法门无量，总归一乘，所以，凡佛说三藏十二部圣典，一字一句都是无始长夜的大宝火炬，生死苦海的慈悲航船。凡在佛光照触下的有缘人，哪有一个不蒙获佛法利益的？然而，程朱理学的诸学子，以依赖世智辨聪，靠学术研究的妄识才华，以为自己已经通彻一切，凭借依通之见，肆意诋毁和诃责佛教，遮障正法明灯，瞎将来度众生之法眼，疑惑误导众生，这绝不是一件可以忽略的小事。</p></div>
+<div class="para-pair"><p class="p-orig">谓其无罪，宁有是处。兹以一乘之理，剖决群疑，正大光明，直截痛快。荡迷云而净尽，耀佛日以重光，诚为法门一大金汤矣。</p><p class="p-trans">说程朱理学那些有关佛教的偏见沒有罪过，是绝对没有道理的。彭际清居士以一乘的义理，剖析决断众多疑惑，心地正大光明，笔风直截痛快，扫荡迷云而至尽净无余，照耀古今的佛日因此重现光明，（彭际清的《一乘决疑论》）实在是护持佛教法门的坚固壁垒啊。</p></div>
+<div class="para-pair"><p class="p-orig">当是时也，诸子天眼，法执，果得已通已忘，自能深生随喜。正使未忘未通，定当顿获胜益。</p><p class="p-trans">在这个时候，程朱理学的诸学子的本自具足的法眼正见果然已经开通的，法执（偏见）果然已经放下的，自然能深深生起随喜之心，也正好能令未开通正见，未放下法执的诸学子顿时蒙获殊胜利益。</p></div>
+<div class="para-pair"><p class="p-orig">故知此论之作，非特有益于法门，实则有益于诸子。不唯有益于诸子，且深有益于天下后世之学者。请即流通，以广法施。</p><p class="p-trans">因此知道此论的流通，不但有益于佛教，实际上也有益于诸学子，不但有益于诸学子，而且深深地有益于天下后世的学者，请当下决断，予以流通，以此论说，扩大法布施。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【一乘决疑论】</span>书名。一卷。清·彭际清述。收于《卍续藏》第一○四册。本书旨在会通儒佛道三教，化解抨击佛教之非难。作者彭际清初学儒书，且信服唐·韩昌黎排佛论而排佛；后为究明生死之说，始识佛教之深玄，兼且触及儒学真髓，以为明道、象山、阳明、梁溪等诸儒所谈与佛教所说有一致之处，遂于乾隆四十六年（1781）起稿撰述此书，于乾隆五十六年完成。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【四悉檀】</span>﹝出法华文句﹞悉，遍也。檀，梵语具云檀那，华言施。华梵兼称，故名悉檀。佛以此四说法，遍施一切众生，故名四悉檀也。［一、世界悉檀］，世即隔别之义，界即界分也。盖由众生根器浅薄，故佛随其所欲乐闻，为之次第分别而说，令生欢喜，是名世界悉檀。［二、为人悉檀］，谓佛欲说法，必先观众生机器之大小，宿种之浅深，然后称其机宜而为说之，令生正信，增长善根，故名为人悉檀。［三、对治悉檀］，谓如众生贪欲多者，教观不净；嗔恚多者，教修慈心；愚痴多者，教观因缘。为对此等诸病，说此法药，遍施众生，故名对治悉檀。［四、第一义悉檀］，第一义，即理也。谓佛知众生善根已熟，即为说法，令其得悟圣道，是名第一义悉檀。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【敷衍】</span>陈述并发挥。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【依通】</span>五种通力之一。通过对法理的理解知道的、利用身体本能产生的、依靠药力或咒术表现出来的有漏神通。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【金汤】</span>金属造的城，沸水流淌的护城河。形容城池险固。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

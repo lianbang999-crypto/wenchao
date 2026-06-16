@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复曹培灵居士书 · 印光法师文钞</title>
+<meta name="description" content="（培灵居士，夫妻连生五女。自皈依佛法后，力行善事，吃素念佛，并极力提倡劝化，自利利人。至民国二十五年，与袁丽庭居士等，筹办无锡佛教净业社，多方倡导，不遗余力。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-155/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复曹培灵居士书 · 印光法师文钞">
+<meta property="og:description" content="（培灵居士，夫妻连生五女。自皈依佛法后，力行善事，吃素念佛，并极力提倡劝化，自利利人。至民国二十五年，与袁丽庭居士等，筹办无锡佛教净业社，多方倡导，不遗余力。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-155/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复曹培灵居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">（培灵居士，夫妻连生五女。自皈依佛法后，力行善事，吃素念佛，并极力提倡劝化，自利利人。至民国二十五年，与袁丽庭居士等，筹办无锡佛教净业社，多方倡导，不遗余力。</p><p class="p-trans">（曹培灵居士，夫妻连生了五个女儿。自从皈依佛法后，努力做善事，吃素念佛，并且极力提倡净土法门，劝化大众，自利利人。到民国二十五年&lt;1936年&gt;，与袁丽庭居士等人，筹办无锡佛教净业社，多方倡导，不遗余力。</p></div>
+<div class="para-pair"><p class="p-orig">是年冬，遂举一男。迨二十八年秋，再生德征，因感佛恩，乃以百圆供养印老。其时适窦存吾居士，为二贫儿，托森转请老人，具函黄涵之居士，介绍免费入三育中学肄业。</p><p class="p-trans">这年冬天，终于生了一个男孩。等到民国二十八年（1939年）的秋天，又生一男孩，印光大师赐名“德征”。因为感激佛恩，于是拿出一百圆供养印老。当时正碰上窦存吾居士，为两个贫苦的孩子，托德森法师转请老人，写信给黄涵之居士，介绍他们免费进入三育中学学习。</p></div>
+<div class="para-pair"><p class="p-orig">老人即令将此百圆交黄居士，捐助赈济，以作代二贫儿作介之条件，亦可免人借口。黄居士，亦念老人慈德照办之。</p><p class="p-trans">老人就让人将这一百圆交给黄涵之居士，捐助赈济，以此作为代替两个贫苦孩子的入学条件，这样也可以免除他人的口舌。黄涵之居士，也感念老人慈悲之德遵照办理。</p></div>
+<div class="para-pair"><p class="p-orig">培灵居士，感老人此举，不特有益于法门，如人人如此用心，国家贤才蔚起，可拭目以俟。乃将此函令森编入，并嘱略叙所以云尔。德森谨识。）</p><p class="p-trans">曹培灵居士有感于老人此举，不只是有利益于佛门，如果人人都能这样用心，那么可以拭目以待的是，国家贤才将会蔚然兴起。于是将这封信令德森法师编入《续编》，并且嘱咐应当略微叙述事情的原委。德森谨记。）</p></div>
+<div class="para-pair"><p class="p-orig">汝昔屡屡生女，今则屡屡生男，可见佛天加被为善之人，令其诸凡如意也。令郎法名福永，乳名德征。福永，不知与姊兄有重否，重则以德征为法名。佛天加被汝，汝当认真教育，俾成正器。</p><p class="p-trans">你早先屡屡生女儿，现在则屡屡生男孩，由此可见佛天加被修善的人，使得他们一切吉祥如意。给你的儿子起法名叫做“福永”,乳名叫做“德征”。“福永”这两个字，不知和他的姐姐、哥哥名字是否重复？如果重复则用“德征”做为法名。佛天加被你，你应当认真教育儿女，使他们成为端正合格的人。</p></div>
+<div class="para-pair"><p class="p-orig">世间不知多少好天姿儿女，均被不知教育之父母，养成败类，令其永堕阿鼻地狱，此吾国之一大不幸也。汝当移爱于善教，则福寿均可永常，而为祖宗与汝积德之征据。</p><p class="p-trans">世间不知有多少好天姿的儿女，都被他们不懂教育的父母，娇养成了败类，使得他们永远地堕入阿鼻地狱，这是我国的一大不幸啊！你应当把溺爱子女转化为依照圣贤教育善教儿女，那么儿女的福寿就都可以长久了，而且这也是为祖宗和你自身积德的证据。</p></div>
+<div class="para-pair"><p class="p-orig">百圆当为介绍二贫子入校之弄引。如不能免费，当作别种功德，或可不至失望。当此时局，切不可设筵会客，并用荤酒。</p><p class="p-trans">你的一百圆就当做介绍两个贫苦孩子入校的引介费。如果不能免费入学，这些钱也会作其他的功德，或许不至于让你失望。在这个时局动乱、国民困苦的时代，千万不可为孩子降生、满月大讲排场，设宴款待宾客，并且饮酒吃肉。</p></div>
+<div class="para-pair"><p class="p-orig">当念无衣无食者之饥寒，勿以有用之钱，作折福之事。世间痴人多如此，谅汝不至如此。宁可作废话，不可不说，而或随俗为之，则错过矣。</p><p class="p-trans">应当怜悯世间没有衣食，饱受饥寒者的苦况，不要把能够修功积德、荫福子孙的有用钱，拿去做折福的事情。世上愚痴的人往往是这样，想必你还不至于如此。这个话，情愿你当作废话，也不能不说。万一你随顺世俗人情做了这种事，那么就错过修积功德的大好时机了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【正器】</span>谓合乎标准的治具或器具。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

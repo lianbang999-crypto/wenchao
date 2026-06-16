@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书二十九 · 印光法师文钞</title>
+<meta name="description" content="两接手书，不胜感叹。保甲公约甚好，惜全国各县长不致意于此。德森师本月初七回来。许止净九月初来。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-256/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书二十九 · 印光法师文钞">
+<meta property="og:description" content="两接手书，不胜感叹。保甲公约甚好，惜全国各县长不致意于此。德森师本月初七回来。许止净九月初来。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-256/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书二十九</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">两接手书，不胜感叹。保甲公约甚好，惜全国各县长不致意于此。德森师本月初七回来。许止净九月初来。</p><p class="p-trans">两封信都接到了，非常感叹。保甲公约非常好，可惜全国的各个县长不致力注重在这个地方。德森法师本月初七回来。许止净九月初来。</p></div>
+<div class="para-pair"><p class="p-orig">明道师病久，于本月十九早二点半钟去世。二十一运龛至灵岩，廿五迁化，入灵岩普同塔。</p><p class="p-trans">明道师病了很久，于本月十九日早上二点半去世。二十一日运灵龛到灵岩山，二十五日火化，安放到灵岩山普同塔中。</p></div>
+<div class="para-pair"><p class="p-orig">六十元收到，当为印送经书之备。此次或有大祸，光实无有迁移之念。以老病畏寒，不能迁移，勿道光不移动，即德许亦不移动。</p><p class="p-trans">六十元钱已收到，当作为印送经书的预备。这次或许有大祸，我实在没有迁移的念头。因为年老有病，害怕寒冷，不能迁移，不要说我不移动，就是德森法师、许止净也不移动。</p></div>
+<div class="para-pair"><p class="p-orig">以光若一去，报国即废，无人维持矣。况苏州数十万人，均不去，吾僧徒何特畏死以去，以令苏人增大惶惧乎。</p><p class="p-trans">因为我如果一离开，报国寺就荒废，没人维持了。何况苏州有几十万人，都不离开，我们出家僧人，哪会怕死离开，而令苏州的人民增加惶恐畏惧呢？</p></div>
+<div class="para-pair"><p class="p-orig">廿一年苏亦垂危，去者十之七，尚有决不为动者，凡逃难者，均遭抢劫之难，不逃难者，安然无患。</p><p class="p-trans">民国二十一年（1932年），苏州也垂危，离去的人有十分之七，仍有绝对不为所动的人，凡是逃难的人，均遭到被抢劫的灾难，不逃难的人，反而安然无患。</p></div>
+<div class="para-pair"><p class="p-orig">有几处函邀往彼者，光复云，若有危险，当随炸弹而去，较比路上受抢劫，长时怀忧惧，为优胜多多。</p><p class="p-trans">有好几个地方，写信请我前往，我回复说，如果有危险，应当随炸弹而去，比起路上受匪徒抢劫，长时间心怀忧惧，要好很多。</p></div>
+<div class="para-pair"><p class="p-orig">此次若起战事，当以不动自守。死乃人各难免，与其流离失所而死，不如安住不动而死之为安乐也。</p><p class="p-trans">这次如果战争爆发，应当以不动自守。死是每个人都难免的，与其流离失所而死，不如安住不动而死，为安乐啊。</p></div>
+<div class="para-pair"><p class="p-orig">现在弘化社事，悉归光任，随分随力以办，并不愿广为募化，以令人生厌，而起疑光贪财之心也。</p><p class="p-trans">现在弘化社的事，全都归我担任，随分随力来办理，并不愿广泛地募资化缘，以免令人生厌，从而引起怀疑我有贪财的心。</p></div>
+<div class="para-pair"><p class="p-orig">祈放心勿念。三界无安，西方极乐，唯此为所迁之地，此外则一无所迁。现不出关，以省各处讲演之烦。以后无要事，不必来信，以免彼此劳神。</p><p class="p-trans">请放心不要挂念。三界火宅，无有安乐，只有西方极乐世界，才是我们所迁之地，除此之外就没有一个地方能迁移了。现在不出关，因为全省各地的讲演太烦。以后没有要紧的事，不必来信，以免彼此劳神。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【廿一年苏亦垂危】</span>1932年，日本占据东三省。三月，淞沪会战爆发。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

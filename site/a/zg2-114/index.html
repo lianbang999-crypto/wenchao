@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>书华严经讼过记（代宽慧师作） · 印光法师文钞</title>
+<meta name="description" content="大矣哉，华严经之为教也。称法界性，说常住法。依真如心，示即具体。理超象外，道契寰中。寂照圆彰，能所双泯。离凡圣之假名，绝生佛之称谓。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-114/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="书华严经讼过记（代宽慧师作） · 印光法师文钞">
+<meta property="og:description" content="大矣哉，华严经之为教也。称法界性，说常住法。依真如心，示即具体。理超象外，道契寰中。寂照圆彰，能所双泯。离凡圣之假名，绝生佛之称谓。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-114/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">书华严经讼过记（代宽慧师作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大矣哉，华严经之为教也。称法界性，说常住法。依真如心，示即具体。理超象外，道契寰中。寂照圆彰，能所双泯。离凡圣之假名，绝生佛之称谓。</p><p class="p-trans">《华严经》这一教法真是博大精深啊！称合法界性，宣说常住法。依真如妙心，显示即心本具之体。理超现象之外，道契寰宇之中。寂照圆彰，能所双泯。脱离凡夫、圣者的假名，绝断众生、佛陀的称谓。</p></div>
+<div class="para-pair"><p class="p-orig">然而珠在衣里，迷者不知。不得不于无可修中论修，无可证中论证。故有五十二位之次第，信解行证之浅深。</p><p class="p-trans">然而宝珠藏在衣里，迷惑的人不知道。不得不在无可修处来谈论修行，在无可证处来讨论实证。所以就有了五十二个菩萨位次，有了信、解、行、证的浅深层次。</p></div>
+<div class="para-pair"><p class="p-orig">所谓全性起修，全修在性。及至圆证妙觉，不过复其本体。于本体外，了无所增。但以智断究竟，彻露本地风光。圆满菩提，实无一法可得。因该果海，果彻因源者，此之谓也。</p><p class="p-trans">这就是所说的：全性起修，全修在性。直到圆证妙觉佛果，也不过是恢复了他的心性本体。本体之外，没有丝毫增加。只是因为智德、断德究竟无余，彻底显露本地风光；圆满证得菩提，实在没有一法可得。因行该摄果海，果地通彻因源，就是说的这个道理。（众生因地念佛的心,每一念都成就佛觉果海。未来成佛的果报源自当下念佛的因中，因果同时交互作用，不隔毫厘，就是说的这个道理。）</p></div>
+<div class="para-pair"><p class="p-orig">十方诸佛成道，无不说此法门。十方菩萨修行，无不依此轨范。文虽八十一卷，六十万余言。而恒沙法门，包括净尽。无边妙义，显示无遗。全事即理。全修即性。全多即一。全他即自。</p><p class="p-trans">十方诸佛成道，无不宣说这个法门；十方菩萨修行，无不依照这个轨范。经文虽然只有八十一卷，六十多万字。然而恒河沙数的法门，全都包括没有剩余；无量无边的妙义，全都显示没有遗漏。全事修即理性，全多即一，全他即自。</p></div>
+<div class="para-pair"><p class="p-orig">故云十世古今，始终不离于当念。无边刹土，自他不隔于毫端。故得受持诵读，罪山崩而福海洪深。书写流通，迷云散而慧日朗耀。</p><p class="p-trans">所以说：十世古今，始终不离于当下一念；无边刹土，自他不隔于毫端。所以受持诵读的人，罪山崩塌而福海洪深；书写流通的人，迷云消散而慧日朗耀。</p></div>
+<div class="para-pair"><p class="p-orig">慧宿生多幸，得入法门。往业甚深，心不契道。拟欲书此不思议甚深大经，忏除宿业。蒙寂山和尚，谛闲法师，及诸善知识，提奖赞助，得遂其愿。</p><p class="p-trans">宽慧我宿生多幸，今生得入佛门。然而过去的罪业很深，心与道不能契合。所以想要书写这部不思议的甚深大经，来忏悔消除宿世的罪业。承蒙寂山和尚、谛闲法师，以及诸位善知识的提拔奖励赞助，得以完成了心愿。</p></div>
+<div class="para-pair"><p class="p-orig">但以少阅经教，未谙规程。虽常燃香灯，随书随礼。而字体随便，不甚端整。孤陋寡闻，有过不知。时历二周寒暑，已书六十余卷。</p><p class="p-trans">但是因为阅读经教不多，不明白写经的规矩程序。虽然也常时燃香点灯，一边书写，一边礼拜。然而字体却比较随便，不很端整。因为孤陋寡闻，有了罪过自己却不知道。写了二年，已经完成六十多卷。</p></div>
+<div class="para-pair"><p class="p-orig">一日有一老宿见而呵曰，汝发心写经，拟欲资之以忏宿业，显本有，超凡入圣，了生脱死。其所希望，大不可言。如此草率，何以能上感三宝，下契自心。断烦惑以证真常，生安养以侍导师。岂不孤负自己一番苦功，与诸师赞襄之莫大恩德也耶。</p><p class="p-trans">一天，有一位年老的大德看见，呵斥我说：“你发心写经，打算借此来忏悔宿业，显示本有真性，超凡入圣，了脱生死。你所期望的结果，大到不能言说。然而行事却如此草率，怎么能够向上感通三宝，向下契合自心呢？怎么能够断除烦惑，证得真常，生到极乐世界，侍从阿弥陀佛导师呢？岂不是辜负了自己的一番苦功，辜负了诸位师父赞助的莫大恩德吗。</p></div>
+<div class="para-pair"><p class="p-orig">汝取华严感应传读之，见德圆修德等古德书经之懿范，与彼所获之利益，能不愧死。慧闻命之下，痛如割心。深恨最初不遇此老。因顿改前非，竭诚尽敬。虽拙朴仍旧，而恭谨笃至。</p><p class="p-trans">你取来《华严感应传》恭读，看看德圆法师、修德法师等古德写经的美好风范，以及他们所获得的利益，能不羞愧到死吗。”我听到这番教诲，痛如割心，深深遗憾最初没有遇到这位老人。因此立刻改正过错，竭尽诚敬地书写。虽然字迹仍旧拙朴不够美观，但是恭敬谨慎到了极点。</p></div>
+<div class="para-pair"><p class="p-orig">一部笔法，前后不同。恐阅者见怪，故述缘讼过。亦冀一切四众，受持读诵一切经典，悉皆竭诚尽敬，无或怠忽。如对圣容，亲聆圆音。庶慧之罪过，藉以消灭。而当人之福慧，速得圆满矣。</p><p class="p-trans">同一部经中的笔法，前后不同。担心阅读的人见怪，所以在此叙述缘由，阐述自己的过失。也希望一切四众（比丘、比丘尼、优婆塞、优婆夷）弟子，受持读诵一切经典时，全都竭尽诚敬，没有丝毫的懈怠轻忽。就如同亲自面对佛陀的圣容，亲耳聆听佛陀的法音。（这样的话），想必宽慧我的罪过，就可以借此而消灭；而读诵者的福慧，也可以快速圆满了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【寰中】</span>宇内，天下。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【赞襄】</span>辅助，协助。语本《书·皋陶谟》：“皋陶曰：‘予未有知，思曰赞赞襄哉。’”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【德圆】</span>僧德圆。不知氏族。天水人也。常以华严为业。读诵受持。妙统宗极。遂修一净园。植诸谷楮。并种以香草。杂以鲜花。每一入园。必加洗濯。身着净衣。溉以香水。楮生三载。香气四达。后别立净室（剥楮取皮。浸以沈水。护净造纸）。书写此经。纔书数行。每字光发。照明院宇。又神人执戟。现形警卫。又有青衣梵童。无何而至。手执天华。亦申供养。余如传说。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【修德】</span>永徽年中。定洲有禅师。名修德。学徒数万。禅之领袖也。而专业华严。欲写斯经敬为宗故。先以沈香渍水。而种诸树。树大取皮造纸。而用写经。经生笔匠造纸等三人。大小便并皆洗浴护净。每一卷了。施以十缣。装染周毕。设斋庆赞。香函盛之。志心礼拜。当设斋日。道俗云趋。初开函时。金光远照。彻百余里。山东五十余洲。皆来礼经开。外道俗无不闻知。时有阉人刘谦之。北齐第三王子之从者也。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【十世】</span>即过去、现在、未来之三世，各有三世，而成九世，此九世容融而成一世，合之共为十世。（佛学大词典）</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【闻命】</span>接受命令或教导。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【笃至】</span>深厚到了极点。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

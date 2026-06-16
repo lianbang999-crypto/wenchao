@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>89、净土法门说要（王求是，龚云伯记） · 印光法师文钞</title>
+<meta name="description" content="辨别佛力、自力，解释永明禅师禅净四料简">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-089/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="89、净土法门说要（王求是，龚云伯记） · 印光法师文钞">
+<meta property="og:description" content="辨别佛力、自力，解释永明禅师禅净四料简">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-089/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第六部分·杂著 · 如诚法师译</div>
+      <h1 class="art-title">89、净土法门说要（王求是，龚云伯记）</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>辨别佛力、自力，解释永明禅师禅净四料简</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">原夫众生与佛，本性原无二无别。只以众生不守自性，为尘劳所污，习染所蔽，致迷悟攸殊，生佛迥别。</p><p class="p-trans">众生与佛，本性原本没有差别。只因为众生不守自性，被尘劳所染污，习气所蒙蔽，致使迷惑、觉悟截然不同，众生与佛迥然有别。</p></div>
+<div class="para-pair"><p class="p-orig">惟众生迷有浅深，根有大小。如来乃随机设教，对病发药。为实施权，开权显实。于一乘法，作种种说。善根成熟者，令其直登觉岸。恶业深厚者，令其渐出尘劳。是以四十九年中，大小渐顿半满之教，随其种性，施以教化。</p><p class="p-trans">因为众生迷惑有浅有深，根机有大有小。于是如来随众生根机，施设教法，对病发药。为一乘真实义，施设三乘权便；开除三乘权便，显示一乘真实义。于一乘法中，作种种宣说。善根成熟的，令他们直接登上觉岸；恶业深厚的，令他们渐渐出离尘劳。所以四十九年中，佛陀宣说大、小、渐、顿、半、满之教，随众生的种性，施以教化。</p></div>
+<div class="para-pair"><p class="p-orig">宗教法门，多仗自力。纵令宿根深厚，彻悟自心。倘见思二惑稍有未尽，则生死轮回依然莫出。况既受胎阴，触境生迷。由觉至觉者少，从迷入迷者多。上根犹然如是，中下又何待言。</p><p class="p-trans">禅宗、教下的法门，大多依仗自力。纵然是宿根深厚，彻悟自心。倘若见思二惑，稍有一点没有断尽，那么依然不能出离生死轮回。何况既然受了胎阴，触境生迷。由觉悟到觉悟的人少，从迷惑进入迷惑的人多。上根尚且如此，中下根就更不必说了。</p></div>
+<div class="para-pair"><p class="p-orig">生死了脱，是诚不易。惟念佛求生净土法门，专仗弥陀愿力。无论善根之熟否，恶业之轻重，乃至五逆十恶，但得生信发愿，持佛名号，临命终时，定蒙弥陀接引，往生净土。</p><p class="p-trans">了脱生死，实在是不容易。只有念佛求生净土这个法门，专仗阿弥陀佛愿力。无论善根成熟与否，恶业是轻是重，乃至五逆十恶的罪人，只要能够生信发愿，持佛名号，临命终时，决定蒙阿弥陀佛接引，往生净土。</p></div>
+<div class="para-pair"><p class="p-orig">善根成熟者，固顿圆佛果，即恶业深重者，亦得幸预圣流。较之仗自力者，其中难易得失，不待烦言而解。故此净土法门，乃三世诸佛度生之要道，上圣下凡共修之妙法。诸大乘经，咸启斯要。历代祖师，莫不遵行。</p><p class="p-trans">善根成熟的，固然能够顿时圆满佛果，即使是恶业深重的，也能有幸预入圣流。比起依仗自力的法门，其中的难易、得失，不必用烦琐的话来解释。所以这个净土法门，是三世诸佛度生的要道，上圣下凡共修的妙法。诸大乘经，全都指示净土法门的要旨。历代祖师，无不遵行求生净土。</p></div>
+<div class="para-pair"><p class="p-orig">顾或以净土法门至简至易，虽愚夫愚妇亦能为之，遂藐视净土。不知净土一门，三根普被，十界齐收。</p><p class="p-trans">但有的人因为净土法门的修持，非常简便、容易，即使是愚夫愚妇也能修习，于是便轻视净土。他们不知道净土法门，三根普被，十界齐收。</p></div>
+<div class="para-pair"><p class="p-orig">华严入法界品，善财童子于证齐诸佛之后，普贤菩萨乃以十大愿王劝进善财，及与华藏海众，令其往生西方极乐世界，以期圆满佛果。</p><p class="p-trans">《华严经·入法界品》，善财童子在证得与诸佛齐等之后，普贤菩萨于是用十大愿王劝进善财，以及华藏海众，令他们往生西方极乐世界，以期圆满佛果。</p></div>
+<div class="para-pair"><p class="p-orig">夫善财位登等觉，华藏海众无一凡夫二乘，乃四十一位法身大士，破无明证三德之人，尚尔回心念佛，愿生西方。又华藏海中，净土无量，而必回向西方。可知往生极乐，乃出苦之妙门，成佛之捷径也。</p><p class="p-trans">善财童子已证入等觉菩萨位，华藏海众没有一个是凡夫二乘，而是四十一位法身大士，破无明惑、证三德的大菩萨，尚且回心念佛，愿生西方。另外，华藏海中，净土无量无边，而必定要回向西方极乐世界。由此可以知道往生极乐，是出苦的妙门，成佛的捷径啊！</p></div>
+<div class="para-pair"><p class="p-orig">又永明禅师，为修行人确示要道，开出四料简。（一）有禅有净土，犹如戴角虎。现世为人师，来生作佛祖。（二）无禅有净土，万修万人去。若得见弥陀，何愁不开悟。（三）有禅无净土，十人九蹉路。阴境若现前，瞥尔随他去。（四）无禅无净土，铁床并铜柱。万劫与千生，没个人依怙。</p><p class="p-trans">再有永明禅师，为修行人确切地指示修持要道，开出四料简。（一）有禅有净土，犹如戴角虎。现世为人师，来生作佛祖。（二）无禅有净土，万修万人去。若得见弥陀，何愁不开悟。（三）有禅无净土，十人九蹉路。阴境若现前，瞥尔随他去。（四）无禅无净土，铁床并铜柱。万劫与千生，没个人依怙。</p></div>
+<div class="para-pair"><p class="p-orig">此永明四料简，乃大藏之纲宗，修持之龟鉴。先须认准如何是禅，如何是净，如何是有，如何是无，然后逐文分剖，则知字字的当，无一字能移易。</p><p class="p-trans">永明大师作的这个四料简，是大藏经的纲宗，修持的龟鉴。先必须认准，什么是禅，什么是净，什么是有，什么是无，然后再逐文分析剖解，那么就会知道字字非常恰当，没有一个字能够移动改变。</p></div>
+<div class="para-pair"><p class="p-orig">禅者，即吾人本具之真如佛性，即父母未生前本来面目，即无能无所即寂即照之离念灵知，所谓纯真心体也。净土者，即信愿持名，求生西方（非偏指唯心净土，自性弥陀）。</p><p class="p-trans">禅，就是我们本具的真如佛性，就是父母未生前的本来面目，就是无能无所、即寂即照的离念灵知，就是所谓的纯真心体。净土，就是信愿持名，求生西方（并不是偏指唯心净土，自性弥陀）。</p></div>
+<div class="para-pair"><p class="p-orig">有禅者，即参究力极，念寂情亡，彻见本来面目，明心见性。有净土者，即真实发心，生信发愿，持佛名号，求生西方。</p><p class="p-trans">有禅，就是参究的功夫到了极点，念头寂灭、情见消亡，彻底见到本来面目，明心见性。有净土，就是真实发心，生信发愿，持佛名号，求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">禅与净土，是约教约理。有禅有净土，是约机约修。一理一事。理虽如是，须如理起行，行极证理。务使实有诸己也。</p><p class="p-trans">禅与净土，这是就教法、义理来说的。有禅，有净土，这是就根机、修持来说的。一个是理体，一个是事相。理体虽然如此，但必须如理生起行持，修行到极点，才能证得理体。务必要真正领悟并真实修行。</p></div>
+<div class="para-pair"><p class="p-orig">倘参禅未悟，或悟而未彻，皆不得名为有禅。倘念佛而无信愿，或有信愿而不真切，悠悠忽忽，敷衍故事，或行虽精进，而因地不真，心恋尘境，乃至求来生富贵，生天求乐，皆不得名为有净土。</p><p class="p-trans">倘若参禅没有开悟，或者开悟而没有彻底，都不能名为“有禅”。倘若念佛而没有信愿。或者有信愿而不真切，悠悠忽忽，敷衍了事。或者行持虽然精进，然而因地不真诚，内心贪恋尘缘境界，乃至求来生富贵，生天求乐，都不能名为“有净土”。</p></div>
+<div class="para-pair"><p class="p-orig">（一）有禅有净土，犹如戴角虎，现世为人师，来生作佛祖者。其人彻悟禅宗，明心见性，又复深入经藏，备知如来权实法门。</p><p class="p-trans">（一）“有禅有净土，犹如戴角虎，现世为人师，来生作佛祖。”这个人彻悟禅宗，明心见性，又深入经藏，尽知如来权教、实教一切法门。</p></div>
+<div class="para-pair"><p class="p-orig">而于诸法之中，惟以信愿念佛一法，自利利他。其人有大智慧，有大辩才，邪魔外道，闻而丧胆，如虎之戴角。</p><p class="p-trans">而在诸法之中，惟以信愿念佛一法，自利利他。这个人有大智慧，有大辩才，邪魔外道，闻名丧胆，犹如戴角的老虎。</p></div>
+<div class="para-pair"><p class="p-orig">有来学者，随机说法。应以禅净双修接者，即以禅净双修接之。应以专修净土接者，即以专修净土接之。无论上中下根，无一不被其泽。岂非人天导师欤。</p><p class="p-trans">有来修学的人，随机对其说法。应以禅净双修接引的，就以禅净双修接引他。应以专修净土接引的，就以专修净土接引他。无论上、中、下根，没有一个不蒙受他的惠泽。这难道不是人天的导师吗？</p></div>
+<div class="para-pair"><p class="p-orig">至临命终时，蒙佛接引，往生上品。一弹指顷，花开见佛，证无生忍。即最下证圆初住，能现身百界作佛，故曰，来生作佛祖。</p><p class="p-trans">到了临命终时，蒙佛接引，往生上品。一弹指顷，花开见佛，证无生法忍。即使是最下，也能证得圆教初住位菩萨，能现身一百个世界作佛，所以说，“来生作佛祖”。</p></div>
+<div class="para-pair"><p class="p-orig">（二）无禅有净土，万修万人去，若得见弥陀，何愁不开悟者。其人虽未明心见性，却是决志净土，求生西方，志诚念佛，感应道交，定蒙摄受。</p><p class="p-trans">（二）“无禅有净土，万修万人去，若得见弥陀，何愁不开悟。”这个人虽然没有明心见性，却是决心修持净土，求生西方，志诚念佛，感应道交，一定蒙佛摄受。</p></div>
+<div class="para-pair"><p class="p-orig">力修者，固得往生。即五逆十恶，临终十念，亦皆蒙佛化身前来接引。非万修万人去乎。</p><p class="p-trans">努力修持的，固然能够往生。即使是五逆十恶的罪人，临终十念，也都能蒙佛化身前来接引。这难道不是“万修万人去”吗？</p></div>
+<div class="para-pair"><p class="p-orig">既生西方，见佛闻法，虽有迟速，然已高预圣流，竟不退转，渐证圣果。则其开悟，可不待言。故谓若得见弥陀，何愁不开悟。</p><p class="p-trans">既已往生西方，见佛闻法，虽然有迟有速，然而已经高高预入圣流，究竟不退转，渐渐证得圣果。那么他的开悟，就不用再说了。所以说：“若得见弥陀，何愁不开悟。”</p></div>
+<div class="para-pair"><p class="p-orig">（三）有禅无净土，十人九蹉路，阴境若现前，瞥尔随他去者。其人虽略识心性，而见思未尽。直须磨厉净尽，至于无余，则生死方可出离。</p><p class="p-trans">（三）“有禅无净土，十人九蹉路，阴境若现前，瞥尔随他去。”这个人虽然略微识得一点心性，但见思惑没有断尽。还要将见思惑磨砺得干干净净，以至于没有剩余，那么才能出离生死。</p></div>
+<div class="para-pair"><p class="p-orig">若一毫未断，六道轮回，依然难逃。生死海深，菩提路远，即便命终，归途莫测。十人之中，九人如是。</p><p class="p-trans">若有一丝毫未断除，六道轮回，便依然难以逃出。生死大海深广，菩提道路长远，即便是命终，归途也无法测度。十人之中，九人是这样。</p></div>
+<div class="para-pair"><p class="p-orig">故曰，十人九蹉路。蹉者，蹉跎，即俗所谓耽搁也。阴境者，中阴身境，即临命终时，现生及历劫善恶业力所现之境。</p><p class="p-trans">所以说，“十人九蹉路”。蹉，蹉跎，就是俗话所说的耽搁。阴境，中阴身境，就是临命终时，现生以及历劫善恶业力所现的境界。</p></div>
+<div class="para-pair"><p class="p-orig">眨眼之间，随其业力，便尔受生，一毫不能自作主宰。如人负债，强者先牵，心绪多端，重处偏坠。故曰，阴境若现前，瞥尔随他去。</p><p class="p-trans">眨眼之间，随他的业力，便去投生，一丝毫也不能自己作主。就像人负债，势力强的债主先将他牵走，心绪多端，重的地方先坠下去。所以说，“阴境若现前，瞥尔随他去”。</p></div>
+<div class="para-pair"><p class="p-orig">（四）无禅无净土，铁床并铜柱，万劫与千生，没个人依怙者。其人既未彻悟，又不求生净土，悠悠泛泛，修诸法门（非指埋头造恶不修行者）。既不能定慧均等，断惑证真。又不能仗佛慈力，带业往生。</p><p class="p-trans">（四）“无禅无净土，铁床并铜柱，万劫与千生，没个人依怙。”这个人既没有彻悟，又不求生净土，悠悠泛泛，修诸多法门（不是指埋头造恶，不修行的人）。既不能定慧均等，断惑证真。又不能仗佛慈力，带业往生。</p></div>
+<div class="para-pair"><p class="p-orig">以毕生修持功德，感来生人天福报。现生既无正智，来生即随福转。享福愈大，恶业愈多。既造恶业，难逃果报。一息不来，即堕地狱，偿其夙债。所谓铁床并铜柱是也。</p><p class="p-trans">凭借毕生修持的功德，感来生的人天福报。现生既然没有正智，来生就随福业而转。享福愈大，恶业造得愈多。既然造作恶业，便难逃恶果。一口气上不来，就堕入地狱，偿还他的宿债。就是所谓的“铁床并铜柱”。</p></div>
+<div class="para-pair"><p class="p-orig">如是造业之人，譬如慧日，盲者不见。虽有诸佛菩萨垂以慈悲，以彼恶业障故，不能获益，永劫受苦。故曰，没个人依怙。</p><p class="p-trans">如此造业的人，譬如太阳当空，盲人却看不见。虽有诸佛菩萨垂以慈悲，因为他自己的恶业所障蔽的缘故，不能获得利益，永劫受苦。所以说，“没个人依怙”。</p></div>
+<div class="para-pair"><p class="p-orig">夫一切法门，专仗自力。净土法门，专仗佛力。一切法门，惑业净尽，方可了生死。净土法门，带业往生，即预圣流。</p><p class="p-trans">一切法门，专仗自力。净土法门，专仗佛力。一切法门，惑业断除净尽，才能了生死。净土法门，带业往生，即可预入圣流。</p></div>
+<div class="para-pair"><p class="p-orig">又佛在世时，众生色心业胜，依仗自力，或可证道。今当末世，根劣障重，知识稀少，若舍净土，无由解脱。</p><p class="p-trans">另外，佛在世时，众生的色心业胜，依仗自力，或许可以证道。现今正当末法时代，众生根机陋劣、业障深重，善知识稀少，如果舍弃净土法门，便没有办法解脱。</p></div>
+<div class="para-pair"><p class="p-orig">永明禅师恐世不知，故特举料简以示来兹。诚迷津之宝筏，昏衢之明灯也。</p><p class="p-trans">永明禅师恐怕世人不知道，所以特地举出四料简，来开示来学。实在是迷津的宝筏，暗路的明灯啊！</p></div>
+<div class="para-pair"><p class="p-orig">修持净土念佛法门，当以信愿行为宗。信者，当笃信佛力。弥陀如来在因地中，发四十八愿，愿愿度生，中有念我名号，不生我国，誓不成佛。今者因圆果满，故我今念佛，必得往生。</p><p class="p-trans">修持净土念佛法门，应当以信愿行三法为宗旨。信，应当深信佛力。阿弥陀佛在因地中，发四十八愿，愿愿度众生，其中有“念我名号，不生我国，誓不成佛”。现今阿弥陀佛因圆果满，所以我今念佛，必得往生。</p></div>
+<div class="para-pair"><p class="p-orig">次信佛力慈悲，摄受众生，如母忆子。子若忆母，如母忆时，定蒙接引。次信净土法门，如永明禅师四料简所言。较诸余法，其间大小难易得失，迥然不同。虽有余师称赞余法，不为所动。乃至诸佛现前劝慰，令修余法，亦不退转，此乃真所谓信也。</p><p class="p-trans">其次深信佛力慈悲，摄受众生，如母亲忆念孩子。孩子若忆念母亲，如母亲忆念孩子那般深切时，一定能蒙佛接引。其次深信净土法门，如永明禅师的四料简所说。比起其他法门，其中的大小、难易、得失，迥然不同。即使有其他师父，称赞其他法门，也不为所动。乃至诸佛现前劝慰，令修其他法门，也不退转，这才是所谓的真信啊！</p></div>
+<div class="para-pair"><p class="p-orig">愿者，愿以此生誓往西方。不取多生修习，于秽土中头出头没，从迷入迷。复愿既生西方，回至娑婆，度脱一切众生。</p><p class="p-trans">愿，愿在此生，誓愿往生西方。不取多生修习，在秽土中头出头没，从迷入迷。又愿往生西方之后，还要回到娑婆世界，度脱一切众生。</p></div>
+<div class="para-pair"><p class="p-orig">行者，真实依教起行。大势至念佛圆通章云，都摄六根，净念相继，得三摩地，斯为第一。则知念佛之法，当都摄六根。都摄六根之前，尤当先摄二三根。</p><p class="p-trans">行，真实依教起行。《大势至念佛圆通章》中说：“都摄六根，净念相继，得三摩地，斯为第一。”由此则知念佛之法，应当都摄六根。都摄六根之前，尤其应当先收摄二三根。</p></div>
+<div class="para-pair"><p class="p-orig">二三根者，何也。即耳口心是也。将南无阿弥陀佛六字，一句一句，一字一字，口中念得明明白白。心中念得明明白白。耳里听得明明白白。稍有不分明处，即是不真切而有妄想（只念不听，易生妄想）。</p><p class="p-trans">二三根是什么呢？就是耳、口、心。将“南无阿弥陀佛”六字，一句一句，一字一字，口中念得明明白白。心中念得明明白白。耳里听得明明白白。稍微有不分明的地方，就是不真切而有妄想（只念不听，容易生妄想）。</p></div>
+<div class="para-pair"><p class="p-orig">念佛固要字句分明，不加思索。其他看经亦然。切莫一路看一边分别，则获益少而情想多。昔有写经者至诚写经，专心一意，只管写经，别无情见，迨天已黑，仍抄写不辍。忽有人告以天黑，何能写经。尔时写经之人，情念一动，遂不能写。</p><p class="p-trans">念佛原本就要字句分明，不加思索。其他如看经等，也是如此。千万不要一边看经、一边分别，那样获得的利益少，而分别情想多。过去，有写经的人至诚写经，专心一意，只管写经，没有其他的情见，等到天已经黑了，仍然抄写不停。忽然有人告诉他，天已经黑了，怎么还能写经？这时，写经的人，分别情念一动，便（眼前一片黑暗，）不能再写了。</p></div>
+<div class="para-pair"><p class="p-orig">夫明暗之分，众生之妄见也，众生之凡情也。故当专心一意，妄尽情空之际，只知写经，不知天之既黑，亦不知天黑则无光，而不能写经。迨至为人提破，无明动而情想分。妄念一动，光明黑暗，顿时判别，遂致不能写经。故知用功之道，端在专摄，不事情想。若无思想，那有邪见。邪见既无，即是正智。</p><p class="p-trans">光明、黑暗的分别，是众生的妄见，众生的凡情。所以应当专心一意，妄见尽、凡情空的时候，只知道写经，不知道天已经黑了，也不知道天黑就没有光明，而不能写经。等到被他人说破，无明动而情想分别。妄念一动，光明、黑暗，顿时分判区别开来，于是就导致不能写经了。所以知道用功之道，确实在于专心摄意，不做情想分别。如果没有胡思乱想，哪里会有邪见。邪见既然没有了，就是正智。</p></div>
+<div class="para-pair"><p class="p-orig">又修净土者，当提倡因果。在上智之人，固本乎伦常，了知其所当为，与其所不当为者。对中下之人，若不将因果之说，详细剖明，报应事迹，昭然揭示，何以警其操行，而束其身心。故因果为入道之初门。</p><p class="p-trans">另外，修净土的人，应当提倡因果。如果是上智之人，原本就以伦理纲常为本，明白他所应当做，与他不应当做的事。对于中下根的人，如果不将因果的道理，详细剖析说明，报应的事迹，明显揭示出来，如何能警诫其操守行持，因而约束其身心。所以因果是入道的初门。</p></div>
+<div class="para-pair"><p class="p-orig">且笃信因果，亦自不易。小乘初果，大乘初地，乃真能笃信因果者。初地以降，初果以还，一遇违缘，杀盗淫妄，且不可保，起惑造业随之。而聪明之士，犹或小视因果，以为此不过为中下人告。不知粗知其意，不足称为信也。知而不能躬行实践，亦不足称为信也。</p><p class="p-trans">而且深信因果，也不容易。小乘初果、大乘初地菩萨，才是真能深信因果的人。初地以下、初果以下，一旦遇到违缘，杀盗淫妄，尚且不能保住不犯，起惑造业随之而为。而那些聪明的人，还小视因果，认为这不过是对中下根人的告诫。他们不知道，粗略知道因果的意义，还不足以称为相信因果。知道了而不能亲身实践，也不足以称为相信。</p></div>
+<div class="para-pair"><p class="p-orig">惟初果初地预流圣人，乃能不受后有。不受后有，不入色声香味触法之人，乃能称为笃信。故梦东云，善谈心性者，必不弃离于因果，而深信因果者，终必大明乎心性。</p><p class="p-trans">惟有初果、初地这样的预流圣人，才能不受后有。不受后有，不入色声香味触法的人，才能称为深信。所以梦东彻悟禅师说：“善谈心性者，必不弃离于因果，而深信因果者，终必大明乎心性。”</p></div>
+<div class="para-pair"><p class="p-orig">顾何以世间念佛人多，真能了生死者少。只以念佛之人，无深信切愿，但求福报，希图来世富贵。不知希图来世富贵，譬如仰天射箭，力尽则还，非但无益，且有损也。</p><p class="p-trans">但是为什么世间念佛的人多，真能了生死的人少？只因为念佛的人，没有深信切愿，只求福报，希图来世富贵。不知道希图来世富贵，就像仰天射箭，箭力尽了，到头来仍会落到地上，不但无益，而且有损。</p></div>
+<div class="para-pair"><p class="p-orig">即如今世念佛，感人天福报，有福报而无正智。以有福报故，则有势位富贵。以无正智故，则愚痴而不信因果。夫以不信因果之人，处势位富贵之地，如虎附翼，益增其恶。故福报愈大，造孽愈多。既造恶业，应受恶报。此所谓三世怨也。</p><p class="p-trans">就像今世念佛，感得人天福报，有福报而没有正智。因为有福报的缘故，便有权势地位、富贵。因为没有正智的缘故，便愚痴而不相信因果。因为不相信因果的人，处在权势地位、富贵的境地，如同老虎插上翅膀，会更加增加他的恶业。所以福报愈大，造孽愈多。既然造作了恶业，就应当受到恶报。这就是所谓的“三世怨”。</p></div>
+<div class="para-pair"><p class="p-orig">故念佛者，断不可存福报之心，当以猛利直前，往生西方，为了脱生死之妙法。故彻悟禅师云，真为生死，发菩提心，以深信愿，持佛名号十六字，为念佛法门一大纲宗。</p><p class="p-trans">所以念佛的人，千万不能存有求福报的心，应当以猛利心勇往直前，往生西方，这才是了脱生死的妙法。所以彻悟禅师（大师字彻悟，号梦东，莲宗第十二祖）说，“真为生死，发菩提心，以深信愿，持佛名号”这十六个字，是念佛法门的一大纲宗。</p></div>
+<div class="para-pair"><p class="p-orig">又云，一句弥陀，我佛心要，竖彻五时，横赅八教。甚哉，一句弥陀，微妙难思，惟佛与佛，知其究竟。等觉以还，尚有未尽，所谓菩萨少分知。若我辈凡夫，尤当信而行之。</p><p class="p-trans">又说：“一句弥陀，我佛心要，竖彻五时，横赅八教。”伟大啊！一句阿弥陀佛，微妙难思议，惟有佛与佛，知其究竟。等觉以下的菩萨，尚且有所不知，所谓菩萨知道一少部分。像我辈凡夫，尤其应当深信而力行啊！</p></div>
+<p class="p-orig">【注释：】</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【半满】</span>涅槃经云。半字义者皆是烦恼言说之根本。故名半字。满字者乃是一切善法言说之根本也。譬如世间为恶之者名为半人。修善者名为满人。故西秦昙无谶三藏依涅槃此经。以了义大乘为满字教。不了义小乘为半字教。立半满之教。昙无谶始也。（《禅林疏语考证》）</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【实有诸己】</span>理学名词。即是通过自身的体察与践履，使道德意识成为主体的内在德性。明王守仁《传习录》卷中：“讲之以身心，行著习察，实有诸己者也。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【后有】</span>指未来之果报、后世之身心。即未证涅槃之人，于未来世将受之果报。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复净善居士书三 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。古云，大乱之后民易治。当此乱极之时，若有德望之人提倡佛法，令其戒杀护生，吃素念佛。为彼说三世之因果，与六道之轮回。有仁心者，孰不佩服乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-117/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复净善居士书三 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。古云，大乱之后民易治。当此乱极之时，若有德望之人提倡佛法，令其戒杀护生，吃素念佛。为彼说三世之因果，与六道之轮回。有仁心者，孰不佩服乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-117/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复净善居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。古云，大乱之后民易治。当此乱极之时，若有德望之人提倡佛法，令其戒杀护生，吃素念佛。为彼说三世之因果，与六道之轮回。有仁心者，孰不佩服乎。</p><p class="p-trans">来信尽知。古人云，“大乱之后民易治”。正当现在这个大乱到极点之时，如果有德高望重的人来提倡佛法，让大家戒杀护生，吃素念佛。为他们讲说三世因果，与六道轮回。有仁慈之心的人，谁不佩服呢？</p></div>
+<div class="para-pair"><p class="p-orig">儒教讲仁民而爱物，此话须从人生孩幼时做起，则其仁民也，方能究竟。若不在孩幼时做，则其仁民处，或致误民，其爱直是空谈。今为说其所以。</p><p class="p-trans">儒教讲仁慈百姓而爱护万物。这句话必须从人生的孩童幼年时做起。那么这个仁慈百姓，才能究竟。如果不在孩童幼小时做起，那么这个仁慈百姓的地方，或许导致误害百姓，这个慈爱简直就是空谈。现在为你讲说其中的所以然。</p></div>
+<div class="para-pair"><p class="p-orig">小孩无知，见飞走等物，必直杀，或取而顽耍杀。若大人无论何物，均不许杀。以杀则折己福寿，致天地鬼神，都不保佑。幼小时养成此习惯，大了决不至以互相残杀为乐。</p><p class="p-trans">小孩子无知，见到飞禽走兽等动物，必定直接杀死，或者取来顽耍杀死。如果是大人，无论什么动物，都不允许他杀。因为杀就是折损自己的福寿，致使天地鬼神，都不保佑自己。幼小时养成这个习惯，长大了决定不至于以互相残杀为乐。</p></div>
+<div class="para-pair"><p class="p-orig">十余年前有英人林某，住南京，来普陀见光。送光几本书，云是他著。他中国话尚不甚好，何能作很好文字乎。有一本专提倡卫生，专门以杀生为事。余书均送人，唯卫生之书，光撕碎付字篓。恐无知者持去，则害人害物，无有底极。</p><p class="p-trans">十多年前，有英国人林某，住在南京，来普陀山见我。送我几本书，说是他写的。他的中国话还说得不是很好，如何能写很好的文字呢？有一本专门提倡卫生，专门以杀生为事。其余的书都送人了，唯有提倡卫生的这本书，我撕碎了丢到字篓里。恐怕无知的人拿去，就害人害动物，没有终极了。</p></div>
+<div class="para-pair"><p class="p-orig">周君盖深中西人之毒，而不知卫生利人之道。人为万物之灵，亦一种动物也。我与万物同生于天地之间，彼未要我之命，我何得要他的命。打蝇之家，蝇更多。杀蜈蚣之人，常被蜈蚣咬。彼欲卫生于现生，而现生亦未必得益。由此一生常怀杀心，将来生生世世，常被人杀。但以未能亲见，尚乐以忘疲而杀。</p><p class="p-trans">周君大概深中西洋人的毒说，因而不知道卫生利益他人之道。人是万物之灵，也是一种动物。我与万物共同生长于天地之间，它没有要我的命，我怎么能要它的命。打苍蝇的家里，苍蝇会更多。杀蜈蚣的人，常常被蜈蚣咬。他想要现生得到卫生，而现生也未必就能得到利益。由此，一生常常怀着杀心，将来生生世世，常常被他人杀。只是因为没能亲眼见到，还乐此忘疲地残杀。</p></div>
+<div class="para-pair"><p class="p-orig">古书中有恶蚁者，蚁盈其尸。恶蝇者，蝇集其体。无法可设，徒叹奈何。光以此事即是大造杀劫之根本。若犹欲依己所见而为，窃恐有后悔不及时，为可怜可悯，无有可救援也。仁人君子，何得专以杀物为事，令一切无知者，皆效法乎。</p><p class="p-trans">古书中有厌恶蚂蚁的人，蚂蚁盈满他的尸体。厌恶苍蝇的人，苍蝇聚集爬满他的全身。没有办法可想，只有徒然感叹无可奈何。我认为这件事就是大造杀劫的根本。如果还想依自己的见解来行事，我恐怕有后悔都来不及的时候，就可怜可悯，没有可以救援的办法了。仁人君子，怎么能专门以杀动物为事。令一切无知的人，都来效法呢？</p></div>
+<div class="para-pair"><p class="p-orig">十余年前，一皈依弟子有一小儿，买一拍蝇板，以为玩具，遂常拍之。一日蝇多极，极力拍之，忽全屋皆黑。大人遂开门窗，念佛忏悔，未久蝇悉去。从此焚其拍物，亦无蝇来矣。此系佛弟子佛慈加被，令断杀业者。若无信心之人，恐无此兆。其来生后世，何可设想也。</p><p class="p-trans">十多年前，一位皈依弟子有一个小孩，买来一个拍蝇板，作为玩具，小孩于是常常拍打。一天，苍蝇很多，他就用力拍苍蝇，忽然满屋子全黑了。大人于是打开门窗，念佛忏悔，不久，满屋的苍蝇全都离去。从此，焚烧掉这个拍蝇板，也没有苍蝇来了。这是佛弟子佛慈加被，令他断除杀业。如果没有信心的人，恐怕就没有这个征兆了。他的来生后世，如何来设想呢？</p></div>
+<div class="para-pair"><p class="p-orig">大悲米，单寄颇费事。今为寄大悲香灰二包，比米更好检拾。其利益亦与米同，而久不会坏。若遇医不能治之病，取二分灰，放大碗中，用开水冲之。搅搅，候灰质沉下，将清水倒于一器中。作十次服。每日服三四次。好则不须再服。未好则再冲。其灰包，当供于佛龛下一边。或挂于高洁之处，不可亵渎。此系加持万多遍大悲咒之香灰。凡危险病，即不好，亦当见轻而死。冲过之灰质，加水浇树，或泼屋上。</p><p class="p-trans">大悲米，单独寄，比较费事。现今为你寄大悲香灰二包，比米更好收拾。它的利益也与米相同，而且时间久了也不会坏。如果遇到医生不能医治的病，取二分灰，放入大碗中，用开水冲化。搅一搅，等到灰质沉下，将清水倒入一个器皿中。分作十次服用。每天服三四次。病好了就无须再服。没有好就接着冲服。这个香灰包，应当供在佛龛下的一边。或者挂在高洁的地方，不可亵渎。这是加持一万多遍的大悲咒的香灰。凡是（有生命）危险的病，即使不好，也当会减轻病症而死。冲过的香灰质，加水浇树，或者泼到屋顶上。</p></div>
+<div class="para-pair"><p class="p-orig">今用物犹如此，饬终津梁，寿康宝鉴，息灾开示，了凡四训，各二本，夹好。其填空之纸，不可弃。乃礼观音求子疏，及求子三要，亦与一切青年人大有关系之文，无论老少，均不可不知。否则不知节欲而望生子，子尚未生，父已先死。或母因房事过多，而成痨瘵者，不知凡几。</p><p class="p-trans">今用《物犹如此》、《饬终津梁》、《寿康宝鉴》、《息灾开示》、《了凡四训》，各二本，夹好。其中填补空隙的纸，不可丢弃。是《礼观音求子疏》，以及《求子三要》，也是与一切青年人大有关系的文章，无论老少，都不可不知。否则，不知道节欲而希望生子，儿子还没有生，父亲已经先死。或者母亲因为房事过多，而成肺结核的，不知道有多少。</p></div>
+<div class="para-pair"><p class="p-orig">屠友生颇聪明。今之聪明子弟，多犯手淫之病。令看寿康宝鉴，及了凡四训，庶不至致成残疾，及短命而死之苦祸。昔圣王设官布告。今则父母师友概不说及此事，亦大家恶业之所感也。更有愚人，儿子有病，即为娶妻。意欲病好，实则令其速死耳。可不哀哉。</p><p class="p-trans">屠友生比较聪明。现今的聪明子弟，大多犯有手淫的毛病。令他看《寿康宝鉴》和《了凡四训》，才不至于成为残疾，以及短命而死的苦祸。过去圣王设立官员在道路上布告要节制房事。现今则是父母、师长、朋友一概不说这件事，这也是大家的恶业所感。更有愚痴的人，儿子有病，就为他娶妻。心意是想他的病好，实际上是让他快点死啊。能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">湖南一人两个儿子，都由此死。第三子有病，尚欲如此，一友呵之遂止。此盖前生诱人冶游而死之果报。一个死尚不悟，两个死了又不悟。若非友人呵，则绝门矣。愚人之心，何竟如此。非怨鬼使他，必不如是之愚也。祈慧察是幸。</p><p class="p-trans">湖南一人有两个儿子，都是由于这件事而死的。第三个儿子有病，还想要如此来办，一位朋友呵责后，才停止。这大概是前生引诱他人嫖妓而死的果报。一个人死了还不觉悟，两个人死了，仍旧不觉悟。如果不是友人呵责，就灭门绝后了。愚痴人的心，为何竟然到如此地步。若不是怨鬼役使他，一定不会如此的愚痴。请智慧思察，是为庆幸。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【卫生】</span>1.养生；保护生命。2.谓谋生存。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【痨瘵】</span>1.肺结核病。俗称肺痨。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

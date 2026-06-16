@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书十五 · 印光法师文钞</title>
+<meta name="description" content="接手书，知为法为民之心，犹如昔者，足可征其具坚刚之志力，不与时俗浮沉矣。涪陵，系佛法不到之地，最初开办，不宜即于高深处下手。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-242/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书十五 · 印光法师文钞">
+<meta property="og:description" content="接手书，知为法为民之心，犹如昔者，足可征其具坚刚之志力，不与时俗浮沉矣。涪陵，系佛法不到之地，最初开办，不宜即于高深处下手。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-242/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书十五</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知为法为民之心，犹如昔者，足可征其具坚刚之志力，不与时俗浮沉矣。涪陵，系佛法不到之地，最初开办，不宜即于高深处下手。</p><p class="p-trans">接到信，知道你为法为民的心，仍如往昔一样，足可以证明你具有坚定刚强的意志力，不随世俗而浮沉。涪陵，是佛法尚未普及到的地方，最初开办佛学，不宜开始就从高深处下手。</p></div>
+<div class="para-pair"><p class="p-orig">宜先表示其高深处，非今人素未修习者所能即得。然佛法固有大方便法门，令无力即得高深者，修持净土法门，并须极力敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。又以信愿念佛，求生西方，果能如是以修，则可以仗佛慈力，带业往生。</p><p class="p-trans">应该先表明佛法的高深之处，并非是现在从来没有修习过的人所能立刻懂得的。然而佛法原本就有大方便法门，令没有力量即刻得到高深之法的人，修持净土法门，并且必须极力敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。再以信愿念佛，求生西方，果真能够这样来修行，就可以仗佛慈力，带业往生。</p></div>
+<div class="para-pair"><p class="p-orig">若得往生，则所得利益，较彼能修至高至深之法者，亦绝无所歉，尚有过之百千万倍者。以一则专仗自力，一则兼仗佛力故也。</p><p class="p-trans">如果能够往生，那么他所得到的利益，比起那些能够修到最高最深之法的人，也绝对没有什么欠缺，而且还超过他们百千万倍。因为一个是专仗自力，一个是兼仗佛力的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">如此以说，彼决不敢小视净土法门，而修高深者。若不如是以说，彼必以高深自期，以净土法门归之于愚夫愚妇。</p><p class="p-trans">如此来宣说，他们就绝对不敢小视净土法门，而去修习高深的法门。如果不这样来宣说，他们必定以高深法门来自我期许，将净土法门归之于愚夫愚妇（修习的法门）。</p></div>
+<div class="para-pair"><p class="p-orig">究其实益，或少知名相，自高自大，毕竟难以得断惑证真之实益。究其结果，则欲望彼愚夫妇仗佛力带业往生者之肩背而不可得。此天下古今好说大话，好以通家自诩者之通病。</p><p class="p-trans">穷究他们所得的实际利益，或许稍微知道一些名相，但因自高自大，毕竟难以得到断惑证真的真实利益。追究他们的结果，则想要望见愚夫愚妇仗佛慈力带业往生者的肩背，都不可能。这是天下古今好说大话，好以大通家自诩之人的通病。</p></div>
+<div class="para-pair"><p class="p-orig">吾人既欲利人，若仍踵袭其迹，则成宋儒欲卫儒教，故破佛说。究其所得，则成废经废伦废孝免耻杀父杀母之实祸。</p><p class="p-trans">我们既然想要利益他人，如果仍旧沿袭他们的老路，就成为宋儒想要卫护儒教，故此破斥佛教所说。追究他们最终所得，就成了废儒经、废伦常、废孝道，免羞耻，杀父、杀母的实祸。</p></div>
+<div class="para-pair"><p class="p-orig">使彼亦提倡因果报应生死轮回，人当有所畏惧，有所冀慕，世世相承，不敢以此等事为佛骗人之妄语。则欧风再烈，何至少数信从乎。况胥天下之伟人杰士悉信从乎。</p><p class="p-trans">假使宋儒也提倡因果报应、生死轮回，人们应当有所畏惧，有所希冀仰慕，世世相承，不敢把因果轮回等事，认为是佛教骗人的妄语。那么欧风再猛烈，何至于使少数人信从呢？况且使全天下的伟人杰士，全都信从呢？</p></div>
+<div class="para-pair"><p class="p-orig">呜呼哀哉，灭儒教者，非欧人也，乃宋儒也。宏扬佛法，不在真实行持处注意，唯以玄妙为事者，其弊亦与宋儒相同，故不敢不与汝一发挥也。</p><p class="p-trans">呜呼哀哉，灭儒教的人，不是西方人，而是宋儒啊！宏扬佛法，不在真实行持的地方注意，只以高深玄妙作为事务的人，这个弊病也与宋儒相同，所以不敢不对你发挥说明。</p></div>
+<div class="para-pair"><p class="p-orig">近来密宗大兴，然某某某之劣迹，已大为露布。闻重庆佛学社，完全变作密宗道场，彼成佛之易，往生之易，直同反掌，居士恐亦为之感动。</p><p class="p-trans">近来密宗大兴，然而某某某的劣迹，已经大为暴露流传。听说重庆佛学社，完全变成了密宗道场，他们所说容易成佛、容易往生，简直是易如反掌，居士你恐怕也会为之感动。</p></div>
+<div class="para-pair"><p class="p-orig">但思某某多年专学密宗，其见识如此，决非成佛及业尽情空之气分。则彼之所学者，殆非如来所传之密宗。使真正如来之密宗已得，何致香臭亦不知，而任意侮蔑圣贤也。（六月初九）</p><p class="p-trans">但想到某某多年专学密宗，而他的见识却是这样的情况，绝对不是成佛以及业尽情空的气分。那么他所学的，大概也不是如来所传的密宗。假使他已经得到了如来所传的真正密宗，何致连香臭也不知道，而任意轻蔑圣贤呢？（六月初九）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【浮沈】</span>随波逐流。谓追随世俗。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【近来密宗大兴】</span>密宗现身成佛，或云即生成佛，此与禅宗见性成佛之话相同，皆称其工夫湛深之谓，不可认做真能现身成佛。须知现身成佛，唯释迦牟尼佛一人也。此外即古佛示现，亦无现身成佛之事。无知之人，每每错认，其失大矣。（《印光法师文钞三编·卷一·复周志诚居士书一》）</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【侮蔑】</span>1.轻慢；轻蔑。”2.捏造事实，恶意指摘，以毁坏别人或某一事情、某种行动的名誉。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

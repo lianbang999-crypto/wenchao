@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>劝修念佛法门序（民二十七年） · 印光法师文钞</title>
+<meta name="description" content="净土法门，普被三根，实如来上成佛道，下化众生，成始成终之妙道。弥陀誓愿，九界齐资，乃众生速出苦海，顿预莲池，心作心是之良谟。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-073/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="劝修念佛法门序（民二十七年） · 印光法师文钞">
+<meta property="og:description" content="净土法门，普被三根，实如来上成佛道，下化众生，成始成终之妙道。弥陀誓愿，九界齐资，乃众生速出苦海，顿预莲池，心作心是之良谟。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-073/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">劝修念佛法门序（民二十七年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，普被三根，实如来上成佛道，下化众生，成始成终之妙道。弥陀誓愿，九界齐资，乃众生速出苦海，顿预莲池，心作心是之良谟。</p><p class="p-trans">净土法门，普被三根，的确是如来上成佛道，下化众生，成始成终的妙道。阿弥陀佛的宏深誓愿，能够救助九法界一切众生，是众生迅速出离苦海、立即进入极乐世界七宝莲池，是心作佛、是心是佛的良谋。</p></div>
+<div class="para-pair"><p class="p-orig">此之一法，为一代时教中仗佛力之特别法门，不可与一切大小权实，仗自力之诸法门同论者。</p><p class="p-trans">这个法门，是一代时教中，依仗佛力的特别法门，是不能与一切大、小、权、实，依仗自力的各种法门相提并论的。</p></div>
+<div class="para-pair"><p class="p-orig">世多不察，稍聪明者，多矜己之智力，不肯修持。且藐视修持之人，鄙之为愚夫愚妇，若将浼焉。是让此即生了生脱死，超凡入圣之大利益于愚夫愚妇，而自己不愿得之，可不哀哉。</p><p class="p-trans">世人大多不明白这个道理，稍为聪明点的人，大多自恃自己的智力，不肯修持净土法门。而且还轻视修持净土法门的人，鄙视他们为愚夫愚妇，好像自己沾上了脏东西一样。这种人是把这个在现生就能了生脱死、超凡入圣的大利益让给了愚夫愚妇，而自己却不愿意得到，怎么能不令人为之感到悲哀呢？</p></div>
+<div class="para-pair"><p class="p-orig">不知净土法门，其大无外，为一切法门之发源归宿法门。是故一切法门，无不从此法界流，无不还归此法界也。</p><p class="p-trans">他们哪里懂得，净土法门，非常深广，包含一切法门，是一切法门发源与归宿的法门。因此一切法门，无不从此法界流出，无不还归此法界。</p></div>
+<div class="para-pair"><p class="p-orig">果已三惑净尽，四德圆证，不修亦可。若尚未至此地位，且请随华藏海众，十住，十行，十回向，十地，等觉菩萨之班，一致进行，以十大愿王之不思议功德，回向往生西方极乐世界，以期速圆佛果。</p><p class="p-trans">果真已经到了三惑（见思、尘沙、无明）净除究尽，圆满证得常乐我净的涅槃四德，不修这个法门也可以。如果还没有到达这个地位，那么就请你先跟随华藏海众的，十住、十行、十回向、十地、等觉这些菩萨的班次，一致进行，用十大愿王的不可思议功德，回向往生西方极乐世界，以期迅速圆满佛果。</p></div>
+<div class="para-pair"><p class="p-orig">能如是者，可谓大智慧，大丈夫，世出世间之能事毕矣。尚须随类现身，弘扬此法，作证佛果后之观音，普贤，以期众生咸成佛道而后已。</p><p class="p-trans">能这样做的人，可以称得上有大智慧，是大丈夫，世间、出世间一切事没有比这件事更高更妙的了。自己成就之后还应当随类现身，弘扬这个法门，像证得佛果之后的观世音菩萨和普贤菩萨那样去做，直到使众生全部都成就佛道为止。</p></div>
+<div class="para-pair"><p class="p-orig">光宿业深重，虽则五十余年虚预僧伦，一切诸法，皆无所知。虽常念佛，以业重故，其心与佛，未尝相应。然信佛无虚愿，当不弃我，故其志愿，任谁莫转。</p><p class="p-trans">我宿业深重，虽然出家五十多年了，但还只是徒有加入僧众的虚名，其他一切法门，都没有什么了解。虽然恒常念佛，但是因为业力深重的缘故，自心与佛，还不曾相应。不过，我坚信阿弥陀佛没有虚愿，应当不会放弃我，所以往生的志愿，任凭是谁都不能把我转变。</p></div>
+<div class="para-pair"><p class="p-orig">近圆瑛法师，讲演群经之暇，著劝修念佛法门之论，将欲流通，函命作序。光老矣，目力精神均不给，久已谢绝笔墨差事。今幸念佛一法，得人提倡，遂撮举大意，以塞其责云。</p><p class="p-trans">近来圆瑛法师，在讲演诸经的空暇，写了《劝修念佛法门》这部论著，想要印刷流通，来信让我作序。我老了，视力、精神都不足，已经有很长时间谢绝笔墨差事了。现在幸好念佛法门，有人提倡，于是就摘举了净土法门的大意，来搪塞责任。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【浼】</span>沾污；玷污。《孟子·公孙丑上》：“推恶恶之心，思与乡人立，其冠不正，望望然去之，若将浼也。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【三惑】</span>见思惑、尘沙惑、无明惑。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【四德】</span>指大乘大般涅槃所具有的四种德，即常、乐、我、净。常者，涅槃之体，恒常不变，没有生灭；乐者，涅槃之体，永远寂灭、安闲、受用、无丝毫的烦恼；我者，涅槃之体，得大自在，没有丝毫的束缚；净者，涅槃之体，解脱一切的垢染，非常清净。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【能事】</span>所能之事。《易·系辞上》：“引而伸之，触类而长之，天下之能事毕矣。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【塞责】</span>对自己应尽的责任敷衍了事。常用作谦词。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

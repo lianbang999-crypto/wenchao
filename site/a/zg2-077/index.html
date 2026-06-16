@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>因果录序 · 印光法师文钞</title>
+<meta name="description" content="因果报应者，乃人事与天理或顺或逆之影响也。故书曰，惠迪吉，从逆凶，惟影响。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-077/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="因果录序 · 印光法师文钞">
+<meta property="og:description" content="因果报应者，乃人事与天理或顺或逆之影响也。故书曰，惠迪吉，从逆凶，惟影响。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-077/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">因果录序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">因果报应者，乃人事与天理或顺或逆之影响也。故书曰，惠迪吉，从逆凶，惟影响。</p><p class="p-trans">因果报应，是人的行为随顺或者违逆天理而产生的影响。所以《尚书》中说：顺道则得吉祥，逆道则得凶险，果报的到来，如同影子跟随身体，如同回响应答声音。</p></div>
+<div class="para-pair"><p class="p-orig">人虽至愚，断无幸灾乐祸，避吉趋凶，愿一切同人斥名唾骂，天地鬼神夺魄殛诛，及死后灵魂永堕三途恶道，受诸极苦，经百千劫，莫之能出者。然其所作所为，多皆反其所愿者，何也。</p><p class="p-trans">即使愚蠢至极的人，也绝对不会遇到灾祸而高兴欢喜，躲避吉祥而去追逐凶险，以及希望一切人都来唾骂自己，希望被天地鬼神夺去魂魄诛杀性命，希望死后灵魂永远堕入恶道，受极大的苦痛，经历百千劫数而不能出离。然而世人的所作所为，大都和他们所希望的结果背道而驰，这是为什么呢？</p></div>
+<div class="para-pair"><p class="p-orig">由世少通人，不提倡因果报应之道，而家袭陋习，唯知以自私自利相传之所致也。间有所作所为，顺乎天理，内而家庭，恪尽己分，外而交际，务益于人。以及种种善举，悉皆奉行。若恤灾赈饥，济难扶危，戒杀放生，护惜物命，持斋吃素，诵经念佛，以期自他兼利，幽显均益者，无不家门清吉，子孙兴隆，富贵尊荣，令人景仰。</p><p class="p-trans">这是因为世间少有通达明智的人，不提倡因果报应的事理，而家族中只知道将自私自利的陋习世代传承的缘故。偶尔会有人，所作所为顺乎天理，在家庭当中恪守本分，尽职尽责，在对外交际时，务必要利益他人，以及种种善举，全都奉行。像赈救饥民，周济苦难，扶持危困，戒杀放生，爱护生命，持斋吃素，诵经念佛，以期自己、他人、阴间、阳间都得到利益。这样的人，无不是家门清平吉祥，子孙兴隆昌盛，富贵尊荣，令人景仰。</p></div>
+<div class="para-pair"><p class="p-orig">历观传记，凡贤哲挺生，功业杰出，或道传群圣之心，或德为万民之望者，其先代皆有利人利物，资幽资显之懿行阴德焉。</p><p class="p-trans">遍观历代以来的传记，但凡是功业杰出，或者传承群圣心法，或者德行被万民所景仰的贤哲。他们的祖先都做过利人利物，资益阳界冥界的阴德善行。</p></div>
+<div class="para-pair"><p class="p-orig">然此特凡眼所见之绪余耳，而其人之神识，或上生天宫，或高超佛国，世间凡夫，又何能悉知之而悉见之耶。</p><p class="p-trans">然而这只是凡人眼睛所看见的一小部分而已。他们的神识，或者上生到天界，或者高超到佛国。世间的凡夫，又哪能全都见到知道呢。</p></div>
+<div class="para-pair"><p class="p-orig">因果之理，大发明实维佛经，而儒教经书，亦屡宣说。若书之作善降之百祥，作不善降之百殃。与洪范五福六极之说。及易之积善之家必有余庆，积不善之家必有余殃。莫不皆以因果报应之理示人。</p><p class="p-trans">因果的道理，彻底显发阐明出来，实际是在佛经当中。而儒教的经典中，也多次作了宣说。像《尚书》中“作善降之百祥，作不善降之百殃”与《尚书·洪范》中“五福六极”的言句。以及《周易》中的“积善之家必有余庆，积不善之家必有余殃。”都是用因果报应的道理来教示人。</p></div>
+<div class="para-pair"><p class="p-orig">但以其言简略，只说现世，及与子孙，未能详言过去，现在，未来，轮回六道三途之事，若不深研精思，或致当面错过。兼以俗儒每欲各竖门庭，与佛竞异，纵令知之，亦不肯提倡。</p><p class="p-trans">只是因为言语简略，并且只说到了现世和子孙，而没能详细说出过去、现在、未来三世当中轮回六道的事理。所以如果不深入研究，专精思考，或许会错过（其中的深意）。再加上知见庸俗的儒生，每每想要各立门庭，争着想要显示与佛法不同。即使他们知道这些事理，也不肯加以提倡。</p></div>
+<div class="para-pair"><p class="p-orig">致使贤者莫由树淑世善民之极功，愚者悉皆怀弱肉强食之恶念。由兹互相攻击，成千古未闻之杀劫。被杀者人固知其可惨，而杀人者之惨，当更酷烈万倍，惜世人不能悉知悉见。</p><p class="p-trans">从而导致贤善的人无从树立教化世道人心的极大功勋，更使得愚昧的人全都心怀弱肉强食的恶念。从此互相攻击，酿成千古未闻的杀劫。被杀的人，人们自然知道他们的悲惨。而杀人者的悲惨，必当酷烈万倍，可惜世间的人对此不能全知全见。</p></div>
+<div class="para-pair"><p class="p-orig">其可见者，若被人杀，若灭门绝祀，乃千万分之一二耳，其在三途所受之苦，则罄竹难书矣，可不悲夫。</p><p class="p-trans">可以看见的部分结局，比如杀了人又被人杀掉，比如杀人之后全家灭绝、断子绝孙，这只不过是千万分之一二罢了。他们在三恶道当中所受的痛苦，就罄竹难书了。能不悲哀吗。</p></div>
+<div class="para-pair"><p class="p-orig">吾常曰，因果者，世出世间圣人，平治天下，度脱众生之大权也。即圣教昌明之世，若不提倡因果，尚不能普令愚民潜息隐恶，悉使智者，大积阴功。</p><p class="p-trans">我常常说，因果是世出世间的圣人，用来平治天下、度脱众生的大权。即使是圣教昌明的时代，如果不提倡因果，尚且不能让愚昧的人全都停止作恶，不能让智慧的人全都大积阴德。</p></div>
+<div class="para-pair"><p class="p-orig">况今世道人心，坏至其极，废弃圣经，推翻伦理，邪说横流，载胥其溺。有心世道者，思欲挽回狂澜，若不以因果报应为震聋发瞆之资，虽佛菩萨圣贤悉出于世，亦莫如之何，况其下焉者乎。</p><p class="p-trans">何况现在的世道人心，败坏到了极点。废弃圣教经典，推翻纲常伦理，邪说流行，道德沦陷。有心想挽救世道的人，知道要想挽回狂澜，如果不用因果报应作为震聋发瞆的资粮，那么即使佛菩萨、圣贤全都出现在世间，也没有办法。而佛菩萨圣贤之下的人就更没有办法了。</p></div>
+<div class="para-pair"><p class="p-orig">无锡金居士昌，有见于此，特记录近世，及现时各因果事，排印流布。冀人人各怀自利利人之心，以行己立立人之道。则习尚正而风俗淳淑，人祸息而天眷常临。举此竞争士类，同作羲皇上人。因序其大意，以贡阅者。</p><p class="p-trans">江苏无锡的金昌居士，见到这种情形，就特别记录下近代和当代的各种因果事理，排印流布。希望每个人都怀着自利利人之心，来实行己立立人之道。那么就会民风淳正，人祸平息，上天眷顾，所有争夺名利的人，都同作隐逸无争的君子啊。因此序写其中大意，呈现给读者。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【迪吉】</span>《书·大禹谟》：“惠迪吉，从逆凶。”孔传：“迪，道也。顺道吉，从逆凶。”后因以“迪吉”表示吉祥，安好。此句意为：人顺道则吉，从逆则凶，吉凶之报。惟若影之随形，响之应声，言其无不报也。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【懿行】</span>善行。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【绪余】</span>抽丝后留在蚕茧上的残丝。借指事物之残余或主体之外所剩余者。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【五福】</span>五种幸福。《书·洪范》：“五福：一曰寿，二曰富，三曰康宁，四曰攸好德，五曰考终命。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【六极】</span>谓六种极凶恶之事。《书·洪范》：“六极：一曰凶短折，二曰疾，三曰忧，四曰贫，五曰恶，六曰弱。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【潜息】</span>谓无形中止息。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【载胥及溺】</span>相继沉没。出自《诗经·大雅·桑柔》。载：句首语助词，无义；胥：相。及：与。溺：落水。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【习尚】</span>犹风尚。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【淳淑】</span>仁厚善良。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【士类】</span>文人、士大夫的总称。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【羲皇上人】</span>羲皇，指伏羲氏。古人想象羲皇之世其民皆恬静闲适，故隐逸之士自称羲皇上人。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

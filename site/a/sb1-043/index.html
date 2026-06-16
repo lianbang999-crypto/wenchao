@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复高鹤年居士书六 · 印光法师文钞</title>
+<meta name="description" content="久未会晤，兼不知阁下行踪，是以未曾致书。前者张瑞曾居士来函，言因他事，蒙居士厚爱，为之转旋，未至受坏人之累，故欲赴沪申谢，光因附函问候。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-043/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复高鹤年居士书六 · 印光法师文钞">
+<meta property="og:description" content="久未会晤，兼不知阁下行踪，是以未曾致书。前者张瑞曾居士来函，言因他事，蒙居士厚爱，为之转旋，未至受坏人之累，故欲赴沪申谢，光因附函问候。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-043/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复高鹤年居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">久未会晤，兼不知阁下行踪，是以未曾致书。前者张瑞曾居士来函，言因他事，蒙居士厚爱，为之转旋，未至受坏人之累，故欲赴沪申谢，光因附函问候。</p><p class="p-trans">很久没有见面了，又不知阁下的行踪，所以没有给你写信。前些天，张瑞曾居士来信，说因为他的事，承蒙居士厚爱，为他展转周旋，没有受到坏人的拖累，所以想要到上海表示感谢，我因此附信问候你。</p></div>
+<div class="para-pair"><p class="p-orig">次接梅荪函，言居士与柏农居士十八日到宁，一视法云形势，以定殿基。又许建大殿时，当复再来，不胜欣慰。</p><p class="p-trans">其次接到魏梅荪的信，说居士与李柏农居士十八日到了南京，看一下法云寺的形势，以定好大殿的基址。又许诺建大殿的时候，当会再来，不胜欣慰。</p></div>
+<div class="para-pair"><p class="p-orig">兹接手书，知尚在南园听经，所言琥珀朝珠，供养菩萨，实为难舍能舍，莫大功德。但此寺香火门头，来人甚杂，必不能挂于菩萨项中。但可存于衣钵寮或库房。</p><p class="p-trans">现在接到你的信，知道你还在南园听经，所说的琥珀朝珠，供养菩萨，实在是难舍能舍，莫大功德。但这座寺院香火门头，来往的人员很复杂，一定不能挂在菩萨的颈项中。只可以保存在衣钵寮或者库房里。</p></div>
+<div class="para-pair"><p class="p-orig">然此等宝物，既不能用，后必至令见小之人窃去。则未得实益，而令此窃者徒受其损。不如仍向真达师处收回，或转送人，或卖之，以作功德。方为有实益耳。鄙见如是，不知居士以为然否。</p><p class="p-trans">可是这等宝物，既然不能使用，以后必定让贪小利的人偷去。那么就不得实际利益，反而令这个偷窃的人，徒然受到宝物的损害。不如仍从真达法师那里收回来，或者转送他人，或者变卖，来作功德。这样才有真实的利益。我的浅见是如此，不知居士，认为对吗？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【南园】</span>是民族资本家、南洋兄弟烟草公司创办人简照南、简玉阶兄弟的私家花园，以简照南之“南”题名为“南园”。简氏兄弟皈依佛门后，将南园易名“觉园”，取佛陀是“觉”者之意。觉园坐落在北京西路1400弄，原名南园，筑于民国9年。早期东起小沙渡路（今西康路），西到赫德路（今常德路），南临爱文义路（今北京西路），北至新闸路，占地1.5万平方米。园正门朝东，里面建成寺庙式的两进殿宇，向西面常德路418号开门，建成的香光堂2层大厅及家房等成为花园楼阁式的精舍道场。园内筑有九曲桥、假山、天桥、湖心亭、石碑等景致，还植有菩提树。曾设贫民诊所，施诊给药。后又在2楼设一佛声电台传播佛经，其后叶恭绰居士捐资于东南端建“法宝馆”。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

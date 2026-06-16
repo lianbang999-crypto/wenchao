@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>70、袁了凡四训铸板流通序 · 印光法师文钞</title>
+<meta name="description" content="圣贤之道，唯诚与明。圣狂之分，在乎一念。圣罔念则作狂，狂克念则作圣。其操纵得失之象，喻如逆水行舟，不进则退。不可不勉力操持，而稍生纵任也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-070/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="70、袁了凡四训铸板流通序 · 印光法师文钞">
+<meta property="og:description" content="圣贤之道，唯诚与明。圣狂之分，在乎一念。圣罔念则作狂，狂克念则作圣。其操纵得失之象，喻如逆水行舟，不进则退。不可不勉力操持，而稍生纵任也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-070/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第四部分·序文 · 如诚法师、圆涛法师译</div>
+      <h1 class="art-title">70、袁了凡四训铸板流通序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">圣贤之道，唯诚与明。圣狂之分，在乎一念。圣罔念则作狂，狂克念则作圣。其操纵得失之象，喻如逆水行舟，不进则退。不可不勉力操持，而稍生纵任也。</p><p class="p-trans">成就圣贤的道路，唯有“诚”和“明”这两方面。圣人与愚狂人的分别，在于一念心。圣人失去正知正觉就成为狂妄的人，狂妄的人克服邪念就能作圣人。我们严持操守便得圣贤之道，如果失去操守，放纵欲望就得不到。好比逆水行舟，不进则退。因此有志修圣贤之道的人不可不勉力操持。不可稍微萌生放纵任意的心。</p></div>
+<div class="para-pair"><p class="p-orig">须知诚之一字，乃圣凡同具，一如不二之真心。明之一字，乃存养省察，从凡至圣之达道。</p><p class="p-trans">要知道“诚”这个字，是圣人和凡夫共同具有的一如不二的真心。“明”这个字，是我们存心养性，不断反省观察，从凡夫到达圣贤的公认准则。</p></div>
+<div class="para-pair"><p class="p-orig">然在凡夫地，日用之间，万境交集。一不觉察，难免种种违理情想，瞥尔而生。此想既生，则真心遂受锢蔽。而凡所作为，咸失其中正矣。</p><p class="p-trans">然而，我们身为凡夫，在日常生活中，面对万缘境界现前，一不觉察清楚，内心种种违背纲常伦理的情感和妄想，难免（不由自主地）忽然生起。这种无明妄想既然生起来，那么真心就被禁锢遮盖了。而后凡所作所为都失去其中正的道理。</p></div>
+<div class="para-pair"><p class="p-orig">若不加一番切实工夫，克除净尽。则愈趋愈下，莫知底极。徒具作圣之心，永沦下愚之队。可不哀哉。</p><p class="p-trans">如果不切实下一番苦功夫，克制欲望，将妄念彻底清除干净，就会使自己的情操志向越来越下劣，不知道会堕落到什么程度的深渊之中。我们白白拥有超凡入圣的真心，却永远沉沦在愚痴下劣人的行列里，怎么能不悲衰呢？</p></div>
+<div class="para-pair"><p class="p-orig">然作圣不难，在自明其明德。欲明其明德，须从格物致知下手。倘人欲之物，不能极力格除。则本有真知，决难彻底显现。</p><p class="p-trans">然而成圣成贤不难，关键在于自己要恢复显明真心本性，想要恢复自己光明的真心本性，就必须从格除我们的私欲下手。假使人们的物欲不能极力格除，那么我们本有的真知（即真如本性，真心，人固有的良知，明德），决定难以彻底显现出来。</p></div>
+<div class="para-pair"><p class="p-orig">欲令真知显现，当于日用云为，常起觉照。不使一切违理情想，暂萌于心。常使其心，虚明洞彻。如镜当台，随境映现。但照前境，不随境转。妍媸自彼，于我何干。来不预计，去不留恋。</p><p class="p-trans">想要让真知显现，应当在日常生活中常起觉照。不使一切违背情理的妄想，稍微在心中萌发。常使这颗心虚明洞彻。如镜当台，随境映现。只映照当前境界，不随境界而转。美丑是外境的事，和我有什么关系呢。境界没来时就不去预想，境界若消失也不去留恋。</p></div>
+<div class="para-pair"><p class="p-orig">若或违理情想，稍有萌动。即当严以攻治，剿除令尽。如与贼军对敌，不但不使侵我封疆，尚须斩将搴旗，剿灭余党。</p><p class="p-trans">如果心中有违背理智的情想萌动。就应当严厉加以攻伐和对治，将妄想剿除干净。好像和贼军对垒，不但不能使它侵犯我的封疆，还必须斩其将拔其旗，剿灭一切匪党。</p></div>
+<div class="para-pair"><p class="p-orig">其制军之法，必须严以自治，毋怠毋忽。克己复礼，主敬存诚，其器仗须用颜子之四勿，曾子之三省，蘧伯玉之寡过知非。加以战战兢兢，如临深渊，如履薄冰，与之相对。</p><p class="p-trans">这种制军的方法必须严格自治，不要懈怠疏忽。克制自己的私欲，使自己的行为端正，内心恭敬虔诚。所用的武器必须用颜回“非礼勿视”的四勿、曾子“为人谋而不忠乎”的三省、蘧伯玉“年五十而知四十九之非”的寡过知非。再加上战战兢兢，如临深渊，如履薄冰的慎独功夫，来与匪党相对阵。</p></div>
+<div class="para-pair"><p class="p-orig">则军威远振，贼党寒心。惧罹灭种之极戮，冀沾安抚之洪恩。从兹相率投降，归顺至化。尽革先心，聿修后德。将不出户，兵不血刃。举寇仇皆为赤子，即叛逆悉作良民。上行下效，率土清宁。不动干戈，坐致太平矣。</p><p class="p-trans">那么就会使军威远振，令贼党寒心。惧怕遭到灭种的极刑杀戮，希望普遍蒙沾安抚的洪恩。于是就会相率投降，归顺至化。尽力洗心革面，修正自己未来的德行。这样就可以将不出户，兵不血刃。全体寇仇都会成为赤子，即便是叛逆之人也可转化成良民。上行下效，整个国土都清净宁静。不动干戈而坐致太平了。</p></div>
+<div class="para-pair"><p class="p-orig">如上所说，则由格物而致知，由致知而克明明德。诚明一致，即凡成圣矣。其或根器陋劣，未能收效。当效赵阅道日之所为，夜必焚香告帝，不敢告者，即不敢为。</p><p class="p-trans">就象上述所说的，由格除私欲而致良知显现，由于有了良知而彰明光明的性德。诚明一致（修德有功，性德方显）就会转凡成圣。如果因为自己的根器陋劣，未能收效。则应当效仿宋朝赵阅道，白天所有的行为，夜间必然焚香禀告上天，不敢禀告的事就不敢去做。</p></div>
+<div class="para-pair"><p class="p-orig">袁了凡诸恶莫作，众善奉行，命自我立，福自我求，俾造物不能独擅其权。受持功过格，凡举心动念，及所言所行，善恶纤悉皆记，以期善日增而恶日减。</p><p class="p-trans">袁了凡，诸恶莫作，众善奉行，命自我立，福自我求，使造物主不能独专个人命运的决定权。受持《功过格》，凡举心动念及所言所行，善恶大小全都记下来，希望善日渐增加而恶日渐减少。</p></div>
+<div class="para-pair"><p class="p-orig">初则善恶参杂，久则唯善无恶。故能转无福为有福，转不寿为长寿，转无子孙为多子孙。现生优入圣贤之域，报尽高登极乐之乡。行为世则，言为世法。彼既丈夫我亦尔，何可自轻而退屈。</p><p class="p-trans">开始的时候则善恶参杂，久而久之就会只有善没有恶了。所以他就能转无福为有福，转不寿为长寿，转无子孙为多子孙。现生光荣地加入圣贤人的行列，死后高登极乐世界的九品莲。他的行为、言语都被世人效法遵行，他们既然都是大丈夫，我们也是啊，我们怎么可以自己看不起自己而自甘堕落呢！</p></div>
+<div class="para-pair"><p class="p-orig">或问，格物，乃穷尽天下事物之理。致知，乃推极吾之知识，必使一一晓了也。何得以人欲为物，真知为知，克治显现为格致乎。</p><p class="p-trans">或者问：格物的意思，是穷尽天下事物之理。致知，是推究穷极我们的知识，必定使之一一明白晓了。怎么可以用“私欲”来解释“物”，“良知”来解释“知”，“格”解释为“克治”，“致”解释为“显现”呢？</p></div>
+<div class="para-pair"><p class="p-orig">答曰，诚与明德，皆约自心之本体而言。名虽有二，体本唯一也。知与意心，兼约自心之体用而言。实则即三而一也。格致诚正明（此指明明德之明与诚明之明），五者皆约闲邪存诚返妄归真而言。</p><p class="p-trans">回答说：“诚”与“明德”，都是对着自心本体来说的。名称虽然是二个，本体却只有一个啊！“知”与“意”“心”，都是对着自心本体的作用来说。实际是即三个而为一个啊！格（物）、致（知）、诚（意）、正（心）、明（明德），（这个明是指明明德的明，与诚明的明。）这五者都是就防止邪念，心怀诚敬，返妄归真来说的。</p></div>
+<div class="para-pair"><p class="p-orig">其检点省察造诣工夫，明为总纲，格致诚正乃别目耳。修身正心诚意致知，皆所以明明德也。倘自心本有之真知为物欲所蔽，则意不诚而心不正矣。若能格而除之，则是慧风扫荡障云尽，心月孤圆朗中天矣。</p><p class="p-trans">其中检点省察自我的造诣工夫，“明”为总纲，“格、致、诚、正”是个别的条目罢了。修身、正心、诚意、致知，都是为了明明德啊！倘若自心本有的良知，被私欲所蒙蔽，那么就意地不诚，而心不正了。如果能够格除私欲，就是智慧之风扫荡业障乌云，心中明月圆满朗照天空了。</p></div>
+<div class="para-pair"><p class="p-orig">此圣人示人从泛至切，从疏至亲之决定次序也。若穷尽天下事物之理，俾吾心知识悉皆明了，方能诚意者。则唯博览群书遍游天下之人，方能诚意正心以明其明德。未能博览阅历者，纵有纯厚天姿，于诚意正心，皆无其分，况其下焉哉。有是理乎。</p><p class="p-trans">这是圣人开示我们，从浮泛到真切，从疏远到亲近的决定修持次序。如果是穷尽天下事物的道理，使我心中对什么知识都全部明了，方才能够“诚意”的话。那么就只有博览群书，遍游天下的人，才能够诚意正心来彰明他的明德了。没有能够博览阅历的人，纵然有纯厚的天姿，对于诚意正心，都没有份，何况是下面的修身、齐家、治国、平天下呢？有这样的道理吗？</p></div>
+<div class="para-pair"><p class="p-orig">然一切不深穷理之士，与无知无识之人，若闻理性，多皆高推圣境，自处凡愚。不肯奋发勉励，遵循从事。若告以过去现在未来三世因果，或善或恶，各有其报。则必畏恶果而断恶因，修善因而冀善果。</p><p class="p-trans">然而一切不深入探究，究竟明了理性的读书人，和无知无识的人，如果听闻道德理性，多半认为那是高不可攀的圣人境界，自己甘心身处凡愚的位置。以此借口不肯奋发勉励，遵循道德从事。如果告诉他过去、现在、未来三世因果及善恶报应的道理。他必然会害怕遭恶果而先断除恶因，修行善因而希望得到善果。</p></div>
+<div class="para-pair"><p class="p-orig">善恶不出身口意三。既知因果，自可防护身口，洗心涤虑。虽在暗室屋漏之中，常如面对帝天，不敢稍萌匪鄙之心，以自干罪戾也已。此大觉世尊普令一切上中下根，致知诚意正心修身之大法也。</p><p class="p-trans">善恶报应不出身、口、意这三处。既然知道了三世因果、善恶报应的道理，自然可以防护身口，洗除心垢，清除烦扰，使思想清净。就算独自一人在暗室屋漏中，常常如同面对帝王与上天一样，不敢稍微萌生下劣卑鄙的心，因为自己感觉自己罪业深重啊。这是释迦如来想让一切上中下根机的众生，都能致良知、诚意、正心、修身的广大法门啊。</p></div>
+<div class="para-pair"><p class="p-orig">然狂者畏其拘束，谓为著相。愚者防己愧怍，谓为渺茫。除此二种人，有谁不信受。</p><p class="p-trans">然而狂妄的人害怕受到约束，说这是著相修行。愚痴的人害怕内心惭愧难堪，便说因果渺茫空洞。除了这二种人，有谁不信受奉行呢？</p></div>
+<div class="para-pair"><p class="p-orig">故梦东云，善谈心性者，必不弃离于因果。而深信因果者，终必大明夫心性。此理势所必然也。须知从凡夫地乃至圆证佛果，悉不出因果之外。有不信因果者，皆自弃其善因善果。而常造恶因，常受恶果，经尘点劫，轮转恶道，末由出离之流也。哀哉。</p><p class="p-trans">所以彻悟禅师说：“善谈心性者，必不弃离于因果；而深信因果者，终必大明夫心性。”这是理势所必然的。要知道从凡夫地，乃至圆证佛果，都不出因果之外。有不信因果的人都是自己放弃了善因善果。而常造恶因，常受恶果，经尘点劫，轮转在恶道中，没有出离六道的希望，这真是悲哀！</p></div>
+<div class="para-pair"><p class="p-orig">圣贤千言万语，无非欲人反省克念，俾吾心本具之明德，不致埋没，亲得受用耳。但人由不知因果，每每肆意纵情。纵毕生读之，亦只学其词章，不以希圣希贤为事，因兹当面错过。</p><p class="p-trans">圣贤的千言万语，无非想要我们反省自己，克制恶念，使我们自心本具的明德，不致于埋没，亲自得到受用罢了。但是由于我们不知道因果，每每都是肆意纵情。纵然是一辈子读圣贤书，也只是学习其中的文词章句，不将仰慕效法圣贤作为事务，因此当面错过。</p></div>
+<div class="para-pair"><p class="p-orig">袁了凡先生训子四篇，文理俱畅，豁人心目。读之自有欣欣向荣，亟欲取法之势。洵淑世良谟也。</p><p class="p-trans">袁了凡先生训诲儿子的四篇文章，文字义理都很通畅，豁开我们的内心眼目。读了之后，自然有欣欣向荣，振奋向前，立刻想要取法而行的态势。实在是济世的良谋啊！</p></div>
+<div class="para-pair"><p class="p-orig">永嘉周群铮居士，感佩之极。祈上海商务印书馆铸铅为板，以公同志，又印送若干，以结法缘。祈予为序。因撮取圣贤克己复礼闲邪存诚之意，以塞其责云。</p><p class="p-trans">永嘉的周群铮居士，对这本书，感动佩服到极点。祈求上海商务印书馆铸成铅板，公开给志同道合的人，又印送若干本，以结法缘。祈求我写个序。因此撮略摘取圣贤们克己复礼，闲邪存诚的用意，来尽这个责任。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【诚明】</span>至诚之心和完美的德性。语出《礼记·中庸》：“自诚明谓之性，自明诚谓之教，诚则明矣，明则诚矣。”郑玄注：“由至诚而有明德，是圣人之性者也。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【狂人】</span>狂妄无知的人。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【罔念】</span>谓不思为善。《书·多方》：“惟圣罔念作狂，惟狂克念作圣。”孔传：“惟圣人无念于善则为狂人，惟狂人能念于善则为圣人。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【存养】</span>存心养性。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【省察】</span>检查；内省。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【瞥尔】</span>突然；迅速地。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【锢蔽】</span>禁锢蔽塞。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【中正】</span>得当；不偏不倚。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【底极】</span>终止；终极。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【格物致知】</span>谓研究事物原理而获得知识。为中国古代认识论的重要命题之一。语出《礼记·大学》：“欲诚其意者，先致其知，致知在格物。”此处意为：格除私欲，以显良知。印祖在《复念佛居士书》中有云：光近来作一格物致知确解，今为陈之。解曰，格除幻妄私欲物，致显中庸秉彝知。此物，即心中不合天理人情之私欲。一有私欲，则所知所见皆偏而不正。若格除此幻妄不实之私欲，则不偏不易，即心本具之正知自显。一举一动，悉合情理，了无偏僻。此圣人为天下后世所立修己治心之大法。修齐治平在是。超凡入圣亦在是。于此用功最省力。而其所得之利益，随各人之工夫浅深，为贤为圣，乃至为佛，悉由是得。况其下焉者乎。惜后儒不察，以物为事物，以知为知识。则是以根本之根本，认为枝末之枝末。又以枝末之枝末，认为根本之根本。不但不得圣人之意，亦乱圣人之文。何以言之，以欲诚其意，先致其知，致知在格物。此极省力，极简便，举念即得之法。弃之不讲，令人推极吾之知识，穷尽天下事物之理，以期诚意正心者，则举世难得其人矣。由宋儒误认物为外物，故后儒只云诚正，而不提格致。此理极明显，以自命得圣人心传者错解之。致圣人教人修己治心之道，晦塞不彰。可不哀哉。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【妍媸】</span>美好和丑恶。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【搴旗】</span>拔取敌方旗帜。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【克己复礼，闲邪存诚】</span>《印光法师文钞·三编·跋三》中写道：一者，入道之初，发足伊始，必须遵循印公遗教，致力于克己复礼，闲邪存诚之功。克者，胜也。己者，私欲也。六尘之境，五欲之乐，凡心之所好，情之所慕，粗则声色货利，细则学问知见。乃至进退毁誉，盛衰得失，死生祸福，足以动吾心者，皆为私欲。必战而胜之，不令纤毫，滞于胸中。然后心地空明，皎若琉璃，脱洒自在，无所障碍。必至此地，学佛方有入手处。复者，还也。礼者，理也。战胜己私，而后始得还归于真如之理也。一切凡夫，蔽于己私，而违逆于真如之理也，久矣。今日发心学佛，固当以此为始也。闲者，防闲也。邪者，非理之思也。凡淫声美色，荡心佚志。狂情戾气，悖理违真。游辞浮文，废时憩日。异端曲说，背经侮圣。如是之类，皆名非理。当防闲之，不令入于吾心。即是防非止恶之意也。存者，持而不失也。诚者，真实之心也。即起信论所说直心正念真如是也。斯乃自利利他二行之本也。近世号称知识者，往往好钻研名相，驰骤空有，涉猎三藏，挥斥五宗，却不知克己复礼，闲邪存诚为何事。于是心口相违，表里不一。甚则闲居为不善，无所不至。身犹在世，心已先亡。及乎临终舍报之时，怕怖慞惶，不知所措。反咎修行无益，佛法匪灵。岂不谬哉。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【主敬存诚】</span>语本《易·乾》：“闲邪存其诚。”《礼记·少仪》：“宾客主敬，祭祀主敬。”谓恪守诚敬。宋儒以此为律身之本。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【器仗】</span>武器总称。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【四勿】</span>孔子主张克己复礼，应当“非礼勿视，非礼勿听，非礼勿言，非礼勿动”。语见《论语·颜渊》。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【三省】</span>省察三事。《论语·学而》：“曾子曰：‘吾日三省吾身：为人谋而不忠乎？与朋友交而不信乎？传不习乎？’”后泛指认真反省自己的过失。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【寡过知非】</span>《淮南子·原道训》：“故蘧伯玉年五十，而有四十九年非。”谓年五十而知前四十九年之过失。后因以“知非”称五十岁。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【聿修】</span>《诗·大雅·文王》：“无念尔祖，聿修厥德，永言配命，自求多福。”毛传：“聿，述。”聿本助词，后多训为“述”，因以“聿修”谓继承发扬先人的德业。</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【赤子】</span>比喻百姓，人民。</p>
+<p class="note-item"><span class="note-n">[21]</span><span class="note-term">【上行下效】</span>在上者怎样做，在下者就跟着学。</p>
+<p class="note-item"><span class="note-n">[22]</span><span class="note-term">【率土】</span>“率土之滨”之省。谓境域之内。《诗·小雅·北山》：“率土之滨，莫非王臣。”</p>
+<p class="note-item"><span class="note-n">[23]</span><span class="note-term">【清宁】</span>指时世太平。</p>
+<p class="note-item"><span class="note-n">[24]</span><span class="note-term">【赵阅道】</span>赵阅道，名忭，衢州西安人。气宇清逸，喜愠不形于色。仁宗朝官御史，劲直敢言。神宗朝擢参知政事，屡陈新法之害。历知诸州，民怀其惠。阅道年四十余，屏去声色，居常蔬食，究心宗教。初在衢与慧来禅师游，慧来不容措一辞。及在青州时，时冥坐，忽闻雷震，大悟，作偈曰：“默欲公堂虚隐几，心源不动淇如水，一所霹雳顶门开，唤起从前自家的。”慧来闻而笑曰：“赵阅道撞彩耳。”元丰初，以太子太保致仕作高斋，居之禅诵精严，日延一僧与之对饭，尝作偈曰：“腰佩黄金巳退藏，个中消息也寻常，时人要识高斋老，只是柯村赵四郎。”注云“切忌错认”，日所为事，夜必露香以告于天。七年卒，年七十七，先期遍辞亲友，其子屼见其形色异常，问后事，阅道厉声叱之，遗慧来书曰：“非师平日警诲至此，必不得力矣。”少顷跌坐而化。</p>
+<p class="note-item"><span class="note-n">[25]</span><span class="note-term">【穷理】</span>穷究事物之理。</p>
+<p class="note-item"><span class="note-n">[26]</span><span class="note-term">【愧怍】</span>惭愧。语出《孟子·尽心上》：“仰不愧于天，俯不怍于人。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

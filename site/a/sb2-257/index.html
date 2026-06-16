@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>乐清佛教净业社缘起 · 印光法师文钞</title>
+<meta name="description" content="大觉世尊，愍诸众生，迷本妙心，轮回生死。示生世间，成等正觉。随众生机，说种种法。虽大小权实不同，偏圆顿渐各异。要皆为令众生开示悟入佛之知见，究竟成佛而已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-257/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="乐清佛教净业社缘起 · 印光法师文钞">
+<meta property="og:description" content="大觉世尊，愍诸众生，迷本妙心，轮回生死。示生世间，成等正觉。随众生机，说种种法。虽大小权实不同，偏圆顿渐各异。要皆为令众生开示悟入佛之知见，究竟成佛而已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-257/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">乐清佛教净业社缘起</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大觉世尊，愍诸众生，迷本妙心，轮回生死。示生世间，成等正觉。随众生机，说种种法。虽大小权实不同，偏圆顿渐各异。要皆为令众生开示悟入佛之知见，究竟成佛而已。</p><p class="p-trans">大觉世尊，怜悯一切众生，迷失本有的妙心，轮回生死。于是示现出生在这个世间，成就正等正觉的佛果。随顺众生的根机，宣说种种教法。虽然有大乘、小乘、权教、实教的不同，偏教、圆教、顿教、渐教的各种差异。目的都是为了令众生开示悟入佛之知见，究竟成佛而已。</p></div>
+<div class="para-pair"><p class="p-orig">然众生根有大小，迷有浅深，不能直下畅佛本怀。又为末世众生业障深厚，智慧浅薄，寿命短促，知识稀少，匪仗佛力，决难了脱。于是特开一总摄初中后法，普被上中下根之净土法门。俾彼已证法身者，速成佛道。未断烦惑者，亦出轮回。其为利益，超出一代时教之上。</p><p class="p-trans">然而众生的根机有大有小，迷惑有浅有深，不能直下畅达佛陀的本怀。又因为末法时代的众生，业障深厚，智慧浅薄，寿命短促，善知识稀少，若不依仗佛力，决定很难了脱生死。于是特别开启了一个总摄初、中、后教法，普被上、中、下三根的净土法门。使那些已经证得法身的菩萨，快速成就佛道；还没有断除烦惑的凡夫，也能出离轮回。这个利益，超出佛陀一代时教之上。</p></div>
+<div class="para-pair"><p class="p-orig">以一则专仗自力。一则兼仗佛力。譬如跛夫，尽日只行数里，若乘转轮圣王轮宝，一日即可遍达四洲。故得九界同归，十方共赞。千经俱阐，万论均宣。以其为十方三世一切诸佛上成佛道，下化众生，成始成终之总持法门故也。</p><p class="p-trans">因为一个是专仗自力，一个是兼仗佛力。譬如瘸腿的人，一整天只能走几里路。如果乘坐转轮圣王的轮宝，一天就可以遍达四大部洲。所以使得九法界同归净土，十方佛共赞极乐。千部经典都阐扬，万部论典都宣讲。因为这个法门，是十方三世一切诸佛上成佛道，下化众生，成始成终的总持法门的缘故啊！</p></div>
+<div class="para-pair"><p class="p-orig">溯自大教东来，远公首开莲社。当时高僧巨儒之预会者，凡百二十三人。自兹厥后，代有高人，续焰传灯，遍布中外。</p><p class="p-trans">追溯佛教东来中土，慧远大师首开莲社。当时高僧、大儒加入莲社的，共有一百二十三人。从此以后，历代都有高人，延续法焰、传承慧灯，遍布中外。</p></div>
+<div class="para-pair"><p class="p-orig">如来大法，有律教宗密净五种。唯净土一法，最易修持，最易成就，为律教宗密之归宿。故古今律教宗密之知识，皆务密修，尤多极力显化者。</p><p class="p-trans">如来大法，有律、教、禅、密、净五种。唯有净土法门，最容易修持，最容易成就。是律、教、禅、密各宗的归宿。所以古今律、教、禅、密各宗的善知识，都致力密修净土，还有很多极力显扬弘化净土的。</p></div>
+<div class="para-pair"><p class="p-orig">此法真俗圆融，机理双契。不但为学道者，立出轮回之法。实为治国者，坐致太平之基。故往圣前贤，通人智士，咸皆修持。若群星之拱北，众水之朝东焉。</p><p class="p-trans">这个法门真俗圆融（注1），机理双契。不但为学道的人，建立出离轮回的方法。实在也是治理国家的人，轻易获得天下太平的基础。所以从前的圣贤，通达之人、有智之士，全都修持净土。如同群星拱卫北斗星，众水都朝东流入大海。</p></div>
+<div class="para-pair"><p class="p-orig">迩来人心不古，弃本逐末。欧风东渐，竞尚唯新。废经废伦，废孝免耻，以驯致于大加提倡杀父杀母矣。有心世道人心者，见此现象，恐人道或几乎息，群起而设法挽救之。</p><p class="p-trans">近来人心不古，舍弃根本、追逐枝末。欧风东来，大家争着崇尚唯新。废除经典、废弃伦常，废除孝道、不知廉耻，以致逐渐发展到了大加提倡杀父杀母啊！有心挽救世道人心的人，见到这种现象，恐怕为人之道或许将要息灭了，大家群起而设法来挽救。</p></div>
+<div class="para-pair"><p class="p-orig">于是各处咸立净业社，居士林，提倡佛学。明三世之因果，示六道之轮回。令一切人守孝弟忠信礼义廉耻之八德，行格致诚正修齐治平之八事。则必能惩忿窒欲，闲邪存诚，诸恶莫作，众善奉行，而为世间贤人善人。发菩提心，自行化他，信愿念佛，求生西方，迨至临终，蒙佛接引，往生西方，而为出世间上善人。此各处立净业社之大意也。</p><p class="p-trans">于是，各个地方都成立了净业社、居士林，提倡佛学。阐明三世因果，显示六道轮回。令一切人遵守孝、弟、忠、信、礼、义、廉、耻这八德，实行格物、致知、诚意、正心、修身、齐家、治国、平天下这八事。那么必定能够惩忿窒欲（克制忿怒，抑制欲念），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，而成为世间的贤人善人；发菩提心，自行化他，信愿念佛，求生西方，等到临终，蒙佛接引，往生西方，而成为出世间的上善之人。这是各地成立净业社的大意啊！</p></div>
+<div class="para-pair"><p class="p-orig">温州古为佛教兴盛之地。前者吴璧华极力提倡，故乐清虹桥，已有居士林之建立。今吴智馨，林智明，集合各信士，于县城中立一净业社，以期改转人心，辅翼国政。</p><p class="p-trans">温州，古时候是佛教兴盛的地方。以前，吴璧华极力提倡，所以乐清虹桥，已经有居士林建立了。现今吴智馨、林智明，集合各位信士，在县城中成立了一个净业社，以期改转人心，辅助国政。</p></div>
+<div class="para-pair"><p class="p-orig">深恐未谙佛理者，莫明其益之广大深远，特祈作记，以发挥其义致。庶即心本具之妙道，人人皆可亲得而实证矣。至于其所建立与所修持，另有记者，此不备书。（民国二十二年癸酉孟秋）</p><p class="p-trans">深恐不知道佛理的人，不明白修持净业利益的广大深远，特地请我写篇记文，来发挥其中的义理大致。使即心本具的妙道，人人都可以亲得而实证。至于净业社的建立与修持，另有文章记述，此处不再多写。（民国二十二年&lt;1933&gt;癸酉孟秋&lt;农历七月&gt;）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【真俗圆融】</span>“克论佛法大义，不出真俗二谛。真谛一法不立，即圣智所见之实体也。俗谛万行圆彰，即法门所修之行相也（俗，即建设之义，不可作世俗，俗鄙讲）。”（《印光法师文钞三编·卷四·上海护国息灾法会法语》）
+“学佛之人，必须真俗圆融，一道齐行。以其一法不立，始能修万行圆彰之道。万行圆彰，始能显一法不立之体。今为易解，特说一喻。真如法性之本体，如大圆宝镜，空空洞洞，了无一物。而胡人来则胡人现，汉人来则汉人现，胡汉俱来则俱现。正当空空洞洞，了无一物时，不妨胡来胡现，汉来汉现。正当胡来胡现，汉来汉现时，仍然空空洞洞，了无一物。禅宗多主真谛，即在万行圆彰处，指其一法不立。净宗多主俗谛，即在一法不立处，指其万行圆彰。明理智士，自无偏执。否则宁可著有，不可著空。以著有，虽不能圆悟佛性，尚有修持之功。著空，则拨无因果，成断灭见，坏乱佛法，疑误众生，其祸之大，不可言宣。吾人念佛，当从有念而起，念至念寂情亡时，则既无能念之我，亦无所念之佛，而复字字句句，历历分明，不错不乱，即所谓念而无念，无念而念也。念而无念，无念而念者，正念佛时，了无起心念佛之情念。虽无起心念佛之情念，而复历历明明，相续而念。然此工夫，非初心所能即得。若未到无念而念之工夫，即不以有念为事，则如毁屋求空。此空非是安身立命之所。古之禅德，多有礼拜持诵，不惜身命，如救头然者。故永明寿禅师，日课一百零八种佛事，夜往别峰，行道念佛。况后世学者，不重事修，而欲成办道业乎。以大悟一法不立之理体，力行万行圆修之事功，方是空有圆融之中道。空解脱人，以一法不修为不立，诸佛称为可怜悯者。莲池大师云，著事而念能相续，不虚入品之功。执理而心实未通，难免落空之祸。以事有挟理之功，理无独立之能，故也。吾人学佛，必须即事而成理，即理而成事。理事圆融，空有不二，始可圆成三昧，了脱生死。若自谓我即是佛，执理废事，差之远矣。当用力修持，一心念佛，从事而显理，显理而仍注重于事，方得实益。如等觉菩萨，尚以十大愿王，回向往生西方极乐世界，以期圆满佛果。今以凡夫而不自量，视念佛为小乘，不足修持，则将来定入阿鼻地狱矣。”（《印光法师文钞三编·卷四·上海护国息灾法会法语》）</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

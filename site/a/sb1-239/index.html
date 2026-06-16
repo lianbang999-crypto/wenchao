@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书十二 · 印光法师文钞</title>
+<meta name="description" content="孝经略义复函，当已收到。观孔子纪念之文，实为得其纲要，于讲道理则得，欲借此挽回世道人心，尚是只轮单翼，颇难收其实效。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-239/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书十二 · 印光法师文钞">
+<meta property="og:description" content="孝经略义复函，当已收到。观孔子纪念之文，实为得其纲要，于讲道理则得，欲借此挽回世道人心，尚是只轮单翼，颇难收其实效。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-239/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书十二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">孝经略义复函，当已收到。观孔子纪念之文，实为得其纲要，于讲道理则得，欲借此挽回世道人心，尚是只轮单翼，颇难收其实效。</p><p class="p-trans">《孝经略义》的回信，应当已经收到。看你所写纪念孔子的文章，的确是得到了儒学的纲要，在讲道理这一方面，是有所得。但想要借此来挽回世道人心，还只是单个车轮，单只翅膀，很难收到实际成效。</p></div>
+<div class="para-pair"><p class="p-orig">先王淑世善民，有教有政，当人心淳善之时，只说其理，人自服从。现今是何世道，汝只知守旧章程，不知变通。于留纯儒之名边则可，于普转中下人心则难。</p><p class="p-trans">古代帝王，济世化民，有教育，有政令。在人心淳厚良善的时候，只说道理，人们就自然会服从。现今是什么世道，你只知道死守旧章程，却不知道变通。在遗留纯儒学者之名这方面，还可以。但对于普遍扭转中根下根人的心，就很难了。</p></div>
+<div class="para-pair"><p class="p-orig">是故当以因果报应之理为之辅翼，即所谓政教并施也（因果亦如刑政，可以折服强梁）。</p><p class="p-trans">所以，应当以因果报应的事理，作为济世救民的辅助，就是所谓的：政令与教育一并施用（因果也如同刑法政令，可以折服强横、凶暴之人）。</p></div>
+<div class="para-pair"><p class="p-orig">汝守儒分，亦非不能发明因果，福善祸淫，惠吉逆凶，以及古圣贤聿修厥德，永膺多福等。岂儒者亦不宜言及乎。</p><p class="p-trans">你遵守儒家的本分，也并非不能阐发显明因果，行善得福、邪淫招祸，顺理吉祥、违理凶险，以及古圣先贤修持己德、承继发扬先德，永享多福等道理。哪里是儒者就不宜说到因果呢？</p></div>
+<div class="para-pair"><p class="p-orig">而洪范五福六极，实示人以三世因果之理。在儒书中，此为最深，最有关系。先儒不信有前生后世，故一归于皇极，而绝不肯发其深蕴。以致因不知因果之故，现出废经废伦等禽兽行为之相。</p><p class="p-trans">而《尚书·洪范》中所说的五种福业，六种极凶之事，实际上就是显示给人们三世因果的道理。在儒书当中，这是最深，最有关系的。以前的儒生不相信有前生后世，所以一概归到君王统治天下的准则，而绝对不肯阐发其深藏的蕴义。以致因为不知道因果的缘故，出现废儒经、废伦常等禽兽行为的现象。</p></div>
+<div class="para-pair"><p class="p-orig">今当此相大现之时，仍只守说理一途，则用力多而得效寡矣。洪范五福，寿，富，康宁，攸好德，考终命，此五者，岂由王者之所主乎。六极之凶，短折，疾，忧，贫，恶，弱，亦非王者之所主也。</p><p class="p-trans">现今在这些现象大为显现的时候，仍然只守空说道理这方面，那就用力很多而得效太少了。《尚书·洪范》中的五福，是：长寿，富贵，康宁，好德，善终，这五福，哪里是由君王所能主宰的呢？六极之凶，是：短命，多病，忧愁，贫穷，貌丑，懦弱，也不是君王所能主宰的。</p></div>
+<div class="para-pair"><p class="p-orig">此实前因后果之大宗，乃约前生今世而论福善祸淫之天道也。实则天亦无权，不过随彼所作之善恶而畀之，儒家所谓命也。</p><p class="p-trans">这实在是前因后果的大宗旨，是针对前生今世来讨论行善得福、行淫招祸的天道啊！实际上，上天也没有权力主宰，不过是随各人所作的善恶行为而给予他善恶果报，这就是儒家所说的命。</p></div>
+<div class="para-pair"><p class="p-orig">此命亦自作之而自受之，天何尝与此厚而与彼薄乎。三世之理，唯佛为大发明。儒教圣贤，亦略示端绪。</p><p class="p-trans">这个命也是自作自受，上天何尝会对你优厚，对他刻薄呢？三世因果的道理，只有佛法大大地阐发显明。儒教的圣贤，也大略显示一些迹象头绪。</p></div>
+<div class="para-pair"><p class="p-orig">无如理学以欲有异于佛，竟将圣人治天下之大本，废弃不讲。徒欲以尽义尽分以宏儒教而启牖人。适见其知见之偏，而背畔乎圣与天也。</p><p class="p-trans">怎奈理学家因为想要不同于佛法，竟然将圣人治理天下的大根本，废弃不讲。徒然地想用尽道义、尽本分来宏扬儒教，并启发诱导他人。这正好看出理学家知见的偏颇，而且也背叛了圣贤之道与天理啊！</p></div>
+<div class="para-pair"><p class="p-orig">五福六极，若不约前生之因说，则向之与威，从何处施。可怜哉，后儒也。可怜哉，天下群黎，被此等高明人，抉去其希圣希贤乐天知命之眼目也。</p><p class="p-trans">五福六极，如果不针对前生之因来说，那么顺从得五福、违悖得六极，从何处施用呢？可怜啊！后世的儒生。可怜啊！天下的百姓，被这些所谓的高明人，除去了他们仰慕效法圣贤、乐天知命的眼目。</p></div>
+<div class="para-pair"><p class="p-orig">光之所说，不知是抉人之目，抑为与人以明也，祈裁酌（编者按，朱子晚岁失明，岂非报乎）。</p><p class="p-trans">我所说的，也不知道是除去他人的眼目呢？还是给人以光明呢？请裁度斟酌（编者按：朱熹晚年失明，难道不是果报吗）。</p></div>
+<div class="para-pair"><p class="p-orig">整理佛教，实为护法之要务。然须审察利弊，庶可得其实益。至于送僧于藏学，拟沟通川藏佛法，此实外行人之计画。吾国佛法，法法完备，所欠少者，唯密宗耳。</p><p class="p-trans">整顿管理佛教，实在是护法的重要事务。然而必须审察好利益与弊病，才能得到真实利益。至于送僧人到藏地学习，准备沟通四川藏地的佛法，这实在是外行人的计划。我国的佛法，法法完备，所欠缺的，只有密宗。</p></div>
+<div class="para-pair"><p class="p-orig">言沟通者，须明本有之法，然后以其余力，学彼密宗，以辅翼本有各宗。今以未曾致力于各宗之僧，令从留康某等之魔王学，学成之后，必能坏乱佛法，疑误众生。</p><p class="p-trans">说到沟通，必须先学明白本土存有的佛法，然后有余力，再学习密宗，来辅助本土的各个宗派。现在将还没有学好本土各宗佛法的僧人，让他们去跟从留驻西康的某某魔王学习，学成之后，必能坏乱佛法，疑误众生。</p></div>
+<div class="para-pair"><p class="p-orig">如某某之欲打倒废灭铲除二帝三王之道。其于儒教佛教，均大有关系。汝是明理之人，刘公一番好心，固不得不遵。然古今立法，均须询及哲士，方可施行。岂不计利害，而但取其即行为是耶。</p><p class="p-trans">如同某某人想要打倒废灭铲除二帝三王之道。这对于儒教、佛教，都有很大的关系。你是个明理的人，刘公的一番好心，固然不得不遵从。然而古今建立法轨，均须向贤明智慧的人询问后，才可以施行。哪能不考虑利害，就立即采取行动呢？</p></div>
+<div class="para-pair"><p class="p-orig">使不见某某之魔知魔见尚可，已知其为魔，而又令未魔者依魔去学，则不为魔民魔女者，盖亦少矣。此事关系甚大，光不得不说。</p><p class="p-trans">假使没有看到某某人的魔知魔见，尚可。现在已经知道他是魔，而又令没有着魔的人，跟着魔去学习，要想不成为魔民魔女的人，大概也是很少的。这件事关系很大，我不得不说。</p></div>
+<div class="para-pair"><p class="p-orig">不过光与汝说之言，不可向彼不知者直述。当委曲婉转引前之祸，为后车之鉴，则可矣（宜先学本有之佛法，不学此法，即是舍家珍而行乞耳）。</p><p class="p-trans">不过我对你说的话，不可向那些不知道详情的人直接述说。应当委曲婉转引述前车的灾祸，作为后车的借鉴，就可以了（应该先学习本土所有的佛法，不学习这些法，就是舍弃自家珍宝反而向外乞讨）。</p></div>
+<div class="para-pair"><p class="p-orig">不学佛而不能知儒。不宏儒而无由宏佛。五伦三纲，皆菩萨六度万行中事。</p><p class="p-trans">不学习佛法，就不能知道儒道。不宏扬儒道，就没有方法宏扬佛法。五伦三纲，都是菩萨六度万行中的事。</p></div>
+<div class="para-pair"><p class="p-orig">某某佛教新青年会章程，教人行六度万行，八大使命，而无一字言及因果报应，纲常伦理，及与净土。吾不知六度万行作么而行。此亦某弟子某某之伴侣也。</p><p class="p-trans">某某佛教新青年会章程，教人行六度万行，八大使命，然而却没有一个字说到因果报应，纲常伦理，以及净土法门。我不知道这样的六度万行，要怎样来行。这也是某弟子某某的伴侣。</p></div>
+<div class="para-pair"><p class="p-orig">祈阅毕付之丙丁，切勿示人，以免彼党见忌。（七月十八日）</p><p class="p-trans">请你看完信后烧掉，千万不要拿给他人看，以免那些人看见了忌恨。（七月十八日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【先王】</span>指上古贤明君王。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【强梁】</span>1.强劲有力；勇武。2.强横凶暴。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【聿修】</span>《诗·大雅·文王》：“无念尔祖，聿修厥德，永言配命，自求多福。”毛传：“聿，述。”聿本助词，后多训为“述”，因以“聿修”谓继承发扬先人的德业。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【皇极】</span>帝王统治天下的准则。即所谓大中至正之道。《书·洪范》：“五，皇极，皇建其有极。”孔颖达疏：“皇，大也；极，中也。施政教，治下民，当使大得其中，无有邪僻。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【畀】</span>1.赐与。2.给予；付与。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【曰之与威】</span>《尚书·洪范》：“次九曰向用五福，威用六极。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【乐天知命】</span>旧谓乐从天道的安排，安守命运的分限。《易·系辞上》：“乐天知命，故不忧。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【五伦】</span>旧指君臣、父子、兄弟、夫妻、朋友之间五种伦理关系。也称五常。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【三纲】</span>我国封建社会中谓君为臣纲、父为子纲、夫为妻纲，合称三纲。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

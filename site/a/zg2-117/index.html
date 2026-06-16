@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>无著老人创建常明庵缘起碑记（代化宏师作） · 印光法师文钞</title>
+<meta name="description" content="寂灭真宗，唯心本具。圆通妙道，非人莫宏。兴梵刹以辟普门，布慈云而注法雨。于法运垂秋之际，振将绝欲坠之宗，唯我先师无著老人其人焉。师讳立山，法名满圆，别号无著。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-117/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无著老人创建常明庵缘起碑记（代化宏师作） · 印光法师文钞">
+<meta property="og:description" content="寂灭真宗，唯心本具。圆通妙道，非人莫宏。兴梵刹以辟普门，布慈云而注法雨。于法运垂秋之际，振将绝欲坠之宗，唯我先师无著老人其人焉。师讳立山，法名满圆，别号无著。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-117/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">无著老人创建常明庵缘起碑记（代化宏师作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">寂灭真宗，唯心本具。圆通妙道，非人莫宏。兴梵刹以辟普门，布慈云而注法雨。于法运垂秋之际，振将绝欲坠之宗，唯我先师无著老人其人焉。师讳立山，法名满圆，别号无著。</p><p class="p-trans">寂灭真宗，唯心本自具足；圆通妙道，非人莫能宏扬。兴建寺宇而开辟普度之门，布设慈云而流注甘露法雨，在法运将要衰微之时，振兴将要断绝坠落的宗门，这就是我的先师无著老人啊。先师，名立山，法名满圆，别号无著。</p></div>
+<div class="para-pair"><p class="p-orig">道光五年乙酉，葭月二十五日，示生于松江金山顾氏。父即福本悟公。行年十四，父即出家。心欲随之，以母在不果。及至弱冠，礼父祝发。诣大崇福，受具足戒。</p><p class="p-trans">道光五年乙酉（1825年）十一月二十五日，出生在上海金山顾姓人家。先师的父亲就是福本悟公。先师十四岁那年，父亲就出家了。他心里想要跟随父亲出家，只因为母亲还健在，就没有实行。到二十岁时，礼拜父亲落发出家，又到大崇福寺受具足戒。</p></div>
+<div class="para-pair"><p class="p-orig">以寇据南京，不便参方。遂住普陀，或居松江。晦迹韬光，无心应世。至同治庚午，掩关于伴山庵。日礼华严，遍参海众。时法雨寺，凋敝已极，住持虚席。本山尊宿信真和尚，率诸法眷，叩关请师。辞不获已，遂允许之。</p><p class="p-trans">因为当时太平天国军队占据南京，不方便游方参学。于是住在普陀山，有时也住在上海。隐匿行迹，掩藏光华，无心应酬世间俗务。同治庚午年（1870年）在伴山庵闭关，每天礼拜《华严经》，周遍参拜华藏大海众菩萨。当时的法雨寺，破败到了极点，没有住持。普陀山的尊宿信真和尚，率领诸位法眷属，请师父出关住持。先师推辞不掉，于是答应了。</p></div>
+<div class="para-pair"><p class="p-orig">壬申春进院。寺产素薄，香积不充。破屋颓垣，荒凉满目。师伤之，以兴复为己任。竭力经营，整理修葺。四方檀信，布金恐后。不数年间，百废具举。虽未全复当日旧制，而大局已有可观矣。</p><p class="p-trans">壬申年（1872年）春天住持法雨寺。法雨寺产一向缺乏，僧人道粮不充足。房屋破损，院墙颓败，满目荒凉。师父看了心中感伤，将复兴法雨寺作为自己的责任。全力经营，整理修葺。四方檀越信众，争先恐后的布施。没过几年，百废俱兴。虽然没有完全恢复当初的旧制，然而大局已经很可观了。</p></div>
+<div class="para-pair"><p class="p-orig">久之，意欲憩息，专修净业。因筑庵于寺西清凉冈之麓，额曰常明。盖取心性寂照圆融，横遍竖穷之义，欲人修因以克果也。</p><p class="p-trans">时间久了，师父想要退院休息，专修净业。因此在法雨寺西边的清凉冈上建了一座小庵，命名为常明庵。大概是取心性寂照圆融，横遍十方，竖穷三际的意义，想让人通过修行正因而获得正果吧。</p></div>
+<div class="para-pair"><p class="p-orig">光绪甲申春，退居是庵。决志西归，念佛不辍。又令庵内二时课诵，二时念佛。永为恒规，寒暑无间。置稻田三百二十二亩。除拨无著公堂一百亩，余者永为常住念佛资粮。</p><p class="p-trans">光绪甲申（1884年）春天，先师退院，隐居到常明庵。决志往生西方，念佛不止。又令庵内的僧众每天八小时课诵，八小时念佛，作为永远不变的规矩，无论寒暑，都不间断。寺中置办了三百二十二亩稻田，拨给无著公堂一百亩，其余永远作为寺中常住的念佛资粮。</p></div>
+<div class="para-pair"><p class="p-orig">又化开等置田四十四亩，以助念佛诸师衣单之费，其详列后。老人尝曰，末世众生，障深根钝，向上一著，不易凑泊。大悟尚难，何况实证。</p><p class="p-trans">另外，化开师等人置办的四十四亩稻田，用来资助诸位念佛法师的衣单费用，详细情况列在后面。先师曾经说：“末世的众生，业障深，根机钝，参禅不容易了脱。想要大彻大悟尚且很难，更何况实证呢。”</p></div>
+<div class="para-pair"><p class="p-orig">唯净土一法，三根普被，利钝全收。上圣下凡，皆当修持。良由此法，全摄果觉，以作因心。因该果海，果彻因源。即世相以达实相，以凡心而契佛心。所赖绵佛法，翼国政，感人心者，唯此一法耳。</p><p class="p-trans">唯有净土法门，三根普被，利钝全收。上圣下凡，都应当修持。实在因为这个法门，完全该摄阿弥陀佛的果地觉，作为念佛众生的因地心。因行该摄果海，果证通彻因源，即世相而达实相，以凡心而契佛心。想要延绵佛法，辅助国政，感化人心，只有靠这一法门了。</p></div>
+<div class="para-pair"><p class="p-orig">汝辈当恪遵之，毋或废弛。庶可不负四恩，均资三有。后之当家，若有废此成规者，非我弟子。即会同法眷，立时摈黜。毋或容隐，以负我心。</p><p class="p-trans">你们应当恪守遵从，不可稍有荒废松弛。想必才可以不辜负四恩（父母恩，众生恩，国土恩，三宝恩），平等资助三有（欲界、色界、无色界）众生。后来的当家，如果废除了这个规矩，就不是我的弟子。（你们）就应当聚合法亲眷属，立刻将他罢黜。不可稍有包庇隐瞒，而辜负了我的苦心。</p></div>
+<div class="para-pair"><p class="p-orig">至己丑年腊月初一，安然神逝。僧腊四十六年，世寿六十五岁。所度弟子数十人，能继迹者，唯有化闻。宏等虽列门墙，未登阃奥。</p><p class="p-trans">己丑年（1889年）腊月初一，先师安然神逝。僧腊四十六年，世寿六十五岁。剃度弟子有几十人，能够继承先师行迹的，就只有化闻法师。我（化宏）们这些人，虽然也列在先师门下，但是没能登堂入室。</p></div>
+<div class="para-pair"><p class="p-orig">其所悟处，不得而知。不敢推高以滥圣，亦不敢就下以屈贤。姑摭其言行大纲，以明此庵之缘起云（按法雨寺，自明万历八年开山，前清两次敕建，洪杨之乱，衰败不堪，无著乃复重兴耳）。</p><p class="p-trans">先师所悟的境界，我们无从知道。不敢（将先师）推上高位来滥充圣者，也不敢勉就下位而委屈贤哲。姑且在此摘取先师的言行大纲，来说明这座常明庵的缘起（按：法雨寺，自从明朝万历八年开山，前清朝廷两次敕命修建。而经过太平天国的战乱，衰败不堪，无著老人于是重新加以振兴）。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【讳】</span>指已故尊长者之名。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【葭月】</span>农历十一月的美称，因冬月葭草吐绿头，故称十一月为葭月。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【不果】</span>没有成为事实；终于没有实行。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【晦迹韬光】</span>晦、韬：隐藏；迹：踪迹；光：指才华。指将自己的才华隐藏起来，不使外露。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【香积】</span>指僧道的饭食。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【向上一路】</span>禅林用语。即指言绝意断之正真大道。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【凑泊】</span>1.凝合；聚合。2.促成；形成。3.附着。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【摈黜】</span>斥退废黜。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【阃奥】</span>比喻学问或事理的精微深奥所在。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【摭】</span>1.拾取。2.搜集。3.摘取。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

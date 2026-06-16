@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>江母汪太夫人往生记 · 印光法师文钞</title>
+<meta name="description" content="净土法门，利益宏深。自大法东流，以博地凡夫信愿念佛，求生西方。因兹出五浊而登九品者，何可胜数。以佛力法力众生心力，三皆不可思议。故得此奇特殊胜之果。实为一代时教之所无，而惟净土法门为然也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-275/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="江母汪太夫人往生记 · 印光法师文钞">
+<meta property="og:description" content="净土法门，利益宏深。自大法东流，以博地凡夫信愿念佛，求生西方。因兹出五浊而登九品者，何可胜数。以佛力法力众生心力，三皆不可思议。故得此奇特殊胜之果。实为一代时教之所无，而惟净土法门为然也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-275/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">江母汪太夫人往生记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，利益宏深。自大法东流，以博地凡夫信愿念佛，求生西方。因兹出五浊而登九品者，何可胜数。以佛力法力众生心力，三皆不可思议。故得此奇特殊胜之果。实为一代时教之所无，而惟净土法门为然也。</p><p class="p-trans">净土法门，利益宏大深广。自佛法东来，以博地凡夫（的资质）信愿念佛，求生西方。因此出离五浊恶世而登上九品莲台的，如何能数得清呢？因为佛力、法力、众生心力，三者都不可思议。所以得到这样奇特殊胜的果报。实在是佛陀一代时教所没有，而只有净土法门才能够如此啊！</p></div>
+<div class="para-pair"><p class="p-orig">此之法门，唯重实行。以感佛故，得仗佛慈力，带业往生。较彼专仗自力断惑证真，以超凡入圣，了生脱死者。其难易，不可同年而语也。</p><p class="p-trans">这个净土法门，只注重真实行持。因感通佛的（愿力）之故，得以仗佛慈力，带业往生。比起那些专门依仗自力、断惑证真，来超凡入圣、了生脱死的法门。这两者之间的难易程度，不能相提并论啊！</p></div>
+<div class="para-pair"><p class="p-orig">婺源江易园居士，初膺教职，每为学生讲说，必以笃行孝友，恪尽己分为事。至为讲说义理，必期发挥尽致，了无余蕴而后已。因兹过为劳瘁，遂成痼疾，群医诊视，均不见效。</p><p class="p-trans">婺源的江易园居士，起初担任教师之职，每次为学生讲说，必定把切实实行孝敬父母、友爱兄弟，恭谨竭尽自己的本分，作为事务。到了为学生讲说义理时，必定要发挥得详尽彻底，没有一点保留而后已。因此，过于劳累，便形成了顽疾，经许多医生诊视，都不见效。</p></div>
+<div class="para-pair"><p class="p-orig">后有友人劝以息心念佛，遂得痊愈。由是屡亲知识，专研净宗。始知此法，实为十方三世一切诸佛上成佛道，下化众生，成始成终之殊胜法门。于是由亲及疏，悉皆以此奉劝。</p><p class="p-trans">后来有友人劝他息心念佛，才得以痊愈。因此他多次亲近善知识，专门研究净土宗。才知道这个净土法门，实在是十方三世一切诸佛，上成佛道，下化众生，成始成终的殊胜法门。于是由关系亲近到关系疏远的人，全都用净土法门来奉劝。</p></div>
+<div class="para-pair"><p class="p-orig">其母汪太夫人，赋性贤淑，一闻其说，即发心持斋念佛。日必课佛万余声。兼持观音普门品，普贤行愿品，往生，大悲等咒，以为助行。今春因匪避地，值狭路，遇牛行挤轿。轿夫与轿，跌仆田中。轿已破裂，而江母竟不惊不怖，了无损伤。以在轿中，默持普门品故。是知江母之功夫绵密，故得此感应也。</p><p class="p-trans">他的母亲汪太夫人，天性贤惠，一听他说净土法门，就发心持斋念佛。每日必定念一万多声佛号。兼持《观世音菩萨普门品》、《普贤菩萨行愿品》，往生咒、大悲咒等，作为助行。今年春天，因为土匪而到其他地方躲避，正值道路狭窄，遇到牛在道路上走，挤了轿子。轿夫与轿子，都跌倒在田中。轿子已经破裂，而江母竟然不惊不怖，没有一点损伤。因为她在轿中，默持《普门品》的缘故。所以知道江母的功夫绵密，故此能有这样的感应啊！</p></div>
+<div class="para-pair"><p class="p-orig">年七十有八，耳聪目明，绝无老状。至五月末，示微疾，三十日闻其孙有朋，与人讲四十八愿，犹令侍者谛听。因问明日是初一乎。盖预计归期也。至夜半睡醒，觉痰闭而欬吐无力。于是全家念佛，以祈速得往生。易园又复示以佛愿弘深，当深归向。若能通身放下，一心念佛。必定感应道交，蒙佛接引，往生西方。</p><p class="p-trans">她年纪已有七十八岁了，耳聪目明，绝无衰老的样子。到了五月末，示现小病，三十日，听到她的孙子江有朋，给他人宣讲四十八愿，还令侍者在旁边仔细听。因此询问：“明天是初一吗？”这大概是预先计划归西的日期。到了半夜睡醒，觉得一口痰堵塞，而咳吐无力。于是全家念佛，以求速得往生。江易园又为她指示：佛陀誓愿弘深，应当深深地归向。如果能够全身放下，一心念佛。必定感应道交，蒙佛接引，往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">历一时许，至辰刻，安然坐逝。逝时犹见颔动。盖心中默念，但无声可闻耳。自辰及申，历五时之久，念佛不辍。申后方为洗浴著衣哭泣等。以人之将终，身力不支。若预为洗浴换衣及哭泣等，必致破坏正念，不克往生。今既不移动，又不哭泣，大家同声念佛。使彼心中惟有佛念，了无余念。故得正念昭彰，随佛往生，诚可为法。</p><p class="p-trans">经历一个时辰（2个小时）左右，至辰时（7:00-9:00），安然坐着往生了。往生的时候还见到她的下巴微动。大概在心中默念，只是听不到声音罢了。从辰时到申时（15:00-17:00），经过五个时辰（10个小时）之久，念佛不停。申时过后，眷属才为她做洗浴、著衣、哭泣等事。因为人将要命终，色身体力不支。如果预先为她洗浴、换衣以及哭泣等，必然导致破坏她的正念，不能往生。现今眷属既不移动她的身体，又不哭泣，大家同声念佛。使她的心中只有佛念，没有一点儿杂念。所以能够正念昭彰，随佛往生，实在可以作为法则。</p></div>
+<div class="para-pair"><p class="p-orig">愿孝子慈孙，咸皆依此。其为孝慈也，大矣。且江母预先嘱其子媳，令终后首不戴佛，口不含钱，不著华冠绣服，衣惟布制，项挂念珠而已。所有纸衣冥器，均不宜用。丧祭概用蔬素，不得效世俗用荤祭神等。</p><p class="p-trans">祈愿孝子慈孙，全都依照这个榜样。这样的孝慈，就大了。而且江母预先嘱咐她的儿子、媳妇，令命终之后头上不顶戴佛像，口中不含金钱，不穿戴华冠绣服，只穿布制的衣服，脖子上挂一串念珠而已。所有的纸衣、冥器，都不宜使用。丧祭一概用蔬菜素食，不得效仿世俗用荤腥祭神等。</p></div>
+<div class="para-pair"><p class="p-orig">噫，江母之言之行，皆足以为末世法。母仪闺阃，师范女流。其人虽逝，其德常存。愿世之闺阁英贤，闻风兴起。以江母之言行，是则是效。则相夫教子，以成贤善。</p><p class="p-trans">噫！江母的言行，都足以作为末世的法则。为闺阃的母仪，作女流的师范。她虽然已经去逝了，但她的美德却常存。祈愿世间的闺阁英贤，闻风兴起。以江母的言行，作为准则来效法。那么相夫教子，而成为贤善之人。</p></div>
+<div class="para-pair"><p class="p-orig">俾二妃三太之懿行，又复见于今日。兼以深明即心本具之佛性，笃修即俗修真之净业。庶几人敦礼让，世复唐虞。本此了无形迹致治之道，以作挽回世道人心之法。愿各勉旃，则幸甚幸甚。</p><p class="p-trans">使得娥皇、女英二妃，太姜、太任、太姒三太的懿行，又重现于今日。加以深明即心本具的佛性，认真修持即俗修真的净业。或许可以使人人切实实行守礼谦让，世道恢复唐虞盛世。本着这个没有一点儿行迹而使国家政治安定清平的大道，来作为挽回世道人心的方法。愿各自勉励，那么就非常庆幸，非常庆幸了啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【避地】</span>1.谓迁地以避灾祸。2.犹言避世隐居。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

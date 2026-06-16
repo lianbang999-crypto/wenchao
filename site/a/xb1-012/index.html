@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复云南王德周居士书（二）（民国二十年） · 印光法师文钞</title>
+<meta name="description" content="居士林宣言书，词理周到，甚善。简章，亦极严整周备。足见云南佛化之兴盛象。然须恪守本分，切勿学好高务胜一派。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-012/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复云南王德周居士书（二）（民国二十年） · 印光法师文钞">
+<meta property="og:description" content="居士林宣言书，词理周到，甚善。简章，亦极严整周备。足见云南佛化之兴盛象。然须恪守本分，切勿学好高务胜一派。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-012/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复云南王德周居士书（二）（民国二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">居士林宣言书，词理周到，甚善。简章，亦极严整周备。足见云南佛化之兴盛象。然须恪守本分，切勿学好高务胜一派。</p><p class="p-trans">《居士林宣言书》，文词义理周到，非常好。《居士林简章》，也极为严整周备。可以看得出云南佛教弘化的兴盛气象。然而必须恭谨遵守自己的本分，千万不要学习好高务胜的派头。</p></div>
+<div class="para-pair"><p class="p-orig">譬如穿衣吃饭，须按各人身量食量，夏葛冬裘，渴饮饥食，则可以养身心。施之失宜，均可以伤身心。非饮食裘葛之有善不善也，视其人之善用与否耳。</p><p class="p-trans">譬如穿衣吃饭，必须按照每个人的身高饭量，夏天穿葛衣，冬天穿裘衣；渴了喝水，饿了吃饭，则可以滋养身心。如果施行不得当，都会损伤我们的身心。并不在于喝水吃饭、葛衣裘衣的好或不好，而是看这个人是不是善用而已。</p></div>
+<div class="para-pair"><p class="p-orig">无论如何资格，必须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。又须注重净土法门，以仗佛力，比仗自力，其难易奚啻天地悬隔。</p><p class="p-trans">人无论什么样的资格，都必须敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。还必须注重净土法门，因为依仗佛力，比依仗自力，其难易程度何止天地悬隔般那样巨大。</p></div>
+<div class="para-pair"><p class="p-orig">近有一种专逞口解脱者，指念佛者为腐败待死，祈勿被此种邪说所惑。</p><p class="p-trans">近来有一种专门逞口舌之能来解脱的人，指责念佛人是在腐败消极地等死，千万不要被这种邪说所迷惑。</p></div>
+<div class="para-pair"><p class="p-orig">当今之世，纵是已成正觉之古佛示现，决不另于敦伦尽分，及注重净土法门外，别有所提倡也。使达磨大师现于此时，亦当以仗佛力法门而为训导。</p><p class="p-trans">当今世道，纵然是已成正觉的古佛示现，一定不在敦伦尽分（敦笃伦常、恪尽己分），以及注重净土法门之外，另外有所提倡。即使达磨大师出现在这个时代，也会以仗佛力的净土法门，作为训导。</p></div>
+<div class="para-pair"><p class="p-orig">时节因缘，实为根本。违悖时节因缘，亦如冬葛夏裘，饥饮渴食，非唯无益，而又害之。</p><p class="p-trans">时节因缘，实在是弘法的根本。违悖时节因缘，也就如同冬天穿葛衣，夏天穿裘衣；饿了喝水，渴了吃饭，不但对身体没有益处，反而有损害。</p></div>
+<div class="para-pair"><p class="p-orig">佛教正义，完全与伦常道理，相契相合。世有外道，多多剽窃佛教之名，而实行炼丹运气之道，反美其名曰三教同源。源固同也，流则异矣。若认异见者口说同源，以为即是三教之源，则得罪于三教圣人也，大矣。</p><p class="p-trans">佛教的正宗教义，完全与伦常道理，相契相合。世间有好些外道，大多剽窃佛教的名词义理，而实行炼丹运气之道，反而美其名曰：三教同源。纵然源头相同，但支流就绝对不同了。如果认同外道口中所说的“同源”，当真以为就是三教的源头，那么这个得罪三教圣人的罪过，就太大了！</p></div>
+<div class="para-pair"><p class="p-orig">今且专致力于伦常净土法门，将来当可左右逢源。若舍此以秘密传授炼丹法为源，则成永迷真源，长趋邪径矣。宜与有宿根而未知佛法所以之信士言之，则其益大矣。</p><p class="p-trans">现今暂且专门致力于世间的伦常道德，以及出世间的净土法门，将来自当左右逢源。如果舍弃伦常道德、净土法门，以秘密传授炼丹法作为所谓的源头，那么就会永远迷失真正的源头，深入在邪途之上了。应该对有宿世善根，而不知道佛法所以然的信士来说明这个道理，那么这个利益就很大了。</p></div>
+<div class="para-pair"><p class="p-orig">耿其昌，法名德昌。韩寿山，法名德崇。须知本有性德，极昌明，又极崇高，良以不识，反成暗昧卑劣。</p><p class="p-trans">给耿其昌取法名为德昌。韩寿山取法名为德崇。必须要知道本有性德，极为昌明，又极为崇高，实在是因为我们不认识（这个本有之性德），反而成为暗昧卑劣。</p></div>
+<div class="para-pair"><p class="p-orig">若肯于一切起心动念处检点，自可复本还源，亲得受用，然不得不极力专注于敦伦念佛也。以此自行，复以化他，是名佛子。</p><p class="p-trans">如果肯在一切起心动念处，检点自己，自然可以复本还源，亲得本性功德的受用。然而必须要努力专注于敦伦尽分、信愿念佛求生净土。以此来自己行持，并以此教化他人，这才名为佛子。</p></div>
+<div class="para-pair"><p class="p-orig">弘化社所有各书，当令各寄一二分，以备林友参阅。并令附寄书目，以便欲请以利人者，得以按章以请也。现有增修历史统纪印出，不久订成，当寄一二包以结缘。</p><p class="p-trans">弘化社所有各种书籍，当令人各寄一二份过去，以备居士林的同修道友参考阅读。并令他们附上书单目录，以便想请书用以利益他人的人，能够按章来奉请。现在有《增修历史感应统纪》这本书印出，不久书订成后，会寄一二包来结缘。</p></div>
+<div class="para-pair"><p class="p-orig">普陀山志，或于秋末冬初可出版。罗两峰正信录，亦可于秋初出版。净土十要原文，当于明年夏秋间出版，此书甚有益于净业行人。</p><p class="p-trans">《普陀山志》，或许在秋末、冬初可以出版。罗两峰的《正信录》，也可以在秋初出版。《净土十要》原文，当会在明年夏秋之际出版，这本书非常有益于净业行人。</p></div>
+<div class="para-pair"><p class="p-orig">光以有此数事，故未能拒绝一切，虽名闭关，仍复冗事烦琐。待此种事了结，当必拒绝一切，以期腊月三十日，无有障碍，随佛往生也。以后无要事，不可来信，以精神不给，无力应酬也。</p><p class="p-trans">我因为有这些书籍校勘的事，所以不能拒绝一切外缘。虽然名为闭关，仍旧是忙于没完没了的烦琐之事。等到这些事都了结了，定当拒绝一切外缘，以期腊月三十日（临终），没有障碍，随佛往生。以后没有要紧事，不可来信，因为我精神不足，无力应酬啊！</p></div>
+<div class="para-pair"><p class="p-orig">●（其二）所言腊月三十日，乃预计之词，非预知时至，谓在腊月三十也。腊月三十，年尽岁穷，故古人每借譬死期耳。若平常不早为预备，临时则定规手忙脚乱也。</p><p class="p-trans">●（其二）所说的腊月三十日，是比喻预先计划的言词，不是说预知时至，就在腊月三十往生啊！腊月三十，是一年到头的最后一天，所以古人每每借它来比喻死期。如果平常不早作预备，临终时定会手忙脚乱啊！</p></div>
+<div class="para-pair"><p class="p-orig">陈正庵等七人，既欲皈依，当须依文钞，嘉言录修持，方可不负此心。现今各地外道甚多，彼均以炼丹运气，求成仙生天为极则事。</p><p class="p-trans">陈正庵等七人，既然想皈依，当必须依照《文钞》、《嘉言录》来修持，方可不辜负此心。现今各地外道很多，他们都是以炼丹运气，求成仙生天作为终极之事。</p></div>
+<div class="para-pair"><p class="p-orig">既皈依佛法，切不可又兼修彼法，邪正夹杂，正亦成邪。又须各各敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。</p><p class="p-trans">皈依佛法之后，千万不可又兼修炼丹法，否则邪正夹杂，正法也变成了邪法。又必须各各敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。</p></div>
+<div class="para-pair"><p class="p-orig">必须以因果报应，生死轮回，为培植家国之要务。使人各依此而行，天下自无不太平之事理。今天下之乱，其源皆由于不讲家庭教育，不讲因果报应之所酿成也。</p><p class="p-trans">必须以宣传因果报应，生死轮回之理，作为积德行善、管理好家庭、治理好国家的重要事务。假使人人都依此而行，天下自然没有不太平的事理。现今天下大乱，其源头都是由于不讲家庭教育，不讲因果报应所酿成的啊！</p></div>
+<div class="para-pair"><p class="p-orig">今寄新印增修历史统纪七包，正信录四包，到祈酌量分送。正信录，最能破拘墟之偏见。</p><p class="p-trans">现今寄上新印的《增修历史感应统纪》七包，《正信录》四包，收到后，请酌量分送。《正信录》，最能够破除见闻狭隘之人的偏见。</p></div>
+<div class="para-pair"><p class="p-orig">读书人之善根，被理学先生所断。而理学先生，悉皆窃取佛法之义以自雄，而又恐人学，故特加辟驳，以关闭后学，令不知佛法。然稍具宿根者，又何能关住，不过有此一曲折，俾中下根人，便无由亲沐法泽矣。</p><p class="p-trans">读书人的善根，被理学先生所断送。而理学先生，全都是窃取佛法的义理来壮自己的门面，而且又怕别人去学习佛法，所以特地加以辟驳，来关闭后学之路，令他们不知道佛法。然而稍具宿世善根的人，又怎么能被关住呢？不过有这一曲折，使得中下根的人，就没有办法亲自沐浴佛法的恩泽了。</p></div>
+<div class="para-pair"><p class="p-orig">今为彼等各取法名，祈为分书交彼，或将此书之大致，令彼各抄之。相片已无，但祈礼佛念佛，用我相有何所益。</p><p class="p-trans">现今为他们各取了法名，请你分送善书交给他们，或将这封信的大致，令他们各各抄写。相片已经没有了，只祈望你们礼佛念佛，用我的相片有什么益处呢？</p></div>
+<div class="para-pair"><p class="p-orig">现今世乱已极，天灾人祸，亦莫此为甚。当此时世，大家均要发一番感激心，认真从伦常日用中，各各修持为人之道，而兼修净土法门。</p><p class="p-trans">现今世道已坏乱到极点，天灾人祸，也没有比这更严重的了。在这个时候，大家都要发起一番感激心，认真从伦理纲常、日常生活中，各各修持为人之道，并兼修净土法门。</p></div>
+<div class="para-pair"><p class="p-orig">所谓即俗修真，居尘学道，佛法世法，一道齐行。往劫若不种善根，佛之名字亦难闻。若不认真修持，则成登宝山而空手回耳，其孤负佛恩与己灵也，大矣。</p><p class="p-trans">这就是所谓的即俗修真，居尘学道，佛法世法，一道齐行。往劫若不种善根，佛的名字都难听到。如果不认真修持，就成为登上宝山却空手而回的愚人啊！这样就辜负佛恩与自己的性灵，太大太大了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【自雄】</span>自豪；自以为了不起。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

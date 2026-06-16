@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复潘对凫居士书 · 印光法师文钞</title>
+<meta name="description" content="前者大梦未醒，致有冲突，不胜惭愧。今梦醒矣，本欲无言，然恐阁下或有未喻，且略陈之。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-080/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复潘对凫居士书 · 印光法师文钞">
+<meta property="og:description" content="前者大梦未醒，致有冲突，不胜惭愧。今梦醒矣，本欲无言，然恐阁下或有未喻，且略陈之。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-080/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复潘对凫居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前者大梦未醒，致有冲突，不胜惭愧。今梦醒矣，本欲无言，然恐阁下或有未喻，且略陈之。</p><p class="p-trans">上次大梦未醒，导致有所冲突，非常惭愧。今天梦醒了，本来不想说，然而恐怕你或许有不明白之处，暂且大略陈述所以。</p></div>
+<div class="para-pair"><p class="p-orig">孟子云，有不虞之誉，有求全之毁，孟子此语，极确切，而未明其所以然。佛说一切利，衰，毁，誉，称，讥，苦，乐，各有前因，致获现果。了此，则只宜自忏宿业，何暇怨人乎哉。</p><p class="p-trans">孟子曾说：有料想不到的赞扬，也有吹毛求疵的诋毁，孟子这句话，极为确切，但没有说明其所以然。佛说一切利，衰，毁，誉，称，讥，苦，乐，各有其前因，致使获得现在的果报。明白了这个道理，就只应该自己忏悔宿世的业障，哪有空闲去埋怨别人呢？</p></div>
+<div class="para-pair"><p class="p-orig">所以君子上不怨天，下不尤人，素富贵行乎富贵，素贫贱行乎贫贱，素夷狄行乎夷狄，素患难行乎患难，受宠若惊，受辱不怨，逆来顺受，无往而不自在逍遥也。</p><p class="p-trans">所以君子对上不怨恨天，对下不归罪他人，在富贵，就做富贵人应做的事；在贫贱，就做贫贱人应做的事；被贬到边远地区，就做在边远地区应做的事；处于患难，就做在患难中应做的事。受到恩宠，惊喜不安，受到侮辱，没有怨恨，逆境来了当作顺境一般接受，无论何时何地何种情况没有不自在逍遥的啊！</p></div>
+<div class="para-pair"><p class="p-orig">此传作于民国十三年，彼在青岛悦来公司，函告于光，实未寄文来。光极力呵斥，令毁其稿。至今年四月，彼持其自作之年谱令光看，于十三年谱内，有此文。</p><p class="p-trans">这个《印光法师传》写于民国十三年，马契西在青岛悦来公司，写信来告诉我这件事，实际没有将文稿寄来。我极力呵斥，令他焚毁稿件。到了今年四月，他带着他自己写的年谱给我看，在民国十三年的年谱之内，有这个传文。</p></div>
+<div class="para-pair"><p class="p-orig">光即将传文撕作粉碎，极力呵斥，谓彼是甚么人，何得自作年谱。而又何得妄造谣言，陷光于以凡滥圣，藐视天下宗教知识，及贤士大夫之极大罪中乎，令永勿再录。</p><p class="p-trans">我当时便将传文撕作粉碎，极力地呵斥他，说他是什么人，怎能自作主张写年谱。而且又怎能妄造谣言，陷我于以凡滥圣，藐视天下宗门教下的善知识，以及贤士大夫的极大罪过当中呢？令他永远不要再录。</p></div>
+<div class="para-pair"><p class="p-orig">至八月，因催印观音颂到申，于友人处，见彼油印之文，光持回撕之。时彼亦寄居太平寺，谓之曰，汝以此恭维光，甚于持刀杀光百千万倍，令勿流布。</p><p class="p-trans">到了八月，因为催印《观世音菩萨本迹感应颂》到上海，在友人处，见到他油印的传文，我带回来撕了。当时他也寄居在太平寺，对他说：你以此传文来恭维我，超过持刀来杀我百千万倍，令他不要流布。</p></div>
+<div class="para-pair"><p class="p-orig">岂知彼早已寄于海潮音令登报矣。及阁下寄来，光意谓才印未久，尚可收拾，所以祈蔚如劝阁下尽行焚毁，务成爱我之实。</p><p class="p-trans">哪知他早已寄到《海潮音》让人登报了。到了阁下你寄给我，我心里认为可能才印不久，可能还可以收拾局面，所以请求徐蔚如劝阁下你全部焚毁，务必要成就爱护我的这件事。</p></div>
+<div class="para-pair"><p class="p-orig">又令上海居士林，净业社，各于林刊月刊声明，免致不知者谓彼承光意而作耳。及阁下来书，方知不可收拾，遂悟孟子，子思及佛所说之各事理，而心中已于此了不介意。</p><p class="p-trans">又令上海居士林，净业社，各自在林刊、月刊上声明，免得不知道的人认为他是承顺我的心意而写。等到阁下你写来书信，方才知道已不可收拾，于是悟到孟子、子思，以及佛所说的各种事理，因而心中已对于此事一点也不介意了。</p></div>
+<div class="para-pair"><p class="p-orig">是盖宿业所使，只可自怨宿生少栽培，何暇怨彼之妄造谣言乎。马契西此举，光于一切前境，皆悉无烦计虑，或可完我天真，卒能无愧于自心耳，则是因祸而得福，实为大幸。</p><p class="p-trans">这大概是宿业所使，只可自怨宿生少栽培，哪有空暇埋怨他人妄造谣言呢？马契西这个举动，使我对于一切现前的境界，全都不再计划思虑，或许可以恢复我的天真佛性，最终能够无愧于自心，那么就是因祸而得福，实在是大幸事。</p></div>
+<div class="para-pair"><p class="p-orig">阁下所印之传，随阁下意，烧之也好，散之也好。如其爱我情殷，略将光诫彼之意，撮略叙百数十字，印于皮子里边之白垫纸中，以免无知者之效尤更好，并非为洗雪此诬，免人唾骂也。</p><p class="p-trans">阁下你所印的传文，随你的意，烧了也好，流通散布也好。如果爱护我的心真切，大略将我告诫他的意思，约略写上一百或几十个字，印在封面里边的白垫纸中，以免无知的人仿效更好，并不是为了洗清昭雪这个诬陷，免遭他人的唾骂。</p></div>
+<div class="para-pair"><p class="p-orig">何以故，唾骂者愈多，光得利益愈深，以非光自为，而光受唾骂，则其消业障而增福慧，有如金刚经十六分所说者。</p><p class="p-trans">为什么呢？唾骂的人愈多，我得到的利益就愈深，因为不是我自己要这样做的，而我受到唾骂，那么这其中消业障而增福慧，就有如《金刚经》十六分中所说的一样。</p></div>
+<div class="para-pair"><p class="p-orig">光色力衰弱，冗事繁多，以致净业工夫，徒惭疏略，得此因缘，用作不修而获益之据，幸何如之。</p><p class="p-trans">我的体力衰弱，繁杂的事务很多，以致净业的工夫，白白地荒疏而惭愧，现在遇到这个因缘，当作不修而获（如金刚经十六分所说）利益的凭据，还有比这更幸运的吗？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【喻】</span>明白。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【有不虞之誉，有求全之毁】</span>《孟子·离娄上》第二十一章 孟子曰：“有不虞之誉，有求全之毁。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【八风】</span>又作八法、八世风。谓此八法，为世间所爱所憎，能扇动人心，故以风为喻，称为八风。苟心所有主，安住正法，不为爱憎所惑乱，则不为八风所能动。八风，即：(一)利，利乃利益，谓凡有益于我，皆称为利。(二)衰，衰即衰灭，谓凡有减损于我，皆称为衰。(三)毁，毁即毁谤，谓因恶其人，构合异语，而讪谤之。(四)誉，誉即赞誉，谓因喜其人，虽不对面，亦必以善言赞誉。(五)称，称即称道，谓因推重其人，凡于众中必称道其善。(六)讥，讥即讥诽，谓因恶其人，本无其事，妄为实有，对众明说。(七)苦，苦即逼迫之意。谓或遇恶缘恶境，身心受其逼迫。(八)乐，乐即欢悦之意。谓或遇好缘好境，身心皆得欢悦。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【素富贵行乎富贵】</span>《礼记·中庸》：“君子素其位而行，不愿乎其外。素富贵，行乎富贵；素贫贱，行乎贫贱；素夷狄，行乎夷狄；素患难，行乎患难。君子无入而不自得焉。在上位不陵下，在下位不援上，正己而不求于人，则无怨。上不怨天，下不尤人。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【贤士】</span>志行高洁、才能杰出的人。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【无烦】</span>不需烦劳；不用。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【效尤】</span>仿效坏的行为。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【金刚经十六分】</span>能净业障分第十六：“复次，须菩提！善男子、善女人，受持读诵此经，若为人轻贱，是人先世罪业，应堕恶道，以今世人轻贱故，先世罪业则为消灭，当得阿耨多罗三藐三菩提。”</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【疏略】</span>疏忽；忽略。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

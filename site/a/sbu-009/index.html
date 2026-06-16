@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与高鹤年居士书六 · 印光法师文钞</title>
+<meta name="description" content="适接来书，如见故人。光拟八月初旬到申，以了安士书事。扬州刻工拖拉，去不去尚未定，以去亦不能了事故。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-009/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与高鹤年居士书六 · 印光法师文钞">
+<meta property="og:description" content="适接来书，如见故人。光拟八月初旬到申，以了安士书事。扬州刻工拖拉，去不去尚未定，以去亦不能了事故。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-009/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">与高鹤年居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">适接来书，如见故人。光拟八月初旬到申，以了安士书事。扬州刻工拖拉，去不去尚未定，以去亦不能了事故。</p><p class="p-trans">刚刚接到来信，如同见到老朋友一样。我打算八月初旬到上海，来了结印《安士全书》的事情。因为扬州的刻工拖拉，去了也不能办妥事情，所以去不去扬州还未定。</p></div>
+<div class="para-pair"><p class="p-orig">东林一事，静禅，慧禅拟作子孙万年安乐窝，任凭只么不肯改作十方。此语，系静禅面与光及施省之居士所说。其言曰，昔吾师令我当家，我云我若当家，当改作十方。吾师即低头哀痛。不但师在不能改作十方，即师去世，亦不敢改作十方以伤师心。施君遂谓既不能作十方，请作罢论。静禅中心欢悦，绝无一念伤惜之意。</p><p class="p-trans">东林寺的事，静禅、慧禅法师打算作子孙万年的安乐窝，无论如何都不肯改作十方丛林。这句话，是静禅法师当面对我和施省之居士所说。他说：“过去我的师父令我当家，我说：‘我如果当家，要改作十方丛林。’我师父就低头哀痛。不但师父活着不能改作十方丛林，即使师父去世，也不敢改作十方丛林，令师父痛心。”施省之于是说：“既然不能改作十方丛林，就请作罢。”静禅法师中心欢悦，绝对没有一念伤痛惋惜的意思。</p></div>
+<div class="para-pair"><p class="p-orig">省之去后十余日，慧禅约芜湖李葆龄等五居士，具启请光兴复东林。连二日来两次启，光以老病辞，而略与李葆龄说其所以，以彼曾皈依光，故不得不按实告也。慧禅亦有信来，光直说彼师兄之意，令其勿再来信。</p><p class="p-trans">施省之离开后十多天，慧禅法师约芜湖李葆龄等五位居土，备好请帖信函请我兴复东林寺。接连二天，来了两次请帖，我以年老多病推辞，并大略对李葆龄说明其中的所以然，因为他曾经皈依我，所以不得不以实相告。慧禅法师也有信来，我直接说明他师兄的意思，让他不要再来信。</p></div>
+<div class="para-pair"><p class="p-orig">今宏庆师之言，皆是哄骗小儿之套子，光岂不知去就陷此漩涡。况光实无才力，又兼现已开始修普陀志，虽大士门有江西许止净居士，余则邑令请邑绅纂辑，光挂名其中，实不能不时加察访，庶少讹舛。</p><p class="p-trans">现在宏庆法师的话，都是哄骗小孩子的套话，我哪会不知，这一去就会陷入这个漩涡当中。何况我实在没有才德和力量，又加上现在已经开始修订《普陀山志》，虽然《观音大士感应颂》有江西许止净居士编写，其余则是县令请乡绅王雅三纂辑，我只是挂名，实在不能不时时加以检查，希望能少些讹误。</p></div>
+<div class="para-pair"><p class="p-orig">彼之不许先勤者，特遮面孔之词，知光决不能亲来，故特作此好听话，以期免人讥议耳。此种僧人，尚可与之交涉乎。若不自谅，则必至获意外之虞。光固不惜身命，然与其死而无益于自他，何若慎始慎终之为愈乎。祈居士亦作罢论。倘远公有灵，或可有转旋时，然光决不干预其事也。</p><p class="p-trans">他们之所以不答应（改为十方丛林）却先勤发请帖的原因，那只是特地遮脸用的，知道我决定不能亲自来，所以说这些好听话，期望免除他人的讥议罢了。这种僧人，还可与他打交道吗？如果不自己体察，就必有意外的忧虑。我固然不惜身命，然而与其死了无益于自己和他人，还不如始终都小心谨慎，这样不是更好吗？请居士也就此作罢。倘若慧远大师有灵，或许能有扭转之时，然而我绝不干预这件事。</p></div>
+<div class="para-pair"><p class="p-orig">今年天灾人祸更惨于昔，吾国之结果究不知其作何景象耶，尚何计及于东林一道场乎。俗欲兴法，僧欲灭法，彼固乘愿而来，破坏施主信心祖师道场者。</p><p class="p-trans">今年的天灾人祸更加惨过往年，我国的结果究竟不知作何等景象，还能去计较东林寺一个道场吗？俗家居士想要振兴佛法，僧人却想要灭法，他们原本就是乘愿而来，破坏施主信心、祖师道场的。</p></div>
+<div class="para-pair"><p class="p-orig">近今风灾，各处受伤，广东汕头轮船漂于屋上，有由屋墙搁住者，可知其地之人皆沦胥其溺矣。哀哉。风灾之后又加瘟疫，人民之死亡不知其数。此际固宜静守，倘一兴作，工未成而灾祸又至，则徒劳而无功，固须以知几为要义也。</p><p class="p-trans">最近的风灾，各地受损，广东汕头的轮船漂在屋顶上，有的船是由屋墙而拦住的，可知那个地方的人，全都相继落水了。悲哀啊！风灾之后又加上瘟疫，人民的死亡不知其数。这个时候，原本就应当静守不动，倘若一旦兴起动工和修建之事，事情未成而灾祸又来，那么就徒劳无功了，所以要以遇事有预见作为要义。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【慎始慎终】</span>事情从开始到结束都谨慎小心。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【作罢】</span>作为罢论；不进行。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【知几】</span>谓有预见，看出事物发生变化的隐微征兆。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

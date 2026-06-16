@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拜谒印光大师记（谢慧霖） · 印光法师文钞</title>
+<meta name="description" content="十九日 癸未十九日晨七钟，偕明道上人乘京沪火车赴苏州。午前九钟到达。入城时，忽悟一句佛名放下一切，绵密持念，即已包括涵养，察识，一切工夫在内，不必格外用心。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-190/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拜谒印光大师记（谢慧霖） · 印光法师文钞">
+<meta property="og:description" content="十九日 癸未十九日晨七钟，偕明道上人乘京沪火车赴苏州。午前九钟到达。入城时，忽悟一句佛名放下一切，绵密持念，即已包括涵养，察识，一切工夫在内，不必格外用心。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-190/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 附录</div>
+      <h1 class="art-title">拜谒印光大师记（谢慧霖）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">十九日  癸未十九日晨七钟，偕明道上人乘京沪火车赴苏州。午前九钟到达。入城时，忽悟一句佛名放下一切，绵密持念，即已包括涵养，察识，一切工夫在内，不必格外用心。</p><p class="p-trans">十九日  癸未（日）十九日，早晨七点，与明道法师乘京沪火车前往苏州。上午九点到达。进入苏州城时，忽然悟到：一句佛名放下一切，绵密持念，就已经包括涵养自身、省察识别等一切工夫在内，不必另外用心。</p></div>
+<div class="para-pair"><p class="p-orig">明道上人导往护龙街南段穿心街报国寺内，谒见吾师印光老人，即留住寺中。老人年七十有三，精神内敛，言辞恳切。论及宋明理学，谓其持论太过，不足以接引初机。</p><p class="p-trans">明道法师引导，前往护龙街南段，穿心街报国寺内，拜见我的师父印光老人，当天留住在寺中。老人年纪七十三岁，精神内敛，言辞恳切，谈论到宋明理学，说他们立论（注1）太过，不足以接引初机学人。</p></div>
+<div class="para-pair"><p class="p-orig">不信因果轮回，尤为错误。今日人心肆无忌惮，酿成浩劫，何莫非此种语言为厉之阶。盖因果者，世间出世间圣人平治天下，救度众生所示之至理，如种瓜得瓜，种豆得豆，决无丝毫错误。世之治乱安危，事之吉凶得失，如来之证一乘，众生之堕三途，皆始于初因，成乎后果。</p><p class="p-trans">不相信因果轮回，尤其错误。今天人心肆无忌惮，酿成浩劫，全都是由这种语言的祸根酿成（注2）。因果，是世间、出世间圣人，平治天下，救度众生所开示的至理，如种瓜得瓜，种豆得豆，决定没有丝毫错误。世间的治乱、安危，事情的吉凶、得失，如来证得一佛乘，众生堕落三恶道，都是始于初因，成于后果。</p></div>
+<div class="para-pair"><p class="p-orig">人多忽略而不深察，是以人心日坏，世界日乱，可不惧乎。余问，理学家不信开悟，亦自有其寂然不动虚灵不昧景象，恐其尚在根本无明住地，未能彻底掀翻。</p><p class="p-trans">人们大多忽略而不深察，所以人心一天天变坏，世界一天天变乱，能不畏惧吗？我问：理学家不相信开悟，也自有他们寂然不动、虚灵不昧的景象，恐怕他们还在根本无明住地，没能彻底掀翻烦惑。</p></div>
+<div class="para-pair"><p class="p-orig">师言，理学家于见思惑恐尚未断，遑论尘沙无明惑也。果然大公无私，不执门户之见，其造就当不止此。至我无轮回心，自无轮回事之言，是佛菩萨境界，学人未易及此。但须好生念佛，一切功用自在其中。老人慈悲深切，境界极高，非浅学所能测也。</p><p class="p-trans">大师说：理学家对于见思惑恐怕尚未断除，更不要说尘沙、无明惑了。他们果真大公无私，不执着门户之见，其造就当不止于此。至于“我无轮回心，自无轮回事”的话，这是佛菩萨的境界，学人不容易到达这个境界。只须好生念佛，一切功用自在其中。老人慈悲深切，境界极高，非浅学所能测度。</p></div>
+<div class="para-pair"><p class="p-orig">二十日  甲申二十日晨八时，幼庵（按，谢居士内弟）及张君鹿鸣归依印公，余亦随同作礼。老人以三皈念佛谆谆相勉。继又论及理学家不明因果精微之理，反肆毁谤，为今日世道人心之患，皆此等议论有以致之。其造就不能深邃，正心诚意不能笃实，亦缘于此。务须引以为戒。</p><p class="p-trans">二十日  甲申（日）二十日，早晨八点，幼庵（按：谢居士的内弟）以及张鹿鸣归依印公，我也随同作礼。老人以三皈依、念佛，谆谆教诲勉励。接着又谈到理学家不明白因果精微的道理，反而肆意加以毁谤，造成今天世道人心的祸患，都是这等议论所导致的。他们造就不能深邃，正心诚意不能笃实，也是缘于此等议论。务必引以为戒。</p></div>
+<div class="para-pair"><p class="p-orig">二十一日  乙酉二十一日晨兴，印老命明道上人导余与幼庵诣开元寺礼拜迦叶，维卫二世尊像。云此像于晋代浮海而至，迎供寺中。极为灵异。其事详载邑乘。日本僧侣多来瞻礼，苏州人士反多不知也。旋辞印老，搭火车赴无锡。</p><p class="p-trans">二十一日  乙酉（日）二十一日，早起（注3），印老命明道法师引导我与幼庵到开元寺礼拜迦叶、维卫二尊佛像。说这二尊佛像是在晋代浮海而来，迎请供奉到寺中。极为灵异。这件事情详细记载在县志中。日本僧侣多来瞻礼，苏州人士反而大多不知道。随即辞别印老，搭火车前往无锡。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【持论】</span>立论，提出主张。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【唯厉之阶】</span>《诗经·大雅·瞻昂》：“妇有长舌，唯厉之阶。”意思是：那个女人舌头长，这是惹事的祸根。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【晨兴】</span>早起。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

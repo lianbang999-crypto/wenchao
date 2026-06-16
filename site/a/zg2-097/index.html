@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>归心堂跋 · 印光法师文钞</title>
+<meta name="description" content="夫心者，即寂即照，不生不灭，廓彻灵通，圆融活泼，而为世出世间一切诸法之本。虽在昏迷倒惑具缚凡夫之地，直下与三世诸佛，敌体相同，了无有异。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-097/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="归心堂跋 · 印光法师文钞">
+<meta property="og:description" content="夫心者，即寂即照，不生不灭，廓彻灵通，圆融活泼，而为世出世间一切诸法之本。虽在昏迷倒惑具缚凡夫之地，直下与三世诸佛，敌体相同，了无有异。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-097/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 跋</div>
+      <h1 class="art-title">归心堂跋</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">夫心者，即寂即照，不生不灭，廓彻灵通，圆融活泼，而为世出世间一切诸法之本。虽在昏迷倒惑具缚凡夫之地，直下与三世诸佛，敌体相同，了无有异。</p><p class="p-trans">真如妙心，即寂即照，不生不灭，廓彻灵通，圆融活泼，是世间、出世间一切诸法的根本。即使是昏沉、迷惑、颠倒，通身被业力束缚的凡夫，心体与三世诸佛完全相同，毫无差异。</p></div>
+<div class="para-pair"><p class="p-orig">故曰，心佛众生，三无差别。但以诸佛究竟证得，故其功德力用，彻底全彰。凡夫全体迷背，反承此功德力用之力，于六尘境，起贪瞋痴，造杀盗淫。</p><p class="p-trans">所以说：心佛众生，三无差别。只是因为诸佛究竟证得了真心，所以真心的功德力用，彻底得以彰显；凡夫完全迷背了真心，反而凭借着真心的功德力用之力，在六尘境缘当中，生起贪瞋痴三毒，造作杀盗淫三业。</p></div>
+<div class="para-pair"><p class="p-orig">因惑造业，因业感苦。惑业苦三，互相引发。因因果果，相续不断。经尘点劫，长受轮回。纵欲出离，末由也已。</p><p class="p-trans">因迷惑而造作罪业，因罪业而感得苦报。惑、业、苦三者互相引发。因因果果，相续不断。经历了微尘那么多劫的时间，长久地承受轮回。即使想要出离，也没有办法。</p></div>
+<div class="para-pair"><p class="p-orig">喻如暗室触宝，不但不得受用，反致被彼损伤。迷心逐境，背觉合尘，亦复如是。如来悯之，为说妙法，令其返妄归真，复本心性。</p><p class="p-trans">就像在黑暗的房间里撞上了宝贝，不但得不到受用，反而被它损伤。迷惑的心追逐于外境，背离觉性，合于六尘，也是这样的。如来怜悯众生，为众生宣说妙法，让其返妄归真，恢复本有的心性。</p></div>
+<div class="para-pair"><p class="p-orig">初则即妄穷真，次则全妄即真。如风息波澄，日暖冰泮，即波冰以成水，波冰与水，原非二物。当其未澄未泮之前，校彼既澄既泮之后，体性了无二致，相用实大悬殊。</p><p class="p-trans">最初是即于妄心而穷究真心，后来则全体妄心即成真心了。如同风平浪静，日出冰融，波浪与冰都成了水。波浪、冰、水，本来就是同一种物。波浪没有平静，冰没有融化时，与波浪平静，冰融化之后相比较，水的体性完全相同，但是外相与功用却相差很远。</p></div>
+<div class="para-pair"><p class="p-orig">所谓修德有功，性德方显。若唯仗性德，不事修德，则尽未来际，永作徒具佛性，无所恃怙之众生矣。</p><p class="p-trans">正所谓“修德有功，性德方显”。如果只是依仗性德，而不从事于修德。那么尽未来际，都只能永远地成为白白具有佛性，却无依无靠的众生了。</p></div>
+<div class="para-pair"><p class="p-orig">故般若心经云，观自在菩萨，行深般若波罗蜜多时，照见五蕴皆空，度一切苦厄。</p><p class="p-trans">所以《般若波罗蜜多心经》说：“观自在菩萨，行深般若波罗蜜多时，照见五蕴皆空，度一切苦厄。”</p></div>
+<div class="para-pair"><p class="p-orig">夫五蕴者，全体即是真如妙心，但由一向迷背，遂成幻妄之相。妄相既成，一真即昧，一真既昧，诸苦俱集。</p><p class="p-trans">经中所说的五蕴，完全就是真如妙心。只是由于众生一直迷惑背离，于是就成了幻妄之相。妄相形成，真心就迷昧了，真心迷昧，种种苦就会来集聚了。</p></div>
+<div class="para-pair"><p class="p-orig">如风动则全水成波，天寒则即柔成刚。照以甚深般若，则了知迷真成妄，全妄即真。如风息日暖，复还水之本体耳。</p><p class="p-trans">如同风一吹动，水就都成了波浪，天气寒冷，柔水就变成坚冰。用甚深的般若智加以觉照，就会了知迷失真心成为妄心，全体妄心就是真心的道理。如同狂风止息，暖阳照耀，波和冰又恢复了水的本体。</p></div>
+<div class="para-pair"><p class="p-orig">故知一切诸法，皆由妄情所现。若离妄情，则当体全空。以故四大咸失本性，六根悉可互用。</p><p class="p-trans">所以就知道一切诸法，都是由妄情所现。如果脱离妄情，就当体全空，地水火风四大都失去本性，眼耳鼻舌身意这六根都可以互用。</p></div>
+<div class="para-pair"><p class="p-orig">所以菩萨不起灭定，现诸威仪。眼根作耳根佛事，耳根作眼根佛事。入地如水，履水如地。水火不能焦濡，虚空随意行住。境无自性，悉随心转。</p><p class="p-trans">所以菩萨不出灭尽定而显现种种威仪。眼根作耳根的佛事，耳根作眼根的佛事。进入地中，如潜水下；走在水上，如履平地。火不能烧，水不能湿，在虚空中随意飞行停留。境缘没有自性，都会随心而转。</p></div>
+<div class="para-pair"><p class="p-orig">故楞严云，若有一人发真归元，十方虚空，悉皆消殒，乃照见五蕴皆空之实效也。归者，归投，归还，即返照回光复本心性之义。</p><p class="p-trans">所以《楞严经》说：“若有一人发真归元，十方虚空，悉皆消殒”。这是“照见五蕴皆空”的实际效果。归：归向投靠，归还，就是返照回光，恢复本来心性的意思。</p></div>
+<div class="para-pair"><p class="p-orig">然欲返照回光复本心性，非先归心三宝依教奉行不可。既能归心三宝依教奉行，自可复本心源彻证佛性。</p><p class="p-trans">然而要想返照回光，恢复本有心性，一定要先归心于三宝，依教奉行才可以。能够归心三宝，依教奉行，自然可以恢复心体本源，彻证本具佛性。</p></div>
+<div class="para-pair"><p class="p-orig">既得复本心源彻证佛性，方知自心至宝，在迷不减，在悟不增。但以顺法性故，则得受用，违法性故，反受损伤，而利害天渊迥别耳。</p><p class="p-trans">复本心源彻证佛性之后，才知道自心这一妙宝，迷惑中不减少，觉悟时不增多。只因为随顺法性的缘故，所以得到受用；因为违背法性的缘故，反而受到损伤。而其中的利害就有天渊之别了。</p></div>
+<div class="para-pair"><p class="p-orig">师导周居士，欲令子子孙孙，世奉佛法，乃以归心名堂，请题其意义，因书此以塞其责云。</p><p class="p-trans">周师导居士，想要让子子孙孙、世世代代都信奉佛法，所以用“归心”二字作为堂名，请我题示其中的含义，因此写了这篇文章来搪塞责任。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【寂照】</span>（术语）真理之体云寂，真智之用云照。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【敌体】</span>谓彼此地位相等，无上下尊卑之分。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【四大】</span>（名数）地水火风也。依俱舍论言，此四大有假实二种，其实者，称为四界或四大界，假者，单云四大。实之四大，一地大，性坚，支持万物。二水大，性湿，收摄万物。三火大，性暖，调熟万物。四风大，性动，生长万物。此四者，以造作一切之色法，故谓之能造四大。其体触处所摄，唯为身根所得。身根触诸色而觉知坚湿暖动也。假之四大，则世间所称之地水火风也，此四大虽其实为地水火风及色声香味触九法之假和合，然其中坚性最增盛者名为地，乃至动性最增盛者名为风。要之实之四大为能造，假之四大属于所造也。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【六根互用】</span>谓眼、耳、鼻、舌、身、意等六根远离染污而得清净，则六根一一具有他根之用。据北本涅槃经卷二十三载，如来一根则能见色、闻声、嗅香、别味、觉触、知法，一根如此，其余诸根亦然。此系真六根互用。又法华经卷六法师功德品说菩萨在六根清净之位，亦有六根互用之德。此系相似之六根互用。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

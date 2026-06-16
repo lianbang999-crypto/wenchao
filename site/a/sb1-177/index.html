@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复李慰农居士书六 · 印光法师文钞</title>
+<meta name="description" content="家庭诸事，只可以父母兄弟情分论。不可以我是彼非事理论。兄弟不睦，多半由于父母偏爱所起。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-177/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复李慰农居士书六 · 印光法师文钞">
+<meta property="og:description" content="家庭诸事，只可以父母兄弟情分论。不可以我是彼非事理论。兄弟不睦，多半由于父母偏爱所起。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-177/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复李慰农居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">家庭诸事，只可以父母兄弟情分论。不可以我是彼非事理论。兄弟不睦，多半由于父母偏爱所起。</p><p class="p-trans">家庭中的一切事，只可以父母、兄弟的情分来论。不可以是非对错等事来理论。兄弟不和睦，多半是由于父母的偏爱所引起。</p></div>
+<div class="para-pair"><p class="p-orig">由偏爱故，事事均须占便宜。若吃亏之兄弟，能作退一步想，譬己生于贫家，衣食住皆无有，又当与谁相争乎。</p><p class="p-trans">由于偏爱的缘故，事事都必须占便宜。如果吃亏的兄弟，能够作退一步想，譬如自己生在贫苦的家庭，衣食住都没有，又该和谁去相争呢？</p></div>
+<div class="para-pair"><p class="p-orig">又父母所留之钱财，父母之儿女得之，比兵匪得之，当好多矣。若兵匪来抢劫，又有何法能捍御之。</p><p class="p-trans">另外，父母所留的钱财，父母的儿女得到，比官兵土匪得到，当然是好多了。但如果官兵土匪来抢劫，又有什么办法能够抵御呢？</p></div>
+<div class="para-pair"><p class="p-orig">令祖父虽身入黉门，实于圣贤躬行之道，绝未闻之。尚以为耻，欲报而不得，拟汝代彼报也。使稍回想唯孝友于兄弟，则当以十余年讼为耻，不以弟多得为耻也。</p><p class="p-trans">你祖父虽然在学校中，实际却于圣贤躬行之道，绝对没有听闻过。（弟弟多得家产）还认为是羞耻，想要报复却没有报复成，还打算让你替他报复。假使稍微回想《尚书》中说的“孝啊，就是孝敬父母，友爱兄弟”，那么应当以十多年的官司为耻，不会以弟弟多得了家产为耻啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝于此理，亦不明了，尚以报复之志薄弱为憾，亦可慨也。须知汝父子兄弟之不睦，实汝祖不知睦兄弟之感报也。</p><p class="p-trans">你对于这个道理，也不明白，还以报复的志向薄弱为憾，也实在让人感慨。必须知道你父子兄弟的不和睦，实在是你祖父不知道和睦兄弟的感应果报。</p></div>
+<div class="para-pair"><p class="p-orig">汝既奉佛法，当向根本伦理上看，为汝祖三兄弟念佛，消彼阋墙之业。俾彼等同预莲池海会，同证无生法忍，此实汝报汝祖之大者。</p><p class="p-trans">你既然信奉佛法，应当向根本伦理上看，为你祖父三兄弟念佛，消除他们兄弟相争的业障。使得他们共同预入莲池海会，同证无生法忍，这才是真实你报答你祖父的最大恩德。</p></div>
+<div class="para-pair"><p class="p-orig">至于汝父，但为彼忏悔，祈其业障消除，善根增长，冥冥中尚有回转，既无回转，而我之心已尽矣。</p><p class="p-trans">至于你父亲，只要为他忏悔，祈求他的业障消除，善根增长，冥冥中还有回转的余地，即使没有回转，但我的心已经尽到了。</p></div>
+<div class="para-pair"><p class="p-orig">爱子之道，不是姑息。姑息非爱，乃害也。如芳虽由汝母溺爱，亦由汝绝未分疏其所宜非宜。故一味仗势强悍，不受约束。将来出嫁，则又何能克尽妇道。</p><p class="p-trans">疼爱孩子的方法，不是姑息纵容。姑息纵容不是爱，而是害。如芳虽然由于你母亲的溺爱，但也是由于你绝对没有一条条地讲清楚其中应该、不应该做的事。所以她一味地仗势强悍，不受约束。将来出嫁，又如何能够恪尽妇道。</p></div>
+<div class="para-pair"><p class="p-orig">汝既欲彼种善根以消恶习，今为彼取法名为慧贤。慧贤，即世俗称赞女人之贤慧也。贤则孝友恭恪，慧则勤俭柔顺，具此德者，人敬之，神护之，生有令名，死生善道，亦正合彼如芳之名之义。</p><p class="p-trans">你既然想让她种植善根来消除恶习，现今为她取法名为慧贤。慧贤，就是世俗称赞女人的贤慧。贤就是孝顺友爱、恭敬谨慎，慧就是勤劳节俭、温柔和顺，具备这种德行的人，人们尊敬她，神灵护佑她，在生有美名，死后生善道，也正合她如芳之名的含义。</p></div>
+<div class="para-pair"><p class="p-orig">又令后之儿女媳等，继其懿范，以作闺阃母仪，以此芳徽，永传裔世。彼虽强悍，总愿人说好，既有愿人说好之心，则不妨于不如法时，稍稍点破。若有宿根，或可转机。</p><p class="p-trans">又令后代的儿女媳妇等人，继承她的美德仪范，作为闺门为人之母的仪范，以此芬芳美德，永传后世。她虽然强悍，总愿意别人说她好，既然有愿意他人说她好的心，那么不妨在她不如法的时候，稍稍加以点破。如果她宿世有善根，或许可以有所转机。</p></div>
+<div class="para-pair"><p class="p-orig">又须恳求观世音菩萨，所谓若有众生多贪瞋痴，常念恭敬观世音菩萨，即得离贪瞋痴矣。</p><p class="p-trans">又必须恳求观世音菩萨，所谓：若有众生多贪瞋痴，常念恭敬观世音菩萨，即得离贪瞋痴啊！</p></div>
+<div class="para-pair"><p class="p-orig">又凡有大病，皆宜劝其念佛，戒杀吃素，此于医道甚有关系。倘肯利人，比他人易于得益。</p><p class="p-trans">另外，凡有大病，都应该劝他们念佛，戒杀吃素，这对于医道很有关系。倘若肯以此利益他人，比起其他人更容易得到利益。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【黉门】</span>学宫之门。借指学宫，学校。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【唯孝友于兄弟】</span>《论语·为政》：或谓孔子曰：子奚不为政？子曰：书云“孝乎，唯孝友于兄弟。”施于有政，是亦为政，奚其为为政？</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【阋墙】</span>语本《诗·小雅·常棣》：“兄弟阋于墙，外御其务。”谓兄弟相争于内。后用以指内部相争。争吵；争斗。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【分疏】</span>指一样一样讲清楚。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【闺阃】</span>宫院或后宫；内室。亦特指妇女居住的地方。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【母仪】</span>1.指作母亲的仪范。2.为母之道。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

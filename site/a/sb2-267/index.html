@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>彻悟禅师念佛伽陀教义百偈小序 · 印光法师文钞</title>
+<meta name="description" content="彻悟禅师深通教义，彻悟宗乘。晚年归心净土，自行化他。一以信愿念佛，求生西方为主。其所发挥，实为近代所罕见。今录其教义百偈，以为修净业者作一善导。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-267/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="彻悟禅师念佛伽陀教义百偈小序 · 印光法师文钞">
+<meta property="og:description" content="彻悟禅师深通教义，彻悟宗乘。晚年归心净土，自行化他。一以信愿念佛，求生西方为主。其所发挥，实为近代所罕见。今录其教义百偈，以为修净业者作一善导。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-267/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">彻悟禅师念佛伽陀教义百偈小序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">彻悟禅师深通教义，彻悟宗乘。晚年归心净土，自行化他。一以信愿念佛，求生西方为主。其所发挥，实为近代所罕见。今录其教义百偈，以为修净业者作一善导。</p><p class="p-trans">彻悟禅师深通教法义理，彻悟禅宗意旨。晚年归心净土，自行化他。一向以信愿念佛，求生西方为主。他所发挥的文字、义理，实在是近代所罕见的。现今收录他撰写的教义百偈，来为修净业的人作一个好向导。</p></div>
+<div class="para-pair"><p class="p-orig">【附：】</p><p class="p-trans">教义百偈（收录于弘化社版《净土十要》第十附录：彻悟禅师语录）</p></div>
+<p class="p-trans">一句弥陀，我佛心要，竖彻五时，横该八教。</p>
+<p class="p-trans">一句弥陀，意旨如何，知音常少，木耳偏多。</p>
+<p class="p-trans">一句弥陀，大意分明，蛇生弓影，药出金瓶。</p>
+<p class="p-trans">一句弥陀，名异方便，普摄群机，旁通一线。</p>
+<p class="p-trans">一句弥陀，开往生门，是多福德，非少善根。</p>
+<p class="p-trans">一句弥陀，临终佛现，四辩亲宣，六方共赞。</p>
+<p class="p-trans">一句弥陀，成佛标准，以念佛心，入无生忍。</p>
+<p class="p-trans">一句弥陀，证三不退，只此一生，便补佛位。</p>
+<p class="p-trans">一句弥陀，满十大愿，岂得普贤，错教了办。</p>
+<p class="p-trans">一句弥陀，白牛驾劲，其疾如风，行步平正。</p>
+<p class="p-trans">一句弥陀，如来藏心，水外无浪，器原是金。</p>
+<p class="p-trans">一句弥陀，妙真如性，春在华枝，像含古镜。</p>
+<p class="p-trans">一句弥陀，清净实相，绝议绝思，难名难状。</p>
+<p class="p-trans">一句弥陀，圆融法界，觌体全真，交罗无碍。</p>
+<p class="p-trans">一句弥陀，大圆智镜，身土影含，重重掩映。</p>
+<p class="p-trans">一句弥陀，空如来藏，万法未形，一真绝相。</p>
+<p class="p-trans">一句弥陀，圆满菩提，天更无上，云不与齐。</p>
+<p class="p-trans">一句弥陀，大般涅槃，一轮明月，万里空寒。</p>
+<p class="p-trans">一句弥陀，开般若门，十虚万法，一口平吞。</p>
+<p class="p-trans">一句弥陀，华屋门开，从者里入，快随我来。</p>
+<p class="p-trans">一句弥陀，入王三昧，似地均擎，如天普盖。</p>
+<p class="p-trans">一句弥陀，得大总持，转一切物，使十二时。</p>
+<p class="p-trans">一句弥陀，性本自空，星皆拱北，水尽朝东。</p>
+<p class="p-trans">一句弥陀，法界缘起，净业正因，菩提种子。</p>
+<p class="p-trans">一句弥陀，如镜照镜，宛转互含，重叠交映。</p>
+<p class="p-trans">一句弥陀，似空合空，了无痕缝，却有西东。</p>
+<p class="p-trans">一句弥陀，一大藏经，纵横交彩，绝待幽灵。</p>
+<p class="p-trans">一句弥陀，一大藏律，瞥尔净心，戒波罗蜜。</p>
+<p class="p-trans">一句弥陀，一大藏论，当念心开，慧光如喷。</p>
+<p class="p-trans">一句弥陀，一藏秘密，发本神通，具大威力。</p>
+<p class="p-trans">一句弥陀，浑全大藏，戒定慧光，流出无量。</p>
+<p class="p-trans">一句弥陀，绳本是麻，奈何不会，翻疑作蛇。</p>
+<p class="p-trans">一句弥陀，罕闻罕睹，影现镜林，响宣天鼓。</p>
+<p class="p-trans">一句弥陀，无可譬喻，古镜当台，水银堕地。</p>
+<p class="p-trans">一句弥陀，老婆心苦，运万斛舟，发千钧弩。</p>
+<p class="p-trans">一句弥陀，明明是有，四辩八音，婆心苦口。</p>
+<p class="p-trans">一句弥陀，的的是无，熔他万像，入我洪炉。</p>
+<p class="p-trans">一句弥陀，亦无亦有，梦里山川，镜中华柳。</p>
+<p class="p-trans">一句弥陀，非有非无，捺著便转，水上壶卢。</p>
+<p class="p-trans">一句弥陀，第一义谛，尚超百非，岂落四句。</p>
+<p class="p-trans">一句弥陀，妙圆三谛，最清凉池，大猛火聚。</p>
+<p class="p-trans">一句弥陀，得大自在，转变圣凡，融通世界。</p>
+<p class="p-trans">一句弥陀，有功者赏，王膳盈前，髻珠在掌。</p>
+<p class="p-trans">一句弥陀，里仁为美，居卜来归，枯桩非鬼。</p>
+<p class="p-trans">一句弥陀，非难非易，九品莲华，一生心力。</p>
+<p class="p-trans">一句弥陀，就路还家，可惜痴人，弃金担麻。</p>
+<p class="p-trans">一句弥陀，横出娑婆，汝信不及，吾末如何。</p>
+<p class="p-trans">一句弥陀，归元捷径，紧要资粮，唯信愿行。</p>
+<p class="p-trans">一句弥陀，要在信深，莲芽九品，抽自此心。</p>
+<p class="p-trans">一句弥陀，要在愿切，寸心欲焚，双目流血。</p>
+<p class="p-trans">一句弥陀，要在行专，单提一念，斩断万缘。</p>
+<p class="p-trans">一句弥陀，誓成片段，拌此一生，作个闲汉。</p>
+<p class="p-trans">一句弥陀，只恁么念，百八轮珠，线断重换。</p>
+<p class="p-trans">一句弥陀，不急不缓，心口一如，历历而转。</p>
+<p class="p-trans">一句弥陀，愈多愈好，如人学射，久习则巧。</p>
+<p class="p-trans">一句弥陀，摄心密持，如人饮水，冷暖自知。</p>
+<p class="p-trans">一句弥陀，譬犹掘井，就下近泥，价廉工省。</p>
+<p class="p-trans">一句弥陀，类如钻火，木暖烟生，暂停不可。</p>
+<p class="p-trans">一句弥陀，全身顶戴，人命无常，光阴不再。</p>
+<p class="p-trans">一句弥陀，如救头然，尽十分力，期上品莲。</p>
+<p class="p-trans">一句弥陀，妙圆止观，寂寂惺惺，无杂无间。</p>
+<p class="p-trans">一句弥陀，险路砥平，直抵宝所，不住化城。</p>
+<p class="p-trans">一句弥陀，如水清珠，纷纭杂念，不断自无。</p>
+<p class="p-trans">一句弥陀，顿入此门，金翅擘海，直取龙吞。</p>
+<p class="p-trans">一句弥陀，尘缘自断，师子游行，惊散野干。</p>
+<p class="p-trans">一句弥陀，蓦直念过，一踏到底，香象渡河。</p>
+<p class="p-trans">一句弥陀，无相心佛，国土庄严，更非他物。</p>
+<p class="p-trans">一句弥陀，无为大法，日用单提，剑离宝匣。</p>
+<p class="p-trans">一句弥陀，无漏真僧，雪山药树，险道明灯。</p>
+<p class="p-trans">一句弥陀，满檀那度，裂破悭囊，掀翻宝聚。</p>
+<p class="p-trans">一句弥陀，满尸罗度，都摄六根，圆净三聚。</p>
+<p class="p-trans">一句弥陀，满羼提度，二我相空，无生忍悟。</p>
+<p class="p-trans">一句弥陀，满毗梨度，不染纤尘，直踏玄路。</p>
+<p class="p-trans">一句弥陀，满禅那度，现诸威仪，藏甚枯树。</p>
+<p class="p-trans">一句弥陀，满般若度，境寂心空，云开月露。</p>
+<p class="p-trans">一句弥陀，想寂思专，未离忍土，已坐宝莲。</p>
+<p class="p-trans">一句弥陀，一朵宝莲，唯心之妙，法尔如然。</p>
+<p class="p-trans">一句弥陀，一朵宝莲，凡情不信，亦宜其然。</p>
+<p class="p-trans">一句弥陀，一朵宝莲，决定不信，真个可怜。</p>
+<p class="p-trans">一句弥陀，一朵宝莲，直饶不信，已染识田。</p>
+<p class="p-trans">一句弥陀，宏通敢惰，入大悲室，坐法空座。</p>
+<p class="p-trans">一句弥陀，无尽宝藏，八字打开，普同供养。</p>
+<p class="p-trans">一句弥陀，断诸烦恼，全佛全心，一了百了。</p>
+<p class="p-trans">一句弥陀，灭除定业，赫日轻霜，洪炉片雪。</p>
+<p class="p-trans">一句弥陀，能空苦报，世界根身，即粗而妙。</p>
+<p class="p-trans">一句弥陀，圆转三障，即惑业苦，成秘密藏。</p>
+<p class="p-trans">一句弥陀，解难解怨，慈光共仰，法喜均沾。</p>
+<p class="p-trans">一句弥陀，报未报恩，裂缠绵网，入解脱门。</p>
+<p class="p-trans">一句弥陀，空诸恶趣，万德洪名，那容思议。</p>
+<p class="p-trans">一句弥陀，机逗人天，参差三辈，掩映九莲。</p>
+<p class="p-trans">一句弥陀，化兼小圣，回狭劣心，向无上乘。</p>
+<p class="p-trans">一句弥陀，超然无碍，文殊普贤，大人境界。</p>
+<p class="p-trans">一句弥陀，微妙难思，唯佛与佛，乃能知之。</p>
+<p class="p-trans">一句弥陀，列祖奉行，马鸣造论，龙树往生。</p>
+<p class="p-trans">一句弥陀，因缘时节，异香常闻，莲社创结。</p>
+<p class="p-trans">一句弥陀，利大象龙，永明禅伯，智者教宗。</p>
+<p class="p-trans">一句弥陀，感应非轻，少康化佛，善导光明。</p>
+<p class="p-trans">一句弥陀，有教无类，雄俊入冥，惟恭灭罪。</p>
+<p class="p-trans">一句弥陀，是无上禅，一生事办，旷劫功圆。</p>
+<p class="p-trans">一句弥陀，理非易会，百偈俄成，三尊加被。</p>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

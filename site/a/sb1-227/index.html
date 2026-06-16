@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢子厚居士书 · 印光法师文钞</title>
+<meta name="description" content="徐某肯提倡净土甚好。彼上前年以醒迷录一本见寄，祈为排印，前年附于坐花志果之后。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-227/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢子厚居士书 · 印光法师文钞">
+<meta property="og:description" content="徐某肯提倡净土甚好。彼上前年以醒迷录一本见寄，祈为排印，前年附于坐花志果之后。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-227/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢子厚居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">徐某肯提倡净土甚好。彼上前年以醒迷录一本见寄，祈为排印，前年附于坐花志果之后。</p><p class="p-trans">徐某肯提倡净土，很好。他上前年将一本《醒迷录》寄给我，请我排印，前年附在《坐花志果》后面。</p></div>
+<div class="para-pair"><p class="p-orig">去年腊月，同一川僧来报国，住多日过年，其僧袍子也未带。过年后，光呵斥之曰，汝为僧，当于岁末年初祝国祝民。</p><p class="p-trans">去年腊月，他同一位四川的僧人来到报国寺，住了许多天，在报国寺过年。那位僧人，衣袍也没有带。过年后，我呵斥他说：你是个僧人，应当在岁末年初，祝祷国泰民安。</p></div>
+<div class="para-pair"><p class="p-orig">汝远出过年，袍子也不带，可知汝成年也无礼诵持念之事。幸同徐居士来，否则报国单也不挂你的。</p><p class="p-trans">你出远门过年，衣袍也不带，可知你一年中都没有礼诵持念的事。幸亏你同徐居士来，否则报国寺也不挂你的单。</p></div>
+<div class="para-pair"><p class="p-orig">徐既由支那内学院结伴来，则徐亦是只说空话，不务实行之人。否则何肯相伴，令彼辱及于己乎。此种人，如来说为可怜悯者。</p><p class="p-trans">徐某既然是由支那内学院与你结伴而来，那么徐某也是只说空话，不务实行的人。否则如何肯与你作伴，令他辱及到自己呢？这种人，如来说是可怜悯者。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【支那内学院】</span>乃我国现代著名之佛学院，为唯识学大师欧阳竟无创办于民国十一年（1922）。因古印度称中国为支那，佛教自称内学，故有此名。院址位于南京公园路。院务由欧阳氏本人主持，设学务处、编校流通处、事务处，分掌研究、讲演、图书、出版、校勘、编纂、庶务等责。教授除欧阳氏本人外，另有汤用彤、吕澄、邱虚明、王恩洋、聂耦庚等人。学生除正式招生者外，社会各界亦经常有来该院问学者。十四年，该院开设法相大学特科，招收比丘、居士等学员四十余人，十六年特科因故停办。二十六年中日战争爆发，南京被日本占领，该院迁往四川江津，定名为蜀院。三十二年欧阳氏去世后，院务由吕澄接掌。原在南京刻经一一○部，一○五五卷，入蜀又刻经三十部，五十余卷。该院以主持人欧阳氏为一代佛学名家，教授亦多为一时之选，故颇受中日等国佛学界所重视，俨然为当时我国佛学研究中心。该院以“师、悲、教、戒”为院训。所刊行之“内学年刊”，与太虚大师之“海潮音”杂志，并为民国以来之两大佛教刊物。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

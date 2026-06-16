@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>潮阳佛教分会演说一（代了清师作） · 印光法师文钞</title>
+<meta name="description" content="我大觉世尊释迦牟尼佛，尘点劫前，早成正觉。为度众生，数数示生，频频现灭。且据此番出世，在周昭王二十六年甲寅，示生于中天竺迦毗罗卫国净饭王宫。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-149/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="潮阳佛教分会演说一（代了清师作） · 印光法师文钞">
+<meta property="og:description" content="我大觉世尊释迦牟尼佛，尘点劫前，早成正觉。为度众生，数数示生，频频现灭。且据此番出世，在周昭王二十六年甲寅，示生于中天竺迦毗罗卫国净饭王宫。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-149/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">潮阳佛教分会演说一（代了清师作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">我大觉世尊释迦牟尼佛，尘点劫前，早成正觉。为度众生，数数示生，频频现灭。且据此番出世，在周昭王二十六年甲寅，示生于中天竺迦毗罗卫国净饭王宫。</p><p class="p-trans">我大觉世尊，释迦牟尼佛，于尘点劫前，早已成就无上正等正觉。为度众生，多次示现降生，频频示现灭度。根据这一次的出世，是在周昭王二十六年甲寅年，示生在中天竺的迦毗罗卫国净饭王宫。</p></div>
+<div class="para-pair"><p class="p-orig">其母摩耶夫人，于四月八日入岚毗尼园游观，见无忧树华盛开，以右手攀枝欲取，世尊即于右胁诞生。随即一手指天，一手指地，目顾四方，周行七步。曰，天上天下，唯我独尊。</p><p class="p-trans">佛陀的母亲摩耶夫人，在四月八日，入岚毗尼园游观，看见无忧树华盛开，以右手攀枝欲取此华，世尊就从摩耶夫人右胁诞生。随即一手指天，一手指地，目顾四方，周行七步。说：天上天下，唯我独尊。</p></div>
+<div class="para-pair"><p class="p-orig">至年十九，于二月八日夜半时，乘乾陟马，逾城而去，直至深山，修出世道。又欲示彼外道皆非正法，故复游历五年，遍访诸仙。</p><p class="p-trans">到了十九岁，在二月初八夜半之时，乘乾陟马王，逾城而去，直至深山，修出世道。又想显示外道所修的都不是正法，所以又游历五年，遍访众多仙人。</p></div>
+<div class="para-pair"><p class="p-orig">后乃独坐观心，日食一麻一麦，苦行六年，于腊月初八日明星出时，举目一观，豁然大悟。叹曰，奇哉奇哉，一切众生，具有如来智慧德相。但以妄想执著，不能证得。若离妄想，一切智，自然智，无碍智，即得现前。</p><p class="p-trans">后来才独坐观心，每天食用一麻一麦，苦行六年，在腊月初八日，明星出时，举目一观，豁然大悟。叹说：“奇哉奇哉，一切众生，具有如来智慧德相。但以妄想执着，不能证得。若离妄想，一切智，自然智，无碍智，即得现前。”</p></div>
+<div class="para-pair"><p class="p-orig">须知世尊出家游历苦行悟道，皆为后世修行者作一榜样。非先实未悟，因兹始悟也。事在穆王二年癸未。从兹随顺机宜，度脱众生。说法四十九年，谈经三百余会。偏圆顿渐，大小权实，观机逗教，令其得益。</p><p class="p-trans">我们必须知道，世尊出家游历，苦行悟道，都是为后世修行者作一个榜样。不是先前真的没有觉悟，因此出家苦修才觉悟的。成佛是在周穆王二年癸未年。从此随顺机宜，度脱众生。说法四十九年，谈经三百余会。偏、圆、顿、渐，大、小、权、实一切法门，观察众生根机，阐扬教法，令众生得到利益。</p></div>
+<div class="para-pair"><p class="p-orig">至穆王五十二年壬申二月十五日，以一切众生，根已熟者，皆证道果，其未熟者，皆亦已作得度因缘。一期事毕，复示涅槃。</p><p class="p-trans">到了周穆王五十二年壬申年，二月十五日，因为一切众生，根机已成熟的，都证得道果；根机未成熟的，也都已经作了得度的因缘。一期教化事业完毕，又示现了涅槃。</p></div>
+<div class="para-pair"><p class="p-orig">以定慧所生丈六之法身，作金刚不坏八斛之舍利。散布天上人间，起塔供养。普令众生，同种善根。</p><p class="p-trans">用定慧所生的丈六法身，作金刚不坏的八斛舍利。散布到天上人间，起塔供养。普令众生，同种善根。</p></div>
+<div class="para-pair"><p class="p-orig">至汉明帝永平七年甲子，帝梦金人，项有圆光，飞来殿廷。旦问群臣，是何祥瑞。太史傅毅对曰，西域有神，号之为佛。陛下所梦，其必是乎。</p><p class="p-trans">到了汉明帝永平七年甲子年（公元64年），汉明帝梦见全身金色的人，颈部有圆光，飞来殿廷。早晨询问群臣，是什么祥瑞。太史傅毅回答说：西域有神，称号为佛。陛下所梦，必定就是佛。</p></div>
+<div class="para-pair"><p class="p-orig">帝遂遣博士王遵，中郎将秦景，郎中蔡愔等一十八人，往求佛法。至月氏国，值迦叶摩腾，竺法兰二尊者，赍佛经像，欲化此方，遂祈同来。</p><p class="p-trans">汉明帝于是派遣博士王遵，中郎将秦景，郎中蔡愔等十八人，前往求取佛法。到了月氏国，正遇上迦叶摩腾、竺法兰二位尊者，带着佛经佛像，想来教化此方，于是请他们二人同来。</p></div>
+<div class="para-pair"><p class="p-orig">至十年始达洛阳，馆于鸿胪寺，后建伽蓝，因以白马驮经，假馆鸿胪之故，因名之曰白马寺。帝问摩腾，大觉世尊，何以不生中国。腾曰，迦毗罗卫国，乃大千世界之中。三世诸佛，悉生于此。边方国土，或数百年，或千余年，声教渐被。此土乃属东方，当土自称中国耳。</p><p class="p-trans">到了汉明帝十年（公元67年），才到达洛阳，住在鸿胪寺，后来建造寺院，因为白马驮经，住在鸿胪寺的缘故，因此命名为白马寺。汉明帝问迦叶摩腾尊者：大觉世尊，为什么不生到中国。迦叶摩腾尊者说：迦毗罗卫国，是大千世界的中央。三世诸佛，全都出生在此。边方的国土，或者几百年，或者上千年，佛陀的声教渐渐覆被。这个地方属于东方，本地人自己称为中国罢了。</p></div>
+<div class="para-pair"><p class="p-orig">五岳诸山道士，以新来佛法，帝极崇重，遂怀忌妒。至十四年，正月一日，朝正之次，表请较试。帝允许之。</p><p class="p-trans">五岳诸山的道士，因为佛法是新传来的，而皇帝却极为崇敬尊重，于是心怀忌妒。到了汉明帝十四年（公元71年），正月初一，大臣们向皇帝朝贺新年之后，上表请求互相较量比试一番。皇帝允许了。</p></div>
+<div class="para-pair"><p class="p-orig">至十五日，于白马寺南门外，筑台置经，以火取验。道经悉毁。佛像及经，悉皆放光。摩腾涌身虚空，现诸神变。即时宰官，士庶，道士，妃嫔等千余人出家。</p><p class="p-trans">到了正月十五，在白马寺南门外，筑起高台，放置经卷，以火烧来检验真假。道教经典全都被焚毁。而佛像及经书，却全都放光。迦叶摩腾尊者涌身虚空，现各种神变。当时就有宰官，士人百姓，道士，妃嫔等一千多人出家。</p></div>
+<div class="para-pair"><p class="p-orig">帝即建十寺，七寺安僧，三寺安尼。然此时，东西尚未大通，往来者少。佛法流布，仅在北方。</p><p class="p-trans">于是汉明帝就建造了十座寺院，七座寺院，安置僧众，三座寺院，安置尼众。然而在当时，东西方的道路还没有畅通，往来的人很少。佛法的流布，仅限在北方。</p></div>
+<div class="para-pair"><p class="p-orig">三国初有康僧会者，始宏化吴地。至晋而遍及全国，兼流布于高丽，日本，暹罗，安南，缅甸，蒙古诸国。</p><p class="p-trans">三国初年，有康僧会尊者，佛法才开始宏化到吴地。到了晋朝就遍及全国了，而且流布到朝鲜，日本，泰国，越南，缅甸，蒙古等国。</p></div>
+<div class="para-pair"><p class="p-orig">佛法肇始于汉，扩张于晋。及宋，齐，梁，陈，隋，则蒸蒸日上。至唐而律教禅净，性相诸法，无不具备。</p><p class="p-trans">佛法肇始于汉朝，扩张于晋朝。到了宋、齐、梁、陈、隋，就蒸蒸日上。到了唐朝，律、教、禅、净，性相诸法，无不具备。</p></div>
+<div class="para-pair"><p class="p-orig">五代之时，北方略衰，南方犹盛。至宋而法门气象，不亚唐时。元以蒙古入承大统，崇重佛法，不让前朝。明朝诸帝，奉佛犹殷。</p><p class="p-trans">五代之时，北方的佛法略微衰弱，南方还很兴盛。到了宋朝，法门气象，不亚于唐朝时候。元朝以蒙古族入主中原，继承帝业，崇重佛法，不亚于宋朝。明朝诸位皇帝，奉佛依然很殷勤。</p></div>
+<div class="para-pair"><p class="p-orig">唯嘉靖崇信道教，四十余年，法运少衰。万历以来，又复蔚兴。迨至有清，崇重尤隆。世祖章皇帝不观时机，仰遵佛制，罢除试僧度牒，令其随意出家。在当时高人林立，实为有益。</p><p class="p-trans">只有嘉靖皇帝崇信道教，四十多年的时间，法运稍微衰弱。明朝万历皇帝以来，又蔚然兴盛。等到了清朝，崇敬尊重佛教尤其隆厚。清世祖顺治皇帝不观众生时机，仰遵佛制，罢除了僧人考试，合格后，国家才发给度牒的制度，使大众可以随意出家。在当时，高人林立，确实是有利益的。</p></div>
+<div class="para-pair"><p class="p-orig">从乾隆以后，法道日微。加以发匪回匪，屠戮僧侣，焚毁寺宇，法轮几乎停转。从兹哲人日希，典型日坠。</p><p class="p-trans">从乾隆以后，法道日渐衰微。加上发匪、回匪的叛乱，屠杀僧侣，焚毁寺宇，法轮几乎停止转动。从此智慧卓越的人日渐希少，典范榜样日渐坠落。</p></div>
+<div class="para-pair"><p class="p-orig">鄙败无赖之徒，由不试僧之故，多皆混入其中。裨贩如来，造种种业。致令见浅之流，纷纷谤议，竟有逐僧毁寺等种种不法之举。虽事出无知妄作，总因僧界无人，解行俱缺，不能以法化人之所致耳。</p><p class="p-trans">粗鄙败坏的无赖之徒，由于不对僧人进行考试的缘故，大多都混入到佛门。贩卖如来，造种种罪业。致使浅见之人，纷纷诽谤议论，竟然有驱逐僧人，毁坏寺院等种种不法之举。虽然事情是出于俗人无知妄作，但总还是因为僧界没有高人，解悟行持都缺少，不能以佛法感化他人所导致的啊！</p></div>
+<div class="para-pair"><p class="p-orig">溯自法流中国，历代帝王，无不崇奉。唯三武灭佛，而随即更兴。譬冬之冻闭坚固，正成就其春夏之发生畅茂耳。杲日当空，只手焉遮。仰面唾天，反污己身。</p><p class="p-trans">追溯佛法流传到中国，历代帝王，无不尊崇信奉。唯有三武灭佛，而佛法随即又兴盛起来。譬如冬季冰冻坚固，正是为了成就春夏，万物的生发、畅茂罢了。明日当空，一只手岂能遮住。仰面唾向天空，反而唾污到自身。</p></div>
+<div class="para-pair"><p class="p-orig">三武者魏太武，周武帝，唐武宗也。先皆深信佛法，极意修习。魏武信崔浩之蛊惑。周武听卫元嵩之谗谮。唐武信李德裕，及道士赵归真之诬谤。毁灭未久，而主者助者，皆罹极殃。</p><p class="p-trans">三武就是北魏太武帝，北周武帝，唐武宗。他们起先都是深信佛法，尽心修习。北魏太武帝相信了崔浩的蛊惑。北周武帝听信了卫元嵩的谗言。唐武宗相信了李德裕，以及道士赵归真的诬谤。毁灭佛教的事做了还没有多久，而主毁、助毁的人，就都遭受了极大的祸殃。</p></div>
+<div class="para-pair"><p class="p-orig">魏武废教后，不五六年，崔浩赤族，己亦被弑。嗣帝即位，复大兴之。周武废教后，元嵩贬死，不五年而身感恶疾，遍体糜烂。死未三年，隋文受禅，复大兴之。</p><p class="p-trans">北魏太武帝废除佛教后，不到五六年，崔浩全族被诛，北魏太武帝自己也被杀。北魏文成帝即位，又大兴佛法。北周武帝废除佛教后，卫元嵩被贬而死，不到五年自己也身感恶疾，遍体腐烂。北周武帝死后不到三年，隋文帝称帝，又大兴佛法。</p></div>
+<div class="para-pair"><p class="p-orig">唐武废教后，不及一年，归真被诛，德裕窜死，武宗服道士金丹，疽发背死，宣宗复大兴之。宋之徽宗，初亦甚信佛法。后听道士林灵素之妖妄，遂改佛像为道相，称佛为大觉金仙，称僧为德士，著道士衣，凡作法事，居道士后。</p><p class="p-trans">唐武宗废除佛教后，不到一年，赵归真被诛杀，李德裕遭贬逐而死，唐武宗服用道士金丹，疽发于背而死，唐宣宗又大兴佛法。宋徽宗，最初也很信奉佛法。后来听信道士林灵素的怪异荒诞之说，于是改佛像为道相，称佛为大觉金仙，称僧为德士，穿道士衣，凡作法事，位于道士之后。</p></div>
+<div class="para-pair"><p class="p-orig">下诏不久，京城大水，直同湖海。君臣惶惧，敕灵素止水，愈止愈涨。忽僧伽大圣现灵禁中，帝焚香乞哀。僧伽振锡登城，水即顿涸。随敕复佛旧制。不六七年，父子被金虏去。金封徽宗为昏德侯，钦宗为重昏侯。二宗皆死于五国城。</p><p class="p-trans">下诏不久，京城发大水，如同江湖大海。君臣惶恐害怕，命令林灵素止水，结果愈止愈涨。忽然僧伽大师现身在宫中，皇帝焚香乞求哀告。僧伽大师振锡登上城头，大水立即干涸。随即敕命恢复佛教旧制。不到六七年，父子二人被金兵虏去。金人封宋徽宗为昏德侯，宋钦宗为重昏侯。宋徽宗、宋钦宗都死在了五国城。</p></div>
+<div class="para-pair"><p class="p-orig">夫佛乃三界大师，四生慈父，圣中之圣，天中之天。教人以返妄归真，背尘合觉。了幻妄之惑业，复本有之心性。尚感恩报德，护持流通之不暇，岂可任一时之势力，灭众生之慧眼，断人天之坦路，掘地狱之深坑。宜其即目交报，永劫沉沦。贻诮将来，以为殷鉴。</p><p class="p-trans">佛陀是三界大师，四生慈父，圣中之圣，天中之天。教导我们返妄归真，背尘合觉。了断幻妄的惑业，恢复本有的心性。感恩报德，护持流通都来不及，怎可随任一时的势力，灭去众生的慧眼，断阻人天的坦路，挖掘地狱的深坑。应该让他即刻就看到报应，永劫沉沦。为将来的人留下笑柄，作为借鉴。</p></div>
+<div class="para-pair"><p class="p-orig">书曰，惠迪吉，从逆凶，惟影响。因果报应，亦儒教之圣谟。但未深明其致，故人多暗昧不了耳。由汉至今，千八百余年，自天子以至于庶人，依佛法而明心见性，了生脱死者，如恒河沙。</p><p class="p-trans">《尚书》中说：顺道吉祥，逆道凶险，如同身的影子，音的回响。因果报应，也是儒教的圣训。只是没有深明其中的原由，所以人们大多暗昧不明白罢了。从汉朝至今，一千八百多年，上自天子，下至平民百姓，依佛法明心见性，了生脱死的人，如恒河沙之多。</p></div>
+<div class="para-pair"><p class="p-orig">迄今民国启运，各界名人，皆知佛教为世出世间道之源本，保护赞助。我广东乃千余年来宏法胜地。</p><p class="p-trans">到今天民国初立，各界名人，都知道佛教是世出世间大道的源本，保护赞助。我们广东省是一千多年来宏法的胜地。</p></div>
+<div class="para-pair"><p class="p-orig">曹溪一脉，流布中外。潮阳灵山，实大颠禅师（师讳宝通，潮州杨氏子，参南岳石头希迁禅师，大悟，遂嗣其法，住潮州灵山。刺史韩退之初不信佛，每作文排斥，至宪宗元和十四年，谏迎佛骨，贬之潮州，因与大颠往还，乃少生信向耳），摄辟佛之大儒，入佛法之胜道场地。</p><p class="p-trans">六祖曹溪一脉，流布中外。潮阳灵山，实是大颠禅师（禅师名讳宝通，潮州杨氏子，参南岳石头希迁禅师，大悟，于是承嗣其法，住潮州灵山。刺史韩愈最初不信佛，每每作文排斥佛教，在唐宪宗元和十四年（公元819年），因写《谏迎佛骨表》，被贬到潮州。因此与大颠禅师来往，于是稍微生起信心归向），摄受辟佛的大儒韩愈，进入佛法的胜道场地。</p></div>
+<div class="para-pair"><p class="p-orig">今法运虽衰，胜地犹昔。我僧界诸同衣，各宜以古为师，见贤思齐。精进勇猛，力修净业。庶不至宗风扫地，贻辱法门。而况外护有人，内修无障。岂可不自奋勉，以挽既倒之狂澜，续将绝之慧命，冀报佛恩于万一哉。</p><p class="p-trans">现今法运虽然衰微，胜地还是如古时一样。我僧界诸位同辈，各自应该以古为师，见贤思齐。精进勇猛，力修净业。才不至于宗门道风扫地，使法门蒙羞。何况外护有高人，内修无障碍。怎可不自我奋发勉励，以挽救将倒的狂澜，延续将断绝的慧命，希望报佛恩的万分之一呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【周行七步】</span>出自《涅槃经》。一：南行七步。示现欲为无量众生作上福田故也。二：西行七步。示现生尽。永断老死。是最后身故也。三：北行七步。示现已度诸有生死故也。四：东行七步。示为众生而作导首故也。五：四维（东南东北西南西北）行七步。示现断灭种种烦恼四魔（天魔、阴魔、死魔、烦恼魔）种性。成于如来应正遍知故也。六：上行七步。谓升虚空而行也。示现不为不净之物之所染污。犹如虚空故也。七：下行七步。谓从虚空而下也。示现法雨灭地狱火。令彼众生受安隐乐。为毁禁戒者。示作霜雹而能净洗其故也。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【月氏国】</span>是西北古代民族。亦称“月支”、“大月氏”。《史记·大宛传》载：&quot;始月氏居敦煌、祁连间&quot;，约当今甘肃省兰州以西直到敦煌的河西走廊一带。大约远在战国初期，月氏便在这一带过着游牧生活。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【假馆】</span>借用馆舍。引申指作客旅居。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【声教】</span>教法由音声而宣说，故称声教。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【朝正】</span>也称“贺正”、“元会”。指大臣在新年向皇帝拜贺。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【肇始】</span>发端，开始。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【大统】</span>帝业；帝位。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【发匪】</span>指太平天国军，是因为太平军蓄发的缘故。清廷规定汉人也须遵从满人风俗，剃光前额的头发，而太平军为表示反满的决心，仍按汉族传统习俗蓄发。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【回匪】</span>同治元年（1862）陕、甘伊斯兰教徒和新疆回族、维吾尔族人民爆发起义，称为回匪。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【蛊惑】</span>使人心意迷惑</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【谗谮】</span>恶言中伤</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【赤族】</span>诛灭全族。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【窜死】</span>贬逐而死。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【疽】</span>中医指局部皮肤肿胀坚硬的毒疮。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【妖妄】</span>指怪异荒诞之说。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【僧伽】</span>（628-710）唐代西域僧。葱岭北何国人，一说碎叶人，俗姓何。唐龙朔（661-663）初年，来西凉府，又游历江淮之地，居止于楚州龙兴寺。后于泗州临淮县（安徽省）信义坊得金像一尊，上有古香积之铭记及普照王佛之铭，遂建临淮寺。师屡次显现神异，尝现十一面观音形，人益信重，世称观音大士化身。景龙二年（708），受中宗之诏入内道场，被尊为国师。未久，即住京师荐福寺，因治众病、祈雨有验，蒙赐“普光王寺”之额于临淮寺。景龙四年三月二日示寂于荐福寺，世寿八十三。中宗深为哀悼，送其遗骸还本处。弟子惠俨、木叉等为之建塔院。懿宗咸通二年（861）赐号“证圣大师”。宋真宗大中祥符六年（1013）敕赐“普照明觉大师”之谥号。
+僧伽和尚是初唐一位传奇式的佛教人物，因其生前在泗州一带传法，被后世尊奉为“泗州大圣”。自唐宋以来，关于僧伽的传奇故事和神异事迹在民间广为流传，在一大批佛教居士的推动下，历经唐、宋、明、清，更形成了全国性的僧伽信仰。僧伽信仰作为一种宗教现象，是佛教与中国居士阶层特别是唐宋的居士活动融合的产物，唐宋的居士佛教造就了僧伽信仰。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【交报】</span>泛指报应。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【贻诮】</span>见笑。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【殷鉴】</span>谓“殷”人子孙应以“夏”的灭亡为鉴戒。后泛指可以作为借鉴的往事。</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【大颠禅师《佛祖历代通载》】</span>大颠禅师者。潮阳人。参南岳石头和上。一日石头问。何者是禅。师云。扬眉动目。石头云。除却扬眉动目外。将汝本来面目呈看。师云。请和上除却扬眉动目外鉴某甲。石头云。我除竟。师云。将呈和上了也。石头云。汝既将呈我心如何。师云。不异和上。石头云。非关汝事。师云。本无物。石头云。汝亦无物。师云。无物即是真物。石头云。真物不可得。汝心现量如此。大须护持。师后归住潮阳灵山。尝示众曰。夫学道人须识自家本心。多见时辈只认扬眉动目一语一默蓦头印可以为心要。此实未了。吾今为汝分明说出。各须听取。但除一切妄运想念现量。即真汝心。此心与尘境及守静时。全无交涉。即心是佛。不待修治。何故应机随照泠泠自用。穷其用处了不可得。唤作妙用乃是本心。大须护持不可容易。侍郎韩愈尝问。如何是道。师良久。时三平为侍者。乃击禅床。师云。作什么。三平云。先以定动。后以智拔。退之喜曰。愈问道于师。却于侍者得个入处。遂辞而去</p>
+<p class="note-item"><span class="note-n">[21]</span><span class="note-term">【见贤思齐】</span>看到德才兼备的人，就想向他学习，和他一样。</p>
+<p class="note-item"><span class="note-n">[22]</span><span class="note-term">【贻辱】</span>使蒙受羞辱。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

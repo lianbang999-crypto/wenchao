@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与友人论校经纲要书 · 印光法师文钞</title>
+<meta name="description" content="佛经义理无穷，随人所见，各自著述。只一经也，别圆终顿，所判不同。因缘观心，所释各异。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-005/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与友人论校经纲要书 · 印光法师文钞">
+<meta property="og:description" content="佛经义理无穷，随人所见，各自著述。只一经也，别圆终顿，所判不同。因缘观心，所释各异。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-005/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">与友人论校经纲要书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛经义理无穷，随人所见，各自著述。只一经也，别圆终顿，所判不同。因缘观心，所释各异。</p><p class="p-trans">佛经的义理无穷，随人所见，各自有所著述。只是一部经，就有别教、圆教（天台四教）、终教、顿教（贤首五教），判教的不同。就因缘释、观心释等四释来诠释经文，解释的会各有差异。</p></div>
+<div class="para-pair"><p class="p-orig">况复后世禅道大行，人皆乐闻直指之说，谓其亲切痛快，易于得益。由是多有以祖意释经意，挽佛说徇己说。抹除事相，专谈本分。或以机锋为转折，或以表法为通关。但能不背心宗，皆堪辅弼佛说。纵不能普被三根，称佛本怀。亦可以各利一类之机，令其就路还家。又显经义幽远，佛理圆通。法法归真，头头合道。</p><p class="p-trans">何况到了后来唐宋之时，禅宗之道大为盛行，人们都喜欢听直指人心，见性成佛之说，认为这样开门见山、直达目的，容易得到利益。因此就有很多人，用祖师的意思来解释经文，或引用佛陀所说来支持自己的见解，并在修行中抹除事相，专谈自性的本来面目。或以机锋问答来转迷为悟，或者比喻表法来打破参禅路上的关口。但只要能够不违背禅宗心法，都堪能辅助佛说。纵然这些方法不能普被上中下三根而完全符合佛陀普度一切众生的初衷，但都有益于特定根机的众生，使他们按照正确的方法出离轮回。又显得经文含义深奥，佛理圆融通达。法法皆归真，头头皆合道。</p></div>
+<div class="para-pair"><p class="p-orig">良以者个如太虚空，杳无疆界，不妨随人所住，以分南北西东。如摩尼珠，非青黄赤白等色，而复遇青现青，逢黄现黄。青黄虽非本色，本色不离青黄。倘欲离青黄以觅本色，非蕴空大士不可。</p><p class="p-trans">其实，心性如无边虚空，杳然没有疆界，当然无所谓方位。但不妨随人所住地方的不同而分出东西南北各种方位。如同彩色多变的摩尼宝珠，并非具有青黄红白等特定颜色，但它遇到青色就现青色，逢到黄色便现黄色，青黄虽然不是摩尼珠的本色，但本色却需要借助于青黄等特定颜色而显现。倘若想要离开青黄等特定颜色而寻找本色，若非五蕴皆空的法身大士，不可能做到。</p></div>
+<div class="para-pair"><p class="p-orig">如李长者之华严论。憨山之法华击节。曾凤仪之三宗通。及禅家以念佛作话头看，以净土依正作本分说等。</p><p class="p-trans">例如唐朝李通玄的《华严经论》。明朝憨山大师的《法华击节》。明朝曾凤仪的《三宗通》。以及禅宗以“念佛是谁”作为话头来参，以净土的依正庄严，来作禅宗的本分说（如自性弥陀，唯心净土）等等。</p></div>
+<div class="para-pair"><p class="p-orig">不得律以教家常格，谓为错讹而稍加更改。以彼另属一宗，揽一切法指归向上。设一更改，于本注前后血脉隔断。又不能于教理始终意义吻合。一经稍改，两途俱失。剜肉作疮，有损无益。还他本来面目，流通后世。</p><p class="p-trans">不能用教下的常规准则来衡量、评判禅宗的修行方法而认为其有误，更不能因此对禅宗修法做任何更改。因为这些方法是专属于禅宗，其方法是将一切法、一切相都直接破除，直指人心，复归本来面目。如果按照教下而将其改为实意之语，哪怕改动一点，都将误解禅宗修行方法的本质，而扭曲破坏禅宗的传承，又不能同教理意义完全吻合。禅宗方法一按照教下加以改动，则非彼非此，两种修法的意义都失去了。好比挖肉作疮，有损而无益。应让禅宗按照其本来面目，流通后世。</p></div>
+<div class="para-pair"><p class="p-orig">譬如春兰秋菊，各擅其美。尽忠行孝，俱振纲常耳。以师在海山，言憨山所注法华，有不合经旨处，以憨山多约本分作直指之谈故也。</p><p class="p-trans">譬如春兰秋菊虽季节不同，但各有其美。尽忠行孝虽对象不同，同样都是振兴伦理纲常。您在普陀山，说憨山大师所注解的《法华击节》，有不合经文义旨的地方，这是因为憨山大师多针对禅宗本分，按照直指人心来谈的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">又校经一事，甚不容易。恐师无暇及此，委任他人。须有出格见识，十分细心，再三详审，勤加考稽。方可一正讹谬，令其芜秽尽除，天真彻露。否则宁可依样画葫芦，庶不至大失其本真矣。</p><p class="p-trans">另外，校对经书这件事情，非常不容易。恐怕您没有闲暇做这件事。如果委托他人，必须托付有出格见识，又十分细心的人，且应再三详审，勤加考据。才可以修正讹谬，除去所有杂乱和瑕疵，使天真面目完全显露。否则，宁可依原样画葫芦不加改动，这样虽不能去除芜杂，但也不至于错得太多啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【别圆】</span>指天台化法四教中的别教与圆教。为隋代天台宗智顗大师所立，即佛陀教化众生之教法内容，分为藏、通、别、圆四教。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【终顿】</span>指贤首五教中的大乘终教与顿教。为华严三祖贤首所立，即：(一)小乘教（愚法声闻教），(二)大乘始教（权教），(三)大乘终教（实教），(四)顿教，(五)圆教。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【因缘观心】</span>智者大师以四释（一，因缘释；二，约教释；三，本迹释；四，观心释）诠经的文句，述为《法华文句》。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【本分】</span>又称本地风光、本来面目。即身心自然脱落而现前之本具心性。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【机锋】</span>禅林用语。又作禅机。机，指受教法所激发而活动的心之作用，或指契合真理之关键、机宜；锋，指活用禅机之敏锐状态。意谓师家或禅僧与他人对机或接化学人时，常以寄意深刻、无迹象可寻，乃至非逻辑性之言语来表现一己之境界或考验对方。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【转语】</span>禅林用语。随于机宜自由自在转变词锋之语，称为转语。于禅者迷惑不解，进退维谷之际，师家为令禅者颖解，蓦地翻转机法而下转语。有“一转语”、“三转语”等称。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【通关】</span>禅宗有透三关之说。透三关为禅林用语。三关，指三种由低而高之参禅境界。行者若能凡情销尽，彻见诸法之虚妄不实及悟得自己之心性本源（本来面目，或本地风光），则称为“破初关”，或破本参，又作见性。其次，在见性之后，再用功修持，则不但不为“有”所碍，而且亦能不执着于“空”，此称为“透重关”，又作大死大活。此后，再用功磨炼，乃能达寂照不二、空有无碍之境，虽五欲当前，亦运用自如而不失本性，此为“透末后牢关”。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【者个】</span>（术语）指物之辞。也作禅林用语。如锦官万福琼目温禅师：蓦拈拄杖。卓曰。惟有者个。赤条条。光灼灼。有时和泥合水。社舞村歌。有时孤峰独立。挂月悬星。动则俾观音势至。结舌藏锋。静则令释迦老子。无本可据。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【摩尼】</span>或云踰摩。应法师云：正云末尼，即珠之总名也。此云离垢，此宝光净，不为垢秽所染。或加梵字，显其净也。又翻增长，有此宝处，增长威德。大品云：如摩尼宝，若在水中，随作一色。以青物裹，水色即青；若黄赤白红缥（敷沼切）物裹，随作黄赤白红缥色。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【李通玄】</span>（635～730）唐代华严学者。王族出身，或谓沧州（河北沧县）人。天赋异禀，学无常师，洞精儒释二典，入林泉，远离城市之嚣。开元七年（719），隐于太原府寿阳方山之土龛，参究新译华严经。居山中数载，每日仅以枣颗、柏叶饼为食，世称枣柏大士。开元十八年三月，于龛室坐化，享年九十六。宋徽宗赐号“显教妙严长者”。所著有新华严经论四十卷、华严经会释论十四卷、略释新华严经修行次第决疑论四卷、略释、释解迷显智成悲十明论各一卷、十玄六相、百门义海、普贤行门、华严观及诸诗赋等。《新华严经论》凡四十卷，唐代李通玄撰。收于大正藏第三十六册。本书系就实叉难陀所译之新华严经明其玄旨，并随释经文而成。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【法华击节】</span>《法华经击节》一卷。明海印沙门释德清述《卍续藏》第31册。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【曾凤仪】</span>明代衡州（湖南衡阳）人。字舜征，号金简。仕至礼部郎中。性敏好学，宗陆象山之理学，隐退之后，于乡中设书院讲学，门人颇众。偶遇一僧，诤论三日不休，由是信佛。持戒茹素，研读经论，致力参省工夫。一日见月落日升，豁然得悟，自谓疑碍尽消，已得两家真意，后著书立说。作有首楞严经宗通、楞伽经宗通、金刚经宗通等。其生卒年不详。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【海山】</span>据《三编卷一·复高鹤年居士书五》：“光色力尪羸，不能远行，坐老海山，无所见闻，”海山即指普陀山。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【芜秽】</span>荒芜。谓田地不整治而杂草丛生。指冗杂；杂乱。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

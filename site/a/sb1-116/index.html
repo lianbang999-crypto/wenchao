@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复穆宗净居士书四 · 印光法师文钞</title>
+<meta name="description" content="杨母法名，另纸书之。光之相片不便寄。以战事，邮局不肯收包裹。今寄劝念观音文，祈为广劝。本令印五十万，以战事停工。此后或印出，邮局肯寄，或可寄来。亦不能定，以时局故。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-116/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复穆宗净居士书四 · 印光法师文钞">
+<meta property="og:description" content="杨母法名，另纸书之。光之相片不便寄。以战事，邮局不肯收包裹。今寄劝念观音文，祈为广劝。本令印五十万，以战事停工。此后或印出，邮局肯寄，或可寄来。亦不能定，以时局故。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-116/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复穆宗净居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">杨母法名，另纸书之。光之相片不便寄。以战事，邮局不肯收包裹。今寄劝念观音文，祈为广劝。本令印五十万，以战事停工。此后或印出，邮局肯寄，或可寄来。亦不能定，以时局故。</p><p class="p-trans">杨母的法名，在另外的纸上写好。我的相片不方便寄。因为战事混乱，邮局不肯收包裹。现在寄上《劝念观音文》，请广泛加以劝导。本来让他们印五十万张，因为战事而停工。以后如果印出来，邮局肯寄，或许可以寄来。也不能肯定，因为时局多变的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">德森师病，已好八程。汝以后不得络索一无所谓。又未会过，来信即复，勿道病人，即十分强健，亦日不暇给。</p><p class="p-trans">德森法师的病，已经好了八成。你以后不可用一些无关紧要的事去啰嗦他。又没有见过面，来信就要回复，不要说是病人，即使身体十分强健，也会每天忙得没有空闲。</p></div>
+<div class="para-pair"><p class="p-orig">光于民国七八年来，在普陀法雨寺了无一事，来信即复。致日日以复信为事。彼讲经之法师，万不能来信即复，以无此功夫精神应酬故也。</p><p class="p-trans">我自从民国七、八年以来，在普陀法雨寺住，没有什么事，有人来信就回复。致使天天都以回信为事。那些讲经的法师，根本不能来信就回，因为没有这个功夫精神应酬的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">战事剧烈，以持大悲咒念观音为要。无要事，切勿来信。战事未息，永不许来信。以持诵来不及，无暇答复也。（民廿六八月十九）</p><p class="p-trans">战事加剧，以持诵大悲咒，念观音菩萨圣号为要务。没有要紧的事，千万不要来信。战事没有停息，永远不许来信。因为持诵都来不及，没有空闲答复。（民国二十六年八月十九）</p></div>
+<div class="para-pair"><p class="p-orig">修净业，与学教不同。一注重开解。一注重实行。纵有不知者且置之，再三看几次，多有前后发明处。即令不了然，且体贴上下文义，当可以意会。</p><p class="p-trans">修持净业，与学习教理不同。一个是注重开示解悟。一个是注重真实行持。纵然有不明白的，暂且搁置在一边，再多看几次，大多有前后发现明了之处。即使还不明了，暂且细心体会上下的文义，应当可以意会。</p></div>
+<div class="para-pair"><p class="p-orig">若随有所疑即问，倘绝无一事之人，则亦无妨。若终日忙不及的烦琐之人，何忍加之以劳乎。</p><p class="p-trans">如果随有疑惑就来问，倘若是绝对没有其它事的人，那也无妨。如果是整天为繁重的杂事忙得不得了的人，如何忍心增加事情，来劳累他呢？</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，不能应酬诸所问。即德森师以江西寿量寺及专员提寺产事，忙以成病，亦不可再贻以劳也。</p><p class="p-trans">我老了，不能应酬各种询问。即使是德森法师，因为江西寿量寺以及专员提寺产的事，忙碌成病，也不可以再让他劳累了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

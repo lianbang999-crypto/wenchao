@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>新昌石城寺重建智者大师衣钵塔记 · 印光法师文钞</title>
+<meta name="description" content="智者大师，久证法身。十地等妙，均莫能测。乘宿愿力，示生斯世。降灵之夕，神光烛天。眉分八采，目耀重瞳。由蕴非常之德，故现非常之相。是为梁武帝大同四年戊午岁也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-273/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新昌石城寺重建智者大师衣钵塔记 · 印光法师文钞">
+<meta property="og:description" content="智者大师，久证法身。十地等妙，均莫能测。乘宿愿力，示生斯世。降灵之夕，神光烛天。眉分八采，目耀重瞳。由蕴非常之德，故现非常之相。是为梁武帝大同四年戊午岁也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-273/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">新昌石城寺重建智者大师衣钵塔记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">智者大师，久证法身。十地等妙，均莫能测。乘宿愿力，示生斯世。降灵之夕，神光烛天。眉分八采，目耀重瞳。由蕴非常之德，故现非常之相。是为梁武帝大同四年戊午岁也。</p><p class="p-trans">智者大师，久证法身。十地菩萨、等觉、妙觉，都不能测度。乘着宿世愿力，示生在这个世间。出生的当天晚上，神奇的光明照亮了天空。大师的眉毛有八种颜色，眼睛光耀有二个瞳孔。由于蕴藏不一般的圣德，所以就现出非常不一般的相貌。这一年是梁武帝大同四年戊午（538年）。</p></div>
+<div class="para-pair"><p class="p-orig">甫离襁褓，卧必合掌，坐必向西。遇像必礼，逢僧必敬。盖欲为世模范，必谨之于其初也。弱冠出家，遍研经论。越三年，是为陈文帝天嘉元年庚辰，闻慧思大师在光州大苏山，特往礼谒。</p><p class="p-trans">刚离开襁褓，大师躺卧的时候必定合掌，坐的时候必定面向西方。遇到佛像，必定顶礼，见到僧人，必定恭敬。这是想要成为世间的模范，必定在人生之初，就非常谨慎。大师二十岁出家，周遍研读经论。过了三年，就是陈文帝天嘉元年庚辰（560年），听说慧思大师在河南光州大苏山，特地前往礼拜谒见。</p></div>
+<div class="para-pair"><p class="p-orig">思师一见即叹曰，昔日灵山，同听法华，宿缘所追，今复来矣。即授以普贤道场，令修法华三昧。诵法华经，至药王菩萨本事品，是真精进，是名真法供养如来，豁然大悟，寂然入定。亲见灵山一会，俨然未散，获旋陀罗尼。</p><p class="p-trans">慧思大师一见他，就感叹地说：“过去在灵山会上，我和你同听本师宣讲《法华经》，宿世因缘所追，今天你又来了。”就授给他普贤道场，令他修法华三昧。大师诵《法华经》，诵到《药王菩萨本事品》，“是真精进，是名真法供养如来”，豁然大悟，寂然入定。亲眼见到灵山法会，俨然在目前，并没有散会，获得旋陀罗尼。</p></div>
+<div class="para-pair"><p class="p-orig">自是以后，照了法华，如杲日之临万象。达诸法相，似清风之游太虚。遂以五时八教，判释如来一代所说。俾阅经者知其指归，不致望洋兴叹，莫识津梁。以三止三观，传佛心印。俾修行者，亲见自己常住不变寂灭真心。其所修虽与禅宗小异，其所证实与禅宗大同。以故禅宗传灯各书，均列智者于应化圣贤科中。</p><p class="p-trans">从此以后，照了《法华经》，如同明亮的太阳照临万象。通达一切法相，好似清风遍游太虚。于是大师以五时八教，判释如来一代所说教法。使得读经的人知道其主旨，不至于望洋兴叹，不认识到达彼岸的桥梁。用三止三观，传佛心印。使得修行的人，亲见自己常住不变的寂灭真心。止观的修习虽然与禅宗有一些不同，而所证悟的，实际与禅宗大致相同。所以，禅宗《传灯录》等各种书籍，都将智者大师列在“应化圣贤”这一科当中。</p></div>
+<div class="para-pair"><p class="p-orig">如上教行二事，包括佛法净尽。然皆属自力进修之道，上根利智，亦可即生了办。若根器稍劣，又不知经若干生，若干劫，方能了生脱死也。于是随顺佛慈，宏扬净土。</p><p class="p-trans">如上教理、行门这二事，包括佛法净尽无遗。然而都属于自力进修之道，上根利智，也可以当生了脱成办。如果根器稍微陋劣，又不知道要经过多少生，多少劫，才能够了生脱死啊！于是大师随顺佛陀的慈悲，宏扬净土法门。</p></div>
+<div class="para-pair"><p class="p-orig">疏十六观，决十种疑。以六即之义释佛，令一切行人，知自己一念心性，与佛无二。而佛则修德功极，性德圆彰。己则惟具性德，毫无修德。性体不二，故六而常即。事修各别，故即而常六。知六而常即，故不生退屈，上慕诸圣。知即而常六，故不生上慢，下重己灵。</p><p class="p-trans">疏解十六观，撰《观无量寿佛经疏》；决择十种疑惑，撰《净土十疑论》。用六即的意义来解释佛果行位，令一切修行人，知道自己的一念心性，与佛没有二样。而佛陀是修德之功到了极点，性德圆满彰显。自己则是只具有性德，丝毫没有修德。自性心体，没有二样，所以虽分为六个阶位，而本体皆即佛。事相的修持，各有差别，所以虽然本体皆即佛，而分为六个阶位。知道六个阶位，而本体皆即佛，所以不生退缩自屈之心，向上仰慕诸位圣者。知道本体皆即佛，而分六位，所以不生增上慢心，向下注重自己的性灵。</p></div>
+<div class="para-pair"><p class="p-orig">末世众生，定慧力弱，不仗佛力，其何能淑。又得如此妙释，谁肯弃本具之衣珠，往贫里以循乞乎哉。由是宗风丕振，举国钦崇。上自帝后宰辅，下及净信士女，靡不闻风依止，草偃风行。</p><p class="p-trans">末法时代的众生，定慧之力微弱，不依仗佛力，如何能够成功。又得到如此玄妙的解释，谁肯舍弃本具的衣里宝珠，前往贫穷之地，循街乞讨呢？由此，教观宗风大振，全国钦敬尊崇。上自皇帝皇后宰相，下及净信男女，莫不闻风依止，如同风吹草伏。</p></div>
+<div class="para-pair"><p class="p-orig">自法流震旦，德业之盛，无有出其右者。至年三十八，始入天台山。是为陈宣帝大建七年乙未岁也。至则见其山境，与其僧定光，乃十七岁礼佛发愿时，神游之境，与所遇之人也。固知宿与此山有大因缘。自兹以后，或在山宏法，或随机应缘，二十余年大宏法化。具如本传，此不繁述。</p><p class="p-trans">自从佛法流入中国，道德功业的盛大，没有超过智者大师的。到了三十八岁那年，才进入天台山。这是陈宣帝大建七年乙未岁（575年）。到了天台山，则见到天台山的境象，与天台山神僧定光。这是大师十七岁礼佛发愿的时候，神识游历的境象，与所遇到的神僧啊！因此知到自己宿世原本就与这座山有大因缘。从此以后，或者在山中宏法，或者随机应缘，二十多年大宏法化。具体如《智者大师传》中所说，此处不再繁述。</p></div>
+<div class="para-pair"><p class="p-orig">隋文帝开皇十七年丁巳，扬州总管晋王杨广，遣使迎师至扬州。师与使偕行，至新昌石城寺，知住世缘尽，遂略举法要以示大众。言讫，唱三宝名，如入三昧。是为十一月二十四日未时也。世寿六十，僧夏四十。遗命灵龛归于佛陇。</p><p class="p-trans">隋文帝开皇十七年丁巳（597年），扬州总管晋王杨广，派遣使者迎请大师到扬州。大师与使者一同前行，到了新昌的石城寺，知道住世的缘份已尽，于是略举佛法大要，告示大众。说完，唱三宝名，如同进入三昧禅定。这是十一月二十四日未时（13:00-15:00）。世寿六十，僧夏四十。遗嘱命令灵龛归葬到天台山西南的佛陇峰。</p></div>
+<div class="para-pair"><p class="p-orig">诸弟子以师入灭于此，故为建一衣钵塔，以作纪念。令后世四众见者闻者，同种善根。自昔至今，千四百年，地随时变，颇不适宜。寺僧汝愚，与诸缁素议，迁于大佛岩之北。实为来龙之总脉，众山之关键。地势高而瞩望远，庶可发起见闻者之善心。乃为叙述其大略云。</p><p class="p-trans">诸位弟子因为大师在新昌石城寺入灭，所以为此建造了一座衣钵塔，来作为纪念。令后世的四众弟子，见到听到的人，同种善根。从过去到现在，已有一千四百年，而所处的地方随着时代的变迁，已很不适宜了。寺院僧人汝愚，与诸位僧俗商议，将大师的衣钵塔迁到大佛岩的北面。实在是群峰的总脉，众山的关键。地势高峻而瞩望辽远，可以发起见者闻者的善心。于是为之叙述其中的大略情形。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【重瞳】</span>就是一个眼睛里有两个瞳孔，在上古神话里记载有重瞳的人一般都是圣人</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【旋陀罗尼】</span>（术语）法华三陀罗尼之一。谓于法门得旋转自在之力也。嘉祥法华义疏十曰：“旋陀罗尼，于法门中圆满具足，出没无碍。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【三止三观】</span>天台宗修观的方法之一，名曰止观。所谓止，是止息妄念；观，是反观自性。三止：就是体真止，方便随缘止，和息二边分别止。三观：就是空观、假观、中观。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【来龙】</span>旧时堪舆家以山势为龙，称其起伏绵亘的姿态为龙脉。来龙，指龙脉的来源。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

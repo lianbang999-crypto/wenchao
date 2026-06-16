@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>如皋募建荐孤弭灾佛七道场小引 · 印光法师文钞</title>
+<meta name="description" content="三界无安，犹如火宅。众苦充满，甚可怖畏。如来于法华会上，早言之矣。近世刀兵之惨，振古未闻。杀人之法，无奇不有。致令国运危岌，民不聊生。究其源由，总因众生在迷，不了我空。故于违顺等境，起贪瞋痴，造杀盗淫之所致也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-269/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如皋募建荐孤弭灾佛七道场小引 · 印光法师文钞">
+<meta property="og:description" content="三界无安，犹如火宅。众苦充满，甚可怖畏。如来于法华会上，早言之矣。近世刀兵之惨，振古未闻。杀人之法，无奇不有。致令国运危岌，民不聊生。究其源由，总因众生在迷，不了我空。故于违顺等境，起贪瞋痴，造杀盗淫之所致也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-269/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">如皋募建荐孤弭灾佛七道场小引</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">三界无安，犹如火宅。众苦充满，甚可怖畏。如来于法华会上，早言之矣。近世刀兵之惨，振古未闻。杀人之法，无奇不有。致令国运危岌，民不聊生。究其源由，总因众生在迷，不了我空。故于违顺等境，起贪瞋痴，造杀盗淫之所致也。</p><p class="p-trans">“三界无安，犹如火宅。众苦充满，甚可怖畏。”如来在法华会上，早就已经说过了。近年刀兵劫的惨酷，千古未闻。杀人的方法，无奇不有。致使国运危急，民不聊生。追究其源由，总是因为众生在迷惑颠倒之中，不明白我空的真理。所以在违顺等境界上，生起贪瞋痴三毒，造作杀盗淫三业所导致。</p></div>
+<div class="para-pair"><p class="p-orig">然淫盗二事，贤者以礼自防，愚者为法所制，尚不至甚。唯杀生食肉一事，世俗习为固然，恬不介意。以致彼此生生世世，互相报复，酿成如此极惨之劫。可不哀哉。</p><p class="p-trans">然而邪淫、偷盗这两件事，贤人以礼法自我防范，愚者为法律所限制，还不至于造得太过厉害。唯有杀生吃肉这件事，世俗的习惯，认为是理所当然，毫不在意。以致彼此生生世世，互相报复，酿成这样极为惨痛的杀劫。能不让人悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">同人等救世有心，弭劫无力。窃以兵灾所伤，一切孤魂，抱恨九泉，久必成厉。是以大兵之后，必有疫疠及凶年。若不依佛法超荐，不但死者魂识无归，亦使生者心神痛怛。或致疫疠凶年。则如水益深，如火益热矣。</p><p class="p-trans">我们有共同志向的人有心救世，却无力消弭这个劫难。在我看来战争兵灾所伤害的一切孤魂，抱恨在九泉之下，时间久了，必定成为厉鬼。所以大的战争之后，必定有瘟疫和灾年。如果不依佛法超荐，不但死者的魂识无所依归，也使活着的人心神哀痛悲伤。或许导致瘟疫、灾年。就如同洪水更深，大火更热了。</p></div>
+<div class="para-pair"><p class="p-orig">然佛法法门广大，无量无边。唯念佛法门，最为第一。以弥陀因中，发大誓愿。若有信愿念佛者，必定垂慈接引，令其往生西方也。今订于某月某日，于某处，起建七日念佛道场。凡属善信，各宜发菩提心，来会念佛。以期孤魂各得超升，灾障悉皆消灭。如不便来，亦须在家虔念。</p><p class="p-trans">然而佛法法门广大，无量无边。唯有念佛法门，最为第一。因为阿弥陀佛在因地中，发大誓愿。如果有信愿念佛的人，必定垂慈接引，令其往生西方。现今订于某月某日，在某处，起建七日念佛道场。凡是男女善信，各各应该发菩提心，参加法会念佛。以期孤魂各各得以超升，灾障全都消灭。如果不方便来，也必须在家中虔诚念佛。</p></div>
+<div class="para-pair"><p class="p-orig">但以七日之中，所有供佛之香烛果食，供众之茶饭点心，供孤之香烛箔锭，所费甚巨。恳祈一切善信，各随心力而为赞助。俾来会念佛者，于七日中咸得仗众人之财力，伸竭诚之供养，免来去奔驰之劳，得一心不乱之念。俾所荐之孤魂，仗佛力以直往西方。</p><p class="p-trans">但因为七日之中，所有供佛的香烛、水果、食物，供众的茶饭、点心，供孤魂的香烛、纸钱，所需费用很大。恳祈一切善信，各随心力而来赞助。使得来会念佛的人，在七日之中，全都得以依仗众人的财力，奉献至诚的供养，免除来去奔驰的劳累，得到一心不乱。使得所超荐的孤魂，依仗佛力，直下往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">如邑阖境，消灾障而长获吉庆。当地各姓祖祢，悉托质于莲池。法界所有众生，尽栖神于安养。世界将见佛天云护，福祉骈臻，时和年丰，民康物阜，唐虞大同之象，或可见于今日。唯祈各各不惜心力忆念，不惜财力资助。则其利益，莫能名焉。</p><p class="p-trans">使得如皋县境内，消除灾障而长获吉庆。当地各姓的祖先，全都托化于莲池之中。法界所有的众生，全都栖神于安养世界。世界将要见到佛天如云护佑，幸福利益一并到来，时节和顺，年成丰收，人民康乐，物产丰富，唐虞盛世，大同世界的景象，或许能够在今天见到。只祈愿各各不惜心力忆念佛号，不惜财力资助供养。那么启建佛七法会的功德利益，就不能用语言表达了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【恬不为意】</span>处之泰然，满不在乎。恬：安然，满不在乎。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【疫疠】</span>瘟疫。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【凶年】</span>年成很坏。指饥荒的年头</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【痛怛】</span>哀痛悲伤</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【阖境】</span>边界以内的全部地方。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

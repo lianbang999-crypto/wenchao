@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复觉明居士书（民国二十三年） · 印光法师文钞</title>
+<meta name="description" content="昨接汝及范古农之书，知汝宿世固有善根。然犹以文人习气未除，几致不得实益。今则实行其事，犹不知自利利他之相关甚巨。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-010/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复觉明居士书（民国二十三年） · 印光法师文钞">
+<meta property="og:description" content="昨接汝及范古农之书，知汝宿世固有善根。然犹以文人习气未除，几致不得实益。今则实行其事，犹不知自利利他之相关甚巨。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-010/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复觉明居士书（民国二十三年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接汝及范古农之书，知汝宿世固有善根。然犹以文人习气未除，几致不得实益。今则实行其事，犹不知自利利他之相关甚巨。</p><p class="p-trans">昨天接到你和范古农的信，知道你宿世就具有善根。然而因为文人的习气仍然没有除去，导致几乎得不到真实的利益。如今虽然真实行持学佛之事，却仍然不知道自利利他二者的相互关系甚大。</p></div>
+<div class="para-pair"><p class="p-orig">且勿论外人，即自己丈夫，儿女，媳妇，孙等，均当教以常念佛号。一则令彼等同种善根，当此大乱之世，若不以佛为怙恃，则危险可虑。</p><p class="p-trans">且不要说外人，就是你自己的丈夫、儿女、媳妇、孙辈等，都应当教他们常念佛号。一是令他们同种善根，在这个大乱的世道，如果不以佛作为依靠，那么实在有令人忧虑的危险。</p></div>
+<div class="para-pair"><p class="p-orig">二则不于平时令彼等操练熟习，一旦汝欲谢世，彼等以世俗知见，预为瞎张罗哭泣。则汝纵有净功，可以与佛相应，蒙佛接引。一经此种动作，破坏净念，决定仍复留住娑婆。则尘沙劫又尘沙劫，仍在六道受轮回矣。</p><p class="p-trans">二是如果不在平时令他们操练熟习，一旦你将要去世的时候，他们以世俗的知见，预先为你瞎张罗哭泣。那么你纵然有往生净土的功夫，可以与佛相应，蒙佛接引。但一经他们这些张罗动作，就会破坏你的净念，你肯定仍旧留住在娑婆世界。那么经过尘沙劫，又尘沙劫，你仍在六道中遭受轮回啊！</p></div>
+<div class="para-pair"><p class="p-orig">是以劝眷属念佛，为最要紧之一件大事。光粥饭庸僧，于经教妙理，不能令汝得益。唯此一事，由阅历数十年，可以令汝现生亲得利益。汝若能依行，不异求佛接引汝及眷属，并后世子孙也。</p><p class="p-trans">所以劝家中眷属念佛，是最要紧的一件大事。我是个只会吃饭的平庸僧人，在经教妙理上，不能够令你得到利益。唯有这件事，由于阅历几十年，可以令你现生亲得利益。你如果能够依照奉行，不异于求佛接引你和你的眷属，以及后世的子孙啊！</p></div>
+<div class="para-pair"><p class="p-orig">今为汝取法名为朝觉，谓自与眷属，及诸亲识，同皆归向阿弥陀大觉世尊也。现今女界，范围放弛，若不以佛法维持，则后来之变，不知成何景象也。汝既宿有慧根，可不以此自利利他，俾自己净业纯熟，高登上品乎。</p><p class="p-trans">现在为你取法名为朝觉，意思是自己与家亲眷属，以及诸位亲戚朋友，共同都归向阿弥陀大觉世尊啊！现今的妇女界，道德轨范放纵松弛，如果不以佛法来维持，那么将来的变化，不知道会成什么景象啊！你既然宿世就有慧根，难道不以佛法来自利利他，使得自己净业纯熟，高登上品吗？</p></div>
+<div class="para-pair"><p class="p-orig">今为汝寄净土十要一部，此系原本，非向所流通之节略本。净土圣贤录一部。救劫编一部。木板观音颂一部（观音颂，系一弟子出资刻，托南京一僧校，其人学识颇能校得好。以在扬州刻，屡经打仗，每每邮路不通。及至刻成，以邮路不通停久，即将板寄来。适值其僧之庵，被豪势所夺，心绪已乱，遂未勘校。后令印四百部。印出一阅，知错讹甚多。因排一勘误表夹入，祈细心按表改正）。</p><p class="p-trans">现今为你寄去《净土十要》一部，这是蕅益大师的原本，不是一向所流通的成时大师的节略本。《净土圣贤录》一部。《救劫编》一部。木刻板的《观音颂》一部（《观音颂》，是一位弟子出资刻板的，委托南京一位僧人校对，凭这个人的学识，能校对得很好。因为是在扬州刻板，屡次经历打仗，邮路常常不能通畅。等到印板刻成了，因为邮路不通而停留了很久，（邮路畅通后）就将印板寄过来。这时正值那位僧人的寺庵，被地方豪势所夺，他的心绪已乱，便没有审核校对。后来印了四百部。印出来一看，知道错误的地方很多。因此排印了一个勘误表，夹在书中，请细心按表改正）。</p></div>
+<div class="para-pair"><p class="p-orig">木板历史统纪一部（此二部，无流通者，以为费甚巨故也）。及各种凑满包者，均有关于人心世道。</p><p class="p-trans">木刻板的《历史感应统纪》一部（这二部，没有流通，是因为费用太大的缘故）。以及各种凑足满包的善书，都是有关于世道人心的。</p></div>
+<div class="para-pair"><p class="p-orig">又一函遍复，实为一切人传家之宝，文字虽肤浅，无一无用之语。去年婺源佛光分社成立，一弟子祈光作序。光一向不留底稿，以彼特钞以寄来，欲令转寄佛学特刊社，因循未寄。今为汝寄来，看过祈转寄范古农居士，并说其已为汝取法名，以免光与彼书。</p><p class="p-trans">另外，《一函遍复》，实在是一切人的传家之宝，文字虽然肤浅，但没有一句无用的话。去年江西婺源佛光分社成立，一位弟子请我作序。我一向不留底稿，因为他特地钞写一份寄过来，想要我转寄到佛学特刊社，我懒惰拖延没有寄。现今一并给你寄过去，看过后请转寄范古农居士，并告诉他我已经为你取了法名，免得我再写信给他。</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，由宿业力，生六月即病目，六月未开眼，未止哭声，今七十多年矣。近来目力甚衰，于去年冬，凡有信来，均令以后切勿来信，来决不复，以免或致抱西河之痛也。</p><p class="p-trans">我老了，由于宿世业力，生下来六个月，眼睛就生病了，六个月中没能睁开眼，没有停止哭声，到如今已有七十多年了。近来视力很不好，去年冬天开始，凡是有信来，都令他们以后千万不要再来信，来了也决不回复，以免或许导致眼睛失明的痛苦啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【佛教特刊】</span>《佛教特刊》是上海《市民报》的副刊。1932年11月5日创刊。创办人为黄慧泉，编辑为邓奠坤。主要内容为劝人皈依佛教、戒杀放生、多行善事等，同进也登载中国佛教会及各地佛教会的活动情况与重要文件。1934年7月16日停刊。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【因循】</span>疏懒；怠惰；闲散。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【西河之痛】</span>指丧子之痛。《史记·仲尼弟子列传》：“孔子既没，子夏居西河教授，为魏文侯师。其子死，哭之失明。”子夏，孔子弟子。他晚年时，到魏国西河一带教学，并成为了魏文侯的老师。他的儿子死了，他把眼睛都哭瞎了。所以后来人们便用“西河之痛”或称“痛抱西河”、“抱痛西河”等，来表示丧子之痛。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复丁普瀞居士书 · 印光法师文钞</title>
+<meta name="description" content="来书备悉。须知佛法，具足世出世间一切诸法。从前理学家，以弃伦理，明因果报应，生死轮回而辟之，谓其无父无君，惑世诬民。即此语而论之，不但不知佛法之精深义理，即佛法之粗迹，彼亦未得而知。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-330/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复丁普瀞居士书 · 印光法师文钞">
+<meta property="og:description" content="来书备悉。须知佛法，具足世出世间一切诸法。从前理学家，以弃伦理，明因果报应，生死轮回而辟之，谓其无父无君，惑世诬民。即此语而论之，不但不知佛法之精深义理，即佛法之粗迹，彼亦未得而知。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-330/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复丁普瀞居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">来书备悉。须知佛法，具足世出世间一切诸法。从前理学家，以弃伦理，明因果报应，生死轮回而辟之，谓其无父无君，惑世诬民。即此语而论之，不但不知佛法之精深义理，即佛法之粗迹，彼亦未得而知。</p><p class="p-trans">来信尽知。必须知道佛法，具足世出世间一切诸法。从前的理学家，认为佛教抛弃世间伦理，阐明因果报应、生死轮回而加以辟驳，说佛教是出家无父、出俗无君，蛊惑世人。就理学家们说的这些话来讨论，说明他们不但不知道佛法的精深义理，即使是佛法的粗显事迹，他们也不得而知。</p></div>
+<div class="para-pair"><p class="p-orig">佛法于父言慈，于子言孝，兄友弟恭，夫和妇顺，主仁仆忠。世间伦理，毫善弗遗。因果明过去现在未来三世轮回，显天人修罗鬼畜地狱六道。果能执此理以导民化俗，不亦大有益于二帝三王周孔之道乎。</p><p class="p-trans">佛法对父亲讲慈爱，对儿子讲孝顺，兄友弟恭，夫和妇顺，主仁仆忠。世间的伦理，丝毫的善法都没有遗漏。以因果阐明过去、现在、未来三世轮回，显示天、人、修罗、鬼、畜、地狱六道。果真能够执守这个因果轮回的道理来引导人民、化导风俗，不也大大有益于唐尧、虞舜二帝，夏禹、商汤、周文王、周武王三王，周公、孔子的圣贤之道吗？</p></div>
+<div class="para-pair"><p class="p-orig">彼乃嫉之若雠，恨不得全国悉无声迹，乃自矜其智，谓佛为愚，特为因果报应，生死轮回之言，以蛊惑愚俗。竟致袭其说者，皆以因果轮回为无稽。</p><p class="p-trans">他们却是嫉恨佛教如同仇家，恨不得佛法在全国都悄无声迹。于是自夸炫耀他们的智慧说：这是佛为了愚惑世人，特地说出这些因果报应、生死轮回的话，来蛊惑愚昧庸俗的人。竟然导致传承他们学说的人，都将因果轮回当作是无稽之谈。</p></div>
+<div class="para-pair"><p class="p-orig">于教人正心诚意之根据事实，完全废弛。空守正心诚意之语言，以为宏阐儒道之本。</p><p class="p-trans">对于教人要正心诚意的根据事实（因果轮回），完全废弃不顾。却空守着一个正心诚意的语言，来作为宏扬阐述儒道的根本。</p></div>
+<div class="para-pair"><p class="p-orig">上焉者或能正诚，然以一死永灭，亦不能发大有为之心。中下则以一死永灭，尧桀同归于尽，又何必绳趋尺步，徒受束缚乎。</p><p class="p-trans">上根的人或许能够正心诚意，然而因为一死之后永远断灭，也不能发起大有作为的心；中下根的人，就因为一死之后永远断灭，圣贤尧帝、残暴夏桀同归于尽，又何必循规蹈矩，白白地受束缚呢？</p></div>
+<div class="para-pair"><p class="p-orig">于是任心肆志，为所欲为，此毒已伏近千百年。加以欧风东渐，竞尚物质文明。则一切以强凌弱，惨无人道之恶剧，通通演出矣。究其祸根，皆由理学家破斥因果轮回之所致也。</p><p class="p-trans">于是随心纵情，为所欲为，这种毒害已经潜伏近千年了。加上欧风东来，争着崇尚物质文明。那么一切以强凌弱，惨无人道的恶剧，通通都上演了。追究这个灾祸的根源，都是由于理学家破斥因果轮回所导致的啊！</p></div>
+<div class="para-pair"><p class="p-orig">学说之谬，其祸烈于洪水猛兽。俾吾国群黎死于刀兵饥馑苛政匪盗者，不计其数。其幸保残生，亦同受水深火热之痛。可不哀哉。</p><p class="p-trans">思想学说错谬，它的祸害比洪水猛兽惨烈。使得我国百姓，死于刀兵、饥馑、苛政、匪盗的，不计其数。其中侥幸保住残生，也同样遭受水深火热的苦痛。能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">今欲自利利人，淑身淑世，当从敦伦尽分，闲邪存诚，诸恶莫作，众善奉行做起。内而家庭，外而世人，悉以因果报应，生死轮回为劝导。</p><p class="p-trans">现今想要自利利人，修身济世，应当从敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行做起。内而家庭，外而世人，都以因果报应、生死轮回来劝导。</p></div>
+<div class="para-pair"><p class="p-orig">俾人各修善因，以冀乐果。畏苦果，以息恶因。则家庭子弟，不至沦于匪盗。乡邑社会，渐可复其礼让淳朴之风矣。</p><p class="p-trans">使得人人各自修积善因，来希望得到乐果。畏惧苦果，来止息恶因。那么家庭子弟，不至沦于土匪强盗；城乡社会，渐渐可以恢复守礼谦让、淳朴的民风了。</p></div>
+<div class="para-pair"><p class="p-orig">此只就世间事说佛法之益者。至于出世，亦仍以此为本。但当生信发愿，念佛求生西方。则人人皆能修，人人皆能得其实益。</p><p class="p-trans">这只是就世间的事，来讲说佛法的利益。至于出世间，也还是以此（敦伦尽分，闲邪存诚，诸恶莫作，众善奉行）为根本。只是应当生信发愿，念佛求生西方。那么就人人都能修习，人人都能得到佛法的真实利益了。</p></div>
+<div class="para-pair"><p class="p-orig">此佛法中之一特别法也。三根普被，凡圣同修。愚夫愚妇，皆能入于其中。大圣大贤，不能超出其外。</p><p class="p-trans">这是佛法中的一个特别法门。三根普被，凡圣同修。愚夫愚妇，都能进入到这个法门之中。而大圣大贤，也不能超出这个法门之外。</p></div>
+<div class="para-pair"><p class="p-orig">若于此法能生信心，虽是业力凡夫，即可现生了生脱死，超凡入圣。倘不于此法认真修持，而于如来所说一切诸法中，随修一法，或兼修各法，欲了生死，勿道即生不能了，或经百千万生及百千万劫，尚不能了者，多多也。</p><p class="p-trans">如果对于这个法门能够生起信心，即使是业力凡夫，也可以在现生了生脱死、超凡入圣。倘若对于这个法门不认真修持，而于如来所说的一切诸多法门中，随便修一个法门，或者兼修各种法门，想要了生死，不要说当生不能了，或经百千万生以及百千万劫，还不能了生死的，太多太多了。</p></div>
+<div class="para-pair"><p class="p-orig">何以故，以念佛求生西方一法，专仗佛力。自己但具真信切愿，持佛圣号。则于临命终时，决定蒙佛接引，往生西方。</p><p class="p-trans">为什么呢？因为念佛求生西方这一法门，专门依仗佛力。自己只要具足真信切愿，持佛圣号。那么在临命终时，决定会蒙佛接引，往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">其余一切法门，必须修到业尽情空之时，方可了脱生死。否则任汝工夫深，功德大，烦恼若有一丝一毫未尽，则仍然不能出离六道轮回之外。以自力了生死，比仗佛力了生死，其难易奚啻天渊悬殊也。</p><p class="p-trans">其余一切法门，必须修到业尽情空之时，方才可以了脱生死。否则，任凭你的工夫深、功德大，如果烦恼有一丝一毫没有断尽，就仍然不能出离六道轮回之外。因为凭自力了生死，比起仗佛力了生死，其难易程度何止天地悬殊啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝幸宿有善根，于此法门能生信心。然须立深重誓，决不随其余经典知识言教，舍此法门，另修他法。庶可不负此宿根与现缘也。</p><p class="p-trans">你幸亏宿世有善根，对于这个法门能生起信心。然而必须立下深重誓愿，决定不随其余的经典、善知识言教，舍弃这个法门，另外修习其他的法门。才可以不辜负这个宿世善根与现世因缘啊！</p></div>
+<div class="para-pair"><p class="p-orig">若读诸大乘经，见其义理深奥，或亲近禅教律密各宗知识，闻其所说亲切，遂视念佛为平常，视彼为奇特，舍此修彼，则如稚子舍父母，重病弃良医，欲得成人愈病，何可得乎。</p><p class="p-trans">如果读诵诸多大乘经典，见到其中的义理深奥，或者亲近禅、教、律、密各宗的善知识，听到他们所说的佛法很亲切，于是便将念佛法门视为平常，将其他法门视为奇特，舍此净土法门而修其他法门，就如同年幼的孩子舍弃父母，得重病的人舍弃良医，想要能够长大成人、治好疾病，怎么可能呢？</p></div>
+<div class="para-pair"><p class="p-orig">汝既看文钞，何不细心体察，何得又有此六种疑问。</p><p class="p-trans">你既已看了《文钞》，为什么不细心体察，怎会又有这六种疑问。</p></div>
+<div class="para-pair"><p class="p-orig">（一）佛即是心，心即是佛，乃约吾心之本体而言。由其有无量无边之烦恼惑业，必须仗惑业净尽，福慧圆满，有大誓愿之阿弥陀佛大慈悲力为之加被，令其往生。渐次修习，以至究竟亲证此是佛之心而后已也。汝将谓是佛，便不须念佛乎。</p><p class="p-trans">（一）“佛即是心，心即是佛”，这是针对我们这个心的本体而说的。由于心中有无量无边的烦恼惑业，必须依仗惑业净尽、福慧圆满、有大誓愿的阿弥陀佛的大慈悲力为我们加被，令我们往生。渐次修习，以至究竟亲证这个“是佛之心”而后已。你难道认为既然“心即是佛”，就不须要念佛了吗？</p></div>
+<div class="para-pair"><p class="p-orig">譬如大圆宝镜，经劫蒙尘，虽具有照天照地之光明，若不加磨砻之功，经劫亦无发光之时。错会即是，其祸可胜道哉。</p><p class="p-trans">譬如大圆宝镜，经过长久劫蒙上尘垢，虽然具有照天照地的光明，如果不加以磨治的功夫，经过长久劫，也不会有发光的时候。错会“心即是佛”的意思，这种祸害不能说尽。</p></div>
+<div class="para-pair"><p class="p-orig">至许止净谓诸佛无身，而般若实为其母，即诸佛从智慧而生之义。智慧为六度之首，举智慧则六度无不圆备。则其修持事业功夫，岂笔墨所易显示乎。</p><p class="p-trans">至于许止净说的“诸佛无身，而般若实为其母”，就是诸佛从智慧而生的意思。智慧是六度之首，举出智慧，那么六度无不圆满具备。那么这个修持的事业功夫，哪里是用笔墨所能显示的呢？</p></div>
+<div class="para-pair"><p class="p-orig">汝且著实于前所说之敦伦尽分，于后所说之信愿持名，认真行去。则决定可以慰汝人世无常生死难了之念。</p><p class="p-trans">你暂且确实对于前面所说的敦伦尽分（敦笃伦常、恪尽己分），对于后面所说的生信发愿，持佛名号，都认真地去做。那么决定可以安慰你“人世无常，生死难了”的念虑。</p></div>
+<div class="para-pair"><p class="p-orig">若只执著一二理性，而遂以事修为徒劳。则恐后来尚有永堕恶道，长劫不闻天地父母之名之时。可不预防而慎修乎哉。</p><p class="p-trans">如果只是执著是一不二的理性，于是便认为事修是徒劳的。那么恐怕将来还有永堕恶道，长劫不闻天地父母之名的时候。能不预防且谨慎修持吗？</p></div>
+<div class="para-pair"><p class="p-orig">（二）念观音求生西方，亦可往生西方，但不可谓何必更念阿弥陀佛。以观音乃阿弥陀佛之辅弼也。弥陀是主，观音是宾。弥陀如国王，观音如冢宰。善会其意，即可无疑。</p><p class="p-trans">（二）念观世音菩萨求生西方，也能往生西方，但是不可以说“何必再念阿弥陀佛”。因为观世音菩萨是阿弥陀佛的辅弼大士。阿弥陀佛是主，观世音菩萨是宾。阿弥陀佛如同国王，观世音菩萨如同冢宰。善于领会其中的意思，就会没有疑惑了。</p></div>
+<div class="para-pair"><p class="p-orig">（三）多劫不能成佛，由修自力法门故。须知净土法门，纵临终始闻，能生信愿而念，即可往生西方，了生脱死。况未至临终，即已预修乎。</p><p class="p-trans">（三）多劫不能成佛，是由于修习自力法门的缘故。必须知道净土法门，即使是临终才开始听闻，若能生信发愿来念佛，就可以往生西方，了生脱死。何况没到临终，就已经预先修持了呢。</p></div>
+<div class="para-pair"><p class="p-orig">（四）乩坛多属灵鬼附会。玉仙乃一进士，而知见卑鄙，不堪言状。何足以彼所宣传者，而挂口齿乎。</p><p class="p-trans">（四）乩坛大多是灵鬼附会。孙玉仙是一个进士，然而他的知见卑鄙，不堪用语言来形容。他所宣传的，不足挂齿。</p></div>
+<div class="para-pair"><p class="p-orig">（五）持佛号时，杂念纷飞，此是多知多见，心无正念之现象。欲此种境象不现，唯专心痛念自己将欲命终。唯恐即堕恶道，励志念佛。了不起他种念头。久则自可澄清。</p><p class="p-trans">（五）持诵佛号时，杂念纷飞，这是多知多见，心无正念的现象。想使这种境象不出现，只有专心痛念自己将要命终。唯恐马上就要堕入恶道，励志念佛。一点其他的念头都不起。时间久了，自然可以内心澄清无杂念。</p></div>
+<div class="para-pair"><p class="p-orig">（六）吃素不难，贪口腹而欲吃素则难。三净肉及肉边菜，乃为下根人所立法也。祈慧察。</p><p class="p-trans">（六）吃素不难，贪著口腹之欲却想要吃素就难了。三净肉以及肉边菜，这是为下根人所立的法。请智慧思察。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【无父无君】</span>孟轲斥责墨翟、杨朱之语。后以讥刺无伦常者。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【三王】</span>1.指夏、商、周三代之君。2.指周之太王、王季、文王。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【绳趋尺步】</span>犹言循规蹈矩。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【磨砻】</span>磨治。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【冢宰】</span>官名，即太宰。殷商置，位次三公，为六卿之首。太宰原为掌管王家财务及宫内事务的官。周武王死时，成王年少，周公曾以冢宰之职摄政；另，称吏部尚书为冢宰。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【玉仙】</span>孙锵（约1880-？），字玉仙。书画家、藏书家。浙江奉化人。光绪末为探花。辛亥革命后寓居德阳县。有藏书楼名“好古山房”，收藏图书、画帖极多。长于书法，仿虞、欧二体。作画秀雅中含有沉雄深厚之势。晚年近居上海，于上海爱丽园建“十二万卷楼”，专贮书、画，所藏书皆四库未收秘籍。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

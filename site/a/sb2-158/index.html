@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复康寄遥居士书四 · 印光法师文钞</title>
+<meta name="description" content="接手书，知汝与秦中人皆在做梦。秦地民不聊生，而欲开道场，宏法化，请谛闲法师，彼岂肯受此艰难乎。何云不得不恳请，用此曲折作么。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-158/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复康寄遥居士书四 · 印光法师文钞">
+<meta property="og:description" content="接手书，知汝与秦中人皆在做梦。秦地民不聊生，而欲开道场，宏法化，请谛闲法师，彼岂肯受此艰难乎。何云不得不恳请，用此曲折作么。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-158/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复康寄遥居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知汝与秦中人皆在做梦。秦地民不聊生，而欲开道场，宏法化，请谛闲法师，彼岂肯受此艰难乎。何云不得不恳请，用此曲折作么。</p><p class="p-trans">接到信，知道你与陕西的人都在做梦。陕西那个地方民不聊生，想要开道场，宏扬法化，想请谛闲法师去宏法，他哪里肯受这种艰难呢？何必说“不得不恳请”，用这些曲折客套作什么。</p></div>
+<div class="para-pair"><p class="p-orig">某某师（其人断断请不得）会说大话，毫无真行持。请此种法师去宏法，欲人皆学空套子大话乎。抑欲真修实践乎。光前已与汝说过，将谓我屈抑贤哲乎。</p><p class="p-trans">某某师（这个人，万万请不得）会说大话，丝毫没有真实的行持。请这种法师去宏法，想让众人都学那些空套子大话吗？还是想要真修实践呢？我以前已经对你说过，难道认为是我压抑贤哲之人吗？</p></div>
+<div class="para-pair"><p class="p-orig">至于令光示人，光常处海上，绝无一人与光往来。知谁是发菩提心，欲普利一切之人乎。此事实为难中之难。若求吃饭穿衣僧，则诚有之。</p><p class="p-trans">至于说让我推荐人，我常年住在海岛上，绝无一人与我往来。知道谁是发菩提心，想要普利一切的人呢？这件事，实在是难中之难。如果求吃饭穿衣的僧人，则实在是有。</p></div>
+<div class="para-pair"><p class="p-orig">彼尚不愿到北方苦寒地方穿衣吃饭去，况曰宏法利生乎哉。秦中之僧，亦如秦中之儒。将何整理而使其一一皆依儒释圣人之道而行也。可胜浩叹乎哉。捐册公函，已于昨日寄回矣。</p><p class="p-trans">他们尚且不愿意到北方苦寒的地方去穿衣吃饭，何况说宏法利生呢？陕西的僧人，也如同陕西的儒生。将如何整顿管理，而使他们一一都依儒、释圣人之道而行持呢？实在是只能浩然长叹啊！捐册的公函，已经在昨天寄回去了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【曲折】</span>曲意承顺。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【屈抑】</span>枉屈；压抑。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【贤哲】</span>贤明睿智的人。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【浩叹】</span>长叹，大声叹息。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

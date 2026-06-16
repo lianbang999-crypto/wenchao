@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>绍兴偏门外娄江村兴教禅寺（即小云栖）募修大殿疏（代源湛师作） · 印光法师文钞</title>
+<meta name="description" content="如来调御众生，随机说法。由众生根机不一，故所说法门无量。求其汇归统一，唯律教禅净四法。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-328/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="绍兴偏门外娄江村兴教禅寺（即小云栖）募修大殿疏（代源湛师作） · 印光法师文钞">
+<meta property="og:description" content="如来调御众生，随机说法。由众生根机不一，故所说法门无量。求其汇归统一，唯律教禅净四法。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-328/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">绍兴偏门外娄江村兴教禅寺（即小云栖）募修大殿疏（代源湛师作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来调御众生，随机说法。由众生根机不一，故所说法门无量。求其汇归统一，唯律教禅净四法。</p><p class="p-trans">如来调御众生，随机说法。由于众生的根机不一，因此所宣说的法门无量。求其汇归统一，只有律、教、禅、净四法。</p></div>
+<div class="para-pair"><p class="p-orig">律者佛身，教者佛语，禅者佛心，净者佛境。律教禅净，行人归宿之所。亦究竟圆成佛道，普度一切凡圣之法也。</p><p class="p-trans">律，是佛身；教，是佛语；禅，是佛心；净，是佛境。律、教、禅、净四个法门，是修行人的归宿之所。也是究竟圆成佛道，普度一切凡圣之法。</p></div>
+<div class="para-pair"><p class="p-orig">四法并非各别。必须法法圆通，法法俱备，方可以上续佛慧，下化众生。不过约其注重者论，遂立律教禅净四宗之名而已。</p><p class="p-trans">四个法门，并非互不相干。必须法法圆通，法法俱备，才可以向上续佛慧命，向下化导众生。不过就其注重的方面来说，于是建立了律、教、禅、净四宗的名称而已。</p></div>
+<div class="para-pair"><p class="p-orig">兴教禅寺，创建于晋，则为律为教。至唐鸟窠禅师重兴，则为禅。明末莲池大师徒孙内恒铨公复兴，则为净。善知识观机逗教，因时制宜。但取益物，不执陈迹。故令一切众生，咸沾法益也。</p><p class="p-trans">兴教禅寺，创建于晋朝，是持戒、学教的道场。到了唐朝鸟窠禅师重兴，则成为禅宗道场。明朝末年，莲池大师的徒孙内恒铨公复兴，又成为了净土道场。善知识观察众生根机，逗合教法，因时制宜。只取利益众生，不执着过去的旧迹。所以令一切众生，均沾法益啊！</p></div>
+<div class="para-pair"><p class="p-orig">由明以来二百余年，其间住持法道之高人，亦复不少。清末以来，法道式微，殿堂寮舍，悉形颓败。而大殿为安住如来法身之所，亦属四众祈福之场。栋梁腐败，椽梠差脱。若不设法修葺，必至直下倾覆。</p><p class="p-trans">从明朝以来，二百多年，这期间住持法道的高人，也有不少。清朝末年以来，法道衰微，殿堂寮舍，全都倾颓破败。而大殿是安住如来法身之所，也是四众弟子祈福之场。栋梁腐旧败坏，椽条参差脱落。如果不想办法修葺，必定会很快倾覆。</p></div>
+<div class="para-pair"><p class="p-orig">湛住持其中，心常惊惧。以故特述愚诚，遍募护法檀信，恳祈各舍净资，成就善举。俾含空宝殿，指日成工。满月金容，经劫常住。将见佛天云护，吉庆骈臻。富寿康宁，现身获箕畴之五福。高爵尊徽，后裔纳伊训之百祥矣。惟冀不吝，共登芳衔。（民国十五年丙寅）</p><p class="p-trans">源湛住持这座寺院，心中时常惊慌恐惧。所以特地叙述愚诚，遍募护法檀信，恳祈各各施舍净资，成就善举。使得含空宝殿，指日成工。满月金容，经劫常住。将要见到佛天如云护佑，吉庆一并来临。富贵长寿，健康安宁，现身获得箕子在《洪范·九畴》中所说的五种幸福。高爵厚禄，美名尊显，后代子孙享受伊尹在《尚书·伊训》中所说的百种吉祥啊！希望大家不吝资财，共登功德芳名。（民国十五年&lt;1926&gt;丙寅）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

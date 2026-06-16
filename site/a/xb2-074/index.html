@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>蛰园札记序 · 印光法师文钞</title>
+<meta name="description" content="世乱已极，无可救药，有志之士，何忍坐视，虽居畎亩，于家庭朋友间所谈叙者，未始非挽救世道人心之嘉言懿论也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-074/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蛰园札记序 · 印光法师文钞">
+<meta property="og:description" content="世乱已极，无可救药，有志之士，何忍坐视，虽居畎亩，于家庭朋友间所谈叙者，未始非挽救世道人心之嘉言懿论也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-074/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">蛰园札记序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">世乱已极，无可救药，有志之士，何忍坐视，虽居畎亩，于家庭朋友间所谈叙者，未始非挽救世道人心之嘉言懿论也。</p><p class="p-trans">世道已经乱到了极点，无可救药，有志之士，怎么能忍心坐视不理呢？即使居住在乡村之中，在家庭朋友间所谈论的内容，也未必不是挽救世道人心的嘉言懿论。</p></div>
+<div class="para-pair"><p class="p-orig">楚蕲陈敦复，法名慧复，以彼平日酬酢于家庭亲友之言论，择要辑为一册。友人劝其付梓，因以其稿寄光，祈为鉴定。</p><p class="p-trans">湖北蕲春县的陈敦复，法名慧复，将他平时与家庭亲朋好友之间应酬交谈的言论，选择精要编辑为一册书。友人劝他把稿件交付刊印出来，因此他就将稿件寄给我，请我来鉴定。</p></div>
+<div class="para-pair"><p class="p-orig">光阅之，其立言本儒经，其义意不悖佛法，果能依之以自修，则希贤希圣之事业，何难见于人人焉。</p><p class="p-trans">我读后，看到书中所说的话都来源于儒经，这些话的义意不违悖佛法，果真能够依照来自我修持，那么成就圣贤的事业，对于每个人来说就都不难了。</p></div>
+<div class="para-pair"><p class="p-orig">然人心已死，不易挽回。孔子不云乎，法语之言，能无从乎，改之为贵。巽与之言，能无悦乎，绎之为贵。悦而不绎，从而不改，吾末如之何也已矣。</p><p class="p-trans">但是，现代社会人心已死，很不容易挽回。孔子不是说过：“符合礼法的话，能不听从吗？但只有（按照法语）改正（自己的缺点错误），才是可贵的。顺耳好听的话，能不让人高兴吗？但只有分析鉴别（这些话的真伪是非），才是可贵的。如果只高兴而不分析鉴别，只听从而不改正自己，（对于这样的人），我实在没有什么办法啊。”（出自《论语·子罕篇第九》）</p></div>
+<div class="para-pair"><p class="p-orig">当今之世，法语巽言，均难得益。以无三畏之念，徒逞一己之能，法语则按剑而起，巽言则如风过树，任凭智德如周孔，亦只可曰吾末如之何也已矣。</p><p class="p-trans">现今的世道，法语巽言，都很难使世人得到利益。因为现代人没有了三畏（畏天命、畏大人、畏圣人之言）之念，所以你如果仅仅倚仗自己的能力，对他说法语，他就会按剑而起、大发雷霆；对他说巽言（恭顺委婉的言词），却又像一阵风吹过树梢一样没有任何作用，任凭你的智慧道德像周公孔子，也只能说：“我实在没有什么办法啊。”</p></div>
+<div class="para-pair"><p class="p-orig">然于无可设法中，不妨特为设法。以世道之乱，人心之死，在于不讲因果，不讲家庭教育。果能注重此二事，则人人知因果，家家有教育，一切法语巽言，均成家常茶饭，无一人肯一日离者。</p><p class="p-trans">可是在这无法可设之中，不妨特别来设立一个方法。因为世道混乱，人心已死的原因，在于不讲因果、不讲家庭教育。所以，果真能够注重这两件事，就会人人懂因果，家家有教育，那么一切法语、巽言，就都成了家常茶饭，没有一人肯背离一天了。</p></div>
+<div class="para-pair"><p class="p-orig">光常曰，因果者，圣人治天下，佛度众生之大权也。教子为治国平天下之根本，而教女尤为重要也。</p><p class="p-trans">我常常说：因果，是圣人治理天下，佛陀度化众生的大权。教育子女是治国、平天下的根本，而教育好女儿尤其重要。</p></div>
+<div class="para-pair"><p class="p-orig">以有贤女，方有贤妇贤母。贤母所生之儿女，皆为贤人，此三太之所以兴周，而后世称女人为太太之来源也。故又曰，治国平天下之权，女人家操得一大半，盖以母教为本也。愿诸阅者，咸注意焉。</p><p class="p-trans">因为有了贤女，才有贤妇、贤母。贤母所生的儿女，也都是贤人，这就是太姜、太任、太姒三太之所以兴盛周朝的原因，而且也是后世称女人为太太的来源。所以我还常说：治国、平天下的权力，女人家掌握一大半，正是因为母教是根本啊。祈愿诸位读者，全都能注重因果与家庭教育啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【蛰】</span>蛰居，潜藏。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【畎亩】</span>田间，田地。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【酬酢】</span>宾主互相敬酒（酬：向客人敬酒，酢：向主人敬酒），泛指交际应酬。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【三畏】</span>语出《论语·季氏》“君子有三畏：畏天命、畏大人、畏圣人之言。小人不知天命而不畏也，狎大人，侮圣人之言。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

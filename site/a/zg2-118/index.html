@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>砌普陀山仙人井功德碑记（代戒如作） · 印光法师文钞</title>
+<meta name="description" content="圆通大士，永劫常住此山。超尘仙人，不时安居斯地。虽像教未至，凡俗莫睹夫慈容。而应身所居，仙真恒瞻乎佛日。故秦之安期生，汉之梅子真，晋之葛稚川等，悉皆寄寓兹山，修真养道。所饮甘泉，名仙人井。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-118/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="砌普陀山仙人井功德碑记（代戒如作） · 印光法师文钞">
+<meta property="og:description" content="圆通大士，永劫常住此山。超尘仙人，不时安居斯地。虽像教未至，凡俗莫睹夫慈容。而应身所居，仙真恒瞻乎佛日。故秦之安期生，汉之梅子真，晋之葛稚川等，悉皆寄寓兹山，修真养道。所饮甘泉，名仙人井。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-118/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">砌普陀山仙人井功德碑记（代戒如作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">圆通大士，永劫常住此山。超尘仙人，不时安居斯地。虽像教未至，凡俗莫睹夫慈容。而应身所居，仙真恒瞻乎佛日。故秦之安期生，汉之梅子真，晋之葛稚川等，悉皆寄寓兹山，修真养道。所饮甘泉，名仙人井。</p><p class="p-trans">观音圆通大士，永劫常住普陀。超尘仙人，不时安居此山。虽然当时佛像、经教还没流传到中国，凡夫俗子没有见过菩萨的慈容。然而在菩萨应身所居的普陀，修仙真人们却可以常时瞻仰佛日的光辉。所以秦朝的安期生、汉朝的梅子真、东晋的葛稚川等人，全都寄居在普陀山，修真养道。他们所饮用的甘泉，名叫仙人井。</p></div>
+<div class="para-pair"><p class="p-orig">及至梁贞明间，始建道场。则大士宏慈，由天章而广被。仙人古迹，随佛法以流传。其井前邻大海，上覆土窟。入地丈余，从下涌出。极旱不减，大涝不增。酷暑则凉，严寒则燠。质沉重而清澄，味甘美而润泽。信士饮之，多愈沉疴。</p><p class="p-trans">到了后梁贞明年间，才开始在普陀山建立道场。从此，观音大士的宏慈大悲，借着朝廷的敕命而广被众生；山中仙人的往昔行迹，随着佛法的传布而广为流传。这口古井，前面邻近大海，上面覆盖着土窟，深一丈多，泉水从地涌出。极度干旱的时候，泉水不会减少；大洪大涝的时候，泉水不会增多。酷暑时泉水清凉，严寒时泉水温热。水质沉重而清澄，味道甘美而润泽。有信心的人喝了，许多都治好了长久不愈的疾病。</p></div>
+<div class="para-pair"><p class="p-orig">故闽粤吴楚之朝礼此山者，必瓶贮携归，以为法药。若非大悲法水，从菩萨大慈悲心中流出。俾饮者近愈疾病，远证菩提。其能灵验远著之若是耶。</p><p class="p-trans">所以福建、广东、江浙、湖北等地赶来朝拜普陀的人，必定用瓶子装上泉水带回去，作为治病的法药。如果不是大悲法水，从菩萨的大慈悲心中流出。使得饮用的人，当下治愈疾病，将来证得菩提，怎么会如此灵验，如此声名远扬呢。</p></div>
+<div class="para-pair"><p class="p-orig">四明杏村干居士，来山进香，饮水而甘。询其名义，称叹不已。遂恺然施资，命衲经理。用石砌井，兼铺井道。上建一龛，中供大士，左奉龙王，右安仙人。</p><p class="p-trans">四明杏村的干居士，来普陀山进香。饮用泉水，觉得十分甘美。询问泉水名字的含义之后，称叹不已。于是慷慨地布施资财，请我来经营办理。用石头加砌井口，又铺筑井道。上面建一座石龛，中间供奉观音大士，左边供奉龙王，右边安置仙人。</p></div>
+<div class="para-pair"><p class="p-orig">欲后之取此水者，行清净道，彻法源底。见观音于当处，培佛种于将来。醍醐入口，疾病离身。心地清凉，永无热恼之逼迫。前程远大，常登仁寿之康庄。</p><p class="p-trans">想要让今后到这里取水的人，行走清净大道，透彻佛法源底。当处亲见观音菩萨，培植将来成佛种子。甘露醍醐一入口，疾病痛苦便离身。心地清凉，永无烦热苦恼的逼迫；前程远大，常登仁德长寿的康庄大道。</p></div>
+<div class="para-pair"><p class="p-orig">衲嘉其诚恳，略叙颠末。勒诸贞珉，以告来哲。</p><p class="p-trans">我赞叹居士的诚恳，特此大略叙述其中的始末。刻成石碑，来告知后来智慧卓越之人。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【仙真】</span>道家称升仙得道之人。唐李白《上云乐》诗：“生死了不尽，谁明此胡是仙真？”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【佛日】</span>系大乘佛教诸经典中所常用之譬喻。因佛陀之睿智、德行、慈悲，可破众生之迷妄，如日轮破夜之闇，故喻佛陀如日。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【安期生】</span>一名安期，人称千岁翁，安丘先生。琅琊人，师从河上公，是秦汉期间燕齐方士活动的代表人物，黄老哲学与方仙道文化的传人。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【梅子真】</span>即梅福，寿春人，曾为南昌尉。西汉元始年间，王莽篡汉，梅福便弃妻子隐居宜丰山中。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【葛洪】</span>（284-364）为东晋道教学者、著名炼丹家、医药学家。字稚川，自号抱朴子，晋丹阳郡句容（今江苏句容县）人。三国方士葛玄之侄孙，世称小仙翁。他曾受封为关内侯，后隐居罗浮山炼丹。著有《神仙传》、《抱朴子》、《肘后备急方》、《西京杂记》等</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【天章】</span>1.犹天文。指分布在天空的日月星辰等。2.指帝王的诗文。3.泛指好文章。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【燠】</span>暖；热。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【沉痾】</span>拖延长久的重病；难治的病。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【四明】</span>浙江鄞县。今为宁波市鄞州区。鄞县地处浙江东部沿海，位于宁绍平原东端。县境西北与西部与余姚接壤，南部紧邻奉化，东南临象山港与象山隔水相望，东北与北仑区相邻。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【仁寿】</span>谓有仁德而长寿。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【康庄】</span>指宽阔平坦、四通八达的道路。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【颠末】</span>本末；前后经过情形。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【贞珉】</span>石刻碑铭的美称。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【来哲】</span>后世智慧卓越的人。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

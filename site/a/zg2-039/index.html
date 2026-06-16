@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>白华庵法谱序（此系悬叙，下叙事不录） · 印光法师文钞</title>
+<meta name="description" content="吾人一念心性，不生不灭，非色非空。竖无初后之迹，横绝边表之形。不变随缘，历九界而不减。随缘不变，证佛道而不增。光明洞彻，受用自在。直下与十方三世一切诸佛，无二无别。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-039/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="白华庵法谱序（此系悬叙，下叙事不录） · 印光法师文钞">
+<meta property="og:description" content="吾人一念心性，不生不灭，非色非空。竖无初后之迹，横绝边表之形。不变随缘，历九界而不减。随缘不变，证佛道而不增。光明洞彻，受用自在。直下与十方三世一切诸佛，无二无别。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-039/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">白华庵法谱序（此系悬叙，下叙事不录）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">吾人一念心性，不生不灭，非色非空。竖无初后之迹，横绝边表之形。不变随缘，历九界而不减。随缘不变，证佛道而不增。光明洞彻，受用自在。直下与十方三世一切诸佛，无二无别。</p><p class="p-trans">我们的一念心性，不生不灭，非色非空。竖则无始无终，横则无边无际。不变而又随缘，历经九法界而不减；随缘而又不变，证得佛道而不增。光明洞彻，受用自在。直下与十方三世一切诸佛，毫无差别。</p></div>
+<div class="para-pair"><p class="p-orig">但由迷真逐妄，背觉合尘。致使生佛悬殊，苦乐迥异。大觉世尊愍之，示生世间，成等正觉，广演言教。令其返妄归真，背尘合觉。复还本有之天真，亲证无上之觉道。</p><p class="p-trans">只是因为众生迷惑真心，追逐妄境，背离觉性，合于六尘，所以导致众生与佛天差地别，受苦受乐，完全不同。大觉世尊，怜愍众生，在世间示现成佛，广泛演说教法，使我们返妄归真，背尘合觉。恢复本有天真，亲证无上觉道。</p></div>
+<div class="para-pair"><p class="p-orig">由是教随机异，法以人殊。为实施权，备设五乘之阶位。开权显实，同归三德之法门。</p><p class="p-trans">因此，随众生根机的不同，而施设不同的教法。为了阐说实教而设立权教，备设人、天、菩萨、声闻、缘觉五乘的阶位；开除权教之执著，显明真实之义，同归法身、解脱、般若三德之法门。</p></div>
+<div class="para-pair"><p class="p-orig">虽一雨普润，四众均沾。而宏扬流通，惟僧是赖。良由割爱辞亲，方能精修净行。负荷法道，必须洞彻心源。</p><p class="p-trans">虽然佛法雨露普遍滋润一切众生，四众弟子都能沾受利益。然而宏扬流通佛法，惟有依赖于僧人。实在由于割舍爱欲，辞别亲人，才能够精进修持净行。要想负荷如来法道，就必须洞彻自心本源。</p></div>
+<div class="para-pair"><p class="p-orig">故自教启西乾，法传东震。律教扬镳，禅净建帜。</p><p class="p-trans">所以自从佛教开启于西域，传播到东土以来。律宗、教下（天台宗、华严宗、法相宗）得以建立宏扬，禅宗、净土宗法幢高竖成为中国佛教的特色标志。</p></div>
+<div class="para-pair"><p class="p-orig">二千年来，蒙剃度而饮法乳，以斯道而觉斯民者。其世系师承，源源本本，何可得而胜数也。</p><p class="p-trans">二千多年来，剃度出家，得饮法乳，用佛法觉悟众生的高僧大德，他们的世代师承，源源本本，哪里能数的清呢？</p></div>
+<div class="para-pair"><p class="p-orig">普陀为观音大士应化之地，历劫常然，无迁无变。而世间凡夫知见之迹，则自五代梁贞明间，始建道场。</p><p class="p-trans">普陀山是观音大士应化之地，经历劫数而常然如此，没有迁移，没有变化。而世间凡夫所知道和见到的形迹，则是起始于五代梁朝贞明年间，由慧锷祖师建立的道场。</p></div>
+<div class="para-pair"><p class="p-orig">历宋，元，明，以迄昭代。高人屡出，天章频颁。其间法运，不无否塞。而赖有负荷法道之人，为之调停施设。得以转否为泰，即塞成通。以故圆通道场，振古如斯，不坠厥初也。</p><p class="p-trans">历经宋、元、明，以至于当朝。高人屡屡出现，圣旨频频颁敕。这期间，法运并不是没有阻塞的时候。依赖那些担负法道的人，从中调停周旋、善巧施设，得以转丕难为安泰，即阻塞成通达。所以观音菩萨圆通道场，从古到今都是如此，道风不坠与最初之时没有差别。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【开权显实】</span>开除权教之执着，显示真实之义。“开”含开除、开发、开拓等义；开除乃除却权执，开发乃由内机缘纯熟而脱权执，开拓乃权即实而广其体之义。即开除三乘之权便，显示一乘真实之义。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【西乾】</span>西天。后用以指从西域传入的佛教。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【东震】</span>指中国。震：震旦。印度古时称中国为震旦。中国在东方，故称。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【扬镳】</span>1.提起马嚼子。谓驱马。2.喻显扬才华。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【以斯道而觉斯民】</span>《孟子·万章上》：“予将以斯道觉斯民也。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【昭代】</span>政治清明的时代。常用以称颂本朝或当今时代。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【天章】</span>指帝王的诗文。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【否塞】</span>闭塞不通。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【振古】</span>远古；往昔。《诗·周颂·载芟》：“匪今斯今，振古如兹。”</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【厥初】</span>最初、开头。《诗经﹒大雅﹒生民》：“厥初生民，时维姜嫄。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>上海市佛教会慈幼院添建房屋落成发隐颂并序 · 印光法师文钞</title>
+<meta name="description" content="子舆氏有言曰，老吾老，以及人之老。幼吾幼，以及人之幼。治天下可运之掌上。自真学失传，儒者皆以破斥因果轮回为志事。纵有知者，亦不敢出诸口。以是之故，老吾老，幼吾幼，均不得究竟之道，况人老人幼乎哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-049/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="上海市佛教会慈幼院添建房屋落成发隐颂并序 · 印光法师文钞">
+<meta property="og:description" content="子舆氏有言曰，老吾老，以及人之老。幼吾幼，以及人之幼。治天下可运之掌上。自真学失传，儒者皆以破斥因果轮回为志事。纵有知者，亦不敢出诸口。以是之故，老吾老，幼吾幼，均不得究竟之道，况人老人幼乎哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-049/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">上海市佛教会慈幼院添建房屋落成发隐颂并序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">子舆氏有言曰，老吾老，以及人之老。幼吾幼，以及人之幼。治天下可运之掌上。自真学失传，儒者皆以破斥因果轮回为志事。纵有知者，亦不敢出诸口。以是之故，老吾老，幼吾幼，均不得究竟之道，况人老人幼乎哉。</p><p class="p-trans">孟子曾说：“老吾老，以及人之老。幼吾幼，以及人之幼。治天下可运之掌上。”(出自《齐桓晋文之事》)自从儒家真学失传后，儒者都以破斥因果轮回作为抱负。纵然有知道因果事理的，也不敢说出口。由于这个缘故，孝养自己的父母，教养自己的子女，都得不到究竟的方法（因果报应、六道轮回），何况推及他人的父母、子女呢？</p></div>
+<div class="para-pair"><p class="p-orig">所谓老老，在于以道自淑，养亲之志，谕亲于道。否则纵能奉养唯谨，不能令亲身心究竟安乐，皆不得名为真老吾老。</p><p class="p-trans">所谓老吾老（孝养父母），是要修行解脱法门，不断完善自己，不仅奉养父母的身体，还要培养父母的心志，用脱离轮回的道理来劝导父母。否则即使能够把父母奉养得很周到，但是由于不能使父母的身心究竟得到安乐，所以都不能称为真正的老吾老。</p></div>
+<div class="para-pair"><p class="p-orig">此语且置，姑论幼幼。幼幼在于以身作则，蒙以养正，一言一行，毋许越规。必期于为贤为善，有益于国家，无害于社会而后已。</p><p class="p-trans">老吾老这些话暂且说到这里，我们再来谈一谈幼吾幼（教养子女）。幼吾幼，在于以身作则，在启蒙时就要培养子女正确的道德观念，一言一行，都不许违背道德规范。一定要把子女培养成贤人、善人，使他有益于国家、无害于社会，才算达到目的。</p></div>
+<div class="para-pair"><p class="p-orig">否则纵令不惜资财，供给学费，学业大成，而不以道义是务，皆不得名为真幼吾幼。吾幼尚不能真实是幼，况旁人世人之幼，又何能容心于其间哉。</p><p class="p-trans">否则即使不惜资财，供给学费，学业大有成就，但是由于子女的人生观没有建立起道德和正义这个核心，所以都不能称为真正的幼吾幼。自己的子女尚且不能做到真实地教养，更何况别人、世人的子女，又怎么能放在心上呢？</p></div>
+<div class="para-pair"><p class="p-orig">近来世道荒乱，民不聊生，几多无父无母之孤儿，无衣无食，将成饿殍。纵不饿死，由无教育，必难成就正器。不为顽民，必为败类。</p><p class="p-trans">近来世道荒乱，民不聊生，多少无父无母的孤儿，无衣无食，将要成为饿死之人。即使不被饿死，但是由于没有受到教育，也必定很难成为正器。不是成为顽民，就是必成败类。</p></div>
+<div class="para-pair"><p class="p-orig">关絅之等诸大善士，热心公益，念孤儿之困苦，特于前年，借闸北宝莲寺，立一佛教慈幼院。现以人多屋少，添建若干间，已经落成，将印纪念特刊，命光略叙大致。爰为颂曰。</p><p class="p-trans">关絅之等诸大善士，热心公益慈善，悯念孤儿的困苦，特地在前年，借上海闸北的宝莲寺，建立了一所佛教慈幼院。现在因为人多屋少，又增建了几间房屋，已经落成了，将要印发纪念特刊，让我略叙大致情形。于是为之写颂曰：</p></div>
+<div class="para-pair"><p class="p-orig">济济孤儿，头角峥嵘，若不救济，将无由生。既得教育，正器必成，或为工商，或读或耕。为贤为善，嘉会其亨，恪守道义，虽贱亦荣。何况不少，出格俊英，是知慈幼，利益深宏。子舆之言，实具深思，唯愿仁人，同怀慈悲。院屋虽成，常需不资，各为输将，以助成之。幼人之幼，己幼必奇，贤善相继，为世型仪。利人自利，因果如斯，勿或不信，佛语不欺。</p><p class="p-trans">济济孤儿，头角峥嵘，若不救济，将无由生。既得教育，正器必成，或为工商，或读或耕。为贤为善，嘉会其亨，恪守道义，虽贱亦荣。何况不少，出格俊英，是知慈幼，利益深宏。子舆之言，实具深思，唯愿仁人，同怀慈悲。院屋虽成，常需不资，各为输将，以助成之。幼人之幼，己幼必奇，贤善相继，为世型仪。利人自利，因果如斯，勿或不信，佛语不欺。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【蒙以养正】</span>指从童年开始，就要施以正确的教育。《易·蒙》：“蒙以养正，圣功也。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>金刚经次诂序 · 印光法师文钞</title>
+<meta name="description" content="金刚经者，即有谈空，不堕空边。即空论有，不堕有边。空有两泯，真俗不二。生佛一致，事理圆融。行起解绝，直趣觉海。一切菩萨，依此而修因。三世诸佛，依此而证果。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-017/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="金刚经次诂序 · 印光法师文钞">
+<meta property="og:description" content="金刚经者，即有谈空，不堕空边。即空论有，不堕有边。空有两泯，真俗不二。生佛一致，事理圆融。行起解绝，直趣觉海。一切菩萨，依此而修因。三世诸佛，依此而证果。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-017/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">金刚经次诂序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">金刚经者，即有谈空，不堕空边。即空论有，不堕有边。空有两泯，真俗不二。生佛一致，事理圆融。行起解绝，直趣觉海。一切菩萨，依此而修因。三世诸佛，依此而证果。</p><p class="p-trans">《金刚经》，即有谈空，而不堕入执空一边；即空论有，而不堕入执有一边。空、有双双泯灭，真谛、俗谛，原本不是两个。众生、佛陀一致，事相、理性圆融。行到极处，能所情见消亡，直下趣入觉性大海。一切菩萨，都依此而修菩提因；三世诸佛，都依此而证菩提果。</p></div>
+<div class="para-pair"><p class="p-orig">乃如来一代时教之纲要，实菩萨上宏下化之准绳。示如如之本体，机理双契。证空空之三昧，解行俱圆。妙而又妙，玄之又玄。猗欤懿哉，何可得而思议也已。</p><p class="p-trans">是如来一代时教的纲要，是菩萨上宏下化的准绳。显示了如如之本体，根机、理性双双契合；证得了空空之三昧，义解、行持全都圆满。妙而又妙，玄之又玄。实在是深妙伟丽，不可思议啊。</p></div>
+<div class="para-pair"><p class="p-orig">世多不察，谓为空宗，其孤负佛恩也甚矣。夫度尽一切众生，不见能度所度之相。不住色声香味触法，而行布施，以至六度，及与万行。以无我人众生寿者，修一切善法。无所住而生心。虽说法而无法可说。虽成佛而无菩提可得。</p><p class="p-trans">世间人大多不加深察，而把这部经称作是空宗，这实在深深地辜负了佛恩啊。度尽一切众生，而不见能度者和被度者的事相分别；不住于色声香味触法，而行布施，以至于行六度（布施、持戒、忍辱、精进、禅定、般若）万行。以没有我、人、众生、寿者相（的平等心），来修习一切善法；无所住著而生心。虽然说法而无法可说；虽然成佛而无菩提可得。</p></div>
+<div class="para-pair"><p class="p-orig">是则云腾行海，波涌度门。乃称性缘起之道，行所无事。以故内不见有能度之我，外不见有所度之人与众生，中不见有所证之无余涅槃之寿者相。</p><p class="p-trans">由此，六度万行，如同云腾波涌一般兴起。乃是称合真性而缘起的大道，行所无事。所以内不见有能度众生的我相，外不见有所度的人与众生相，中不见有所证的无余涅槃和寿者相。</p></div>
+<div class="para-pair"><p class="p-orig">自他见亡，凡圣情尽。三轮体空，一道清净。如如不动实相妙理，彻底圆彰。故得福德等彼十方虚空也。</p><p class="p-trans">自、他分别的执见灭亡，凡、圣差异的情见消除。三轮体空，一道清净。如如不动的实相妙理，彻底圆满彰显。所以获得的福德，等同于十方虚空。</p></div>
+<div class="para-pair"><p class="p-orig">至于受持此经，为他人说。虽四句三句二句一句，其福胜彼三千大千世界满中七宝布施，及无量百千万亿劫，日日三时，以恒河沙等身命布施之福。</p><p class="p-trans">至于受持这部经，为他人演说，即使只说四句、三句、二句、一句，所获的福德，胜过用充满三千大千世界那样多的七宝来行布施，也胜过在无量百千万亿劫中，每天早中晚三时，舍弃恒河沙数那样多的身命来行布施。</p></div>
+<div class="para-pair"><p class="p-orig">良以一切诸佛，及诸佛无上觉道之法，皆从此经出故。故说法者，即是以佛庄严而自庄严，并以庄严一切众生。此其自行化他真实功德，名之为空，岂有当哉。是故随说此经，虽止四三二一句等，而一切天人，皆应如佛塔庙而供养之。</p><p class="p-trans">实在是因为，一切诸佛，以及诸佛无上觉道之法，都从这部经流出的缘故。所以，宣说（这部经）法的人，就是用诸佛之庄严来庄严自己，并且庄严一切众生。这样自行而又化他的真实功德，说成是空，恰当吗？所以，（如果有人）随说这部经，即使只有四、三、二、一句等，而一切天人，都应该看作佛塔庙宇一样来供养他。</p></div>
+<div class="para-pair"><p class="p-orig">以持经之人，心与道合，心与佛合。故能转最重之后报，作最轻之现报，而复当得菩提也。以自行化他，心不住相。则以如如智，契如如理。直下与菩提涅槃，混而为一。如水投水，似空合空。虽有圣智，莫能分别也。</p><p class="p-trans">因为受持这部经的人，心与道相合，心与佛相合。所以能够把后世最重的罪报，转化为现世最轻的罪报，而且将会证得菩提。因为自己修行又化导他人，而心不住著于相。则是以如如智，契如如理，直下和菩提涅槃，混为一体。如同将水注入水中，又如空与空相重合，即使有圣人智慧，也不能分别。</p></div>
+<div class="para-pair"><p class="p-orig">如来一代所说法门，悉以此智照了而修。则水到渠成，云开月露，一尘不立，万德圆彰矣。</p><p class="p-trans">如来一代时教所宣说的法门，如果都用这样的智慧觉照而修行，那么就会水到渠成，云开月露，一尘不立，万德圆彰了。</p></div>
+<div class="para-pair"><p class="p-orig">马通白居士者，宿植德本，笃信佛乘。品行清高，著述宏富。实当代之文宗，具超格之学识。</p><p class="p-trans">马通白居士，宿世培植善根，笃实信奉佛法，品行清高，著作丰富。实在是当代的文学大家，具备超凡的学问见识。</p></div>
+<div class="para-pair"><p class="p-orig">然以志树儒宗，未暇殚精内典。迨岁周华甲，以沧桑迭迁，悟身世无常，遂屏除一切，专阅佛经。始知如来所说，皆示吾心。而本有衣珠，几致忘却。庆幸之极，转为悲感。</p><p class="p-trans">然而因为志向在于儒学，没有空闲研究佛典。到了六十岁，因为经历了世事沧桑变迁，觉悟到人生世间的无常。于是屏除一切事务，专心阅读佛经，这才知道如来所宣说的，都是在开示我们的心性，而我们衣服里本有的宝珠，几乎要被忘记了。居士于是庆幸到极点，转而又悲伤感慨。</p></div>
+<div class="para-pair"><p class="p-orig">后阅此经，心华顿发，因随所见，注为次诂。浑融之文，以章段显之。玄妙之义，以平实明之。契理契机，彻上彻下。固初机之良导，实入佛之要门。</p><p class="p-trans">后来阅读了这部经，心中光华顿时显发，因此就根据自己所见，著作了《金刚经次诂》一书。浑然圆融的经文，分章分段来呈现；玄奥微妙的义理，用平实朴素的语言来阐明。上契佛理，下契众机，上下贯通，究竟彻底。自然是初学者的优良师导，实在也是进入佛法的切要门径。</p></div>
+<div class="para-pair"><p class="p-orig">诸门人欲为刊板，永用流通。庶通方儒士，悉皆景仰而效法焉。其为利益，唯佛能知。勉抒愚怀，用为序引。</p><p class="p-trans">马居士的诸位学生想要将这本书刻板，永久流通。想必那些学问通达的儒士们，都会心生景仰而加以效法。其利益，唯有佛能了知。就此勉强抒发我的心意，作为序言。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【诂】</span>以今言解释古代语言文字。亦泛指解释字义。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【觉海】</span>1. 觉性甚深湛然，譬如海也。2. 谓佛教也，佛以觉悟为宗。言海者，喻其教义之深广也。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【空空】</span>谓内身、外身、内外身俱空，而犹执空成病，复以空法而破三空，是名空空。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【三轮体空】</span>指布施时之应有态度。又称三事皆空、三轮清净。指布施时住于空观，不执着能施、所施及施物三轮。就布施言，施者、受者和所施之物，谓之三轮，行施后，此三轮相，不存于心，名“三轮体空”。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【殚精】</span>竭尽精思；精心。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

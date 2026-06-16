@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复张季直先生书 · 印光法师文钞</title>
+<meta name="description" content="光一无知无识之粥饭僧耳，由徐蔚如谬以芜稿再四排印，竟致渎及青眼，尚不以芜秽见弃，反谓其儒释融通，有体有用。殆所谓志在敬佛，遂忘其僧之庸劣也，感极愧极。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-168/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复张季直先生书 · 印光法师文钞">
+<meta property="og:description" content="光一无知无识之粥饭僧耳，由徐蔚如谬以芜稿再四排印，竟致渎及青眼，尚不以芜秽见弃，反谓其儒释融通，有体有用。殆所谓志在敬佛，遂忘其僧之庸劣也，感极愧极。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-168/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复张季直先生书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光一无知无识之粥饭僧耳，由徐蔚如谬以芜稿再四排印，竟致渎及青眼，尚不以芜秽见弃，反谓其儒释融通，有体有用。殆所谓志在敬佛，遂忘其僧之庸劣也，感极愧极。</p><p class="p-trans">印光我是一个无知无识只会吃饭的僧人，由于徐蔚如错谬地将我的文稿四次排印，竟然有幸被您看到了。并且您不因为杂乱而嫌弃，反而说这些文钞是儒家佛家融会贯通，有体有用。这大概是所谓的，心意在于敬佛，于是忘记了僧人的平庸低劣吧。非常感激、惭愧！</p></div>
+<div class="para-pair"><p class="p-orig">易园与光，殆有宿缘，每欲拉阁下以同往西方，俾无量劫来，及与现生，所培之善根福德，同归实际，光极为佩服。</p><p class="p-trans">江易园与我，大概宿世有缘，他常常想要拉阁下您一同往生西方，使得无量劫来，以及现生，所培的善根福德，都归于实际，对此我很佩服。</p></div>
+<div class="para-pair"><p class="p-orig">以阁下当代文宗，光一无知无识之挂搭僧，故不敢随易园之班，以修书奉劝也。今接阁下华翰，见其曾看佛经，不知何者禅也，但觉净耳，不胜欣慰。足知阁下般若种子，殆非一佛二佛三四五佛所之所种者。</p><p class="p-trans">您是当代文章大家，而我只是一个无知无识的挂单僧人，所以不跟敢随江易园的做法，来写信奉劝您。现今接到您的来信，看见其中说到，您曾经看过佛经，不知什么是禅，只是觉得心中清净。对此我非常欣慰。足知您的般若种子，想必不是在一佛、二佛、三四五佛前所种下的。</p></div>
+<div class="para-pair"><p class="p-orig">夫禅至于不知，方是真禅，以见闻觉知，皆意识中事，唯其不知，方能灵光独耀，迥脱根尘，体露真常，即如如佛耳。净至于但觉，则全心是佛，全佛是心，心佛不二，心佛一如矣，否则何名但觉。</p><p class="p-trans">禅修到了“不知”的境界，才是真禅。因为见闻觉知，这些都是意识中的事。只有不知，才能灵光独耀，迥脱根尘，体露真常，也就是如如佛了。清净到了“但觉”的境界，那就全心是佛，全佛是心，心佛不二，心佛一如了。否则，为何说是“但觉”呢。</p></div>
+<div class="para-pair"><p class="p-orig">阁下见解如此，已是超越近之学佛者万万。倘再能生信发愿，回向往生，则上品莲台，当可独据。或恐阁下于禅净之所以然，佛力自力之大小难易，未能深知。谓既悟自心，当处便是西方，不须求生，则其误非浅。</p><p class="p-trans">阁下这样的见解，已经超越近世学佛人的万万倍了。如果再能生信发愿，回向往生西方，那么上品莲台，应当可以独据。只是担心阁下或许对于禅宗净土的所以然，佛力自力的大小难易，未能深入了解。从而认为既然觉悟了自心，那么当处就是西方极乐，不需要再求往生，那么错误就不小了。</p></div>
+<div class="para-pair"><p class="p-orig">何以故，以凡夫纵能悟到极处，尚有无始以来之烦恼习气，未能顿断。烦恼习气若有一丝毫，便不能超出生死轮回之外，此仗自力了生死之难也。</p><p class="p-trans">为什么呢？因为凡夫纵然能够悟到极点，仍然有无始以来的烦恼习气，不能立刻断除。烦恼习气如果还剩下一丝毫，就不能超出生死轮回之外，这是仗自力了生死的困难所在。</p></div>
+<div class="para-pair"><p class="p-orig">念佛法门，但具真信切愿，无论工夫之浅深，功德之大小，皆可仗佛慈力，带业往生。末世众生，欲了生死，不依此法，其难不可以喻矣。</p><p class="p-trans">念佛法门，只要具足真信切愿，无论工夫的浅深，功德的大小，都可以仗佛慈力，带业往生西方。末世众生，想要了生死，不依此净土法门，困难是无法比喻的啊。</p></div>
+<div class="para-pair"><p class="p-orig">祈详读净土十要，净土圣贤录，自知光言不谬。若不以为谬，且无多暇，但息心详阅文钞，自可悉知矣。</p><p class="p-trans">祈望您详读《净土十要》、《净土圣贤录》，自然知道我所说的不错。如果不认为我所说的是错误的，却没有很多空闲，那么只要静心详阅《文钞》，自然可以全都知道了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【张謇】</span>（1853-1926），字季直，号啬庵，江苏海门人。1853年出生于常乐镇。清末状元。中国近代实业家、政治家、教育家。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【体用】</span>1.本体和作用。2.中国古代哲学亦以“体用”指事物的本体、本质和现象。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【实际】</span>1.佛教语。指“真如”、“法性”境界。犹言实相。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【文宗】</span>备受尊崇的文章宗伯。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【但觉】</span>参考：“唯佛如来，三障都尽，三觉具圆。故号如来为：满净觉者。若以此二。望众生，二乘菩萨，诸佛及本性料拣。有两种四句。一者众生不净。二乘菩萨分净。诸佛满净，本性但净。二者众生不觉。二乘菩萨分觉。诸佛满觉，本性但觉。”（《金刚经纂要刊定记卷第一》）</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【如如佛】</span>1．觉悟如如之理的佛。2．佛体即是如如之理。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

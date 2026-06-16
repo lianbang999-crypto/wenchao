@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复东海居士书 · 印光法师文钞</title>
+<meta name="description" content="净土法门，以深信愿，念佛求生西方。不可发来生及生生世世之愿，有此愿，便不能决定往生矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-180/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复东海居士书 · 印光法师文钞">
+<meta property="og:description" content="净土法门，以深信愿，念佛求生西方。不可发来生及生生世世之愿，有此愿，便不能决定往生矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-180/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复东海居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，以深信愿，念佛求生西方。不可发来生及生生世世之愿，有此愿，便不能决定往生矣。</p><p class="p-trans">净土法门，以深信愿，念佛求生西方。不可发来生以及生生世世的愿，有这样的愿，就不能决定往生了。</p></div>
+<div class="para-pair"><p class="p-orig">一切法门，亦有现生即了生死者，然不过千万之一二耳，故须发生生世世之愿。汝谓尽未来际，带业往生，此话殊失净土宗旨。现生即求佛慈接引，带业往生。何可云尽未来际乎。</p><p class="p-trans">一切法门，也有现生就能了生死的，然而不过是千万个中的一二个罢了，所以必须发生生世世的愿。你说 ：“尽未来际，带业往生。”这句话很失净土的宗旨。现生就求佛慈接引，带业往生。怎么可以说“尽未来际”呢？</p></div>
+<div class="para-pair"><p class="p-orig">行菩萨道，当以尽未来际为限。现修净土，何可以尽未来际往生乎。汝虽看文钞，犹未知净土法门之所以然。</p><p class="p-trans">行菩萨道，应当以尽未来际为限定。现在修净土，怎么可以说“尽未来际往生”呢？你虽然看《文钞》，但还不知道净土法门的所以然。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝寄净土五经一册，文钞一部，净土十要一部，净土圣贤录一部，饬终津梁一本，阅此各书，净土法门之蕴，发挥殆尽矣。</p><p class="p-trans">现在为你寄去《净土五经》一册，《文钞》一部，《净土十要》一部，《净土圣贤录》一部，《饬终津梁》一本，阅读这些书，净土法门的蕴含，就发挥殆尽了。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝取法名为契海，谓以自己念佛之因心，上契如来所证之觉海。尚须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。当劝父母兄弟姊妹妻子，并及乡党邻里亲戚朋友同修此法，同求往生。</p><p class="p-trans">现在为你取法名为契海，就是以自己念佛的因心，上契如来所证的觉海。还必须要敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。应当劝导父母、兄弟、姊妹、妻子、儿女，以及乡亲、邻里、亲戚、朋友共同修习这个法门，同求往生。</p></div>
+<div class="para-pair"><p class="p-orig">三皈五戒，当看文钞中所说，于佛前自誓以受，然须一一真实方好。世有好名之人，事事要冒假名，事事不修实行。不知名为实之宾，实充而名自著，何可用意邀求。</p><p class="p-trans">三皈五戒，应当看《文钞》中所说的，在佛前自誓来受，然而必须一一真实不虚才好。世间有好名的人，事事都要冒假名，事事不修实行。不知道名为实之宾，实充足而名自然显著，怎么可以用意来邀求。</p></div>
+<div class="para-pair"><p class="p-orig">邀求之名，一时或可悦人耳目，后来必受人人唾骂。凡事以诚为者，决定有好结果。以虚假为者，徒自欺耳。世人尚不能欺，况佛菩萨乎。</p><p class="p-trans">邀求来的名，一时或许可以悦人耳目，后来必定受人人的唾骂。凡事以诚心来做的话，绝对有好结果；以虚假心来做的话，徒然自我欺骗罢了。世人尚且不能被欺骗，何况佛菩萨呢？</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，不可以金刚经之道理，及禅宗之道理论。各别论之则有益，混融论之则有损。以汝曾看五十三家注，或有此见，故为说破。</p><p class="p-trans">净土法门，不可用《金刚经》的道理，以及禅宗的道理来论说。各自分别来论说，则有利益；混合融通来论说，则有损害。因为你曾经看过《金刚经五十三家注》，或许有这些见解，所以为你说破。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，其大无外，等觉菩萨欲成佛果，尚须以十大愿王回向往生西方。况此下之一切菩萨及学者乎。</p><p class="p-trans">净土法门，广大无外，等觉菩萨想要成就佛果，还必须以十大愿王回向往生西方极乐世界。何况等觉菩萨以下的一切菩萨以及学人呢？</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，去冬夜于电灯下校书，目受伤，遂拒绝一切。凡来信，皆云以后永勿来信，来决不复，以目力不能应酬故也。</p><p class="p-trans">我老了，去年冬天夜里在电灯下校对书，眼睛受了伤，于是拒绝一切信件来往。凡是来信，都说以后永远不要再来信，来了绝对不回，因为视力不能应酬的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">净土之要，有五经，十要，圣贤录，可以备知，切勿随今之好高务胜者，求明心见性，及现身成佛，则便可如佛所说者，悉可亲得矣。</p><p class="p-trans">净土宗的纲要，有《净土五经》、《净土十要》、《净土圣贤录》，就可以全部知道了，千万不要随现今那些好高务胜的人，求（禅宗的）明心见性，以及（密宗的）现身成佛，那么就可以如佛所说的，全都可以亲得了。</p></div>
+<div class="para-pair"><p class="p-orig">嘉言录，一函遍复，尤宜注意。以一切时一切处，均可以此法，利益一切人也。余不多说。</p><p class="p-trans">《嘉言录》、《一函遍复》，尤其应该注意。因为一切时、一切处，都可用此法，利益一切人。其余不再多说。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【五十三家注】</span>《金刚经注解》四卷，明代洪莲编。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

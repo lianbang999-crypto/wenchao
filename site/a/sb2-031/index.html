@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复温光熹居士书七 · 印光法师文钞</title>
+<meta name="description" content="汝之性情，直同小孩子一样。前与汝一长信，恐汝好名入军政界，已极陈利害。何得不以此种言论，为前途导师。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-031/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复温光熹居士书七 · 印光法师文钞">
+<meta property="og:description" content="汝之性情，直同小孩子一样。前与汝一长信，恐汝好名入军政界，已极陈利害。何得不以此种言论，为前途导师。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-031/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复温光熹居士书七</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝之性情，直同小孩子一样。前与汝一长信，恐汝好名入军政界，已极陈利害。何得不以此种言论，为前途导师。</p><p class="p-trans">你的性情，简直如同小孩子一样。之前给你的一封长信，是怕你好名进入军政界，已经极力陈述了利害。为什么不以这种言论，作为前途导师。</p></div>
+<div class="para-pair"><p class="p-orig">又恨闭关不通示，又叹茫然无所从。汝若听我说，何茫然无所从。汝不听我说，则茫然无所从之日，尚在闭目之后。</p><p class="p-trans">你又怨我没有发布闭关通知告示，又感叹茫然无所适从。你如果听我的，哪会茫然无所适从。你不听我的，那么茫然无所适从的日子，还在你闭目之后呢（死后轮回）。</p></div>
+<div class="para-pair"><p class="p-orig">汝家计幸不缺，理宜于此时加力修持，以祈免祸。而且欲刺头于祸窟中，得此不值一叹之虚名，而不计生生世世之永堕恶道之极祸。汝之狂，真可谓极狂矣。</p><p class="p-trans">你家庭生计幸好不缺乏，理应在此时努力修持，来祈求免于灾祸。可是你反而要向祸窟里钻，得到这种不值得一叹的虚名，却不顾生生世世永堕恶道的极端惨祸。你的狂妄，真可说是狂妄之极了。</p></div>
+<div class="para-pair"><p class="p-orig">嘉言录，文钞，不是开示，前书及书笺等等，不是开示。若如汝之意，纵牛载之驴驮之，也不适汝意。汝真所谓可怜悯者。祈一心持大悲咒及观音名号，庶可不至罹诸祸患矣。</p><p class="p-trans">《嘉言录》、《文钞》，难道不是开示？以前的信和书笺等等，难道不是开示？如果按照你的意思，即使用牛载，用驴驮，也不合你的心意。你真是经上所说的可怜悯者。希望你一心持大悲咒和观世音菩萨名号，或许能不至遭遇各种祸患。</p></div>
+<div class="para-pair"><p class="p-orig">近苏省有数善人，令人念摩利支天咒，以保身家，而祈太平。印十万张，本地见家送一张。外埠于各机关善举处，则寄若干，以祈分散，并为重印。其跋系光代为修饰，彼必欲光署名，而欲人见信，故随彼意而署之。</p><p class="p-trans">近来江苏省有几位善人，叫人念摩利支天咒，来保护身家，并且祈求太平。印了十万张，本地见到一家就送一张。外地在各机关善举处，则寄去若干，以希望分发散布，并且将之重印。它的跋是我代为修改润饰的，他们一定要我署名，是要他人看见了生起信心，所以我就随顺他们的意思而署了名。</p></div>
+<div class="para-pair"><p class="p-orig">彼又请二十穷无所食之善人，令到彼办善举之会中，念此咒一百日。每日供其饮食，并给咒资，以为养家之据。可谓一举而数善备矣。</p><p class="p-trans">他们又请二十个穷困没有饭吃的善人，叫他们到做善举的法会中，念此咒一百天。每天供给善人们饮食，并给念咒的酬劳，来作为养家糊口的依靠。可以说一举而具备了数善。</p></div>
+<div class="para-pair"><p class="p-orig">当此茫茫大劫，不发一番利人利物之心，则到玉石俱焚之时，岂不徒叹前失乎。今为寄三张，祈兼念之，当必有不可思议之感格矣。</p><p class="p-trans">正当这个茫茫大劫，不发一番利人利物的心，那么到了玉石俱焚的时候，怎会不空叹从前的过失呢。现在为你寄去三张，希望你兼念此咒，必定会有不可思议的感应。</p></div>
+<div class="para-pair"><p class="p-orig">汝之信，屡言汝忙，忙得做么，真忙得无谓。数千里远来，以见光为名，及见一宿，并不肯住。</p><p class="p-trans">你的信，老是说你很忙，忙着做什么，真忙得毫无价值。数千里远道而来，以见我为名，等到见了面一晚都不肯住。</p></div>
+<div class="para-pair"><p class="p-orig">光与汝极一生之大致，俱示之于汝。所求之外，即长信，汝如未见一字，亦不提及。又屡屡叹其欠缘，真是可笑之极。</p><p class="p-trans">我将你极尽一生的修行大致，全都给你作了开示。所求之外，就是前面给你的长信（《复温光熹居士书二》），你如同未见一字，也不提起。却又常常感叹欠缺因缘，真是可笑之极。</p></div>
+<div class="para-pair"><p class="p-orig">果能死心塌地，依我所说，则此去当有无穷之乐。不然，则如哑子吃黄连，有苦不能说矣。祈慧察。此光末后之付嘱也。</p><p class="p-trans">你果真能死心塌地，依照我所说的，那么这次离开当有无穷的乐趣。不然，就好像哑巴吃黄连，有苦说不出了。希望你用智慧体察。这是我最后的叮嘱。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【书笺】</span>或指短小的书信。笺：小幅华贵的纸张，古时用以题咏或写书信。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

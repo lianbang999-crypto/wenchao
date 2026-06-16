@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复李觐丹居士书五 · 印光法师文钞</title>
+<meta name="description" content="昨接手书，知圣定已生西方。临终正念，殁后顶暖，面色愈好，酷暑不臭。即此数端，决可定其往生。至于生品，总在中品。以中品皆戒善世善所生，亦不必要好听，定其上生。即下品下生，业已超过三界诸天之上，况中品之下生乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-194/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复李觐丹居士书五 · 印光法师文钞">
+<meta property="og:description" content="昨接手书，知圣定已生西方。临终正念，殁后顶暖，面色愈好，酷暑不臭。即此数端，决可定其往生。至于生品，总在中品。以中品皆戒善世善所生，亦不必要好听，定其上生。即下品下生，业已超过三界诸天之上，况中品之下生乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-194/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复李觐丹居士书五</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接手书，知圣定已生西方。临终正念，殁后顶暖，面色愈好，酷暑不臭。即此数端，决可定其往生。至于生品，总在中品。以中品皆戒善世善所生，亦不必要好听，定其上生。即下品下生，业已超过三界诸天之上，况中品之下生乎。</p><p class="p-trans">昨天接到信，知道圣定已经往生西方。临终正念，死后头顶温暖，面色比平常还好，酷暑天气，身体也不发臭。就这几种瑞相，绝对可以认定她往生净土了。至于往生的品位，总在中品。因为中品往生，都是戒善、世善所生的品位，也不必要好听，认定她是中品上生。即使是下品下生，也已经超过三界诸天之上，何况是中品下生呢？</p></div>
+<div class="para-pair"><p class="p-orig">四十九日佛声不断，不但于亡人有益，于现在眷属大有利益。灵岩例不念经，拜忏，放焰口，做系念，做水陆，传法，收徒，讲经，传戒，做会。日常功课，与普通打七同。唯有信心，不务繁华者，求打佛七则允许。若广招亲友，及少年女眷，七先即来，七后方去者，亦不允许。</p><p class="p-trans">四十九天佛声不断，不但对于亡人有益，对于现在的眷属，也大有利益。灵岩山寺的惯例：不念经、拜忏、放焰口、做系念、做水陆、传法、收徒、讲经、传戒、做会。日常的功课，与普通打七相同。只有具有信心，不崇尚繁华的人，来求打佛七，才允许。如果广招亲友，以及少年女眷，打七之前就来，打七之后才离去的，也不允许。</p></div>
+<div class="para-pair"><p class="p-orig">十七年张鸣岐（系皈依者）打七七未去一人，十八年亦（系皈依者）打二十一七，亦未去一人。十九年有二十多七，不过五六家去人，然亦只住一二天二三天耳。二十年以人多屋小，大起修造，其七更多。</p><p class="p-trans">民国十七年（1928年），张鸣岐（是皈依弟子）打了七个七，（家中）没有去一个人。民国十八年，也（是皈依弟子）打了二十一个七，（家中）也没有去一个人。民国十九年，有二十多个七，不过五六家有人去，然而也只是住一二天、二三天而已。民国二十年，因为人多屋小，大造殿舍，打七就更多了。</p></div>
+<div class="para-pair"><p class="p-orig">今将碑记寄汝一张，阅之即知。汝若欲利济圣定，在生常素，丧期想不至于用荤酒。至于葬及后来之祭祀，当戒令郎勿效俗例。光于朝暮课诵回向时，称彼法名，回向三七，以尽师生之谊。</p><p class="p-trans">现今将碑记寄给你一张，读过就知道了。你如果想要利济圣定，她在生时吃长素，丧期想来不至于用荤酒。至于丧葬，以及后来的祭祀，应当告诫你的儿子，不要效仿世俗惯例。我在朝暮课诵回向时，称她的法名，回向三个七，以尽师生之谊。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

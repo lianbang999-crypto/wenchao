@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>71、四书蕅益解重刻序 · 印光法师文钞</title>
+<meta name="description" content="道在人心，如水在地。虽高原平地，了不见水。苟穴土而求之，无不得者。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-071/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="71、四书蕅益解重刻序 · 印光法师文钞">
+<meta property="og:description" content="道在人心，如水在地。虽高原平地，了不见水。苟穴土而求之，无不得者。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-071/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第四部分·序文 · 如诚法师译</div>
+      <h1 class="art-title">71、四书蕅益解重刻序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">道在人心，如水在地。虽高原平地，了不见水。苟穴土而求之，无不得者。</p><p class="p-trans">道在人心，如同水在地中。虽然是高原平地，看不见水。如果掘土而求水，没有得不到的。</p></div>
+<div class="para-pair"><p class="p-orig">水喻吾心固有之明德，土喻吾心幻现之物欲。果能格物致知，无有不能明其明德者。然穴土取水，人无不施工求之，以非水不能生活故也。</p><p class="p-trans">水比喻我们心中本有的明德，土比喻我们内心幻现的物欲。果真能够格除物欲而显现良知，没有不能彰明他光明性德的。然而掘土取水，人们没有不施工来求取的，这是因为没有水就无法生活的缘故啊！</p></div>
+<div class="para-pair"><p class="p-orig">而道本心具，人多不肯施工。致物欲锢蔽真知，不知希圣希贤，甘心自暴自弃。由兹丧法身以失慧命，生作走肉行尸，死与草木同腐，可不哀哉。</p><p class="p-trans">虽然道是我们心中本具的，人们却大多不肯去施工求取。导致物欲禁锢蒙蔽了真知，不知道仰慕效法圣贤，甘心自暴自弃。由此丧失法身慧命，活着作行尸走肉，死了与草木同腐，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">四书者，孔门上继往圣，下开来学，俾由格物致知以自明其明德，然后推而至于家国天下，俾家国天下之人，各皆明其明德之大经大法也。</p><p class="p-trans">《四书》，是儒家向上继承以往圣贤，向下开启未来学人，由格除物欲显示真知来自己彰明光明性德，然后推广到家庭、国家、天下，使得家庭、国家、全天下的人，都各各彰显他们光明性德的伟大经典，伟大法则啊！</p></div>
+<div class="para-pair"><p class="p-orig">前乎此者，虽其说之详略不同，而其旨同。后乎此者，虽其机之利钝有异，而其效无异。诚可谓先天而天弗违，后天而奉天时，万世师表，百代儒宗也。</p><p class="p-trans">在这之前的圣贤，虽然他们的学说有详略的不同，而其中的宗旨都是相同的。在这之后的学人，虽然他们的根机有利钝的差别，而所得的成效却没有两样。实在可说是：先于天象而行动，天不违背他；后于天象而处事，也能遵循天的变化规律。是万世师表，百代儒宗啊！</p></div>
+<div class="para-pair"><p class="p-orig">其大纲在于明明德修道。其下手最亲切处，在于格物慎独，克己复礼，主敬存诚。学者果能一言一字皆向自己身心体究。虽一介匹夫，其经天纬地参赞化育之道，何难得自本心。</p><p class="p-trans">其中的大纲在于彰显光明性德的修道。其下手最亲切之处，在于格除物欲、谨慎独处，克除己私、还归真理，竭尽恭敬、心怀坦诚。学习的人，果真能够一个字一个字，都向自己的身行心意中去体察追究。虽然是一介凡夫，其经天纬地参赞化育之道，要得于本心，又有什么困难的呢？</p></div>
+<div class="para-pair"><p class="p-orig">俾圣贤垂训一番苦心，不成徒设，而为乾坤大父大母增光，不愧与天地并称三才。可不自勉乎哉。</p><p class="p-trans">使得圣贤垂训的一番苦心，不成为白白的施设，而为天地父母增光，不愧与天地，并称为三才。能不自我勉励吗？</p></div>
+<div class="para-pair"><p class="p-orig">如来大法，自汉东传，至唐而各宗悉备，禅道大兴。高人林立，随机接物。由是濂洛关闽以迄元明诸儒，各取佛法要义以发挥儒宗，俾孔颜心法，绝而复续。</p><p class="p-trans">如来大法，自汉朝东传。到了唐朝，各个宗派都完备了，禅宗非常兴盛。高僧大德林立，随根机接引众生。因此宋代理学的四个学派濂、洛、关、闽，到元朝、明朝的诸多儒生，各自吸取佛法要义来发挥儒学，使得孔子颜回的心法，虽断绝却又承续了下来。</p></div>
+<div class="para-pair"><p class="p-orig">其用静坐参究，以期开悟者，莫不以佛法是则是效。故有功深力极，临终预知时至，谈笑坐逝者甚多。</p><p class="p-trans">其中用静坐来参究，以期开悟的，没有不以佛法作为仿效的。所以有功夫深、力量大，临终预知时至，谈笑坐着而逝的人很多。</p></div>
+<div class="para-pair"><p class="p-orig">其诚意正心，固足为儒门师表。但欲自护门庭，于所取法者，不唯不加表彰，或反故为辟驳，以企后学尊己之道，不入佛法。然亦徒为是举。</p><p class="p-trans">他们诚意正心，固然足以为儒门的师表。但是他们想要自护门庭，对于所吸取的佛法，不仅不加以表彰，却反过来故意辟驳，以企望后学的人尊崇自己的理学之道，不入佛法之门。可是这些举动都是徒劳的。</p></div>
+<div class="para-pair"><p class="p-orig">不思己既阴取阳排，后学岂无见过于师之人。适见其心量狭小，而诚意正心之不无罅漏也。深可痛惜。</p><p class="p-trans">他们不想想自己已然暗地里吸取了别人的学说，表面上却加以排斥，后学的人哪能没有见识超过师长的人呢？这正好看出他们心量狭小，而对于他们所崇尚的诚意正心，就有罅隙缺漏了。实在是痛心惋惜。</p></div>
+<div class="para-pair"><p class="p-orig">明末蕅益大师，系法身大士，乘愿示生。初读儒书，即效先儒辟佛，而实未知佛之所以为佛。后读佛经，始悔前愆，随即殚精研究，方知佛法乃一切诸法之本。其有辟驳者，非掩耳盗铃，即未见颜色之瞽论也。</p><p class="p-trans">明朝末年的蕅益大师，是法身大士，乘愿再来。最初读儒家之书，即效仿先儒来辟佛，而实际上并不知道，佛为什么称为佛。后来读到佛经，才开始忏悔以前的罪愆，接着就立刻殚精竭虑地研究，才知道佛法是一切诸法的根本。那些辟驳的人，不是掩耳盗铃，就是没有看见过颜色的盲人瞎说。</p></div>
+<div class="para-pair"><p class="p-orig">遂发心出家，弘扬法化。一生注述经论四十余种，卷盈数百。莫不言言见谛，语语超宗，如走盘珠，利益无尽。</p><p class="p-trans">于是他发心出家，弘扬佛法教化众生。一生注述的经论有四十多种，有几百卷。全部都是字字见到真谛，句句超越宗门，如同自动旋走在盘中的珍珠，利益无有穷尽。</p></div>
+<div class="para-pair"><p class="p-orig">又念儒宗，上焉者取佛法以自益，终难究竟贯通。下焉者习词章以自足，多造谤法恶业。中心痛伤，欲为救援。因取四书周易，以佛法释之。</p><p class="p-trans">又想到儒家学说，上等的人吸取佛法来自我利益，最终很难究竟融会贯通。下等的人学习文词章句自以为足，大多造作谤法的恶业。心中非常伤痛，想要加以救援。因此取来《四书》、《周易》，以佛法来加以解释。</p></div>
+<div class="para-pair"><p class="p-orig">解论语孟子，则略示大义。解中庸大学，则直指心源。盖以秉法华开权显实之义，以圆顿教理，释治世语言。俾灵山泗水之心法，彻底显露，了无余蕴。</p><p class="p-trans">解释《论语》、《孟子》，就大略显示其中的大义。解释《中庸》、《大学》，就直接指示心源根本。秉承《法华经》开权显实的意义，以圆顿教理，解释治世语言。使得佛教儒家的心法，彻底显露，没有一点隐藏。</p></div>
+<div class="para-pair"><p class="p-orig">其取佛法以自益者，即得究竟实益。即专习词章之流，由兹知佛法广大，不易测度。亦当顿息邪见，渐生正信。</p><p class="p-trans">那些吸取佛法来自我利益的人，就得到究竟的实际利益。即使是专门学习词句文章之类的人，由此知道佛法的广大，不容易测度。也应当顿然息灭邪见，渐渐生起正信。</p></div>
+<div class="para-pair"><p class="p-orig">知格除物欲，自能明其明德。由是而力求之，当直接孔颜心传。其利益岂能让宋元明诸儒独得也已。</p><p class="p-trans">知道格除物欲，自然能够彰明光明性德。由此而努力追求，必能直接继承孔子颜回的心法传承。其中的利益，怎能让宋、元、明诸位儒生独得呢？</p></div>
+<div class="para-pair"><p class="p-orig">近来各界，眼界大开。天姿高者，无不研究佛法。一唱百和，靡然风从。既知即心本具佛性，无始无终，具足常乐我净真实功德。岂肯当仁固让，见义不为，高推圣境，自处凡愚乎哉。</p><p class="p-trans">近来全国各界，眼界大开。天姿高的人，没有不研究佛法的。一人唱百人和，如同风吹草伏一般。既然知道即心本具的佛性，无始无终，具足常乐我净的真实功德。哪肯当仁而辞让，见义不为，高高推崇圣境，自己却甘处凡愚呢？</p></div>
+<div class="para-pair"><p class="p-orig">以故伟人名士，率多吃素念佛，笃修净业。企其生见佛性，死生佛国而已。郁九龄，施调梅二居士，宿具灵根，笃信佛法。一见四书蕅益解，不胜欢喜。</p><p class="p-trans">所以伟人名士，大多吃素念佛，力修净业。希望活着就能见到佛性，死后能生到佛国而已。郁九龄、施调梅二位居士，宿世具有慧根，笃信佛法。一见到《四书蕅益解》，非常欢喜。</p></div>
+<div class="para-pair"><p class="p-orig">谓此书直指当人一念，大明儒释心法。于世出世法，融通贯彻。俾上中下根，随机受益。深则见深，不妨直契菩提。浅则见浅，亦可渐种善根。</p><p class="p-trans">认为这本书，直指当下人的一念心性，大大地阐明了儒家佛教的心法。对于世间、出世间法，融通贯彻。使得上中下根的人，随各自的根机而受到利益。根机深的人见到深理，不妨直接契入菩提。根机浅的人见到浅义，也可以渐渐种植善根。</p></div>
+<div class="para-pair"><p class="p-orig">即欲刊板，用广流通。以此功德，恭祝现在椿萱，寿登期颐，百年报尽，神归安养。过去父母，宿业消除，蒙佛接引，往生净土。</p><p class="p-trans">就打算刊板刻印，广泛流通。以此功德，恭祝现在的父母，长寿百岁。百年之后，神识回归安养极乐。过去父母，宿业消除，蒙佛接引，往生净土。</p></div>
+<div class="para-pair"><p class="p-orig">祈序于光，企告来哲。光自愧昔作阐提，毁谤佛法。以致业障覆心，悟证无由。喜彼之请，企一切人，于佛法中，咸生正信。庶可业障同消，而心光俱皆发现矣。</p><p class="p-trans">请我写个序，以告来学的智者。我自己惭愧，过去曾经作一阐提，毁谤佛法。导致业障覆心，没办法开悟得证。很随喜他们的请求，希望一切人，对于佛法，都生起正信。才可以业障同消，而心光全都显发啊！</p></div>
+<div class="para-pair"><p class="p-orig">周易禅解，金陵已刻。孟子择乳，兵燹后失传。杨仁山居士求之东瀛，亦不可得，惜哉。</p><p class="p-trans">《周易禅解》，金陵刻经处已经刻印过了。《孟子择乳》，兵火战乱之后失传了。杨仁山居士在日本寻求，也找不到，实在是可惜啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【先天】</span>谓先于天时而行事，有先见之明。《易·乾》：“夫大人者，与天地合其德；与日月合其明，与四时合其序，与鬼神合其吉凶，先天而天弗违，后天而奉天时。”孔颖达疏：“先天而天弗违者，若在天时之先行事，天乃在后不违，是天合大人也。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【经天纬地】</span>《国语·周语下》：“经之以天，纬之以地，经纬不爽，文之象也。”本指以天地为法度。后以“经天纬地”、“经纬天地”谓经营天下，治理国政。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【参赞】</span>协助谋划。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【化育】</span>教化培育。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【三才】</span>天、地、人。《易·说卦》：“是以立天之道曰阴与阳，立地之道曰柔与刚，立人之道曰仁与义。兼三才而两之，故《易》六画而成卦。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【濂洛关闽】</span>宋代理学的四个学派。“濂”指濂溪周敦颐；“洛”指洛阳程颢、程颐；“关”指关中张载；“闽”指讲学于福建的朱熹。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【则效】</span>效法。语出《诗·小雅·鹿鸣》：“君子是则是效。”毛传：“是则是效，言可法效也。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【瞽论】</span>不明事理的言论。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【走盘珠】</span>珍珠的形态以正圆形为最好，古时候人们把天然正圆形的珍珠称为走盘珠。能在平滑瓷盘中滴溜溜旋转。此为禅林用语。【护国此庵元禅师二首《嘉泰普灯录》】佛祖权衡真妙绝。一句通明万机彻。纵横端似走盘珠。念念圆融大休歇。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【当仁不让】</span>《论语·卫灵公》：“当仁不让于师。”朱熹集注：“当仁，以仁为己任也；虽师亦无所逊。言当勇往而必为也。”后泛指遇到应该做的事主动去做，绝不推诿。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【椿萱】</span>《庄子·逍遥游》谓大椿长寿，后世因以椿称父。《诗·卫风·伯兮》：“焉得谖草，言树之背。”谖草，萱草。后世因以萱称母。椿、萱连用，代称父母。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【期颐】</span>一百岁。语本《礼记·曲礼上》：“百年曰期、颐。”郑玄注：“期，犹要也；颐，养也。不知衣服食味，孝子要尽养道而已。”</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【择乳】</span>饮其醇而存其水也。《孟子择乳》，也即《孟子》撷精，其实是对《孟子》一书的选注发挥。在序文中，藕溢大师说：“解孟子者曰择乳。饮其醇而存其水也。”</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【兵燹】</span>因战乱而造成的焚烧破坏等灾害。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

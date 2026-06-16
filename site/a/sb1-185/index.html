@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复霁清居士书 · 印光法师文钞</title>
+<meta name="description" content="今日陈鹤年居士来，持汝书及佛学八识之批评，不禁令人长叹。汝学佛有年，因锦汉之语，而疑佛经及历代古德，或有不妥贴处，便成信道不笃。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-185/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复霁清居士书 · 印光法师文钞">
+<meta property="og:description" content="今日陈鹤年居士来，持汝书及佛学八识之批评，不禁令人长叹。汝学佛有年，因锦汉之语，而疑佛经及历代古德，或有不妥贴处，便成信道不笃。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-185/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复霁清居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">今日陈鹤年居士来，持汝书及佛学八识之批评，不禁令人长叹。汝学佛有年，因锦汉之语，而疑佛经及历代古德，或有不妥贴处，便成信道不笃。</p><p class="p-trans">今天陈鹤年居士来访，带来你的信，以及《佛学八识之批评与研究》，不禁令人长叹。你学佛也有多年了，因为锦汉说的话，就怀疑佛经以及历代古德，或许有不妥贴之处，便成了信道不忠实坚定。</p></div>
+<div class="para-pair"><p class="p-orig">彼极破八识之三名，谓为有讹，只以动力易之，谓能正佛经历来之讹。其好名之心，可谓至极。加以不知羞，无惭愧，亦可谓至极无加。</p><p class="p-trans">他极力破斥八识的三名，认为有讹误，只以“动力”来替换，认为能够匡正佛经历来的错讹。他好名的心，可说是到了极点。加上不知羞耻，没有惭愧，也可以说是到了极点无以复加。</p></div>
+<div class="para-pair"><p class="p-orig">彼以真如佛性，皆谓之后天物，其不识心性，只知物质，为可怜也。汝年近七旬，专精念佛，尚恐不及，何暇问及于此。岂后世凡夫所说，反胜于如来所说，而待彼订正耶。</p><p class="p-trans">他将真如佛性，都认作是后天的东西，他不认识心性，只知道物质，实在可怜。你年近七十，专精念佛，还恐怕来不及，哪有空来问这些问题。难道是后世凡夫所说的，反而胜过如来所说，而需要他来订正呢？</p></div>
+<div class="para-pair"><p class="p-orig">所言受三皈五戒者，当如徐女士书中所说佛前自受。今为汝取法名为慧清，谓以智慧，清净自他之业，令其生为圣贤之徒，没登极乐之邦。</p><p class="p-trans">所说的，要受三皈五戒，应当如《与徐福贤女士书》中所说的，在佛前自誓受戒。现今为你取法名为慧清，就是以智慧，清净自他的业障，令自他在生成为圣贤之徒，临终登入极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">至于化人之事，随分随力而启迪之，当以古今人念佛之功效，与彼说之，庶可易于领受。若不注意于此，则诚可为彼笑具。</p><p class="p-trans">至于教化他人的事，随分随力地启迪他们，应当以古往今来之人念佛的功效，对他们讲说，才可以让他们容易领受。如果不注意在这个地方，那么实在就成了他们嘲笑的对象。</p></div>
+<div class="para-pair"><p class="p-orig">又汝年已老迈，来日无多，宜将念佛利益，与家眷说。并及临终助念之益，破坏之损，照文钞，嘉言录所说，为彼等说之，令其预知。庶不至临终行落井下石之孝。</p><p class="p-trans">另外，你年纪已经老迈，来日不多，应该将念佛的利益，对家中眷属讲说。并将临终助念的利益，破坏的损害，依照《文钞》、《嘉言录》中所说，对他们讲说，令他们预先知道。才不至于临终时，行落井下石的孝道。</p></div>
+<div class="para-pair"><p class="p-orig">又宜写一章程，请二三同志为之证明。俾将死勿破坏正念，以成就正念。死后勿杀生，免添我业累。若不如此，天地鬼神当必鉴察。以此纠正俗知俗见，庶可得正念昭彰，随佛往生也。</p><p class="p-trans">再有，应该写一个章程，请二三位同志作个证明。使得将死的时候，不要破坏正念，成就正念。死后不要杀生，免得增添我的罪业拖累。如果不如此，天地鬼神必定会鉴察。以此来纠正世俗的知见，才可以正念昭彰，随佛往生啊！</p></div>
+<div class="para-pair"><p class="p-orig">所寄批评八识之魔话，代汝焚之，故不寄来。以此种书，即不随彼转，亦令心纷歧，或致生烦恼耳。书此祈慧察。</p><p class="p-trans">你所寄的《八识之批评与研究》这些魔话，我代你焚烧，所以不寄回给你。因为这种书，即使不随他所说而转，也会令心中生起混乱，或许导致生起烦恼。写这些，请你慧察。</p></div>
+<div class="para-pair"><p class="p-orig">友人阅嘉言录而疑净土，此宿世恶业之所致也。今为一喻，蛆在厕中，乐不可支。若与彼说厕坑之外，尚有极清净开阔之楼台屋宇，彼能生信否乎。</p><p class="p-trans">友人阅读《嘉言录》而怀疑净土，这是宿世恶业所导致。现今为你作个比喻，蛆虫在厕所中，乐不可支。如果对它说厕坑之外，还有极其清净开阔的楼台屋宇，它能生信吗？</p></div>
+<div class="para-pair"><p class="p-orig">即有好事者，不惜垂手从厕中取出，用清水香水次第洗之，亦只能成就其速死而已。于彼完全不得其益，亦犹是也。</p><p class="p-trans">即使有好事的人，不惜垂手从厕所中将它取出，用清水香水次第清洗干净，也只能成就它速死而已。对于他来说，完全不能得到其中的利益，也是如此。</p></div>
+<div class="para-pair"><p class="p-orig">汝等一介愚夫，自己尚完全不识（唯大彻大悟人，方可谓识得自己者）。尚谓诸佛所说，诸祖所宏，诸大善知识所倡导者，不真实，乃骗人之寓言。诚可谓心粗胆大，不惧后来堕拔舌地狱也。</p><p class="p-trans">你们一介愚夫，自己还完全不认识自己（唯有大彻大悟的人，才可以说是认识自己的人）。尚且认为诸佛所说的，诸位祖师所宏扬的，诸大善知识所倡导的，不真实，是骗人的寓言。实在可说是心粗胆大，不畏惧后来堕拔舌地狱啊！</p></div>
+<div class="para-pair"><p class="p-orig">全真成妄，乃约众生心言。喻如水因风动而成波浪，全水成波。风息则全波成水矣。全真成妄，返妄则全妄即真。汝之聪明，实为愚痴。</p><p class="p-trans">全真成妄，这是指众生心来说。譬如海水因为风动而成波浪，全水成为波浪。风停息下来，那么全体波浪就成为海水了。全真成妄，返妄，那么全妄即真。你的聪明，实际是愚痴。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【佛学八识】</span>《佛学八识之批评与研究》，锦汉撰，民国十七年（1929）铅印本。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【信道不笃】</span>《论语·子张》子张曰：“执德不弘，信道不笃，焉能为有？焉能为亡？”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【纷歧】</span>混乱不一致。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

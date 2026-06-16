@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>致华叔琴居士书 · 印光法师文钞</title>
+<meta name="description" content="近闻移居常熟，想可专一净修矣，慰慰。世道不好，诸事均不易办。观音颂，自居士发心刊板以来，至今数年，尚未至于完全了结。可知世间多少好事，均由兵灾不能成就也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-354/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="致华叔琴居士书 · 印光法师文钞">
+<meta property="og:description" content="近闻移居常熟，想可专一净修矣，慰慰。世道不好，诸事均不易办。观音颂，自居士发心刊板以来，至今数年，尚未至于完全了结。可知世间多少好事，均由兵灾不能成就也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-354/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">致华叔琴居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">近闻移居常熟，想可专一净修矣，慰慰。世道不好，诸事均不易办。观音颂，自居士发心刊板以来，至今数年，尚未至于完全了结。可知世间多少好事，均由兵灾不能成就也。</p><p class="p-trans">最近听说你移居到了常熟，想必能够专一净修了，欣慰。世道不好，各种事都不容易办。《观音颂》，自从居士发心刊板以来，至今已数年，仍然还没有完全了结。可知世间多少好事，均由于战火兵灾不能成就。</p></div>
+<div class="para-pair"><p class="p-orig">昔妙莲令扬州人刻，战事屡次发生，每有彼此不通音信之时。及乎刻好之后，观音庵又复住兵，以故妙莲于校对颇欠精详。而卷首未刻，遂作了结。</p><p class="p-trans">过去，妙莲法师令扬州人刻印这本书，战事多次发生，经常有彼此不通音信的时候。等到刻好之后，观音庵又住进了官兵，所以妙莲法师对于校对，很欠精详。而且卷首还没有刻，就作了了结。</p></div>
+<div class="para-pair"><p class="p-orig">至去年居士发心印施，乃命慈幼院人向妙莲于杨公馆要板。及后印出，所有签条书面与卷首皆无。即令详查，知系未刻。随即令刻，而四百部书，至近日方始交清。</p><p class="p-trans">到了去年，居士发心印施，于是命慈幼院的人找妙莲法师向杨仁山居士的刻经处要板。等到后来书印出来，所有的签条、书面与卷首都没有。就令人详细查找，才知道这些都没有刻板。随即令人刻板，而所印的四百部书，到最近几天方才交接清楚。</p></div>
+<div class="para-pair"><p class="p-orig">光后详校，知其大错，亦有三四百。而小不如法者，更为多多也。因标一部，令其修板。此次所印之书，印一勘误表。凡送书者，均夹于书中，庶得书者可按表改。</p><p class="p-trans">我后来详细校对所印的书，知道书中大错的地方，也有三四百处。而小的不如法的地方，就更多了。因此校对标点一部，令他们修改刻板。这次所印的书，印一张勘误表。凡是送书的人，都将勘误表夹在书中，使得到书的人，可以按照勘误表改正。</p></div>
+<div class="para-pair"><p class="p-orig">汝处五十部，去年已寄到，想已散出。今幼农居士来观新宅，祈彼带勘误表五十张。凡前所送书之人，祈各与一张，庶可改正。</p><p class="p-trans">你那里有五十部，去年已经寄到，想必已经散发出去了。现在王幼农居士来看新房子，请他带五十张勘误表给你。凡是以前送过书的人，请各给他们一张，才能改正书中的错误。</p></div>
+<div class="para-pair"><p class="p-orig">现今世道，难即太平。当以阿弥陀佛与观世音菩萨作为倚靠之泰山，庶不至于危险耳。然世间之险，险之小者。若不生西方，则将来轮回之险，当有甚于此时之险百千万也。</p><p class="p-trans">现今世道，很难马上就太平。应当以“阿弥陀佛”与“观世音菩萨”作为倚靠的泰山，才不至于有危险。然而世间的危险，还是危险中的小危险。如果不往生西方，那么将来轮回六道的危险，应当超过此时危险的百千万倍啊！</p></div>
+<div class="para-pair"><p class="p-orig">祈与慧源并诸儿女同修净业，庶可出此五浊，生彼九品。则今日世道之险，未始不为往生西方永离众苦之前导也。</p><p class="p-trans">请与慧源以及各位儿女同修净业，才能够出离这个五浊恶世，往生九品莲邦。那么今日世道的危险，未必就不是往生西方永离众苦的前导啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【签条】</span>1.贴在卷轴及书籍封面上的字条。2.写有文字、贴在封套正中的纸片。即贴在书面，写有书名的纸条。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【卷首】</span>书刊的前面部分。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

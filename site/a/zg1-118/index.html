@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与徐蔚如居士书四 · 印光法师文钞</title>
+<meta name="description" content="前日云雷寄无依道人金刚了义，阅之，知阁下佛学，其来也远，不胜感佩。孟由将一行居集寄来，见其字迹过细，不受久刷。此京中刻经处未能虑及者。明书册藏，刻得甚粗。现今版小，不能照彼。然亦当如南京扬州款式。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-118/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与徐蔚如居士书四 · 印光法师文钞">
+<meta property="og:description" content="前日云雷寄无依道人金刚了义，阅之，知阁下佛学，其来也远，不胜感佩。孟由将一行居集寄来，见其字迹过细，不受久刷。此京中刻经处未能虑及者。明书册藏，刻得甚粗。现今版小，不能照彼。然亦当如南京扬州款式。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-118/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">与徐蔚如居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前日云雷寄无依道人金刚了义，阅之，知阁下佛学，其来也远，不胜感佩。孟由将一行居集寄来，见其字迹过细，不受久刷。此京中刻经处未能虑及者。明书册藏，刻得甚粗。现今版小，不能照彼。然亦当如南京扬州款式。</p><p class="p-trans">前天，张云雷寄来无依道人徐昌治的《金刚经会解了义》，阅读后，知道你学佛也是由来已久，非常钦佩。周孟由将《一行居集》寄来，见到其中的字迹太细，不能承受长久的印刷，这是北京刻经处没能考虑到的。明朝的书籍以及《嘉兴藏》，字体刻得很粗。现在的刻版太小，不能依照明朝的样式来刻。然而也应当按照南京、扬州的款式刻板。</p></div>
+<div class="para-pair"><p class="p-orig">祈寄信经理人，说其所以。令一副板多印几千，其利益大矣。又一行居集，若文若理，通通皆好。唯禅宗秘密了义经跋，为醍醐中含有毒味之作。此经出于乩坛。其文悉取华严法华楞严圆觉之成文，并六祖坛经，及合会禅净语录中文。大通家看之固有益。不具眼者，谓此经乩坛中出，金口亲宣。由兹遂谓乩坛中经，皆是佛经。</p><p class="p-trans">祈望你寄信给经理人，说明其中的所以，让（他们）一副刻板多印几千册，这个利益就很大了。另外，《一行居集》这本书，无论文字或义理，通通都好。唯有其中的《禅宗秘密了义经跋》，是无上醍醐当中含有毒味的著作。这部经出自乩坛。其中的文字都是摘取《华严经》、《法华经》、《楞严经》、《圆觉经》的原文，加上《六祖坛经》，以及合会禅宗净土语录当中的文字。大通家看了，固然有利益。不具备择法智眼的人，会说这部经是乩坛中产生的，是佛菩萨金口所宣。由此就认为乩坛中所说的经书，都是佛经。</p></div>
+<div class="para-pair"><p class="p-orig">古有闭目诵出之经，皆不流通者，恐其肇杜撰之端耳。大明仁孝皇后梦感经，其义理利益，皆不思议。而灵峰老人，阅藏知津，目为疑伪。清藏初亦刻入，高宗后又撤去，以防伪滥。</p><p class="p-trans">古时候有闭目诵出的经书，都不会予以流通。其原因，就是恐怕会开启杜撰佛经的端由。大明仁孝皇后在梦中所得的经书，义理和利益都不可思议。然而灵峰蕅益老人在《阅藏知津》一书中，指出它是疑伪之经。清藏最初也刻入了，高宗乾隆皇帝之后又撤去了，这是为了防止伪经混滥。</p></div>
+<div class="para-pair"><p class="p-orig">二林见地甚高，何以虑不及此。法雨先亦有一本，光烧之以杜祸胎耳。以法门知己，不妨络索一上。</p><p class="p-trans">彭二林的见地很高，为何没有考虑到这一点。法雨寺先前也有一本，我已将其烧掉来杜绝祸根。因为你我是法门知己，所以不妨啰嗦了上面这些。</p></div>
+<div class="para-pair"><p class="p-orig">现今国穷民困，已至极点。贴骨之烟患，尚未能除。亦有世道民生之责任者，一大憾事。今夏有友，自哈尔滨来，言其地烟禁大弛。亦有二三友人，欲戒而苦无良方。</p><p class="p-trans">现今国家贫穷，人民困苦，已到了极点。贴骨吸髓的鸦片烟祸患，还没能根除，这是有世道民生责任之人的一大遗憾。今年夏天，有一位朋友从哈尔滨来，说到他们那里，禁除鸦片的风气非常不盛，（他本人）也有二三位朋友，想要戒除而苦于没有好的药方。</p></div>
+<div class="para-pair"><p class="p-orig">光先闻陈锡周戒烟方，灵得非常，为从来所未有。候其来山，令开出寄去。又开一张与本寺副寺，令其送人。以彼曾在商务中做过事，交游必宽，企其普遍流传。至十一月间，哈尔滨有信来。言光所寄方，灵得非常，代为戒好友人致谢。</p><p class="p-trans">我先前听说陈锡周的戒烟方，非常灵验，前所未有。等到他来普陀山时，就让他开出药方寄过去。还开了一张给本寺的副寺，让他送人。因为他曾经在商务场中做过事，所结交的人必定很广，希望他普遍流传这个方子。到了十一月中，哈尔滨有信寄来。说我所寄的药方非常灵验，他代替戒掉的朋友致谢。</p></div>
+<div class="para-pair"><p class="p-orig">不胜欢喜。因问本寺副寺，彼言其友汪蟾清，其内人以气痛吃烟。后欲戒之，即买市卖药丸服之，终不断根。若不吃药，烟气二病即发。得此方一料服完，烟气二病，化为乌有。其子开汪李济堂药店，生大感激，印其方送人。并依方制成丸药，药水，以期济人，于自己各店卖之。</p><p class="p-trans">我看了之后非常欢喜，因此询问本寺的副寺，他说，他的朋友汪蟾清的妻子，因为气痛而吃了鸦片烟。后来想要戒掉，就买市集上卖的药丸来服，始终不能断根。如果不吃药，烟瘾气痛两种病就一起发作。按照这个药方一贴药服完，烟瘾气痛两种病，都化为乌有了。他的儿子是汪李济堂药店的老板，因为这事大生感激之心，就印刷了这个药方送人。并且依照药方制成药丸、药水，在自己开的各个药店中售卖，希望能救济他人。</p></div>
+<div class="para-pair"><p class="p-orig">光即令要二百张方子来，凡远近知交有信来，皆为附寄一张。有力者令其排印广传。窃念阁下及云雷，悉皆有心利人。宜将此方，长年上报，俾举世咸知，则功德无量矣。</p><p class="p-trans">我即刻让人向他要了二百张药方，凡是远近朋友有来信，都附寄一张。有能力的，就让他们排印广泛流传。我想到你和张云雷都有心要利益他人。应该将这个药方，长年登在报纸上，使得举世的人都知道，则功德无量啊！</p></div>
+<div class="para-pair"><p class="p-orig">已与云雷谈过，当出半分报费，此费当觅三五有心世道之人均认，则事在必行。于报馆，于自己，皆无妨碍。倘欲戒者，即可顿离此苦，亦救国救民之一端也。</p><p class="p-trans">（这件事我）已经与张云雷谈过了，他会出一半的登报费。这个费用应当找三五个有心挽救世道的人来平均认捐，那么这件事必定可行。对于报馆，对于自己，都没有妨碍。想要戒烟的人（看到了），就可以马上出离这种痛苦，这也是救国救民的一种方式啊！</p></div>
+<div class="para-pair"><p class="p-orig">光于广东云南各处，皆随文钞寄去。令其排印此方，普遍传布。前与哈尔滨寄方时，亦令彼觅三五有财力肯利人者出资，于当地两报馆，长年登报，俾本界及外界咸知。</p><p class="p-trans">广东、云南各个地方，我都随《文钞》寄了这个方子，让他们排印出来，普遍传布。先前寄给哈尔滨时，也让他们寻觅三五个有财力，肯利益他人的人出资，在当地的两个报馆，长年登报，使得本地以及其它地方的人都能看到。</p></div>
+<div class="para-pair"><p class="p-orig">今既亲获灵验，当必能常时登报矣。真办道人，何预他事。但未能通身放下，斩断万缘。不妨带培心地，以救取一半耳（方附集末）。</p><p class="p-trans">现在他们既已亲身获得了灵验的效果，想必能够长期将药方登在报纸上了。真修行的人，又何必参与其他事务。但是如果没能全身放下，斩断万缘，也不妨兼带着培植心地，来救取全身的一半了（药方附在文集的末后）。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【无依道人】</span>徐昌治，明末武源（位于江苏）人。法名孝廉，别号无依道人。任杭州府海宁县盐官。因读楞严经而弃官舍儒，趣入禅门。崇祯元年（1628），谒金粟寺之密云圆悟，受圆悟之法嗣石车通乘之钳锤。崇祯十一年，从费隐通容住于天童山，受命撰辟邪集。其后，历参金粟寺之隐元隆琦、福严寺之寿和尚等。清顺治十三年（1656），接受费隐通容之付法，其间为费隐通容所撰之五灯严统作序，并独立刊行之。尝为径山志及百痴行元、隐元隆琦等人之语录作序。撰有祖庭指南二卷、醒世录八卷、高僧摘要四卷、无依道人录二卷、百痴和尚梵胜散录一卷等。与徐蔚如曾祖父徐槐廷为同时代人，或许与徐家颇有渊源，故印祖说“阁下佛学，其来也远”，徐蔚如家十世奉佛。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【一行居集】</span>（书名）共八卷，清彭绍升著。绍升字允初，号尺木，别号知归子。法名际清。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【嘉兴藏】</span>明版《大藏经》，一般指径山藏。《径山藏》又名《嘉兴藏》、《楞严寺版》、《方册藏》。私版。明代以嘉兴楞严寺为中心劝募雕印。筹划于明神宗万历七年(1579)，始刻于万历十七年(1589)，完成于清康熙十五年版式行款一般为四周双边，边栏外粗内细；版心上方一般皆刻“经”、“律、“论”、“西土撰述”、“支那撰述”等分类名称。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【禅宗秘密了义经跋】</span>见一行居集卷二（其三），原题“书重刻禅宗秘密修证了义经后”。计七百三十六字。文中有云：“永命、孚佑两真人，以儒仙入道，往来人天”。又云：“箕书笔箓，多为仙灵神鬼所凭依：其上者、或阐洙泗之微言，或发函关之秘藏；至若西来大意，罕有闻焉。”又云：“此经指示正修，抉剔禅弊，多敲骨吸髓之谈，非金口亲宣，决难假托”。此谓“的系佛说”。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【感经】</span>即《大明仁孝皇后梦感佛说第一希有大功德经》。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【料】</span>量词。用于中医配制丸药，处方规定剂量的全份为一料。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

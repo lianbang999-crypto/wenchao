@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>唐孝子祠校发隐 · 印光法师文钞</title>
+<meta name="description" content="孟子曰，人皆可以为尧舜，又曰，尧舜之道，孝弟而已矣。有子谓君子务本，本立而道生，孝弟也者，其为仁之本欤。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-171/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="唐孝子祠校发隐 · 印光法师文钞">
+<meta property="og:description" content="孟子曰，人皆可以为尧舜，又曰，尧舜之道，孝弟而已矣。有子谓君子务本，本立而道生，孝弟也者，其为仁之本欤。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-171/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">唐孝子祠校发隐</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">孟子曰，人皆可以为尧舜，又曰，尧舜之道，孝弟而已矣。有子谓君子务本，本立而道生，孝弟也者，其为仁之本欤。</p><p class="p-trans">孟子说，人人都可以成为尧舜。又说，尧舜的圣贤之道，就是孝悌而已。有子说，君子应当致力于根本，根本树立了，圣道才能成就。孝亲、悌友这两件事，就是仁德的根本吧。</p></div>
+<div class="para-pair"><p class="p-orig">夫为尧舜为仁，不外乎敦行孝弟，初非有奇特玄妙，艰难困苦，欲为而不能者。人固各当自勉，以期不负独为万物之灵，而与天地并称为三才耳。且天地至广至大，人得以七尺之躯，与之并称者，以其能赞天地之化育，继圣贤之志事也。</p><p class="p-trans">成为尧舜，成为仁人，不外乎是敦行孝亲、悌友，最初并没有什么奇特玄妙、艰难困苦，想做而做不到的地方。人人固然都应当自我勉励，以期不辜负自己身为万物之灵，而与天地并称为三才啊。而且天地广大至极，人能凭借着七尺身躯，与天地并称为三才，这是因为人能够协助天地的教化培育，继承圣贤的志向事业啊。</p></div>
+<div class="para-pair"><p class="p-orig">否则机械变诈，败常乱俗，徒污天地与人类耳。形虽为人，实则禽兽之不如，以禽兽不知礼教，人知礼教，知礼教而悖之，斯居禽兽之下矣。</p><p class="p-trans">否则，机巧诡诈，败坏伦常，扰乱风俗，（这样的人）只是在污染天地与人类而已。虽然有着人的身形，实际上禽兽不如。因为禽兽不知道礼教，而人知道礼教。知道礼教却违悖礼教，那就在禽兽之下了。</p></div>
+<div class="para-pair"><p class="p-orig">是人也，生既为衣冠禽兽，死必堕三途恶道，人亦何苦以能为尧舜为仁之资，甘心永作畜生饿鬼地狱之可怜众生，是诚何心哉。无他，皆由家教未至，与自己不自振奋而致然也。</p><p class="p-trans">这样的人，活着是衣冠禽兽，死之后必定堕入三途恶道。人又何苦本着能成尧舜，能成仁人的资质，而甘心永作畜生、饿鬼、地狱的可怜众生，这究竟是什么居心呢？没有别的，都是由于没有好的家教，和自己不振奋自强导致的。</p></div>
+<div class="para-pair"><p class="p-orig">近来欧风渐至，一班新学派，厌故喜新，趋之若鹜。凡欧人为国为众之好处，皆所不学。其蔑礼乱伦处，则变本加厉。竟至废经废伦仇孝等，无所不至，直欲人与禽兽，了无有异而后已。</p><p class="p-trans">近来，欧美的风气渐渐传到我国。一班新学派人士，喜新厌旧，趋之若鹜。凡是欧美人为国家、为大众的好处，全都不学。而他们轻蔑礼教、坏乱伦常的地方，却变本加厉地学习。竟然到了废除儒经，废除伦理，仇视孝道的地步，无所不至，简直就是想让人和禽兽丝毫没有差异，才肯罢休。</p></div>
+<div class="para-pair"><p class="p-orig">有心世道人心者，各怀忧惧。武进唐驼，欲挽颓风，以先曾祖唐孝子安邦公事，虽经表彰，载之邑乘，未立专祠，知者盖鲜，遂设祠勒碑以表彰之。</p><p class="p-trans">有心于（挽救）世道人心的人，都对此心怀忧虑恐惧。江苏武进县的唐驼，想要挽救颓败的风气。因为他的曾祖唐孝子安邦的事迹，虽然经过了表彰，记载在武进地方志中。但是没有建立专门的祠堂，大概少有人知，于是就设立祠堂、刻立石碑加以表彰。</p></div>
+<div class="para-pair"><p class="p-orig">又于其中，立一小学，名为唐孝子祠校。俾当地贫子弟读书其中。冀其顾名思义，效法前人，敦本重伦，以尽己分。</p><p class="p-trans">又在祠堂之中，设立了一所小学，名为唐孝子祠校，使当地的贫穷子弟能在里面读书。希望他们由校名而想到其中的含义，效法前人，敦守本分，注重伦常，尽到自己的本分。</p></div>
+<div class="para-pair"><p class="p-orig">初则服劳奉养以安其亲，次则立身行道以荣其亲。既能孝矣，必能笃修弟忠信礼义廉耻等。则为人之道得，为尧舜为仁之道亦得，而赞天地之化育，继圣贤之志事之道，亦可以随分而得。</p><p class="p-trans">先是服事、奉养，让父母安宁；然后修养自身，奉行道义，让父母荣光。既然能够尽孝，就必定能够笃实修行悌、忠、信、礼、义、廉、耻等。那么为人之道成就了，为尧舜、为仁人之道也成就了，而协助天地教化培育，继承圣贤志向事业之道，也可以随分随力而成就。</p></div>
+<div class="para-pair"><p class="p-orig">驼之意，盖如此，以故不辞辛苦，鬻字以办。诚可谓敦本重伦，尚德慕义之士，驼其贤乎哉。其族侄允中，亦随力劝助，足见唐氏之多贤人也。</p><p class="p-trans">唐驼的用意，大概是这样。所以才不辞辛苦，通过卖字来操办这件事。实在可以说是敦守本分、注重伦常、崇尚美德、钦慕道义的人。唐驼真是贤善啊！他的族侄唐允中，也根据自己的能力进行了劝化赞助，足以看出唐氏门中多有贤人。</p></div>
+<div class="para-pair"><p class="p-orig">虽然，驼之贤有自来矣。按，驼生五岁，父恂之公即弃世，时驼兄光盛十一岁，妹始三岁，家徒壁立，零丁孤苦，不堪言状。</p><p class="p-trans">虽然如此，唐驼的贤善是有由来的。唐驼五岁时，父亲唐恂之就离世了。当时唐驼的哥哥唐光盛十一岁，妹妹才三岁，家徒四壁，孤苦零丁，不忍言说。</p></div>
+<div class="para-pair"><p class="p-orig">母邹恭人，日勤针黹及与人浣衣，赖以度生，以养以教，俾驼兄弟皆成人成德。且为其夫买墓地，成契后，村人移大成庵青莲尼骨于其地中。</p><p class="p-trans">母亲邹恭人，每天借着辛勤做针线活，以及给别人洗衣服，赖以生活，从而养育教诲儿女，使得唐驼兄弟都成了德才兼备的人。而且她为丈夫买墓地，契约订立后，村里人把大成庵青莲尼师的遗骨迁移到她所买的墓地中。</p></div>
+<div class="para-pair"><p class="p-orig">邹恭人询知，不唯不以为嫌，且深生景仰，岁时祭扫，必令二子致祭于尼。及恭人逝后，地主移葬他处，驼兄弟感母慈，兼恐后或夷灭，遂复移置其父母茔内，且建塔表彰其懿德清操焉。</p><p class="p-trans">邹恭人问明之后，不但不嫌弃，而且深深景仰。每年扫墓祭拜，必定让两个儿子祭奠青莲尼师。邹恭人去世后，地主将尼师移葬到别处。唐驼兄弟感念母亲的慈心，又担心将来尼师的坟墓或许会被夷平，于是又将尼师之墓迁移到自己父母的坟地内，并且建塔来表彰尼师的美德清操。</p></div>
+<div class="para-pair"><p class="p-orig">夫邹恭人当夫逝时，年齿甚盛，居贫守节，教养二子，钦敬以身殉法之尼，其殆魏慈母，鲁义姑之流。懿德贞心，堪为世范。故感驼年逾五十，不减孺慕，欲广孝思，以报母恩，爰立此祠，设校于中，以教乡里之贫子弟，冀为挽回世道人心之据。</p><p class="p-trans">丈夫去世时，邹恭人正当盛年，而安于贫困，守持贞节，教养两个儿子，钦敬以身殉法的青莲尼师。她想必可以和魏芒慈母、鲁义姑并列同流吧。美德贞心，足以成为世间的模范。所以感得唐驼年过五十之后，仍然不减对母亲的爱戴与怀念。想要推广孝思，以报答母亲的恩德，于是建立了这座祠堂，又在其中设立学校，来教育当地的贫困子弟，希望作为挽回世道人心的依据。</p></div>
+<div class="para-pair"><p class="p-orig">可谓笃于事亲，克尽子道矣。因为发其隐义，俾安邦公之孝行，与邹恭人之潜德悉彰，庶见者闻者，咸皆兴起。</p><p class="p-trans">可以说是笃力事奉双亲，竭尽为子之道了。特此阐发其中的隐含之义，使得唐安邦老先生的孝行，与邹恭人潜藏的美德，全都得以彰显。想必见者闻者，全都会奋起追随啊。</p></div>
+<div class="para-pair"><p class="p-orig">孝经云，夫孝，天之经也，地之义也，民之行也。由是言之，一言一行，有不合道，皆为不孝。</p><p class="p-trans">《孝经》说：“孝道，是天经地义，是人之常行。”由此说来，只要有一言一行不符合道义，都是不孝。</p></div>
+<div class="para-pair"><p class="p-orig">故曰，孝弟为仁之本，尧舜之道，孝弟而已矣。凡为人子者，可不深长思而亟自勉焉。</p><p class="p-trans">所以才说，孝亲、悌友是仁德之根本，尧舜圣贤之道，只是孝悌而已。作子女的人，能不加以深思而即刻自勉吗。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【笃行】</span>切实履行；专心实行。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【机械】</span>巧诈；机巧。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【变诈】</span>巧变诡诈。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【邑乘】</span>县志；地方志。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【鬻】</span>卖。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【魏慈母】</span>《列女传·魏芒慈母》魏芒慈母者，魏孟阳氏之女，芒卯之后妻也。有三子。前妻之子有五人，皆不爱慈母。遇之甚异，犹不爱。慈母乃命其三子，不得与前妻子齐衣服饮食，起居进退甚相远，前妻之子犹不爱......魏安厘王闻之，高其义曰：“慈母如此，可不救其子乎！”乃赦其子，复其家。自此五子亲附慈母，雍雍若一。慈母以礼义之渐，率导八子，咸为魏大夫卿士，各成于礼义。
+译文：孟阳女（生卒年不详），战国时期魏国人。嫁给大夫魏芒卯时，就做了三个年幼孩子的母亲。前妻有五个孩子，都不喜欢后妈，而孟阳女却格外关心他们，可后子们就是不喜欢她。为了融洽与他们的关系，孟阳女宁肯委屈三个亲子，在饮食起居上降低标准，尽管这样后子们还是不喜欢她。有一次前妻的小孩失手杀了人，要判死罪，孟阳女非常痛心和悲伤，茶饭不思以致身体日渐消瘦，为了能够救孩子，她日夜操劳。旁人劝孟阳女不要这样，说：“反正他们也不爱你，你又何必如此呢？”孟阳女说：“如果我的亲子不爱我，出事了做母亲的一定会给予帮助，不是亲生的就不去管他，这跟一般的母亲有什么区别。他们的父亲把孩子交给我，我就要象亲生的妈妈一样对待他们，是妈妈就一定要爱自己的孩子。否则怎么可以在世上立足。”接着孟阳女继续为后子起诉。孟阳女爱前妻子胜过亲生子的事，顿时在京都大梁传开。魏王称赞孟阳女的嘉行美德，赦免二子，严整法制，尊封她为“慈母”。从此五个后子都开始喜欢孟阳女了，在慈母的严格教诲下，八子先后拜为大夫、将军，成为国家栋梁。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【鲁义姑】</span>据汉刘向《列女传·鲁义姑娣》载，春秋时齐攻鲁，至郊，见一妇人抱子携侄而行，军且及，妇人弃子抱侄而走，被视为义举。后以“鲁义姑”泛指秉德好义的妇女。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【孺慕】</span>《礼记·檀弓下》：“有子与子游立，见孺子慕者，有子谓子游曰：‘予壹不知夫丧之踊也，予欲去之久矣，情在于斯，其是也夫。’”郑玄注：“丧之踊，犹孺子之号慕。”后谓对父母的哀悼、悼念为“孺慕”。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

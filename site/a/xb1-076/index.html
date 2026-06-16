@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周伯遒居士书 · 印光法师文钞</title>
+<meta name="description" content="手书，于日前接到，近日人事颇烦，故迟迟其复。幸汝一家仍然照旧修持，实为欣慰。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-076/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周伯遒居士书 · 印光法师文钞">
+<meta property="og:description" content="手书，于日前接到，近日人事颇烦，故迟迟其复。幸汝一家仍然照旧修持，实为欣慰。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-076/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复周伯遒居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书，于日前接到，近日人事颇烦，故迟迟其复。幸汝一家仍然照旧修持，实为欣慰。</p><p class="p-trans">你的信，于几天前收到，因为近来人情俗事比较烦多，所以迟迟才给你回信。幸好你一家人仍然照旧修持，实在是很欣慰。</p></div>
+<div class="para-pair"><p class="p-orig">年来灾祸频仍，实可寒心，总因人心愈坏所致。新生机，皆为救急之要方，然此事不常有。今为常有之事，特设一法，祈常为传布，其利无穷。</p><p class="p-trans">一年来灾祸频频发生，著实让人寒心，这些总归都是因为人心愈来愈坏所导致的。《新生机》里面，都是救急的要方，然而这些事不常常有。现在为常会发生的灾祸事，特别设立一个方法，请常常传播流布，其利益是无穷的。</p></div>
+<div class="para-pair"><p class="p-orig">现今是一大患难世道，无论富贵贫贱，老幼男女，均当念南无阿弥陀佛，及念南无观世音菩萨圣号，以作预防灾祸之据。</p><p class="p-trans">现今是一个大患难的世道，无论富贵贫贱，老幼男女，都应当念“南无阿弥陀佛”，以及念“南无观世音菩萨”圣号，作为预防灾祸的依靠。</p></div>
+<div class="para-pair"><p class="p-orig">凡刀兵，水火，瘟蝗，旱涝，土匪，强盗及诸意外之祸，并怨业病，怨家相逢等，若能志诚念佛及观世音，决定能逢凶化吉。即定业所致，亦可减轻，不至过于酷烈。</p><p class="p-trans">凡是遇到刀兵、水火、瘟疫、蝗灾、旱涝、土匪、强盗以及各种意外的灾祸，怨业病、怨家相逢等情况，如果能够志诚念佛以及念观世音菩萨圣号，决定能够逢凶化吉。即使是定业所致，不可避免，也可以减轻，不至于过份残酷惨烈。</p></div>
+<div class="para-pair"><p class="p-orig">此等祸，是不间富贵贫贱者。而富贵人，或比贫贱人为尤甚，固不可以其富贵而忽之，以其贫贱而仍之，不一为预计也。</p><p class="p-trans">这些灾祸，是不因富贵贫贱而有所区别的。而且富贵人，或许比贫贱人，更为惨痛，因此不可因为富贵就忽视念佛，因为贫贱才想起来念佛，而不预先来计划防范。</p></div>
+<div class="para-pair"><p class="p-orig">又念佛之法，于人之生与死，均有利益。世独知临终助念之益，而不知临产劝念之益，致许多母子受无量苦，或致殒命，无可救法。</p><p class="p-trans">还有，念佛之法，对于一个人的生和死，都有利益。世人只知道临终助念的利益，却不知道临产生孩子劝念的利益，致使许多母子受无量痛苦，或导致死亡，而没有挽救的办法。</p></div>
+<div class="para-pair"><p class="p-orig">女人能从小常念佛，及观音圣号，后来决无产难之苦。或一受孕即念，或将产三四月前即念，或临产始念，均得安然而生。</p><p class="p-trans">女人能够从小常常念佛，以及念观世音菩萨圣号，将来决定没有产难的痛苦。或者一怀孕就念，或者将要临产前三、四个月就念，或者临产才开始念，都可以安然而生。</p></div>
+<div class="para-pair"><p class="p-orig">若难产之极，将及殒命，肯念南无观世音菩萨，决定立刻即安然而生。切不可谓此时裸露不净，念之恐有罪过。</p><p class="p-trans">如果极度难产，快要丧命之时，肯念“南无观世音菩萨”，决定立刻就安然而生。千万不要认为，这个时候裸露不净，念了恐怕会有罪过。</p></div>
+<div class="para-pair"><p class="p-orig">须知观音菩萨，大慈大悲，寻声救苦。譬如儿女堕于水火圊厕之中，呼父母以求救，父母决不以彼衣服不整齐，身体不洁净，而弃之不救。</p><p class="p-trans">必须知道观世音菩萨，大慈大悲，寻声救苦。譬如儿女堕在水火、厕所之中，呼喊父母来救援，父母绝不会因为儿女的衣服不整齐、身体不洁净，而弃之不救。</p></div>
+<div class="para-pair"><p class="p-orig">菩萨救众生之心，深切于世之父母爱儿女之心，奚啻百千万亿恒河沙倍。是以临产之妇，能朗念菩萨名号者，为极灵极效之最上妙法。不但无罪过，且令彼母子，同得种大善根。</p><p class="p-trans">菩萨救度众生的心，深切超过了世间父母疼爱儿女的心，何止百千万亿恒河沙倍。所以临产的妇女，能够大声念菩萨名号，是极灵验、极有效的最上妙法。不但没有罪过，而且令她们母子二人，共同种下大善根。</p></div>
+<div class="para-pair"><p class="p-orig">此义系释迦佛于药师经中所说，非不慧杜撰。凡有念者，无不安然而生。近来难产者甚多，一因宿世恶业，一因现生不知节欲所致。然菩萨救苦，固不计彼之若何为因，而平等救之。</p><p class="p-trans">这个义理是释迦牟尼佛在《药师经》中所说，不是我杜撰出来的。凡有念菩萨圣号的产妇，没有不安然而生的。近来难产的人很多，一是因为宿世恶业，一是因现生不知道节欲所导致。然而菩萨救苦，肯定不会计较她的苦是什么原因造成的，而是平等来救度。</p></div>
+<div class="para-pair"><p class="p-orig">平常念佛，虽行住坐卧都可念，然睡时，只可心中默念，不可出声。若或睡醒，衣冠尚未整齐，手脸尚未洗漱，及洗澡，抽解，及至秽污不洁之处，只可心中默念，不宜出声。</p><p class="p-trans">平常念佛，虽然行住坐卧都可以念。然而睡觉的时候，只可在心中默念，不可出声念。如果睡醒了，衣冠还没有穿戴整齐，手脸还没有洗漱干净，以及洗澡，上厕所，还有到秽污不洁的地方，只可在心中默念，不宜出声念。</p></div>
+<div class="para-pair"><p class="p-orig">此种时处，默念功德，与平时相同。出声则于仪式不合。至临产决定要出声朗念，不可心中默念，以默念感应力小。又此时用力送儿出，心中默念，或致闭气受病。不但产妇要朗念，在旁照应人，均须朗念。即家中在别屋人，亦可为此产妇念。</p><p class="p-trans">这个时候、这种地方，默念的功德，与平时相同。出声念，对于仪式就不符合了。到了临产时，决定要出声大念，不可在心中默念，因为默念的感应力小。而且，这个时候，要用力将婴儿送出，心中默念，或许会导致闭气受病。不但产妇要大声念，在旁边照应的人，都必须大声念。就是家里在其他房间的人，也可以为这个产妇念。</p></div>
+<div class="para-pair"><p class="p-orig">此法若能传布，世间永无生产之苦，及因生产而母子两亡之苦。知佛法普利一切，佛为大慈悲父母，天中之天，圣中之圣者，以普利一切众生之大菩提心，所得圆满成就故也。</p><p class="p-trans">这个方法如果能够传播流布，世间就会永远没有生孩子的痛苦，以及因为生孩子而母子两亡的痛苦。须知佛法普遍利益一切，佛是大慈悲父母，天中之天，圣中之圣，那是因为佛依靠普利一切众生的大菩提心，取得了圆满成就的缘故！</p></div>
+<div class="para-pair"><p class="p-orig">世有倡高调者，厌闻因果报应之事，及与勤劳修持之法，只以一切皆空，一切不著为护身符。而不知已著于一切皆空，一切不著，便非一切皆空一切不著之意。</p><p class="p-trans">世间有唱高调的人，不喜欢听到因果报应的事情，以及勤劳修持的方法，只以“一切皆空，一切不著”作为护身符。而不知道他已经住著在“一切皆空，一切不著”上了，就不是“一切皆空，一切不著”的真意了。</p></div>
+<div class="para-pair"><p class="p-orig">况彼借此以遮懒惰懈怠之迹，不以真修为事，唯以空谈争高。待至业报已熟，阎老当以最上供养，敬此一切不著一切皆空之人。于斯时也，不知尚能皆空不著与否。</p><p class="p-trans">何况他是借这个话来掩饰懒惰懈怠的行迹，不以真修为事，只是用空谈争论高低。等到他业报成熟，阎王老爷当以最上供养，敬献给这些“一切不著，一切皆空”的人。在这个时候，不知还能不能“一切皆空，一切不著”呢？</p></div>
+<div class="para-pair"><p class="p-orig">吾人当于此等人，敬而远之，以免同彼受阎老之最上供养恭敬也。</p><p class="p-trans">我们应当对于这些人，敬而远之，以免同他们一样，受阎王老爷的最上供养恭敬啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【年来】</span>近年以来或一年以来。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【频仍】</span>接连多次。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

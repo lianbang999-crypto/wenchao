@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书一 · 印光法师文钞</title>
+<meta name="description" content="光去年以料理刻经事，故于七月廿六日下山往扬州。顺便至沪苏金陵，至九月初五由扬回沪。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-228/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书一 · 印光法师文钞">
+<meta property="og:description" content="光去年以料理刻经事，故于七月廿六日下山往扬州。顺便至沪苏金陵，至九月初五由扬回沪。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-228/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光去年以料理刻经事，故于七月廿六日下山往扬州。顺便至沪苏金陵，至九月初五由扬回沪。</p><p class="p-trans">我在去年因为处理刻经的事，所以在七月二十六日，下普陀山前往扬州。顺便到上海、苏州、南京，到了九月初五，由扬州回到上海。</p></div>
+<div class="para-pair"><p class="p-orig">友人邀以往杭，由杭回沪。以缩小排印安士书故，又耽搁数日，至廿四日方到法雨。见阁下所寄七月廿六七二函，并坛经，天乐鸣空二书。</p><p class="p-trans">友人邀请我去杭州，由杭州回到上海。因为缩小排印《安士全书》的缘故，又耽搁了几天，到了二十四日，才回到法雨寺。见到阁下所寄七月二十六、二十七日的二封信，以及《坛经》，《天乐鸣空》二本书。</p></div>
+<div class="para-pair"><p class="p-orig">以月余未在山，外间信札颇多，一时不能遍复。至十月初三日复阁下书，又寄商务书馆所印文钞五部，新刻刻藏缘起一本，作一包付邮，谅已寄到贵府矣。</p><p class="p-trans">因为一个多月，没有在普陀山，外面的信件很多，一时不能全部回复。到了十月初三日，才回复阁下的信，又寄上商务书馆所印的《文钞》五部，新刻的《刻藏缘起》一本，作一包邮寄，想必已经寄到贵府了。</p></div>
+<div class="para-pair"><p class="p-orig">安士全书，为天下古今善书中冠。光绪七年张凤篪先生之尊人溥斋先生名守恩者，刻于扬州藏经院。其板笔画过细，故未经刷多少，而字迹模糊，兼之错讹甚多。</p><p class="p-trans">《安士全书》，是天下古今善书中最好的。光绪七年（1881年）张凤篪先生的父亲，溥斋先生张守恩，刻于扬州藏经院。这个木刻板的笔画过于细小，所以没经过多少次印刷，字迹便模糊了，加上错讹的地方很多。</p></div>
+<div class="para-pair"><p class="p-orig">光十余年前，早欲另刻，为之详校。至七年得友人刘芹浦出资，故其志方满，八年始刻成出书。一二年来，刷二三千部。</p><p class="p-trans">我在十多年前，早就想要另外刻印，为这本书做了仔细的校定。到了民国七年，得到友人刘芹浦出资，这个志愿方才圆满。民国八年，才刻成出书。一二年来，印刷了二三千部。</p></div>
+<div class="para-pair"><p class="p-orig">去秋友人以世道人心陷溺已极，以故天灾人祸，频频降作，劝光缩小排印安士全书，普遍流布，以为挽回之计。光遂不揣浅陋，为之提倡。</p><p class="p-trans">去年秋天，友人因为世道人心已陷溺到极点，所以天灾人祸，频频发生，劝我缩成小字排印《安土全书》，普遍流布，来作为挽回劫运的方法。我于是不顾浅陋，为此提倡。</p></div>
+<div class="para-pair"><p class="p-orig">蒙政商各界赞助，至腊月计已有二万部之承任。十七日接到重庆佛学社章程，知佛源老法师被官绅推出，于长安寺弘扬法化。因致书源公，祈告当道，将安士书印万余部。</p><p class="p-trans">承蒙政商各界的赞助，到腊月，一共已有二万部的印资。十七日，接到重庆佛学社章程，知道佛源老法师被官府士绅推出，在长安寺弘扬法化。因此写信给佛源老和尚，请他转告当道官员士绅，将《安士全书》印一万多部。</p></div>
+<div class="para-pair"><p class="p-orig">川省各县各散百部，较在一处讲演，更为获益广溥。以此书浅深俱备，真俗并诠，深则见深，浅则见浅，断无一人不能领会，不得利益者。</p><p class="p-trans">四川省每个县，各分送一百部，比起在一个地方讲演，所获的利益更为广大。因为这本书浅理深义全都俱备，真谛俗谛一并诠释，深根的人，见到深理；浅根的人，见到浅理，绝对没有一人不能领会，不能得到利益的。</p></div>
+<div class="para-pair"><p class="p-orig">又恐渝地一处，或以费巨，难以全任，又为阁下致书。祈阁下告之成都当道官绅，协成共举，则八九千元不至吃力矣。</p><p class="p-trans">又恐怕重庆这个地方，或许因为费用巨大，难以全部任资助印，又给阁下写信。请阁下告知成都执政的官员士绅，协助成就共襄胜举，那么八、九千元，就不至于吃力了。</p></div>
+<div class="para-pair"><p class="p-orig">今正月初七接到片香集，以冗务甚烦，略为翻阅少分，遂置之。至十九日方接阁下寄片香集之函，方知阁下已在重庆学社。</p><p class="p-trans">今年正月初七，接到了《片香集》，因为杂务烦琐，大略翻阅了少部分，于是便放下了。到了十九日，方才接到阁下寄来《片香集》的信，才知道阁下已经在重庆佛学社。</p></div>
+<div class="para-pair"><p class="p-orig">所言八月已出门，则光十月之函与书，当在家中，并腊月之函，当并要来一阅。光之此举，法颇严明，绝无弊窦。</p><p class="p-trans">你说八月已经出门，那么我十月写的信与寄的书，应当已在你家中，还有腊月的信，应当一并要来看一看。我的这个举动，方法比较严明，绝对没有弊病和漏洞。</p></div>
+<div class="para-pair"><p class="p-orig">倘阁下不以光之狂悖，祈与首长言之，祈其设法广布，亦未始非国民之福。即不能每县百部，减数亦无所妨，详观章程办法自悉，此不备书。</p><p class="p-trans">倘若阁下不认为我狂妄悖谬，请对领导者说明，请他想办法广泛流布，也未尝不是国民的福祉。即使不能每县一百部，减少数量也无妨，请详细观看章程办法，自然知道，此处不再多说。</p></div>
+<div class="para-pair"><p class="p-orig">片香集既欲令名人质证，以祈流通，似不宜一本转致。光目力不给，不能多看，当即寄徐蔚如（名文霨）。至于李证刚居士（名翊灼），宜另寄一本。</p><p class="p-trans">《片香集》既然想要令名人来核实验证，期望流通，似乎不应该只用一本展转传看。我的视力不好，不能多看，立即寄给徐蔚如（名文霨）。至于李证刚居士（名翊灼），应该另外再寄一本。</p></div>
+<div class="para-pair"><p class="p-orig">证刚未与光通信，其住处光知之，在江西南昌府松柏巷刘园临川李宅即是。刘洙源文理甚深，观张君行状，不胜感佩。</p><p class="p-trans">李证刚没有与我通过信，他的住处我知道，是在：江西省南昌府松柏巷刘园临川李宅。刘洙源的文理很深，看张君的生平事迹，非常感动钦佩。</p></div>
+<div class="para-pair"><p class="p-orig">川中既有高人，又为提倡，实为川民之幸，亦属法道之幸。至于弘法一事，当观时机。当国家太平，人心淳善时，宜多分依实际正弘。</p><p class="p-trans">四川既然有高人，又为之提倡，实在是四川人民的幸运，也属于法道的幸运。至于弘法这件事，应当观察时机。在国家太平，人心淳善的时候，应该大部分依照实际情况，正式弘化。</p></div>
+<div class="para-pair"><p class="p-orig">当此惨无天日之世代，当先以因果报应，生死轮回等，化其刚强，旁攻侧激，动其良心。知所法戒之后，再用正弘，方为唯一无二之道。（元月廿一）</p><p class="p-trans">在这惨无天日的时代，应当先以因果报应，生死轮回等事理，化导民众的刚强个性，旁攻侧击，触动民众的良心。知道有所禁戒之后，再用正式弘化，方才是独一无二的方法。（元月二十一日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【张凤篪居士】</span>张钰居士，字凤篪，广西人(待考)。因父母皆参学禅宗，八岁即有入处。前清时，随父宦游，后为某县令主幕。有寡妇受欺于族，讼涉冤诬，某令因受赂，拟曲断。鞠审次，士坐内室，愤然不平，以手击桌厉声曰：“天下有此等冤屈事，岂神明所许哉!”言甫毕，天际忽起霹雳，击断公堂梁木。令惊悸木然，冤赖以白。从此终生无疾言怒色。常云：“学般若菩萨，不可妄动嗔心。”旋出任川南某县令（待考），有仁政。一日坐堂审案，吏报夷人反，兵已临南门。士曰：“无恐，我已有却敌策矣。”即亲出率勇卒与夷人战，败之，追逐数十里。众返城，而士犹坐堂问案未辍，人惊为神。自显神通后，不肯留任，即辞官遁去。
+晚年，隐于蜀之新都桂湖畔，茅屋三椽，破釜啜粥，优游卒岁。新都距成都四十里，常徒步晋省，访诸禅人。一日暮归，出成都北门，过毗河，河阔甚，误堕水中。及旦，有舟过，见河中有人，顶出水面，从容而动。亟拯之，见是居士，手持念珠，口喃喃宣佛号不辍，询之：“何以在水中?”曰：“不知也!我惟觉仍在坦途中行耳!”有法国神父某，慕名访之，与论义，折服甚。一日，某神父携西药“杀虫剂”一瓶过士，曰：“服之必戕命。”士曰：“有是哉?我愿尝之。”坚阻不顾，饮尽一瓶，谈笑自若，唯略感倦容，移时如故。神父惊异赞叹久之。民国肇建，士喜甚，趋成都，行市中，左右顾盼，中途即洒泪而返。曰：“今后世将大变，苍生苦甚！我必再来也！”不一月果殁。其著作，成都志古堂有刻板。
+抗战初，其长公子任成都高等法院首席检察官。当访问士之遗事，曰：“家父在日，视一切众生如子女，唯视我辈子女如一切众生，他不悉也。”又闻士于其长子，不惟钟爱，且常敬之如对大宾。人询其故，曰：“其为我祖再来身也，不敢以异世易之。”……摘自南怀瑾《禅海蠡测》</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【尊人】</span>对父母的敬称。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【刘洙源】</span>（1875-1950）四川中江县人。名复礼，字洙源，别号离明。前清拔贡，北京经科大学毕业。长于文学，通达三礼，历任四川高级师范、成都大学、四川大学文学教授。早岁精唯识，曾著唯识学纲要数万言。私淑永明延寿，于民国二十一年（1932）著有宗镜录大科判；晚耽禅悦，不喜著作，惟存讲稿数篇为弟子所传钞。三十八年农历三月于德阳孝泉延祚寺剃发，受三坛大戒，法名昌宗。未久，应邀讲楞严经，并传净土观法。后返中江，驻锡白云寺，专研戒律。三十九年示寂，世寿七十六。著作除上记外，另有宗镜录细科判约五卷、宗镜录读法约十余卷。另纂集大智度论之法相而成性宗法藏三册，然未出版。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【行状】</span>汉朝称“状”，元代以后称之“行状”或“行述”（也谓之“事略”）。叙述死者世系、生平、生卒年月、籍贯、事迹的文章，常由死者门生故吏或亲友撰述，留作撰写墓志或史官提供立传的依据。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【法戒】</span>楷式和鉴戒。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

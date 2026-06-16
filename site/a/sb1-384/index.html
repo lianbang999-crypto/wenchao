@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复师康居士书 · 印光法师文钞</title>
+<meta name="description" content="光年时已过，应酬日多。上十年来，忙于此种外务，自己功夫殊难专精。今若不另行一路，则将忙死。于人无益，于己有损。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-384/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复师康居士书 · 印光法师文钞">
+<meta property="og:description" content="光年时已过，应酬日多。上十年来，忙于此种外务，自己功夫殊难专精。今若不另行一路，则将忙死。于人无益，于己有损。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-384/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复师康居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光年时已过，应酬日多。上十年来，忙于此种外务，自己功夫殊难专精。今若不另行一路，则将忙死。于人无益，于己有损。</p><p class="p-trans">我的年纪已大，应酬一天天增多。十几年来，忙于这些外务，致使自己的功夫很难专精。现今如果不走另外一条路，就会忙死。这样对他人无益，且对自己有损。</p></div>
+<div class="para-pair"><p class="p-orig">现所有文钞，安士书，观音颂，寿康宝鉴，嘉言录，弥陀经白话注，感应篇直讲，各纸板，均打四付。</p><p class="p-trans">现将所有的《文钞》、《安士全书》、《观音颂》、《寿康宝鉴》、《嘉言录》、《弥陀经白话注》、《感应篇直讲》，各书的纸板，都打四付。</p></div>
+<div class="para-pair"><p class="p-orig">又有报纸本小本头学佛浅说，助觉管见，初机学佛摘要合编，江慎修杀生放生现报录，莲池等戒杀放生文合编，格言联璧（此张瑞曾托排者），家庭宝鉴，纪文达笔记摘要，此七种，亦打三四付纸板。</p><p class="p-trans">另外，有报纸本小本头的《学佛浅说•助觉管见•初机学佛摘要合编》、《江慎修杀生放生现报录•莲池大师戒杀放生文合编》、《格言联璧》（这是张瑞曾委托排印的）、《家庭宝鉴》、《纪文达笔记摘要》，这七种，也打三、四付纸板。</p></div>
+<div class="para-pair"><p class="p-orig">此后凡有发心印者，直向大中书局，或漕河泾监狱署接洽。以故亦不必光再为料理。</p><p class="p-trans">以后凡是有发心印书的人，直接与大中书局，或者漕河泾监狱署接洽。所以也不必要我再来料理。</p></div>
+<div class="para-pair"><p class="p-orig">汝之所说，过于高大。佛法犹如大海，谁能一口吞尽，一踏到底。但按自己天姿而为修持。以此自行，复以此化他。纵未能圆彻诸法，只要能依此信愿念佛，求生西方法门，有何所欠。</p><p class="p-trans">你所说的，过于高大。佛法犹如大海，谁能一口吞尽，一脚踏到底。只要按自己的天分姿质来修持。以此自己行持，再以此教化他人。纵然未能圆满彻究一切诸法，只要能够依照这个信愿念佛，求生西方的法门，又有什么欠缺的呢？</p></div>
+<div class="para-pair"><p class="p-orig">而作此种难而又难之说话，以又欲长请益也。文钞等不足以为训，净土经论语录，均不能依止乎。</p><p class="p-trans">而你说这种难而又难的话，还想要长期请教。难道《文钞》等不足以作为训导，净土经论语录，均不能依止吗？</p></div>
+<div class="para-pair"><p class="p-orig">所要紧之遗嘱，在于保身。汝之一身，关系全家。汝父已往外国去，汝家内尚有母亲，二弟小妹皆依靠汝。汝若不知慎重守身，则全家危殆矣。</p><p class="p-trans">对你来说要紧的遗嘱，在于保全自身。你的一身，关系到全家。你父亲已经前往国外，你家中还有母亲，二弟小妹都要依靠你。你如果不知道慎重保守自身，那么全家就危险了。</p></div>
+<div class="para-pair"><p class="p-orig">论汝性格，亦断不至淫荡，然于夫妇之际，亦当有节，不可任意贪快乐。于寿康宝鉴之忌讳，当详审记忆。亦令师昭详阅，庶可齐眉偕老，同得寿康。</p><p class="p-trans">论你的性格，也断不至于淫荡，然而于夫妇之间，也应当有所节制，不可任意贪图快乐。对于《寿康宝鉴》中所说的忌讳，应当详细审察记忆。也让师昭详细阅读这本书，这样才能夫妻二人齐眉偕老，同得长寿健康。</p></div>
+<div class="para-pair"><p class="p-orig">彼世之青年孀居，与娶未久而妻亡者，十有八九，皆由不自慎重以送命耳。岂一一皆属生来本命如是耶。</p><p class="p-trans">世上那些年轻守寡，与娶妻不久就妻子死亡的，十有八九，都是由于不自我慎重节制以致送命的。哪里一一都是天生本来命该如此呢？</p></div>
+<div class="para-pair"><p class="p-orig">罗济同与某商人及某商之子，使彼详阅寿康宝鉴，已熟知忌讳，岂有即死之事乎。光是以悯彼无知，特辑此书（已印五万本）。恐汝以为我必不至犯邪淫，何必看此，则便成大错。</p><p class="p-trans">罗济同与某商人以及某商人之子，假使他们详细阅读了《寿康宝鉴》，已经熟知其中的忌讳，哪里会发生很快死亡的事情呢？我是因为怜悯他们的无知，特地编辑这本书（已经印了五万本）。恐怕你以为自己肯定不至于犯邪淫，何必看这本书，便成为大错了。</p></div>
+<div class="para-pair"><p class="p-orig">同治皇帝亦因病未复原，而行房事以死，此事实为守身淑世之要道。古者皇帝尚令遒人以木铎巡于道路（即街道村巷），而报告之。</p><p class="p-trans">同治皇帝也是因为生病没有复原，就行房事而死的，这件事实在是守身济世的要道。古时候，皇帝尚且派使臣用木铃巡告在街道村巷上（道路：就是街道村巷），来警告这件事（要节制夫妇房事）。</p></div>
+<div class="para-pair"><p class="p-orig">今则父母亦不与儿女说。待其犯忌讳而死，则只知叫号，岂不大可哀哉。</p><p class="p-trans">如今则是父母也不对儿女说这件事。等儿女犯了忌讳而死，就只知道哀叫哭号，岂不是很可悲吗？</p></div>
+<div class="para-pair"><p class="p-orig">我与汝父有深交，汝母与汝夫妇又皈依，直将汝夫妇作儿女看，故有此络索也。其余善知识，断断不言此事。</p><p class="p-trans">我与你父亲有深交，你母亲与你夫妇二人又都皈依了，我将你夫妇二人当作儿女看待，所以说了这些啰嗦的话。其余的善知识，绝对不会说到这些事。</p></div>
+<div class="para-pair"><p class="p-orig">不知汝以光言为是与否也。余则有经典在，固不须光说也。（己巳年二月初二）</p><p class="p-trans">不知道你认为我的话对不对呢？其余，有经典在，固然不须要我多说。（己巳年&lt;1929年&gt; 二月初二）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【请益】</span>要求老师再讲一遍。《礼记·曲礼上》：“请业则起，请益则起。”郑玄注：“益，谓受说不了，欲师更明说之。”泛指向人请教。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【遒人】</span>古代帝王派出去了解民情的使臣。《礼记·月令》：“季春，先雷三日，遒人以木铎巡于道路曰，雷将发声，有不戒其容止者，生子不备，必有凶灾。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

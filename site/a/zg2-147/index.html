@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>沈翊仙居士脱难记 · 印光法师文钞</title>
+<meta name="description" content="佛视一切众生，犹如一子，爱无偏党，常欲度脱。以一切众生，皆有佛性，皆堪作佛，故虽绝无信心之一阐提辈，亦无一念弃舍之心。机缘若到，自可生信归依，依教修持，以迄断惑证真，了生脱死也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-147/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="沈翊仙居士脱难记 · 印光法师文钞">
+<meta property="og:description" content="佛视一切众生，犹如一子，爱无偏党，常欲度脱。以一切众生，皆有佛性，皆堪作佛，故虽绝无信心之一阐提辈，亦无一念弃舍之心。机缘若到，自可生信归依，依教修持，以迄断惑证真，了生脱死也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-147/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">沈翊仙居士脱难记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛视一切众生，犹如一子，爱无偏党，常欲度脱。以一切众生，皆有佛性，皆堪作佛，故虽绝无信心之一阐提辈，亦无一念弃舍之心。机缘若到，自可生信归依，依教修持，以迄断惑证真，了生脱死也。</p><p class="p-trans">佛看待一切众生，犹如同一个儿子，慈爱没有偏私，恒常想要度脱他们。因为一切众生，都有佛性，都能作佛。所以即使是绝对不信佛法的一阐提种性，佛也没有一丝弃舍他们的心念。机缘如果成熟，他们自然可以生起信心归依佛法，依教修持，以至于断惑证真，了生脱死。</p></div>
+<div class="para-pair"><p class="p-orig">故楞严经云，十方如来，怜念众生，如母忆子，若子逃逝，虽忆何为，子若忆母，如母忆时，母子历生不相违远。若众生心，忆佛念佛，现前当来，必定见佛，去佛不远，如染香人，身有香气。</p><p class="p-trans">所以《楞严经》中说：“十方如来，怜念众生，如母忆子，若子逃逝，虽忆何为，子若忆母，如母忆时，母子历生不相违远。若众生心，忆佛念佛，现前当来，必定见佛，去佛不远，如染香人，身有香气。”</p></div>
+<div class="para-pair"><p class="p-orig">法华经云，若有无量百千万亿众生，受诸苦恼，闻是观世音菩萨，一心称名，观世音菩萨即时观其音声，皆得解脱。又云，是观世音菩萨，于怖畏急难之中，能施无畏，是故此娑婆世界，皆号之为施无畏者。</p><p class="p-trans">《法华经》中说：“若有无量百千万亿众生，受诸苦恼，闻是观世音菩萨，一心称名，观世音菩萨即时观其音声，皆得解脱。”又说：“是观世音菩萨，于怖畏急难之中，能施无畏，是故此娑婆世界，皆号之为施无畏者。”</p></div>
+<div class="para-pair"><p class="p-orig">良由众生之心，与佛菩萨之心，觌体无异，但以众生迷昧，背觉合尘，致使彼此间隔，莫蒙覆被。倘背尘合觉，一心称名，自然感应道交，垂慈加被，虽遇险难，亦得无虞也。</p><p class="p-trans">实在是由于众生的心，与佛菩萨的心，全体没有差异。只因为众生迷惑昏昧，背离觉性，合于六尘，导致（自己的心和佛菩萨的心）彼此间隔，不能蒙受泽被。如果众生背离六尘，合于觉性，一心称念佛菩萨名号，自然能够感应道交，感得佛菩萨垂慈加被，即使遇到险难，也会平安无忧啊。</p></div>
+<div class="para-pair"><p class="p-orig">安徽沈翊仙居士，向不知佛，丙寅春，金陵起金光明法会，遂入会随喜，读金光明最胜王经，觉义理精妙，愿常受持。因请一部，日诵一卷，十日一周，周而复始。</p><p class="p-trans">安徽沈翊仙居士，向来不知佛法。丙寅年（1926年）春天，南京发起金光明法会，居士于是入会随喜。读了《金光明最胜王经》，觉得义理精妙，发愿常时受持。因此请了一部回去，每天读诵一卷，十天诵满一遍，周而复始。</p></div>
+<div class="para-pair"><p class="p-orig">夏间从军赣地，军事纷繁，不能诵经，但默念阿弥陀佛及观世音菩萨圣号而已。八月赣战失利，全军覆没，唯彼一人，得全身命。方知佛慈广大，感应无差，奈芸芸众生，不但不生信向，反从而毁谤之，致令无缘大慈，同体大悲，莫由亲受。喻如杲日当空，普照万邦，彼戴盆者，莫见光相，可不哀哉。</p><p class="p-trans">夏天居士到江西从军，军中事务繁杂，不能诵经，只是默念阿弥陀佛，以及观世音菩萨圣号。八月江西战场失利，全军覆没，只有他一个人存活下来。居士这才知道佛的慈悲广大，感应丝毫无差，无奈的是芸芸众生，不但不生起信心向往，反而加以毁谤。致使佛菩萨的无缘大慈，同体大悲，自己得不到受用。譬如太阳当空，普照万国，而那些头顶大盆的人，却见不到阳光，能不悲哀吗。</p></div>
+<div class="para-pair"><p class="p-orig">后得印光文钞，乃知净土法门，为一切若凡若圣，现生即得了生脱死之道。仗佛慈力，横超三界，校彼仗自力断惑证真竖出者，其难易天渊悬殊也。</p><p class="p-trans">后来居士得到了《印光法师文钞》，才知道净土法门，是一切凡夫圣人，现生就能了生脱死的大道。仗佛慈力横超三界，相比于那依仗自力，断惑证真，竖出三界的通途法门，难易程度天差地别。</p></div>
+<div class="para-pair"><p class="p-orig">冬初归家，特辟静室，供佛及观音圣像，晨夕礼念，以期消除宿业，增长善根，生为三业清净之人，没登九品宝莲之位。</p><p class="p-trans">初冬时居士回到家中，特地开辟了一间静室，供奉佛像和观音圣像，早晚礼拜念诵，期望消除宿业，增长善根，在生时作三业清净之人，去世后登九品宝莲之位。</p></div>
+<div class="para-pair"><p class="p-orig">以书致光，祈为作记，因将佛菩萨平等大慈大悲，愍念众生，及众生向背不同，致有得受覆被与否之义，书以赠之。</p><p class="p-trans">沈居士写信给我，祈请我写篇文章记述（他战场脱难的事）。特此将佛菩萨平等大慈大悲愍念众生，以及众生因为归向背离的不同，从而导致是否蒙受庇佑的道理，写下来赠给他。</p></div>
+<div class="para-pair"><p class="p-orig">以冀无信心者，即生正信，有信心者，益加修持。务必敦笃伦常，恪尽己分，克己复礼，闲邪存诚，众善奉行，诸恶莫作，生为圣贤之徒侣，没入如来之封疆。</p><p class="p-trans">希望没有信心的人，即刻生起正信；有信心的人，更加努力修持。务必要敦笃伦常、恪尽己分（即敦伦尽分），克己复礼（战胜己私、还归真理），闲邪存诚（防止邪念、心怀诚敬），众善奉行，诸恶莫作，在生时成圣成贤，去世后往生佛国。</p></div>
+<div class="para-pair"><p class="p-orig">倘人各如是，则争竞消灭，礼让兴行，天下太平，人民安乐矣，何幸如之。愿见闻者，咸谛信而力行焉。</p><p class="p-trans">倘若每个人都能如此，那就竞争消灭、礼让盛行、天下太平、人民安乐了，这是何等的庆幸啊。祈愿见者闻者，全都深信不疑，努力奉行啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【一阐提】</span>梵语一阐提，华言信不具。谓此人拨无因果，颠倒邪见，不信现在未来业报，不亲善友知识，不听诸佛所说教诫，当堕地狱，无有出期。如世重病，终难治也。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【无虞】</span>没有忧患，太平无事。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【金光明最胜王经】</span>（经名）十卷，唐义净译。为金光明三译中最后出而最完备者。常略名最胜王经.唐慧沼有疏十卷。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

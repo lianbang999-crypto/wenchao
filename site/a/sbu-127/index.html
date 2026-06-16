@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>潮阳佛教居士林缘起序 · 印光法师文钞</title>
+<meta name="description" content="如来圣教，法门无量。随依一法，以大菩提心修之，皆可以了生死，成佛道。然于修而未证之前，不无难易疾迟之别。求其至圆至顿，最简最易，契理契机，即修即性，三根普被，利钝全收，为律教禅密诸宗之归宿，作人天凡圣证真之捷径者，无如信愿念佛，求生西方一法也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-127/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="潮阳佛教居士林缘起序 · 印光法师文钞">
+<meta property="og:description" content="如来圣教，法门无量。随依一法，以大菩提心修之，皆可以了生死，成佛道。然于修而未证之前，不无难易疾迟之别。求其至圆至顿，最简最易，契理契机，即修即性，三根普被，利钝全收，为律教禅密诸宗之归宿，作人天凡圣证真之捷径者，无如信愿念佛，求生西方一法也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-127/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 序跋疏</div>
+      <h1 class="art-title">潮阳佛教居士林缘起序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来圣教，法门无量。随依一法，以大菩提心修之，皆可以了生死，成佛道。然于修而未证之前，不无难易疾迟之别。求其至圆至顿，最简最易，契理契机，即修即性，三根普被，利钝全收，为律教禅密诸宗之归宿，作人天凡圣证真之捷径者，无如信愿念佛，求生西方一法也。</p><p class="p-trans">如来圣教，法门无量。无论依止哪一个法门，以大菩提心来修持，都能了生死，成佛道。然而在修学尚未证果之前，并不是没有难易、快慢的差别。想要寻找其中最圆满顿超，最简单容易，契理契机，即修德为性德，三根普被，利钝全收，为律、教、禅、密诸宗的归宿，作人天凡圣证真的捷径法门，就只有信愿念佛求生西方这一法门了。</p></div>
+<div class="para-pair"><p class="p-orig">良以一切法门，皆仗自力。念佛法门，兼仗佛力。仗自力非烦惑断尽，不能超出三界。仗佛力若信愿真切，即可高登九莲。当今之人，欲于现生了生死大事者，舍此一法，则绝无希望矣。</p><p class="p-trans">确实是因为一切（通途）法门，都依仗自力。念佛（特别）法门，兼仗佛力。依仗自力，必须烦恼惑业断尽，否则不能超出三界。依仗佛力，倘若信愿真切，就可高登九品莲台。现在修行的人，想在现生了脱生死这一大事的，舍弃净土念佛法门，就绝对没有希望了。</p></div>
+<div class="para-pair"><p class="p-orig">须知净土法门，法法圆通。如皓月丽天，川川俱现。水银堕地，颗颗皆圆。不独于格物致知，穷理尽性，觉世牖民，治国安邦者，有大裨益。即士农工商，欲发展其事业。老幼男女，欲消灭其疾苦者，无不随感而应，遂心满愿。</p><p class="p-trans">要知道净土法门，法法圆通。如皓月当空，川川江河水全都显现出它的影子。又如水银落在地上，颗颗水银珠都是圆的。不只对格物（格除私欲）致知（致显良知），穷理尽性（注1），唤醒世道人心、导民向善，治国安邦的人，有大利益。即使是士、农、工、商，想要发展自己的事业。老幼男女，想要消灭自己的疾苦，也无不随感而应，让大家称心满愿。</p></div>
+<div class="para-pair"><p class="p-orig">今则人心陷溺，世乱已极，废经废伦，废孝免耻，实行兽化。种种邪说暴行，极力提倡。若不挽救，则人道或几乎熄。于是各处有心之士，群起而提倡佛法。明三世之因果，显六道之轮回。示娑婆之浊恶，表极乐之严净。以期斯世之人，克己复礼，生入圣贤之域。了生脱死，没归极乐之邦。</p><p class="p-trans">现今人心深深地陷入错误的泥淖而无法自拔，世道已坏乱到了极点，废儒经、废伦理，废孝道、无羞耻，实行畜生的教化。种种邪说暴行，极力地加以提倡。如果不加以挽救，那么人道几乎将要熄灭了。于是各地有心之士，群起而来提倡佛法。阐明三世因果，显示六道轮回。开示娑婆的浊恶，表明极乐的严净。以期这个世界的人们，克己复礼（战胜己私、还归真理），在生成为圣贤之人。了生脱死，临终回归极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">潮阳郭慧泰，慧海，范智超，周慧实，姚克初，萧耻凡，仰宣，林慎之等诸居士，于县城内立一佛教居士林。每月朔望，及佛菩萨诞期，集众念佛。午后念佛毕，请通文理缁素，演说居尘学道，在野护国，敦伦尽分，闲邪存诚，诸恶莫作，众善奉行之道。真为生死，发菩提心，信愿念佛，求生西方，普令同伦超出苦海之法。</p><p class="p-trans">广东潮阳郭慧泰、慧海、范智超、周慧实、姚克初、萧耻凡、仰宣、林慎之等各位居士，在县城内成立了一个佛教居士林。每个月的初一、十五，以及佛菩萨诞期时候，集合大众念佛。午后念佛完毕，请通达文理的僧俗，演说居于红尘、修学佛道，不居官位、护国安邦，敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬）的大道；还有真为生死，发菩提心，信愿念佛，求生西方，普令同伦超出苦海的方法。</p></div>
+<div class="para-pair"><p class="p-orig">俾一切人知人皆可以为尧舜，人皆可以作佛之所以然。实行孝弟忠信，礼义廉耻之八德，力究格致诚正，修齐治平之八事。则于一切时，一切处，皆为希圣学佛之事。此实不居位而护国救民，不现形而移风易俗之大方便法门。</p><p class="p-trans">使一切人知道：人人都可以成为尧舜，人人都可以作佛的所以然。实行孝弟忠信，礼义廉耻的八德，力究格物、致知、诚意、正心、修身、齐家、治国、平天下这八事。那么在一切时，一切处，都是效法圣人，学习佛法的事。这实在是不居官位而护国救民，不现形迹而移风易俗的大方便法门。</p></div>
+<div class="para-pair"><p class="p-orig">林友咸以林既成立，当以大义普示来哲，庶若见若闻，咸发信心，共弘斯道，自可天下太平，人民安乐矣。函祈不慧作序，乃书此以塞其责云。</p><p class="p-trans">林友们因为居士林既已成立，应当将成立居士林的大义，让后来的学人们都能知晓，使得看到和听到的人，全都发起信心，共同弘扬这个法道，自然可以天下太平，人民安乐了。写信请我作序，于是便写下这些以塞其责。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【穷理尽性】</span>原指彻底推究事物的道理，透彻了解人类的天性。后泛指穷究事理。《易·说卦》：“穷理尽性以至于命。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

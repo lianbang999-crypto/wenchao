@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复包右武居士书一 · 印光法师文钞</title>
+<meta name="description" content="适接手书，不胜感愧。印光一粥饭僧耳。法门中事，概不能知。唯于净土，颇欲自他同生。以故凡有缁素见访，皆以此奉答。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-094/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复包右武居士书一 · 印光法师文钞">
+<meta property="og:description" content="适接手书，不胜感愧。印光一粥饭僧耳。法门中事，概不能知。唯于净土，颇欲自他同生。以故凡有缁素见访，皆以此奉答。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-094/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复包右武居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">适接手书，不胜感愧。印光一粥饭僧耳。法门中事，概不能知。唯于净土，颇欲自他同生。以故凡有缁素见访，皆以此奉答。</p><p class="p-trans">刚刚接到你的书信，非常的感慨与惭愧。我只是一个粥饭僧人罢了。法门当中的事情，一概不知道。唯独对于西方极乐净土，很想要自己与他人都能够共同往生到那里。所以凡是有僧俗二界的人来询问我，我都以求生西方这件事来回答他们。</p></div>
+<div class="para-pair"><p class="p-orig">徐蔚如居士，以其于禅净界限，分析明了。并佛力自力之难易得失，及主敬存诚等种种肤论，皆于初机稍有利益。以故虽文词鄙拙，亦不见弃，而三四次排印流布。以期有志了生死者，同皆纳此刍议而已。</p><p class="p-trans">徐蔚如居士，因为《文钞》对于禅宗与净土的界限，分析的明白了然。靠佛力、靠自力的困难容易、得失，以及主敬存诚等种种的浅论，都是对于初学佛人稍有些利益。所以虽然我的文章词句鄙陋笨拙，也不嫌弃，而三次四次的来排版印刷流通。以期有志向了脱生死的人，一同来接纳这些浅陋的议论罢了。</p></div>
+<div class="para-pair"><p class="p-orig">然以残羹馊饭，陈于饱餐王膳者前，则恶心发呕矣。况敢注经乎哉。阁下既不以酸臭见弃，敬赠芜钞一部。此去年蔚如令商务印书馆另编排印，今年所出者。彼书馆恐售不出，故止印二千。出书后，尚未发行，已经售尽。</p><p class="p-trans">然而把剩下的菜汤和发酸的饭菜，摆在吃饱国宴的人面前，就会使人恶心想吐了。哪里敢说是注解经书呢？您既然不因为我的文章酸臭而嫌弃，就赠送给您一部《印光法师文钞》。这是去年徐蔚如居士令商务印书馆另外编辑排印，今年出版的。商务印书馆恐怕卖不出去，所以只印了二千套。书印出来后，还没有发行，就已经销售完了。</p></div>
+<div class="para-pair"><p class="p-orig">虽已留板，但以彼馆急于时尚之新书，至今未印二板。一二年来，亦有知友劝光刻板，光拟待商务书馆编好出书后再刻，则可省心力。去岁北地大荒，各善士设法筹捐。</p><p class="p-trans">虽然已经留下了底板，但是因为商务印书馆要急着排印时尚的新书，到现在没有印第二板。这一二年来，也有知道情况的好友劝我再刻板流通，我打算等到商务印书馆编好出版后再刻，就可以省心省力了。去年北方有大饥荒，各地善心人士都在筹款募捐。</p></div>
+<div class="para-pair"><p class="p-orig">光遂尽数将刻款助赈矣。两次共五百元。如以为有益初机，肯为刊布，未始非利人之一端也。</p><p class="p-trans">我于是将刻书的钱全部都拿来赈灾了。二次共有五百元。如果你认为《文钞》有益于初学佛人，肯发心来刊印流通，也未尝不是利益他人的一种方式啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【刍议】</span>浅陋的议论。多用作自谦之辞。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【一端】</span>指事情的一点或一个方面。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

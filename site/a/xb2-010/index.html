@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>念佛三昧宝王论疏序（民十九年） · 印光法师文钞</title>
+<meta name="description" content="肇法师云，天地之内，宇宙之间，中有一宝，秘在形山。此语且约未悟未证者言。实则此宝包括太虚，竖穷横遍，亘古亘今，时常显露。正所谓时时示时人，时人自不识，可不哀哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-010/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="念佛三昧宝王论疏序（民十九年） · 印光法师文钞">
+<meta property="og:description" content="肇法师云，天地之内，宇宙之间，中有一宝，秘在形山。此语且约未悟未证者言。实则此宝包括太虚，竖穷横遍，亘古亘今，时常显露。正所谓时时示时人，时人自不识，可不哀哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-010/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">念佛三昧宝王论疏序（民十九年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">肇法师云，天地之内，宇宙之间，中有一宝，秘在形山。此语且约未悟未证者言。实则此宝包括太虚，竖穷横遍，亘古亘今，时常显露。正所谓时时示时人，时人自不识，可不哀哉。</p><p class="p-trans">晋朝僧肇法师在《宝藏论》中说：“天地之内，宇宙之间，中有一宝，秘密藏在四大五蕴中。”这句话虽然是针对没有开悟、证果的人来说的。但实际上，这个宝，包括太虚（整个宇宙），竖穷三际、横遍十方，贯穿古今，时常显露。正所谓：时时示时人，时人自不识，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">唯我释迦世尊一人，亲得受用。余诸众生，经劫至劫，仗此宝威神之力，起惑造业，轮回六道，了无出期。犹如盲人，亲登宝山，不但不得受用，反更受彼所伤。</p><p class="p-trans">唯我释迦世尊一人，亲身得到受用。其余的一切众生，却经劫至劫，仗此宝的威神之力，起惑造业，轮回六道，没有出离之期。犹如盲人，亲身登上宝山，不但不得受用，反而更会受到此宝的伤害。</p></div>
+<div class="para-pair"><p class="p-orig">由是世尊，随顺机宜，为之开示。俾彼各各就路还家，于彼六根，六尘，六识，七大中，随于何境，谛审观察，以期亲见此宝。</p><p class="p-trans">因此世尊，随顺机宜，为众生开示。使众生各各就路还家，让众生从六根、六尘、六识、七大中，随意取任何一个境界，来仔细地辨认、观察，希望众生能亲身见到此宝。</p></div>
+<div class="para-pair"><p class="p-orig">然具般若之智照，直下蕴空厄尽者，虽则大有其人，而非末世钝根众生所能希冀。于是遂开一特别法门，以期上中下根，同于现生，得其实益。令以深信切愿，专念阿弥陀佛圣号。都摄六根，净念相继，久而久之，即众生业识心，成如来秘密藏。则由三昧宝，证实相宝，方知此宝，遍满法界，复以此宝，普施一切。</p><p class="p-trans">但是，具备了般若的智照，能直下照见五蕴皆空、度尽一切苦厄的，虽然大有人在，却不是我们末法时期的钝根众生，能有希望得到的。于是释迦牟尼佛就开设了一个特别法门，希望可以让上中下三根的众生，都能在现生，得到真实利益。让众生凭借深信切愿，专念阿弥陀佛圣号，都摄六根，净念相继。久而久之，就能不离众生的业识心，成就如来的秘密藏。那么，就可以通过三昧宝，证得实相宝，此时方才知道，这个宝遍满法界，并再用这个宝，普施一切众生。</p></div>
+<div class="para-pair"><p class="p-orig">以故自佛开此法门以来，一切菩萨祖师善知识，悉皆遵行此法。以其具足自他二力，较彼专仗自力者，其难易奚啻天渊之别。</p><p class="p-trans">因此，自佛开启这个法门以来，一切菩萨、祖师、善知识，全都遵行这个法门。因为此净土法门，具足自他二力，比起那些专门依仗自力的法门，修行的难易程度，何止是天渊之别啊！</p></div>
+<div class="para-pair"><p class="p-orig">唐飞锡法师，驻锡终南紫阁山草堂寺，大宏净化。特撰念佛三昧宝王论，令一切四众，圆念三世佛，专注于西方阿弥陀佛。</p><p class="p-trans">唐朝飞锡法师，驻锡在终南紫阁山草堂寺，大力宏扬净土教化。还特别撰写了《念佛三昧宝王论》，让一切四众，圆念三世诸佛，专门称念西方极乐世界阿弥陀佛。</p></div>
+<div class="para-pair"><p class="p-orig">以若不念未来佛，则不能发大菩提心，折伏慢幢，于一切境，犹有凡圣情见，何由圆离四相，彻证一真。若见一切众生皆是佛，其心自无凡圣情见可得，方得究竟断除烦恼，究竟圆证自心也。</p><p class="p-trans">因为，如果不念未来佛，就不能发大菩提心，折伏我慢高幢，对于一切境界，就仍然会有凡圣的情见，没有办法圆满远离人、我、众生、寿者四相，彻证诸法实相。如果见一切众生都是佛，修行者心中，就自然没有凡圣的情见可得，这样才能究竟断除烦恼、究竟圆证自心。</p></div>
+<div class="para-pair"><p class="p-orig">若不圆念过现诸佛，则其念阿弥陀佛之心，或有拘局，不能圆满普遍。故令念佛人，即一佛而圆念三世诸佛。虽圆念三世诸佛，而必专致力于阿弥陀佛，庶可念佛之心，横遍十方，竖穷三际。即此念佛之心，与彼十方三世一切诸佛之心，无时不相契合也。</p><p class="p-trans">如果不圆念过去、现在诸佛，那么修行者念阿弥陀佛的心，就可能会有局限，不能圆满普遍。所以让念佛人，念一佛时，就要圆念三世一切诸佛。虽然圆念三世一切诸佛，但是必须通过专念阿弥陀佛来实现。从而让自己念佛的心，横遍十方、竖穷三际；使自己这个念佛的心，与十方三世一切诸佛的心，时时刻刻互相契合。</p></div>
+<div class="para-pair"><p class="p-orig">此论义意深广，若不注释，或有觌面错过，及不悉理事之虞。幸台宗谛闲老法师，不惜精力，特为著疏，俾若文若义，悉得明了，其为利益，何可名焉。</p><p class="p-trans">这部论的意义深广，如果不加以注释，就可能会有使人当面错过，以及不能明白理与事的忧虑。庆幸天台宗的谛闲老法师，不惜精力，特地为这部论著疏，使得文字义理，全都得以明了，这个利益，如何能用言语来表达呢？</p></div>
+<div class="para-pair"><p class="p-orig">志净居士，久修净业，利人心切，发心印五千部，以施修净诸缁素。祈余标示论之大致，俾阅者从先得其指归。</p><p class="p-trans">志净居士，久修净业，利益他人的心迫切，发心印五千部，来布施给修习净业的各位出家、在家佛弟子。还祈请我标示这部论的大要，使得读者在读这部论之初，就明白其宗旨。</p></div>
+<div class="para-pair"><p class="p-orig">因不揣固陋，略摅所蕴。使知净土法门，乃即浅即深，即权即实之法门。一切法门，河沙妙义，无不从此法界流，无不还归此法界。</p><p class="p-trans">因此，就不考虑自己的浅陋，大略表达了其中的义理。使大众知道净土法门，是即浅即深，即权即实的特别法门。一切法门，恒河沙数的妙义，无不从此法界流出，无不还归至此法界。</p></div>
+<div class="para-pair"><p class="p-orig">以其为十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门故也。倘以此语为失当者，请质之劝发十大愿王，导归极乐之普贤菩萨焉。</p><p class="p-trans">因为净土法门，是十方三世一切诸佛，上成佛道，下化众生，从初始到最终的总持法门的缘故。倘若认为，这些话不妥当，就请去质问劝发十大愿王、导归极乐的普贤菩萨吧。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【肇法师】</span>僧肇（384-414）东晋僧。长安人，俗姓张。家贫，以佣书为业，遂得博览经史。初好老庄，及读维摩经而感悟，遂出家。善方等大乘经典，兼通三藏，冠年名声已震关中。才思幽玄，精于谈论。闻鸠摩罗什羁留凉土，前往从之，罗什叹为奇才。及至姚秦破凉，乃随侍罗什入长安。禀姚兴之命，与僧睿等于逍遥园详定经论，解悟弥深，被称为解空第一。弘始六年（404），罗什译出大品般若经，师乃撰般若无知论呈之，颇受鸠摩罗什及慧远之赞赏。后又撰述不真空论、物不迁论、涅槃无名论、注维摩诘经十卷等。惜英龄遽折，义熙十年示寂，年仅三十一。今有学者推定其出生年应为东晋孝武帝宁康二年（374）。后人收集僧肇所著之宗本义、物不迁、不真空、般若无知、涅槃无名诸论，题名为“肇论”行世。此外，僧肇之著述，相传又有宝藏论一卷、维摩诘经序、长阿含经序、百论序等。然宝藏论实为后人所伪托，并非僧肇所撰。其他有关僧肇之著作，出三藏记集卷十二、东域传灯目录、增补诸宗章疏录、法华玄论卷二等，有不同记载。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【云门一宝】</span>（公案）“云门示众云：乾坤之内，宇宙之间，中有一宝。秘在形山，拈灯笼向佛殿里，将三门来灯笼上。”此据肇公之宝藏论广照空有品：“夫天地之内，宇宙之间，中有一宝，秘在形山。识物灵照，内外空然，寂寞难见，其号玄玄。”拈灯笼已下为云门之注脚。形山为四大五蕴，灯笼譬一宝之明照，佛殿里比形山之空虚，三门即山门。见碧岩六十二则，种电钞七，从容录九十二则。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【飞锡】</span>唐代僧。籍贯、生卒年皆不详。神气高邈，识量绝群，通晓儒墨，善于文笔。尝究律仪，后修密教，多所亲证。代宗永泰元年（765），奉诏与良贲等十六人参与北天竺大译经家不空之译场。于大明宫内译有仁王护国般若经二卷、密严经三卷等，颇受重视。又曾著念佛三昧宝王论三卷，宣扬净土。另著有无上深妙禅门传集法宝、誓往生净土文各一卷。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【驻锡】</span>僧人出行，以锡杖自随，故称僧人住止为驻锡。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【指归】</span>主旨；意向。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

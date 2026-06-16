@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>赠佛光社社友大会颂词 · 印光法师文钞</title>
+<meta name="description" content="我佛拈花，迦叶微笑。道本在心，无他奥妙。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-292/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="赠佛光社社友大会颂词 · 印光法师文钞">
+<meta property="og:description" content="我佛拈花，迦叶微笑。道本在心，无他奥妙。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-292/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">赠佛光社社友大会颂词</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">我佛拈花，迦叶微笑。道本在心，无他奥妙。</p><p class="p-trans">我佛在灵山会上拈花，迦叶尊者领悟微笑。佛道本在心中，没有其他奥妙。</p></div>
+<div class="para-pair"><p class="p-orig">人同此心，心同此理。道心惟微，虽微实一。</p><p class="p-trans">人同此心，心同此理。道心精微，虽然精微，实际是同一个。</p></div>
+<div class="para-pair"><p class="p-orig">人生有欲，欲生于境。前境若无，念亦不起。</p><p class="p-trans">人生有各种欲望，欲望对境而生起。前境如果没有了，念头也就不会生起。</p></div>
+<div class="para-pair"><p class="p-orig">众欲纷乘，道心乃蔽。蔽之谓迷，觉则不迷。</p><p class="p-trans">众多欲望纷呈，道心就被蒙蔽了。蒙蔽了称之为迷，觉悟了称之为不迷。</p></div>
+<div class="para-pair"><p class="p-orig">迷曰无明，无明曰痴。贪心瞋心，俱生于是。</p><p class="p-trans">迷称为无明，无明称为痴毒。贪心和瞋心，都生于此。</p></div>
+<div class="para-pair"><p class="p-orig">因惑造业，是谓恶因。既种恶因，苦果随之。</p><p class="p-trans">因惑造业，这称为恶因。既然种下恶因，苦果就会随之而生。</p></div>
+<div class="para-pair"><p class="p-orig">佛悯众生，发无缘慈。说戒定慧，治贪瞋痴。</p><p class="p-trans">佛怜悯众生，发无缘大慈。宣说戒定慧，对治贪瞋痴。</p></div>
+<div class="para-pair"><p class="p-orig">因戒生定，因定发慧。慧为般若，照破无明。</p><p class="p-trans">因戒生定，因定发慧。慧是般若，能照破无明愚痴。</p></div>
+<div class="para-pair"><p class="p-orig">如斩妖剑，如暗室灯。由苦出乐，由凡入圣。</p><p class="p-trans">如斩妖宝剑，如暗室明灯。由痛苦出离得到快乐，由凡夫进入圣位。</p></div>
+<div class="para-pair"><p class="p-orig">莫不由此，同登大乘。惟依般若，乃波罗蜜。</p><p class="p-trans">没有不是由这戒定慧三学，同登大乘之路。只有依靠般若智慧，才是真正的到彼岸。</p></div>
+<div class="para-pair"><p class="p-orig">心经金刚，皆明此义。心经深行，在观自在。</p><p class="p-trans">《心经》、《金刚经》，都阐明了这个义理。《心经》的深行法门，在观照自在无碍。</p></div>
+<div class="para-pair"><p class="p-orig">明心见性，五蕴何在。此乃理修，功在于解。</p><p class="p-trans">明心见性了，五蕴何在。这是从理性上修，功夫在于悟解。</p></div>
+<div class="para-pair"><p class="p-orig">金刚一经，说空四相。真理既显，四相皆妄。</p><p class="p-trans">《金刚经》，宣说无人、无我、无众生、无寿者四相。真理显明之后，四相全为虚妄。</p></div>
+<div class="para-pair"><p class="p-orig">书写读诵，为人解说。经中赞叹，福德无量。</p><p class="p-trans">书写读诵这部经，为他人解说。《金刚经》中赞叹，福德无量。</p></div>
+<div class="para-pair"><p class="p-orig">此何以故，自觉觉他。展转饶益，无有限量。</p><p class="p-trans">这是为什么呢？因为自己觉悟，觉悟他人。辗转互相饶益，没有限量。</p></div>
+<div class="para-pair"><p class="p-orig">此乃事修，功在于行。心佛众生，三无差别。</p><p class="p-trans">这是事相修持，功夫在于实行。心、佛、众生，三者没有差别。</p></div>
+<div class="para-pair"><p class="p-orig">道同心同，是故无别。禹稷颜子，易地皆然。</p><p class="p-trans">法道相同，心体相同，所以没有差别。大禹、后稷、颜回，他们互换所处的位置，而做人处世的原则都是一样的。</p></div>
+<div class="para-pair"><p class="p-orig">道同心同，所以皆然。若无众生，佛法不立。若不利人，何能自利。</p><p class="p-trans">法道相同，心体相同，所以都是如此。如果没有众生，佛法就不成立。如果不利益他人，如何能够利益自己。</p></div>
+<div class="para-pair"><p class="p-orig">颜子三月不违仁，禹稷本此救饥溺。</p><p class="p-trans">颜回可以在长时间内，不违背仁德，大禹、后稷本着这个悲心来救济人民的饥饿沉溺。</p></div>
+<div class="para-pair"><p class="p-orig">众生个个有佛性，十恶十念生净土。</p><p class="p-trans">众生个个都有佛性，即使十恶众生临终十念佛号也能往生净土。</p></div>
+<div class="para-pair"><p class="p-orig">大千世界同一心，是心成佛心作根。</p><p class="p-trans">大千世界同此一心，就是这个心成佛，这个心作根本。</p></div>
+<div class="para-pair"><p class="p-orig">无量光兮无量寿，灵山至今未散会。</p><p class="p-trans">无量光啊！无量寿！灵山法会至今还没有散。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【禹稷颜子，易地皆然】</span>《孟子·离娄》：“禹稷颜回同道。禹思天下有溺者，由己溺之也；稷思天下有饥者，由己饥之也。是以如是其急也。禹稷颜回，易地则皆然。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【颜子三月不违仁】</span>《雍也·第六》第七章：子曰：“回也，其心三月不违仁，其余则日月至焉而已矣。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

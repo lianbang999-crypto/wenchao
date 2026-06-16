@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与周法利童子书 · 印光法师文钞</title>
+<meta name="description" content="人之一生成败，皆在年幼时栽培与因循所致，汝已成童，宜知好歹，万不可学时派。当学孝，学弟，学忠厚诚实。当此轻年，精力强壮，宜努力读书。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-092/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与周法利童子书 · 印光法师文钞">
+<meta property="og:description" content="人之一生成败，皆在年幼时栽培与因循所致，汝已成童，宜知好歹，万不可学时派。当学孝，学弟，学忠厚诚实。当此轻年，精力强壮，宜努力读书。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-092/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">与周法利童子书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人之一生成败，皆在年幼时栽培与因循所致，汝已成童，宜知好歹，万不可学时派。当学孝，学弟，学忠厚诚实。当此轻年，精力强壮，宜努力读书。</p><p class="p-trans">人这一生的成败，都在于幼年时的教育培养。你已经长成童，要知道是非好歹，千万不要赶时髦。要学孝悌、学忠厚诚实。要趁现在年轻，精力旺盛，努力读书。</p></div>
+<div class="para-pair"><p class="p-orig">凡过读之书，当思其书所说之事，是要人照此而行，不是读了就算数了。书中所说，或不易领会。而阴骘文，感应篇等皆直说，好领会。宜常读常思，改过迁善。</p><p class="p-trans">凡是读过的书，要想想书中所说的事，是要让人们按照去做的，不是读了就过去。书中的内容，有的不太容易明白。而《阴骘文》、《感应篇》等语言比较直白，易于领会。要常读一读，想一想，不断改正错误，及时行善。</p></div>
+<div class="para-pair"><p class="p-orig">于暇时尤宜念阿弥陀佛，及观世音菩萨，以期消除业障，增长福慧，切勿以为辛苦。古语云，少壮不努力，老大徒伤悲。此时若错过光阴，后来纵然努力，亦难成就。以年时已过，记性退半，所学皆用力多而得效少耳。</p><p class="p-trans">在闲暇的时候，尤其应该念阿弥陀佛、观世音菩萨，以此来消除业障，增长福慧，千万不要认为这是很辛苦的事。古语说：“少壮不努力，老大徒伤悲。”如果现在错过了学习的好时光，以后纵然再努力也很难有成就了。因为年龄大了以后，记忆力会减退，再学东西只能是事倍功半。</p></div>
+<div class="para-pair"><p class="p-orig">第一先要做好人。见贤思齐焉，见不贤而内自省焉。第二要知因果报应。一举一动，勿任情任意。</p><p class="p-trans">第一先要做好人。见到有德行的人就向他看齐，见到没有德行的人就反省自身的缺点。第二要知道因果报应。一举一动，不要随心所欲，恣意纵情。</p></div>
+<div class="para-pair"><p class="p-orig">必须想及此事，于我，于亲，于人有利益否。不但做事如此，即居心动念，亦当如此。起好心，即有功德。起坏心，即有罪过。</p><p class="p-trans">必须想到这件事对于自己、对于亲人、对于别人是否有好处。不但做事要这样审查，就是起心动念也要这样观照。起好心，就有功德，起坏心，就有罪过。</p></div>
+<div class="para-pair"><p class="p-orig">要想得好报，必须存好心，说好话，行好事，有利于人物，无害于自他方可。倘不如此，何好报之可得。譬如以丑像置之于明镜之前，决定莫有好像现出。所现者，与此丑像了无有异。</p><p class="p-trans">要想得好报，必须存好心，说好话，行好事，有利于别人，同时也不伤害自己他人才可以。如果不这样，怎么会得到好报呢？比如把一个很丑的像放在镜子前面，镜子里决定不会出现好的像。镜中所出现的，与这个丑像一模一样。</p></div>
+<div class="para-pair"><p class="p-orig">汝果深知此义，则将来必能做一正人君子，令一切人皆尊重而爱慕之也。祈审慎思察，则幸甚幸甚。</p><p class="p-trans">你真的明白了这个道理，将来必定能做一个正人君子，使所有人都尊重爱慕。希望你能认真地思考，那就非常庆幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【栽培】</span>1.种植培养。2.比喻培养、造就人才。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【因循】</span>疏懒；怠惰；闲散。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【成童】</span>年龄稍大的儿童。或谓八岁以上，或谓十五岁以上，说法不一。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【轻年】</span>青年；年轻。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【见贤思齐焉，见不贤而内自省焉】</span>《论语·里仁》子曰：“见贤思齐焉，见不贤而内自省焉。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【幸甚】</span>1.表示非常庆幸或幸运。2.书信中习用语。有表示殷切希望之意。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>戒堂小食榜 · 印光法师文钞</title>
+<meta name="description" content="三德圆融之体，因戒以彰。四大幻成之身，依食而住。趣证菩提，须全戒度。精修道品，必赖食轮。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-192/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="戒堂小食榜 · 印光法师文钞">
+<meta property="og:description" content="三德圆融之体，因戒以彰。四大幻成之身，依食而住。趣证菩提，须全戒度。精修道品，必赖食轮。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-192/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">戒堂小食榜</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">三德圆融之体，因戒以彰。四大幻成之身，依食而住。趣证菩提，须全戒度。精修道品，必赖食轮。</p><p class="p-trans">三德圆融的心体，因持戒而得以彰显。四大幻成的色身，依饮食而得以安住。要证得菩提，就必须圆满六度中的持戒波罗蜜；精修道品，必定要依赖每天的饮食。</p></div>
+<div class="para-pair"><p class="p-orig">汝等既发无上道心，欲得三聚净戒。竭尽心力，投诚礼忏。堂外诸师，及诸护法，唯恐汝等身心疲劳，道业难以成办。于午食前，特设小食，以点汝心，令得安隐。</p><p class="p-trans">你们既然发起无上道心，想要受得三聚净戒。于是竭尽心力，在戒堂投诚礼拜忏悔。堂外的诸位师父，以及诸位护法居士，担心你们身心疲劳，道业难以成就。于是在午斋之前，特地施设了小食，来点你们的空腹，让你们得到安隐。</p></div>
+<div class="para-pair"><p class="p-orig">当知此食，体即禅悦。无生无灭，即色即空。同净名之香饭，惑消方消。乃华严之金刚，劫坏不坏。</p><p class="p-trans">应当知道这些食品，当体就是禅悦法喜。无生无灭，即色即空。等同于《佛说维摩诘经》中的香饭，烦惑消除之后，饭食才会消灭；乃是《华严经》中的金刚，时劫坏，金刚不坏。</p></div>
+<div class="para-pair"><p class="p-orig">汝等若能了知三轮体空，六尘即觉。则一念不生，十界消殒。食法心境，一一平等。如空合空，似水投水。消与不坏，打成一段。方可称为持净戒人，是则名曰能报恩者。</p><p class="p-trans">你们如果能够了知，能施、所施、施物三者当体即空，六尘即是妙真觉性。那么就一念不生，十法界消殒。饮食、戒法、内心、外境，一一平等。如同空与空相合，好似水投入到水中。（烦惑）消除与（菩提）不坏，打成一段（不二）。才可以称为守持净戒之人，这才名为能报佛恩的人。</p></div>
+<div class="para-pair"><p class="p-orig">否则粒米如山，何能消受。则将来之披毛戴角还，大有日在。汝等务各勉旃。</p><p class="p-trans">否则，施主一粒米，大如须弥山，如何能消受得起？那么将来（堕为畜生）披毛戴角来偿还，有的是时间。你们务必要各自勉励。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【三德】</span>法身德、般若德、解脱德。法身德是佛常住不灭的法性身无不周遍；般若德是佛的智慧无量无边；解脱德是佛所证得的最胜妙法，能够化度一切众生而自在无碍。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【三聚净戒】</span>摄律仪戒、摄善法戒、摄众生戒。摄律仪戒是遵守佛法不作诸恶；摄善法戒是奉行一切之善；摄众生戒是广修一切善法以利益众生。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【点心】</span>禅宗指斋食（昼食）前之小食。关于点心之义，据禅林象器笺饮啖门载，点心，点于空心也。即以食点空腹之义。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【禅悦】</span>入于禅定者，其心愉悦自适之谓。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

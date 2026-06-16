@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周子秀居士书 · 印光法师文钞</title>
+<meta name="description" content="接手书，不胜感愧。所言放生会之办法，足见慈心毅力。必须借此以普劝一切人戒杀护生，吃素念佛，方为大放生。并自己同伦，通皆放之于莲池法海中，俾永离生死苦，常享真常乐，方为放生之一大结果耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-199/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周子秀居士书 · 印光法师文钞">
+<meta property="og:description" content="接手书，不胜感愧。所言放生会之办法，足见慈心毅力。必须借此以普劝一切人戒杀护生，吃素念佛，方为大放生。并自己同伦，通皆放之于莲池法海中，俾永离生死苦，常享真常乐，方为放生之一大结果耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-199/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复周子秀居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，不胜感愧。所言放生会之办法，足见慈心毅力。必须借此以普劝一切人戒杀护生，吃素念佛，方为大放生。并自己同伦，通皆放之于莲池法海中，俾永离生死苦，常享真常乐，方为放生之一大结果耳。</p><p class="p-trans">接到信，非常感激惭愧。所说放生会的办法，足以见到你的慈心和毅力。必须借此来普劝一切人戒杀护生，吃素念佛，方才是大放生。并将自己的同伦，全都放到莲池法海中，使得大众永离生死苦，常享真常乐，方才是放生的一种最大结果。</p></div>
+<div class="para-pair"><p class="p-orig">初七日与伯遒书，并寄四包文钞，当已收到。所言晋苏先生之道德工夫，不禁令人神往。</p><p class="p-trans">初七日写给周伯遒的信，并寄四包《文钞》，应当已经收到了。所说晋苏先生的道德功夫，不禁令人神往。</p></div>
+<div class="para-pair"><p class="p-orig">虽然彼固以丹法为事者。观其自叙，谓得某先生之秘传。而某先生为上承六祖传法与俗人之真正法脉，此语乃一切外道之普通话。晋君倘真得佛法之实益，决不作此掩耳盗铃之语。</p><p class="p-trans">虽然他原本是以炼丹法作为事务的人。看他的自叙，说是得到某先生的秘传。而某先生是上承六祖传法给俗人的真正法脉，这句话是一切外道的普遍话。晋苏先生倘若真的得到了佛法的真实利益，绝对不会说这句掩耳盗铃的话。</p></div>
+<div class="para-pair"><p class="p-orig">阁下谓为诱引初机，然则除以炼丹性命双修外，便不能令初机入道耶。彼所修持，多主于佛法，所提倡多悖于佛法，是尚得为心口如一，言行相应之盛德君子乎。</p><p class="p-trans">阁下认为可以诱导初学之人，既然这样，那么除了以炼丹性命双修之外，就不能令初学之人入道了吗？他所修持的，大多以佛法为主，而所提倡的却大多违悖佛法，这还能称为心口如一、言行相应的盛德君子吗？</p></div>
+<div class="para-pair"><p class="p-orig">至复伍廷芳之结语，阁下以为明心工夫之证，实则借禅宗言句作护身符，而犹未得其禅宗。实为不知大彻大悟，是悟不是证。</p><p class="p-trans">至于回复伍廷芳信中的结束语，阁下认为是明心见性功夫的证明，实际上是借禅宗的言句作为护身符，却还没有得到禅的宗旨。实际上是不知道大彻大悟，是悟而不是证。</p></div>
+<div class="para-pair"><p class="p-orig">勿道悟则虚空粉碎，人法两忘，圣佛仙秩庸晋苏，均归于无何有之乡。即令证得虚空粉碎，人法双忘之理，仍圣佛仙秩庸晋苏觌体全彰，不相混滥。况悟则犹是生死凡夫，证则方可出离轮回。今人谁是悟者，况证乎。此如来所以大开净土法门，普令一切众生，同于现生了生脱死也。</p><p class="p-trans">不要说彻悟就会虚空粉碎，人法两忘，圣、佛、仙、秩庸（伍廷芳的号）、晋苏，都归于无何有之乡。即使让他证得虚空粉碎，人法双忘之理，仍然是圣、佛、仙、秩庸、晋苏，当体还是全部彰显，不相混滥。何况彻悟仍旧还是生死凡夫，彻证方才可以出离生死轮回。现今的人，谁是彻悟的人？何况是彻证的呢？这就是如来所以大开净土法门，普令一切众生，同在现生了生脱死的原因。</p></div>
+<div class="para-pair"><p class="p-orig">光昔受韩欧程朱之毒，而毁谤佛法者。晋苏乃借佛法张其丹家之门庭。又恐或不得实益，而密默依佛法修持，以自防其或失。</p><p class="p-trans">我过去受韩愈、欧阳修、二程（程颢、程颐）、朱熹辟佛的毒害，而毁谤佛法。晋苏是借佛法扩大他炼丹家的门庭。又恐怕或许得不到真实利益，因而暗中依照佛法来修持，以防自己的损失。</p></div>
+<div class="para-pair"><p class="p-orig">较迹则晋苏胜光多矣。然光既知佛法，决不作阴奉行而阳排斥之语。晋苏谓得六祖法传白衣之秘传，此语直扫灭六祖以后之诸大祖师。此其心，固不如光之直率无伪也。</p><p class="p-trans">比较外迹，那么晋苏先生超过我很多。然而我既然知道了佛法，就决不暗中奉行而表面却说排斥的话。晋苏认为得到了六祖法传白衣的秘传，这话直接扫灭六祖以后的诸大祖师。他这个心，就不如我的直率无伪了。</p></div>
+<div class="para-pair"><p class="p-orig">虽然，人各有所好，光岂强人以从我乎。但以有缘，不妨略一评论。如谓不然，请君大张彼道，遍布天下，亦所深愿而乐闻也。</p><p class="p-trans">虽然如此，人各有所好，我岂能勉强他人来顺从我呢？但因为有缘，不妨略加评论。如果认为不对，请你大张他的炼丹之道，遍布天下，也是我所深愿乐闻的。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【伍廷芳】</span>(1842-1922)，本名叙，字文爵，又名伍才，号秩庸，后改名廷芳。汉族，广东新会西墩人，清末民初杰出的外交家、法学家。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【仙秩】</span>仙官。秩，俸禄或品级。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【无何有之乡】</span>无何有：即无有。原指什么都没有的地方，后指虚幻的境界。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>赎迁西湖放生鱼募缘疏 · 印光法师文钞</title>
+<meta name="description" content="凡在生死轮回之中，悉皆随业受生。忽焉为人，忽焉为物。当其为人时，则以强陵弱，以众暴寡，不知栽培来福，任意造诸恶业。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-326/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="赎迁西湖放生鱼募缘疏 · 印光法师文钞">
+<meta property="og:description" content="凡在生死轮回之中，悉皆随业受生。忽焉为人，忽焉为物。当其为人时，则以强陵弱，以众暴寡，不知栽培来福，任意造诸恶业。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-326/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">赎迁西湖放生鱼募缘疏</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">凡在生死轮回之中，悉皆随业受生。忽焉为人，忽焉为物。当其为人时，则以强陵弱，以众暴寡，不知栽培来福，任意造诸恶业。</p><p class="p-trans">凡是在生死轮回之中的众生，全都是随业受生。一会儿成为人，一会儿成为其它动物。当他投生为人的时候，就以强陵弱，以多欺少，不知道栽培未来的福报，任意造作各种恶业。</p></div>
+<div class="para-pair"><p class="p-orig">及其宿福已尽，杀业已深，难免堕于异类。口不能言，心无智谋，身无技勇，只好任人割烹咀嚼。然推究其心，其贪生畏死之情，临危望救之念，惨凄何可名状。</p><p class="p-trans">等到他宿世的福报已经享尽，杀业已深，难免堕于畜类。口不能说，心无智谋，身无技艺勇力，只好任人宰割烹煮咀嚼。然而推究它的心，它贪生怕死之情，临危望救之念，悲惨凄凉，无法用语言来形容。</p></div>
+<div class="para-pair"><p class="p-orig">所以古之贤哲，多皆爱惜物命，不忍伤害。如子产蓄鱼，襄子放鸠，随侯济蛇，杨宝救雀，此皆本其不忍之心，以行救济之事。尚未知一切众生，皆有佛性，皆于未来，当得成佛。及从无量劫来，互为父母兄弟妻子眷属等义。</p><p class="p-trans">所以，古时的贤人智士，大多都爱惜动物的生命，不忍心伤害。如子产蓄鱼（注2），襄子放鸠（注3），随侯济蛇（注4），杨宝救雀（注5），这都是本着他的不忍之心，来实行救济之事。当时还不知道一切众生，皆有佛性，皆于未来，当得成佛。以及从无量劫来，互为父母、兄弟、妻子、眷属等义理。</p></div>
+<div class="para-pair"><p class="p-orig">迨至佛教东来，此义大明于世。是以仁人君子，为报恩故，为免劫故，倍复注意于戒杀放生，持斋茹素也。然有大多数未闻佛法者，习以为常，任意行杀，以期悦口。由是之故，酿成兵劫。</p><p class="p-trans">等到佛教东来，这些义理大明于世。所以仁人君子，为报恩的缘故，为免除杀劫的缘故，更加注意于戒杀放生，持斋吃素。然而有大多数没有听闻佛法的人，习以为常，任意杀害，以期取悦口腹。因此，酿成了刀兵劫。</p></div>
+<div class="para-pair"><p class="p-orig">试思兵劫之中，人被杀戮，与彼物类受宰割以充口腹者，相去几何。倘作此想，则杀彼身以悦我口之念，能不消灭乎。又我既贪生，彼岂爱死。我若一芒刺指，即难忍受。彼则脔割其身，心岂能甘。虽力不能敌，无可如何，其怨恨之心，固结莫解，生生世世，必为报复。</p><p class="p-trans">试想当今兵劫之中，人被杀害，与那些动物受到宰割来充口腹的，相差多少？倘若这样一想，那么杀害它身来取悦我口腹的念头，能不消灭吗？再有，我既然贪生，它哪里又喜欢死。我如果被一根芒刺刺到指头，就难以忍受。它们却被一刀一刀割去身肉，内心哪会甘愿。虽然力不能敌，无可奈何，而它的怨恨之心，固结不解，生生世世，必定要报复。</p></div>
+<div class="para-pair"><p class="p-orig">是以贤哲之士，欲令世人同息杀业，冀合乾父坤母，民胞物与之道，种种设法，买而放之，令尽天年。须知此举，重在救人，非单为救物也。以其冀人因见买放，不忍特杀。</p><p class="p-trans">所以贤哲之士，想令世人共同止息杀业，希望符合天父地母，民为同胞，物为同辈的大道，设想种种办法，买来放生，令它们享尽天年。必须知道这个举动，重点在救人，并不是单纯为救动物。因为这是希望他人因为看见有人买动物放生，自己也就不忍心再杀生。</p></div>
+<div class="para-pair"><p class="p-orig">既不忍杀，则怨对不结，而未来之杀劫可消，后世之福寿自永。此放生之究竟宗旨，真实利益也。不知者，每谓虚费钱财，了无所益。试设身处地，为当愿人放我，为当愿人杀而食我耶。</p><p class="p-trans">既然不忍心杀生，那就不结怨家对头，而未来的杀劫可以消除，后世的福寿自然永续。这是放生的究竟宗旨，真实利益所在。不知道的人，常常认为放生是浪费钱财，没有一点利益。试着设身处地想一想，是愿意他人放我一条生路，还是愿意他人杀我吃我呢？</p></div>
+<div class="para-pair"><p class="p-orig">杭州西湖，自宋真宗时，即为放生池。自后纵有废弛，不久即复。今政府以为湖鱼过多，致湖水昏浊，有碍卫生，拟标卖之，令彼渔人，一网打尽，以益民生。</p><p class="p-trans">杭州西湖，自宋真宗时代起，就是放生池。之后，纵然有废弛的时候，但不久就恢复了。现今政府因为湖里的鱼太多，导致湖水浑浊，有碍卫生，打算标价卖掉，令捕渔的人，一网打尽，来利益民生。</p></div>
+<div class="para-pair"><p class="p-orig">杭州上海各慈善大居士，不忍以历来放生之鱼，悉令复作食料。特派孙厚在居士来杭，恳求政府买而迁之他处。则于卫生放生，两俱适宜。</p><p class="p-trans">杭州上海各位慈善大居士，不忍心历来放生的鱼，又令它们全都成为食料。特地委派孙厚在居士来杭州，恳求政府买下来并迁移到其他地方。那么对于卫生、放生，两方面都适宜妥当。</p></div>
+<div class="para-pair"><p class="p-orig">政府准以八千圆承买，作三期交，即日交三千圆，明年阳历二月二十九，与四月十日，各交二千五百圆。迁移完竣，以六月三十日为限。承买正价八千，而数十顷湖，欲令迁尽，殊非易易。须雇许多渔船，日事打捞。又须人力挑运，而其经理监督者，每船当须几位。彼船资挑资，及日间食用所费，亦须数千。</p><p class="p-trans">政府批准用八千圆承包买断，分作三期交接，当天交三千圆，明年阳历二月二十九，与四月十日，各交二千五百圆。迁移完成，以六月三十日为期限。买下来的正价是八千元，而几十亩的湖鱼，想要迁移干净，实在不容易。必须雇许多渔船，每天打捞。还必须用人力挑运，而经理监督的人，每条船上也应当要几位。渔船与挑运的资费，以及每天吃用的经费，也须几千圆。</p></div>
+<div class="para-pair"><p class="p-orig">恳祈十方善信，随力随心，各出净资。俾彼待烹之辈，复得其所。诸大居士所愿圆成。其有宿具善根之人，见此义举，当悉爱惜物命，不忍杀伤。由此因缘，庶可消灭杀机，增长仁风。其为功德，何能名焉。</p><p class="p-trans">恳祈十方善信，随力随心，各出净资。使得那些待烹的鱼儿，再得到安适之所。诸位大居士的善愿圆满成就。其中有宿具善根之人，见到这个义举，当全都爱惜物命，不忍心杀伤。由此因缘，才可以消灭杀机，增长仁德之风。这个功德，如何能用语言表达呢？</p></div>
+<div class="para-pair"><p class="p-orig">将填沟壑老僧释印光，谨为无数量过去父母未来诸佛，至诚恳祷请命。若蒙慧察，则不异身受其救济也。谨疏。</p><p class="p-trans">将要往生的老僧释印光，慎重地为无量无数过去父母、未来诸佛，至诚恳切，祈祷请命。若蒙智慧鉴察，则不异于自身受到这种救济啊！慎重写下疏文。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【以众暴寡】</span>以人多势众的一帮去欺凌、迫害人少势弱的一方。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【子产畜鱼】</span>春秋时代郑国贤大夫，公孙侨，字子产。心地仁厚，孔子称赞他：“有仁爱之德古遗风，敬事长上，体恤百姓。”当时列国横争侵扰，而郑国能以保持内政稳定，民生安乐，首赖子产辅政有功。每当有人赠送活鱼给子产，子产从来不忍心，以享口腹，而使活生生的鱼受鼎俎烹割痛苦，总是命人把鱼畜养在池塘里，眼见鱼儿优游水中，浮沉其间，子产心胸畅适，不禁感叹地说：“得其所哉，得其所哉！”由此可见子产的仁德普及物类，不只是民吾同胞，事实已扩大到物类了。观察以上事迹，可知爱惜物命，放生善举，并不只佛教提倡，儒家圣贤君子，也是遵守奉行的。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【简子放鸠】</span>我国最兴盛的朝代是周朝，出了很多贤人，当时五霸强七雄出，那个时候的诸候，每年的正月元旦那天都要捉很多斑鸠来饮酒食啖，当时列国的赵简子于元旦的时候，就把斑鸠鸟全部买下来放生，有人就谏正他说：你这样定期于元旦，只一天放生的办法不彻底。赵简子听人谏正很有道理，即时下了命令禁止捉斑鸠鸟，彻底严禁任何人杀害，并且奖励放生。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【随侯济蛇】</span>随侯往齐国，路见一蛇，困于沙碛，首有血出，以杖挑放水中而去。后回至蛇所，蛇衔一珠向侯，侯不敢取。夜梦脚踏一蛇，惊觉，乃得双珠。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【杨宝救雀】</span>杨宝幼时，见黄雀为枭搏坠地，复为蝼蚁所困，取而畜诸笥中，给以黄花，痊乃放去。夜梦黄衣童子拜谢，赠玉环四枚，曰：“我王母使者，荷君济命，愿君子孙洁白，位列三公，亦如此环矣。”后四世贵显。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【民胞物与】</span>民为同胞，物为同类。泛指爱人和一切物类。宋·张载《西铭》：“民吾同胞，物吾与也。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【填沟壑】</span>谓填尸于沟壑。指死。多用作婉辞。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

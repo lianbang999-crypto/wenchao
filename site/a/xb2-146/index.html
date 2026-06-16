@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>示周余志莲女居士法语（民二十年） · 印光法师文钞</title>
+<meta name="description" content="汝已七十多岁，不久就要死了。现在就要把一切事，通安顿好。心里头除过念佛外，别无一件事挂牵，则临终时，方可无挂无碍。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-146/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="示周余志莲女居士法语（民二十年） · 印光法师文钞">
+<meta property="og:description" content="汝已七十多岁，不久就要死了。现在就要把一切事，通安顿好。心里头除过念佛外，别无一件事挂牵，则临终时，方可无挂无碍。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-146/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">示周余志莲女居士法语（民二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝已七十多岁，不久就要死了。现在就要把一切事，通安顿好。心里头除过念佛外，别无一件事挂牵，则临终时，方可无挂无碍。</p><p class="p-trans">你已经七十多岁，不久就要死了。现在就要把一切事，全都安顿好。心里头除了念佛之外，别无一件事牵挂，那么临终时，才能无挂无碍地往生净土。</p></div>
+<div class="para-pair"><p class="p-orig">若现在还是样样放不下，看不开，则临命终时，所有贪恋衣服，首饰，房屋，子孙之心，通通现前，如何能够往生西方。</p><p class="p-trans">如果现在还是样样放不下，看不开，那么临命终的时候，所有贪恋衣服、首饰、房屋、子孙的心，通通现前，如何能够往生西方呢？</p></div>
+<div class="para-pair"><p class="p-orig">既不能生西方，则汝一生守节念佛，及所作种种有益之事，完全成了福报了。汝现在尚无智慧，虽常精勤念佛，心中尚不决定求生西方。</p><p class="p-trans">既然不能往生西方，那么你一生守节、念佛，以及所作的种种有益的事，就完全转成福报了。你现在还没有智慧，虽然常常精进勤恳地念佛，但是心中还没有下决心求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">到了来生享福的时候，决定被福所迷，便要造诸恶业。既造恶业，必定就要堕于地狱，饿鬼，畜生中受苦了。此种大苦，皆是现世念佛，不知决定求生西方之所感召的。</p><p class="p-trans">到了来生享福的时候，一定会被痴福所迷，就要造作各种恶业。既然造作恶业，必定就要堕于地狱、饿鬼、畜生三恶道中受苦了。这种大苦，都是你现世念佛，却不知道下决心求生西方所感召的。</p></div>
+<div class="para-pair"><p class="p-orig">光怜悯汝，恐汝后来或成此种景况，故预为汝设法。汝若肯依我所说，就不会因福得祸。</p><p class="p-trans">我怜悯你，担心你将来或许会落到这种景况，所以预先为你想办法。你如果肯依我所说的来做，就不会因福得祸了。</p></div>
+<div class="para-pair"><p class="p-orig">现在虽很强健，就要做就要死了想。凡现在要穿的衣服，留到穿。凡绸缎皮袄等贵重衣服，均分与孙媳等。首饰，臂钏，耳坠及金，银，翡翠等，通通救济灾民，以此功德，回向往生。</p><p class="p-trans">现在虽然身体很强健，但是也要做就快要死了想。凡是现在要穿的衣服，就留着穿。凡是绸缎、皮袄等贵重衣服，全都分给孙媳妇等人；首饰、臂钏、耳坠及金、银、翡翠等宝物，全都用来救济灾民，并以此功德，回向往生西方极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">若心中见识小，舍不得赈灾，亦须分与女儿，孙媳，孙女等。自己身边，决不可留此种令人起贪恋的东西。所有存款，为防养老者，亦须交与孙子。即田地契志等，亦须交代的干干净净。</p><p class="p-trans">如果心中见识小，舍不得捐出来赈灾，也必须分给女儿、孙媳、孙女等人。自己身边，绝对不能留下这种令人起贪恋的东西。所有的存款，为了预防养老的钱，也必须交给孙子。即使田地契志等凭据，也必须交代的干干净净。</p></div>
+<div class="para-pair"><p class="p-orig">汝心里除念佛外，不使有一点别的念头。连汝这个身子，也不预计死后作怎么样安顿。连孙子重孙等，都要当做素不相识之人，不管他们长长短短。只管念我的佛，一心盼著佛来接引我往生西方。汝能照我所说的做，一切事通通放下，到了临命终时，自然感佛亲垂接引，往生西方。</p><p class="p-trans">你心里除了念佛之外，不让自己有一点别的念头。就连你这个身体，也不要去想死后要作什么样的安顿。就连孙子、重孙等人，都要当做素不相识的人，不管他们的长长短短。只管念我的佛，一心盼着佛来接引我往生西方。你如果能照我所说的做，一切事通通放下不管，那么到了临命终时，自然就会感佛亲垂接引，往生西方极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">若是仍旧贪恋一切好东西，及银钱，地亩，房屋，首饰，衣服，及女儿，孙，曾等，则万万也不会生西方了。西方既不生，则下世决有痴福可享。</p><p class="p-trans">若是仍旧贪恋一切好东西，以及银钱、田地、房屋、首饰、衣服，以及女儿、孙子、曾孙等，那么万万也不会往生西方了。西方既然不能往生，那么下一世一定有痴福可以享。</p></div>
+<div class="para-pair"><p class="p-orig">因享福而造业，定规一气不来，堕落三途。由恶业障蔽故，心识不明，纵有活佛来救汝，也救不得了，岂不可怜可悯乎哉。愿汝信我所说，则实为莫大之幸。</p><p class="p-trans">因为享福而造业，就一定会一气不来，堕落到三途恶道中。由于恶业障蔽的缘故，心识不明，纵然有活佛来救你，也救不得了，岂不是太令人怜悯了吗？愿你相信我所说的话，那么这实在是你莫大的幸运。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

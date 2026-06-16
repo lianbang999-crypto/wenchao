@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复章道生居士书三 · 印光法师文钞</title>
+<meta name="description" content="久未通函，不知近来修持若何，念念。今为汝寄新印文钞一部，此比前年所印者，多百余页。虽无有发挥理致之文，然于净业初机之疑碍，当又可消除一二耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-099/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复章道生居士书三 · 印光法师文钞">
+<meta property="og:description" content="久未通函，不知近来修持若何，念念。今为汝寄新印文钞一部，此比前年所印者，多百余页。虽无有发挥理致之文，然于净业初机之疑碍，当又可消除一二耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-099/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复章道生居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">久未通函，不知近来修持若何，念念。今为汝寄新印文钞一部，此比前年所印者，多百余页。虽无有发挥理致之文，然于净业初机之疑碍，当又可消除一二耳。</p><p class="p-trans">很久没有通信，不知你近来的修持如何，非常想念。现在给你寄去新印的《文钞》一部，这次比前年所印的，多了一百多页。虽然没有发挥义理情致之文，然而对于净业初机的疑惑和障碍，当又可消除一二分。</p></div>
+<div class="para-pair"><p class="p-orig">又寿康宝鉴一本，当为少年人留心阅之。庶将来出圄归家，对一切亲戚乡党，得有所本，而施拯拔也。</p><p class="p-trans">还有《寿康宝鉴》一本，应当为了少年人而留心阅读。才能将来出狱回家时，对一切亲戚同乡，有所依据，而施行拯救拔济。</p></div>
+<div class="para-pair"><p class="p-orig">汝之性情颇聪敏。每有聪敏者，误用心事，不惟无益，而又害之，最为研究修持之障。</p><p class="p-trans">你的性情比较聪敏。常常有聪敏的人，错用心机行事，不仅没有益处，而且还有损害，是研究修持的最大障碍。</p></div>
+<div class="para-pair"><p class="p-orig">吾于七月至沪杭各地，盘桓二月余日，有一后生颇聪明，而所问者，皆非所宜致意，殊为可笑且可悯耳。</p><p class="p-trans">我在七月份到上海杭州各地，逗留二个多月，有一位后生很聪明，然而他所问的东西，都不是应该留意的，实在是可笑而且可怜。</p></div>
+<div class="para-pair"><p class="p-orig">（一）问一切有情，皆具佛性，大小虽异，畏死是同，凡放生者，宜先注意于小生，则自悖佛性畏死是同之说。既知是同，固宜随分随力是救，何所论其先后。倘能畅演佛性是同，畏死不异之理事，则其利大矣。何得偏执先后之说。</p><p class="p-trans">（一）问一切有情，全都具有佛性，体形大小虽然不同，但害怕死亡却是相同的，凡是放生的人，应该先注意小的生命，那么就自己违悖了自己“皆具佛性，畏死是同”的说法。既然知道保命畏死的习气是相同，固然应该随分随力地施救，怎么能讨论先救后救呢？倘若能够畅演众生本具之佛性和害怕死亡之习气都是相同的义理事相，那么这个利益就大了。怎么能偏执先救后救的说法。</p></div>
+<div class="para-pair"><p class="p-orig">（二）谓水中空中，微生虫无量无边，人一呼吸，随之吸入者，不计其数，将来之业报，何有了期。并谓既知人畜循环，则古今大儒通佛理者甚多，何不制以为律，断除杀生之事。</p><p class="p-trans">（二）认为水中空中，有无量无边的微生物，人一呼吸，随之吸入的微生物，不计其数，将来的业报，哪有了结之期。并且认为既然知道人道、畜道循环，那么古往今来的大儒通达佛理的人很多，为什么不制定成为法律，来断除杀生之事。</p></div>
+<div class="para-pair"><p class="p-orig">又谓一切众生，皆是过去父母，未来诸佛，不可杀害，亦不淫佚，而正式婚姻，或亦宿世之亲者。</p><p class="p-trans">又说一切众生，都是过去父母，未来诸佛，不可杀害，也不能淫佚，然而正式的婚姻，或许也是自己过去世的亲人。</p></div>
+<div class="para-pair"><p class="p-orig">此三种问，皆属逞小聪明，妄以充类至义至尽之事相拟。不惟无益，而又害之。何也，以其不能因其细微者，并欲将粗大者而尽废之也。</p><p class="p-trans">这三种问题，都属于卖弄小聪明，妄图以推究同类事物到极点的事情来相比。不仅没有益处，而且还有损害。为什么呢？因为他不能因为极细微的事，便想将粗大的事也全部废除。</p></div>
+<div class="para-pair"><p class="p-orig">譬如好洁之人，欲其不沾尘垢，详察身内之屎尿脓血，身外之垢汗发毛，并及蚊蚋蚤虱日在己身便利。因思此身内外之秽恶，竟与圊厕无异，遂不复致洁，而终日在圊厕中行乐耳。</p><p class="p-trans">譬如爱干净的人，想使自身不沾染尘垢，详细观察他体内的屎尿脓血，身体之外的污垢、汗水、发毛，以及蚊子、跳蚤、虱子每天在自己的身上大小便。因此想到这个身体内外的污秽臭恶，竟然与厕所没有二样，于是就不再保持清洁卫生，而整天在圊厕中行乐了。</p></div>
+<div class="para-pair"><p class="p-orig">至谓古今名臣，何不以杀物命为律。乃不知世出世法有权有实。纵彼知实，以人心未能完全皈依佛化，固不易以实理制律也。</p><p class="p-trans">至于说古今的名臣，为什么不将杀生制定成为法律。这是不知道世间、出世间法有权巧有实理。纵然他知道实理，因为人心没能完全皈依佛化，所以不容易用实理来制定法律。</p></div>
+<div class="para-pair"><p class="p-orig">敬惜字而每言纸，以纸为书字之物，虽字有各处各物之用，终不如纸之多，故每言敬惜字纸。非在纸上宜惜，不在纸上皆不足惜。</p><p class="p-trans">敬惜字而常常说成敬惜纸，因为纸是写字的东西，虽然字有各个地方、各个物品的用途，终究不如纸多，所以常常说成“敬惜字纸”。不是说写在纸上的，应该敬惜，没有写在纸上的，都不值得敬惜。</p></div>
+<div class="para-pair"><p class="p-orig">且字固宜惜，字义尤宜惜。若人不依人道行事，则是弃孝弟忠信礼义廉耻之亡八字矣。人而亡八字，尚得谓之为人乎。当致力于此，则其大本已立。纵不能断一切物上之或污，然其污者，盖亦鲜矣。</p><p class="p-trans">而且，字固然应该敬惜，字义尤其应该敬惜。如果人不依照人道来行事，就是弃舍孝、弟、忠、信、礼、义、廉、耻的亡八字了。人若亡失了这八个字，还能称其为人吗？应当致力于此，那么他为人的最大根本已经建立。纵然不能断除一切事物上的染污，然而其人的染污，也会比较少了。</p></div>
+<div class="para-pair"><p class="p-orig">君子素其位而行，凡非力所能及者，皆不宜引力所能及者，而破坏之也。知力不能及者，而格外注意于力所能及者，则为大善。以力不能及者，破斥力所能及者令其勿行，则为大恶。聪明人多多具此邪见。</p><p class="p-trans">君子安于现在所处的地位，去做应做的事，凡不是自己能力所能做到的，都不应该引能力所能做到的事，而加以破坏。知道能力不能做到的事，而格外注意于能力所能做到的事，就是大善。用能力不能做到的事，破斥能力所能做到的事，令他人不要去做，就是大恶。聪明人大多都有这种邪见。</p></div>
+<div class="para-pair"><p class="p-orig">此种言论，光不知接过多少。唯恐人不善用心，而致罪咎。因思汝或有此种邪见，或同侪中有此种邪见。若不预为铲除，将来或致自误误人，以故为汝略说大端。</p><p class="p-trans">这种言论，我不知道接触过多少。唯恐人们不善用心，而导致罪咎。因此想到你或许有这种邪见，或者同辈中有这种邪见。如果不预先铲除，将来或许导致自误误人，所以为你大略说说重要的内容。</p></div>
+<div class="para-pair"><p class="p-orig">至于光之折伏此种邪见之言论，固非穷数日之功，不能备书也。敦笃伦常，恪尽己分，诸恶莫作，众善奉行。此十六字，为生入圣域，殁归乐邦之本。愿吾徒谨守而力行之，则幸甚。</p><p class="p-trans">至于我折伏这种邪见的言论，原本就不只是花几天的时间，所能详细写出来的。敦笃伦常，恪尽己分（即敦伦尽分），诸恶莫作，众善奉行。这十六字，是在生进入圣贤领域，死后归入极乐莲邦的根本。愿我的徒弟谨慎遵守而努力实行，就很庆幸了。</p></div>
+<div class="para-pair"><p class="p-orig">诚之所至，金石为开。又少实胜多虚，大巧不如拙。黄涵之作宁绍台道时，发心吃长素，劝其母亦吃，为备素菜，则但吃白饭。涵之函询作何法方可。光示代亲至诚忏悔，业消则能吃矣。未一月而长素矣。</p><p class="p-trans">诚之所至，金石为开。另外，少实胜多虚，大巧不如拙。黄涵之作宁绍道尹的时候，发心吃长素，劝他的母亲也吃素，为她备好素菜，她母亲却只吃白饭。黄涵之写信询问，用什么办法方才可以让母亲吃素。我告诉他代母亲至诚忏悔，业障消了就能吃素了。不到一个月，她母亲就吃长素了。</p></div>
+<div class="para-pair"><p class="p-orig">戚则周之女，年十九，双目失明，伸手于前，亦不见。来信以告，时彼在山三圣堂，得信即欲回家，送其女于杭州尼庵。光令写信与其女，令至诚念观音圣号，未一月亲自写信告愈矣。</p><p class="p-trans">戚则周的女儿，十九岁，双目失明，伸手在眼前，也看不见。家里来信告诉他，当时他在普陀山的三圣堂，收到信就想回家，送他的女儿到杭州的尼庵。我让他给他的女儿写信，让她至诚念观世音菩萨圣号，不到一个月，亲自写信告诉我说痊愈了。</p></div>
+<div class="para-pair"><p class="p-orig">一女人于十六岁时，得气疼病，每日必二三次发，发时辄疼得要命，今年五十六岁，来求皈依。光令至诚念观音。并与一药方，即文钞中戒烟方，但不加烟。彼即熬一料，头一次吃，气便不疼。四十一年之群医莫能为力之痼疾，一经一次吃药，即完全好矣。非至诚念菩萨名号故，得遇此方乎。</p><p class="p-trans">一女人在十六岁时，得了气疼病，每天必定发作二三次，发病的时候疼得要命，今年五十六岁，来求皈依。我让她至诚念观世音菩萨。并给她一个药方，就是《文钞》中的《戒烟方》，只是不加烟。她就熬了一副，头一次吃，气就不疼了。四十一年的多少医生都不能治好的老毛病，一经吃药一次，就完全好了。不是至诚念观世音菩萨名号的缘故，能遇到这个药方吗？</p></div>
+<div class="para-pair"><p class="p-orig">此三者，皆用力少而得效大，乃诚也。汝为母之痼疾，叹无法设，光责以何不念佛求消母业。汝便写出许多经佛礼拜，然亦不见功效。以是写的所谓少实胜多虚。设汝果真实如此礼拜持诵。汝母之痼疾不愈，光当瞎眼，天地当易位，日月当倒行矣。有是理乎。</p><p class="p-trans">这三件事例，都是用力少而得效大，就是因为有至诚心。你叹息母亲的痼疾没有办法治疗，我责怪你为什么不念佛来祈求消除母亲的业障。你就写出诵了多少经，拜了多少佛，然而也不见功效。写的这些就是所说的“少实胜多虚”。假设你果真是如此的礼拜持诵。你母亲的痼疾不痊愈，我当会瞎眼，天地当会易位，日月当会倒行了。有这个道理吗？</p></div>
+<div class="para-pair"><p class="p-orig">光恐汝诚之一字，或未致意，故为汝取名慧诚。即知汝诚在笔上，不在心上。使在心上，断不至如此修持，了无所益也。</p><p class="p-trans">我恐怕你在“诚”这一字上，或许没有注意，所以为你取法名为慧诚。就是知道你的诚心在笔墨上，不在心地上。假使诚在心上，断然不至于如此修持，却没有一点益处。</p></div>
+<div class="para-pair"><p class="p-orig">汝欲生为圣贤之徒，殁入极乐之邦，须完全将所有之假心相，丢到大海外，认真作实事。说到就要做到。做不到就不肯说。能如此，则于汝祖宗父母大有辉光。光亦可借汝之实行功德，消除罪业。</p><p class="p-trans">你想在现生成为圣贤之徒，死后进入极乐之邦，必须完全将所有的虚假心相，丢到大海之外，认真作实事。说到就要做到。做不到就不要说。能够如此，那么对于你的祖宗父母，大有光辉。我也可以借你的实行功德，消除罪业。</p></div>
+<div class="para-pair"><p class="p-orig">若以为光未亲见，便好随汝妄说。即使光认以为真，天地鬼神诸佛菩萨亦认以为真乎。汝具此心，即不孝以欺亲欺师欺佛。亲师岂真能欺乎，汝徒自欺耳。光以汝尚明理，故累下针锥。若以光为过，则请从此勿相往还可也。</p><p class="p-trans">如果以为我没有亲眼见到，就好随你妄说。即使我认为是真，天地鬼神、诸佛菩萨也认为是真吗？你有这种心，就是以不孝来欺骗母亲、欺骗师父、欺骗佛陀。母亲、师父哪里真得能被欺骗呢？你徒然自欺罢了。我因为你尚且明理，所以多次对你的毛病痛加对治。如果认为我太过份，就请从此不要互相来往就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">君子可欺以其方，难罔以非其道。非光过为刻论，以汝之所说，前后不相应。而且其事，颇非汝在监中所能办到者。光虽无道德，阅世已六十八年，故不情之事，颇难瞒哄。祈痛改之。否则将终身为儒佛之罪人矣。</p><p class="p-trans">所以君子可以用合乎情理的方法来欺骗他，却很难用不合情理的事情来欺骗他。不是我过份地苛刻评论，因为你所说的，前后不相应。而且这些事，好像不是你在监狱中所能办到的。我虽然没有道德，但阅历世事已经六十八年，所以不合情理的事，很难欺瞒哄骗我。请痛加改正。否则，将终身成为儒教、佛教的罪人了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【圄】</span>监狱。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【充类至尽】</span>谓用同类事物比照类推，把道理引申到极点。《孟子·万章下》：“夫谓非其有而取之者，盗也。充类至义之尽也。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【君子可欺以其方，难罔以非其道】</span>《孟子·万章上》：“故君子可欺以其方，难罔以非其道。”方，道也，法也。可以情理之所常有者欺之。意思是：所以君子可以拿合乎情理的事去欺骗他，却不可以拿不合情理的事去欺骗他。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

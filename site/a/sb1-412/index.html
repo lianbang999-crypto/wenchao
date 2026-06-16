@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复金振卿居士书 · 印光法师文钞</title>
+<meta name="description" content="人之入道，各有时节因缘。既因文钞而知佛法，从事修持，即是皈依。不必又复行皈依礼，方为皈依。不行皈依礼，不名皈依也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-412/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复金振卿居士书 · 印光法师文钞">
+<meta property="og:description" content="人之入道，各有时节因缘。既因文钞而知佛法，从事修持，即是皈依。不必又复行皈依礼，方为皈依。不行皈依礼，不名皈依也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-412/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复金振卿居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人之入道，各有时节因缘。既因文钞而知佛法，从事修持，即是皈依。不必又复行皈依礼，方为皈依。不行皈依礼，不名皈依也。</p><p class="p-trans">人们进入佛道，各有时节因缘。既然因为《文钞》知道了佛法，并从事修持，这就是皈依了。不必又再行皈依礼，才算皈依。不行皈依礼，就不名皈依啊！</p></div>
+<div class="para-pair"><p class="p-orig">但愿汝能依到底不中变，即真皈依，又何须每日顶礼于不慧也。果以礼不慧之礼以礼佛，则彼此均得巨益矣。</p><p class="p-trans">但愿你能依从到底，不中途改变，就是真皈依，又何必每天顶礼我呢？果真以顶礼我的礼仪来礼佛，那么我们彼此就都能得到巨大的利益了。</p></div>
+<div class="para-pair"><p class="p-orig">锡箔一事，虽非出佛经，其来源甚远。古农虽不知来源，所说本于天理人情。何得又自作聪明，不以为是。</p><p class="p-trans">烧锡箔这件事，虽然不是出自佛经，但它的来源却很久远。范古农虽然不知道其来源，但他所说的本于天理人情。你怎么又自作聪明，认为他说的不对呢？</p></div>
+<div class="para-pair"><p class="p-orig">昔看法苑珠林，忘其在某卷，有二三页说锡箔（此即金银）及焚化衣物（此即布帛）等事。</p><p class="p-trans">我过去看《法苑珠林》，忘记是在哪一卷，有二三页说到烧锡箔（这就是金银）以及焚化衣物（这就是布帛）等事。</p></div>
+<div class="para-pair"><p class="p-orig">其文乃唐中书令岑文本，记其师与一鬼官相问答等事。其人仿佛是睦仁茜，初不信佛及与鬼神。后由与此鬼官相契，遂相信。</p><p class="p-trans">这篇文章是唐朝中书令岑文本，记录他的老师与一位鬼官（名成景）互相问答等事。这个人好像是睦仁茜，最初不信佛及鬼神。后来由于与这个鬼官相交深厚，于是就相信了。</p></div>
+<div class="para-pair"><p class="p-orig">并令岑文本为之设食，遍供彼及诸随从。睦问冥间与阳间，何物可相通，彼云金银布帛可通。</p><p class="p-trans">并令岑文本为他们设食，遍供鬼官以及诸多随从。睦仁茜问鬼官成景：“阴间与阳间，什么东西可以通用？”成景说：“金银布帛可以通用。”</p></div>
+<div class="para-pair"><p class="p-orig">然真者不如假者，即令以锡箔贴于纸上，及以纸作绸缎等，便可作金及衣服用。此十余年前看者，今不记其在何卷何篇。汝倘详看，当可见之。其时在隋之初，以此时岑文本尚在读书，至唐则为中书令矣。</p><p class="p-trans">然而真的不如假的，就令他将锡箔贴在纸上，以及用纸作绸缎等，便可以作为阴间的金银和衣服来用了。这是十多年前看到的，现在不记得这个故事在哪一卷、哪一篇。你如果详看，应当可以看到。那个时候是在隋朝初年，因为那时岑文本还在读书，到了唐朝就成为中书令了。</p></div>
+<div class="para-pair"><p class="p-orig">汝之性情，过于自是。古农所说，虽未知其出处，然于天理人情，颇相符合。汝尚不以为然，便欲全国之人废除此事。倘真提倡，或受鬼击。</p><p class="p-trans">你的性情，过于自以为是。范古农所说的，虽然不知道其出处，然而对于天理人情，却颇相符合。你还认为不对，便想让全国的人都废除烧锡箔这件事。倘若真的提倡，或许受到鬼的攻击。</p></div>
+<div class="para-pair"><p class="p-orig">世有愚人，不知以物表心，专以多烧为事，亦不可。当以法力心力加持，令其变少成多，以遍施自己宗亲与一切孤魂则可。</p><p class="p-trans">世间有愚昧的人，不知用物品来表达心意，专门以多烧为事，这样也不可以。应当以法力、心力加持，令这些东西变少成多，来遍施自己的宗亲与一切孤魂，就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">若供佛菩萨，则非所宜。佛菩萨岂无所受用，尚需世人之供养乎。但世人若不以饮食香华等表其诚心，则将无以作感佛菩萨之诚。</p><p class="p-trans">如果是供奉佛菩萨，那么就不适宜了。佛菩萨哪会没有受用，还需要世间人的供养呢？但是世间人如果不用饮食、香华等物品来表示他们的诚心，那么就将没有什么东西能表示诚心，来感通佛菩萨了。</p></div>
+<div class="para-pair"><p class="p-orig">愚人无知，纵用此以供佛，于一念诚心上论，亦有功德。喻如小儿供佛以沙（阿育王前身事），尚得铁轮王报。若愚人不知求生西方，用许多金钱，买锡箔烧之寄库，实则痴心妄想。</p><p class="p-trans">愚昧的人无知，纵然用这些来供佛，在一念诚心上来说，也有功德。如同小孩子用沙供佛（阿育王的前身之事），尚且得到铁轮王的果报。如果愚昧的人不知道求生西方，用许多金钱，买来锡箔焚烧，寄存到冥库，这样实在是痴心妄想。</p></div>
+<div class="para-pair"><p class="p-orig">俗人以自私自利之心，欲作永远做鬼之计，恰逢不问是非，只期有佛事得经资之俗僧，便随彼意行之。故破地狱，破血湖，还寿生者，实繁有徒。</p><p class="p-trans">世俗人以自私自利的心，想作永远做鬼的打算，恰好遇上不问是非，只期望一有佛事，就能得到经忏资费的俗僧，就随他们的心意来做。所以破地狱、破血湖、还寿生等事，实在有很多。</p></div>
+<div class="para-pair"><p class="p-orig">然君子思不出其位，但可以此理自守，及为明理之人陈说。若执固不化之人，亦不得攻击。以致招人怨恨，则于己于人于法，皆无利益也。</p><p class="p-trans">然而君子考虑事情，不超出他的职责范围，只可以这个道理来自我守持，以及为明理的人陈述。像固执不化的人，也不能攻击他们。以致招来他人的怨恨，那么对于自己、他人以及佛法，都没有利益。</p></div>
+<div class="para-pair"><p class="p-orig">汝果真欲皈依，当以吾言为准。否则纵亲来皈依，亦是有名无实。有何师弟之谊，与皈依之益乎。祈慧察。</p><p class="p-trans">你果真想要皈依，应当以我说的话为准。否则，纵然亲自来皈依，也是有名无实。有什么师父弟子的情谊，与皈依的利益呢？请智慧思察。</p></div>
+<div class="para-pair"><p class="p-orig">光老矣（今已七十有一矣），精神不给，不得常来信。（民廿年六月初四日）</p><p class="p-trans">我老了（今年已经有七十一岁了），精神不足，不得经常来信。（民国二十年&lt;1931年&gt;六月初四日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span>【光昔看法苑珠林，忘其在某卷，有二三页说锡箔（此即金银）及焚化衣物（此即布帛）等事】《法苑珠林·鬼神部·感应缘·唐眭仁蒨》第六卷
+《冥报记》：“睦仁茜者。赵郡邯郸人也。少有经学。不信鬼神。常其欲试有无。就思人学之。十余年。不能得见。后徙家向县。于路见一人。如大官。衣冠甚伟。乘好马。从五十余人骑。视仁茜而不言。后数见之。帝如此。经十年。凡数十相见。后忽驻马。呼茜曰。比频见君。情相眷慕。题与君交游。茜即拜之。问公何人也。答吾是鬼耳。姓成。名景。本弘农。西晋时。为别驾。今任临胡国长吏。仁茜问其国何在。王何姓名。答曰。黄河已北。总为临胡国。国都在楼烦西北。州碛是也。其王。是故赵武灵王。今统此国。总受太山摄。每月各使上相朝于太山。是以数来过此。与君相遇也吾乃能有相益。令君预知祸难。而先避之。可免横害。唯死生之命。与大祸福之报。不能移动耳。茜从之。景因命其从骑。常掌事。以是赠之。遣随茜行。有事令先报之。即尔所不知。当来告我。于是便别。掌事恒随逐如从者。顷有所问。无不先知。时大业初。江陵岑之象为邯郸令。子文本。年未弱冠。之象请仁茜于家。教文本书。茜以此事告文本。仍谓曰。成长史谓曰。我有一事。羞君不得道。既与君交。亦不能不告君。鬼神道中亦有食。然不能饱。苦饥。若得人食。便得一年饱。众鬼多偷窃人食。我既贵重。不能偷之。从君请一餐。茜既告文本。文本即为具馔。备设珍羞。茜曰。鬼不欲入人屋。可于外边。张幕设席。陈酒食于上。文本如其言。至时。仁茜见景两客来坐。从百余骑。既坐文本向席再拜。谢以食之不精。亦传意。辞谢。初文本将设食。仁茜请有金帛以赎之。文本问是何等物。茜云。鬼所用物。皆与人异。唯黄金及绢。为得通用。然亦不如假者。以黄色涂大锡作金。以纸为绢帛。最为贵上。文本如言作之。及景食毕。令其从骑更代坐食。文本以所作金钱绢赠之。景深喜谢曰。因睦生烦郎君供给。郎君颇欲知年寿命乎。文本辞曰。不愿知也。---贞观十六年九月九日。文官赐识于玄武北门。文本时为中书侍郎。与家兄太府乡。及治书侍御史马周给事中韦琨。及临对坐。文本自谓诸人云尔”---《冥报记》卷上　吏部尚书唐临撰   唐临：（601-660）字本德，京兆长安人。武德初，为侍御史，持节按狱交州，出寃系三千人。迁大理卿，决囚不寃，囚皆绝意不复诉。累官吏部尚书，以与李义府不睦，坐免官。起为潮州刺史，卒。临著有小说《冥报记》二卷，（旧唐书本传）传于世。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【中书令】</span>官名，是帮助汉武帝在宫廷处理政务的官员，中书令负责直接向皇帝上奏的密奏“封事”，责任重要（霍光传），在西汉都是由皇帝最信任的人担任。---唐中书令为三省（中书、门下、尚书）长官。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【岑文本】</span>字景仁，唐朝宰相，南阳棘阳人，（595-645年）。祖父名善方，仕萧察，吏部尚书。父名之象，隋末为邯郸令。曾被人诬陷。岑聪慧敏捷，博通经史。他善于文词，《新唐书·艺文志》着录其文集60卷，已散佚。《全唐文》录存其文20篇，《全唐诗》录存其诗4首。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【寄库】</span>旧时迷信，人在生前焚冥钱，作佛事，寄属冥吏，备死后取用，亦称寄库。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【破地狱】</span>是道教里一种基本的科仪法事。据道家所言，生前有作孽者，死后必沦入地狱。而破地狱就是用来「斋醮建功」，即以神光法力来破彼岸之幽暗，使亡者猛然醒悟，放下执迷，从而超拔仙界，不再受地狱之苦。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【破血湖】</span>俗人认为，妇女平时有经血来，弄脏的东西要拿到河里去洗，由此玷污了河神。妇女生小孩流血，也冲犯了诸神。这些经血和血露聚为“血湖池”。妇女死后要下血湖池地狱，受血水浸淹之苦，要饮尽血水，方可超生。所以，一般“破血湖”都是孝顺儿女为在世母亲做的，使她逝世后免受此痛苦。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【还寿生】</span>认为人投胎是因向阴间曹官借钱“买”来的，因此要还所欠阴间的债，以免被讨，使自己长寿。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【实繁有徒】</span>意谓确实有不少这样的人。一般用贬义。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

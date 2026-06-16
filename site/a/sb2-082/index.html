@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复徐紫焜居士书 · 印光法师文钞</title>
+<meta name="description" content="观阁下来书，知阁下固一盛德君子。所可惜者，邪正不分。初则误以同善社所传之法为佛法。而不知其为炼丹运气养身体，以期其延年益寿，妄冀成仙之法耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-082/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复徐紫焜居士书 · 印光法师文钞">
+<meta property="og:description" content="观阁下来书，知阁下固一盛德君子。所可惜者，邪正不分。初则误以同善社所传之法为佛法。而不知其为炼丹运气养身体，以期其延年益寿，妄冀成仙之法耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-082/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复徐紫焜居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观阁下来书，知阁下固一盛德君子。所可惜者，邪正不分。初则误以同善社所传之法为佛法。而不知其为炼丹运气养身体，以期其延年益寿，妄冀成仙之法耳。</p><p class="p-trans">看你的来信，知道阁下本是一位品德高尚的君子。所可惜的是，邪正不分。最初误以为同善社所传的法就是佛法。却不知他们所修炼的是炼丹运气、保养身体，以期延年益寿，妄想成仙的法。</p></div>
+<div class="para-pair"><p class="p-orig">所言静坐用功，皆是用运气之功。绝无佛法气分，妄谓此为佛法。譬如以鱼目作真珠而宝贵之，谓为奇珍。</p><p class="p-trans">所说的静坐用功，全都是用运气的功夫。绝对没有佛法的气分，妄说这就是佛法。譬如将鱼眼当作真珠，而以为宝贵，认为这是奇珍。</p></div>
+<div class="para-pair"><p class="p-orig">及见光文钞，虽能老实念佛，究竟不肯弃舍炼丹运气之法，犹然谓此为佛法。口虽念佛，心中仍然注重外道。而外道皆以种种境界神奇鬼怪惑人。</p><p class="p-trans">等看了我的《文钞》，虽然能够老实念佛，究竟不肯舍弃炼丹运气之法，依然认为这便是佛法。口中虽然念佛，心中仍然注重外道。而外道都是以种种境界，神奇鬼怪来迷惑人。</p></div>
+<div class="para-pair"><p class="p-orig">若阁下既知佛法，尽情弃舍先所修之炼丹法。则心中正念昭彰，如杲日当空，何有魑魅魍魉兴妖作怪之事。汝心地正大光明，彼妖魔鬼怪，自无存立之地。</p><p class="p-trans">如果阁下已然知道佛法，尽情舍弃先前所修的炼丹法。那么心中正念昭彰，如丽日当空，哪有魑魅魍魉兴妖作怪的事。你心地正大光明，那些妖魔鬼怪，自然没有立足之地。</p></div>
+<div class="para-pair"><p class="p-orig">由阁下以邪作正，平常妄欲得神通，得先知，故惹起魔鬼，于汝身中妄现妖相。虽汝邪正不分，尚未全认作魔鬼之妖相为是，尚有可救。倘认做得道得通，则欲不魔死不可得也。险极险极。</p><p class="p-trans">由于阁下以邪法作正法，平常妄想得到神通，想得到预知的能力，所以惹起魔鬼，在你身中妄现妖相。虽然你邪正不分，还没有完全认同魔鬼的妖相是对的，还可以挽救。倘若认做是自己得道、得神通了，那么想要不被魔死都不可能。极其危险！极其危险啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝既问光，当依光说，从此以后，将从前所做之工夫，完全丢脱，不存一丝一毫之宝贵心。至诚恳切生信发愿，念佛求生西方。必须身口意三业，专注于修持净业上。</p><p class="p-trans">你既然问我，应当依我所说，从此以后，将从前所做的功夫，完全丢掉，不存一丝一毫的宝贵心。至诚恳切，生信发愿，念佛求生西方。必须身口意三业，专注于修持净业上。</p></div>
+<div class="para-pair"><p class="p-orig">汝心中既无邪见，再加以佛名号之威德神力，彼魔鬼将逃避不暇，何敢少留而为汝作障碍乎。其作障碍者，乃汝邪心所招。</p><p class="p-trans">你心中已然没有邪见，再加上佛名号的威德神力，那些魔鬼将要逃避都来不及，哪敢少作停留，来障碍你呢？那些作障碍的，都是你的邪心所招来的。</p></div>
+<div class="para-pair"><p class="p-orig">譬如主人闲邪存诚，克己复礼，若言若行，悉合诚明之道。则放僻邪侈，肆无忌惮，所作所为，悉皆暗昧之小人，何敢登彼之堂，入彼之室乎。如大明之下，了无黑暗。大暑之中，了无冰霜。</p><p class="p-trans">譬如主人闲邪存诚（防止邪念、心怀诚敬），克己复礼（战胜己私、还归真理），语言行为，全都符合诚明之道。那么放僻邪侈，肆无忌惮，所作所为，全都暗昧的小人，如何敢登上他的堂屋，进入他的居室呢？如同大光明之下，没有一丝黑暗，大暑热中，没有一点冰霜一样。</p></div>
+<div class="para-pair"><p class="p-orig">汝能全依净土法门而修，不复以先所期望者为是。则如主人明悟，知彼是贼，则彼自当远去。如其认做自己家中人，则彼便作主人，入汝之窍，令汝著魔发狂，以致丧身殒命也。</p><p class="p-trans">你能够完全依照净土法门来修持，不再认为先前所期望的得神通、得先知是正确的。那么如同主人明白觉悟，知道那是贼，贼就会自然远去。如果你认做是自己家中人，那么贼就作了主人，进入你的心窍，令你著魔发狂，以致丧身失命。</p></div>
+<div class="para-pair"><p class="p-orig">无论彼是狐是鬼，是宿世怨家，但发菩提心，持佛名号，皆当消灭。如其不消，则天地当易位，日月当倒行者。</p><p class="p-trans">无论他是狐是鬼，是宿世怨家，只要你发菩提心，持佛名号，都必会消灭。如果他们不消灭，那么天地当会易位，日月当会倒行了。</p></div>
+<div class="para-pair"><p class="p-orig">所虑者，汝心不依正理，仍存以前之邪知邪见，勿道印光所说者不灵，即诸佛所说亦不灵矣。以根本既邪，正无由施故也。书此祈洞察，则幸甚幸甚。</p><p class="p-trans">我所忧虑的是，你心中不依正理，仍旧心存以前的邪知邪见，不要说我所说的不灵，即使是诸佛所说的也不灵了。因为根本既然是邪，正法没有办法施行的缘故。写下这些，请你透彻地思察，就非常庆幸了。</p></div>
+<div class="para-pair"><p class="p-orig">修持法则，文钞备书，此不具说。凡静坐时，但心中默念佛号。此外不加一点别的工夫，及别的念头。久而久之，全心是佛，全佛是心，心佛不二，心佛一如。</p><p class="p-trans">修持的法则，《文钞》中都有，此处不再多说。凡是静坐的时候，只要心中默念佛号。除此之外，不加一点别的功夫，以及别的念头。久而久之，全心是佛，全佛是心，心佛不二，心佛一如。</p></div>
+<div class="para-pair"><p class="p-orig">且问甚么禅定有如此之深妙乎。甚么工夫有如此之高尚乎。阁下能依此而修，管保业障消灭，福慧增长。现生优入圣贤之域，临终直登极乐之邦矣。</p><p class="p-trans">且问什么禅定有如此的深妙呢？什么功夫有如此的高尚呢？阁下能够依此来修持，管保业障消灭，福慧增长。现生优入圣贤的领域，临终直接登入极乐莲邦。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【诚明】</span>至诚之心和完美的德性。语出《礼记·中庸》：“自诚明谓之性，自明诚谓之教，诚则明矣，明则诚矣。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【放辟邪侈】</span>指肆意作恶。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

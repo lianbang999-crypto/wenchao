@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普为施资流通历史感应统纪及展转传布看读诸善信回向偈 · 印光法师文钞</title>
+<meta name="description" content="三界一切法，唯是一心作。顺道则善吉，逆理则凶恶。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-282/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普为施资流通历史感应统纪及展转传布看读诸善信回向偈 · 印光法师文钞">
+<meta property="og:description" content="三界一切法，唯是一心作。顺道则善吉，逆理则凶恶。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-282/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">普为施资流通历史感应统纪及展转传布看读诸善信回向偈</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">三界一切法，唯是一心作。顺道则善吉，逆理则凶恶。</p><p class="p-trans">三界一切法，唯是一心作。遵循道义，就会得吉祥善果。违背天理，就会得凶恶。</p></div>
+<div class="para-pair"><p class="p-orig">懿哉古大人，存心同天地。用己才智力，参赞其化育。</p><p class="p-trans">美好啊！古代的盛德君子，存心如同天地（一样广阔）。用自己的才能、智力，协助天地的教化培育。</p></div>
+<div class="para-pair"><p class="p-orig">事事欲普利，天下及后世。博爱而济众，了无居德意。</p><p class="p-trans">事事都想到要普遍利益，天下以及后世之人。博爱救济大众，没有一点儿以德自居的心意。</p></div>
+<div class="para-pair"><p class="p-orig">功高名誉隆，德大吉庆莅。生备享五福，余庆覃后裔。</p><p class="p-trans">功业高显而名誉隆盛，道德广大而吉庆来临。现生备享五种幸福，余庆延及子孙后代。</p></div>
+<div class="para-pair"><p class="p-orig">此风若兴行，世界自安治。人各怀礼让，咸思尽己谊。</p><p class="p-trans">这种风尚如果兴盛流行，那么世界自然长治久安。人们各怀守礼谦让（之心），全都想要竭尽自己的道谊本分。</p></div>
+<div class="para-pair"><p class="p-orig">哀哉诸小人，唯知有自己。存心与作事，绝不循天理。</p><p class="p-trans">悲哀啊！诸位小人，只知道有自己。他的存心与行事，绝对不遵循天理。</p></div>
+<div class="para-pair"><p class="p-orig">陷人以自安，损人以自益。唯务得现利，不知折宿福。</p><p class="p-trans">陷害他人来自我安稳，损害他人来利益自己。只是致力于得到现前的利益，却不知道这是折损宿世的福报。</p></div>
+<div class="para-pair"><p class="p-orig">及至结果时，苦报无穷极。徒为人所怜，罪业莫由息。</p><p class="p-trans">等到结果的时候，苦报没有穷尽。只是被他人所怜悯，罪业没有办法止息。</p></div>
+<div class="para-pair"><p class="p-orig">上启于唐虞，下迄于明代。善恶各事迹，诸史悉备载。</p><p class="p-trans">上自唐虞盛世，下至明朝。善恶各种事迹，诸多史书中全都有记载。</p></div>
+<div class="para-pair"><p class="p-orig">今世道陷溺，有识咸忧惧。吾友聂云台，设法为救济。</p><p class="p-trans">现今的世道陷落沉溺，有识之士全都担忧畏惧。我的朋友聂云台，想办法来加以救济。</p></div>
+<div class="para-pair"><p class="p-orig">特请许止净，辑感应统纪。排印广流通，法戒冀自取。</p><p class="p-trans">特地请许止净，编辑《历史感应统纪》。排印后广泛流通，楷模、鉴戒希望（读者）自己（在书中）获取。</p></div>
+<div class="para-pair"><p class="p-orig">幸得诸善士，出资逾万元。敬印二万部，用普结善缘。</p><p class="p-trans">庆幸得到诸位善士，出资超过一万元。敬印（书册本）二万部，用来普结善缘。</p></div>
+<div class="para-pair"><p class="p-orig">所余之净资，另排报纸本。字小而价廉，慰青年学悃。</p><p class="p-trans">所剩余的清净资财，另外再排印报纸本。（报纸本）字体小而价格便宜，满足青年学子的诚恳好学之心。</p></div>
+<div class="para-pair"><p class="p-orig">报纸印四万，流布于遐迩。举凡见闻者，无不生欢喜。</p><p class="p-trans">报纸本印了四万部，流布远近。一切见到、听到的人，无不心生欢喜。</p></div>
+<div class="para-pair"><p class="p-orig">两种出版后，止净重校阅。稍有所增修，比初逾亲切。</p><p class="p-trans">两种本子出版后，许止净重新审阅校订。稍微有些增修，比起初版更加亲切。</p></div>
+<div class="para-pair"><p class="p-orig">李耆卿居士，愿任剞劂资。写刻请高手，必期永传持。</p><p class="p-trans">李耆卿居士，愿意承担刻印（即木刻板）的费用。请来写字、刻字的高手，必定期望永远传持下去。</p></div>
+<div class="para-pair"><p class="p-orig">余亦令重排，书报二种本。加以增修字，以期垂久远。</p><p class="p-trans">我也令人重新排印（即铅印版），书册、报纸二种本子。加上“增修”两个字，以期久远流传。</p></div>
+<div class="para-pair"><p class="p-orig">因果之理事，既以大明显。有心世道人，得有所舒展。</p><p class="p-trans">因果的事理，既然大大地显明。有心世道的人，（眉头）得以舒展。</p></div>
+<div class="para-pair"><p class="p-orig">普愿见闻者，设法广流通。庶几息竞争，直臻于大同。</p><p class="p-trans">普愿见到、听到的人，设法广泛流通。希望止息竞争，直接进入大同社会。</p></div>
+<div class="para-pair"><p class="p-orig">愿彼发起人，及与编辑者。助印诸善士，看读取法者。</p><p class="p-trans">愿那些发起的人，以及编辑的人。助印的诸位善士，阅读这部书而效法的人。</p></div>
+<div class="para-pair"><p class="p-orig">现在及未来，一切诸善人。同消诸恶业，同长胜善根。</p><p class="p-trans">现在以及未来，一切诸善人。共同消除恶业，共同增长殊胜善根。</p></div>
+<div class="para-pair"><p class="p-orig">生则获五福，没则登九品。先亡生净土，后裔为世准。</p><p class="p-trans">现生获得五种幸福，死后登入九品莲邦。先祖往生净土，后代成为世人的楷模。</p></div>
+<div class="para-pair"><p class="p-orig">风雨常顺适，物阜而民康。俾彼四夷人，咸来观国光。（民国十九年庚午闰六月吉日）</p><p class="p-trans">风雨常调顺适宜，物产丰富而人民康乐。使得那些四夷人，全都来观览国家美好的景象。（民国十九年&lt;1930年&gt;庚午闰六月吉日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【大人】</span>指德行高尚、志趣高远的人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【参赞其化育】</span>参赞：协助谋划。化育：教化培育。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【五福】</span>五福六极：箕子之陈洪范也，末后方说，向用五福，威用六极。五福，六极，乃示前生之因，为今生之果。向，顺也。用，以也，得也。（一）寿，（二）富，（三）康宁，（五）考终命，乃前生修道修德所感之果。（四）攸好德，乃前生修道修德之习性也。极，穷厄也。威，义当作违，悖逆也。谓前生所作所为，悖逆道德，致今生得（一）横死之凶，与夭寿之短折（凶与短折，合为第一），（二）及身不康之疾，（三）心不宁之忧 ，（四）用不足之贫，（五）貌丑之恶，（六）身无能力之弱也。（《印光法师文钞续编卷下·挽回世道人心标本同治录序（民国己卯冬作 时年七十九）》）</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【庆覃】</span>谓福泽绵延。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【悃】</span>诚恳，至诚。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【剞劂】</span>刻镂的刀具。雕板；刻印。刻镂的刀具。刻镂用的曲凿。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【世准】</span>世人的楷模、准绳。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【四夷】</span>古籍对中原周边各族之泛称，即东夷、南蛮、北狄和西戎的合称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

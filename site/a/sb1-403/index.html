@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复蔡契诚居士书二 · 印光法师文钞</title>
+<meta name="description" content="接手书，备悉一切。现今之世，乃魔王外道出世之时。若宿世中未种真实善根，有信心者，尽入魔罥。以彼等群魔，皆有最稀奇怪异之法子惑动人故也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-403/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复蔡契诚居士书二 · 印光法师文钞">
+<meta property="og:description" content="接手书，备悉一切。现今之世，乃魔王外道出世之时。若宿世中未种真实善根，有信心者，尽入魔罥。以彼等群魔，皆有最稀奇怪异之法子惑动人故也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-403/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复蔡契诚居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，备悉一切。现今之世，乃魔王外道出世之时。若宿世中未种真实善根，有信心者，尽入魔罥。以彼等群魔，皆有最稀奇怪异之法子惑动人故也。</p><p class="p-trans">接到信，一切尽知。现今之世，正是魔王外道出世的时候。如果宿世中没有种下真实的善根，有信心的人，全都会进入魔网。因为那些群魔，都有最稀奇怪异的法子，来蛊惑打动人心的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">江神童，乃鬼神附体之能力，非真系生知之神童。前年友人张之铭，以江神童息战书见寄，命光看。有不合宜者批之，当转致。</p><p class="p-trans">江神童（即江希张），那是鬼神附体的能力，并不是真的天生神童。前年，友人张之铭将江神童所写的《息战书》寄给我，让我看。有不合适的地方加以批点，当会转送给他。</p></div>
+<div class="para-pair"><p class="p-orig">及光指其弊病，此友概不提及。什么宗教大同会，什么释迦化身。有智识者闻之，当直下知其为显异惑众之魔王，岂待问人。</p><p class="p-trans">等我指出他的弊病，这位朋友一概不提起。什么“宗教大同会”，什么“释迦化身”。有智慧见识的人听了，当下就知道他是显异惑众的魔王，哪里还用得着去问别人。</p></div>
+<div class="para-pair"><p class="p-orig">彼同善社老师，亦在四川。凡入会必须要出钱做功德。及出钱，则云寄至四川，由老师调派。</p><p class="p-trans">那些同善社的老师，也在四川。凡是入会，必须要出钱做功德。等出了钱，就说寄到四川，由老师调派。</p></div>
+<div class="para-pair"><p class="p-orig">什么唐焕章，什么邓绍云，皆系妖魔鬼怪之流类。引一切善男信女，同陷邪见深坑。佛法那里教人炼精气神。无论什么外道，离炼精气神，便无道可说矣。</p><p class="p-trans">什么唐焕章，什么邓绍云，都是妖魔鬼怪之流类。引导一切善男信女，同陷邪见的深坑。佛法哪里教人炼精气神了。无论什么外道，离开炼精气神，就没有其他道理可说了。</p></div>
+<div class="para-pair"><p class="p-orig">若是正人修之，亦可延年益寿。若了生死成佛，乃是说梦话。彼并不知如何是生死，如何是佛，胡说巴道一套，以骗人家男女。</p><p class="p-trans">如果是心正的人修了，也能延年益寿。如果说（炼精气神能）了生死成佛，就是在说梦话。他们并不知道什么是生死，什么是佛，胡说八道一套，来诓骗在家男女。</p></div>
+<div class="para-pair"><p class="p-orig">倘是邪淫之徒，则便借坎离交媾，婴儿姹女交媾等名词，诱诸少年妇女，悉为所污。且以此为传道。</p><p class="p-trans">倘若是邪淫之徒，就会借着“坎离交媾”、“婴儿姹女交媾”等名词，引诱那些少年妇女，全都被他们所玷污。而且以此为传道。</p></div>
+<div class="para-pair"><p class="p-orig">而无智之人，虽受彼污，犹不以为非法，以其是传道，不同无道之人夫妇行淫也。哀哉，世人何迷至此。</p><p class="p-trans">而没有智慧的人，虽然受到他们的玷污，仍然不认为这是非法，认为这是在传道，不同于无道之人的夫妇行淫。悲哀啊！世人何以迷昧到了如此的地步！</p></div>
+<div class="para-pair"><p class="p-orig">灵学扶乩，乃灵鬼作用。亦有真仙降临，乃百千回之一二。其平常俱灵鬼冒名，断不可以此为实。光文钞亦略谈之。</p><p class="p-trans">灵学会的扶乩，是灵鬼的作用。扶乩也有真仙降临的情况，但只是百千回中的一二回罢了。而平常都是灵鬼冒名的，千万不能认为这是真实的。我在《文钞》中也大略谈到过。</p></div>
+<div class="para-pair"><p class="p-orig">江神童之道德，亦扶乩故，与灵学会同一臭味。学佛人不应入此种会。而今之学佛人，有几多依佛行知佛法者。</p><p class="p-trans">江神童的万国道德会，也因扶乩的缘故，与灵学会是同一种臭味。学佛人不应加入这种会。而如今的学佛人，有多少是依照佛行、了知佛法的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">以故闻彼等之鬼怪奇特，遂如蚁聚乌合，虾蟆逐闹，热处跳了，可叹孰甚。</p><p class="p-trans">因此听到他们那些鬼怪奇特，就如同蚂蚁乌鸦聚合，虾蟆追逐热闹，到热闹之处跳跃，还有比这更可叹的吗？</p></div>
+<div class="para-pair"><p class="p-orig">令友王君入魔已深，喻如狗子吃屎，谓无上美味。彼并不知佛，亦无正知正见。一向如狗子寻屎，苍蝇逐臭，蚁子赴膻，名为学佛，实为学魔。</p><p class="p-trans">你的朋友王君，入魔已经很深了，如同狗吃大便，认为是无上美味。他并不知道佛法，也没有正知正见。一向如同狗寻找大便，苍蝇追逐臭味，蚂蚁赴向膻味，名为学佛，实际是学魔。</p></div>
+<div class="para-pair"><p class="p-orig">今之出家者，有几多知佛法者。每每亦学炼丹运气扶乩等。指窍之说，最为惑人之本。</p><p class="p-trans">现今的出家人，又有多少是知道佛法的人呢？他们常常也学外道的炼丹、运气、扶乩等法。指窍之说，最能迷惑人的根本。</p></div>
+<div class="para-pair"><p class="p-orig">若遇少年女子，多被此种法子所乱，罪大恶极。邪正不两立，正法昌明，则邪法自可消灭。今魔种遍天下，亦众生同分恶业之所感也。</p><p class="p-trans">如果遇到少年女子，她们大多被这种法子所迷乱，罪大恶极。邪法正法不能两立，正法昌明，那么邪法自然可以消灭。现今魔种遍布天下，也是众生同分恶业所感的啊！</p></div>
+<div class="para-pair"><p class="p-orig">静坐须提起精神，息心念佛。倘不提精神，一静即睡着矣。此众生通病。化修紫竹林大殿香，乃是吃喝嫖赌无资本，作此种事，借修佛殿为骗钱计，此阿鼻地狱之种子耳。</p><p class="p-trans">静坐必须提起精神，息心念佛。倘若不提起精神，一静下来就睡着了。这是众生的通病。募化修葺紫竹林大殿的香金，乃是吃喝嫖赌没有资本，作这种事，是借着修佛殿来算计着骗钱，这是阿鼻地狱的种子。</p></div>
+<div class="para-pair"><p class="p-orig">紫竹林大殿完完全全，要修做什么。汝且一心持戒念佛，任彼魔王外道，显什么鬼本事，皆勿理会。则可不被魔徒牵入魔党矣。</p><p class="p-trans">紫竹林大殿完完整整的，修它做什么。你暂且一心持戒念佛，任那些魔王外道，显什么鬼本事，都不要理会。那么就能不被魔徒牵入魔党了。</p></div>
+<div class="para-pair"><p class="p-orig">六月前可来信，六月后不可来信。以施省之发心修杭州梵天寺（系光劝发，故必要光去），即莲宗十一祖齐大师道场，须光去料理商量。</p><p class="p-trans">六月前可以来信，六月后就不可以来信了。因为施省之发心修杭州梵天寺（这是我劝导发起的，所以必须要我去），就是莲宗十一祖思齐大师（即省庵大师，讳实贤，字思齐，号省庵）的道场，须要我去料理商量。</p></div>
+<div class="para-pair"><p class="p-orig">不过一二十日，又要到南京法云寺。梅荪以法云寺成立，必要光到，方可迟早随光往南京。亦不过一二十日，由南京到扬州，以安顿文钞事。</p><p class="p-trans">不超过一二十天，又要到南京法云寺。魏梅荪因为法云寺成立，必须要我到，方可迟早随我前往南京。也不超过一二十天，由南京到扬州，来安顿《文钞》的事情。</p></div>
+<div class="para-pair"><p class="p-orig">文钞将刻完矣，一出书即又另排。已有数友任一万部，大约九月半后，即可回到普陀。否则十月初必到。以天气一冷，外边不便故也。（民十二四月廿一日）</p><p class="p-trans">《文钞》将要刻完了，一出书就又要另外排印。已经有数位友人任资一万部，大约九月半后，就能回到普陀山。否则，十月初必会回到普陀山。因为天气一冷，在外边不方便的缘故。（民国十二年&lt;1923年&gt;四月二十一日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【罥】</span>捕取鸟兽的网。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【江神童】</span>江希张（1907-2004年）山东历城（今济南市）人。10岁前，既能解经说文，人称神童，被康有为收为弟子，毕业于萃英中学（现山东省泰安第一中学），后成为中国第一代食品专家，九岁著《四书白话解说》、《息战》、《大千图说》，十三岁著《道德经白话解说》，尤为道教人士推崇。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【前年友人张之铭，以江神童息战书见寄】</span>见增广《文钞》卷二：复张伯岩居士书。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【宗教大同会】</span>万国道德会，系山东历城儒生江寿峰，感于第一次世界大战杀戮惨酷，遂授意有“神童”美誉的次子江希张于1915年间著作《息战论》一书，意图以中国固有儒家文化融合佛、道、基、回等宗教义理，振兴人类的道德意识，避免人类社会因争战不止而同趋殆亡。《息战论》书后附有《万国道德会章程》十八条，提议办立一宣扬道德、倡导和平的全球性社团。《息战论》刊行后颇受好评，支持者渐增，江寿峰遂纠集民众呈准政府立案后于1921年8月27日开万国道德会成立大会。初举孔子嫡裔孔德成为会长，然为孔氏家族以其年幼婉辞，复举康有为任会长。1923年新兴宗教结社“世界宗教大同会”因预言灾劫，遭舆论挞伐，官方查禁。道德会因与该会社师唐焕章间之文字往返，遭《申报》点名批判，会誉受损，华南之会务发展亦受影响。1926年间江寿峰去世，江希张改立章程。1927年康有为去世，江希张赴法留学，道德会支拄乏人，乃于1928年举东北慈善家杜绍彭为理事长，并以杜绍彭之议，迎请东北义学团体领导人王凤仪入会。王凤仪加入道德会后，其所发展之数百处义学单位皆并入道德会，王凤仪之性命伦理思维亦为道德会所吸收，成为会中特有的思维形态。道德会之组织、制度、理念渐次完备，发展亦趋稳定，最盛时据会中统计有分会一千两百余处，会员百余万，兴办中小学与民众进修班千余处。分会分布以东北最为密集，组织亦较为紧密，华北地区次之，华南则少见踪迹。1949年会所次第解散，会产移归国有。少数会员到台，重立总会于台北，延续至今。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【坎离交媾】</span>指小周天功。坎为水，离为火；水为肾水，火为心火。坎离交媾谓之小周天。在小周天立基中，肾中之水上升，心中之火下降，水火升降于中宫，阴阳混合于丹鼎，云收雨散，气结神凝，水火既济而结丹。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【婴儿】</span>道家炼丹，称铅为婴儿，水银为姹女。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【臭味】</span>1.气味。2.比喻志趣。3.比喻同类。4臭恶之气味。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【虾蟆】</span>青蛙和蟾蜍的统称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

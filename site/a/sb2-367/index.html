@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>德育启蒙 · 印光法师文钞</title>
+<meta name="description" content="孝亲">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-367/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="德育启蒙 · 印光法师文钞">
+<meta property="og:description" content="孝亲">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-367/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 楹联</div>
+      <h1 class="art-title">德育启蒙</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">孝亲</p><p class="p-trans">孝顺父母</p></div>
+<div class="para-pair"><p class="p-orig">身体发肤，受之父母，父母与我，实为一体。</p><p class="p-trans">身体毛发皮肤，受于父母，父母和我，实是一体。</p></div>
+<div class="para-pair"><p class="p-orig">我爱自身，应孝父母，能不辱身，便是荣亲。</p><p class="p-trans">我爱护自己，就应孝顺父母，能不辱没自身，便是荣耀双亲。</p></div>
+<div class="para-pair"><p class="p-orig">友爱</p><p class="p-trans">友爱兄弟</p></div>
+<div class="para-pair"><p class="p-orig">兄弟姊妹，手足骨肉，痛痒相关，休戚与共。</p><p class="p-trans">兄弟姊妹，是手足骨肉，身体的痛痒相关，心情的喜忧共担。</p></div>
+<div class="para-pair"><p class="p-orig">兄爱弟敬，和和睦睦，相推相爱，家庭之福。</p><p class="p-trans">兄长友爱、弟弟恭敬，和和睦睦，相互推让、相互爱护，这是家庭之福。</p></div>
+<div class="para-pair"><p class="p-orig">敬师</p><p class="p-trans">尊敬师长</p></div>
+<div class="para-pair"><p class="p-orig">师严道尊，人伦表率，道德学问，是效是则。</p><p class="p-trans">师长威严、道法尊贵，是人伦的表率，这样的道德学问，要学习效法。</p></div>
+<div class="para-pair"><p class="p-orig">养我蒙正，教我嘉谟，不敬其师，何能受益。</p><p class="p-trans">在我蒙童时期，培养我纯正的品质，教导我高明的谋略，不尊敬老师，如何能够受益。</p></div>
+<div class="para-pair"><p class="p-orig">择友</p><p class="p-trans">选择朋友</p></div>
+<div class="para-pair"><p class="p-orig">近朱者赤，近墨者黑，朋友相处，有损有益。</p><p class="p-trans">近朱者赤，近墨者黑，朋友相处，有损有益。</p></div>
+<div class="para-pair"><p class="p-orig">益者近之，损者远之，劝善规过，端赖乎兹。</p><p class="p-trans">益友要亲近，损友要远离，劝我向善，规正我的过失，确实要靠益友的帮助。</p></div>
+<div class="para-pair"><p class="p-orig">布衣</p><p class="p-trans">穿布衣</p></div>
+<div class="para-pair"><p class="p-orig">衣取遮体，兼以御寒，大布之衣，惜福养廉。</p><p class="p-trans">衣取遮体，兼以御寒，素布衣服，惜福养廉。</p></div>
+<div class="para-pair"><p class="p-orig">莫羡绸缎，锦绣华美，折了福寿，自暴自弃。</p><p class="p-trans">莫羡绸缎，锦绣华美，折了福寿，自暴自弃。</p></div>
+<div class="para-pair"><p class="p-orig">蔬食</p><p class="p-trans">吃蔬食</p></div>
+<div class="para-pair"><p class="p-orig">蔬食卫生，肉食伤生，杀时恨心，其毒非轻。</p><p class="p-trans">素食卫生，肉食伤生，动物被杀时的恨心，产生的毒素可不轻。</p></div>
+<div class="para-pair"><p class="p-orig">勿贪吃肉，吃了须还，还的时候，真个可怜。</p><p class="p-trans">不要贪食肉，吃了须偿还，偿还的时候，真叫可怜。</p></div>
+<div class="para-pair"><p class="p-orig">惜字</p><p class="p-trans">惜字纸</p></div>
+<div class="para-pair"><p class="p-orig">字为至宝，远胜金珠，人由字智，否则愚痴。</p><p class="p-trans">字是最宝贵的，远远超过了金银珠宝，人由于认字而有了智慧，否则就会成为愚痴。</p></div>
+<div class="para-pair"><p class="p-orig">世若无字，一事莫成，人与禽兽，所异唯名。</p><p class="p-trans">世间如果没有字，一件事都不能做成，人与禽兽，所不同的就只有名字了。</p></div>
+<div class="para-pair"><p class="p-orig">惜谷</p><p class="p-trans">惜五谷</p></div>
+<div class="para-pair"><p class="p-orig">田中五谷，以养人民，爱惜五谷，即是善心。</p><p class="p-trans">田中的五谷，养活着人民，爱惜五谷，就是善心。</p></div>
+<div class="para-pair"><p class="p-orig">修善者存，不善者亡，惜谷获福，殄谷遭殃。</p><p class="p-trans">修善者存有此心，不善者亡失此心，爱惜五谷获福，浪费五谷遭殃。</p></div>
+<div class="para-pair"><p class="p-orig">惜阴</p><p class="p-trans">珍惜光阴</p></div>
+<div class="para-pair"><p class="p-orig">七十古稀，弹指即过，过则已无，何敢懈惰。</p><p class="p-trans">七十古来稀，弹指即过，过去便没有了，怎敢懈怠懒惰。</p></div>
+<div class="para-pair"><p class="p-orig">努力勤学，立德立业，自利利他，为世作则。</p><p class="p-trans">努力勤学，立德行，立功业，自利利他，为世间做典范。</p></div>
+<div class="para-pair"><p class="p-orig">仗义</p><p class="p-trans">仗义</p></div>
+<div class="para-pair"><p class="p-orig">一举一动，唯义是取，义之所在，无往不利。</p><p class="p-trans">一举一动，唯以道义作为标准，道义所在，无论到哪里都能获得利益。</p></div>
+<div class="para-pair"><p class="p-orig">小人见利，即忘其义，虽得小利，究竟吃亏。</p><p class="p-trans">小人见利忘义，虽能得到小利益，但究竟是吃了大亏。</p></div>
+<div class="para-pair"><p class="p-orig">清廉</p><p class="p-trans">清廉</p></div>
+<div class="para-pair"><p class="p-orig">人生福泽，前世所修，非义而取，是食毒物。</p><p class="p-trans">人生的福报禄位，是前世所修，不合道义而取，是吃毒物。</p></div>
+<div class="para-pair"><p class="p-orig">清而不污，廉而不贪，世所崇敬，荣无加焉。</p><p class="p-trans">清净而不被染污，廉洁而不贪心，世人都崇敬，荣耀无以复加。</p></div>
+<div class="para-pair"><p class="p-orig">知耻</p><p class="p-trans">知耻</p></div>
+<div class="para-pair"><p class="p-orig">耻之一字，其利无穷，有与圣近，无与兽同。</p><p class="p-trans">耻这个字，利益无穷，有了羞耻感，就与圣人相近；没有羞耻感，便与禽兽相同。</p></div>
+<div class="para-pair"><p class="p-orig">惭耻之服，无得暂卸，我佛训诲，庄严第一。</p><p class="p-trans">惭愧羞耻的衣服，一刻也不能卸下去除，我佛的训诲，这是第一庄严的衣服。</p></div>
+<div class="para-pair"><p class="p-orig">尽忠</p><p class="p-trans">尽忠</p></div>
+<div class="para-pair"><p class="p-orig">一秉真诚，不被妄侵，事亲接物，了无二心。</p><p class="p-trans">一心秉真诚，不被妄念侵，事奉双亲、待人接物，没有二心。</p></div>
+<div class="para-pair"><p class="p-orig">只期尽分，不计人知，如是之人，堪为世仪。</p><p class="p-trans">只期望竭尽本分，不计较他人知道，如是之人，堪为世间仪范。</p></div>
+<div class="para-pair"><p class="p-orig">守信</p><p class="p-trans">守信</p></div>
+<div class="para-pair"><p class="p-orig">守信之人，言不妄发，说到做到，不矜不伐。</p><p class="p-trans">守信用之人，不乱说话，说到做到，不自夸不卖弄。</p></div>
+<div class="para-pair"><p class="p-orig">无信之人，事事皆假，人所厌弃，不如牛马。</p><p class="p-trans">无信用之人，事事都假，人所厌弃，不如牛马。</p></div>
+<div class="para-pair"><p class="p-orig">仁慈</p><p class="p-trans">仁慈</p></div>
+<div class="para-pair"><p class="p-orig">仁爱慈悲，心之生机，此心愈真，福泽愈深。</p><p class="p-trans">仁爱慈悲，是心中的生机，这个心愈真，福泽就愈深。</p></div>
+<div class="para-pair"><p class="p-orig">若无此心，势必残刻，纵有宿福，折尽受厄。</p><p class="p-trans">如果没有仁爱慈悲之心，势必残忍刻薄，纵有宿福，福报折完，便受灾厄。</p></div>
+<div class="para-pair"><p class="p-orig">不杀生</p><p class="p-trans">不杀生</p></div>
+<div class="para-pair"><p class="p-orig">凡属动物，皆有知觉，贪生怕死，唯命是惜。</p><p class="p-trans">凡是动物，都有知觉，贪生怕死，都一样惜命。</p></div>
+<div class="para-pair"><p class="p-orig">若戏顽杀，及杀而食，现生后世，决定报复。</p><p class="p-trans">如果戏玩而杀，以及杀死而吃掉，现生后世，决定会遭它们的报复。</p></div>
+<div class="para-pair"><p class="p-orig">不偷窃</p><p class="p-trans">不偷窃</p></div>
+<div class="para-pair"><p class="p-orig">凡有主物，不可偷取，偷小丧品，偷大招祸。</p><p class="p-trans">凡是有主的财物，不可以偷取，偷小财丧失人品，偷大财招来灾祸。</p></div>
+<div class="para-pair"><p class="p-orig">偷人之物，折己之福，欲得便宜，反吃大亏。</p><p class="p-trans">偷他人的财物，折自己的福报，想得便宜，反而会吃大亏。</p></div>
+<div class="para-pair"><p class="p-orig">不邪淫</p><p class="p-trans">不邪淫</p></div>
+<div class="para-pair"><p class="p-orig">淫欲为害，伤身丧志，虽属夫妻，亦当节制。</p><p class="p-trans">淫欲的危害，伤身体丧志气，虽然是夫妻，也应当节制。</p></div>
+<div class="para-pair"><p class="p-orig">若是邪淫，更非所宜，古今志士，无一犯之。</p><p class="p-trans">如果是邪淫，就更不能做，古今的仁人志士，没有一个犯邪淫的。</p></div>
+<div class="para-pair"><p class="p-orig">不说谎</p><p class="p-trans">不说谎</p></div>
+<div class="para-pair"><p class="p-orig">言为行表，是本心术，心既不真，行何能正。</p><p class="p-trans">言语是行为的表达，是源自于内心，心既然不真实，行为如何能端正。</p></div>
+<div class="para-pair"><p class="p-orig">望尔后生，切勿妄语，口是心非，终无结局。</p><p class="p-trans">望你们后辈，千万不要妄语，口是心非，终究没有好的结局。</p></div>
+<div class="para-pair"><p class="p-orig">不吸烟</p><p class="p-trans">不吸烟</p></div>
+<div class="para-pair"><p class="p-orig">烟俱勿吸，以伤卫生，口气常臭，熏天熏人。</p><p class="p-trans">一切烟都不要吸，因为有害健康，口气常臭，熏天熏人。</p></div>
+<div class="para-pair"><p class="p-orig">鸦片香烟，其毒极烈，花钱买害，痴人可怜。</p><p class="p-trans">鸦片香烟，它们的毒害极其惨烈，花钱买来祸害，愚痴人真可怜。</p></div>
+<div class="para-pair"><p class="p-orig">不饮酒</p><p class="p-trans">不饮酒</p></div>
+<div class="para-pair"><p class="p-orig">酒是狂药，饮必乱性，醉则反常，越礼犯分。</p><p class="p-trans">酒是狂乱药，饮了必定乱性，喝醉了就一反常态，不守礼法、僭越等级名分。</p></div>
+<div class="para-pair"><p class="p-orig">最好勿吃，免致大喝，聪明智慧，常保清白。</p><p class="p-trans">最好不要喝，免得大喝不止，要聪明智慧，常保清白。</p></div>
+<div class="para-pair"><p class="p-orig">不赌博</p><p class="p-trans">不赌博</p></div>
+<div class="para-pair"><p class="p-orig">赌钱博奕，丧志失时，专心于此，正事弃遗。</p><p class="p-trans">赌钱博奕，丧失志向、浪费时间，专心在这个上面，正事就弃遗不顾了。</p></div>
+<div class="para-pair"><p class="p-orig">有限光阴，送之儿嬉，破家荡产，罪无了期。</p><p class="p-trans">有限的光阴，送给了儿戏，破家荡产，罪过没有了结之期。</p></div>
+<div class="para-pair"><p class="p-orig">不奢侈</p><p class="p-trans">不奢侈</p></div>
+<div class="para-pair"><p class="p-orig">奢侈夸富，买祸买贱，君子下看，盗贼来劫。</p><p class="p-trans">奢侈夸耀财富，买来祸患、买来下贱，君子看不起，盗贼来抢劫。</p></div>
+<div class="para-pair"><p class="p-orig">布衣蔬食，圣贤仪式，现生后世，人各取则。</p><p class="p-trans">穿布衣吃蔬食，是圣贤的行为方式，现生后世，人人各自取为法则，来学习效法。</p></div>
+<div class="para-pair"><p class="p-orig">不傲慢</p><p class="p-trans">不傲慢</p></div>
+<div class="para-pair"><p class="p-orig">傲慢轻人，实自呈短，明人知伊，学养俱罕。</p><p class="p-trans">傲慢轻视他人，实际是自己呈露短处，明眼人知道他，学问修养都很少。</p></div>
+<div class="para-pair"><p class="p-orig">纵到圣位，犹不轻人，绝无凡圣，念存于心。</p><p class="p-trans">纵然到了圣人位，依旧不轻视他人，绝对没有凡夫、圣人，这些念头存于内心。</p></div>
+<div class="para-pair"><p class="p-orig">不嫉妒</p><p class="p-trans">不嫉妒</p></div>
+<div class="para-pair"><p class="p-orig">人有才德，我当赞叹，彼于社会，必有贡献。</p><p class="p-trans">他人有才华品德，我应当赞叹，他对于社会，必定有贡献。</p></div>
+<div class="para-pair"><p class="p-orig">若生嫉妒，是谓愚痴，业报夺汝，宿世慧思。</p><p class="p-trans">如果生起嫉妒，这称为愚痴，这个业报夺去你，宿世的智慧。</p></div>
+<div class="para-pair"><p class="p-orig">不偏见</p><p class="p-trans">不偏见</p></div>
+<div class="para-pair"><p class="p-orig">人有小智，未闻大道，每执己见，以为最妙。</p><p class="p-trans">一个人有小小智慧，没有听闻过大道，每每执着自己的见解，以为是最高妙的。</p></div>
+<div class="para-pair"><p class="p-orig">坐井观天，所见者小，若登高山，前见自了。</p><p class="p-trans">坐井观天，所看见的天空很小，如果登上高山，以前的偏见自然就没有了。</p></div>
+<div class="para-pair"><p class="p-orig">不迁怒</p><p class="p-trans">不迁怒</p></div>
+<div class="para-pair"><p class="p-orig">有富贵人，气量或小，每因拂意，忿怒牢骚。</p><p class="p-trans">有的富贵人，气量很小，每每因为不如意，就愤怒发牢骚。</p></div>
+<div class="para-pair"><p class="p-orig">迁怒无益，自他烦恼，海涵宽恕，是无价宝。</p><p class="p-trans">迁怒于他人没有利益，自己和他人都烦恼，心中海涵宽恕，才是无价之宝。</p></div>
+<div class="para-pair"><p class="p-orig">不耻问</p><p class="p-trans">不耻问</p></div>
+<div class="para-pair"><p class="p-orig">能问不能，多问于寡，冀人从己，故先自下。</p><p class="p-trans">有能力人请问没有能力的人，学问多的人请问学问少的人，希望他人随从自己，所以先要自己谦下。</p></div>
+<div class="para-pair"><p class="p-orig">若是无知，尤当问人，博学审问，造诣方真。</p><p class="p-trans">如果是无知的人，尤其应当问他人，博学详问，这样的造诣方才真实。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【休戚】</span>喜乐和忧虑。亦泛指有利的和不利的遭遇。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【则效】</span>效法。语出《诗·小雅·鹿鸣》：“君子是则是效。”毛传：“是则是效，言可法效也。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【养正】</span>涵养正道。《易·蒙》：“蒙以养正，圣功也。”孔颖达疏：“能以蒙昧隐默自养正道，乃成至圣之功。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【嘉谟】</span>犹嘉谋。嘉谋：高明的经国谋略。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

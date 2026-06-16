@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复丁福保居士书十一 · 印光法师文钞</title>
+<meta name="description" content="昨接手书，并观世音经，大著词典，不胜感激，谢谢。但以字迹过小，不能详阅，只略阅其序与凡例数条而已。如河伯望洋，不胜浩叹。自惭孤陋寡闻，空在佛门，了无所益，感愧无极。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-178/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复丁福保居士书十一 · 印光法师文钞">
+<meta property="og:description" content="昨接手书，并观世音经，大著词典，不胜感激，谢谢。但以字迹过小，不能详阅，只略阅其序与凡例数条而已。如河伯望洋，不胜浩叹。自惭孤陋寡闻，空在佛门，了无所益，感愧无极。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-178/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复丁福保居士书十一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接手书，并观世音经，大著词典，不胜感激，谢谢。但以字迹过小，不能详阅，只略阅其序与凡例数条而已。如河伯望洋，不胜浩叹。自惭孤陋寡闻，空在佛门，了无所益，感愧无极。</p><p class="p-trans">昨天接到信，以及《观世音经》，大著《佛学词典》，非常感激，谢谢。但因为字迹太小，不能详细阅读，只能略微阅读其中的序文与凡例数条而已。如河神望大海，只能浩然长叹。自己惭愧孤陋寡闻，空在佛门，没有一点利益，无比感慨惭愧。</p></div>
+<div class="para-pair"><p class="p-orig">兹有恳者，奉化孙玉仙居士，近于佛学颇生信向。以弥勒菩萨示迹奉化，更切志流通其事迹，企启一切人信心。前年刻出锡六环一书，乃其先祖所著。去春来山送光一部，光阅之，其中所说，皆以凡夫知见所测度者，绝不知佛法之所以然，及弥勒之所以然。而且措意措词，直同俚俗，谬妄亵渎，动人痛悼。光详陈其弊，谓此书流通，于尊先祖，于佛法，于众生，皆无益而有损，祈勿流通。</p><p class="p-trans">现有恳求之人，奉化的孙玉仙居士，近来对于佛学颇生信心归向。因为弥勒菩萨示迹在奉化，更迫切想要流通菩萨的事迹，希望启发一切人的信心。前年刻出《锡六环》一书，是他的先祖所著。去年春天来普陀山，送我一部，我看后，发现其中所说的，都是以凡夫知见来测度，绝对不知道佛法的所以然，以及弥勒菩萨的所以然。而且用意措词，如同俚俗，谬妄亵渎，令人痛心悲悼。我详细陈述其中的弊病，说这本书如果流通，对于其先祖，对于佛法，对于众生，都无益而且有损，请他不要流通。</p></div>
+<div class="para-pair"><p class="p-orig">彼一经光说，遂即劈板，后遂刻弥勒传。此书甚好，彼于春初即寄与光，谓于傅大士道场，得其语录，亦欲刻板。光曾见兴慈法师令彼皈依弟子所刻之本，其错讹不胜其多，恐是此板，因问是否，彼即将其书寄来，系石印者，比兴法师所刻，错讹更多，因令缓刻。</p><p class="p-trans">他经我一说，就立刻劈掉了刻板，后来便刻了《弥勒传》。这本书很好，他在春初，就寄给我，说在傅大士（注1）道场，得到《傅大士语录》，也想要刻板流通。我曾经看过兴慈法师令他的皈依弟子所刻《傅大士语录》的本子，其中的错讹，非常的多，怕是这个刻板，因此问他是不是？他就将所刻的书寄来，是石印的书，比兴慈法师所刻的本子，错误更多，因此令他暂缓刻板。</p></div>
+<div class="para-pair"><p class="p-orig">光前年劝兴慈师另刻，彼亦应许，彼若刻，则不刻亦可，刻则照彼此次刻本，庶少错讹。玉仙又谓傅大士碑记，系陈朝徐陵所作，文深义奥，阅者多不解了，令光恳求阁下为详注，则一切阅者，更能发菩提心，庶可现生往生西方，将来预龙华会。</p><p class="p-trans">我前年劝兴慈法师另外再刻，他也答应了，他如果刻，那么这个本子不刻也可以，如果要刻，就照兴慈法师这次的刻本，或许错误少一些。孙玉仙又说，《傅大士碑记》，是陈朝的徐陵所作，文深义奥，读者大多不理解，让我恳求阁下为之详细注解，那么一切读者，更能发菩提心，才可现生往生西方，将来预入龙华胜会。</p></div>
+<div class="para-pair"><p class="p-orig">光谓注时，必须详看语录，庶知因由及与事迹并其提倡大略。现在所刻，错讹甚多，若不详察，难免或一致误。待兴慈师二次刻出然后再注，一省心力，二无讹谬，庶可引证的确，开人正眼。彼心甚殷，至昨又致书，意欲即成此举，以期与傅大士语录，并弥勒传共行。</p><p class="p-trans">我说注解的时候，必须详细看《傅大士语录》，才知道原因由来以及事迹，还有其中提倡的大略。现在所刻的本子，错误很多，如果不详细察看，难免或许导致错误。等到兴慈法师第二次刻出这本书，然后再作注解，一则省心力，二则无讹谬，才可引证准确，开人正眼。他的心情很殷切，昨天又写信来，想马上做成这件事，以期与《傅大士语录》，和《弥勒传》共同印行。</p></div>
+<div class="para-pair"><p class="p-orig">令光致书阁下，祈其为众生故，发菩提心，俾弥勒道奥，人所共知，不胜恳祷。光因将光所酌订之傅大士集，挂号寄来，并将玉仙之书，一并封于信函。谅必满玉仙与光之微愿，而以大笔为弥勒点出光明，令其照天照地于尽未来际也。</p><p class="p-trans">让我给阁下写信，请你为众生故，发菩提心，使得弥勒菩萨的法道奥妙，众人共知，不胜恳切祈祷，我因此将我所斟酌修订的《傅大士集》，挂号寄来，并将孙玉仙的信，一并封在信内。想必你一定会满孙玉仙与我的微小心愿，而以大笔为弥勒菩萨点出光明，令菩萨的慈光永照天地啊！</p></div>
+<div class="para-pair"><p class="p-orig">傅大士道场，僻居山陬，近来绝少高人莅止。故其语录，频经抄写刻板，每次必增其错讹，或有赘疣，或有脱落。光见之，不胜痛惜。乃以下劣知见，为之酌订。兴慈师重刻，当依此本。</p><p class="p-trans">傅大士的道场，居于偏僻的山落，近来很少有高人来临。所以他的语录，经过多次的抄写刻板，每次必定增加其中的错误，或有增多，或有脱漏。我见了，非常痛心惋惜。于是以我的下劣知见，为这本书斟酌修订。兴慈法师重刻，应当依照这个本子。</p></div>
+<div class="para-pair"><p class="p-orig">然世无善本，光无正知，未必一一皆能如法，其所改正者，当居多半，纵有改讹者，亦只居其少半耳。以世无善本，不能不为酌订。若死守慎重，不敢更换一字之例，则大士一片婆心，将封于错讹脱赘之闲文字中，而无由彰显矣（此光自不量力行酌订之苦衷也）。</p><p class="p-trans">然而世间没有善本，我没有正知，未必一一都能如法，其中所改正的地方，应当居大多半，纵然有改错的地方，也只是居其中的少半。因为世间没有善本，不能不为之斟酌修订。效仿死守慎重，不敢更换一字的惯例，那么傅大士的一片婆心，将被封在错讹、脱漏、增多的无用文字中，而没有办法彰显了（这是我自不量力，进行斟酌修订的苦衷）。</p></div>
+<div class="para-pair"><p class="p-orig">按佛祖统纪卷七三纸后幅，天台六祖法华尊者，即徐陵后身。智者当陈朝，弘法京师，徐陵皈依座下，发愿来生弘法故也。傅大士语录，一书之中，有三四名。书签封面，皆作集，卷一二作传录，卷三作诗偈，卷四竟无正名。</p><p class="p-trans">按《佛祖统纪》卷七三页的后面，天台六祖法华尊者（注2），就是徐陵的后身。智者大师生在陈朝，弘法京师，徐陵皈依智者大师座下，发愿来生弘法的缘故。《傅大士语录》，一书之中，有三四个书名。书条封面，都作《傅大士集》，卷一二作《傅大士传录》，卷三作《傅大士诗偈》，卷四竟然没有正式的名。</p></div>
+<div class="para-pair"><p class="p-orig">碑文则云附录碑文，余则只有附录二字。光酌立一名，通名傅大士集。初二卷旁书传录，三卷诗偈，四卷于碑文则标附碑文，各传则云附某某传。兴慈法师本，已与彼写样子，此系光所存本，故未标示耳。</p><p class="p-trans">碑文则说“附录碑文”，其余就只有“附录”二个字。我斟酌立了一个名，通名为《傅大士集》。初二卷的旁边写“传录”，三卷“诗偈”，四卷是碑文，就标“附碑文”，各传则写“附某某传”。兴慈法师的本子，已经给他写了样子，这是我所存留的本子，所以没有标示罢了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【傅翕】</span>（497年-569年）南朝梁代禅宗著名之尊宿。东阳乌伤（浙江义乌）人。字玄风，号善慧。又称善慧大士、鱼行大士、傅大士、双林大士、东阳大士、乌伤居士。与宝志共称为梁代二大士。尝与里人共捕鱼，每得鱼则盛于竹笼，沉入深水，并谓：“欲去者去，欲止者留。”时人以之为愚。年十六，娶刘氏女妙光，生普建、普成二子。年二十四，于沂水取鱼，适逢胡僧嵩头陀（名达摩），遂弃鱼具，入乌伤县松山双梼树下结庵，自号“双林树下当来解脱善慧大士”，自称由兜率天宫来说法。日常营作，夜归行道，苦行七年，自谓得首楞严定。并能通儒道典籍，学徒渐集，众皆虔诚精进，不惜身命。陈太建元年四月，集弟子告诫毕，趺坐入寂，世寿七十三。弟子葬之于双林山顶，号弥勒下生。撰有心王铭、语录四卷、还源诗等。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【智威】</span>（？年-680年）唐代僧。处州（浙江）缙云人，俗姓蒋。为天台宗第六祖。家世业儒。十八岁时，任本郡之堂长，以娶妇还家，归途中逢一梵僧，诘问其违背昔日所立重誓。盖师前身名徐陵，曾闻智者大师讲经，誓愿来世童幼出家，大布弘化。依此誓愿，师遂往天台山国清寺，投章安灌顶受具足戒，咨受止观心要，定慧俱发，证得法华三昧。高宗上元元年（674年），离国清寺，觅胜地宣讲教法，先至苍岭普通山，以其地隘狭，难容广众，遂入轩辕炼丹山，开拓荆棘，聚石为徒，昼讲夜禅，手写藏典，乃称其地为法华。其后学者众多，习禅者三百人，听讲者七百余人，常分九处安居。
+师身长七尺，登座每有紫云覆顶，恰如云盖，时人敬称为“法华尊者”。又至其居处之上阪往返八十里路，然斋粥禅会不曾少违，人谓其得神足通。贞观二十年（646年）补朝散大夫，并赐大师号。富于词藻，撰制桃岩寺碑与头陀寺碑。永隆三年十一月示寂，世寿不详。吴越王追谥“玄达尊者”。嗣法弟子为慧威，与师并称“二威”，智威称大威，慧威为小威。此外，敦煌出土之六门陀罗尼经论广释一卷，署“尊者智威造”，未详是否即师所著。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

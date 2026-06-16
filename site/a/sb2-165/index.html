@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与陈燮和居士书 · 印光法师文钞</title>
+<meta name="description" content="闻士牧将往云南，以老父已八十有二，不能常侍膝下，陪以念佛为歉。光决于九月灭踪，尔我有师弟之谊，不能不再与汝一番叙述也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-165/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与陈燮和居士书 · 印光法师文钞">
+<meta property="og:description" content="闻士牧将往云南，以老父已八十有二，不能常侍膝下，陪以念佛为歉。光决于九月灭踪，尔我有师弟之谊，不能不再与汝一番叙述也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-165/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">与陈燮和居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">闻士牧将往云南，以老父已八十有二，不能常侍膝下，陪以念佛为歉。光决于九月灭踪，尔我有师弟之谊，不能不再与汝一番叙述也。</p><p class="p-trans">听陈士牧说，将要去云南，因为老父亲已经八十二岁了，不能常常承侍膝下，陪父亲念佛，心中感到歉疚。我决定在九月灭迹隐居，你我有师父弟子的道谊，不能不再对你叙述一番。</p></div>
+<div class="para-pair"><p class="p-orig">人生七十古来已稀，况八十二乎。若其已得不生不灭之证，则固不必用光一番络索。若其未得，固当如丧考妣，如救头然，以生真信，发切愿，持阿弥陀佛万德洪名，以求生西方也。</p><p class="p-trans">人生七十古来稀，何况已经八十二岁了呢？如果自己已经得到不生不灭的证悟，那么固然用不着我的一番啰嗦。如果没有得到，固然应当如同死了父母，如救头上燃着的火一样，迫切地生起真信，发起切愿，执持阿弥陀佛万德洪名，来求生西方啊!</p></div>
+<div class="para-pair"><p class="p-orig">现今世乱已极，为有天地已来之破天荒大乱。况当此衰年，朝不保夕，岂可如少年无知，因循过日，以致虚生浪死。虽遇佛法，仍莫由得其巨益乎。</p><p class="p-trans">现今的世道坏乱到了极点，是有天地以来破天荒的大乱。何况在这个衰残的晚年，朝不保夕，怎么能如同少年人一样无知，因循苟且，一天过一天，以致虚度生命，糊涂死去。虽然遇到了佛法，却仍然无法得到佛法巨大的利益。</p></div>
+<div class="para-pair"><p class="p-orig">幸智育净英等，尚能认真念佛。当于此时立一规约，若至临终，切不可预为著衣洗浴（详看嘉言录临终所示，此不备书），及与哭泣。以致搅乱其清澄之心，令失正念。而与佛不相契合，莫由蒙佛接引，依旧轮回此三途六道之中。则所谓落井下石之孝，其为害也，莫能名焉。</p><p class="p-trans">幸而智育（儿媳）、净英（孙女）等人，还能认真念佛。应当在这个时候，立一个规约，如果到了临终，千万不可以预先为亡者穿衣洗浴（详看《嘉言录》中临终所示，此处不多写），以及哭泣。以致搅乱亡者的清澄之心，令他失去正念。而与佛愿不相契合，不能蒙佛接引，依旧轮回在这三途六道之中。这就是所谓的落井下石的孝道，这样的祸害，无法用语言来描述。</p></div>
+<div class="para-pair"><p class="p-orig">当看嘉言录示生死事大数章，自可悉知。倘于此时不努力，唯图逸适。则千生万劫，了无出苦之日矣。如其心力衰弱，当令子媳孙女等，轮班助念。</p><p class="p-trans">应当看《嘉言录》中开示“生死事大”这几章，自然能全部知道。倘若在这个时候不努力，只图安逸舒适。那么千生万劫，根本没有出苦的日子了。如果自己心力衰弱，应当令儿子、媳妇、孙女等人，轮班助念。</p></div>
+<div class="para-pair"><p class="p-orig">此一事有多种利益。一则辅助己之正念。二则曲为彼等种最胜善根。三则开通风气，以期大家效法。四则若至临终，自不致张罗忙乱，破坏正念。</p><p class="p-trans">助念这一事，有多种利益。一是辅助自己的正念。二是方便为儿孙等人，种下最殊胜的善根。三是开通风气教化，以期大家效法。四是如果到了临终，自然不致有张罗忙乱，破坏正念的情况发生。</p></div>
+<div class="para-pair"><p class="p-orig">临终一关，要紧之极。即平时功夫得力，若遇不知法门之子孙破坏。则便留住此世界，不得往生矣。若知此义，子孙能助念佛号，成就正念，虽平素功夫不甚恰当，亦能往生。是以光于老人，特为致意。切勿谓迂腐，则幸甚幸甚。</p><p class="p-trans">临终这一关，极其重要。即使平时的功夫得力，如果遇到不知法门的子孙来破坏。就会留在这个娑婆世界，不能往生了。如果知道这个义理，子孙能够助念佛号，成就正念，即使平时的功夫不是很恰当，也能往生。所以，我对于老人特别关注。千万不要认为迂腐，就非常庆幸欣慰了。</p></div>
+<p class="p-trans">1、陈燮和：陈士牧的父亲。</p>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

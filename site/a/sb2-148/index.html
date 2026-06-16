@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复郭汉儒居士书 · 印光法师文钞</title>
+<meta name="description" content="三尊佛，释迦施无畏印，右手仰掌在怀，左手俯按左膝。药师佛，弥陀佛，手印相似。药师是大三昧印，右掌在左掌上。弥陀是弥陀印，左掌在右掌上。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-148/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复郭汉儒居士书 · 印光法师文钞">
+<meta property="og:description" content="三尊佛，释迦施无畏印，右手仰掌在怀，左手俯按左膝。药师佛，弥陀佛，手印相似。药师是大三昧印，右掌在左掌上。弥陀是弥陀印，左掌在右掌上。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-148/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复郭汉儒居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">三尊佛，释迦施无畏印，右手仰掌在怀，左手俯按左膝。药师佛，弥陀佛，手印相似。药师是大三昧印，右掌在左掌上。弥陀是弥陀印，左掌在右掌上。</p><p class="p-trans">三尊佛，释迦牟尼佛是施无畏印，右手仰掌在怀中，左手俯按左膝。药师佛、阿弥陀佛，手印相似。药师佛是大三昧印，右掌放在左掌上。阿弥陀佛是弥陀印，左掌放在右掌上。</p></div>
+<div class="para-pair"><p class="p-orig">佛像折绉，当用熨斗下铺桌毡，将佛像放桌上。一人两手令伸平，一人执熨斗熨之。床上毡万不可用。或用长纸铺几层亦可。熨斗用净火加香。底柄须揩干净。不可太热，太热则佛像受伤，但熨伸即已。</p><p class="p-trans">佛像有绉折，应当用熨斗，下面铺好桌毡，将佛像放在桌上。一人用两手将折绉拉平，一人拿熨斗熨。床铺上的毡毯千万不可用。或者用长纸铺几层也可以。熨斗用净火加香加热。底部手柄都必须揩干净。不可太热，太热了，佛像会受损，只要熨平就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">现在西洋战事剧烈，若不即结束，则将延于吾国。凡中外各国强弱不一，其受害固皆同等。非败者受害，而胜者得利。按实而论，被人杀者固可怜，专杀人者更可怜。彼止知目前，则胜者似乎得益。若并来生后世看之，杀人者比被人杀者苦深万倍。惜世人皆不知也。</p><p class="p-trans">现在西方的战争剧烈，如果不很快结束，那么将会蔓延到我国。凡是中外各国，虽强弱不一，然而受害都是同等的。并不是战败的国家受害，而战胜的国家得利。照实而论，被人杀的固然可怜，然而专门杀人的人更可怜。他们只知道眼前，战胜的一方似乎得到了利益。如果将来生后世一起看，杀人的比被人杀的，痛苦要深万倍。可惜世人都不知道啊！</p></div>
+<div class="para-pair"><p class="p-orig">清凉山志，载隋代州赵良相，家资巨万，生二子，长曰盈，次曰孟，盈强孟弱。其父将终，分家资为二，孟得其上。父死，盈尽霸孟之家业，但与孟园房一所，孟佣力自活。未久盈死，生孟家为子，名环。又未久孟死，生盈家为盈孙，名先。</p><p class="p-trans">《清凉山志》中，记载隋朝代州的赵良相，家资巨万，生了二个儿子，长子名赵盈，次子名赵孟，赵盈强势，赵孟懦弱。他父亲将要命终，将家产分为二份，赵孟得到好的那一份。父亲死后，赵盈霸占了赵孟的那份家业，只给赵孟一所房屋和园子，赵孟靠替人做工，养活自己。不久，赵盈死了，投生到赵孟家为儿子，名赵环。又不久，赵孟也死了，生到赵盈家为赵盈的孙子，名赵先。</p></div>
+<div class="para-pair"><p class="p-orig">环为盈家之仆，先欲朝五台，命环随行。环知其伯霸产事，思欲杀先，幸得其便。行至五台僻处，持所匿刀谓先曰，汝祖霸我家业，令我世穷，我今杀汝以泄愤。先疾走，环追之，入一茅篷。</p><p class="p-trans">赵环成了赵盈家的仆人，赵先想要朝拜五台山，命赵环随行。赵环知道他伯父霸占家产的事，心里想要杀死赵先，庆幸得到了下手的机会。他们走到五台山偏僻之处，赵环拿出藏在身上的刀对赵先说：你祖父霸占我家的产业，令我世代贫穷，我今天要杀你以泄心头之恨。赵先急忙逃走，赵环紧追不放，追到一个茅篷之中。</p></div>
+<div class="para-pair"><p class="p-orig">一老僧止之曰，此处不可行凶。环曰吾杀怨耳。老僧令坐，各与一杯茶饮之，遂知前世事。各哭起来，遂在山出家。倘各国皆见前后世事，还肯专以杀人为强国之要政乎。</p><p class="p-trans">一位老僧制止他说：此处不可行凶。赵环说：我要杀我的怨家。老僧令他们坐下，各自给他们喝了一杯茶，于是知道了前世的事。二人哭起来，于是在五台山出家。倘若每个国家都能看到前世后世的事，还肯专门以杀人作为强国的重要政策吗？</p></div>
+<div class="para-pair"><p class="p-orig">山门，按义当作三门，乃三解脱门也。一门而具三义，一空解脱门，二无相解脱门，三无愿解脱门。由三解脱门，直入涅槃宝殿故。由空故无相，由无相故无愿也。了知一切诸法，当体即空。则空有均不可名，故无相。无相则无执空执有之心愿也。</p><p class="p-trans">山门，按照义理应当写作三门，就是三解脱门。一门具有三种意义，一、空解脱门；二、无相解脱门；三、无愿解脱门。由这三解脱门，直接进入涅槃宝殿的缘故。由于空，所以无相，由于无相，所以无愿。了知一切诸法，当体即空。那么空、有都不可名，所以无相。无相，就没有执空、执有的心愿。</p></div>
+<div class="para-pair"><p class="p-orig">提倡佛学，当以敦伦尽分，闲邪存诚，诸恶莫作，众善奉行为本。能如是，则于世出世法均不悖。否则尚是名教罪人，何堪学佛，以望了生脱死乎。诸恶莫作，众善奉行，此佛戒经中之略戒。文昌阴骘文引用之。惟知阴骘文有此语，不知其来也远。</p><p class="p-trans">提倡佛学，应当以敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行为根本。能够如此，则对于世间法、出世间法都不违悖。否则，尚且是名教的罪人，哪能学佛，以期了生脱死呢？诸恶莫作，众善奉行，这是佛戒经中的略戒。《文昌阴骘文》引用了这两句话。只知道《阴骘文》中有这两句话，却不知这两句话的来源非常久远。</p></div>
+<div class="para-pair"><p class="p-orig">末世学佛，所宜注重者，在知因果，与修净土。以知因果，则不敢自欺欺人，作伤天害理，损人利己之事。修净土，则虽是具缚凡夫，便可仗佛慈力，往生西方。诸余法门，皆须烦恼断尽，方可了生脱死。否则纵令大彻大悟，有大智慧，大辩才，晓得过去未来，要去就去，要来就来，尚不能了。况具足烦恼者乎。</p><p class="p-trans">末法时代的众生学佛，所应该注重的，在明白因果，与修习净土。因为明白因果，就不敢自欺欺人，做伤天害理、损人利己的事。修习净土，那么即使是具足系缚的凡夫，也可仗佛慈力，往生西方。其余一切法门，都必须烦恼断尽，才可了生脱死。否则，纵然是大彻大悟，有大智慧，大辩才，知道过去未来，要去就去，要来就来，尚且不能了生死。何况是具足烦恼的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">昨接贵地佛教会航空信，知甘地亢旱，与陕无二，不胜感伤。贵会三七日已满，尚未得透雨。魏慧滋以灵岩山僧，皆真实修行者。然灾相甚大，只好尽心力而为之。其得普雨与否，不能逆料。</p><p class="p-trans">昨天接到贵地佛教会的航空信，知道甘肃大旱，与陕西没有二样，非常感叹悲伤。贵会三七二十一天的佛号已经圆满，尚未求得一场透雨。魏慧滋因为灵岩山僧，都是真实修行的人。（所以请灵岩山僧人祈雨，）然而灾相太大，只好尽心尽力地来做。能不能求得大雨，不能预料。</p></div>
+<div class="para-pair"><p class="p-orig">慧滋航空信，亦于午后收到。即函令灵岩，于十六日请二十僧，念观音圣号七日，求为各旱区通下普雨。二十人按例须二百元，由光代贵会出，不须寄款来。贵会宜普告当地人民，同念南无观世音菩萨圣号。不必多作仪式，但以念菩萨功德，为岳渎灵聪回向增长威福，为诸孤魂回向往生西方，较为有益。即祭神祇，亦勿用荤腥。事事以诚敬为本，不在仪式之好看也。</p><p class="p-trans">魏慧滋的航空信，也在午后收到。我立刻写信令灵岩寺，在十六日请二十位僧人，念观世音菩萨圣号七天，祈求为各个干旱地区普遍降下大雨。二十个人，按照惯例须二百元，由我代贵会出钱，不须你们寄钱来。贵会应该普告当地人民，同念“南无观世音菩萨”圣号。不必多作仪式，只以念菩萨功德，为五岳四渎，护法神灵回向增长威力福德。为一切孤魂回向往生西方，比较有益。即使祭祀神祇，也不要用荤腥。事事都以至诚恭敬为根本，不在仪式好看不好看。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【代州】</span>即今忻州市代县，位于山西省东北部，北踞北岳恒山余脉，南跨佛教圣地五台山麓。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【名教】</span>指以“正名定分”为主的封建礼教。旧时为维护和加强封建制度而对人们思想行为而设置的一整套规范。名教观念是儒教思想的重要组成部分。名即名分，教即教化，名教即通过上定名分来教化天下，以维护社会的伦理纲常、等级制度。名教观念最初始于孔子。孔子强调以等级名分教化社会，认为为政首要要“正名”，做到“君君、臣臣、父父、子子”。董仲舒据此倡导审查名号，教化万民。“以名为教”，内容主要就是三纲五常。魏晋时期曾兴起围绕“名教”与“自然”关系的论辩。宋明以后，名教被称作“天理”，成为禁锢人们言行的桎梏，如违犯封建伦常，即被视为“名教罪人”。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【岳渎】</span>五岳和四渎的并称。五岳：我国五大名山的总称。指东岳泰山、南岳衡山、西岳华山、北岳恒山、中岳嵩山。四渎：长江、黄河、淮河、济水的合称。《礼记·王制》：“天子祭天下名山大川，五岳视三公，四渎视诸侯。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>南京素食同缘社开示法语 （黄忏华，龚慧云）谨记 · 印光法师文钞</title>
+<meta name="description" content="印光无知无识，少参少学。今承诸大居士之招，实深惭愧。窃维佛法有五乘。（一）人天乘。人乘持五戒，得生人道。天乘行十善，得生欲界天。加四禅四定，则生色无色界天。（二）声闻乘。修四谛，得四沙门果。（三）缘觉乘。观十二因缘，得辟支佛果。（四）菩萨乘。修六度万行，证菩萨果。（五）佛乘。行大慈大悲，成正等觉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-321/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="南京素食同缘社开示法语 （黄忏华，龚慧云）谨记 · 印光法师文钞">
+<meta property="og:description" content="印光无知无识，少参少学。今承诸大居士之招，实深惭愧。窃维佛法有五乘。（一）人天乘。人乘持五戒，得生人道。天乘行十善，得生欲界天。加四禅四定，则生色无色界天。（二）声闻乘。修四谛，得四沙门果。（三）缘觉乘。观十二因缘，得辟支佛果。（四）菩萨乘。修六度万行，证菩萨果。（五）佛乘。行大慈大悲，成正等觉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-321/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">南京素食同缘社开示法语 （黄忏华，龚慧云）谨记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">印光无知无识，少参少学。今承诸大居士之招，实深惭愧。窃维佛法有五乘。（一）人天乘。人乘持五戒，得生人道。天乘行十善，得生欲界天。加四禅四定，则生色无色界天。（二）声闻乘。修四谛，得四沙门果。（三）缘觉乘。观十二因缘，得辟支佛果。（四）菩萨乘。修六度万行，证菩萨果。（五）佛乘。行大慈大悲，成正等觉。</p><p class="p-trans">印光无知无识，少有参学。今天承蒙各位大居士相招，实在深感惭愧。我认为佛法有五乘。（一）人天乘。人乘持五戒，得生人道。天乘行十善，得生欲界天。加上四禅生色界天，四定生无色界天。（二）声闻乘。修四谛，得四沙门果。（三）缘觉乘。观十二因缘，得辟支佛果。（四）菩萨乘。修六度万行，证菩萨果。（五）佛乘。行大慈大悲，成正等觉。</p></div>
+<div class="para-pair"><p class="p-orig">人天乘，而兼菩萨乘佛乘者，其唯净土法门乎。盖人天乘，只修五戒十善，俱是有漏功德。惟此净土法门，乃能出三界，了生死。修净土者，必须敦笃伦常，恪尽己分，父慈子孝，兄友弟恭，夫和妇顺。</p><p class="p-trans">人天乘法中，而兼有菩萨乘、佛乘的，不就只有净土法门吗？因为人天乘，只修五戒十善，都是有漏功德。只有净土法门，才能出三界，了生死。修习净土的人，必须敦睦笃行伦理纲常，恪守竭尽自己本分，父亲慈祥，儿子孝顺，兄长友爱，弟弟恭敬，丈夫和善，妻子温顺。</p></div>
+<div class="para-pair"><p class="p-orig">加以四弘誓愿，广大其心，自行化他。普令内而父母妻子，外而邻里乡党，皆修五戒十善，并修净土法门。以深信愿，念佛求生西方。是人虽系凡夫，实即菩萨。何以故，以心广大故。</p><p class="p-trans">加上四弘誓愿，广大自己的心量，自行化他。普遍使得家内的父母妻子，家外的邻里乡人，全都修持五戒十善，并且修习净土法门。以深信愿，念佛求生西方。这个人虽然是凡夫，而实际上是菩萨。为什么呢？因为他心量广大的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">昔有一沙弥随一尊者行路，沙弥忽发自利利他上求菩提，下化众生之愿，尊者即令其前行。沙弥后忽转念众生若是之多，如何度脱得尽，不如自利为得，时尊者即令其随后。沙弥忽又转念，仍当度脱众生，尊者复令其前行。</p><p class="p-trans">过去有一沙弥跟随一位尊者行路，沙弥忽然发起自利利他，上求菩提，下化众生的大愿，尊者就令沙弥走在前面。沙弥后来又忽然转念想：众生如此之多，如何度脱得完，不如自利为好，这时尊者就让沙弥跟在自己后面。沙弥忽然又转念想：仍然应当度脱众生，尊者就又让沙弥走在自己的前面。</p></div>
+<div class="para-pair"><p class="p-orig">沙弥异而问之。尊者曰，尔初发大菩提心，即是菩萨，我虽罗汉，乃系小乘，故请尔前行。继尔退菩提心，则我乃圣人，尔乃凡夫，理应在后。后尔又发菩提心，故仍请尔前行。由此观之，发菩提心，功德无量无边。我等欲增长善根，非发菩提心不可。</p><p class="p-trans">沙弥感到奇怪，问其原因。尊者说：你最初发大菩提心，你就是菩萨，我虽然是罗汉，却是小乘，所以请你走在前面。接着你退失了菩提心，而我是圣人，你是凡夫，理应跟在我后面。后来你又发菩提心，所以我仍然请你走在前面。由此看来，发菩提心，功德无量无边。我们想要增长善根，非发菩提心不可。</p></div>
+<div class="para-pair"><p class="p-orig">现当末劫，礼教云亡，欲挽回世道人心，必先提倡因果报应，生死轮回。世间圣人所说因果，如积善之家，必有余庆，作善降之百祥等语，辞简义赅，后人每习焉不察。出世间圣人所说因果，至为详尽。</p><p class="p-trans">现在正值末法时代，礼教已经没有了，想要挽回世道人心，必须先提倡因果报应，生死轮回。世间圣人所说的因果道理，如“积善之家，必有余庆”，“作善降之百祥”等话语，言简意赅，后人常常因为习惯了，就觉察不了。出世间圣人所说的因果，十分详尽。</p></div>
+<div class="para-pair"><p class="p-orig">上智得以了生脱死，超凡入圣。中下之资，鉴于行恶而得恶果，行善而得善报，亦可勉于为善。虽穷凶极恶之人，亦有惮而不敢为。故因果报应，实彻上彻下之一法。</p><p class="p-trans">上智之人凭借因果，得以了生脱死，超凡入圣。中下之人，考虑到行恶得恶果，行善得善报，也可以勉力行善。即使是穷凶极恶之人，也有所忌惮而不敢胡作非为。所以因果报应，实在是贯通上下的一个大法。</p></div>
+<div class="para-pair"><p class="p-orig">或以因果报应之说，系属小乘。不知六度万行，亦是因果。如来成正等觉，乃至凡夫堕阿鼻地狱，亦无非因果也。故佛教倡明因果，其有利于人者，深矣。</p><p class="p-trans">有人将因果报应之说，认为是小乘。（那是因为）不知道六度万行，也是因果。如来成正等觉，乃至凡夫堕阿鼻地狱，也无非是因果。所以佛教提倡阐明因果，此利益人的地方，很深啊！</p></div>
+<div class="para-pair"><p class="p-orig">昔文王发政施仁，泽及枯骨，然不及二三百年，而杀人殉葬之风，遍于天下。而且以多为荣，天子诸侯大夫士，皆随力而为之，竟有至数百上千者。</p><p class="p-trans">过去周文王发布政令，广施仁德，恩泽被及路边的枯骨，然而不到二三百年，杀人殉葬的风气，就遍于天下。而且以殉葬的人多为荣，天子、诸侯、大夫、士，都随自己的力量来做这件事，竟然有成百上千的情况。</p></div>
+<div class="para-pair"><p class="p-orig">以秦穆公之贤，尚杀百七十余人以殉葬。子车氏三子，乃国之良臣，皆杀以殉葬。况其余者乎。其原皆由于不知三世因果之故耳。自佛法入中国以后，史册上未闻有殉葬之举。此亦未始非如来三世因果之说有以致之也。</p><p class="p-trans">秦穆公这样贤德，尚且杀了一百七十多人来殉葬。子车氏三子，是国家的良臣，都被杀死来殉葬。何况其余的人呢？其中的原由，都是由于不知道三世因果的缘故。自从佛法进入中国以后，史册上就再没有见到有殉葬的情况了。这也未必不是如来三世因果之说而导致的。</p></div>
+<div class="para-pair"><p class="p-orig">当今之世，杀劫方盛，尤当提倡戒杀吃素。杀劫者，杀业所成。杀业最大者，曰食肉。因食肉之故，感得一切天灾人祸，旱干水涝，淫雨瘟蝗。食肉之害甚多，说不能尽。姑举一喻以明之。</p><p class="p-trans">当今之世，杀劫正盛，尤其应当提倡戒杀吃素。杀劫，是杀业所成。杀业最大的，就是吃肉。因为吃肉的缘故，感得一切天灾人祸，旱灾、水灾，淫雨、瘟疫、蝗虫。吃肉的害处很多，说不能尽。姑且举一个比喻来说明。</p></div>
+<div class="para-pair"><p class="p-orig">昔列国时，鲁有二勇士，各处一地，一日相逢，沽酒共饮。一曰，无肉不能成欢，当买肉。一曰，尔我皆肉也，何更求肉乎。乃互相割食，兼复割以互奉，以致于死。</p><p class="p-trans">过去春秋战国时期，鲁国有两位勇士，各在一方，一天二人相遇，买酒共饮。一个说：没有肉吃，不够痛快，应当买肉。一个说：你我都是肉，哪里还要去买肉呢？于是，这两个人互相割着吃，又割肉互相献给对方，以致最后双双死去。</p></div>
+<div class="para-pair"><p class="p-orig">此事在吾人视之，以为大愚。不知食肉之人，不悉因果报应。他日人死为畜，畜死为人，其互相啖食，何异于是。不过隔世同时之别耳。且尤有甚者，二勇士互食而死，其因果报应，一时俱了。而食肉之人，因果且纠缠不已，报应亦无有已时。楞严经云，以人食羊，羊死为人，人死为羊。如是乃至十生之类，死死生生，互来相啖。经有明文，至可悚惧。</p><p class="p-trans">此事在我们看来，认为他们大为愚蠢。不知道吃肉的人，不明白因果报应。有一天，人死变为畜生，畜生死了变为人，彼此互相吞吃，与这二位勇士相比有什么不同呢？不过是隔世与同时的差别罢了。而且还有更严重的，这二位勇士互相割肉吃而死，彼此的因果报应，当下就都了结了。而吃肉的人，因果纠缠不已，报应也没有停止的时候。《楞严经》中说：“以人食羊，羊死为人，人死为羊。如是乃至十生之类，死死生生，互来相啖。”经中有明文，实在令人惊恐戒惧啊！</p></div>
+<div class="para-pair"><p class="p-orig">兹又略述数义，以明不宜食肉之理。（一）由不忍之心，一切含灵，皆是同体。由仁民而爱物，太和元气，布满人间。则知杀戮生灵，了无义理。一切众生，悉皆贪生怕死，我何忍残生害命，以充口腹。</p><p class="p-trans">现在再大略叙述几条义理，来说明不应该吃肉的道理。（一）由不忍之心，一切生命，与我都是同体。由于仁慈人民而博爱万物，太和元气，就会布满人间。那么就会知道杀害生灵，没有道理。一切众生，全都贪生怕死，我如何忍心残害生命，来充饱我的口腹呢。</p></div>
+<div class="para-pair"><p class="p-orig">（二）因果报应。一切生灵，皆由往昔不知因果，堕落畜类。今我杀食其肉，他年彼之恶报既尽，我之杀业方成，则我亦将为彼俎上肉矣。是故戒杀吃素，非特为生灵计，亦为自身计也。</p><p class="p-trans">（二）因果报应。一切生灵，都是由于往昔不知道因果，堕落为畜生类。现在我杀死吃它的肉，等到某一天它的恶报尽了，我的杀业成就，那么我也将要成为他刀板上的肉了。所以戒杀吃素，不是特别为了被杀的生灵考虑，也是为我们自己考虑。</p></div>
+<div class="para-pair"><p class="p-orig">明翰林刘玉绶，船泊苏州，梦一伟丈夫求救，自称宋偏将军曹翰。因屠江州，世世作猪。此对门屠者，顷所宰第一猪，即我也。祈为救援。醒而果见屠将杀猪，遂买而放之阊门一寺中。</p><p class="p-trans">明朝的翰林刘玉绶，坐船停靠在苏州，梦到一个身材高大的男子向他求救，自称是宋朝的偏将军曹翰。因为屠杀江州城，世世变作猪。现在对门的屠户，一会儿要宰杀的第一头猪，就是我。请您快快救救我。刘玉绶醒来，果然见到屠夫将要杀猪，于是把那头猪买来放生在苏州阊门的一座寺院中。</p></div>
+<div class="para-pair"><p class="p-orig">凡呼曹翰者，其猪皆回首望之。是可为人变畜生，畜生变人之证。载籍上活阎王活小鬼之事甚多。此皆天地鬼神，透露一点因果报应生死轮回之消息，以警戒世人也。</p><p class="p-trans">凡是有人叫“曹翰”，这头猪都回头相望。这可以作为人变畜生，畜生变人的铁证。记载在书籍上，活阎王，活小鬼的事情很多。这都是天地鬼神，透露一点因果报应，生死轮回的消息，来警戒世人啊！</p></div>
+<div class="para-pair"><p class="p-orig">（三）一切众生，皆我过去父母眷属。吾人既明因果轮回，则一生有一生之父母眷属。历劫多生，有历劫多生之父母眷属。如是历劫多生之父母眷属，轮回六道。其间若有造恶者，难免不投入三途。</p><p class="p-trans">（三）一切众生，都是我过去的父母眷属。我们既然明白因果轮回，那么一生有一生的父母眷属。历劫多生，有历劫多生的父母眷属。如是历劫多生的父母眷属，轮回六道。其中如果有造恶的，难免不投入三途恶道之中。</p></div>
+<div class="para-pair"><p class="p-orig">故吾人对六道众生，应作父母妻子想。岂有孝子贤孙，而食其亲者乎。岂有慈父慈母，而食其子女者乎。此际一思量，不忍食亦不敢食矣。</p><p class="p-trans">所以我们对于六道众生，应作父母、妻子想。哪有孝子贤孙，吃自己亲人的呢？哪有慈父慈母，吞食自己子女的呢？此时想一想，就不忍吃也不敢吃了。</p></div>
+<div class="para-pair"><p class="p-orig">即祭祖先，亦不应用肉，以名为敬之，实则害之也。至于以肉食奉父母，皆令父母折福获殃。父母有福德善根者，损其福德善根。无福德善根者，增其受杀恶业。</p><p class="p-trans">即使祭祀祖先，也不应该用肉，因为这样名义是敬祖先，实际上却是害祖先。至于用肉食奉养父母，都是令父母折福获殃。父母有福德善根的，损害父母的福德善根。没有福德善根的，增加父母遭受杀业的恶因。</p></div>
+<div class="para-pair"><p class="p-orig">昔佛在世时，一寡妇为夫周年，购肉以祭。途遇如来，如来谓之曰，此肉汝夫之所转变者也，何能以彼之肉，祭彼之灵乎。即推而敬天地，祀鬼神，亦不应用肉。天地鬼神，岂有不深明因果，贪此秽浊腥臊之肉，而来格来享乎。是则用血食以奉祀者，欲求福而反更得祸也。</p><p class="p-trans">过去佛在世时，一个寡妇为丈夫的周年祭，买肉来祭祀。途中遇到如来，如来对她说：你买来的肉，是你丈夫所转变的，你怎能用他的肉，去祭祀他的灵魂呢？推及敬奉天地，祭祀鬼神，也不应该用肉。天地鬼神，岂有不深明因果，贪图这种秽浊腥臊之肉，而来接受祭祀，歆享供品呢？所以用血肉来供奉祭祀的，是想求福却反而得祸啊！</p></div>
+<div class="para-pair"><p class="p-orig">（四）一切众生，皆是未来诸佛。以一切众生，皆具佛性，皆当作佛，故是未来诸佛。且畜类中，时有佛菩萨化现于其中，方便度生。如清凉志中载薄荷事。</p><p class="p-trans">（四）一切众生，都是未来诸佛。因为一切众生，皆具佛性，皆当作佛，所以是未来诸佛。况且畜生道中，时时有佛菩萨化现在其中，方便度众生。例如《清凉山志》中记载薄荷的这件事。</p></div>
+<div class="para-pair"><p class="p-orig">一僧在五台，遇一异僧，出一函，嘱交薄荷，未言地址。一日过卫辉，见一群小儿呼薄荷。僧问薄荷何在。小儿指墙下所卧之猪曰，这不是。僧取书呼薄荷掷之，其猪人立，以两蹄接而置口中，便立化。方知此猪，乃菩萨所现。</p><p class="p-trans">一位僧人在五台山，遇到一位奇异的僧人，拿出一封信，嘱咐他交给薄荷，但并未说明地址。一天，这位僧人经过河南卫辉，见到一群小孩叫“薄荷，薄荷”。僧人问：薄荷在哪里？小孩指着墙下躺卧的一头猪说：这不就是薄荷。僧人取出信，叫着薄荷之名，将信扔过去，这头猪像人一样站立起来，用两个蹄子接住信，放到口中，便站着往生了。大家这才知道这头猪，是菩萨示现。</p></div>
+<div class="para-pair"><p class="p-orig">其屠所杀甚多，若其猪至薄荷前，则便任其宰杀，了不逃走叫呼，故其屠爱惜薄荷。凡欲杀猪，牵薄荷至其猪边围绕之，则直同杀死者一般。以故多年养而不杀。以其猪清洁，爱食薄荷，故以为名。</p><p class="p-trans">这个屠户所杀的猪非常多，如果将要被杀的猪到了薄荷的面前，就乖乖地听任屠夫宰杀，一点都不会逃走挣扎呼叫，所以这个屠夫很爱惜薄荷。当想要杀猪时，就牵薄荷到这头猪边上围绕几圈，就如同杀死猪一样。所以，多年豢养而不杀。因为这头猪很爱清洁，爱吃薄荷，所以给它取名薄荷。</p></div>
+<div class="para-pair"><p class="p-orig">初其僧受异僧之函而去，于途中思之，此函将投何所，乃私拆其封。大意谓，度众生若得度脱，即当速返，免致久则迷失。僧异之，复为封讫。至是，方知薄荷乃大菩萨也。绕猪一匝，而群猪即证无生法忍。其威德神力，岂可思议乎哉。</p><p class="p-trans">当初，这位僧人接受异僧的信离开，在途中想，这封信要投寄到什么地方呢？于是私自拆开这封信。信中的大意是：度众生，如果得以度脱，应当尽快返回，免得久了会迷失。僧人很惊异，又将信封起来。此时，他才知道薄荷是大菩萨啊！薄荷绕猪一圈，而群猪就证得无生法忍。这个威德神力，哪里是可以心思口议的呢？</p></div>
+<div class="para-pair"><p class="p-orig">又唐文宗喜食蛤，一日有一蛤坚合不开。帝亲开之，中有肉身观音大士像，庄严异常。由此观之，肉尚可食乎。倘误食佛菩萨所化之身，其罪过可胜言哉。吾人若知此理，自不敢食肉，亦不忍食肉矣。</p><p class="p-trans">还有唐文宗喜欢吃蛤蜊，一天，有一只蛤蜊紧合，打不开。皇帝亲自来打开，蛤中有肉身观音大士像，非常庄严。由此看来，肉还能吃吗？倘若误吃佛菩萨所化之身，这个罪过能说得完吗？我们如果知道了这个道理，自然就不敢吃肉，也不忍吃肉了。</p></div>
+<div class="para-pair"><p class="p-orig">吾人当真为生死发菩提心，以深信愿，持佛名号，求生西方。不须别修他法。若仗自力修禅定，欲了生死，甚难甚难。以其须至业尽情空，见思惑尽，方出生死。</p><p class="p-trans">我们应当真为生死，发菩提心，以深信愿，持佛名号，求生西方。不须另外修其他法门。如果仗自力，修禅定，想要了生死，太难太难了。因为这样必须到业尽情空，见思惑断尽，才能出离生死。</p></div>
+<div class="para-pair"><p class="p-orig">佛在世时，见思惑业断尽无余者，固不乏其人。末法时代，根性陋劣，断惑证真者，诚不易得。惟有净土一门，能于临命终时，仗佛慈力，往生西方极乐世界。即已了生脱死，超凡入圣矣。</p><p class="p-trans">佛在世时，见思惑业能够断尽无余的，固然不乏其人。末法时代，根性陋劣，断惑证真的人，实在不容易得到。惟有净土法门，能于临命终时，仗佛慈力，往生西方极乐世界。就已经了生脱死，超凡入圣了。</p></div>
+<div class="para-pair"><p class="p-orig">又净土法门，不可看得太轻。以法身大士，如观音，势至，文殊，普贤等，皆不能出此法门之外。亦不可看得太难。以凡有心者，皆堪作佛。但持阿弥陀佛万德洪名，则往生一事，如操左券。</p><p class="p-trans">另外，净土法门，不能将其看得太轻。因为法身大士，如观音，势至，文殊，普贤等大菩萨，都不能超出这个法门之外。也不能将净土法门看得太难。因为凡是有心的众生，都能作佛。只要执持阿弥陀佛万德洪名，那么往生这件事，就如同手持左券拿回存物一般。</p></div>
+<div class="para-pair"><p class="p-orig">修净土者，当孝养父母，奉事师长，慈心不杀，修十善业。身三，口四，意三，皆归于善，是为三世诸佛净业正因。次则受持三皈，具足五戒，不犯威仪。次则深信因果，发菩提心，读诵大乘，劝进行者。但皆以孝养父母等世善为根本。</p><p class="p-trans">修习净土的人，应当孝养父母，奉事师长，慈心不杀，修十善业。身三，口四，意三，都归于善法，这是三世诸佛，净业正因。其次则是受持三皈，具足五戒，不犯威仪。再其次是深信因果，发菩提心，读诵大乘，劝进行者。但都是以孝养父母等世善作为根本。</p></div>
+<div class="para-pair"><p class="p-orig">若依余法门，皆仗自力。如渡海然，有翼者固能飞渡。能浮者，已不足恃，况不能浮者乎。仗佛力，则如乘轮渡海，须臾即达彼岸。又如平民致身贵显，殊非易事，而王子甫诞，即为储君。此其间自力他力，难易得失，不可同时而语也。</p><p class="p-trans">如果依其它法门，都是依仗自力。如渡越大海一样，有翅膀的，固然能够飞渡过去。能够游泳的，已经不足以作为依恃，何况是不会游泳的人呢？仗佛力，就如同乘轮船渡过大海，须臾之间，就到达彼岸。又如平民百姓，要使自身富贵显达，实在是不容易的事，而王子刚刚诞生，就成为储君。这之间的自力他力，难易得失，不能相提并论啊！</p></div>
+<div class="para-pair"><p class="p-orig">顾号为通宗通教之人，往往不信净土法门，且目为愚夫愚妇之所为。曷不观夫大智律师，五祖戒草堂青之已事乎。</p><p class="p-trans">看看那些自命为通宗通教的人，往往不相信净土法门，而且将其看作是愚夫愚妇所做的事。为何不看看大智律师，五祖师戒禅师，草堂青禅师的事迹呢？</p></div>
+<div class="para-pair"><p class="p-orig">大智律师，初颇藐视净土，后读续高僧传，见慧布法师云，方土虽净，非吾所愿，假使十二大劫在莲华中，受诸快乐，何如我在五浊恶世教化众生乎，遂生诽谤。后因大病，始知毫无把握，遂发愿尽此报身，弘扬净土。二十余年，手不释卷，以净土为依皈。</p><p class="p-trans">大智律师，最初很轻视净土，后来读《续高僧传》，见到慧布法师说：“极乐净土虽然清净，不是我的愿求，假使十二大劫在莲华中，受诸快乐，哪如我在五浊恶世教化众生呢？”于是对净土法门生起诽谤。后来因为大病，才知道自己对生死毫无把握，于是发愿尽此报身，弘扬净土。二十多年，手不释卷，以净土为依皈。</p></div>
+<div class="para-pair"><p class="p-orig">五祖戒禅师，草堂青禅师，其功行之高，迥出恒流。徒以见思惑未能净尽，又复轮转人间。故知了生脱死，入圣超凡，舍净土别无长策。</p><p class="p-trans">五祖师戒禅师，草堂青禅师，他们功德道行之高，迥然超出常人。只是因为见思惑，没能净除究尽，又再轮转人间。所以知道了生脱死，超凡入圣，舍弃净土别无良策。</p></div>
+<div class="para-pair"><p class="p-orig">念佛一门，须信愿行具足。信之既深，则发愿必切。发愿既切，则行持必力。但念弥陀，莫加他法。当以真信切愿，执持名号。都摄六根，净念相继。心念耳听，字字句句，念得分明，听得分明，便是往生正因。</p><p class="p-trans">念佛法门，必须信愿行具足。信的深，那么发愿必定恳切。发愿既然恳切，那么行持必定有力。只要念阿弥陀佛，不要加修其它法门。应当以真信切愿，执持名号。都摄六根，净念相继。心念耳听，字字句句，念得分明，听得分明，就是往生正因。</p></div>
+<div class="para-pair"><p class="p-orig">既以此法自行，必须又以此法化他，则化功归己，实为往生最胜资粮。惟当先劝自家父母兄弟妻子，以身为本，由亲而疏。</p><p class="p-trans">既以净土法门自行，必须再以净土法门教化他人，那么教化的功德归于自己，实在是往生最殊胜的资粮。应当先劝自家的父母、兄弟、妻子，以身体力行为根本，由亲人而后劝化旁人。</p></div>
+<div class="para-pair"><p class="p-orig">又念佛功德，不但能往生西方，并能消除奇灾横祸。凡怨业病，医不能治者，若至诚念佛，久之皆得痊愈。以医者只能医病，不能医业。惟念佛则身病心病，无有不治也。</p><p class="p-trans">又念佛功德，不但能往生西方，并且能消除奇灾横祸。凡是怨业病，医生不能治好的，如果至诚念佛，久而久之，都能得以痊愈。因为医生只能医病，不能医业。惟有念佛则身病心病，没有治不好的。</p></div>
+<div class="para-pair"><p class="p-orig">伏愿诸居士都要发菩提心，提倡因果报应，生死轮回，戒杀护生，吃素念佛。所谓以果地觉，为因地心。故得因该果海，果彻因源。诚所谓甚难稀有之法也。（丙寅七月）</p><p class="p-trans">伏愿诸位居士，都要发菩提心，提倡因果报应，生死轮回，戒杀护生，吃素念佛。所谓以果地觉，为因地心。故得因行该摄果海，果海通彻因源。实在是所谓的：甚难希有之法啊！（丙寅&lt;1926年&gt;七月）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【习焉不察】</span>语出《孟子·尽心上》：“行之而不着焉，习矣而不察焉，终身由之而不知其道者，众也。”后因以“习焉不察”指习惯于某种事物而觉察不到其中的问题。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【泽及枯骨】</span>泽：恩泽；枯骨：死去已久的人。恩泽及于死者。形容给人恩惠极大。《吕氏春秋·孟冬纪·异用》：“文王贤矣，泽及髊骨，又况于人乎！”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【子车氏三子】</span>见《诗经·国风·秦风·黄鸟》。描写秦穆公死时，以大量的活人殉葬，其中子车氏的三兄弟都被殉葬。“交交黄鸟，止于棘。谁从穆公？子车奄息。……交交黄鸟，止于桑。谁从穆公？子车仲行。……交交黄鸟，止于楚。谁从穆公？子车针虎。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【悚惧】</span>恐惧；戒惧。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【阊门】</span>乃苏州古城之西门，通往虎丘方向。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【来格】</span>来临；到来。格，至。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【来享】</span>1.亦作“来飨”。谓鬼神前来接受祭祀，歆享供品。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【卫辉】</span>河南省卫辉市，是一座具有数千年历史的古老城市。商纣时期为京畿牧野地，战国时称汲邑。西汉高祖二年开始设汲县，距今已有二千二百余年的历史。西晋泰始二年设郡，隋、唐、宋三代均为州治，元代为路治，明清两代为卫辉府，民国元年为道治，1948年设卫辉市，1949年撤市改县，到1988年经国务院批准，设立卫辉市。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【左券】</span>古代契约分为左右两片，左片称左券，由债权人收执，用为索偿的凭证。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

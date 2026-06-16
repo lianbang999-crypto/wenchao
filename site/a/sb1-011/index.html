@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>致德森法师书四 · 印光法师文钞</title>
+<meta name="description" content="去腊拟将广济之信作罢，由师怂恿，于除日起随意书之。妙师见之令录，光本无意于入续钞也。络络索索，有五千言。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-011/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="致德森法师书四 · 印光法师文钞">
+<meta property="og:description" content="去腊拟将广济之信作罢，由师怂恿，于除日起随意书之。妙师见之令录，光本无意于入续钞也。络络索索，有五千言。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-011/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">致德森法师书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">去腊拟将广济之信作罢，由师怂恿，于除日起随意书之。妙师见之令录，光本无意于入续钞也。络络索索，有五千言。</p><p class="p-trans">去年腊月打算不再给广济茅篷写信了，但由于你的怂恿鼓动，在除夕开始随意书写。妙真法师见到后，令抄录一份，我本来无意收入《续钞》。啰啰嗦嗦，有五千字。</p></div>
+<div class="para-pair"><p class="p-orig">其初说打千僧斋之流弊，裁去另呈。内中说参禅不易得益，以五祖戒为证。戒师非常人，尚未断见惑，况了生死乎。东坡守杭时，尚不拒绝娼妓，可知其仍是具缚凡夫。</p><p class="p-trans">信中最初所说打千僧斋的流弊，裁去另外呈送（法度和尚）。信内说参禅不容易得到利益，以五祖师戒禅师作为例证。师戒禅师不是一般常人，尚且没有断除见惑，何况是了生死呢？苏东坡在杭州做官时，尚且不拒绝娼妓，可知他仍然是个具缚凡夫。</p></div>
+<div class="para-pair"><p class="p-orig">师详阅之，可附即附，亦不必执定。光目力益衰，信札益多。去腊立春日，因与妙师说，若常住肯料理，则光不问事。否则一概退回。妙师令人代理，凡求皈依者，空函固多，亦有具香敬者。</p><p class="p-trans">你详细阅览一下，可以附入就附入，但也不必执着一定。我的视力更加衰弱了，信件却一天比一天多。去年十二月立春这一天，为此对妙真法师说，如果常住肯料理，那么我就不过问信件这些事了。否则，一概原信退回。妙真法师令人代理，凡是来求皈依的，空信固然很多，但也有备好香敬供养的。</p></div>
+<div class="para-pair"><p class="p-orig">前二年凡来寺皈依，香敬及特别送光者，通归常住。凡信中寄来者归光。今则特别送者归光。来山皈依香敬，信中香敬，通归常住。</p><p class="p-trans">前二年，凡是来寺院皈依的，香敬以及特别送给我的，通通都归常住。凡是在信中寄来的，归我。现今是特别说明送给我的，才归我。来灵岩山皈依的香敬，信中的香敬，通通归常住。</p></div>
+<div class="para-pair"><p class="p-orig">上海有求法名者，师代为书，香敬亦归师零用。续文钞事，光不过问，随师料理。若上海求法名者，转来亦是代书，何必无事找事做乎。</p><p class="p-trans">上海有求法名的，你代为书写，香敬也归你零用。《续编文钞》的事，我不过问，随你料理。如果上海来求法名的，转来给我，也是请你代写，何必无事找事做呢？</p></div>
+<div class="para-pair"><p class="p-orig">费福纯有一片字，何福遐亦有一张字，略说节欲之利益，生二子，均十余日死，当是不节欲，故先天不足所致。此辈青年以欲为乐，又欲生强健福寿之儿女，适得其反，可不哀哉。</p><p class="p-trans">费福纯有一封信，何福遐也有一封信，为他们略说节制淫欲的利益，生了两个儿子，都是十多天就死了，应当是不节制淫欲，所以小孩先天不足所导致。这些青年以淫欲为乐，却又想生下强健福寿的儿女，适得其反，能不哀痛吗？</p></div>
+<div class="para-pair"><p class="p-orig">去腊方慧渊有信来，言汤屡病，且不肯忌生冷，每私吃不宜吃者，则遂发病，病中又常念妻子，念亦无益，可知其人由业力故，竟成颠倒矣。</p><p class="p-trans">去年十二月，方慧渊有信来，说汤某多次生病，而且不肯忌吃生冷，常常偷吃这些不应该吃的东西，于是发病，病中又常常思念妻子，思念也没有什么利益，可知这个人由于业力的缘故，竟然成了颠倒之心。</p></div>
+<div class="para-pair"><p class="p-orig">光虽未死，且作死想。以故一切事，既不能料理，则不过问，以后随师作主办。钱财在上海者，光俱不要。有力多印，无力少印，再无力不印，均随财力为准，切勿负债，以致棘手劳心也。</p><p class="p-trans">我虽然没有死，暂且当作已死来想。所以一切事，既然不能料理，也就不再过问，以后随你作主办理。钱财在上海的，我都不要了。有力量就多印，没力量就少印，再没有力量就不印，都以财力为准，千万不要负债，以致棘手操心。</p></div>
+<div class="para-pair"><p class="p-orig">祈慈谅。凡有信心者，令彼一心念佛，不必以光为念，亦勿特来相看，免得费钱费时，了无所益也。</p><p class="p-trans">请你慈悲体谅。凡是有信心的人，令他一心念佛，不必想念我，也不要特地来看望，免得浪费钱财时间，没有一点利益。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

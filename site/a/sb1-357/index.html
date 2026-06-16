@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复严伯放居士书二 · 印光法师文钞</title>
+<meta name="description" content="日前接汝信，知汝承舅父之栽培，得有今日。寄洋五十圆，以期报母恩，舅父恩，继母恩，及度妹。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-357/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复严伯放居士书二 · 印光法师文钞">
+<meta property="og:description" content="日前接汝信，知汝承舅父之栽培，得有今日。寄洋五十圆，以期报母恩，舅父恩，继母恩，及度妹。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-357/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复严伯放居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">日前接汝信，知汝承舅父之栽培，得有今日。寄洋五十圆，以期报母恩，舅父恩，继母恩，及度妹。</p><p class="p-trans">几天前接到你的信，知道你承蒙舅父的栽培，才有了今天。寄来五十圆，以期报答母恩、舅父恩、继母恩，以及超度妹妹。</p></div>
+<div class="para-pair"><p class="p-orig">此等极重要事，与灵岩寺当家信，署名云谨言，一屈字亦不肯写，与光信云跪禀。汝若无此各重要事求人，又当写何字。为人子，为受重恩之甥，作此写。何不知世礼，一至于此。况佛法之礼乎。</p><p class="p-trans">这些极其重要的事，给灵岩寺当家师写信，署名只写“谨言”，一个自屈的字都不肯写，给我写信言“跪禀”。你如果没有这些重要的事求人，又当会写什么字？作为母亲的儿子，作为受过舅父重恩的外甥，却这样来写。怎么不知道世间的礼仪，到了如此的地步？何况是佛法的礼仪呢？</p></div>
+<div class="para-pair"><p class="p-orig">光为汝亲，朝暮回向，尚须礼佛。灵岩近百大众，为念普佛，每堂各拜二十四拜。则汝之所求者轻，即诸师诚恳，亦难得殊胜感应。</p><p class="p-trans">我为你的亲人，早晚回向，仍须拜佛。灵岩山有将近一百人的大众僧，为你的亲人念普佛，每堂各拜二十四拜。那么你所求的心轻，即使诸位师父诚恳礼拜念诵，也很难得到殊胜的感应。</p></div>
+<div class="para-pair"><p class="p-orig">汝勿谓光求人恭敬，实愍汝无知，不易感三宝垂慈加被。当于佛前恳切忏悔，庶可汝母，汝舅，汝继母，汝妹，蒙佛慈悲接引往生也。又汝过去祖宗，现在眷属，各得三宝加被，离苦得乐。</p><p class="p-trans">你不要认为我这是要求别人恭敬，实在是因为怜悯你的无知，不容易感应到三宝的垂慈加被。应当在佛前恳切忏悔，才能令你的母亲、舅父、继母、妹妹，蒙佛慈悲接引往生啊！还有，你过去的祖宗、现在的眷属，都能各自得到三宝的加被，离苦得乐。</p></div>
+<div class="para-pair"><p class="p-orig">汝以光为师，此种事若不说，光便失为师之资格。汝若不以为然，则汝亦失为人子甥兄徒之资格。以后则作路人，不必又称弟子矣。</p><p class="p-trans">你拜我为师，这种事如果不说，我就失去了当师父的资格。你如果不以为然，那么你也失去作为他人儿子、外甥、兄弟、徒弟的资格了。以后你我就当作陌路之人，不必再称弟子了。</p></div>
+<div class="para-pair"><p class="p-orig">光一生不与流俗同起倒，什么八十不八十。有为光言祝寿者，光不但不领情，且深恶痛绝，以为大辱。祈勿以此事为光言。若对光言祝寿，是视光为流俗矣。（又及）</p><p class="p-trans">我一生不随俗流浮沉，什么八十不八十的。有对我说祝寿的，我不但不领情，而且深恶痛绝，认为这是大耻辱。请不要对我说这件事。如果对我说祝寿，就是将我视为流俗之人了。（又及）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【流俗】</span>社会上流行的风俗习惯。多含贬义。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【起倒】</span>谓随俗俯仰、浮沉。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【又及】</span>附带再提一下。信写完并已署名后又添上几句时，常在下面注明“又及”或“某某又及”。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

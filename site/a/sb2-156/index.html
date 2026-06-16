@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复康寄遥居士书二 · 印光法师文钞</title>
+<meta name="description" content="前寄本校所出书，即欲复说我意。以事须深思遂已。继而思之，游艺之说，不可如是办。且小儿知识甫开，即导之以作戏。恐不在行孝行弟上用心思，而向扮妆生旦净丑上做工夫，则成舍本逐末，弄巧成拙矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-156/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复康寄遥居士书二 · 印光法师文钞">
+<meta property="og:description" content="前寄本校所出书，即欲复说我意。以事须深思遂已。继而思之，游艺之说，不可如是办。且小儿知识甫开，即导之以作戏。恐不在行孝行弟上用心思，而向扮妆生旦净丑上做工夫，则成舍本逐末，弄巧成拙矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-156/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复康寄遥居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前寄本校所出书，即欲复说我意。以事须深思遂已。继而思之，游艺之说，不可如是办。且小儿知识甫开，即导之以作戏。恐不在行孝行弟上用心思，而向扮妆生旦净丑上做工夫，则成舍本逐末，弄巧成拙矣。</p><p class="p-trans">上次寄来你学校所出的教科书，就想再说说我的看法。因为事情必须深思熟虑，于是就停下没写。接着想到，游艺之说，不可这样办。而且小孩子刚刚开始接受知识，就教导他们如何演戏。恐怕他们不在行孝、行弟上面用心思，而向扮演生、旦、净、丑上做工夫，就成为舍本逐末，弄巧成拙了。</p></div>
+<div class="para-pair"><p class="p-orig">光幼时闻老人云，吾乡三四十年前，各处皆调杂戏（即平民子弟，及工农等人，于闲时唱者）。但不唱武戏，余与唱戏全同。有请唱者，须自具一切箱妆器具，但去空人。又须具全帖磕头奉请，以不受钱，当上客待。迎来送去，大家以此为乐。后以每调杂戏，必遭旱灾，从此遂止。可见游艺之说，不可即以作戏实之。</p><p class="p-trans">我小时候听老人们说：我家乡三四十年前，到处都调杂戏（就是平民子弟，以及工农等人，在闲暇时所唱的戏）。只是不唱武戏，其余与唱戏完全相同。有想请人来唱的，必须自己备好一切箱妆器具，唱戏的人空着手去。另外，必须备好全帖，磕头奉请，因为他们不要出演费，所以要当作上宾接待。迎来送去，大家以此为乐。后来因为每一调杂戏，必遭旱灾，从此就停止调杂戏了。可见游艺之说，不可将演戏就当作游艺。</p></div>
+<div class="para-pair"><p class="p-orig">夫凡夫之情，随物所移。土木形骸，妆饰美妙，即生贪染之心。况幼年子弟，妆作女身。虽云高抬教化，实有诲子弟入轻佻之咎。况欲其妆扮逼真，不下一番心思，岂能令人悦目。光本僧人，何问人教育之事。但以尔我有缘，不得不为尽一番计虑。</p><p class="p-trans">凡夫的情执，随外物而转。本来是泥土木头的样子，妆饰的美妙，就生起贪染之心。何况年幼的男孩，妆扮成女身。虽然抬高说，这是教化，但实际有教唆子弟入于轻佻的过失。何况想让他们妆扮的逼真，不下一番心思，哪能让人赏心悦目。我本来是个出家人，哪里会问他人教育的事情。但是因为你我有缘，不得不为你尽一番考虑。</p></div>
+<div class="para-pair"><p class="p-orig">行孝行弟之道，只可为彼讲说。若令彼做出，则勿道弊端。其旷误工夫，何可胜计。士子专习举业，尚不能变化气质。以好顽之机，令其扮戏，遂欲变化气质，恐变坏者多，而变好者少也。</p><p class="p-trans">实行孝弟之道，只可为他们讲说。如果令他们演戏做出来，就不要说弊端了。这其中所耽误的工夫，如何能算得清。读书人专门学习圣贤科考书，尚且不能改变他们的气质。以好顽的机缘，让他们演戏，就想改变他们的气质，恐怕变坏的多，而变好的少。</p></div>
+<div class="para-pair"><p class="p-orig">勿借圣人游艺之语，为子弟开一轻佻之端。数年前有游学生数十住法雨寺，夜亦做戏。教员一边坐视，彼便妆和尚，接香客，实侮僧。光闻之，不胜痛惜。堂堂学校，令生徒作此无益之事。不意汝皈依佛法，发心培植人材，亦极赞此事。光固不怕人谓固执不通，实为不取而特言之。</p><p class="p-trans">不要借着圣人说“游于艺”的话语，为学生开一个轻佻的头。几年前，有几十个旅游的学生住到法雨寺，夜晚也演戏。教员在一边坐着看，他们便装成和尚，接待香客，实际上是侮辱僧人。我听了，非常痛惜。堂堂的学校，令学生徒作这些无益的事。不想你皈依佛法，发心培植人材，也极力赞成此事。我固然不怕他人认为我固执不通，实在是不赞成，而特地说明。</p></div>
+<div class="para-pair"><p class="p-orig">至于学生著作，虽不妨浅近。而屁打马鸡等说，究何所益。徒令明眼人痛心耳。纵纸不用钱，亦不宜印此种废话。然此光之知见，是则依之。否则亦作屁话置之。汝自行汝之教育规章，光岂能必使汝勿行乎。</p><p class="p-trans">至于学生的著作，虽然不妨用浅显易懂的文句。然而“屁打马鸡”等论说，究竟有什么利益。徒然令明眼人痛心罢了。纵然纸张不用钱，也不应该印这种废话。然而这是我的知见，觉得对，就依从。否则，也当作屁话处理。你自去做你的教育规章，我哪能一定让你不要去做呢？</p></div>
+<div class="para-pair"><p class="p-orig">文钞熊大冥有一千元，当作二千部，闻已寄九百于陕汴两处，祈打听大冥回秦否。彼若回秦，余千部当寄彼，令其分送秦地信心人。祈即示回音，以便令上海书馆寄也。</p><p class="p-trans">《文钞》，熊大冥任资有一千元，当作二千部，听说已经寄了九百部到河南陕县、开封两处，请打听熊大冥回到陕西没有。他如果回来了，剩余的一千部也要寄给他，令他分送给陕西有信心的人。请立即回信，以便让上海书馆寄书。</p></div>
+<div class="para-pair"><p class="p-orig">现今时局，尚恐大变。当令家眷及一切有缘者，戒杀护生，吃素念佛及念观世音。庶可逢凶化吉，遇难成祥。否则刀兵一至，其惨殆有不忍言者。</p><p class="p-trans">现今的时局，尚恐有大变。当令家中眷属及一切有缘人，戒杀护生，吃素念佛及念观世音菩萨。才可逢凶化吉，遇难成祥。否则，刀兵劫一到，战争的惨酷，实在不忍言说。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【游艺】</span>泛指修习学问或技艺。语出《论语·述而》：“子曰：志于道，据于德，依于仁，游于艺。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【跳戏】</span>是流行于陕西省合阳县沿黄河一带的古老剧种。当地群众称此剧为“跳调”、“调戏”、“调杂戏”、“调调戏”。其表演以吟诵、拳术舞蹈动作、锣鼓伴奏为特征。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【全帖】</span>旧时礼帖的一种。用红纸制，共有十面，横叠而成。用全帖表示恭敬郑重之意。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【土木形骸】</span>形骸：指人的形体。形体象土木一样。比喻人的本来面目，不加修饰。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【不取】</span>不赞成；不采取。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【马鸡】</span>一种形体大的鸡。主要产于我国西北地区。徐珂《清稗类钞·动物·马鸡》：“马鸡出秦州，大倍于常鸡，形如马，徧体苍翠，耳毛植竖，面足赤若涂朱。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

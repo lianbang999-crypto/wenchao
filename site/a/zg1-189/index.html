@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>吉林哈尔滨创建极乐寺疏 · 印光法师文钞</title>
+<meta name="description" content="佛法流通，利益无量。天机深者得其深，即可明心见性，断惑证真。天机浅者得其浅，亦可改恶修善，希圣希贤。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-189/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吉林哈尔滨创建极乐寺疏 · 印光法师文钞">
+<meta property="og:description" content="佛法流通，利益无量。天机深者得其深，即可明心见性，断惑证真。天机浅者得其浅，亦可改恶修善，希圣希贤。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-189/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">吉林哈尔滨创建极乐寺疏</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法流通，利益无量。天机深者得其深，即可明心见性，断惑证真。天机浅者得其浅，亦可改恶修善，希圣希贤。</p><p class="p-trans">佛法流通，利益无量。善根悟性深的人，得到佛法深义，就可以明心见性，断见思惑，证真谛理。善根悟性浅的人，得到佛法浅显之义，也可以改恶修善，仰慕效法贤圣之人。</p></div>
+<div class="para-pair"><p class="p-orig">良以如来设教，虽则正为出世，而随顺机宜，循循善诱。故于经世之道，亦复发挥净尽，毫善弗遗。遇父言慈，遇子言孝，兄友弟恭，夫倡妇随。凡一切伦常日用之道，与儒教所说，了无异致。</p><p class="p-trans">这实在是因为如来设立教法，虽然说真正的根本是为了出世之道，但却随顺众生的根机以及当时的情况，而循循善诱。所以对于治世之道，也发挥净尽，一丝毫的善，都没有遗漏。遇到父亲，给他讲慈的道理。遇到儿子，给他讲孝的道理。对兄长说友爱，对弟弟说恭敬，丈夫倡导，妻子随顺。凡是一切伦常日用之道，与儒家所说的，没有什么不同。</p></div>
+<div class="para-pair"><p class="p-orig">其所异者，一一各示三世因果，善恶报应。使人心存敬畏，不敢逾越。虽在暗室屋漏之中，常如面对佛天。即下而贪残暴恶之伦，绝无信心。以久闻因果报应之事，其心已冥受制伏，亦不至十分酷烈。</p><p class="p-trans">其中不同的，就是每一法，各自显示三世因果，善恶报应的道理。使得人们心存敬畏，不敢逾越本分。虽然在暗室隐蔽之处，也一样如同面对佛陀天神，不敢有所放纵。就是下等贪婪残暴作恶之人，对三宝绝对不信。也因为久闻因果报应的事迹道理，他的心已经冥冥之中受到制伏，也不至太过于残酷暴烈。</p></div>
+<div class="para-pair"><p class="p-orig">观于列国杀人殉葬，以多为荣。佛教东来，遂灭此风，可以见矣。其入人深而利益溥，譬如杲日丽天，生盲悉获安乐。阳春回地，焦芽亦荷生成。诚所谓如来不出世，万古冥若夜游。</p><p class="p-trans">试看春秋列国时，杀人殉葬，各国国君都以杀人殉葬数量多为荣。佛教传来后，这个风气才得以灭除，可以明见啊！佛法深入人心而利益广大，譬如明日当空，生来就眼盲的人都能得到安乐。大地回春，焦芽也得以生长。这就是所谓：如来不出世，万古冥暗如同夜游。</p></div>
+<div class="para-pair"><p class="p-orig">佛法若流通，人天悉有恃怙。教传东震，年将二千。其间具聪明睿智之姿，立掀天揭地之业。学识通人天，节操陵风云者。莫不崇奉护持，极力流通。不惜巨资，建立塔寺。以其阴翼治道，显淑民情，使民日迁善而不知所以为之者。故古今首出庶物之人，莫不以流通佛法，为天下太平，万国咸宁之基址焉。</p><p class="p-trans">佛法如果流通，人间天界都有依怙。教法传来东土，将近有二千年了。这当中，具有聪明睿智的天姿，建立翻天覆地的事业，学识博通人天，节操品德超越风云之上的人。没有不崇敬信奉护持，极力流通佛法的。不吝惜巨额资财，来建立塔寺。因为佛法，冥冥中帮助治理世道，明显化导人心民情，使得人民一天天的归向善法，而不知其所以然。所以古今杰出卓越的人，没有不以流通佛法，作为天下太平，万国安宁的基础啊！</p></div>
+<div class="para-pair"><p class="p-orig">吉林哈尔滨，僻处边陲。在昔但为华俄渔场而已。自铁路开通，遂成欧亚交通重要地点。万商云集，各行星罗。较京津沪汉，无多让焉。</p><p class="p-trans">吉林省的哈尔滨市，在中国的边陲。在过去，仅是华俄的渔场而已。自从铁路开通，就逐渐成为欧亚交通的要地。万商云集，各行各业如星星罗布。相比北京、天津、上海、武汉这些大城市，也毫不逊色。</p></div>
+<div class="para-pair"><p class="p-orig">但以寺宇绝无，高僧不来驻锡。经典未布，人民无缘培修。中东铁路监察局长陈飞青君，宿植德本，笃信佛乘。欲使滨江同人，咸沐如来法化。特向中东路局，请地数亩，拟建十方丛林，命名极乐，以宏佛法而资信仰。</p><p class="p-trans">但是因为整个城市没有一座寺院，高僧不来弘化。佛教经典没有流布，人民没有因缘培福修行。中东铁路监察局长陈飞青先生，宿植德本，深信佛法。想要使哈尔滨的人民，都能沐浴如来佛法的教化。特别向中东铁路局，申请了数亩土地，打算建十方丛林，命名为极乐寺，宏扬佛法而资助人们的信仰。</p></div>
+<div class="para-pair"><p class="p-orig">其绅商首领，若某某等数十人，莫不皆本己立立人之心，行自利利他之事。为之协力赞襄，以速其成。其建筑规模，悉仿内地大寺之制。以倓虚法师，博学多闻，深通经教，志切宏法而利人，因请为住持。</p><p class="p-trans">其中士绅商人首领，某某等有十几人，全都是本着自己成就，成就他人的心，来实行自利利他的事业。为之大力协助，以迅速建成这座寺院。寺院的建筑规模，都是模仿内地大寺院的建制。因为倓虚法师，博学多闻，深通经教，有志宏法而利益众生，因此请他来住持。</p></div>
+<div class="para-pair"><p class="p-orig">祈其寺成之后，长年讲经。俾莅滨人士，咸知修身淑世之道，与夫了生脱死之法。兼复堂开莲社，继庐山之遗风。室辟阅经，穷修持之秘要。但以平地建筑，与长时宏法。其事体甚大，其费用甚繁。</p><p class="p-trans">祈愿寺院建成之后，长年讲经。使得来到哈尔滨的人们，都知道修身济世之道，与了生脱死之法。并开办莲社，继承庐山慧远大师的遗风。开辟阅经室，来穷尽修持的秘密要诀。但因为这是从平地上建筑寺院，且要考虑长时间宏法。所以这个事体很大，所需的费用也很繁多。</p></div>
+<div class="para-pair"><p class="p-orig">以故恳祈当道长官，巨绅富商，及一切善信人等。各各发菩提心，行方便事。打开宝藏，培植福田。输金输粟，转劝转募。俾含空宝殿，指日成功。满月金容，经劫常住。高僧莅止，经典流通。</p><p class="p-trans">因此，恳切祈愿当道长官，巨绅富商，及一切善信人等。各各发菩提心，行方便事。打开宝藏，培植福田。布施财物，辗转劝化，辗转募捐。使得含在空中的宝殿，指日成功。佛陀的满月金容，经劫常住。高僧莅临，经典流通。</p></div>
+<div class="para-pair"><p class="p-orig">莲社开，而净土之宗风丕振。经教宣，而苦海之舟筏长存。从兹人慎三业，户敦十善。胜残去杀，同登仁寿之域。信愿念佛，共生极乐之邦。</p><p class="p-trans">莲社开办，而使净土的宗风大振。经教宣扬，而使苦海的舟筏长存。从此人人谨慎护持身口意三业，家家户户力修十善之行。制止残暴，远离杀害，同登仁寿之域。真信切愿，念佛名号，共生极乐之邦。</p></div>
+<div class="para-pair"><p class="p-orig">将见出资善士，常蒙佛天护佑。当必灾障冰消，吉庆云集。身心安泰，家门静谧。富寿康宁，现生获箕畴之五福。尊爵上章，后裔纳伊训之百祥矣。</p><p class="p-trans">必将看到，出钱的善人，常蒙佛天护佑。也必定会使灾障冰消，吉庆云集。身心安泰，家门静谧。富寿康宁，现生获得箕子在《九畴》所说的五福。尊贵高显，后世子孙得到《伊训》中所说的各种吉祥啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【天机】</span>犹灵性。谓天赋灵机。《庄子·大宗师》：“其耆欲深者，其天机浅。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【希圣】</span>效法圣人；仰慕圣人。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【希贤】</span>1.谓仰慕贤者，愿与之齐等。宋周敦颐《通书·志学》：“圣希天，贤希圣，士希贤。”2.指效法贤人。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【机宜】</span>事理；时宜。三国魏嵇康《与山巨源绝交书》：“吾不如嗣宗之贤，而有慢弛之阙，又不识人情，闇于机宜。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【经世】</span>1.治理国事。2.阅历世事。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【屋漏】</span>古代室内西北隅施设小帐，安藏神主，为人所不见的地方称作“屋漏”。《诗·大雅·抑》：“相在尔室，尚不愧于屋漏。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【酷烈】</span>残暴。《荀子·议兵》：“秦人，其生民也陿阸，其使民也酷烈。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【生盲】</span>（杂名）生而即盲之人也。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【节操】</span>气节操守。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【首出】</span>杰出。庶物：众物，万物。《易·干》：“保合大和，乃利贞。首出庶物，万国咸宁。”</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【驻锡】</span>僧人出行，以锡杖自随，故称僧人住止为驻锡。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【自立】</span>依靠自力有所建树。《礼记·儒行》：“力行以待取，其自立有如此者。”立人：扶持、造就人。《论语·雍也》：“夫仁者，己欲立而立人，己欲达而达人。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【赞襄】</span>辅助，协助。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【淑世】</span>犹济世。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【丕振】</span>1.大力振兴。2.大震。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【胜残】</span>遏制残暴的人，使之不能作恶。去杀：不用死刑。《论语·子路》：“善人为邦百年，亦可以胜残去杀矣。”</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【仁寿】</span>谓有仁德而长寿。语出《论语·雍也》：“知者动，仁者静，知者乐，仁者寿。”</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【箕畴】</span>指《书·洪范》之“九畴”。相传“九畴”为箕子所述，故名。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【五福】</span>五种幸福。《书·洪范》：“五福：一曰寿，二曰富，三曰康宁，四曰攸好德，五曰考终命。”</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【尊爵】</span>尊贵的爵位。上章：向皇帝上书。</p>
+<p class="note-item"><span class="note-n">[21]</span><span class="note-term">【百祥】</span>各种吉利的事物。《书·伊训》：“作善，降之百祥；作不善，降之百殃。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

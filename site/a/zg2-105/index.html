@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>大总统教令管理寺庙条例跋 · 印光法师文钞</title>
+<meta name="description" content="昔如来将入涅槃，以其法道，付嘱国王大臣，令其护持流通。良以僧众舍俗出家，精修梵行。既乏资财，又无权势。纵能宏扬法化，难免外侮侵陵。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-105/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大总统教令管理寺庙条例跋 · 印光法师文钞">
+<meta property="og:description" content="昔如来将入涅槃，以其法道，付嘱国王大臣，令其护持流通。良以僧众舍俗出家，精修梵行。既乏资财，又无权势。纵能宏扬法化，难免外侮侵陵。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-105/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 跋</div>
+      <h1 class="art-title">大总统教令管理寺庙条例跋</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昔如来将入涅槃，以其法道，付嘱国王大臣，令其护持流通。良以僧众舍俗出家，精修梵行。既乏资财，又无权势。纵能宏扬法化，难免外侮侵陵。</p><p class="p-trans">往昔释迦如来将要入涅槃时，将法道嘱托交付给国王大臣，让他们护持流通。实在因为僧人们舍俗出家，精修梵行，既没有钱财，又没有权势。纵然能够宏扬佛法，化导众生，也难免受到外界的侵侮和欺凌。</p></div>
+<div class="para-pair"><p class="p-orig">若得王臣护持，则法化广被，外侮不生。以其强暴横逆者，息影而匿迹。调柔良善者，起信而投诚。故得大张教网，捞摝苦海之鱼。丕振宗风，彻见自心之月。内护外护，相需而行。则如来法化，自可横遍十方，竖穷三际。普令含识，同沐法泽。</p><p class="p-trans">如果佛法得到国王大臣的护持，那么就能普遍地化导众生，而不会受到外界的欺辱。因为那些强横无理的人，都消声匿迹；温和善良的人，都信服皈依。所以能够广开教网，捞救轮回苦海中的鱼群；大振宗风，彻见本有性天中的圆月。僧人作为内护，王臣作为外护，互相配合行事。那么如来的法化，自然就可以横遍十方，竖穷三际。普令一切众生，共同沐浴佛法的恩泽。</p></div>
+<div class="para-pair"><p class="p-orig">良由因闻佛法，方知从无始来，迷背本心。起贪瞋痴，造杀盗淫。致使长劫轮回生死，莫由出离。既知此已，便欲灭除苦因，企得乐果。从兹反迷归悟，兢兢业业。于心，则息贪瞋痴。于身，则戒杀盗淫。改恶修善，近则感人天之福乐。断惑证真，远则成菩提之觉道。</p><p class="p-trans">实在因为通过听闻佛法，才知道自己从无始以来，迷失背离本心，生起贪瞋痴三毒，造作杀盗淫三业。导致经历长久劫，依然轮回生死，没办法出离。知道这个道理后，就想要消除苦痛的因缘，希望得到快乐的果报。从此以后，反迷归悟，兢兢业业。心中息灭贪瞋痴的念头；身体戒除杀盗淫的行为。改恶修善，近则感得人、天的幸福快乐；断惑证真，远则成就无上的菩提觉道。</p></div>
+<div class="para-pair"><p class="p-orig">由是恪遵佛教，严持自心。虽在暗室屋漏，长如面对佛天。人怀善念，国息刑法。阴翼治道，消祸乱于未萌。显辅政猷，敦仁爱而相睦。由斯利益，西竺此土，历代王臣，永遵佛嘱。莫不崇奉护持，惟恐流通传布之不广也。</p><p class="p-trans">因此严守佛陀教诲，严格修持自心。即使在暗室无人之处，也始终如同面对佛菩萨和天神。人民心中常怀善念，国家刑法自然废止。暗中辅助世道治理，消除祸乱在萌发之前；明处辅助政府管理，崇尚仁爱而百姓和睦。正由于佛教有这样的利益，所以无论印度还是中国，历代的国王大臣，都永远遵从佛的嘱托，都崇奉护持佛法，惟恐流通传布得不够广。</p></div>
+<div class="para-pair"><p class="p-orig">溯自东汉，法流中国。历千八百余年，莫不如是。迨至清末，法道衰微。哲人日希，庸人日多。加以国家多故，不暇提倡。僧徒率多安愚，不事清修。教网既弛，外侮自临。</p><p class="p-trans">从东汉时佛法传到中国，一千八百多年来，全都如此。到清朝末年，法道衰微。智慧有德的人越来越少，庸俗的人越来越多。加上国家多有患难，顾不上提倡佛法；僧人们大都安守愚昧，不用功清修。教网松弛，外界的欺辱自然降临。</p></div>
+<div class="para-pair"><p class="p-orig">由是一班无信根人，觊觎僧产。无法可设，遂借开办学堂，以为口实。每有改佛寺以为学堂，夺僧产以饱己囊者，纷纷不一。</p><p class="p-trans">因此一帮对佛法没有信根的人，企图谋取僧人寺庙产业。找不到其他办法，于是就以开办学堂为借口。每每有将寺院改为学堂，夺取寺产来填饱自己口袋的情况，纷纷而起，不一而足。</p></div>
+<div class="para-pair"><p class="p-orig">及至民国初年，国基甫立，风潮愈甚。同人忧之，遂林立佛教会，屡恳政府保护。故于四年，遂有管理寺庙三十一种条例颁布。其意虽善，但以未加详审。倘施行之人，稍挟偏私。则弊由是生，便成大碍。凡属法门缁素，莫不虑其后患，故屡有意见书，恳其修改。</p><p class="p-trans">民国初年，国家基业刚刚建立，夺寺产办学堂的风潮愈演愈烈。同修们忧心于此，于是纷纷组织建立佛教会，多次恳求政府保护寺庙产业。所以民国四年，颁布了《管理寺庙三十一种条例》。用意虽是好的，只是没有进行详细审察。倘若执法的人稍稍带有偏私的心念，那么就会生出弊端，从而成为大碍。法门中或僧或俗的人都担心会有后患，所以多次有人上呈意见书，恳请政府修改。</p></div>
+<div class="para-pair"><p class="p-orig">九年秋，程雪楼居士察其利害，又以意见书面呈大总统。既蒙俞允，批交内务部集议。十年春，方始修正为二十四条。详审斟酌，有利无弊。仍呈请大总统，以教令公布施行。</p><p class="p-trans">民国九年秋天，程雪楼居士审察到其中的利害关系，又亲自向大总统呈交意见书，得到了大总统的允许，批交内务部集体商议。民国十年春天，才修正为二十四条。（修正后的条文）审察详细、斟酌得当、有利无弊。仍旧呈请大总统，作为宗教条令公布施行。</p></div>
+<div class="para-pair"><p class="p-orig">然政府颁布，不能尽人皆见。而北京法源寺住持道阶法师，护教情重。遂拟急刊流布，以期僻山穷陬之处，缁素咸知，无或疑虑。问跋于余，以资鼓励。</p><p class="p-trans">然而政府颁布的条令，不能让每个人都看到。北京法源寺住持道阶法师，护持佛教的心情十分殷重，于是打算紧急刊印流布，以期偏远地区、穷乡僻壤的僧俗四众都能知道，毫无疑虑。道阶法师请我写一篇跋文，作为鼓励。</p></div>
+<div class="para-pair"><p class="p-orig">余曰，如来法道，虽藉外护之力。必须内护有人，始获实效。譬如外有金城汤池，虽则坚不可破，热不敢近。而内中主帅昏愚，抚民御兵，各失其道。则士卒百姓，皆成叛党。纵有金城汤池，亦何裨益之有。倘主帅明哲，善得士卒人民之心。仁政所及，谁不颂戴。四远闻风，悉来归服。则举寇仇皆为赤子，尽叛逆悉作良民矣。</p><p class="p-trans">我说：如来的法道，虽然要凭藉国王大臣等外护的力量，但也必须有合适的僧人作为内护，才有实际效果。譬如外面虽然有铜墙铁壁和沸腾的护城河，坚不可摧，热不敢近。然而城中的主帅却昏庸愚昧，无论安抚人民还是统领军队，方法都不得当。那么士兵和百姓，都会成为叛党，虽然有金城汤池，又有什么用呢？倘若主帅智慧英明，善于赢得将士和百姓的心。那么仁政所到之处，有谁不歌颂拥戴呢。四方的人听到传闻，都会赶来归服。那么贼寇和叛逆，全都变成赤胆忠心、安分守纪的良民了。</p></div>
+<div class="para-pair"><p class="p-orig">恳祈同衣，各各发菩提心，力修定慧。以如来无上妙道，自行化他。则人各感佛慈恩，仰僧懿行。自然无信心者，发起信心，有信心者，力行佛道。</p><p class="p-trans">恳请所有的同门僧人，各各发起菩提心，努力修习戒定慧。用如来的无上妙道，自行化他。那么人人都会感戴佛陀的慈恩，敬仰僧人的美德。无信心的人，自然发起信心；有信心的人，努力修行佛道。</p></div>
+<div class="para-pair"><p class="p-orig">将见转残忍为仁慈，兵戈永息。变浇俗为淳风，世运升平。如是则上不负国家护持之至意，下不负自己学佛之深心。而佛恩亲恩，皆堪报答于万一。凡我同衣，尚期勉旃。</p><p class="p-trans">将会见到残忍转为仁慈，战火永远熄灭；浇俗变为淳风，世运一片太平。如此，就不负国家护持的诚意，不负自己学佛的深心，而佛陀和父母的恩德，都能报答万分之一了。凡我同门僧众，还望努力。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【外侮】</span>来自外界的侵犯、欺凌。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【横逆】</span>横暴无理的行为。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【息影】</span>语本《庄子·渔父》：“不知处阴以休影，处静以息迹，愚亦甚矣！”后因以“息影”谓归隐闲居。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【内护】</span>僧徒依佛所制之戒法，护自己身心，使离身口意三业之非，称为内护；族亲檀越供给衣服饮食等，称为外护。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【相需】</span>互相依存；互相配合。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【屋漏】</span>古代室内西北隅施设小帐，安藏神主，为人所不见的地方称作“屋漏”。《诗·大雅·抑》：“相在尔室，尚不愧于屋漏。”毛传：“西北隅谓之屋漏。”郑玄笺：“屋，小帐也；漏，隐也。”后即用以泛指屋之深暗处。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【多故】</span>多变乱，多患难。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【觊觎】</span>非分的希望或企图。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【俞允】</span>《书·尧典》：“帝曰：‘俞。’”俞，应诺之词。后即称允诺为“俞允”。多用于君主。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【穷陬】</span>偏远的角落。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【勉旃】</span>努力。多于劝勉时用之。旃，语助，之焉的合音字。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

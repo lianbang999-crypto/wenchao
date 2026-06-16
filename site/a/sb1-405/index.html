@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复蔡契诚居士书四 · 印光法师文钞</title>
+<meta name="description" content="接手书，并邮票二十元，不谬，祈放心。放生池疏，实欲人看之，生戒杀放生吃素念佛之心，非徒为募捐也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-405/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复蔡契诚居士书四 · 印光法师文钞">
+<meta property="og:description" content="接手书，并邮票二十元，不谬，祈放心。放生池疏，实欲人看之，生戒杀放生吃素念佛之心，非徒为募捐也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-405/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复蔡契诚居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，并邮票二十元，不谬，祈放心。放生池疏，实欲人看之，生戒杀放生吃素念佛之心，非徒为募捐也。</p><p class="p-trans">接到信，以及二十元邮票，没有错，请放心。《金陵三汊河法云寺放生池疏》，实际是想让人看了之后，生起戒杀放生、吃素念佛的心，并不是只为了募捐。</p></div>
+<div class="para-pair"><p class="p-orig">汝上有老母，下有眷属，当以勤心照顾店铺为事。所言修持，随人身分。若身无有暇，则只可一心念佛，稍阅净土典章即已。固不须远往他处，以图静修也。</p><p class="p-trans">你上有老母，下有眷属，应当以勤心照顾店铺为事。所说的修持，随各人的身分。如果自身没有闲暇，就只可一心念佛，稍稍阅读净土典章，就可以了。本来就不必远行他处，以图自己静修。</p></div>
+<div class="para-pair"><p class="p-orig">汝家有店铺，店主人不在家，或是伙计作不法事（赌博及外宿等），或致小人乘间偷窃。</p><p class="p-trans">你家中有店铺，店主人不在家，或许伙计会作些不法的事（赌博以及外宿等），或许致使小人乘机来偷窃。</p></div>
+<div class="para-pair"><p class="p-orig">汝且莫心高，欲作大通家居士。但一心念佛，并在家于夜间，劝令母与眷属同念。汝知生死事大，无常迅速。何不念吾亲已老，敢不多方劝诱，令其同我念佛，并诸眷属皆令念佛。</p><p class="p-trans">你暂且不要心太高，想要作个大通家居士。只要一心念佛，并于晚上在家时，劝你的母亲与眷属，共同念佛。你知道生死事大，无常迅速。为什么不想想你的母亲已经老了，敢不多方面来劝说诱导她，令她同我念佛，以及诸位眷属，都令她们念佛吗？</p></div>
+<div class="para-pair"><p class="p-orig">一则可悦亲心。二则一人念，未生信心之人，便觉无有兴趣，由多人念，则便觉有兴。</p><p class="p-trans">一来可以使母亲的心愉悦。二来一人念佛，没有生起信心的人，就觉得没有兴趣，由于有很多人念，就会觉得有兴趣了。</p></div>
+<div class="para-pair"><p class="p-orig">暇时将净业指南，及光文钞之合于初机者，详细为令母及各眷说之。倘能生信心以生西方，则其孝为何如也。</p><p class="p-trans">闲暇时，将《初机净业指南》，以及我《文钞》中适合初机人看的，详细为你母亲以及各位眷属讲说。倘若能够生起信心来往生西方，那么这种孝是何等大啊！</p></div>
+<div class="para-pair"><p class="p-orig">祈再勿往某寺。就在店中家中，随分随力修持，则有益无损于己。且可令亲与各眷属及各伙计，时经熏染，渐种善根也。</p><p class="p-trans">请不要再到某寺院。就在店中、家中，随分随力修持，那么对于自己就有益无损了。而且可以让你的母亲与各位眷属，以及各个伙计，时时经由（佛法的）熏染，渐渐种下善根啊！</p></div>
+<div class="para-pair"><p class="p-orig">若不依吾言，则世间出世间，皆犯忤逆。恐久久尚有意外之虑。汝当知好歹，切勿任己意而不改也。</p><p class="p-trans">如果不依从我的话，那么（对于）世间、出世间法，就都犯了忤逆之过。恐怕时间久了，还有（其他）意外的担忧。你应当知道好歹，千万不要随任自己的心意而不改啊！</p></div>
+<div class="para-pair"><p class="p-orig">所寄之二十元，待光于八月往金陵去，带之以交。所言老斋婆，既看过光文钞，如能来也可，不来更好，免受辛苦，兼费钱财。</p><p class="p-trans">所寄的二十元，等我于八月份前往南京，带去转交。所说的老斋婆，既已看过我的《文钞》，如果能来也可以，不来更好，免得既受辛苦，又花费钱财。</p></div>
+<div class="para-pair"><p class="p-orig">观音菩萨遍法界中，随感而应。家中礼拜供养，亦是一样。何须远来普陀，方为朝礼乎。当与净业指南令看。其念佛用工之法则，文钞中已具言之。</p><p class="p-trans">观世音菩萨遍满法界中，随众生之感而应。在家中礼拜供养，也是一样。何必远来普陀山，才是朝礼观世音菩萨呢？应当将《初机净业指南》给她看。念佛用工的法则，《文钞》中已经具体说了。</p></div>
+<div class="para-pair"><p class="p-orig">即见光亦不过仍是说此等话，岂单有私相传授之秘诀乎。有私相传授之秘诀，即非佛法，即是魔王外道。</p><p class="p-trans">即使见我，我也不过仍旧说这些话，哪会单有私相传授的秘诀呢？若有私相传授的秘诀，就不是佛法，而是魔王外道。</p></div>
+<div class="para-pair"><p class="p-orig">彼魔王外道之徒，动则上千上万，皆由以私相传授之秘诀。及欲入其门，先发恶咒之术。以迷惑愚夫愚妇，同陷于邪知谬见之万丈深坑，而莫之能出也。哀哉。</p><p class="p-trans">那些魔王外道的徒众，动则成千上万，都是由以私相传受秘诀，以及想要进入他的门派，要先发恶咒等手段，来迷惑愚夫愚妇，同陷于邪知谬见的万丈深坑，而不能出离。悲哀啊！</p></div>
+<div class="para-pair"><p class="p-orig">凡有信心者，皆令依文钞念佛，即是随缘度生也。</p><p class="p-trans">凡是有信心的人，都令他们依照《文钞》来念佛，这就是随缘度众生啊！</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

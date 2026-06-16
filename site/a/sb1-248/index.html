@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书二十一 · 印光法师文钞</title>
+<meta name="description" content="前航空信，即接到，并送二位友人矣。前日寄一信，想已接到。今之宏法者，通是崖板章程，不知变通。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-248/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书二十一 · 印光法师文钞">
+<meta property="og:description" content="前航空信，即接到，并送二位友人矣。前日寄一信，想已接到。今之宏法者，通是崖板章程，不知变通。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-248/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书二十一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前航空信，即接到，并送二位友人矣。前日寄一信，想已接到。今之宏法者，通是崖板章程，不知变通。</p><p class="p-trans">上次的航空信，一收到就送给二位友人了。前天寄的一封信，想必你已经收到了。现在宏法的人，通通都是执着呆板的章程，不知道权巧变通。</p></div>
+<div class="para-pair"><p class="p-orig">仁王固可护国，讲之殊难领会，念之亦无有多少。若以普门品为救国而讲演，则三岁孩子，也会念观世音菩萨。</p><p class="p-trans">《仁王经》固然可以护国，然而宣讲这部经，很难有人能够领会，念诵这部经的人也没有多少。如果为了救国来演讲《普门品》，那么即使三岁的孩子，也会念观世音菩萨。</p></div>
+<div class="para-pair"><p class="p-orig">若仁王经，则百千中之一二人矣。如此宏法，只得宏法之大名，难得护国之实益，可叹孰甚。</p><p class="p-trans">若用《仁王经》来演讲，则百千人中只有一二人能念了。如此宏扬佛法，只能得到宏法的大名，而难以得到护国的真实利益，实在可叹。</p></div>
+<div class="para-pair"><p class="p-orig">思仁之法名，当名宗垚，此即古尧字，而完全是土，而亦不失宗尧之义。三土之高厚以自励，内尽孝弟，外行仁慈，兼以佛法为依归，则可为世模范，幸何如之。</p><p class="p-trans">思仁的法名，当名为宗垚，“垚”是古时的“尧”字，完全由三个土字组成，因而也不失宗尧的意义。以三土的高厚来自我勉励，家内竭尽孝弟之道，家外实行仁慈之道，同时以佛法作为依归，就能成为世人的模范，还有比这更庆幸的吗？</p></div>
+<div class="para-pair"><p class="p-orig">当须善教，切勿效今人皆自陷子女于罪海中。彼方以为我爱儿女，是爱有甚于杀。故致群起而杀父杀母，皆其父母不知教导之所致也。</p><p class="p-trans">应当要好好教导孩子，千万不要仿效现今的人，都是自己陷害子女到罪海之中。自己还认为我是在疼爱儿女，这样的爱超过了杀。所以导致大家群起而来杀父杀母，这都是因他们的父母不知道教导所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">汝为成都具瞻，以后真欲利人，切勿死守成规。若前二次之救国举动，光不禁心痛。舍简求繁，舍易求难，舍无耗费而大耗费，卒至会念者寥寥，其为益能不寥寥乎。</p><p class="p-trans">你是成都众人倚重的官员，以后若真想要利益他人的话，千万不要死守成规。像前二次的救国行动，我不禁心痛。舍简求繁，舍易求难，舍无耗费而行大耗费，最终导致会念的人很少，而这样的利益能不很少吗？</p></div>
+<div class="para-pair"><p class="p-orig">今年有一小女年九岁，得一怨业病年余，中西医看之无效，光令念观世音菩萨，并令饮大悲水，兼洗其患处，旬余即愈。一小男十一岁，亦如是。</p><p class="p-trans">今年有一个九岁的小女孩，得了一种怨业病，有一年多了，中西医看了，均无效果，我令她念观世音菩萨，并让她饮大悲水，又清洗她的患处，十多天就好了。另外一个十一岁的小男孩，也是如此。</p></div>
+<div class="para-pair"><p class="p-orig">当大急难时作佛事，当愈简便愈有益。故曰愈病不在驴驼药，救急还须海上方。汝知之乎。（十一月十一灯下）</p><p class="p-trans">在大急难时作佛事，应当是越简便越有益。所以说：治好病不在多少贵重药材，救急难还须诚心所感的神仙药方。你知道吗？（十一月十一日灯下）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【仁王般若波罗蜜经】</span>凡二卷。姚秦鸠摩罗什译。又称仁王护国般若波罗蜜经、仁王般若波罗蜜护国经、仁王般若经、仁王经。今收于大正藏第八册。本经分序品、观空品、菩萨教化品、二谛品、护国品、散华品、受持品、嘱累品等八品。系佛陀为十六大国王说示守护佛果、十地之行，及守护国土之因缘，谓讲说受持此经，则可息灾得福。与法华经、金光明经并称护国三部经。修仁王会时，即用此经。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【具瞻】</span>1.谓为众人所瞻望。语出《诗·小雅·节南山》：“赫赫师尹，民具尔瞻。”2.指宰辅重臣。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【驴驼药】</span>大慧普觉禅师《宗门武库》说：“瘥病不假驴驼药，若是对病与药，篱根下拾得一茎草，便可疗病，说什么朱砂、附子、人参、白朮。”驴驼常与“马载”同用，故“驴驼药”意思是：以驴马驼载一大车的药材。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【海上方】</span>指仙方。因秦始皇、汉武帝均曾遣人赴海上求不死仙药，故称仙方为海上方。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

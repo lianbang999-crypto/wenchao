@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>慈悲镜发隐 · 印光法师文钞</title>
+<meta name="description" content="近世杀劫之惨，振古未闻，推究其由，皆因食肉之所酿成，是食肉为杀劫之因。杀劫乃食肉之果，而果复造因，因复感果，展转互杀互食，了无已时，可不哀哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-169/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="慈悲镜发隐 · 印光法师文钞">
+<meta property="og:description" content="近世杀劫之惨，振古未闻，推究其由，皆因食肉之所酿成，是食肉为杀劫之因。杀劫乃食肉之果，而果复造因，因复感果，展转互杀互食，了无已时，可不哀哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-169/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">慈悲镜发隐</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">近世杀劫之惨，振古未闻，推究其由，皆因食肉之所酿成，是食肉为杀劫之因。杀劫乃食肉之果，而果复造因，因复感果，展转互杀互食，了无已时，可不哀哉。</p><p class="p-trans">近世杀劫惨状，千古未曾听闻。推究其原因，都是因为吃肉所酿成的。吃肉是杀劫之因，杀劫是吃肉之果。而果又再造因，因又再感果，辗转互相杀害，互相吞食，没有停息的时候，能不悲哀吗。</p></div>
+<div class="para-pair"><p class="p-orig">然杀劫之惨，人所共戚，而杀生食肉之惨，人所共乐，实则不异于自杀自食，及自杀食其父母兄弟妻子眷属也。</p><p class="p-trans">然而杀劫的惨酷，人人都感到悲哀；而杀生吃肉的惨酷，人人都引以为乐。实际上杀生吃肉这件事，和杀自己吃自己，以及杀死吃掉自己的父母、兄弟、妻子眷属，没有区别啊。</p></div>
+<div class="para-pair"><p class="p-orig">故入楞伽经云，一切众生，从无始来，在生死中，轮回不息，靡不曾作父母兄弟男女眷属，乃至朋友亲爱侍使，易生而受鸟兽等身，云何于中取之而食，食肉之过，可胜言哉。</p><p class="p-trans">所以《入楞伽经》中说：“一切众生，从无始来，在生死中，轮回不息，靡不曾作父母兄弟男女眷属，乃至朋友亲爱侍使，易生而受鸟兽等身，云何于中取之而食。”吃肉的过失，哪里说得完呢。</p></div>
+<div class="para-pair"><p class="p-orig">泉州诸善士，欲挽杀劫，特立大同放生会。放生云者，欲感发众人之慈悲心，从兹不忍食肉耳。</p><p class="p-trans">泉州的诸位善士，想要挽回杀劫，特别建立了大同放生会。说放生，是要感动发起众人的慈悲心，让他们从此不忍心吃肉而已。</p></div>
+<div class="para-pair"><p class="p-orig">既不食肉，则现在不造杀业，将来不受杀报，虽曰爱惜物命，实为预护自身，若大家同抱此志，何难感召天和。</p><p class="p-trans">既然不吃肉，那么现在不造作杀业，将来不承受杀报。虽说是爱护动物的生命，实际上是预先爱护自身。如果大家都抱着这一志愿，就不难感召天地祥和。</p></div>
+<div class="para-pair"><p class="p-orig">倘放者自放，食者自食，则所放有限，所食无穷，消放者个人之杀业则可，消众同分之杀业则未也。</p><p class="p-trans">如果放生的人只顾放生，吃肉的人只管吃肉。那么放掉的有限，吃掉的无穷，借此消除放生者个人的杀业是可以的，要消除众生的同分杀业就不行了。</p></div>
+<div class="para-pair"><p class="p-orig">故特撮取古人浅显劝戒语言，名慈悲镜，布之乡邑，以期见闻，同发慈悲，共持杀戒，咸事素食，庶可挽回劫运，共享太平，因为略陈食肉之过以助之。</p><p class="p-trans">所以他们（诸善士）特地撮取了古人的浅显劝戒言论，编辑为《慈悲镜》一书，流布到城市乡间，以期见者闻者，共同发慈悲心，守持杀戒，共同吃素。想必可以挽回劫运，共享太平了。特此大略陈述吃肉的过失来赞助他们（的善举）。</p></div>
+<div class="para-pair"><p class="p-orig">愿食肉者，将生作己想，将己作生想，想之久久，即以威逼，令其食肉亦不敢，况徒为口腹乎。</p><p class="p-trans">祈愿吃肉的人，将所吃的动物想作自己，将自己想作所吃的动物。时间久了，即使用威势逼其吃肉，也不敢吃了，何况只是为了口腹欲望呢。</p></div>
+<div class="para-pair"><p class="p-orig">至于敬神祭先，奉亲宴客，岂素食便不可，必杀生而方可乎。</p><p class="p-trans">至于敬神祭祖、奉养双亲、宴请宾客等，哪里说不可以用素食，而必须要杀生才可以呢？</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>杭州石经山弥陀寺募修葺殿堂寮舍并浚放生池疏 · 印光法师文钞</title>
+<meta name="description" content="天下名胜之宣传宇宙者，必先有其地，而后得其人，则其名始著。是胜地名山，端赖有仪刑现未之具德高人，方可令人寤寐神驰，以生景仰。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-193/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杭州石经山弥陀寺募修葺殿堂寮舍并浚放生池疏 · 印光法师文钞">
+<meta property="og:description" content="天下名胜之宣传宇宙者，必先有其地，而后得其人，则其名始著。是胜地名山，端赖有仪刑现未之具德高人，方可令人寤寐神驰，以生景仰。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-193/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">杭州石经山弥陀寺募修葺殿堂寮舍并浚放生池疏</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">天下名胜之宣传宇宙者，必先有其地，而后得其人，则其名始著。是胜地名山，端赖有仪刑现未之具德高人，方可令人寤寐神驰，以生景仰。</p><p class="p-trans">天下的名胜之地，扬名于世界，必定先有这个地方，而后有名人住在那里，这个地方的名声才开始显著。胜地名山，要靠现在未来堪称典范的具足道德的高人，才可以令人日夜渴慕，神驰向往，来生起景仰。</p></div>
+<div class="para-pair"><p class="p-orig">若庐山之以远公著，云栖之以莲池重也。浙江山水冠天下，其地素称佛国。高人哲士，相继而出。殆所谓地灵则人杰耳。</p><p class="p-trans">例如庐山因为慧远大师而著名，云栖因为莲池大师而受重视。浙江的山水甲冠天下，一向被称为佛国。高人哲士，相继而出。应该就是所谓的地灵则人杰啊！</p></div>
+<div class="para-pair"><p class="p-orig">清同治间，妙然法师，专修净业。以弥陀一经，普被三根。实华严归宗之要义，亦末法最胜之慈航。拟欲镌诸山石，以垂永久。俾现未见者闻者，同种善根以生正信，修净业以往西方。</p><p class="p-trans">清朝同治年间，妙然法师，专修净业。认为《阿弥陀经》，普被三根。实在是《华严经》归宗的要义，也是末法最殊胜的慈航。于是打算将它镌刻在诸多山石之上，来永远流布传扬。使得现在未来，见到听到的人，同种善根，以生正信，修习净业，以往西方。</p></div>
+<div class="para-pair"><p class="p-orig">因见城北松木场，石岩高峻，石性坚致。乃买其地址，倩工开凿。请善书之沈善登居士书之。居士遂栖邓尉山，先请四位发菩提心道友，昼夜念佛，以为加持。自己放下万缘，斋沐敬书。</p><p class="p-trans">因为看见城北松木场，石岩高峻，石性坚致。于是买下这个地方，请工人来开凿。请善于书法的沈善登居士来书写。居士于是住在邓尉山，先请四位发菩提心的道友，日夜念佛，作为加持力。自己则放下万缘，持斋沐浴，恭敬书写。</p></div>
+<div class="para-pair"><p class="p-orig">凡书一字，必先礼佛三拜，持佛号一百八声，结印持秽迹金刚咒七遍，跪而书之。写经之外，息心念佛，不提余事。以此佛力法力加持功德，冀现未一切若见若闻之人，悉发菩提大心，顿出娑婆秽苦。</p><p class="p-trans">每写一个字，必定先礼佛三拜，持佛号一百零八声，结手印，持秽迹金刚咒七遍，然后跪下来书写。写经之外，息心念佛，不提其余杂事。以此佛力法力加持功德，希望现在未来，一切见到听到的人，都发起菩提大心，顿时出离充满秽恶众苦的娑婆世界。</p></div>
+<div class="para-pair"><p class="p-orig">如此五十三日，千八百余字，方始书毕。字大几寸，铁画银钩，遒劲圆润，诚为稀有。然师遂为镌刻，深及八分。日持佛号，以为加持。尚未毕工，即已西逝。</p><p class="p-trans">如此经过五十三天，一千八百多个字，才书写完毕。每个字有好几寸大，横笔如铁臂，弯笔似银钩，书法健美，字体圆润，实在是希有难得。妙然法师于是请人镌刻在岩石之上，刻字深入岩石有八分之多。每天执持佛号，作为加持。尚未完工，妙然法师就往生了。</p></div>
+<div class="para-pair"><p class="p-orig">其友玉峰，成方二法师，先固相与辅弼，至是遂力任其事。石经刻成，饰之以金。凡属见者，莫不肃然起敬，生稀有想。则全经功德，固已印于八识田中，作未来往生西方，究竟成佛之种子。是盖以佛力，法力，及三师，沈居士之心力，为增上缘，以显发见者闻者性具功德，俾其终得受用耳。</p><p class="p-trans">他的好友玉峰、成方二位法师，原本就辅助他，到这时候，就毅然承担起这件事。石经镌刻完成，涂饰为金色。凡是见到的人，全都肃然起敬，生希有难得之想。这样，全经的功德，就已经印在见者的八识田中，作未来往生西方，究竟成佛的种子了。这也是以佛力、法力、以及三位法师、沈居士的心力，作为增上缘，来显发见者、闻者的自性本具功德，使得众生最终得到受用啊！</p></div>
+<div class="para-pair"><p class="p-orig">由是诸檀越悉皆欢喜，争先布金。遂得佛殿僧寮，一一悉备。居然一专修净业之大道场。所谓地由人著者，非乎。</p><p class="p-trans">因此诸位檀越都非常欢喜，争先恐后布施金钱。于是佛殿、僧寮，一一都具足建成。居然成为一个专门修习净业的大道场。上面所说的，地方由于人而显著，不是这样吗？</p></div>
+<div class="para-pair"><p class="p-orig">三门之外，开一池塘，以放水族诸物。继云栖天台之慈行，令将登鼎镬以充口腹者，咸得游泳其中，以尽天年。乃所以息刀兵而弭杀劫之最上良策也。</p><p class="p-trans">山门之外，开辟了一个池塘，来放生水族动物。继承云栖莲池大师、天台智者大师的慈悲之行，使得将要被烧煮吃掉的众生，都得以在其中游泳，以尽天年。这是止息刀兵而消弭杀劫的最上良策啊！</p></div>
+<div class="para-pair"><p class="p-orig">自建立以来，迄今五十余年，悉守成规，无忝前修。近数年来，住持才力薄弱，颇形艰难。既无田产以充常住之需用，又无道德以感檀信之供养。此之道场，几将湮没。</p><p class="p-trans">从建立以来，到现在有五十多年，都是守老规矩，没有玷污前贤。近些年来，住持法师才力薄弱，颇显艰难。既没有田产来作为常住的需要用度，又没有道德来感化檀越信施的供养。这个道场，几乎将要埋没。</p></div>
+<div class="para-pair"><p class="p-orig">诸居士忧之，去秋强智慧法师为住持。因特开莲社，以绍玉峰之业。必期四众同念弥陀，同求往生，复以转化一切，悉皆同辞五浊，同登九品而后已。</p><p class="p-trans">诸位居士非常忧虑，去年秋天，强请智慧法师来作住持。因此特别开办莲社，来继承玉峰法师的事业。是期望僧俗四众，同念阿弥陀佛，共同求往生极乐，同时要转化一切众生，都能共同辞别五浊恶世，共同登上九品莲池而后已。</p></div>
+<div class="para-pair"><p class="p-orig">其殿堂寮舍，已经五十余年，未曾修葺。兼以今夏风灾，诸多坍塌破坏。若不即修，久则更难为力。而且放生池多年未浚，淤泥充满。于放生一事，大有所碍。拟欲开拓浚掘，悉皆加倍。外竖围栏，以为防护。庶放生得所，而盗捕无由。俾流水智者慈云莲池之慈惠，永久无替。岂徒曲全物命，实欲启世仁慈。</p><p class="p-trans">这殿堂寮舍，已经过了五十多年，没有修理过。又因为今年夏天的风灾，很多地方都坍塌损坏。如果不马上修理，时间久了，就更加难以为力了。而且放生池也多年没有疏通，充满淤泥。对于放生这件事，大有防碍。所以打算开拓疏通挖掘，全部都要加倍修建。外面竖起围栏，作为防护。使得放生效果良好，让别人无法盗捕。使得流水长者子、智者大师、慈云尊者、莲池大师的仁爱，永远无尽。哪里只是保全动物性命，实在是想要启发世人的仁慈之心。</p></div>
+<div class="para-pair"><p class="p-orig">倘能人各不杀，则世道有不太平者乎。但以工程浩大，所费实繁。祈光作疏，遍恳诸大檀越。各发菩提之心，共植出世之业。捐宝海之涓滴，成梵宇之庄严。</p><p class="p-trans">倘若能够每个人都不杀生，那么世道会不太平吗？但是因为这个工程浩大，所须费用实在繁多。请我写个疏文，普遍恳请诸位大檀越。各发菩提心，共植出世的事业。各捐点滴之财以汇成无边的宝海，共同成就庄严清净的天宫。</p></div>
+<div class="para-pair"><p class="p-orig">须知祇园始经营，天界之宫殿已现。佛念才发起，净土之莲华即生。流水所济之鱼，已作十千天子。智者所放之物，多为海东王臣。古既如是，今岂不然。以如是因，感如是果。</p><p class="p-trans">必须知道祇树给孤独园一开始经营，天界的宫殿已经为他现起。成佛之念刚刚发起，净土的莲华就生出来了。流水长者所救济的十千条鱼，已经化作十千天子。智者大师所放生的动物，大多成为海东高丽国的王臣。古时候既然如此，现在难道不是这样吗？以如是因，感如是果。</p></div>
+<div class="para-pair"><p class="p-orig">倘能不惜五家所共之殊珍，成就三宝兴隆之胜举。将见现生永膺多福，临终高登九品。庶可圆彰本具之佛性，速证无上之菩提矣。</p><p class="p-trans">倘若能够不吝惜王贼水火等五家所共的钱财，成就三宝兴隆的胜举。那么必将见到现在、未来永久享受福报，临命终时，高登九品莲池。这样就可以圆满彰显本具的佛性，快速证得无上的菩提了啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【仪刑】</span>楷模；典范。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【寤寐】</span>1.醒与睡。常用以指日夜。《诗·周南·关雎》：“窈窕淑女，寤寐求之。”2.引申指日夜思念、渴望。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【三门】</span>（堂塔）山门之制形如阙，开三门，故亦曰三门。又只有一门，亦呼为三门，盖标帜空，无相，无作，三解脱门之称也。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【鼎镬】</span>鼎和镬。古代两种烹饪器。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【无忝】</span>不玷辱；不羞愧。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【前修】</span>犹前贤。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【才力】</span>1.才能，能力。2.财力。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【修葺】</span>修理（建筑物）。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【慈惠】</span>犹仁爱。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【无替】</span>不废；无尽。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【流水】</span>《金光明经·流水长者子品》。谓释伽佛过去世为流水长者子。一次，长者子经一空泽，见池水涸竭，万鱼被曝晒将死。长者子先取树叶遮住阳光。后来发现，恶人为了捕鱼，在源头处截断了水流。长者子即向国王借了象队，到上流用皮囊盛水，运到空泽，倾泻池中，救活了万鱼。十千鱼即十千天子。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【智者所放之物，多为海东王臣】</span>四明草庵法师道因《教苑遗事》云：昔智者禅师，剏放生池于海涯。其放之也，必为授归戒，说大法。然后纵之海中。智者灭后。至唐末中国天台之道浸息。而海东高丽新罗诸国，盛弘此教。扶宗继忠法师云：智者缘在此方。而教敷于海东者。此必放生池中，诸鱼闻教，禀戒报生者。尔然闻此说者，颇讥以为诞殊。不知教理有凭也。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【五家】</span>世之财物，为王与贼、火、水、恶子等五家之共有物，不能独用之。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

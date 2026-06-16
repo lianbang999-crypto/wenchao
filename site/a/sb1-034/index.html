@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复恒惭法师书一 · 印光法师文钞</title>
+<meta name="description" content="接手书，知去年所寄之书俱收到，慰甚。妙吉近亦有一函，言所与之书亦收到。尔我以道相交，何得学市井俗派，过头称赞，使光无地容身，是岂直心修道者之所宜哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-034/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复恒惭法师书一 · 印光法师文钞">
+<meta property="og:description" content="接手书，知去年所寄之书俱收到，慰甚。妙吉近亦有一函，言所与之书亦收到。尔我以道相交，何得学市井俗派，过头称赞，使光无地容身，是岂直心修道者之所宜哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-034/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复恒惭法师书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知去年所寄之书俱收到，慰甚。妙吉近亦有一函，言所与之书亦收到。尔我以道相交，何得学市井俗派，过头称赞，使光无地容身，是岂直心修道者之所宜哉。</p><p class="p-trans">接到你的信，知道去年所寄的书，都收到了，很是欣慰。妙吉最近也有一封来信，说给他寄的书也收到了。你我以道相交，怎么可以学习市井俗套，过份地称赞，使我无地容身，这哪里是直心修道的人所应该做的呢？</p></div>
+<div class="para-pair"><p class="p-orig">至云虽乏精进，持名颇具欣厌。须知净土一法，乃吾人之大靠山。倘平常忽略，或致临终不得力。</p><p class="p-trans">至于你说，虽然缺乏精进，然而持佛名号，却颇具欣乐净土，厌离娑婆之心。必须知道净土法门，是我们的大靠山。倘若平常忽略行持，或许会导致临终不得力。</p></div>
+<div class="para-pair"><p class="p-orig">显荫天姿甚高，显密诸宗，皆得其要领。但以志尚浮夸，不务真修，死时显密之益不得力。念佛之事向未理会，亦不得力。虽有多人为彼助念，而自己已糊里糊涂，不省人事。此可为年轻之聪明人一大警策。</p><p class="p-trans">显荫的天姿甚高，显教密教的诸多宗派，全都得到其中的要领。但因为志向喜好虚浮夸耀，不从事真修，死的时候，显教密教的利益都不得力。念佛的事修，向来没有理会，也不得力。虽然有许多人为他助念，然而他自己已经糊里糊涂，不省人事。此事可以作为年轻聪明人的一大警策。</p></div>
+<div class="para-pair"><p class="p-orig">良由显荫天姿虽高，气量过小。无韬晦涵养之真修，有矜张夸露之躁性（在东洋回国，往宁波看其师，当日即病，次日即往上海）。因闻其师令闭关静修一语，即日便病，次日即去，竟至延缠以死，可不哀哉。</p><p class="p-trans">实在由于显荫的天姿虽高，但气量太小。没有韬光晦迹，涵养身心的真实修持，却有夸耀显露的轻躁习性（从日本回国后，到宁波看望他的师父，当天就病了，第二天就前往上海）。因为听到他师父令他闭关静修的一句话，当天就病了，第二天就离开，竟然导致疾病延绵而死，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">汝所问各节，本不须问。只因未详阅净土著述，故成一大问题。使详阅后，当自发笑。不但净土著述未详阅，即光文钞亦未详阅。果息心详阅，断不多此一问。</p><p class="p-trans">你所问的各节问题，本不须要问。只因为没有详细阅读净土的著述，故成为一大问题。假使详细阅读后，当会自己发笑。不但净土的著述没有详细阅读，即使是我的《文钞》，你也没有详细阅读。果真专心详细阅读，断然不会多此一问。</p></div>
+<div class="para-pair"><p class="p-orig">此问文钞中通有所释。今再为略陈，佛土有四，所谓凡圣同居土，方便有余土，实报无障碍土，常寂光土。</p><p class="p-trans">这个问题，在《文钞》中全都有所解释。现今再为你大略陈述，佛土有四种，所谓：凡圣同居土，方便有余土，实报无障碍土，常寂光净土。</p></div>
+<div class="para-pair"><p class="p-orig">（一）凡圣同居土者，娑婆世界虽属秽土，亦有佛菩萨二乘圣人同生其间。然凡圣所见之境，与所受用，天渊悬殊。西方约带业往生之人论，则生凡圣同居土。然此土清净微妙，如弥陀经，无量寿经所说。</p><p class="p-trans">（一）凡圣同居土：娑婆世界虽然属于秽土，也有佛菩萨、二乘圣人同生在其间。然而凡夫、圣者所见到的境界，与他们的受用，却是天地般悬殊。西方净土，对带业往生的人来说，是生到凡圣同居土。然而此土清净微妙，如《阿弥陀经》、《无量寿经》中所说。</p></div>
+<div class="para-pair"><p class="p-orig">此土虽属带业往生之人所居，亦有法身菩萨及佛同居其中，为其说法，故亦名凡圣同居土。但此为净土往生之人，虽未能如佛菩萨所见所受用之殊妙，然其气类相同，不比娑婆之条然各别也。</p><p class="p-trans">此土虽然属于带业往生之人所居住，但也有法身菩萨，以及佛陀同居其中，为众生说法，所以也名为凡圣同居土。但这些净土往生的人，虽然没能如佛菩萨所见、所受用的殊胜微妙，然而气质相同，不比在娑婆世界，凡圣所见、所受用是条然各别。</p></div>
+<div class="para-pair"><p class="p-orig">此土亦分九品，若中下六品，则多须时劫。若上三品，则速得悟（悟无生，方能入实报）无生忍，登不退地，证入实报寂光矣。</p><p class="p-trans">此土也分为九品，若是中下六品，就须要很多时劫，才能进入实报土。如果是上三品，就能够快速悟得（悟无生法忍，方才能够进入实报土）无生法忍，登不退地，证入实报土、寂光土。</p></div>
+<div class="para-pair"><p class="p-orig">（二）方便有余土者，乃已断见思，未破无明之人所居之土。言方便者，以其所修系入真实之前方便。言有余者，虽断见思未破无明（尘沙无体，说不说俱可。若说，此九方便人，正破尘沙惑耳），故言有余。若破无明，可称分证无余。若无明净尽（九方便，即藏教二乘，通教三乘，别教三贤，圆教十信。此九种人，同断见思，未破无明），则是究竟无余矣。</p><p class="p-trans">（二）方便有余土：是已经断除见思惑，未破无明之人所居的净土。说方便，是因为他们所修是进入真实（实报土，常寂光土）的前方便。说有余，是因为虽然断见思惑，没有破无明惑（尘沙惑没有实体，说不说都可以。如果要说，这九方便人，正是破除尘沙惑），所以说有余。如果破无明惑，可以称为分证无余。如果无明惑净除究尽（九方便，就是藏教声闻、缘觉二乘，通教声闻、缘觉、菩萨三乘，别教十住、十行、十回向三贤位，圆教十信位。这九种人，同断见思惑，未破无明惑），就是究竟无余了。</p></div>
+<div class="para-pair"><p class="p-orig">（三）实报无障碍土者，即佛菩萨不思议福慧庄严所感之报土。</p><p class="p-trans">（三）实报无障碍土：就是佛菩萨，不思议福慧庄严，所感的报土。</p></div>
+<div class="para-pair"><p class="p-orig">（四）常寂光土者，即佛菩萨所证之理性也。此二土本属一土，约所感之果报土言，则名实报。约所证之理性言，则名寂光。圆教初住，初破一品无明，证一分三德，即入实报土，亦得名分证寂光。若至妙觉佛果，则是上上实报，究竟寂光矣。</p><p class="p-trans">（四）常寂光土：就是佛菩萨所证的理性。此二土本来属于一土，对所感的果报来说，就名为实报土。对所证的理性来说，就名为常寂光土。圆教初住位，初破一品无明，证一分三德，就进入实报土，也名为分证寂光。如果到了妙觉佛果，就是上上实报土，究竟寂光土了。</p></div>
+<div class="para-pair"><p class="p-orig">讲者欲人易悟，且将分证者归于实报，究竟者归于寂光。实则分证，二土俱是分证。究竟，二土俱是究竟耳。实报土，唯破无明证法性者得见。何得以带业往生之人，便拟生实报耶。</p><p class="p-trans">讲经的人，想使人容易明悟，暂且将分证法身归于实报土，究竟法身归于寂光土。实际上，说分证，二土都是分证。说究竟，二土都是究竟。实报土，唯有破无明，证法性的大菩萨可以见到。怎么可能以带业往生的人，便打算生到实报土呢？</p></div>
+<div class="para-pair"><p class="p-orig">生同居，由信愿而念佛，蒙佛接引而生。盖彼虽未断烦惑，由内承心佛自性之力，外蒙弥陀慈悲之力，感应道交。虽未断烦惑，而烦惑不复用事，故得往生最极清净之同居土。</p><p class="p-trans">生到同居土，是由于真信切愿而念佛，蒙佛接引而得生。他虽然没有断除烦惑，但由于内承心佛自性之力，外蒙弥陀慈悲之力，故感应道交。虽然没有断烦惑，但烦惑不再现行用事，所以得以往生最极清净的同居土。</p></div>
+<div class="para-pair"><p class="p-orig">汝疑所生之土，当不能清净，并阿弥陀之胜妙色身，此等众生不当即见者。乃以汝所见者为是。以弥陀之誓愿，释迦之言教，诸菩萨祖师善知识之发挥著述皆错也。唯汝所见为最的确最高超，汝作此见，乃谤佛谤法谤僧，将来当与提婆达多同享极乐于阿鼻大地狱中。</p><p class="p-trans">你怀疑所生的凡圣同居土，应当不能清净，并且阿弥陀佛的胜妙色身，凡圣同居土的众生不应当见到。这是以你自己的见解为是。认为阿弥陀佛的誓愿，释迦本师的言教，诸菩萨、祖师、善知识的发挥著述全错。唯有你的见解是最的确、最高超的，你作此见解，是谤佛、谤法、谤僧，将来应当与提婆达多，在阿鼻大地狱中同享“最极的快乐”。</p></div>
+<div class="para-pair"><p class="p-orig">其为乐也，莫能喻焉。恐尽未来际，尚不间断其受用于种种乐事。汝欲享此乐，请依汝知见而说。如不欲享此乐，纵令势促威逼亦不可说也。</p><p class="p-trans">这个阿鼻地狱的“快乐”，不能比喻。恐怕尽未来际，还要不间断地受用种种“乐事”（谤法罪苦无尽）。你想要享受这个“快乐”，就请依你的知见而说。如果不想享受这个“快乐”，纵然是势力威逼，也不可以那样说。</p></div>
+<div class="para-pair"><p class="p-orig">下品下生，乃五逆十恶之极重罪人，由临终阿鼻地狱之相已现，生大恐怖，遇善知识教以念佛，由怖苦求救之心，猛切之极。虽所念无多，而一念心光感佛，故佛即垂接引以应之，遂得往生。</p><p class="p-trans">下品下生，是五逆十恶的极重罪人，由于临终阿鼻地狱之相已经现前，生大恐怖，遇善知识教导他念佛，由于怖苦求救的心，猛烈急切到极点。虽然所念的不多，而一念心光感通佛陀，所以佛陀就垂慈接引来应他，于是得以往生。</p></div>
+<div class="para-pair"><p class="p-orig">其在华中十二大劫者，以在生罪业重而善根浅，故华开最为迟延也。然此人在华中之快乐，胜于三禅天之乐（世间之乐，三禅最为第一），又何欠憾乎哉。</p><p class="p-trans">此人将在莲华中经历十二大劫，是因为他在生罪业重而善根浅，所以花开的最迟。然而此人在莲华中的快乐，胜过三禅天的快乐（世间的快乐，以三禅天最为第一），这又有什么欠缺遗憾的呢？</p></div>
+<div class="para-pair"><p class="p-orig">实报土，唯法身大士得见，固无娑婆极乐之分。佛之慈悲誓愿，正为未断惑者无由了生死，特设此仗佛慈力往生西方一特别法门。俾凡有心者皆能修。</p><p class="p-trans">实报土，唯有法身大士才能见到，当然就没有娑婆极乐的分别。佛陀的慈悲誓愿，正是为了没有断惑的人，没有办法了生死，才特地施设这个仗佛慈力，往生西方的特别法门。使得凡是有心的人，都能修持。</p></div>
+<div class="para-pair"><p class="p-orig">凡具信愿念佛者皆能生。此我释迦弥陀普度众生之大慈悲心。思之当为感极涕零。尚何暇胡思乱想，依自己种种知见为难也。</p><p class="p-trans">凡是具足信愿念佛的人，都能往生。这是我释迦本师，弥陀如来普度众生的大慈悲心。想到这些，应当为之感极涕零。哪有空闲胡思乱想，依自己种种知见来问难呢？</p></div>
+<div class="para-pair"><p class="p-orig">冈野增次郎，圆山和尚，不以光之文芜秽不堪见弃，殆宿世曾有缘之所致。汝只带一部，彼诸位难以遍看，今特寄两包，共六部，祈为转送二位并有缘者。</p><p class="p-trans">冈野增次郎，圆山和尚，不以我的《文钞》芜秽杂乱不堪而嫌弃，大概是宿世曾经有缘所致。你只带一部，他们诸位难以周遍看阅，现今特地寄给你两包，一共六部，请为我转送二位，以及有缘之人。</p></div>
+<div class="para-pair"><p class="p-orig">至云译饷东人，窃谓译之一字，似不必用。何以故，以彼与光有宿缘故。若无缘者，见之恐取以代薪覆瓿耳。</p><p class="p-trans">至于你说的：翻译成日文出版，以利益日本人，我私下认为，翻译这事，似乎不必要。为什么呢？因为他们与我有宿世因缘的缘故。如果是无缘的人，见到《文钞》，恐怕就拿来替代材薪烧火，或者拿来覆盖陶罐口了。（注1）</p></div>
+<div class="para-pair"><p class="p-orig">又纵谓有利初机，宜照样排印，庶所益者广。若参以和文，只可令识和文之东人看。若华人及各处不识和文之华侨，皆不能看。</p><p class="p-trans">另外，即使说是有利于初学人，也应照原样排印，或许能使得到利益的人更加广泛。如果参以日文，只能令认识日文的日本人看。像华人以及各处不认识日文的华侨，就都不能看了。</p></div>
+<div class="para-pair"><p class="p-orig">况日本书册藏，一木版，二铅版，并此次之大正刊经会之藏，皆尽华文，不参和文，以故华人多有请者。使参入和文，则流通便滞塞矣。</p><p class="p-trans">何况日本的书册藏，一是木版，二是铅版，以及此次的大正刊经会的藏经（注2），全都是华文，不参入日文，因此华人有很多请阅的。假使参入日文，那么流通就滞塞了。</p></div>
+<div class="para-pair"><p class="p-orig">依光愚见，若欲流通，不须用译。至圆山和尚材德弘备，何竟俯欲见光。以光本一无道无德无知无识之粥饭僧，一部文钞，备将满腹草料，彻底吐尽，见之又有何益。况光已衰老不能勤学，若色力强壮，彼既来华，光当学彼所得。</p><p class="p-trans">依我的愚见，如果想要流通，不须要翻译。至于圆山和尚，才德弘广兼备，为何竟然俯就，想要来见我。因为我本来是一个无道无德，无知无识的粥饭僧，一部《文钞》，已经将满腹草料，彻底吐尽，见面了又有什么利益。何况我已经衰老，不能勤学，如果色力强壮，他已来到中国，我应当学习他的所得。</p></div>
+<div class="para-pair"><p class="p-orig">今老矣，除持名外，无一法应学。以死期将至，恐所学愈多，心识愈难淳净。或致与佛感应不交。则一不往生，永劫流转，岂不大可哀哉。</p><p class="p-trans">现在老了，除了持名念佛之外，别无一法应学。因为死期将到，恐怕所学的愈多，心识更难以淳粹清净。或许会导致与佛不能感应相交。那么一旦不能往生，就会永劫流转，岂不大大的悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">汝年齿犹轻，固宜勤学。然一座大须弥山之靠山，切勿视作泛常而忽之。则庶乎不堕显荫之覆辙，而得与诸上善人同亲炙于弥陀愿王也。</p><p class="p-trans">你年纪还轻，固然应该勤学。然而持名念佛，求生净土这一座大须弥山的靠山，千万不要视作普通平常而忽略。则或许才不至于堕入显荫的覆辙，而能够与诸上善人，共同亲受阿弥陀佛大愿王的教诲啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【覆瓿】</span>喻著作毫无价值或不被人重视。亦用以表示自谦。瓿：古代容器名。陶或青铜制。圆口、深腹、圈足，用以盛物。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【大正刊经会之藏】</span>《大正藏》全称《大正新修大藏经》，日本大正13年（1924年）由高楠顺次郎和渡边海旭发起，组织大正一切经刊行会；小野玄妙等人负责编辑校勘，1934年印行。全藏分3个部分：正藏55册，续藏30册，别卷15册（内图像12册，总目录3册），共100册。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

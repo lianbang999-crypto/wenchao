@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与徐蔚如居士书六 · 印光法师文钞</title>
+<meta name="description" content="接手书，及观经嘉祥大师义疏。一再细阅，其文法实在令人迷闷。一句话反覆数说，而义意含糊。兼且只派名义，前不详其所以，后不结其归宿。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-120/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与徐蔚如居士书六 · 印光法师文钞">
+<meta property="og:description" content="接手书，及观经嘉祥大师义疏。一再细阅，其文法实在令人迷闷。一句话反覆数说，而义意含糊。兼且只派名义，前不详其所以，后不结其归宿。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-120/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">与徐蔚如居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，及观经嘉祥大师义疏。一再细阅，其文法实在令人迷闷。一句话反覆数说，而义意含糊。兼且只派名义，前不详其所以，后不结其归宿。</p><p class="p-trans">接到你的信，以及嘉祥大师为《观无量寿佛经》所作的《义疏》。一再详细阅读后，觉得其中的文字义理实在令人迷惑茫然。一句话反复多次述说，而意义含糊不清。并且只是指出名称和定义，前面不细说其中的所以然，末后也不总结疏文的指向和归趣。</p></div>
+<div class="para-pair"><p class="p-orig">光亿此疏，恐未必是嘉祥大师亲笔。当是东洋耳食之徒，冒名而作。否则纵令传写致讹，不致通皆不成文理，杂沓琐碎，绝无显示大义，如须弥高出于海，八风悉吹不动。纵令好为更端者，不能移易一字之处。是为可疑。</p><p class="p-trans">我认为这本《义疏》，恐怕未必是嘉祥大师亲笔所写。应当是日本某个喜欢道听途说的学人，假冒嘉详大师的名字而写的。否则，纵然是在流传抄写过程导致错讹，也不致于全部都不成文理，繁杂琐碎，绝对没有显示出（经文）大义。例如“须弥高出于海，八风悉吹不动＂这些即使是平时喜好更改经文的人，也没办法移动更换一个字的地方。这很值得怀疑。</p></div>
+<div class="para-pair"><p class="p-orig">十一面疏亦然。彼慕吾国高人之名，妄自著书。不知自非高人，冒名亦冒不到耳。又北京近所印书，皆用毛边纸。此纸现视颇好，久则发脆。光在京时，见百余年外之书，纸皆发脆。粗心人翻阅，便见破碎。心窃疑之，而不知其所以。</p><p class="p-trans">《十一面疏》也是如此。他们羡慕我们国家高人的名望，妄自著述写书。殊不知自己不是高人，假冒名字也是假冒不到的。另外，北京最近所印的书，都用毛边纸。毛边纸现在看起来很好，时间久了就会发脆。我在北京的时候，见到一百多年前的书，纸张都发脆。粗心的人阅读时，就会把书翻破。我心里很疑惑，却不知其中的原因。</p></div>
+<div class="para-pair"><p class="p-orig">光绪三十一年，问仁山先生。彼云，被煤烟熏过之故。其说虽有理，亦不能息疑。以藏书多者，岂皆在有煤烟处。红螺无煤，书亦发脆。知先生此言，殆想出之理由，非实验之的据。</p><p class="p-trans">光绪三十一年，向杨仁山先生询问这件事。他说是因为书本被煤烟熏过，所以时间久了就发脆。他说的虽然有道理，却也不能平息我的疑惑，因为藏书的人那么多，怎么会都住在有煤烟的地方呢。红螺山上没有煤烟，书纸也同样会发脆，由此就知道杨仁山先生的回答，大概是出自于想象，而不是实际验证过的确凿依据。</p></div>
+<div class="para-pair"><p class="p-orig">至前年到藏经院，与一老做书者，谈及纸性。因说北京旧书皆发脆，彼云此系毛边。毛边新时觉得厚实坚固，以草料多，竹料少，故久则发脆。毛太重太纸质，不如毛边坚实，但经久不变。外行人多以毛边为美，我等做书各工，亦愿做毛边，以其硬爽好做。实则毛太重太经久。光闻，疑心豁释。</p><p class="p-trans">直到前年去藏经院，与一位资深的做书人谈到纸张的特性，因此就对他说北京的旧书都发脆。他说：＂这是用毛边纸印的。毛边纸新的时候，给人感觉厚实坚固，但因为纸当中用的草料多，竹料少，所以时间久了就会发脆。毛太纸和重太纸，虽然质感不如毛边纸坚实，但是经久不变。外行人大多觉得毛边纸漂亮，我（资深做书人）这边各部门的做书工人也愿意做毛边纸，因为它硬爽好做。实际上，还是毛太纸、重太纸能经久＂。我听了，心里的疑惑一下子解开了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【嘉祥大师】</span>吉藏（549-623）隋代三论宗的集大成者。俗姓安，本西域安息人，先世避仇移居南海，住在交广（今越南、广西）一带，后迁居金陵而生吉藏。武德六年五月，寿七十五寂。师显扬龙树提婆之旨，为三论宗之祖，以其先自安息国出，故曰胡吉藏。以居于嘉祥寺故称为嘉祥大师。所著经论疏凡数十种。见唐僧传十一等。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【归宿】</span>指归，意向所归。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【耳食】</span>谓不加省察，徒信传闻。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【更端】</span>1.另一事。《礼记·曲礼上》：“君子问更端，则起而对。”2.指书写时另行换头。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【十一面疏】</span>《复丁福保居士书三》中专门介绍了此疏，徐蔚如居士有友人于日本藏中抄出十一面神咒经疏，传之既久，颇有错讹。于是依日藏所刻随自意三昧寄给印光大师，大师仔细阅读后，建议还是不要流通为好。上面说提到的观经义疏和十一面疏，印祖在书六、书七及《复丁福保居士书三》中重复的说明这两个本子不要流通为好。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【毛边纸】</span>是一种专供毛笔书写的米黄色手工纸（现在已有机制的毛边纸）有一面光滑一面粗糙。因明代大藏书家毛晋嗜书如命，好用竹纸印刷书籍，当时江西出产竹纸，纸质细腻，托墨吸水性能好，既适于写字，又可用于印刷古籍。毛晋到江西大量订购稍厚实的竹纸，为确保纸的质量没有问题，他在检查后的纸边加盖一个&quot;毛&quot;字的印章，一示专用，二示合格，被人称为“毛边纸”。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【毛太】</span>以竹纤维制成的纸张。原产于福建、江西等地。色泽稍黑，略微粗涩，吸水性强，比毛边纸稍薄，《小石山房丛书》中载竹纤维纸：“江西特造之，厚者曰毛边，薄者曰毛太。”性能几近相同，适宜于练字。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【重太纸】</span>较重的毛边纸又称“玉扣纸”。江西横江出产的仿毛边纸又称为“重纸”。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>苏州弘化社第六届出纳报告清册弁言 · 印光法师文钞</title>
+<meta name="description" content="因果报应者，世出世间圣人，平治天下度脱众生之大权也。净土法门者，一切六道三乘，了生脱死圆证菩提之达道也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-254/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏州弘化社第六届出纳报告清册弁言 · 印光法师文钞">
+<meta property="og:description" content="因果报应者，世出世间圣人，平治天下度脱众生之大权也。净土法门者，一切六道三乘，了生脱死圆证菩提之达道也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-254/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">苏州弘化社第六届出纳报告清册弁言</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">因果报应者，世出世间圣人，平治天下度脱众生之大权也。净土法门者，一切六道三乘，了生脱死圆证菩提之达道也。</p><p class="p-trans">因果报应，是世间、出世间圣人，治理天下、度脱众生的大方便法；净土法门，是一切六道三乘，了生脱死、圆证菩提的通达要道。</p></div>
+<div class="para-pair"><p class="p-orig">宋儒辟因果以后，治国治家治身治心之法，徒存枝叶，了无根本。以驯至于狂流莫挽，无可救药。</p><p class="p-trans">宋儒辟驳因果轮回的事理以后，治国、治家、治身、治心的方法，仅存留下枝叶，完全没有了根本。以至于逐渐发展到了狂流莫挽，无可救药的地步。</p></div>
+<div class="para-pair"><p class="p-orig">学佛不修净土，纵能彻悟自心，深入经藏。若未到业尽情空地位，依旧仍在六道轮回之中。生死海深，菩提路远。欲仗自力了生脱死，则难如登天矣。</p><p class="p-trans">学佛不修净土，纵然能够彻悟自心，深入经藏。如果没有到业尽情空的地位，依旧仍在六道轮回之中。生死海深，菩提路远。想要仗自力了生脱死，则难如登天啊！</p></div>
+<div class="para-pair"><p class="p-orig">不慧业重福轻，障深慧浅。虽有救国救民，自利利他之心，而无弘法济众，己立立人之道。只可量己之力，稍为刊布宣说因果净土切要契机之经书。以期见者闻者，同生正信，同修净业，同皆敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，以聊尽我心而已。</p><p class="p-trans">我业重福轻，障深慧浅。虽然有救国救民，自利利他的心，然而却没有弘法济众，自己成就、成就他人之道。只能衡量自己的能力，稍微刊布流通宣说因果净土、切要契机的经书。以期见到、听到的人，同生正信，同修净业，共同都能敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，来略尽我的一点心意而已。</p></div>
+<div class="para-pair"><p class="p-orig">民十九年庚午春，明道师拟立弘化社，流通前数年所排印各经书于上海净业社。蒙诸大居士佽助，得以开办。</p><p class="p-trans">民国十九年庚午（1930）春天，明道法师打算成立弘化社，流通前些年在上海净业社所排印的各种经书。承蒙诸位大居士的帮助，得以开办。</p></div>
+<div class="para-pair"><p class="p-orig">不慧于夏初掩关苏州报国寺，概不过问。次年弘化社移至报国寺，颇形发达。至今年十月彼去世，弘化社事，无人可托，只可自任。然以七十六岁粥饭庸僧，又复拙于应酬。倘诸大居士以为法为人之菩提心，仍旧维持。则弘化经书，固可遍布遐迩，不至以不慧接办而废弛也。书此祈诸大居士慧鉴。（民国二十五年丙子仲春）</p><p class="p-trans">我在这年初夏，在苏州报国寺闭关，（对这件事，）一概不过问。第二年，弘化社移到报国寺，还显得比较发达。到了今年十月，明道法师去世，弘化社的事，无人可以委托，只能由我自己来负责。然而以一个七十六岁的粥饭庸僧，又不善于应酬。倘若诸位大居士以为法、为人的菩提心，仍旧维持。那么弘化社的经书，一定能够远近遍布，不至于因为我的接管办理而荒废。写下这些，请诸位大居士智慧鉴察。（民国二十五年&lt;1936&gt;丙子仲春&lt;二月&gt;）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【弁言】</span>前言，序文。因冠于前，故名。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【驯至】</span>逐渐达到；逐渐招致。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【佽助】</span>帮助。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【遐迩】</span>远近。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

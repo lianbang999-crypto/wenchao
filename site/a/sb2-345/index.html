@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>答卓智立居士问 · 印光法师文钞</title>
+<meta name="description" content="问，净土法门，既能三根普被，利钝全收，我佛当日，何以不专谈净土，俾万法归一，一路同归，竟尔兼谈各宗，反启后人多歧之惑，且失净土之实益乎（师于问辞中何以不专谈净土句旁，批云胡说巴道）。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-345/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="答卓智立居士问 · 印光法师文钞">
+<meta property="og:description" content="问，净土法门，既能三根普被，利钝全收，我佛当日，何以不专谈净土，俾万法归一，一路同归，竟尔兼谈各宗，反启后人多歧之惑，且失净土之实益乎（师于问辞中何以不专谈净土句旁，批云胡说巴道）。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-345/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">答卓智立居士问</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">问，净土法门，既能三根普被，利钝全收，我佛当日，何以不专谈净土，俾万法归一，一路同归，竟尔兼谈各宗，反启后人多歧之惑，且失净土之实益乎（师于问辞中何以不专谈净土句旁，批云胡说巴道）。</p><p class="p-trans">问：净土法门，既然能够三根普被，利钝全收，我佛当日，为何不专谈净土法门，使得万法归一，一路同归，竟然兼谈各个宗派，反而开启后人许多歧路的迷惑，而且失去净土的实益呢（大师在问辞中“何以不专谈净土”这句旁，批示说：胡说巴道）？</p></div>
+<div class="para-pair"><p class="p-orig">答，养人不止一谷，治病不止一药。由有各法门，方显此法门之妙。若止净土一法，何以能引彼一切机宜，同入佛法乎。</p><p class="p-trans">答：养活人命的，不止一种谷物。治病的，不止一种药物。由于有各种法门，才能显出这个净土法门的玄妙。如果只有净土这一个法门，如何能引导一切根机，同入佛法呢？</p></div>
+<div class="para-pair"><p class="p-orig">问，世俗专认念佛为送死，念观音为保生，以故修净土未精者，及年未老者，临终多因恋世，念观音。助念者，往往徇其意，或从其家属之意，因亦助念观音，不念佛。果病愈，固无憾，否则既碍灵感之名称，又误生西之机缘。</p><p class="p-trans">问：世俗人认为念佛为的是送死，念观世音菩萨为的是保全性命，所以修习净土尚未精熟的人，以及年纪不是很大的人，临终时大多因为贪恋尘世，念观世音菩萨。助念的人，往往曲从他本人的意愿，或者依从他家属的意愿，因此也助念观世音菩萨圣号，不念佛号。病果真痊愈了，固然没有遗憾。否则，既有碍观音灵感的名称，又耽误了往生西方的机缘。</p></div>
+<div class="para-pair"><p class="p-orig">未知若遇此根性，如何办法，始圆通。是否先念观音以保生，及其既死，转念佛号以送死乎。或始终专念观音，亦可令彼寿未尽即愈，寿已尽即生西乎。</p><p class="p-trans">不知如果遇到这种根性的众生，采用什么办法，才能圆通。是否先念观世音菩萨圣号来保全性命，等到病人已死后，转念佛号来送死呢？或者始终专念观世音菩萨圣号，也可以令他的寿命未尽，就痊愈。寿命已尽，就往生西方呢？</p></div>
+<div class="para-pair"><p class="p-orig">答，人有大病，即当作往生想，一心念佛。若寿未尽，由念佛故，即可速愈（阿弥陀，即无量寿，即是消灾延寿）。至于为人助念，何可为念观音，又为祈寿乎。念佛，寿未尽亦能延生。念观音，则无求往生之心念。若寿已尽，则误事。</p><p class="p-trans">答：人有了大病，就应当作往生来想，一心念佛。如果寿命未尽，由于念佛的缘故，就可以迅速痊愈（阿弥陀，就是无量寿，就是消灾延寿）。至于为他人助念，怎么能助念观音圣号，又为他祈求延寿呢？念佛，寿命未尽，也能消灾延生。念观音，就没有求往生的心念了。如果寿命已尽，就会误事。</p></div>
+<div class="para-pair"><p class="p-orig">非念佛定死，念观音定不能往生。然痴人以无求往生之心念之，故亦只成误事之一种业感也。无量光，即消灾。无量寿，即延寿。念阿弥陀佛，极功尚能成佛，岂不能延寿而令速死乎（师于答辞中，痴人二字旁，抹三笔以警。后死者，切勿自误也）。</p><p class="p-trans">并不是念佛一定会死，念观音一定不能往生。然而愚痴的人用不求往生的心来念，所以也只能成为误事的一种业感啊！无量光，就是消灾。无量寿，就是延寿。念阿弥陀佛，功夫用到极处，尚且能成佛，哪里不能延寿而是令人速死呢（大师在答辞中，“痴人”二字旁边，抹了三笔以示警策。将来要死的人，千万不要自误啊）？</p></div>
+<div class="para-pair"><p class="p-orig">问，近有劝戒杀者，因杀难戒，遂教以麻醉杀，冀免物类惨痛死，如求减斩罪为绞罪，是法亦可谓方便法否。</p><p class="p-trans">问：近来有劝导戒杀的人，因为杀生难以戒除，于是教人用麻醉药来杀，希望避免动物悲惨痛苦地死去，如同求减斩头罪为绞死罪，这种办法也可以说是方便法吗？</p></div>
+<div class="para-pair"><p class="p-orig">答，但能减苦，也好。</p><p class="p-trans">答：只要能减少痛苦，也是好的。</p></div>
+<div class="para-pair"><p class="p-orig">问，太乙神针，针后须饮酒，持酒戒者，自宜勿用。但可以教人用酒否，并可用酒制药否。</p><p class="p-trans">问：用太乙神针治病，用针后必须饮酒，持酒戒的人，自然应该不用。但是否能教他人用酒？并且是否能用酒制药呢？</p></div>
+<div class="para-pair"><p class="p-orig">答，此亦非崖板法。有病，念佛念观音，也会好。况不用酒，就定规不好乎。</p><p class="p-trans">答：这也不是呆板的方法。有病了，念佛、念观音，也会好。况且不用酒，就一定治不好吗？</p></div>
+<div class="para-pair"><p class="p-orig">问，糜谷为酒，变救饥之食品，为奢侈之饮料，实属暴殄天物之甚者。世界果能全戒酒，不知又多多少救饥粮，则饮酒不止乱性已也。果能全家全戒酒时，家藏之酒器，是否悉毁之。</p><p class="p-trans">问：浪费谷物酿酒，将救济饥荒的食品，变成奢侈的饮料，实在是太糟蹋粮食了。世界上果真能够全都戒酒，不知又多出多少救济饥荒的粮食，那么饮酒不只是乱性而已。果真能够全家全都戒酒的时候，家中所藏的酒器，是否要全部销毁呢？</p></div>
+<div class="para-pair"><p class="p-orig">答，此亦不可死执。举世无用，则可。有用，则不妨与人。</p><p class="p-trans">答：这也不能死板执着。全世界都无用，那么可以销毁；有用，那么不妨转与他人。</p></div>
+<div class="para-pair"><p class="p-orig">问，长素者，戒及酒与五辛，其宗旨不止戒杀一端也。未稔长素者，可代买五辛及酒与糟否，并可食酒制糟制之素药，及酒糟所烹调之素食品否。</p><p class="p-trans">问：吃长素的人，戒酒以及五辛，其宗旨不只是戒杀这一方面。没有吃长素的人，是否可以代买五辛以及酒与酒糟？并且是否可以吃酒制、酒糟制的素药，以及酒糟所烹调的素食品呢？</p></div>
+<div class="para-pair"><p class="p-orig">答，代买亦宜戒。酒制药，不乱性无碍，素食酒气太胜，则不宜食。轻则无碍，以不能醉乱故。</p><p class="p-trans">答：代买也应该戒除。用酒制药，不乱性就没有大碍，素食中酒的气味太浓，就不应该吃。酒味轻就无大碍，因为不能吃后醉酒乱性的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">问，用活物以作药，为其念佛以度脱，此举似有流弊，以彼等若杀及胎生卵生之动物为药品，亦以念佛解怨为口实，颇觉难解说。立愿凡遇此等方，置之度外，不必流传，未知可否（师于可字旁加一圈，示许可）。</p><p class="p-trans">问：用活的动物来作药，为它念佛超度，这种行为似乎有流弊，因为他们如果杀胎生、卵生的动物来作药品，也把念佛解冤作为借口，觉得很难解说。自己发愿：凡是遇到这种药方，置之度外，不必流传。不知是否可以（大师在“可”字旁边加上一个圈，表示许可）？</p></div>
+<div class="para-pair"><p class="p-orig">答，然亦不能死执。吾人只守己之诚而已。</p><p class="p-trans">答：然而也不能死板执着。我们只要守好自己的诚心，就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">问，医者如遇恶人，以及屠子渔翁猎人等抱病求诊治，教其改恶戒杀，彼不从，病愈仍作孽，是否任之，勿与医。</p><p class="p-trans">问：医生如果遇到恶人，以及屠夫、渔翁、猎人等，抱病来求诊治，医生教他们改恶戒杀，他们不听，病好后仍然作孽，是否随任他们生病，不给他们医治。</p></div>
+<div class="para-pair"><p class="p-orig">答，此亦无理之谈。如汝所说，则于物有损之物，皆当勿救为是。医者果以诚感，彼或能改业。佛尚令屠人受别种戒，可知佛之随机化导之法。</p><p class="p-trans">答：这也是无理之谈。如你所说，那么对于众生有损的生命，都应当不救为好。医生果真以诚心感化，他们或许能够改行业。佛陀尚且令屠夫（不受杀戒而）受别种戒，可知佛陀随机化导的方法。</p></div>
+<div class="para-pair"><p class="p-orig">问，家藏外道书，或邪正混乱书，以及耶教书，三官经，灶君经，血盆经，并教人特杀之医书等，是否悉焚之。又朱注四书，有谤佛处，是否必须涂抹，或标改之。韩欧辟佛文，是否随所见扯出悉焚之（师于灶君血盆二经，加旁抹）。</p><p class="p-trans">问：家里收藏的外道书籍，或者邪正混乱的书，以及基督教的书，《三官经》、《灶君经》、《血盆经》，以及教人杀生的医书等，是否全都焚毁呢？另外，朱熹注解的《四书》，有谤佛的地方，是否必须涂抹，或者标改，韩愈、欧阳修辟佛的文章，是否随自己所见，撕下来全都焚毁呢（大师在灶君、血盆二经，旁边加抹）？</p></div>
+<div class="para-pair"><p class="p-orig">答，朱注之讹，宜批之顶格。凡世间书，多有此种毛病。若大醇小疵，则于顶格批之。大疵讹说者，则不可存留。</p><p class="p-trans">答：朱熹注解的错误处，应该在顶格批改。凡是世间的书，大多有这种毛病。如果大体好，稍有小的瑕疵，那么就在顶格批注；如果是有大毛病、胡乱说的书，就不能存留。</p></div>
+<div class="para-pair"><p class="p-orig">问，有字有佛像之衣服等，可作殓具否（师旁批云不可），经典可焚化以送亡人否（师旁批云不可妄焚）。</p><p class="p-trans">问：有字、有佛像的衣服等，是否可以用作殓尸的衣物（大师在旁边，批示说：不可以）？经典是否可以焚化来送亡人呢（大师在旁边批示说：不能随便焚化经典）？</p></div>
+<div class="para-pair"><p class="p-orig">答，如焚当另备化器。不可以经灰归锡箔灰卖。宜另包，用净布作袋，内加净沙，有人过海，投之深处。否则勿焚。不加沙，恐不沉，仍漂岸边。</p><p class="p-trans">答：如果焚化，应当另外备好焚化的器具。不可将经灰归入锡箔灰中卖掉。应该另外包好，用干净的布作成袋子，里面加上干净的沙子，有人过海的时候，投到大海深处。否则，不能焚化。不加净沙，恐怕灰袋不下沉，仍然会漂到岸边。</p></div>
+<div class="para-pair"><p class="p-orig">问，神能诛恶于既然之后，何不诛之于未然之前。如白起坑降卒许多万之后，始受诛于冥府，何不于其将坑未坑时即诛之，俾其不得坑人乎。或是该降卒夙欠命债，固当坑，坑后旧怨甫平，新怨又结，始得冥诛以泄怨乎。或是作恶如服毒，必待既服入腹，始得中毒以自毙乎。</p><p class="p-trans">问：神灵能在人做恶事之后责罚他，为什么不在未做恶事之前就责罚他？例如秦将白起挖坑活埋降卒四十多万之后，才在冥府受到惩罚，为什么不在他将要坑杀，还没有坑杀的时候，就惩罚他，使他不能坑杀降卒呢？或者是这些降卒，宿世就欠下命债，原本就应当被坑杀，坑杀之后，旧怨刚平，新怨又结，才得以在阴间惩罚仇人来泄怨呢？或者是作恶如同服毒，必须等到毒药服下肚，才能中毒而自毙呢？</p></div>
+<div class="para-pair"><p class="p-orig">答，未行事而即诛，乃千百万中之一耳。已行其事而方诛，乃天理人情常法耳。</p><p class="p-trans">答：还没有做恶事，神灵就责罚的，这是千百万例中的一例罢了。已做恶事，才被惩罚，这是天理人情的常法。</p></div>
+<div class="para-pair"><p class="p-orig">问，谓神能护法，则何至被某帝灭却许多寺乎。谓神不护法，则时有显应降魔之事迹。岂护与不护，悉由众生同分业力之浅深而行止乎。</p><p class="p-trans">问：说神灵能护法，为什么被某些皇帝毁灭了许多寺庙呢？说神灵不护法，有时却显应降魔的事迹。难道护法与不护法，都是由于众生同分业力的浅深而兴行或止息的吗？</p></div>
+<div class="para-pair"><p class="p-orig">答，此事不可死执。盖法运通塞，亦如寒暑之互相资成其岁序耳。</p><p class="p-trans">答：这种事不可死板执着。佛法法运的通达闭塞，也如同寒暑互相资助，成就岁月的顺序罢了。</p></div>
+<div class="para-pair"><p class="p-orig">问，历代祖师，如莲宗诸祖等，身后须经何人评定，始得举世崇奉以为祖。</p><p class="p-trans">问：历代祖师，例如莲宗诸位祖师等，身后须要经什么人评定，才能使举世崇奉他们为祖师呢？</p></div>
+<div class="para-pair"><p class="p-orig">答，有大德，人自肯尊。岂崖板要人评定乎。</p><p class="p-trans">答：有高尚的德行，人们自然肯尊崇。哪里是崖板地要人来评定呢？</p></div>
+<div class="para-pair"><p class="p-orig">问，地理学说甚繁，精通此术靡易，地理不精，择地犹之未择。精择其地，而不精择其心，终至变吉为凶，虽得仍同未得。所谓若无心田，亦无福地也。</p><p class="p-trans">问：地理风水学说很繁琐，精通此术不容易，地理风水不精通，择地也如同没有择地一样。精通选择好地，而不精通选择好心，最终导致吉祥变为凶险，虽然得到福地，仍然同未得一样，所谓：如果没有心田，也就没有福地。</p></div>
+<div class="para-pair"><p class="p-orig">世俗但讲地理，不讲天理，只虑风水有伤，不虑报应不爽，事有拂意，便咎地理之不精，虑彼碍此，无事生事，往往酿成恶剧，忘本逐末，比比皆是，较之不讲天理，并不讲地理者，为弊更甚。</p><p class="p-trans">世俗人只讲地理风水，不讲天理，只考虑风水有损伤，不考虑报应丝毫不爽，事情违背了自己的心意，就归咎风水师不精通地理风水，考虑是他障碍了这件事，无事生事，往往酿成恶剧，遗忘根本、追逐枝末，到处都是这种情形，比起不讲天理，以及不讲地理风水的人，弊病更加严重。</p></div>
+<div class="para-pair"><p class="p-orig">奉佛之人，为防微杜渐，力矫俗弊计，如遇造坟建屋，是否随缘相宜位置。但依佛理，存天理，不依俗理讲地理。</p><p class="p-trans">信佛的人，为防微杜渐，努力矫正俗风流弊考虑，如果遇到造坟建屋，是不是随缘在合适的位置就可以了？只依佛理，存天理，不依俗理讲地理风水。</p></div>
+<div class="para-pair"><p class="p-orig">答，虽不力讲，亦不宜完全不令地师一看。所谓先尽人事也。若长年养瞎眼之地师，皆是不依天理，不明地理之狂妄人。</p><p class="p-trans">答：虽然不极力讲究，也不应该完全不让风水师一看。所谓：先尽人事啊！如果长年奉养瞎眼的风水师，则都是不依天理、不明地理的狂妄之人。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【太乙神针灸】</span>是针灸学的一个学派，其特点是针灸配合、穴位配合，以药灸透入肌理，扶正祛邪，调养元气，达到治疗疾病的目的。“太乙”乃为尊贵之意，似为道家之辞。清朝医家高士宗曾说：“太乙者，无上之尊，优之众职环会而为贵人也”。以“太乙”名其针者，不过欲用以表明此针之效验神奇而已。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【暴殄天物】</span>暴：损害，糟蹋；殄：灭绝；天物：指自然生物。原指残害灭绝天生万物。后指任意糟蹋东西，不知爱惜。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【稔】</span>1.庄稼成熟。2熟悉。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【大醇】</span>1.指敦厚淳朴的诗风。2.谓大体完美。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【别种戒】</span>这里指在家男、女信者受三归依后，再受五戒中之一戒，是为一分戒；受二戒，是为少分戒；三戒、四戒是为多分戒；若更受五戒，即为满分戒。如屠夫，不能受杀戒，可受其它四戒。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【未然】</span>还没有成为事实。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【白起】</span>(？-前257)，芈姓，白氏，名起，楚白公胜之后。春秋时期楚君僭称王，大夫、县令僭称公，白起为白公胜之后，故又称公孙起。白起号称“人屠”。在长平之战中，白起大破赵军，坑杀赵军降卒四十余万。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

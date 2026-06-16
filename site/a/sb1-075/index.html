@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复许止净居士书 · 印光法师文钞</title>
+<meta name="description" content="礼忏无定规，但致志诚恳切即已。卧室供佛，除贫无余屋则可。若有余屋，断不可在卧室供也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-075/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复许止净居士书 · 印光法师文钞">
+<meta property="og:description" content="礼忏无定规，但致志诚恳切即已。卧室供佛，除贫无余屋则可。若有余屋，断不可在卧室供也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-075/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复许止净居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">礼忏无定规，但致志诚恳切即已。卧室供佛，除贫无余屋则可。若有余屋，断不可在卧室供也。</p><p class="p-trans">礼忏没有一定的规矩，只要表达出志诚恳切，就可以了。卧室供佛，除了贫穷没有其余的房间，才可以。如果有其余的房间，绝对不可在卧室供佛。</p></div>
+<div class="para-pair"><p class="p-orig">功课各随己意，亦无定章。光则早晚必按朝暮课诵直念。凡起腔唱者，亦作直念，但稍缓点。光绝未学唱念。然在丛林中，只可小声，不得声闻于外，以致惊动别人。</p><p class="p-trans">功课各随自己的心意，也没有一定的章程。我是早晚必定按照《朝暮课诵》直接念。凡是要起腔唱的，也是直念，只是稍为缓慢一点。我绝对没有学过唱念。然而在丛林中，只可以小声，不得大声传到外面，以致惊动别人。</p></div>
+<div class="para-pair"><p class="p-orig">先则日礼数百拜，近数年来事多，只二时功课。冬则日过百拜。夏则只数十拜。亦只拜释迦，弥陀，净土三经及诸大乘经，观音，势至，清净海众，尽虚空，遍法界，过去，现在，未来，一切诸佛，一切尊法，一切贤圣僧（弥陀之拜，多少不定，按精神天时增减，余各三拜）。近来日间绝不能看经拜佛，所有信札及托校证校对者，则已不暇给矣。</p><p class="p-trans">起先是每天拜几百拜，近些年来，事情多，只念早晚二时的功课。冬天，每天超过一百拜。夏天则只是几十拜。也只拜释迦牟尼佛，阿弥陀佛，净土三经，以及诸大乘经，观世音菩萨，大势至菩萨，清净大海众菩萨，尽虚空遍法界、过去、现在、未来一切诸佛、一切尊法、一切贤圣僧（阿弥陀佛的礼拜，拜多少不一定，按照精神的盛衰、天气时节而增减，其余各三拜）。近来，白天绝对无法看经拜佛，所有的信件以及委托校证、校对的事情，已经没有一点闲暇了。</p></div>
+<div class="para-pair"><p class="p-orig">令夫人既能长斋五月，何不能长斋一年。以杀业最碍往生。即不往生，更须不食肉。庶免未来偿身命债。念佛吃素往生西方，是世间第一功德事。忍令妻子不得决定蒙益乎。</p><p class="p-trans">你的夫人既然能够长斋五个月，为何不能长斋一年。因为杀业最障碍往生。即便不往生，更要不吃肉。才能免得未来偿还身命债务。念佛吃素，往生西方，是世间第一的功德事。忍心令妻子不能绝对蒙受利益吗？</p></div>
+<div class="para-pair"><p class="p-orig">至于工人，若欲令彼种善根，不妨为彼说其所以。将肉食之费用作犒劳，则彼以多得钱故，断不至犹生訾议也。</p><p class="p-trans">至于工人，如果想让他们种善根，不妨为他们讲说其中的所以然。将肉食的费用作犒劳，那么他们因为多得钱的缘故，断然不至于还生起非议。</p></div>
+<div class="para-pair"><p class="p-orig">今夏各处水灾，饥民甚多，尚宜切戒家人认真念佛，以防意外之祸。如其不能受辛苦，当念饥民之苦，及富室或有被劫之苦。则自可忍此念佛之苦矣。</p><p class="p-trans">今年夏天，各处水灾，饥民很多，应该恳切告诫家人认真念佛，以防意外之祸。如果他们不能忍受辛苦，应当想到饥民的痛苦，以及富家或许有被劫的痛苦。那么自然可以忍受这个念佛之苦了。</p></div>
+<div class="para-pair"><p class="p-orig">此本非苦，以一向不惯，故以为苦，然此苦乃出苦之苦，若不能受此苦，则将来之苦，盖有说不能尽者。（乙丑）</p><p class="p-trans">这本来不是苦，因为一向不习惯，所以就认为是苦，然而这个苦，是出离痛苦的苦，如果不能忍受这个苦，那么将来的痛苦，就有说不尽的情形了。（乙丑年&lt;1925年&gt;）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【訾议】</span>非议。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

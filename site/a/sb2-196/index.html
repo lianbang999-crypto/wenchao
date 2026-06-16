@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复李觐丹居士书七 · 印光法师文钞</title>
+<meta name="description" content="佛法广大，无量无边。吾人以博地凡夫之资，欲于现生了百千万劫难了之事，当筹度己力之大小以修。且莫妄充通家，此法尚未真得，又去钻研他宗。致于此最易得益之事，反弁髦视之。以致仍旧百千万劫不能了耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-196/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复李觐丹居士书七 · 印光法师文钞">
+<meta property="og:description" content="佛法广大，无量无边。吾人以博地凡夫之资，欲于现生了百千万劫难了之事，当筹度己力之大小以修。且莫妄充通家，此法尚未真得，又去钻研他宗。致于此最易得益之事，反弁髦视之。以致仍旧百千万劫不能了耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-196/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复李觐丹居士书七</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法广大，无量无边。吾人以博地凡夫之资，欲于现生了百千万劫难了之事，当筹度己力之大小以修。且莫妄充通家，此法尚未真得，又去钻研他宗。致于此最易得益之事，反弁髦视之。以致仍旧百千万劫不能了耳。</p><p class="p-trans">佛法广大，无量无边。我们以博地凡夫的资质，想在现生了结百千万劫都难以了结的大事，应当衡量考虑自己能力的大小来修持。千万不要妄充通家，净土法门尚未真得，又去钻研其他宗派。致使对于这个最容易得到利益的事，反而当作无用之物来看待。以致百千万劫仍旧不能了结生死大事。</p></div>
+<div class="para-pair"><p class="p-orig">佛法犹如太虚，了无东西南北四维上下。所言东西南北四维上下者，约自己所立之地位言也。既自己不能与太虚相契相合，须必按自己所立之地位以论。不妨于无东西南北四维上下中约自己而定以东西南北四维上下。</p><p class="p-trans">佛法犹如太虚，没有东西南北、四维上下。所说的东西南北，四维上下，是就自己所站的地方而言。既然自己不能与无边的太虚相契相合，就必须按照自己所站的位置来讨论。不妨在没有东西南北、四维上下的太虚中，就自己的位置来确定东西南北、四维上下的方位。</p></div>
+<div class="para-pair"><p class="p-orig">而禅宗，相宗，密宗，无一宗不好。然以年已半百之人，得仗佛力，能以具缚凡夫即了生死之法，而复致力于其仗自力之法门，虽能助净业而圆通见解，诚恐心力不及，则以彼为正，以此为稍带，必至难以得力。</p><p class="p-trans">而禅宗，法相宗，密宗，没有一宗不好。然而以一个年已半百之人，已遇到了依仗佛力，能以具缚凡夫的地位就能了生脱死的法门，然而却又致力于其他依仗自力的法门，虽然能够帮助净业、圆通见解，实在恐怕心力达不到。这样杂修，就会成为以其他依仗自力的法门为正事，以此念佛法门为稍带之事，必定导致难以得力。</p></div>
+<div class="para-pair"><p class="p-orig">光并非拒人研究他宗，有不谅者，加以严厉之讥，谓禁拒人研究他宗。则光于冥冥中得福，而大众以光为佛怨矣，祈自裁度而定之。</p><p class="p-trans">我并不是排斥他人研究其他宗派，有不谅解的人，加以严厉的讥责，认为我禁止他人研究其他宗派。那么，如果我不说，而是独自默享这种修行的福份利益，大众就会认为我是佛怨了。个中是非，请你自己裁度定夺。</p></div>
+<div class="para-pair"><p class="p-orig">又南京慈幼院成立后，汝出三百元，其年尚未开办，次年开办，故未再收。闻前年仍出三百元，去年去信云系特别捐，故今年亦不敢去信。前余峙莲说及，拟求汝任一长年捐。或数十元，或一百元，随意。</p><p class="p-trans">另外，南京慈幼院成立后，你出资三百元，这一年还没有开办，第二年才开办，所以没有再收钱。听说前年你仍然出三百元，去年去信，（慈幼院）说是特别捐助，所以今年他们也不敢去信。上次余峙莲说到，打算求你任一位长年捐助功德主。或几十元，或一百元，随意即可。</p></div>
+<div class="para-pair"><p class="p-orig">法云寺自去年以来，学生蒸蒸日上。有王建屏者，一商人耳，家道不过三几万金。而闻法云之慈幼院，特往瞻察喜极。为各学生，缝衣，缝被。所有程度可以出而谋生者，彼包荐出于各行店。彼之门生，开行店者有二三十人，兼及朋友，故彼膺此重任。</p><p class="p-trans">法云寺自去年以来，学生蒸蒸日上。有一名叫王建屏的人，是一位商人，家财不过三万多圆。而他听说法云寺的慈幼院，便特地前去观察，非常欢喜。为每个学生，缝衣服，缝被子。所有学习程度足以出外谋生的，他包荐到各个行店。他的门生，开行店的有二三十人，再加上朋友，所以他担此重任。</p></div>
+<div class="para-pair"><p class="p-orig">从去年至今夏，已为荐出四十八人，尚有要者。以程度太浅，不肯令去。故学生加额至一百六十名，所有旧屋不敷用，又修十余间作工厂。而王建屏又令彼店中作纽扣师来院教之，不要学俸。学生学好即按货开工钱。此一宗，不须本钱，颇为有益。</p><p class="p-trans">从去年到今年夏天，已经为慈幼院推荐出四十八人，还有要人的。因为程度太浅，不肯让他们去。所以学生增加名额，到了一百六十名，所有的旧屋不够用，又修了十几间作工场。而王建屏又令他店中作纽扣的师父来院中教学，不要学费。学生学好了，就按货开工钱。这件事，不须本钱，颇为有益。</p></div>
+<div class="para-pair"><p class="p-orig">又法云寺所作器物，人皆争买，以坚实得受用故。近几年来，虽有加入任捐者。而先所任捐之人，或有移之远方者，或有去世者。而院中经费，比前较大，颇觉吃力。</p><p class="p-trans">再有，法云寺所作的器物，人们都争着买，因为坚实好用的缘故。近几年来，虽然有加入任捐的人。而以前任捐的人，或有迁移到远方的，或有去世的。而院中的经费，比以前大，颇觉吃力。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【弁髦】</span>弁，黑色布帽；髦，童子眉际垂发。古代男子行冠礼，先加缁布冠，次加皮弁，后加爵弁，三加后，即弃缁布冠不用，并剃去垂髦，理发为髻。因以“弁髦”喻弃置无用之物。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

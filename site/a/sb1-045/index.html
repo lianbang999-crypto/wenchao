@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复高鹤年居士书八 · 印光法师文钞</title>
+<meta name="description" content="昔紫柏大师大悟以后，游历名山，以广见闻。凡中国所有名山圣道场地，无不亲历其境，以其色力强健，日行三百余里故也。后此能若是之游者，未闻其人。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-045/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复高鹤年居士书八 · 印光法师文钞">
+<meta property="og:description" content="昔紫柏大师大悟以后，游历名山，以广见闻。凡中国所有名山圣道场地，无不亲历其境，以其色力强健，日行三百余里故也。后此能若是之游者，未闻其人。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-045/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复高鹤年居士书八</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昔紫柏大师大悟以后，游历名山，以广见闻。凡中国所有名山圣道场地，无不亲历其境，以其色力强健，日行三百余里故也。后此能若是之游者，未闻其人。</p><p class="p-trans">过去紫柏大师大悟以后，游历名山，来增广见闻。凡是中国所有的名山圣道场地，无不亲身游历，这是因为他色身体力强健，每天能走三百多里的缘故。后来之人能够如此游历的，还没有听说过。</p></div>
+<div class="para-pair"><p class="p-orig">近世以来，多有赖佛偷生者。禅教律净，一无事事。唯奔南往北，贩买零碎东西，以求微利而恣所欲。虽至名山圣道场地，绝无一念惭愧景仰之心。</p><p class="p-trans">近世以来，多有依赖佛门，苟且偷生的人。对于禅、教、律、净各个宗派，一样也不修持。只是走南闯北，贩买一些零碎的东西，来求取微薄的利润以满足自己的私欲。虽然到了名山圣道场地，但绝对没有一念惭愧景仰之心。</p></div>
+<div class="para-pair"><p class="p-orig">居士即俗修真，随缘进道，执持一句弥陀，当做本命元辰。抱著惭愧二字，以为入圣阶梯。圣地不厌屡登，录其迹以开人耳目。时僧倘一接见，代为语以撑佛门庭。</p><p class="p-trans">居土你在俗修真，随顺因缘，进修道业，执持一句阿弥陀佛名号，当做本命元辰。抱著“惭愧”二字，作为入圣的阶梯。屡次登临圣地道场且毫无厌倦，记录下参访的事迹来开扩人们的耳目。时下的僧人倘若遇见你，一定会请您作为代表来讲说以支撑佛教门庭。</p></div>
+<div class="para-pair"><p class="p-orig">末世之僧，求其如此之真切至诚者，实不多得。况吃得肉已饱，来寻僧说禅之大方家耶。</p><p class="p-trans">末法时代的僧人中，寻求如此真切至诚的人，实在不可多得。何况肉食饭饱，来找僧人清谈禅法的世俗中博学多闻的大方家呢？</p></div>
+<div class="para-pair"><p class="p-orig">去秋尊驾去后，每念居士为佛门庭，焦劳成疾，不久当至陕西，宴坐于观音降龙之地（南五台大茅篷）。都摄六根，净念相继。反念念自性，性成无上道。其为乐也，莫能喻焉。</p><p class="p-trans">去年秋天，你离开后，常常想到居士你为佛教门庭，焦急操劳成疾，不久当会到陕西，安坐于观音降龙的圣地（就是南五台大茅篷）。都摄六根，净念相继。反念念自性，性成无上道。这样的快乐，不能比喻。</p></div>
+<div class="para-pair"><p class="p-orig">至正月初七得接手教，方知去岁仍复游杭，皖等省，欲至北京，以天寒身病而返，居士诚可谓为法忘躯者也。然以光愚见，似乎可以止步休歇矣。</p><p class="p-trans">到了正月初七，接到你的信，才知道，你去年仍然在杭州，安徽等省游历，想要到北京，因为天气寒冷，身体有病而返回，居士实在可以说是为法而忘躯的人。然而以我的愚见，似乎可以止步休息了。</p></div>
+<div class="para-pair"><p class="p-orig">纵欲广游，宜以神不须以身。弥陀三经，华严一部，当作游访路程。宴坐七宝池中，遍游华藏世界。神愈游而身愈健，念愈普而心愈一。</p><p class="p-trans">即使想要广游，宜以神来游历，不须以身来游历。《阿弥陀经》、《无量寿经》、《观无量寿经》净土三经，还有一部《华严经》，可当作游访的路程。安坐在七宝池中，遍游于华藏世界。神愈游则身愈健，念愈广则心愈归一。</p></div>
+<div class="para-pair"><p class="p-orig">其寂也一念不可得，其照也万德本具足，寂照圆融，真俗不二。十世古今，现于当念。无边刹海，摄归自心。</p><p class="p-trans">寂，则一念不可得；照，则万德本具足。寂照圆融，真俗不二。十世古今，现于当念；无边刹海，摄归自心。</p></div>
+<div class="para-pair"><p class="p-orig">较彼披星戴月，冒雨冲风，临深渊而战兢，履危岩而惊怖者，不啻日劫相倍矣。鄙见如是，不知居士以为何如。</p><p class="p-trans">与你披星戴月，冒雨冲风，临深渊而战兢，履危岩而惊怖相比，不只是一天与一劫的差距啊！鄙见如此，不知居士以为如何？</p></div>
+<div class="para-pair"><p class="p-orig">又来教云，光阴迅速，胜于瞿塘滟滪之水，诚然诚然。古教有云，证无生者，方见刹那。居士此言，与见刹那相去不远，慰慰贺贺。</p><p class="p-trans">又来信说，光阴迅速，胜过长江瞿塘峡滟滪堆的湍急流水，的确的确。古德的言教有说，证无生的人，方能见刹那。居士这句话，与见刹那相去不远了，祝贺祝贺。</p></div>
+<div class="para-pair"><p class="p-orig">又谓不慧芜语，为当机之法，一展卷令人如渔父误入桃源等，何失言之甚也。将欲引不慧而进之，则不慧身虽未老，心力早衰。日见其退，寸步难进矣。</p><p class="p-trans">又说我的杂乱芜语，是当机之法，一展读，就令人如同渔父误入桃花源等等，为何要如此失言呢？是要引导我上进吗？那么我身体虽然没有老，心力早己衰微。每天只见退步，寸步难进啊！</p></div>
+<div class="para-pair"><p class="p-orig">又呈示黎公，蒙悯其愚诚，录存备印，益觉惭愧无地耳。果如是，是以腐草投彼宝山，以残羹杂于王膳，黩人耳目，赧我面颜，取憎阅者，有浼法道。</p><p class="p-trans">又呈示给黎端甫居士，承蒙怜悯我的愚诚，录存下来，准备印刷，更加觉得惭愧惶恐，无地自容。果真如此，就是以腐草投到宝山，以残羹掺杂于王膳之中，亵黩他人的耳目，羞红我的颜面，使读者憎恶，法道因此沾污。</p></div>
+<div class="para-pair"><p class="p-orig">又况前三论系开如和尚于前年冬月命作，以供尚贤堂演说之稿。念佛法门普被三根论，即于是冬载于彼堂纪事。余二篇用与未用，不得而知。</p><p class="p-trans">又何况前面三篇论文，是开如和尚在前年冬月命我所作，以供尚贤堂演说的文稿。《念佛法门普被三根论》，就在这年冬天记载在尚贤堂的纪事中。其余二篇，用还是没用，不得而知。</p></div>
+<div class="para-pair"><p class="p-orig">若谓文虽鄙拙，意诚可悯。当于前三论，署释开如名。宗教不宜混滥论，署释常惭名。印光二字，千祈勿书。</p><p class="p-trans">如果认为文词虽然粗鄙拙劣，文意实在可以怜悯。应当将前面三篇论文，署上释开如的名。《宗教不宜混滥论》，署上“释常惭”的名。“印光”二个字，请千万不要写。</p></div>
+<div class="para-pair"><p class="p-orig">又洋纸之害，甚于洪水猛兽，穷国屈民，断灭儒释圣教，其祸无有底极。于初四日已为黎公略言其概，祈居士勿惜慈力，遍与诸居士言之。</p><p class="p-trans">另外，洋纸的危害，超过洪水猛兽，穷国屈民，断灭儒、释圣教，这种祸害没有终极。在初四日，已经对黎端甫大略说明了其中梗概，请居士不要吝惜慈力，普遍对诸位居士言说。</p></div>
+<div class="para-pair"><p class="p-orig">令立一章程，凡佛祖经论，概勿用此纸印。又须通告各刻经处，令其一体知悉。庶不至以流通而致速灭亡。此不慧痛心疾首吁诉无门者。</p><p class="p-trans">令大家立一个章程，凡是佛陀、祖师的经论，一概不要用这种纸来印。又必须通告各处的刻经处，让他们全都知道。才不至于因为流通而导致快速灭亡。这是我痛心疾首，吁诉无门的事情。</p></div>
+<div class="para-pair"><p class="p-orig">今欲以居士为绍介，恳祈诸大居士各各发菩提心，出广长舌，遏此习风，以永法道。谅必悯我愚诚，特为遍告耳。</p><p class="p-trans">现今想以居士你来作介绍，恳祈诸位大居士，各各发菩提心，出广长舌，阻止这个陋习之风，以永远坚固法道。想来必定怜悯我的愚诚，特地为之周遍告知吧。</p></div>
+<div class="para-pair"><p class="p-orig">所寄芜语惭赧卷藏，送开如和尚。五十三参图，以前者引缘师已将彼所受者送之，故送于了一和尚。以居士曾对彼说过，后忘记耳。</p><p class="p-trans">所寄的芜语（似指《佛学丛报》上大师的论文），羞愧脸红，收藏起来，送给开如和尚。五十三参图，因为前些天，引缘师已将他所接受的送（给我了），所以送给了一和尚。因为居士（你）曾经对他说过，后来忘记了。</p></div>
+<div class="para-pair"><p class="p-orig">光之楞严咒袋，送与了清师，令其带至广东，以结法缘。余悉照单分送。悟开师于去岁十一月二十二日未刻厌世，去时光景，具于黎居士书中，今不详书。</p><p class="p-trans">我的楞严咒袋，送给了清师，令他带到广东，以结法缘。其余的都照单子分别送出。悟开师于去年十一月二十二日未刻（下午1-3点）去世，去世时的光景，全都写在给黎端甫居士的书信中，现今不详说。</p></div>
+<div class="para-pair"><p class="p-orig">长安虽好，诸事艰难，倘无大碍事，当于南方专修净业，护持法道，较比北方，事半功倍。何必以衰老之身，强置于困苦之地，然后为道也。</p><p class="p-trans">长安虽好，诸事艰难，倘若没有大碍事，应当到南方专修净业，护持法道，比起北方，事半功倍。何必以衰老的色身，强迫自己生活在困苦之地，然后才修道呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【本命元辰】</span>禅林用语。指本性。本命，指人出生年之干支；值其干支之星，称本命星。元辰，谓人之命运受阴阳二星所左右，而以阳八阴六配合卜算。故本命、元辰皆为支配人命运之星。禅宗则将之比喻为自己之本性。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【大方】</span>谓见识广博或有专长的人。语出《庄子·秋水》。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【滟滪堆】</span>长江瞿塘峡口的险滩。在四川省奉节县东。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【浼】</span>沾污；玷污。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【洋纸之害】</span>似指1.工业化的大量洋纸对传统制纸业的摧毁。2.洋纸的成份低劣，或多有化学原料。3.时久，字墨脱漏。见下《复丁福保居士书十二》。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【惭赧】</span>因羞惭而脸红。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【卷藏】</span>收藏。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

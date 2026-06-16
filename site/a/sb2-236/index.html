@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>大方广佛华严经普贤行愿品流通序 · 印光法师文钞</title>
+<meta name="description" content="如来一代所说诸法，举其大宗，其名有五。曰律，曰教，曰禅，曰密，曰净。此五宗者，悉皆显示佛之身口意三业，戒定慧三学，与夫一切三昧万德。固无可轩轾抑扬，拣择取舍者。然在学者修习，当详审与自己根性相契之法而修。一门深入，较为省力。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-236/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大方广佛华严经普贤行愿品流通序 · 印光法师文钞">
+<meta property="og:description" content="如来一代所说诸法，举其大宗，其名有五。曰律，曰教，曰禅，曰密，曰净。此五宗者，悉皆显示佛之身口意三业，戒定慧三学，与夫一切三昧万德。固无可轩轾抑扬，拣择取舍者。然在学者修习，当详审与自己根性相契之法而修。一门深入，较为省力。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-236/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">大方广佛华严经普贤行愿品流通序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来一代所说诸法，举其大宗，其名有五。曰律，曰教，曰禅，曰密，曰净。此五宗者，悉皆显示佛之身口意三业，戒定慧三学，与夫一切三昧万德。固无可轩轾抑扬，拣择取舍者。然在学者修习，当详审与自己根性相契之法而修。一门深入，较为省力。</p><p class="p-trans">如来一代时教，所说诸法，列举其中的主要宗派，名有五种。就是律宗、教宗、禅宗、密宗、净土宗。这五宗，全都显示佛的身口意三业，戒定慧三学，与一切三昧万德。原本就没有高低优劣，抑扬褒贬，拣择取舍的。然而对于学人的修习，应当详审与自己根性相契的法门来修持。一门深入，比较省力。</p></div>
+<div class="para-pair"><p class="p-orig">而此五宗，无不以律为根本，净为归宿。此在佛世已然，况今末法时代乎。以净土法门，彻上彻下，三根普被，凡圣同归。上之则等觉菩萨，不能超出其外。下之则五逆罪人，亦可预入其中。</p><p class="p-trans">而这五宗，无不是以戒律为根本，净土为归宿的。这种情况在佛住世时已然如此，何况现今的末法时代呢？因为净土法门，贯通上下，普被三根，凡圣同归。向上来说，等觉菩萨不能超出净土法门之外。向下来说，五逆十恶的罪人也可参与净土法门之中。</p></div>
+<div class="para-pair"><p class="p-orig">良由一切法门，皆仗自力。非到业尽情空，不能了生脱死。净土法门，兼仗佛力。若具真信切愿，即可带业往生。二法相较，其难易奚啻天渊悬殊。</p><p class="p-trans">实在是由于一切法门，全都依仗自力。不到业尽情空，不能了生脱死。而净土法门，兼仗佛力。如果具足真信切愿，就可带业往生。二种方法相较，其困难、容易何止天渊悬殊。</p></div>
+<div class="para-pair"><p class="p-orig">溯此法之缘起，实在华严一经。以未详示弥陀因行果德，净土殊胜庄严，行人修因证果，故致人多忽之，不肯提倡。</p><p class="p-trans">追溯净土法门的缘起，其实是在《华严经》中。因为没有详细显示阿弥陀佛的因行果德，极乐净土的殊胜庄严，修行人的修因证果，所以导致人们大多忽视净土法门，不肯提倡。</p></div>
+<div class="para-pair"><p class="p-orig">昔如来初成正觉，与华藏世界海诸大菩萨，互相酬倡，说十信，十住，十行，十回向，十地，等觉，妙觉，诸因果法。其预会者，乃已破无明，证法性之十住十行十回向十地等觉四十一位法身大士。</p><p class="p-trans">往昔如来初成正觉，与华藏世界海中的诸大菩萨，互相酬答倡合，宣说十信、十住、十行、十回向、十地、等觉、妙觉，诸因果法。其中参与大会的圣者，是已经破无明，证法性的十住、十行、十回向、十地、等觉，四十一个阶位的法身大士。</p></div>
+<div class="para-pair"><p class="p-orig">法门虽说十信，然以信位未破无明，未证法性，不能预会。况凡夫二乘乎哉。及至末会入法界品，善财以十信后心，受文殊教，遍参知识。最初于德云比丘处，闻念佛法门，即证初住，是为法身大士。</p><p class="p-trans">法门虽然说有十信位，然而因为信位的菩萨，还没有破无明，还未证得法性，不能参预法会。何况是凡夫、二乘人呢？直到最后一会《入法界品》，善财童子以十信后心位（十信位的最后阶段，再破一品无明，就进入初住位，成为法身大士），受文殊菩萨教导，周遍参访善知识。最初在德云比丘那里，听闻到念佛法门，随即证入初住位，成为法身大士。</p></div>
+<div class="para-pair"><p class="p-orig">自此遍参诸知识，各有所证。末至普贤菩萨处，蒙普贤开示，及威神加被之力。所证与普贤等，与诸佛等，是为等觉菩萨。</p><p class="p-trans">从此，遍参诸位善知识，各有所证。最后到了普贤菩萨处，蒙普贤菩萨开示，以及威神加被之力。所证的境界与普贤菩萨相等，与诸佛齐等，成为等觉菩萨。</p></div>
+<div class="para-pair"><p class="p-orig">普贤乃为说偈，称赞如来胜妙功德，劝进善财，及与华藏海众。同以十大愿王功德，一致进行。回向往生西方极乐世界，以期圆满佛果。并不一说弥陀誓愿，净土庄严，往生因果。以此诸大士咸皆备知，无庸复说。</p><p class="p-trans">普贤菩萨于是为他宣说偈颂，称赞如来胜妙功德，劝进善财童子，以及华藏海众。同以十大愿王功德，一致从事进行。回向往生西方极乐世界，以期圆满佛果。并没有一次说到阿弥陀佛的誓愿，极乐净土的庄严，往生的九品因果。因为这些情形，诸位法身大士全都尽知，无须再说。</p></div>
+<div class="para-pair"><p class="p-orig">又华严一经，初译于晋，只六十卷。次译于唐则天朝，八十卷。二译皆文来未尽，于普贤说偈赞佛后未结而终（从前无纸，西域之经，皆写于贝多树叶。以写之不易，或有节略。又叶用绳穿，或有散失。文来未尽，由此之故。若今经书钉作一本，则无此弊）。</p><p class="p-trans">另外，《华严经》，初译是在晋朝，只有六十卷。次译是在唐朝武则天时代，有八十卷。两次的翻译，都是经文未全尽，在普贤菩萨说偈赞佛之后，没有结文而终止（从前没有纸，西域的经书，全都写在贝多树叶上。因为书写不容易，或有所节略。另外，贝多树叶是用绳子穿起来的，或有所散失。由于这样的缘故，经文没有全部传来。像现今的经书，钉作一本，就没有这个弊病了）。</p></div>
+<div class="para-pair"><p class="p-orig">至德宗贞元十一年，南天竺乌荼国王，进呈大方广佛华严经入不思议解脱境界普贤行愿品四十卷之全文。前三十九卷，即八十卷华严之入法界品，而文义加详。第四十卷，为晋唐二译所无者，乃普贤称赞佛功德后，劝进往生西方之文。</p><p class="p-trans">到了唐德宗贞元十一年（795年），南天竺的乌荼国王，进呈《大方广佛华严经·入不思议解脱境界普贤行愿品》四十卷的全文。前面三十九卷，就是八十卷华严的“入法界品”，而文义更加详尽。第四十卷，是晋、唐二朝翻译所没有的，是普贤菩萨称赞佛陀功德之后，劝进往生西方的经文。</p></div>
+<div class="para-pair"><p class="p-orig">当时清凉国师亦预译场，八十卷经，早已亲制疏钞流通矣。特为此一卷经，制别行疏。圭峰造钞，为之弘阐。又为此四十卷全经制疏。以屡经沧桑，致久佚失。近由东瀛复回中国，故知此一卷经，为华严一经之归宿。</p><p class="p-trans">当时，清凉国师（注1）也参预到译场，八十卷经文，早已经亲自制撰《华严经疏钞》（注2）流通了。特别为这一卷经，制撰《普贤行愿品别行疏》（注3）。圭峰（注4）大师造撰《普贤行愿品别行疏钞》，加以弘扬阐述。国师又为这四十卷全经制撰《贞元新译华严经疏》（注5）。因为屡经沧桑，时间久了这些疏钞佚失了。最近由日本又传回到中国，所以知道这一卷经，是《华严经》的归宿。</p></div>
+<div class="para-pair"><p class="p-orig">华藏世界海，净土无量无边。而必以求生西方，为圆满佛果之行。可知念佛求生西方一法，原自肇起华严。但以凡夫二乘，不预此会，莫由禀承。故于方等会上，普为一切凡夫二乘，及诸菩萨，宣说无量寿经，观无量寿佛经，阿弥陀经。令其悉知弥陀因行果德，净土殊胜庄严，行人修因证果。俾一切具缚凡夫，与断见思惑之二乘，及破无明惑之法身大士，同于现生出此五浊，登彼九莲。以渐进修，直至圆满菩提而后已。</p><p class="p-trans">华藏世界海，净土无量无边。而必定要以求生西方极乐世界，为圆满佛果之行。可知念佛，求生西方这一法门，原本起始于《华严经》。只是因为凡夫、二乘人，不能参与华严法会，没有办法禀承这个法门。所以，佛陀在方等会上，普为一切凡夫、二乘，以及诸位菩萨，宣说《无量寿经》、《观无量寿佛经》、《阿弥陀经》。令他们都知道阿弥陀佛的因行果德，净土的殊胜庄严，行人的修因证果。使一切具缚凡夫，与断见思惑的二乘圣者，以及破无明惑的法身大士，同在现生出离这个五浊恶世，登上那九品莲邦。通过渐渐进修，直至圆满菩提之后才停止。</p></div>
+<div class="para-pair"><p class="p-orig">大矣哉，念佛求生净土之法也。十方三世一切诸佛，上成佛道，下化众生，成始成终，咸资乎此。虽欲赞扬，穷劫莫尽。</p><p class="p-trans">伟大啊！念佛求生净土的法门！十方三世一切诸佛，上成佛道，下化众生，成始成终，全都要借助于这个净土法门。想要赞扬这个法门，即使是穷尽劫数，也无法赞叹究尽。</p></div>
+<div class="para-pair"><p class="p-orig">吾友逸人常诵此经，欲为广印，光劝一并同印净土五经。使人悉知此经回向往生之所以，则若事若理，若因若果，一一明了，绝无遗憾。</p><p class="p-trans">我的朋友逸人和尚，常常读诵这部经，想要广泛刻印这部经，我劝他一并同印《净土五经》。使得人们全都知道这部经回向往生的所以然，那么对于事相义理，因行果德，一一明白了知，绝无遗憾。</p></div>
+<div class="para-pair"><p class="p-orig">彼以发愿在先，故印万册。以后则专印净土五经。故为叙及此经与净土五经之缘起云。（民国二十五年丙子尧历仲春望日）</p><p class="p-trans">他因为发愿在先，所以印了一万册。以后就专门刊印《净土五经》。所以为此叙述了这部经与《净土五经》的缘起。(民国二十五年&lt;1936&gt;丙子二月十五日)</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【澄观】</span>（人名）唐代州五台山清凉寺澄观，嗣贤首，弘华严宗。初居五台山大华严寺，作新华严经疏二十卷。自兴元元年正月至贞元三年十二月而毕功。四年正月寺主贤林请讲新疏。七年河东节度使复请使于崇福寺讲新疏。德宗下诏入都。使与罽宾般若三藏译四十华严经。译成，诏使作疏。师于终南草堂寺编成十卷进呈。天和年中寂，寿七十余。初德宗诞节，讲经于内殿，以妙法清凉帝心，遂赐号清凉法师，礼为教授和尚。元和五年。宪宗问华严法界之旨，豁然有得，加号大统清凉国师。师身长九尺四寸，垂手过膝，历九朝，为七帝之门师。师去贤首百余年，遥禀其旨，所著疏记四百余卷，宰相裴休奉敕作碑。见宋高僧传五，佛祖统纪二十九。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【华严经疏钞】</span>八十卷。唐·澄观撰。作者先于兴元元年到贞元三年间（784年-787年）撰《大方广佛华严经疏》（略称《大疏》，《大正藏》第三十五册）六十卷，解释唐译《大方广佛华严经》文，后来又为弟子僧睿等百余人撰《大方广佛华严经随疏演义钞》（略称《演义钞》，《大正藏》第三十六册）九十卷，解释疏文。《疏》、《钞》原来别行，到了宋代，晋水净源（1011年-1088年）才录疏以配经，编为一二０卷，称为《华严经疏注》（现缺第二十一至七十卷、第九十一至一百卷）。后人更会钞入疏，称为《华严经疏钞》。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【普贤行愿品别行疏】</span>六卷，唐·澄观撰。全书分教起因缘、辨教宗旨、翻译传授、释经名题、随文解释等五门。卷首有序及归敬偈，其释义与本疏所揭者一致，二者之序、归敬偈亦相同。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【圭峰宗密禅师】</span>（人名）华严五祖圭峰宗密禅师姓何氏。果州人。唐元和二年赴贡举，值遂州道圆禅师，因求披剃。一日，于任灌家赴斋，得圆觉经，诵未终，即感悟。圆曰：此经佛授汝耳，速参方去。后谒荆南忠，洛阳照，皆契印可。继览华严疏，欣然曰：吾逢圆觉，心地开通。今遇此疏，何其幸哉！乃以书达清凉，叙门人之礼。观国师答书印可曰：毗卢性海，与吾同游者，舍汝其谁欤。文宗诏赐紫衣。著有论疏九十余卷。会昌元年正月六日坐灭。其月二十二日奉全身于圭峰。荼毗得舍利，如玉。塔曰青莲。宣宗追谥定慧。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【贞元新译华严经疏】</span>凡十卷。唐代澄观撰。又称华严经普贤行愿品疏、贞元华严经疏、华严经行愿品疏。略称贞元疏、行愿品疏、华严经疏。收于卍续藏第七册。本疏叙述四十华严经之纲要，并解释其文义，总立十门，即：(一)教起因缘，(二)教门权实，(三)所诠义理，(四)辩定所宗，(五)修证浅深，(六)彰教体性，(七)部类品会，(八)流传感通，(九)释经名题，(十)随文解释。本书援引经论达数十部之多，系澄观于唐贞元十四年（798年）五月奉敕撰述，卷首载有其自序及归敬偈。本书之释义与澄观之华严经大疏入法界品之释义大体雷同，然对新（八十华严）旧（六十华严）两经所缺而为本经（四十华严）卷四十所独具之“普贤菩萨十大愿文”详加注释，以为修行之玄枢与华严一经之幽键，并主张“极乐不离华藏，弥陀即本师”，而异于净土往生之说。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

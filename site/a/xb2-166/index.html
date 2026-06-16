@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>企庐莲社缘起（民二十四年） · 印光法师文钞</title>
+<meta name="description" content="大觉世尊，愍诸众生，迷本妙心，轮回生死。示生世间，成等正觉，随众生机，说种种法。虽大小偏圆不同，权实顿渐各异，要皆为令众生，开示悟入佛之知见，究竟成佛而已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-166/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="企庐莲社缘起（民二十四年） · 印光法师文钞">
+<meta property="og:description" content="大觉世尊，愍诸众生，迷本妙心，轮回生死。示生世间，成等正觉，随众生机，说种种法。虽大小偏圆不同，权实顿渐各异，要皆为令众生，开示悟入佛之知见，究竟成佛而已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-166/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">企庐莲社缘起（民二十四年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大觉世尊，愍诸众生，迷本妙心，轮回生死。示生世间，成等正觉，随众生机，说种种法。虽大小偏圆不同，权实顿渐各异，要皆为令众生，开示悟入佛之知见，究竟成佛而已。</p><p class="p-trans">大觉世尊，怜悯一切众生，迷背了本有的妙心，而轮回生死，所以示现降生在世间，成就正等正觉，随顺众生的根机，宣说种种法。虽然大乘、小乘、偏教、圆教不同，权教、实教、顿教、渐教各异，但是宗旨都是为了使众生，开、示、悟、入佛的知见，直到究竟成佛。</p></div>
+<div class="para-pair"><p class="p-orig">然众生根有大小，迷有浅深，不能直下畅佛本怀。又为末世众生，业障深厚，智慧浅薄，寿命短促，知识稀少，匪仗佛力，决难现生了脱。</p><p class="p-trans">但是众生的根机有大有小，迷惑有浅有深，不能直接畅说佛的本怀。又因为末法时代的众生，业障深厚，智慧浅薄，寿命短促，善知识又很稀少，如果不仗佛力，就绝对难以现生了生脱死。</p></div>
+<div class="para-pair"><p class="p-orig">于是特开一总摄初中后法，普被上中下根之净土法门。俾彼已证法身者，速成佛道。未断烦惑者，亦出轮回。</p><p class="p-trans">于是世尊特别开启了一个总摄初、中、后三时的教法，普被上、中、下三根的净土法门。从而使那些已经证得法身的菩萨，快速成就佛道；没有断烦惑的凡夫，也能出离轮回。</p></div>
+<div class="para-pair"><p class="p-orig">其为利益，超出一代时教之上。以一则专仗自力，一则兼仗佛力。譬如跛夫，尽日只行数里，若乘转轮圣王轮宝，一日即可遍达四洲。</p><p class="p-trans">这个特别法门的利益，超出一代时教的其他通途法门之上。因为一个是专仗自力，一个是兼仗佛力。就像跛脚的人，（如果仅凭自己的气力，）一天也只不过走几里路。但是如果乘坐转轮圣王的轮宝，那么一天就可以遍达四大洲（注1）。</p></div>
+<div class="para-pair"><p class="p-orig">故得九界同归，十方共赞，千经俱阐，万论均宣。以其为十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门故也。</p><p class="p-trans">所以这个法门得到九法界共同归依，十方诸佛共同称赞，千部经都阐扬，万部论都宣讲。因为这个法门是十方三世一切诸佛，向上成就佛道，向下度化众生，成始成终的总持法门的缘故啊！</p></div>
+<div class="para-pair"><p class="p-orig">溯自大教东来，远公首开莲社，当时高僧巨儒之预会者，凡百二十三人。自兹厥后，代有高人，续焰传灯，遍布中外。</p><p class="p-trans">自从佛教东来以后，慧远大师首先开创了莲社，当时高僧、巨儒加入莲社的，总共有一百二十三人。从此以后，净土宗历代都有高人，续法焰、传慧灯，遍布中外。</p></div>
+<div class="para-pair"><p class="p-orig">如来大法，有律教宗密净五种，唯净土一法，最易修持，最易成就，为律教宗密之归宿。故古今律教宗密诸知识，皆务密修，尤多极力显化者。</p><p class="p-trans">如来大法，有律、教、禅、密、净五种，只有净土这一法门，最容易修持，最容易成就，而且是律、教、禅、密各宗的归宿。所以古往今来律、教、禅、密各宗的诸位善知识，都致力于密修净土法门，而且还有很多人极力地公开弘扬。</p></div>
+<div class="para-pair"><p class="p-orig">此法真俗圆融，机理双契。不但为学道者，立出轮回之妙门，实为治国者，坐致太平之要道。故往圣前贤，通人智士，咸皆修持，若群星之拱北，众水之朝东焉。</p><p class="p-trans">这个法门真谛、俗谛圆融，根机、教理双契。不但是学佛人，立即出离轮回的玄妙法门，而且实际上也是治国者，轻松实现（注2）天下太平的要道。所以往圣前贤、通人智士，全都修持净土法门，就像群星拱卫北极星，众水都向东流一样。</p></div>
+<div class="para-pair"><p class="p-orig">迩来人心不古，弃本逐末，欧风东渐，竞尚唯新。争地争城，互相残杀，天灾人祸，频频降作，国运危岌，民不聊生。</p><p class="p-trans">近来人心不古，舍弃根本（三世因果、六世轮回）、追逐枝末，欧洲的文化风俗逐渐侵蚀到东方后，人们竞相崇尚“唯新”。争地争城，互相残杀，天灾人祸，频频降作，国运危急，民不聊生。</p></div>
+<div class="para-pair"><p class="p-orig">其有心世道人心者，见此现象，恐人道或几乎息，群起而设法挽救之。于是各处咸立净业社，居士林，提倡佛学。</p><p class="p-trans">那些有心挽回世道人心的人，看到这些现象，担心做人的道理几乎将要熄灭了，所以群起设法挽救。于是各处都设立了净业社、居士林，来提倡佛学。</p></div>
+<div class="para-pair"><p class="p-orig">明三世之因果，示六道之轮回。表佛性之真常，赞净土之超胜。令一切人，守孝弟，忠信，礼义，廉耻之八德，行格致，诚正，修齐，治平之八事。则必能惩忿窒欲，闲邪存诚，诸恶莫作，众善奉行，而为世间贤人善人。</p><p class="p-trans">阐明三世的因果，揭示六道的轮回；表明佛性的真常，赞扬净土的超胜。使一切人，都遵守孝弟（悌）、忠信、礼义、廉耻这八德，落实格物、致知、诚意、正心、修身、齐家、治国、平天下这八事。这样就一定能惩忿窒欲（注3）、闲邪存诚（注4），诸恶莫作，众善奉行，而成为世间的贤人、善人。</p></div>
+<div class="para-pair"><p class="p-orig">发菩提心，自行化他，信愿念佛，求生西方，迨至临终，佛及圣众，亲垂接引，令其往生，而为出世间上善人。此各处立社建林之大意也。</p><p class="p-trans">并且还要发菩提心，自行化他，信愿念佛，求生西方，等到临终，阿弥陀佛和西方圣众，亲垂接引，使这些人往生，从而成为出世间的上善人。这些就是各处成立莲社、建立居士林的主要用意啊！</p></div>
+<div class="para-pair"><p class="p-orig">苏州，为古来佛教盛兴之地，固多宿根深厚之人。纵外道援引，误入歧途，不旋踵而复归正道。</p><p class="p-trans">苏州，自古以来就是佛教盛兴的地方，本来就有很多宿世善根深厚的人。即使被外道指引，而误入歧途，也能马上掉转脚跟又回归正道。</p></div>
+<div class="para-pair"><p class="p-orig">曹崧乔居士，创办隐贫会，以周济贫民，乃色身上之慈惠。今又援陈依仁，周良济二居士，开企庐莲社，提倡念佛求生西方。俾迷背故乡，了无资粮以归者，皆得资粮具足，乃慧命上之计虑。而庐山之道，谁能继迹，但能景仰而企望之，亦不愧为庐山之徒，故名为企庐莲社焉。</p><p class="p-trans">曹崧乔居士，创办了隐贫会，来周济（注5）贫民，这是对大众色身上的慈惠。现在又拉陈依仁和周良济二位居士，开办了企庐莲社，提倡念佛求生西方。使迷背故乡，完全没有资粮回家的人，都能得到充足的资粮，这是对大众慧命上的考虑。然而，庐山的道风，又有谁能继承呢？我们只能景仰并企望达到吧，这样做也就不愧为庐山净土宗的门徒了，所以取名为“企庐莲社”。</p></div>
+<div class="para-pair"><p class="p-orig">彼祈光作缘起，以发明其隐义，故为络索一上。庶见者闻者，及诸社员，悉知即心本具之道，即俗修真之法，即念佛而护国，即潜修而辅世之意义矣。</p><p class="p-trans">曹崧乔居士请我作这篇缘起，来阐发莲社名称的内在含义，所以才啰嗦了上面这些内容。也许能使见者、闻者，以及诸位社员，都能懂得即心本具的大道、即俗修真的方法，以及即念佛而护国，即潜修而辅助国家治理这些意义了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【四洲】</span>又称四大部洲、四大洲、四天下，是须弥山周围咸海中的四大洲，分别为东，胜神洲；西，牛贺洲；南，赡部洲（我们所居的地方）；北，俱芦洲。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【坐致】</span>轻易获得；轻易达到。《孟子·离娄下》：“天之高也，星辰之遠也，苟求其故，千岁之日至，可坐而致也。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【惩忿窒欲】</span>惩，惩戒；忿，愤怒；窒，抑止；欲，嗜欲。克制愤怒，抑制嗜欲。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【克己复礼、闲邪存诚】</span>一者，入道之初，发足伊始，必须遵循印公遗教，致力于克己复礼，闲邪存诚之功。克者，胜也。己者，私欲也。六尘之境，五欲之乐，凡心之所好，情之所慕，粗则声色货利，细则学问知见。乃至进退毁誉，盛衰得失，死生祸福，足以动吾心者，皆为私欲。必战而胜之，不令纤毫，滞于胸中。然后心地空明，皎若琉璃，脱洒自在，无所障碍。必至此地，学佛方有入手处。复者，还也。礼者，理也。战胜己私，而后始得还归于真如之理也。一切凡夫，蔽于己私，而违逆于真如之理也，久矣。今日发心学佛，固当以此为始也。闲者，防闲也。邪者，非理之思也。凡淫声美色，荡心佚志。狂情戾气，悖理违真。游辞浮文，废时憩日。异端曲说，背经侮圣。如是之类，皆名非理。当防闲之，不令入于吾心。即是防非止恶之意也。存者，持而不失也。诚者，真实之心也。即起信论所说直心正念真如是也。斯乃自利利他二行之本也。近世号称知识者，往往好钻研名相，驰骤空有，涉猎三藏，挥斥五宗，却不知克己复礼，闲邪存诚为何事。于是心口相违，表里不一。甚则闲居为不善，无所不至。身犹在世，心已先亡。及乎临终舍报之时，怕怖慞惶，不知所措。反咎修行无益，佛法匪灵。岂不谬哉。（摘自印光祖师私淑弟子王永元居士所作的跋文，《印光法师文钞三编·卷四·跋三》。）</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【周济】</span>指在物质上给以帮助、接济。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复胡奉尘居士书（民国二十年　又名师远） · 印光法师文钞</title>
+<meta name="description" content="学佛之人，当具远见。若只知目前三尺地，则无往而不途穷路尽也。吾国二十年，互相残杀，究竟谁是贼，谁不是贼。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-051/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复胡奉尘居士书（民国二十年　又名师远） · 印光法师文钞">
+<meta property="og:description" content="学佛之人，当具远见。若只知目前三尺地，则无往而不途穷路尽也。吾国二十年，互相残杀，究竟谁是贼，谁不是贼。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-051/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复胡奉尘居士书（民国二十年　又名师远）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">学佛之人，当具远见。若只知目前三尺地，则无往而不途穷路尽也。吾国二十年，互相残杀，究竟谁是贼，谁不是贼。</p><p class="p-trans">学佛的人，应当具有远见。如果只知道眼前的三尺之地，那么无论到哪里都会走投无路的。我们国家二十年来，互相残杀，究竟谁是贼，谁不是贼。</p></div>
+<div class="para-pair"><p class="p-orig">杀彼，彼岂任汝杀乎。将牺牲两方面兵民之性命，以博一为国为民之空名耳。人皆如是，我亦如是，又何贵乎学佛也。</p><p class="p-trans">你想杀掉对方，对方哪能任由你来杀呢？牺牲敌我双方士兵人民的性命，来博取一个为国为民的空名罢了。人人都这样做，我也这样做，那又何必看重学佛呢？</p></div>
+<div class="para-pair"><p class="p-orig">吾国之互相残杀，尚是表面，实则自截自己手足与头颅也，尚嫌其不痛快而助之。名则可震惊俗耳，实则必痛烂天心，此事断不可以助其闹热也。</p><p class="p-trans">我国的互相残杀，还是表面现象，实际上是自己截断自己的手足与头颅，还嫌不痛快而且还来相助。名声上可说是震惊了俗人的耳朵，但实际上必定会痛伤上天的慈心，这种同室操戈的事绝对不能助他们闹大。</p></div>
+<div class="para-pair"><p class="p-orig">至云土匪如毛，若不设备，不能安居。则可令当地之人，集一自卫团，凡年少气勇之人，均令彼知此系装威作势，令匪闻名不来耳。若奋其勇气以杀匪，则必结深仇，后来必有屠戮吾村，掘发吾村各家之祖坟耳。</p><p class="p-trans">至于你说：土匪很多，如果不设防备，就无法安稳居住。这件事，可以让当地的人，组织一个自卫团，凡是年少又好勇斗狠的人，都让他们知道这是在装威作势，让土匪听到后，不敢前来。如果振奋他们的勇气去杀死土匪，那么必定会结下深仇，将来必定有屠杀我们村人，挖掘我们村各家祖坟的事情发生。</p></div>
+<div class="para-pair"><p class="p-orig">无论老幼男女，通通常念观世音菩萨，以祈阴相。果大家知好歹，肯依此办，则即防匪为修道，其功德利益，何可思议。若大家通以瞋心毒手，以期取快于一时，则欲哭也无泪可流也。</p><p class="p-trans">无论男女老幼，全都要常念观世音菩萨，来祈求菩萨暗中保佑。果真大家知道好歹，肯依照这个办法来做，那么本是为了防备土匪（而念观音），却成了修道之因，这个功德利益，哪里可以思议。如果大家全都以瞋心下毒手杀匪，期望一时痛快，那么面对将来发生的事就会欲哭无泪。</p></div>
+<div class="para-pair"><p class="p-orig">光之意见如是，不知居士以为何如。以后切勿再来商酌此事，以局外之人，何能为不同心者计画进策也。</p><p class="p-trans">我的意见就是这样，不知居士以为如何。以后千万不要再来商量这些事，因为我是局外人，哪有能力为不同心的人献计献策呢？</p></div>
+<div class="para-pair"><p class="p-orig">不孝有三，无后为大，此对不尽人事者而言也。若已娶而不生，则固非不尽人事也。吾乡一居士无子，多方祈祷均不应，遂娶一妾。而妻妾不和，颇生闲气，又不生。</p><p class="p-trans">“不孝有三，无后为大”，这是针对不尽人伦之事的人来说的。如果已经娶妻而不生子，就不是不尽人伦之事了。我家乡有一位居士没有儿子，多方祈祷，都不灵验，于是娶了一个小妾。但是妻子与小妾不和，生了很多闲气，结果还是不生儿子。</p></div>
+<div class="para-pair"><p class="p-orig">一友为计画，拟于远乡娶一妾，不来家中，每年其友来往一二次，以期生子。有以此事告光者，光闻之，不胜慨叹。</p><p class="p-trans">一位朋友为他献计，打算在远乡娶一位小妾，不到家中来，每年这位居士到那位小妾处一、二次，期望小妾能生子。有人将这件事告诉我，我听了，不胜慨叹。</p></div>
+<div class="para-pair"><p class="p-orig">近来人心坏极，男女自由恋爱，几成公开。以一少年女子，独居于数百里外，此女不生外事，即是大贤，恐百千人中，也难有几个。况此一女，乃自成一家，尚须用人，其费用颇可观。</p><p class="p-trans">近来人心坏到极点，男女自由恋爱，几乎是公开的事。一位少年女子，独自在几百里外居住。这个女子不生出外情，就是大贤人了，恐怕百千人之中，也难得有几个。何况这个女子，是自己成一家庭，还须要用仆人，这个费用也很可观。</p></div>
+<div class="para-pair"><p class="p-orig">幸而生子，好讥议者，必有暗昧之污蔑。不幸而又不生，则此女一生孤寂，其夫一生供给，真成自投牢狱，为女作奴，可不哀哉。</p><p class="p-trans">如果有幸生了儿子，好讥讽议论的人，必定有是不是亲生儿子的污蔑。如果不幸又不生儿子，那么这位女子一生孤寂，此人作为丈夫还要供给她一生，真成了自投牢狱，为女子作奴隶，能不让人悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">此种计画，总因为名而起，以为无子乃系无德，有子则人便不以为无德也。名之累人，一至于此。我但尽我之分，一切不计，方为乐天知命。命本无子，积德以求，求而不得，有何所憾。</p><p class="p-trans">这种计划，归根结底是因为名声引起的，以为没有儿子是因为无德，有了儿子，那么别人就不会认为自己无德了。名声累人，竟到了这种地步。我只要尽自己的本分，一切都不计较，才是乐天知命。命中本来无子，积累功德来求，求了也没有得到，有什么遗憾的呢？</p></div>
+<div class="para-pair"><p class="p-orig">今之打倒父子夫妇之伦，以自由爱恋，男女裸而抱之跳舞者，非其父母所生之儿女乎。此种儿女，还是无有为好。</p><p class="p-trans">如今打倒父子夫妇的人伦纲常，来自由恋爱，男女裸抱跳舞的人，难道不是他们父母所生的儿女吗？这种儿女，还是没有为好。</p></div>
+<div class="para-pair"><p class="p-orig">光兄弟三人，光最小，二兄皆无子，其门遂绝。光闻之，不胜欣慰，以其以后不会有造恶业辱祖先之子孙故也。</p><p class="p-trans">我兄弟三人，我最小，两个哥哥都没有儿子，家门于是就绝后了。我听了，非常欣慰，因为家里以后不会有造作恶业，辱没祖先的子孙了。</p></div>
+<div class="para-pair"><p class="p-orig">此种事，岂但吾乡有之，或有与吾乡抱同情之感者，亦可以稍解其忧闷也。而况修行之人，不愿血脉相续。</p><p class="p-trans">这种无后的事，哪里只是我的家乡有呢？或许有与我家乡同样有无后感受的人，听了我的话也可以稍微宽解其忧愁郁闷了。何况修行的人，不愿意血脉后代相续下去。</p></div>
+<div class="para-pair"><p class="p-orig">庞居士，男不婚，女不嫁。彭二林，一生宏法修净业，其妻生二女，无子，亦不娶妾，亦不令侄子过继。以彼志在往生西方，不愿续由淫欲而生之子孙也。</p><p class="p-trans">唐朝的庞居士，儿子不结婚，女儿不出嫁。清朝的彭二林，一生宏法，修习净业，他的妻子生了二个女儿，没有儿子，他也不娶妾，也不让侄子过继。因为他的志向是往生西方，不愿意延续由淫欲而生的子孙啊！</p></div>
+<div class="para-pair"><p class="p-orig">吾人纵不敢高攀于庞，彭二林之芳规，可以自守。又何必设此种极危险之计画，而必欲得之也。</p><p class="p-trans">我们纵然不敢高攀庞居士、彭二林的芳规，但可以自我守持。又何必用这种极其危险的计划，而一定想要生个儿子呢？</p></div>
+<div class="para-pair"><p class="p-orig">或曰，汝如此说，过于不近人情，忍令祖先坟墓，无人拜扫奉祀耶。则曰，与其娶妾，而被人讥以暗昧，则何如到育婴堂，抱一个庞厚福态的为子，为两全其美。彼无人养，我养之为子，即救彼之命。亦可代我奉事先人，亦令彼之先人，不至痛其子孙之填沟壑也。此义举也，人以为螟蛉，螟蛉有何愧哉。</p><p class="p-trans">你或许说：你这样说，过于不近人情，忍心让自己祖先的坟墓，无人礼拜打扫、祭祀供奉吗？那么我告诉你：与其娶妾，而被人讥讽有不可告人之事，不如到育婴堂，抱养一个庞厚脸有福相的孩子当儿子，是两全其美的办法。他没有人养活，我抚养他为儿子，就是救了他的命。他也可以代我奉事拜祭先人，也让他的先人，不至于悲痛其子孙填入沟壑（而死）啊！这种行为是义举，他人认为这只是螟蛉义子，可是收养螟蛉义子有什么羞愧的呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【螟蛉】</span>出自《诗经·小雅·小宛》：“螟蛉有子，蜾赢负之。”螟蛉是一种绿色小虫，蜾蠃是一种寄生蜂。蜾蠃常捕捉螟蛉存放在窝里，产卵在它们身体里，卵孵化后就拿螟蛉作食物。古人误认为蜾蠃不产子，喂养螟蛉为子，因此用“螟蛉”比喻义子。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

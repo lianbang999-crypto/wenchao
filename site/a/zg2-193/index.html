@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>幽冥戒牒 · 印光法师文钞</title>
+<meta name="description" content="(“现坐道场”四字，只有普陀山可以用，别的地方应为“寻声救苦”。）">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-193/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="幽冥戒牒 · 印光法师文钞">
+<meta property="og:description" content="(“现坐道场”四字，只有普陀山可以用，别的地方应为“寻声救苦”。）">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-193/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">幽冥戒牒</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<p class="p-trans">(“现坐道场”四字，只有普陀山可以用，别的地方应为“寻声救苦”。）</p>
+<div class="para-pair"><p class="p-orig">心体本净，因迷妄而烦惑斯生。世界原清，由幻业而浊恶顿现。一迷永迷，从劫至劫，沉沦于生死之域，汩没于尘劳之中。</p><p class="p-trans">心体本来清净，因为迷惑妄想而生起烦惑；世界原本清净，由于虚幻惑业而顿显浊恶。一旦迷惑，便永远迷惑，从长劫到长劫，沉沦在生死苦海里，埋没在尘劳之中。</p></div>
+<div class="para-pair"><p class="p-orig">观照未起，焉知五蕴皆空。贪染成性，岂了六尘即觉。怀无价之宝珠，枉膺困苦。具常住之佛性，甘受轮回。</p><p class="p-trans">观照没有生起，哪能知道五蕴皆空；贪染已成习性，哪会明了六尘即是觉性。怀揣着无价的宝珠，却冤枉遭受困苦；具有着常住的佛性，却甘心承受轮回。</p></div>
+<div class="para-pair"><p class="p-orig">大觉世尊，愍而哀之。示成正觉，为制戒法。上自三乘十地，下及地狱鬼畜。凡有心者，皆令受持。</p><p class="p-trans">大觉世尊，悲愍哀怜众生。示现成等正觉，为众生制定戒法。上至声闻、缘觉、菩萨三乘，十地菩萨，下到地狱、饿鬼、畜生。凡是有心的众生，都令他们受持戒法。</p></div>
+<div class="para-pair"><p class="p-orig">良以一切众生，皆具如来智慧德相。但以妄想执著，不能证得。若离妄想，一切智，自然智，即得现前。由此三聚净戒之力，直下止恶防非，反妄归真。</p><p class="p-trans">实在因为一切众生，都具有如来智慧德相。只因妄想执著，而不能证得。若离妄想，一切智、自然智，即得现前。通过这三聚净戒（摄律仪戒、摄善法戒、摄众生戒）的力量，当下防非止恶，返妄归真。</p></div>
+<div class="para-pair"><p class="p-orig">垢尽光呈，尘破经出。即业识心，成如来藏。复常住之真心，不迁不变。证寂灭之法性，无减无增。入诸佛位，为法王子。尽来际以度脱众生，俾自他以齐成觉道。</p><p class="p-trans">污垢除尽，光明呈现，尘垢破除，经义显明。即此业识心，而成如来藏。恢复常住的真心，不迁移不改变；证得寂灭的法性，无增加无减损。入诸佛位，作法王子。尽未来际度脱众生，使得自、他同成觉道。</p></div>
+<div class="para-pair"><p class="p-orig">懿哉世尊，以戒度生。令离苦以得乐，使即凡以成圣。慈恩浩荡，法利汪洋。虽天地父母，渺不能喻其万一矣。</p><p class="p-trans">伟大啊世尊！用戒法救度众生，令众生离苦得乐，即此凡心而成圣智。佛陀的慈恩，浩荡无边；佛法的利益，如同大海汪洋。即使是天地父母的恩德，也渺然不及佛恩的万分之一啊。</p></div>
+<div class="para-pair"><p class="p-orig">爰有一四天下，南赡部洲，中华民国，省府县界居住，奉佛修因荐亡生莲信士某某，伏为某某，生于某年月日时，享年几十几岁。于年月日时，忽尔神逝。痛念身捐尘世，神游幽冥。未了一心，难出六道。欲仗佛力，导神识以往生极乐。故来本寺，乞说戒以先净根身。</p><p class="p-trans">现在有一位居住在四天下（东胜神洲、南瞻部洲、西牛贺洲、北俱芦洲）南瞻部洲中华民国某省某县，崇奉佛法，修成佛因，超荐亡人往生净土的信士某某，伏为某某，生于某年某月某日某时，享年几十几岁。于某年某月某日某时逝世。痛切想到某某色身捐弃于尘世，神识游荡在幽冥。没能了悟一心，难以出离六道。于是想要仰仗佛力，引导其神识往生极乐。所以来到本寺，乞请为某某宣说戒法，以便令其根身先得以清净。</p></div>
+<div class="para-pair"><p class="p-orig">由是恭秉佛敕，建坛作法。奉请娑婆教主释迦世尊，极乐导师阿弥陀佛，佛说梵网菩萨戒经，幽冥教主地藏菩萨，现坐道场观音大士，十方三世无尽三宝，临坛证盟，垂慈加被。俾无作妙善戒法，从彼顶门，流入身心。成就法器，绍隆佛种。</p><p class="p-trans">因此恭敬秉承佛陀的敕命，建坛作法。奉请娑婆世界教主释迦世尊、极乐世界导师阿弥陀佛；奉请《佛说梵网菩萨戒经》，以及幽冥界教主地藏王菩萨、现坐道场观音大士、十方三世无尽三宝，临坛传法，垂慈加被。使得无作妙善戒法，从其顶门，流入到身心。从而成就法器，绍隆佛种。</p></div>
+<div class="para-pair"><p class="p-orig">因兹先令归依三宝，反邪归正。次令忏悔业障，清净根身。次令发四宏誓，上求下化。然后为说三聚净戒，令其身口意业，有所依凭。</p><p class="p-trans">因此，先令其归依三宝，返邪归正；其次令其忏悔业障，清净根身；再次令其发四宏誓愿，上求佛道，下化众生。然后为其宣说三聚净戒，令其身口意业，有所凭借依托。</p></div>
+<div class="para-pair"><p class="p-orig">从兹断恶修善，自利利他。若能自强不息，何难破五住而出二死，满四宏而证三德矣。</p><p class="p-trans">从此断恶修善，自利利他。如果能够自强不息，破除五住烦恼（三界内的见惑为一住，思惑为三住，尘沙惑与无明惑共为一住，合称五住），出离分段、变易二种生死，满四宏誓愿，证得法身、解脱、般若三德，又有什么困难呢。</p></div>
+<div class="para-pair"><p class="p-orig">须知娑婆浊恶，触缘障道。极乐清净，睹境明心。以此受戒无上功德，回向往生极乐世界。三心圆发，十念称名。定蒙弥陀亲接，圣众偕迎。一弹指顷，即生彼国。托质莲胎，永离众苦。闻法受记，顿证无生。</p><p class="p-trans">必须知道，娑婆世界污浊邪恶，所接触的外缘大多障碍修行；极乐世界清净无染，只要睹见胜境，就能明了自心。用这受戒的无上功德，回向往生极乐世界。圆满发起三心（至诚心、深心、回向发愿心），十念称佛名号。必定蒙受阿弥陀佛亲自接引，海会圣众偕从迎接。弹指之间，就生到极乐世界。托生莲花之中，永远脱离众苦。闻法受记，顿证无生法忍。</p></div>
+<div class="para-pair"><p class="p-orig">然后乘本愿轮，回入娑婆。圆应群机，现随类逐形之身。遍就诸缘，阐即心自性之法。普令法界众生，共入弥陀愿海。可谓最上佛子，真大丈夫矣。</p><p class="p-trans">然后乘本愿轮，回入娑婆。圆融顺应众生根机，示现随类逐形的化身；普遍就着种种因缘，阐明即心自性之妙法。普令法界众生，共入弥陀愿海。可以说是最上佛子，真正的大丈夫了。</p></div>
+<div class="para-pair"><p class="p-orig">作法既竟，用给牒文。仗此功德，即生净土。</p><p class="p-trans">作法完毕，给付戒牒。依仗这一功德，即刻往生净土。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【汩没】</span>1.淹没。2.埋没；湮灭。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【爰】</span>助词。无义。用在句首或句中，起调节语气的作用。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【四天下】</span>东名弗婆提。西名拘邪尼。南名阎浮提。北名郁单越。此四天下居须弥山四面住也。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【证盟】</span>1.犹盟誓。2.证人</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【无作戒】</span>无作，又作无教、无表。戒体有作戒、无作戒两种。作戒，谓受戒时如法动作之身、口、意三业，即可见闻之业体；无作戒，谓依此时作戒之缘而生于身中不可见闻之业体。此业体初发之缘，虽由身口意之动作（即作戒），而一旦生起，则不假身口意之造作，而恒常相续，故称为无作。作戒于身口意动作止息之时亦随之而灭，无作戒则一生之中恒常相续，具有防非止恶之功能，故称为无作戒体。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【绍隆】</span>1.继承发扬。2.在佛学上谓承继正法并使之光大隆盛。如‘绍隆三宝’，即继承佛、法、僧三宝并使兴隆之意。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【根身】</span>六根组合而成之身。六根是眼耳鼻舌身意。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【五住地惑】</span>又云五住地烦恼。即见、思无明烦恼，有见一处住地、欲爱住地、色爱住地、有爱住地、无明住地等五种，称五住地惑。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

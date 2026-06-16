@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复丁福保居士书二 · 印光法师文钞</title>
+<meta name="description" content="昨接佛学初阶一书，不禁感愧之至。光乃无所知识，强应世缘，随自己愚见所说之芜语，虽意稍可取，而文不雅驯。阁下于后载其数篇，恐大雅通人阅之，或讥阁下失审矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-054/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复丁福保居士书二 · 印光法师文钞">
+<meta property="og:description" content="昨接佛学初阶一书，不禁感愧之至。光乃无所知识，强应世缘，随自己愚见所说之芜语，虽意稍可取，而文不雅驯。阁下于后载其数篇，恐大雅通人阅之，或讥阁下失审矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-054/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复丁福保居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接佛学初阶一书，不禁感愧之至。光乃无所知识，强应世缘，随自己愚见所说之芜语，虽意稍可取，而文不雅驯。阁下于后载其数篇，恐大雅通人阅之，或讥阁下失审矣。</p><p class="p-trans">昨天接到《佛学初阶》一书，不禁感慨惭愧之至。我没有什么知识，勉强应接世俗事缘，随自己愚见所说的杂语，虽然用意稍有可取，然而文词却非典雅。阁下在《佛学初阶》书后登载了好几篇，恐怕大雅、通家看了，或许会讥笑阁下失于审查了。</p></div>
+<div class="para-pair"><p class="p-orig">阁下唯以启人正信为心，光去岁曾拟以佛学起信编结缘，阁下乃以自己发心，拒不取资。</p><p class="p-trans">阁下唯以启发他人的正信为发心，我去年曾经打算以《佛学起信编》结缘，阁下以自己发心，拒绝不收资费。</p></div>
+<div class="para-pair"><p class="p-orig">今有福建福宁福鼎县北关高邵麟者，宿有信心，近数年来专修净业。三年前光曾与伊寄去经典数十种，约值廿多洋圆，以其地僻居山中，兼以苦寒，无力购请故。</p><p class="p-trans">如今有福建福宁福鼎县北关的高邵麟居士，一向具有信心，近些年来专修净业。三年前，我曾给他寄去几十种经典，约值二十多洋圆，因为他那个地方偏僻，居住在山中，又加上贫寒，没有能力购买请书的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">近一二年又有陈延龄者，亦当县北关人。蔡茂塘者，乃南关人，每有信来。光去岁将所刻安士全书，三人各寄一部。</p><p class="p-trans">近一二年，又有陈延龄居士，也是福鼎县北关人。蔡茂塘居士，是南关人，常常有信件寄来。我去年将所刻的《安士全书》，给三个人各寄了一部。</p></div>
+<div class="para-pair"><p class="p-orig">伊等亦欲利人，遂于秋间起一讲演会，请一僧人放蒙山一堂，大家同念佛回向，然后随自力讲演善恶果报及净土法门。</p><p class="p-trans">他们也想要利益他人，于是在秋天发起一讲演讲会，请一位僧人放了一堂蒙山，大家共同念佛回向，然后随自己的能力讲演善恶果报以及净土法门。</p></div>
+<div class="para-pair"><p class="p-orig">去岁入会六七十人，今年只有五六十人而已。伊等以当县从元明来，未闻一开讲会，今夏特请台宗法师讲经。然此事亦不过发起当地人之信心而已。若曰解了其义，则实非易事。</p><p class="p-trans">去年入会的有六、七十人，今年只有五、六十人而已。他们以福鼎县从元朝、明朝以来，没有听过一次开办的讲经法会，今年夏天，特地礼请天台宗的法师讲经。然而这件事也不过是开启当地人的信心而已。如果说明白其中的义理，那实在不是一件容易的事情。</p></div>
+<div class="para-pair"><p class="p-orig">况地方穷苦，亦不能常常举行。窃念阁下所著佛学初阶，于彼颇为合机。以其先说因果，后说净土，凡通文义者，皆能领会。</p><p class="p-trans">何况地方穷苦，也不能常常举行。我想到阁下所著的《佛学初阶》，对于他们颇为合机。因为这本书中，先说因果，后说净土，凡是稍通文义的人，都能够领会。</p></div>
+<div class="para-pair"><p class="p-orig">读之者，自有欣欣向荣，欲罢不能之势。演说者，亦可就文宣说，不须东摘西采，诚为劝善入佛之初步。</p><p class="p-trans">读的人，自然有欣欣向荣，欲罢不能的情势。演说的人，也可以就文宣说，不须东摘西采，实在是劝善入佛的初步。</p></div>
+<div class="para-pair"><p class="p-orig">本拟令彼等向贵局购请，但恐彼等法财不给，或致失利。倘阁下肯发大慈悲，行大法施，寄三几包去。令彼每月按文讲演，俾当县人民，悉知因果，咸修净业，其功德固胜于施富贵人千万倍矣。</p><p class="p-trans">本想让他们向贵书局购请，但恐怕他们法财不足，或许因此失去薰习佛法的利益。倘若阁下肯发大慈悲，行大法施，寄三五包去。令他们每个月按文讲演，使得当县人民，都知道因果道理，全都修习净业，这个功德，必定会胜过布施富贵人千万倍了。</p></div>
+<div class="para-pair"><p class="p-orig">其佛学指南起信编，六道轮回录，亦各寄一二册去，以便彼等采取演说耳。如寄，当于皮面写福建福鼎县北关交高邵麟收。</p><p class="p-trans">《佛学指南起信编》、《六道轮回录》，也各寄一二册去，以便他们采取演说。如果寄，应当在皮面上写：福建福鼎县北关交高邵麟收。</p></div>
+<div class="para-pair"><p class="p-orig">佛学初阶末后之静坐法精义，名实不甚符合，似宜云诸宗要典略纪。至下似宜云，近来刻行佛教诸宗之著述极多，若不得其要，或恐望洋而退，以故于各宗中择其要者标示一二。</p><p class="p-trans">《佛学初阶》末后的《静坐法精义》，题目与文章不是很符合，似乎应该名为：诸宗要典略纪。至于下面似乎应该说：近来刻行佛教诸宗的著述极多，如果不得其中纲要，或恐望洋而退，所以在各个宗派中，择取其中纲要，标示一二。</p></div>
+<div class="para-pair"><p class="p-orig">欲研究某宗，先取某宗之要书读之，自可由约而知博，一了而百了矣。</p><p class="p-trans">想要研究某个宗派，先取某宗派的纲要书来读，自然可以由简约而广博，一了而百了。</p></div>
+<div class="para-pair"><p class="p-orig">去岁印光芜钞寄来时，拟为高邵麟等寄三几包，以每年二月有李俊景居士（亦在北关，其人朴实，不通文理）者，陪诸善信来山进香，欲待其来，令彼带去。</p><p class="p-trans">去年，《印光文钞》寄来时，准备为高邵麟等人寄三五包，因为每年二月份，有李俊景居士（也在北关，这个人朴实，但不通文理），陪同诸位善信来普陀山进香，想要等他来了，让他带去。</p></div>
+<div class="para-pair"><p class="p-orig">谁料今年未来，后以要者多，故致散完。待印书馆出书，当将阁下乐施之书寄去，令彼当县人民，沾阁下之洪恩于无既也已。（六年四月十八日）</p><p class="p-trans">没想到今年他没有来，后来因为索要的人多，所以书很快就散完了。等到印书馆再出书，当将阁下乐施的书寄去，让彼县的人民，共沾阁下的洪恩于无穷。（民国六年四月十八日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【无既】</span>无穷；不尽。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

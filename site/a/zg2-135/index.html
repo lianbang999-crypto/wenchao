@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>岳运生居士往生记 · 印光法师文钞</title>
+<meta name="description" content="一切众生，皆有佛性，皆堪作佛，但由迷悖自性，以致轮回生死，无有了期。如来欲令复本心性，随顺机宜，说种种法。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-135/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="岳运生居士往生记 · 印光法师文钞">
+<meta property="og:description" content="一切众生，皆有佛性，皆堪作佛，但由迷悖自性，以致轮回生死，无有了期。如来欲令复本心性，随顺机宜，说种种法。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-135/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">岳运生居士往生记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">一切众生，皆有佛性，皆堪作佛，但由迷悖自性，以致轮回生死，无有了期。如来欲令复本心性，随顺机宜，说种种法。</p><p class="p-trans">一切众生，都有佛性，都能作佛。只因为迷失悖离了自性，以致于轮回生死，没有停止的时候。如来想让众生恢复本有的心性，于是随顺众生的根机，宣说种种法门。</p></div>
+<div class="para-pair"><p class="p-orig">然欲仗自修持力，于现生中，做到真穷惑尽，以出轮回而了生死者，末世实难多见。唯修净土法门，无论上中下根，老幼男女，但具真信切愿，以至诚心，念佛名号，求生西方，兼以诸恶莫作，众善奉行，待至临终，即得蒙佛接引，往生西方，则万不漏一。</p><p class="p-trans">然而想要依仗自己修持的力量，在现生中做到穷彻真源，尽除惑业，从而出轮回了生死，这样的人末世实在不多见。唯有修行净土法门，无论上中下根，男女老少，只要具足真信切愿，以至诚心，念佛名号，求生西方。并且诸恶莫作，众善奉行。等到临命终时，就能蒙佛接引，往生西方。万人当中也不会漏掉一人。</p></div>
+<div class="para-pair"><p class="p-orig">以仗佛慈力，获此巨益，如乘轮船以渡海，非自己本事能然也。以故历代诸菩萨祖师善知识，悉皆极力提倡此法，以其是了生死之捷径，成佛道之要法故也。</p><p class="p-trans">因为依仗佛的大慈悲力，所以获得如此巨大的利益。如同乘坐轮船渡海，并不是靠自己的本事啊。因此历代以来，诸多菩萨、祖师、善知识，全都极力提倡这个法门，因为这是了脱生死的捷径，是成就佛道的重要大法啊。</p></div>
+<div class="para-pair"><p class="p-orig">岳运生居士者，步云之父也，名泰元，字运生，事亲至孝，乐善好义，天性忠厚，无所适莫。步云于数年来，颇于佛法，生正信心，吃素念佛，唯诚唯谨。</p><p class="p-trans">岳运生居士，是岳步云的父亲，名泰元，字运生。居士事奉双亲极其孝顺，乐于行善，崇尚道义，天性忠厚，没有亲疏厚薄之分。岳步云这些年来，对于佛法很有正信，吃素念佛，诚挚而又谨慎。</p></div>
+<div class="para-pair"><p class="p-orig">因劝其父母，同皆吃素念佛，求生西方，并以显浅易解之净土书，为之解说，令其常看。其父遂知自心本具佛性，但以惑业障蔽，不得受用，幸有此仗佛慈力法门，俾我等少善根劣机众生，于现生中，即得横超三界，高预九莲，何幸如之。</p><p class="p-trans">因此就劝导他的父母，都吃素念佛，求生西方。并用浅显易懂的净土书籍，来为他们解说，让他们常看。他的父亲（岳运生）于是知道，自己心中原本具有佛性，只因为被惑业障蔽，而得不到受用。幸好有这个仗佛慈力往生净土的法门，让我们这些善根少、根机劣的众生，在现生当中就能横超三界，高预九莲，这是何等的庆幸啊。</p></div>
+<div class="para-pair"><p class="p-orig">从兹心心忆念，冀遂所怀。至今七月初，略示微疾，初八日早起，念佛毕，嘱步云速备衣棺，吾将去矣。</p><p class="p-trans">岳运生从此心心忆念，希望达成愿望。到今年七月初，略微示现出一点小病。初八这天，早起念佛完毕，嘱咐岳步云说：“快准备寿衣棺材，我将要去了。”</p></div>
+<div class="para-pair"><p class="p-orig">待衣棺备齐，乃沐浴著衣而卧，步云戒其家人，切勿哭泣，令失正念，同声念佛，以助往生。又劝其父，随声心念，虽不闻声，其口辄动，久之遂止，盖已去矣。</p><p class="p-trans">等寿衣棺材备齐后，岳运生就洗澡更衣躺卧下来。岳步云告诫家里人，千万不要哭泣，从而让父亲失去正念，大家应当同声念佛，帮助父亲往生。又劝导父亲，要随着大家的念佛声，在心里念。虽然听不到父亲念佛的声音，但是看到他的嘴一直在动，很长时间才停止，大概已经往生了。</p></div>
+<div class="para-pair"><p class="p-orig">又复念三小时，方始哭泣。而其父面带笑容，室浮异香。三日入殓，相貌如生，其为往生，可决断矣。</p><p class="p-trans">大家又再念佛三小时，才开始哭泣。而亡者面带笑容，屋中漂浮着奇异的香气。三天后入殓，面色像活着时一样。可以决断他已往生西方了。</p></div>
+<div class="para-pair"><p class="p-orig">步云日与家人，灵前念佛，以冀莲品增高，无生速证，藉报劬劳之恩，以尽人子之分。又步云以才小职卑，薪水无几，仰事俯畜，颇形拮据，向蒙其表叔茅少甫将军，贴补所需，此次衣棺葬费，皆系少甫所出。</p><p class="p-trans">（往生之后），岳步云和家人每天在父亲灵前念佛，希望父亲莲品增高，快速证得无生法忍。借此报答父亲辛劳养育的恩德，以尽为人之子的本分。另外，岳步云因为才能普通，职位不高，薪水不多。要维持一家人的生活，显得十分拮据。所以一向承蒙他的表叔茅少甫将军，贴补生活所需。这次购买寿衣、棺材以及丧葬的费用，都是少甫出的。</p></div>
+<div class="para-pair"><p class="p-orig">少甫公正廉明，清风高节，忠于国而孝于亲，推其遗爱，故能视步云如子，而步云感其帡幪，故亦视少甫如父。</p><p class="p-trans">少甫公正廉明，清风高节，忠于国家，孝敬双亲。推广他的仁爱，所以能够待岳步云如同亲生儿子，而岳步云感恩他的照料，所以也把少甫看作父亲一般。</p></div>
+<div class="para-pair"><p class="p-orig">步云吃素之因缘，实由少甫而始，少甫若能由步云而笃修净业，吃素念佛，以期生入圣贤之域，没归极乐之邦，则相得益彰，两全其美矣，因并记之，以为世劝。</p><p class="p-trans">岳步云吃素的因缘，实际上始自于少甫。少甫如果能够在步云的影响下，笃实修持净业，吃素念佛，以期在生时进入圣贤领域，没后回归极乐净土，那就相得益彰，两全其美了。特此一并记述下来，以便劝化世人。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【适莫】</span>指用情的亲疏厚薄。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【劬劳】</span>劳累；劳苦。《诗·小雅·蓼莪》：“哀哀父母，生我劬劳。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【遗爱】</span>1.谓遗留仁爱于后世。2.指留于后世而被人追怀的德行、恩惠、贡献等。3.指有古人高尚德行、被人敬爱的人。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【帡幪】</span>本指帐幕。庇荫，庇护。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

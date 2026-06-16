@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复河南第五军副司令部杨明斋书 · 印光法师文钞</title>
+<meta name="description" content="所言公门修行，不专指诵经持咒念佛而已。必须尽己职分，除暴安良，并所统之士卒，一一皆以除暴安良保护人民为志。则地方受福，而主将士卒同于冥冥中消除业障，增长福寿矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-170/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复河南第五军副司令部杨明斋书 · 印光法师文钞">
+<meta property="og:description" content="所言公门修行，不专指诵经持咒念佛而已。必须尽己职分，除暴安良，并所统之士卒，一一皆以除暴安良保护人民为志。则地方受福，而主将士卒同于冥冥中消除业障，增长福寿矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-170/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复河南第五军副司令部杨明斋书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">所言公门修行，不专指诵经持咒念佛而已。必须尽己职分，除暴安良，并所统之士卒，一一皆以除暴安良保护人民为志。则地方受福，而主将士卒同于冥冥中消除业障，增长福寿矣。</p><p class="p-trans">所说的公职部门中的修行，不单是指诵经、持咒、念佛而已。必须克尽自己的职责本分，除暴安良，并使自己所统辖的士兵，都能以除暴安良、保护人民为志向。那么地方百姓有福，而主将士兵，也共同在冥冥之中消除了业障，增长了福寿。</p></div>
+<div class="para-pair"><p class="p-orig">若不以此事，以恳切至诚心诫勖士卒。则兵所到处，地方受淫掠之惨，殆有不堪言者。况甚至又有毁烧屋庐，杀人示威者乎。居士果能如此，以至诚心令士卒将地方人民作自己家人想，不使彼受无谓之逼抑苦恼，则其功德大矣。</p><p class="p-trans">如果不将这些事，以恳切至诚的心来告诫勉励士兵。那么士兵所到之处，地方百姓受到奸淫虏掠的惨况，就不堪言说了。何况还有烧毁房屋，杀人示威的情况呢。居士如果能够以至诚心，令士兵们将地方人民当作自己家人一样，不使他们受到无谓的逼迫苦恼，那么功德就大了。</p></div>
+<div class="para-pair"><p class="p-orig">能如是，再加以诵持经咒，念佛名号，则必蒙佛天护佑。无事则军威远镇，宵小潜伏，有事则承佛天力，克制敌军，则是护国将军，救世菩萨矣。</p><p class="p-trans">能够这样做，再加上诵持经咒，念佛名号，那么必定蒙受诸佛天神的护佑。没有战事时，则会军威远镇，使坏人潜藏起来。有战事时，则会承诸佛天神之力，克制敌军。那么您就是护国将军，救世菩萨了。</p></div>
+<div class="para-pair"><p class="p-orig">光以不德，何堪为师。然泥塑木雕之佛，若作真佛敬之，则与敬真佛之利益无异。以故且顺汝志，而为汝师。汝若看佛敬僧，则纵属粥饭庸僧，亦未必不能因之以超凡入圣，了生脱死。若唯以光之道德具备是责，则便失所冀望，不如不皈依之为愈也。</p><p class="p-trans">我没什么德行，哪里够资格做您的师父。然而泥塑木雕的佛像，如果当作真佛一样来恭敬，那么与恭敬真佛的利益没有两样。因此暂且随顺你的心志，而做你的师父好了。你如果看在佛的功德来恭敬僧人，那么纵然是只会吃饭的平庸僧人，也未必不能借着他而超凡入圣，了生脱死。如果你只是根据我的道德具备与否，而加以指责，那么你就会大失所望，还不如不皈依为好。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝取法名为智毅。以有智之勇毅，内之可以修圣道断烦惑，外之可以保国家安人民。汝能顾名思义，其利益及于国家社会，岂止汝一人独得而已。</p><p class="p-trans">现今为你取法名为智毅。因为有智慧的勇毅，在内，可以修行圣道，断除烦惑；在外，可以保卫国家，安定人民。你能够顾名思义，就会利益到国家社会，哪里只是你一个人独得利益而己呢？</p></div>
+<div class="para-pair"><p class="p-orig">至于诵经持咒念佛，一本于至诚恭敬而受持之即已，不必急急求解义为要也。果能如是受持，久之则业障消除，智慧发现，经之实益，尚能亲得，况文义乎。</p><p class="p-trans">至于诵经、持咒、念佛，本着至诚恭敬心来受持就可以，不必以急求解义为要务。果真能够如此受持，久而久之，业障消除，智慧发现，佛经的实际利益，尚且能够亲得，何况是经文的义理呢。</p></div>
+<div class="para-pair"><p class="p-orig">文钞中屡屡言之，故不多述。祈熟阅文钞，即是常相晤对，况一函二函者乎。</p><p class="p-trans">《文钞》中多次说到这些，故不再多说。祈望你熟阅《文钞》，就等于是你我常常面对面交谈，而不仅仅是一二封信了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【一本】</span>完全根据。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【晤对】</span>会面交谈。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

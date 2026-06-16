@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与高鹤年居士书三 · 印光法师文钞</title>
+<meta name="description" content="去秋一会，复值季春，光阴迅速，诚堪叹息。去冬，光之芜钞印出，云雷拟欲寄至九华，问光知其处所否。光以居士行止无定，令不须寄。二月二十七，接到香港手书，知已往鸡足觐迦叶尊者去，不胜翘企羡慕之至。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-006/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与高鹤年居士书三 · 印光法师文钞">
+<meta property="og:description" content="去秋一会，复值季春，光阴迅速，诚堪叹息。去冬，光之芜钞印出，云雷拟欲寄至九华，问光知其处所否。光以居士行止无定，令不须寄。二月二十七，接到香港手书，知已往鸡足觐迦叶尊者去，不胜翘企羡慕之至。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-006/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">与高鹤年居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">去秋一会，复值季春，光阴迅速，诚堪叹息。去冬，光之芜钞印出，云雷拟欲寄至九华，问光知其处所否。光以居士行止无定，令不须寄。二月二十七，接到香港手书，知已往鸡足觐迦叶尊者去，不胜翘企羡慕之至。</p><p class="p-trans">去年秋天一见，现在又到了三月，光阴迅速，实在感叹。去年冬天，我的《文钞》印出，张云雷打算寄到九华山，问我是否知道你的住所地址。我因为你行迹不定，让他不要寄。二月二十七日，接到来自香港的信，知道你已经前往（云南）鸡足山，礼觐迦叶尊者去了，非常企盼和羡慕。</p></div>
+<div class="para-pair"><p class="p-orig">今日又接手书，知往曹溪礼谒六祖，且与照南简君相契甚深，谅必待其佛事圆满，当始启行也。</p><p class="p-trans">今天又接到信，知道你前往（广东）曹溪礼谒六祖，而且与简照南相交甚深，想来必定等到那里的佛事圆满，才会启程（前往鸡足山）。</p></div>
+<div class="para-pair"><p class="p-orig">光之文钞已经散完，蔚如今春又令商务印书馆排印，又请黄幼希居士详加校对，有编辑不合规矩处，另行更订。又添入十余篇，尚未出书，一二月后或可即出。此番排印，彼馆自行留板，以后源源相继，可以随请随得矣。</p><p class="p-trans">我的《文钞》已经散完了，徐蔚如今年春天又让商务印书馆排印，又请黄幼希居士详加校对，有编辑不合规矩的地方，另行更订。又添加了十多篇，尚未出书，一两个月后，或许可以出书。这次排印，商务印书馆自行留板，以后会源源不断，相继印刷，可以随请随得了。</p></div>
+<div class="para-pair"><p class="p-orig">今函附仿单三张，有信心者，祈令知之。秦川之归，实无其力。前月二十七，卧龙住持显安，奉陈督军命，促光北归。光以年志俱颓，眼目昏衰力辞。为开初机入道之书数种，令其有信心者请而阅之，循次而入即已。如不见谅，逼令定归者，当即远避于不通邮局处，以尽余年也。</p><p class="p-trans">现今信中附有三张书价单，有信心的人，请让他们知道。回陕西家乡，实在没有这个气力。上个月二十七日，卧龙寺住持显安，奉陈树藩（字柏生）督军之命，催促我北归。我以年纪心志都已衰颓，视力昏衰来极力推辞。为他开了几种初学人入道的书籍，令那些有信心的人请书阅读，渐次进入佛门，就可以了。如果不体谅，一定要强迫我回去的话，我当会马上远远逃避到不通邮局的地方，来度尽余生。</p></div>
+<div class="para-pair"><p class="p-orig">又去岁，得陈锡周戒烟神方，灵效非常，随即发数十处，亦有印出，反寄于光者。简君家道丰富，又且热心公益，祈将此方排印千百万张，以普传布。俾欲戒者，即得戒之，亦莫大之功德也。今寄数张，仗居士之道力，当不失光所望也。</p><p class="p-trans">另外在去年，得到陈锡周的戒烟神方，非常灵验有效，随即分发到几十个地方，也有印出来，反过来寄给我的。简居士家道富足，而且又热心公益，请将这个药方排印千百万张，来普遍传布。使想要戒烟的人，立刻得到药方而戒烟，也是莫大的功德。现今寄上几张，依仗居士的道力，应当不会让我失望。</p></div>
+<div class="para-pair"><p class="p-orig">又云南法道，其机已兴。唐督军去冬打电，命缪延延请谛法师及光去彼讲经。彼以无暇辞，光以目衰学肤辞，故请欧阳竟无去矣。</p><p class="p-trans">此外，云南的佛法，机缘已兴。唐继尧督军去年冬天打电报，命缪延延请谛闲法师以及我去云南讲经。谛闲法师以没有空推辞了，而我以视力昏衰、学业肤浅进行推辞，所以就请欧阳竟无去了。</p></div>
+<div class="para-pair"><p class="p-orig">张拙仙今日亦有信来，言伊久已长斋念佛。现在恢复省垣圆通古刹，为十方丛林，兼流通佛经。并设念佛堂，以为缁素修持之所。设阅经室，以为研究之所。将伊及王梦菊所请之经，悉置其中，以待研阅。</p><p class="p-trans">张拙仙今天也有信寄来，说他很久就已经长斋念佛了。现在正恢复省会的圆通古刹为十方丛林，同时流通佛经。并设念佛堂，作为僧俗修持之所。设置阅经室，作为研究之所。将他与王梦菊所请的佛经，全都放在阅经室中，以备研究阅读。</p></div>
+<div class="para-pair"><p class="p-orig">乱极思治，人同此心。吾佛三世因果之道，生佛不二之法，与夫断惑证真，超凡入圣，及仗佛慈力，信愿往生等法，固以无机不被，无根不摄矣。再得文行兼优之人为之提倡，将见一倡百和，靡然风从。数十年后，或可远追唐宋法道之盛，亦未可量。拙仙名璞，品极纯粹。居士到滇，当即相契。</p><p class="p-trans">世间坏乱到极点，就想到要治理，每个人的心思都是一样的。我佛三世因果之道，众生与佛不二之法，与断惑证真、超凡入圣，以及仗佛慈力，信愿往生等法，固然已经是无机不被，无根不摄了。如再得到文章品行兼优的人为之提倡，将会见到一倡百和，靡然风从。几十年之后，或许可以远追唐宋法道的盛况，也不可限量。张拙仙名张璞，人品极为纯粹。你到了云南，马上就会与他相交深厚。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【翘企】</span>昂头踮脚，形容急切地盼望。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【省垣】</span>省行政机关所在地。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

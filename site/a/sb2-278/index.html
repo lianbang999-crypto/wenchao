@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>杨佩文居士得舍利记 · 印光法师文钞</title>
+<meta name="description" content="杨佩文，江苏淮安县城人，年四十四岁。向读书训蒙，近亦辍馆。今夏六月下旬，以孙未周岁而殇，颇痛惜。一居士劝其入普济莲社念佛，并令阅文钞嘉言录等，顿生信心，念心颇纯切。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-278/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杨佩文居士得舍利记 · 印光法师文钞">
+<meta property="og:description" content="杨佩文，江苏淮安县城人，年四十四岁。向读书训蒙，近亦辍馆。今夏六月下旬，以孙未周岁而殇，颇痛惜。一居士劝其入普济莲社念佛，并令阅文钞嘉言录等，顿生信心，念心颇纯切。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-278/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">杨佩文居士得舍利记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">杨佩文，江苏淮安县城人，年四十四岁。向读书训蒙，近亦辍馆。今夏六月下旬，以孙未周岁而殇，颇痛惜。一居士劝其入普济莲社念佛，并令阅文钞嘉言录等，顿生信心，念心颇纯切。</p><p class="p-trans">杨佩文，江苏淮安县城人，年纪四十四岁。一向读儒书，训导孩童，近来也关闭了私塾馆。今年夏季六月下旬，因为孙子未满周岁夭折，心中很痛惜。一位居士劝他加入普济莲社念佛，并让他阅读《文钞》、《嘉言录》等书，他顿时生起信心，念佛的心很纯真恳切。</p></div>
+<div class="para-pair"><p class="p-orig">至九月下旬晚课时，见佛前油灯，结一莲花。花心有一黑珠，后花落而珠流于案。大如粟米，色如翡翠。颇以为异，而不知其为何物。遂持至莲社，亦无识者。</p><p class="p-trans">到九月下旬做晚课的时候，见到佛前的油灯，结了一朵莲花。花心有一粒黑珠，后来灯花落下而这粒珠子流落到桌案之上。大小如粟米，颜色如翡翠。他很是惊异，却不知道这是什么东西。于是拿到莲社中，也没有认识的人。</p></div>
+<div class="para-pair"><p class="p-orig">十月中旬，以书并此舍利寄光，求证明。光即以小磁盒盛之，令护关师及三四俗弟子看。时其质，大于初开封时有二三倍。亦不甚介意，即供于佛前。次晨早课毕视之，已无有矣。</p><p class="p-trans">十月中旬，将书信以及这颗舍利寄给我，来求证明。我就用小磁盒盛放起来，令护关师以及三四位俗家弟子观看。当时，舍利的形质，大过最初开封时的二三倍。也不是很在意，就供在佛前。第二天早晨早课完毕再看时，已经没有了。</p></div>
+<div class="para-pair"><p class="p-orig">遂即报书彼莲社，谓此系精诚所感之舍利。昨看毕供佛前，今晨视之无矣。或复归原所，祈为详察。后得彼书云，莲社家中，俱无所有。而佩文愈生正信，知佛法不可思议，求皈依。因为取名慧潜。盖取颛蒙念佛，即可潜通佛智，暗合道妙之意。</p><p class="p-trans">于是立即写信告诉莲社，说这是精诚所感的舍利。昨天看完，供在佛前，今天早晨再看，已经没有了。或许是回归到原来的地方去了，请仔细察看。后来得到他们的回信说，莲社以及家中都没有。而杨佩文更加生起正信，知道佛法不可思议，请求皈依。因此为他取法名慧潜。这是取老实念佛，就可以潜通佛智，暗合道妙的意思。</p></div>
+<div class="para-pair"><p class="p-orig">外道谓精气神炼之久久，则成舍利。宋人刻龙舒净土文板，及绣经，于刀下针下得舍利。及此灯花之舍利，是谁之精气神所炼者。应以舍利身得度者，即现舍利而为说法。（民国廿二年冬至日）</p><p class="p-trans">外道认为精气神炼得久了，就成为舍利。宋朝人刻《龙舒净土文》的印板，以及绣经，在刻刀下，绣针下得到舍利。以及这个灯花的舍利，这是谁的精气神所炼就的呢？正是“应以舍利身得度者，即现舍利而为说法。” （民国二十二年&lt;1933&gt;冬至日&lt;十一月初六&gt;）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

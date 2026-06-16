@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复江西端甫黎居士书 · 印光法师文钞</title>
+<meta name="description" content="东风解冻，企阐显密融通之宗。化日舒长，愿蒙佛顶圆满之光。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-127/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复江西端甫黎居士书 · 印光法师文钞">
+<meta property="og:description" content="东风解冻，企阐显密融通之宗。化日舒长，愿蒙佛顶圆满之光。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-127/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复江西端甫黎居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">东风解冻，企阐显密融通之宗。化日舒长，愿蒙佛顶圆满之光。</p><p class="p-trans">春风化开冻雪，想要阐扬显密融通的宗旨。白日渐渐悠长，祈愿蒙受佛顶圆满的祥光。</p></div>
+<div class="para-pair"><p class="p-orig">恭维端甫黎公大居士，夙植德本，乘愿再来。博极群书，深入经藏。悯象教之衰颓，明法性之纲要。出言成章，机理双契。立愿济世，解行俱崇。破梦醒迷，震惊心之霹雳。扶教宏宗，施当头之棒喝。而且成人之美，不辞劳苦。曲引末学，和光利物。若非普门应现，维摩后身者，俦克如是也耶。</p><p class="p-trans">黎端甫大居士，夙植德本，乘愿再来。博览群书，深入经藏。怜悯佛教的衰颓，阐明法性的纲要。出言成章，根机教理双双契合。立愿济世，悟解行持都达到了崇高的境界。破除昏梦，警醒迷人，震响惊心动魂的霹雳法鼓。扶持教下，宏扬宗门，施设当头的棒喝。为了成就他人的美事，不辞种种的劳苦。迂回方便地引导末学之人，掩抑自己的华光利益一切众生。如果不是像观世音菩萨，维摩诘居士那样的大菩萨再来，怎么能够如此呢？</p></div>
+<div class="para-pair"><p class="p-orig">光幼失问学，长无所知。宗教门高，末由进步。权依净土，以为躲根。天姿陋劣，故无从广参知识。客路竛竮，因廿载寄食普陀。壬子仲冬，得睹佛学丛报。始知宏法大士，多现儒门。欢喜感叹，非言可喻。</p><p class="p-trans">印光我小时候没能好好学习，长大了一无所知。宗门教下的门槛太高，没有办法进入。只能依着净土法门，来填补自己根机的不足。我的天姿浅陋低劣，所以无法广泛参访善知识。娑婆的旅途中孤单一人，因此二十多年寄居在普陀山上挂单。壬子年（1912年）十一月，看到《佛学丛报》，才知道宏法大士，大多示现在儒门。欢喜感叹的心情，非语言所能够表达。</p></div>
+<div class="para-pair"><p class="p-orig">其于阁下著述，更加钦佩。但恨根钝骨朽，不能常侍丈室，叨蒙雕琢耳。季秋万寿寂公，以开蒙因缘，俯临光舍，因劝重治。注意于公，又虑其力不暇及。幸三宝加被，预示梦兆，得蒙俞允。幸何如之。</p><p class="p-trans">对于阁下的著述，更是钦佩不已。只是遗憾自己根机愚钝，身体衰朽，不能常常随侍身旁，蒙受您的雕琢。九月，万寿寺的寂山和尚，因为《楞严开蒙》的因缘，光临印光的寮舍，因此劝他重新修治这本书。他有意请您来做这件事，又怕您没有功夫顾及。幸好三宝加被，预先在梦中显示了征兆，随即得到了您的应允。还有什么比这更值得庆幸的呢。</p></div>
+<div class="para-pair"><p class="p-orig">寂公即函示其由，期以两月告成。光以公未详睹原稿，彼未细陈修法。恐公但随彼意，略加雠校。因稍陈梗概，以致寂公。不亿转蒙莲鉴，感愧无极。兹于除日，得承手教。足征我公接物阅经，直同洪钟在虡，有叩则鸣。宝镜当台，无形不映。感荷感荷。</p><p class="p-trans">寂山和尚随即写信，说明其中的缘由，希望您两个月完成。印光认为您当时或许还没有详细看过原稿，寂山和尚想必也没有详细向您说明修治的办法。从而担心您只是随他的心意，略微加以校对而已。因此写信给寂山和尚，稍稍陈述了其中的梗概。不料想承蒙您看到了我的信，感慨惭愧极了。现于除夕，又得到您来信亲笔指导。这足以征示黎公您待人接物，阅历经世，就如同洪钟悬在钟架上，有人叩击就会鸣响。又如同宝镜放在镜台上，没有形像不被映照。感谢感谢。</p></div>
+<div class="para-pair"><p class="p-orig">窃谓开蒙草稿，虽属通公。其发挥润色，全仗阁下。若精神不给，只得将计就计。倘色力强健，何妨于显宗外，处处另标密宗纲要。俾阅者知显密圆通，法门无二。</p><p class="p-trans">印光私下认为《楞严开蒙》的草稿，虽然是通智法师所作。然而这本书的发挥与润色，全要仰仗阁下您。如果精力不足，也只好按照原稿的框架修订。倘若精力强健，不妨在显宗的义理之外，处处另外标出密宗的纲要。从而使读者知道显密圆通，法门无二的道理。</p></div>
+<div class="para-pair"><p class="p-orig">事修宜一门深入，理性固二法融摄。当不惜如椽之笔力，使佛顶放圆满之光明，以普照于尽未来际一切有情也。</p><p class="p-trans">事修应该一门深入，理性固然二法圆融含摄。应当不惜挥动您椽条般的妙笔，使佛顶放圆满之光明，来普照尽未来际一切有情啊！</p></div>
+<div class="para-pair"><p class="p-orig">又末世讲家，每好谈宗。致令听众，多随语转。窃谓禅家机语，绝无义味。唯就来机，指归向上。只宜参究，何可讲说。如是讲经，唯超格大士，能得其益。其他中下之流，尽受其病。</p><p class="p-trans">另外，末世的讲经之人，每每喜好谈论禅宗。致使听法的人，大多随着语言所转。我认为，禅家的机锋转语，绝对没有解释义理的成分，只是就着来人的根机，指归向上。这些话只适合借以参究，哪里可以用来讲说呢。像这样讲经，唯有超越常格的大士，能够从中得到利益。其他中下根之人，全都会蒙受其中的弊病。</p></div>
+<div class="para-pair"><p class="p-orig">于宗则机锋转语，不知力参，妄自以义路卜度。于教则实理实事，由非己境，便认作寓意表法。以宗破教，以教破宗。近世流弊，莫此为甚。伏祈出广长舌，拯此沉溺。</p><p class="p-trans">由此，对于禅宗的机锋转语，不知道努力参究，却错妄地从求解义理的角度去卜度思量。对于教下的实理实事，由于不是自己所能亲证亲见的境界，就将其当成是寓意表法。就这样，用宗门破斥教下，用教下破斥宗门。近世佛法的流弊，没有比这个更严重的。恳请您出广长舌，挽救这个沉溺的局面。</p></div>
+<div class="para-pair"><p class="p-orig">又悟开师宿根固深，好胜心切。始则专意禅宗，藐视净土。后预通公法会，从兹渐生信心。但负性狂妄，志愿则高不可扳。</p><p class="p-trans">另外，悟开师的宿根固然深厚，然而好胜心切。一开始专门注重禅宗，轻视净土。后来参加了通智法师的讲经法会，从此渐渐生起信心。但是他禀性狂妄，志愿过高没办法扳回。</p></div>
+<div class="para-pair"><p class="p-orig">色力尪羸，行持则远难相应。去冬曾露本心，光遂深加呵斥。奈执心过重，岂能挽回。不亿亦白阁下。冬月廿一，抱病回山。与其师兄叙外面事未毕，即不能言。至次日未刻即逝，有何祥瑞感应之可言也。</p><p class="p-trans">体力虛弱，实际行持很难与他的志向相应。他曾在去年冬天流露出他的真实心意，我于是深深地加以呵斥。怎奈他执著心太重，哪里能挽回。没想到这件事他也告诉阁下了。十一月二十一日，他抱病回普陀山。与他的师兄谈外面的事情，还没有结束，就不能说话了。到了第二天，下午未时（13:00-15:00）便去世了，有什么祥瑞感应可说呢？</p></div>
+<div class="para-pair"><p class="p-orig">杨次公谓爱不重，不生娑婆。念不一，不生极乐。悟师非不信有西方，但以爱根固结，念头不一。平生所期，皆成画饼。其求见道，求临终普现瑞相，皆其爱根发露处。打头不遇作家，到老终是骨董。悟师之谓也，哀哉。</p><p class="p-trans">杨杰先生说：爱见之心如果不重，就不会投生到娑婆世界。求生西方的志愿不专一，就不能往生到极乐世界。悟开师不是不相信有西方极乐，但因为爱根坚固结缚，念头不能专一。导致平生所期望的，都成了画饼。他求见道开悟，求临终普现瑞相，都是他爱根显露的地方。所谓＂开头没有遇到明眼的善知识，到老了终究是无所成就＂，说的就是悟开师了，悲哀啊！</p></div>
+<div class="para-pair"><p class="p-orig">又壬子腊月，因念佛学丛报，印用洋纸，不如本国纸之耐久。致诸公所著奇文伟论，因用纸失当，不能经久广益。遂不避罪责，略陈鄙怀。事虽数条，唯此为主。于癸丑正月初，寄至编辑所。岂料一乘濮公，嫌其芜秽，绝不寓目。</p><p class="p-trans">还有，壬子（1912年）腊月，因为想到《佛学丛报》，印刷使用的洋纸，不如本国纸那样耐久。这将导致诸位先生所写的奇文伟论，因为用纸失当，不能长时间广泛地利益大众。于是就不避罪责，写信大略陈述我浅陋的心意。所写的事情有几条，以这件事为主。在癸丑（1913年）正月初，寄到编辑部。没料到濮一乘居士，嫌我的信杂乱，没有看一眼。</p></div>
+<div class="para-pair"><p class="p-orig">高居士来，重为抄录，企转达诸公，以详知洋纸之害。不知曾蒙青盼否。现虽丛报停版，亦须仰白者。以洋纸之害，甚于洪水猛兽。穷国，屈民，断灭儒释圣教，其祸无有底极。企有力大人，遏此习风，以福同胞而永法道耳。</p><p class="p-trans">高鹤年居士来普陀山，重新将这篇文章抄录下来，希望转达给诸位先生，使诸位详细知道洋纸的危害。不知可曾蒙您的慧眼看到？虽然《佛学丛报》已经停版，但也必须禀告您，其原因在于，洋纸的祸害，超过了洪水猛兽。可导致国家穷困，人民屈辱，进而断灭儒释圣教，这种祸害无穷无尽。希望有能力的大人物，能够遏止这个风气，来造福同胞，以使法道永久坚固。</p></div>
+<div class="para-pair"><p class="p-orig">楚青狄公，有志流通。有正书局，近印数种，皆用洋纸。若不痛示利害，将来各处所刻大藏，定难免用。则是以流通而致速灭亡。此不慧所痛心疾首，吁诉无门者。</p><p class="p-trans">狄楚青居士，有志流通佛经善书。近来在有正书局印了多种，都是用洋纸印的。如果不痛切揭示其中的利害关系，将来各处所刻的大藏经，一定难免也用洋纸。这就成了因为流通佛法而导致佛法快速灭亡。对于这件事，愚钝的我痛心疾首，想要哀叹诉说，却找不到门路啊。</p></div>
+<div class="para-pair"><p class="p-orig">今幸蒙垂教，故敢上呈。我公学冠通国，道高当世。交游遍于中外，言论服于人心。恳祈普告宏法诸公。并撰述鸿文，长登报纸。俾举世同胞，咸知祸害。凡属圣贤传世经书，及契约文凭，概勿用此。庶三教不至速灭，五族同沾洪惠矣。</p><p class="p-trans">现今有幸承蒙您的垂教，所以大胆地说出我的心事。您学冠全国，道高当世。交游遍于中外，言论折服人心。恳祈您普遍告知宏扬佛法的诸位先生。并就这件事撰述鸿词美文，长年登在报纸上。使全天下的同胞，都知道洋纸的祸害。凡是圣贤传世的经书，以及契约文凭，一概不要用洋纸印刷。从而使得释、儒、道三教不至于快速灭亡，汉、满、蒙、回、藏等各族共同蒙受巨大的恩惠啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【东风解冻】</span>语出《礼记·月令》：“孟春之月……东风解冻，蛰虫始振。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【化日】</span>太阳光。亦借指白昼。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【象教】</span>释迦牟尼佛离世，诸大弟子想慕不已，刻木为佛。以形象教人，故称佛教为象教。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【躲根】</span>禅宗语。指不肯当下认取自心。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【竛竮】</span>孤单貌。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【丈室】</span>相传毗耶离（在中印度）维摩诘大士以称病为由，与前来问疾的文殊等讨论佛法，妙理贯珠。其卧疾之室虽一丈见方而能容纳无数听众。唐显庆年间，王玄策奉勅出使印度，过维摩诘故宅，乃以手板纵横量之，仅得十笏，因号方丈、丈室。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【簴】</span>古代挂钟磬的架子上的立柱。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【感荷】</span>感谢。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【大笔如椽】</span>椽：放在檩子上架着屋顶的木条。象椽子那样大的笔。形容著名的文章。也指有名的作家。《晋书·王珣传》：珣梦人以大笔如椽与之，既觉，语人曰：此当有大手笔事。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【负性】</span>禀性。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【尪羸】</span>指瘦弱之人。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【杨杰】</span>北宋无为（安徽）人。字次公，号无为子。雄才俊迈，年少登科。好禅，历叩诸山名宿，参谒天衣义怀，义怀每引庞居士之机语提撕。一日奉祠泰山，睹日如盘涌，因而大悟，呈偈于义怀，遂蒙称可。后会芙蓉道楷，相互酬问。宋神宗熙宁（1068-1077）末年，归乡省母，闲居阅藏经，遂归心净土。曾任两浙提点刑狱，有杨提刑之称。时诣天台山白莲寺，师事真咸，礼智者之塔。晚年专事净业，曾画丈六阿弥陀佛像礼拜观想。临终时感佛来迎，端坐而逝，享年七十。著有释氏别集、辅道集等。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【打头不遇作家，到老终是骨董】</span>比喻初学道之人未遇真正明眼善知识，以致一生学无所成。清悟开法师《念佛百问》：“学道者，少不得明师善友，且明师善友，须择作家。古语云：打头不遇作家，到者终成骨董。关系一生道业，不亦重乎？古人遇着作家师匠，便忘命依从，故易归正道，工夫易成。今人轻忽师友，绝无求道之心，顺其行为，则周旋往返，稍一逆之，则远而避去，故明正道者鲜矣。”</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【五族】</span>辛亥革命后曾称汉、满、蒙、回、藏五个民族为“五族”。五族共和，是中华民国成立初期的政治口号。这一原则强调了在中国的五大族群汉满蒙回藏和谐相处，共建共和国。中华民国以五色旗作为国旗，分别代表汉族（红）；满族（黄）；蒙古族（蓝）；回族（白）；藏族（黑）。其中“回族”泛指内地回民和西北各地说突厥语系语言的诸多穆斯林民族，包括维吾尔族，哈萨克族等。清朝曾将新疆称为回疆。五族共和源自清末立宪运动的“五族大同”。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

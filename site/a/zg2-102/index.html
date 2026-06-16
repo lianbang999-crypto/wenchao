@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>心归净处跋（与刘智空居士作） · 印光法师文钞</title>
+<meta name="description" content="夫心者，灵明洞彻，湛寂常恒。有典有则，独为万象之主。无名无相，混融诸法之中。不垢不净，无一尘之可立。即色即空，具五眼而莫见。处尚不有，净从何来。净处既无，归将安寄。实际理地，不受一尘。说个心字，早成疣赘。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-102/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="心归净处跋（与刘智空居士作） · 印光法师文钞">
+<meta property="og:description" content="夫心者，灵明洞彻，湛寂常恒。有典有则，独为万象之主。无名无相，混融诸法之中。不垢不净，无一尘之可立。即色即空，具五眼而莫见。处尚不有，净从何来。净处既无，归将安寄。实际理地，不受一尘。说个心字，早成疣赘。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-102/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 跋</div>
+      <h1 class="art-title">心归净处跋（与刘智空居士作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">夫心者，灵明洞彻，湛寂常恒。有典有则，独为万象之主。无名无相，混融诸法之中。不垢不净，无一尘之可立。即色即空，具五眼而莫见。处尚不有，净从何来。净处既无，归将安寄。实际理地，不受一尘。说个心字，早成疣赘。</p><p class="p-trans">心，灵明独耀，洞彻十方，湛然寂静，常恒不变。有法有度，独为一切万象之主宰；无名无形，混融在一切万法之中。不垢不净，没有一尘可以安立；即色即空，具备五眼（肉眼、天眼、慧眼、法眼、佛眼）也不能见到。尚且没有处所，又哪里有清净可言呢。既然没有清净处所，那么心又将归到哪里呢？真如无相的实际理地，不受一尘的系缚。就连说出“心”这一字，也早已经是多余。</p></div>
+<div class="para-pair"><p class="p-orig">若能于此直下契入，则其心之全体大用，彻底圆彰，了无余蕴。即可名为无心道人。即可与蕴空大士，比肩齐立，把手共行。普赴众感，现身说法。月印千江，风鸣万籁。遍法界感，遍法界应矣。</p><p class="p-trans">如果能够于此当下契入，那么心的全体大用，就彻底圆彰，了无余蕴了。这样的人就可以名为无心道人，就可以和五蕴皆空的大士，并肩站立，携手同行。就可以普遍响应众生的感念，现身为他们说法。如同一轮明月朗照中天，月影映于万千江河；一缕清风吹过虚空，万种声音随之鸣响。众生遍法界有感，菩萨遍法界有应了。</p></div>
+<div class="para-pair"><p class="p-orig">设或根机陋劣，未能证入。且约生灭门中，指其趣证之方。既由迷心逐境，向外驰求。全智慧德相，变成妄想执著。固当唯精唯一，执持弥陀圣号，真信切愿，企其往生西方。</p><p class="p-trans">假如根机陋劣，不能够证入。那就权且在这生灭门中，指明归向证入的方法吧。既然是由于迷惑真心、追逐尘境、向外驰求，从而使得全体智慧德相，变成了妄想执著。固当精进专一，执持阿弥陀佛圣号，真信切愿，期望往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">持之久久，心佛一如。不离当念，彻证蕴空。妄想执著既灭，智慧德相亦泯。随其心净，则佛土净。不离当处，冥契寂光。唯此一处，方是吾人究竟安身立命之处。愿吾徒智空，普与法界众生，同赋归欤，则幸甚幸甚。</p><p class="p-trans">持念得久了，能念之心与所念之佛，一如不二。不离当下一念，而彻底证得五蕴皆空。妄想执著一旦消除，智慧德相也随之泯灭。随其心净，则佛土净。不离当下，而与寂光真境暗中契合。只有这常寂光，才是我们究竟安身立命的地方。希望我的徒弟智空，与遍法界的一切众生，同辞娑婆苦海，回归极乐家乡，那就太庆幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【典则】</span>典章法则；准则。《书·五子之歌》：“有典有则，贻厥子孙。”孔传：“典，谓经籍；则，法。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【五眼】</span>肉眼、天眼、慧眼、法眼、佛眼。肉眼是肉身凡夫的眼，遇昏暗，遇阻碍，就不能见；天眼是天人的眼，远近昼夜，都能得见；慧眼是声闻的眼，能看破假相，识得真空；法眼是菩萨的眼，能澈了世间和出世间的一切法门；佛眼是如来的眼，有了佛眼便兼有前面的四种眼，能无事不知，无事不见，一切法中，佛眼常照。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【疣赘】</span>比喻多余无用的。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【余蕴】</span>蕴，积聚、类别之意，指色、受、想、行、识等五蕴。余蕴，谓虽已脱离分段生死之五蕴身，而还残余变易五蕴之菩萨身。或称最后身之二乘与菩萨。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【万籁】</span>各种声响。籁，从孔穴中发出的声音。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【赋归】</span>《论语·公冶长》：“子在陈曰：‘归与，归与！’”后因以“赋归”表示告归，辞官归里。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

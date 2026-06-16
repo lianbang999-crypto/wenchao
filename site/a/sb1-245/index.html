@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书十八 · 印光法师文钞</title>
+<meta name="description" content="近来念佛相应，欣慰。陈海超于民九，十年间皈依过（法名志净）。其人好谈理性，盖聪明习气所使也。曾来信多谈理，光颇不以为然，后不来信。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-245/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书十八 · 印光法师文钞">
+<meta property="og:description" content="近来念佛相应，欣慰。陈海超于民九，十年间皈依过（法名志净）。其人好谈理性，盖聪明习气所使也。曾来信多谈理，光颇不以为然，后不来信。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-245/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书十八</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">近来念佛相应，欣慰。陈海超于民九，十年间皈依过（法名志净）。其人好谈理性，盖聪明习气所使也。曾来信多谈理，光颇不以为然，后不来信。</p><p class="p-trans">近来念佛相应，欣喜安慰。陈海超在民国九、十年间皈依过（法名志净）。此人好谈理性，大概是聪明习气使其如此的。曾经来信，大多谈论理性，我很不以为然，后来就不来信了。</p></div>
+<div class="para-pair"><p class="p-orig">至民十九年（或廿年春不记得）令友人将一念成佛法门寄来，光见其序中推尊，且后印版权所有，又一本售洋三元，因将其书与其友寄回，而深斥其以凡滥圣，借佛法以求财利，彼后来信道歉。</p><p class="p-trans">到了民国十九年（或许是二十年春，记不得了）令友人将《一念成佛法门》寄来，我看到他在序文中推尊我，而且后面印上“版权所有”，又一本书，售价三元，因此将这本书让他的朋友寄回，并深深斥责他以凡滥圣，借佛法求财利，他后来来信道歉。</p></div>
+<div class="para-pair"><p class="p-orig">上海打仗，其厂已烧，则其纸型，当亦成灰，想彼利人心切，或又排印也。此种书唯大通家看，则不受病，稍聪明而事理未能了然者，便即以明白此一念为到家，则误人处正在其欲利人处。</p><p class="p-trans">上海打仗，那里的工厂已经烧掉了，估计这本书的纸型，也应当烧成灰了，想必他利人心切，或许又再排印了。这种书，只有大通家看，不会受病，稍微聪明而对于事理没能完全明白的人，就会以明白这一念为到家了，那么误害他人之处正在他想要利人之处。</p></div>
+<div class="para-pair"><p class="p-orig">当今之时，人皆学空套子，此种高调且以不唱为是。不久当有歧路指归十包寄来。八九月间，当有物犹如此十包寄来，此书专记物类之懿德懿行，虽不言戒杀放生，实为戒杀书中之冠。因印六万册，其缘起序中说之。（六月十九）</p><p class="p-trans">当今之时，人人都学空套子，这种高调暂且以不唱为好。不久，会有《歧路指归》十包寄来给你。八、九月份，会有《物犹如此》十包寄来，这本书专门记载动物的美德善行，虽然没有说到戒杀放生，实际上是戒杀类书籍之冠。因此印了六万册，在缘起序中有说明。（六月十九日）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

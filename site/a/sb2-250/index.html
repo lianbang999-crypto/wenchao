@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普劝学佛谭序 · 印光法师文钞</title>
+<meta name="description" content="佛法大无不包，细无不举。凡欲学者，当事实行。否则如读药方而不服药，欲求病愈，何可得乎。是故念佛之人，必须要敦笃伦常，尽己职分，闲邪存诚，克己复礼，知因识果，希圣希贤，诸恶莫作，众善奉行。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-250/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普劝学佛谭序 · 印光法师文钞">
+<meta property="og:description" content="佛法大无不包，细无不举。凡欲学者，当事实行。否则如读药方而不服药，欲求病愈，何可得乎。是故念佛之人，必须要敦笃伦常，尽己职分，闲邪存诚，克己复礼，知因识果，希圣希贤，诸恶莫作，众善奉行。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-250/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">普劝学佛谭序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法大无不包，细无不举。凡欲学者，当事实行。否则如读药方而不服药，欲求病愈，何可得乎。是故念佛之人，必须要敦笃伦常，尽己职分，闲邪存诚，克己复礼，知因识果，希圣希贤，诸恶莫作，众善奉行。</p><p class="p-trans">佛法广大，无所不包；佛法微细，无所不举。凡是想学佛的人，应当从事真实修行。否则，如同读药方却不服药，想求病好，怎么可能实现呢？所以念佛之人，必须要敦笃伦理纲常，竭尽自己的职责本分（即敦伦尽分），闲邪存诚（防止邪念，心怀诚敬），克己复礼（战胜己私、还归真理），知因识果，仰慕效法圣贤，诸恶莫作，众善奉行。</p></div>
+<div class="para-pair"><p class="p-orig">又须真为生死，发菩提心，以深信愿，持佛名号，决定求生极乐世界。以此自行，复以化他。俾内而家庭，外而世人，同沾佛化，同生净土。庶可不孤佛化，不负己灵。</p><p class="p-trans">还必须真为生死，发菩提心，以深信愿，持佛名号，决定求生极乐世界。以此自己行持，并以此教化他人。使得内而家庭，外而世人，共同沾沐佛的教化，共同往生净土。才可以不辜负佛的教化，不辜负自己的性灵。</p></div>
+<div class="para-pair"><p class="p-orig">若其泛泛悠悠，研究种种法门，亦复依之修持。则其作大通家，并来生得人天福报，当可有分。而欲了生脱死，超凡入圣，恐难梦著。何以故，以一切法门，均须断惑证真，方可了生脱死。非如净土法门，仗佛慈力，可以带业往生也。佛力自力，奚啻天渊悬殊。了此则不敢仗自力以弃佛力，以延了生死之期于未来若干数劫也。</p><p class="p-trans">如果修行人泛泛悠悠，研究种种（依仗自力的通途）法门，并依照这种种法门来修持。那么他作一个大通家，且来生得到人天福报，应当可以有分。而想要了生脱死，超凡入圣，恐怕梦都很难梦到。为什么呢？因为一切法门，都必须断惑证真，才能了生脱死。不像净土法门，仗佛慈力，可以带业往生啊！佛力自力，何止天渊悬殊！明白了这个道理，就不敢专仗自力而舍弃佛力，以致拖延了生死的日期于未来若干数劫之后啊！</p></div>
+<div class="para-pair"><p class="p-orig">刘达玄居士，以大劫弥漫，太平无期，遂息心研究佛典。方知佛法为一切诸法之本。果能依佛所说而行，上之则断惑证真，以复本性。下之则改恶迁善，而为贤人。</p><p class="p-trans">刘达玄居士，因为大劫难弥漫世间，太平之日遥遥无期，于是息心研究佛典。才知道佛法是一切诸法的根本。果真能够依照佛陀所说的来行事，上根的人可以断惑证真，来恢复本性；下根的人可以改恶向善，而成为贤人。</p></div>
+<div class="para-pair"><p class="p-orig">贤人以身率物，则内而家庭，外而世人，均可相观而善。其移风易俗，固在于不知不觉中。孟子谓穷则独善其身，若能如上所说，虽穷亦何难兼善其乡邑乎哉。</p><p class="p-trans">贤人以自身的行为作众人的榜样，那么内而家庭，外而世人，都可以相互观摩而向善。这样移风易俗，原本就在不知不觉中了。孟子说：“未发达时就修养好自身。”如果能够如上所说，即使未发达，又有什么困难来利益其县乡的百姓呢？</p></div>
+<div class="para-pair"><p class="p-orig">于是用通俗文，作普劝学佛谭数十篇。以期智愚共晓，人各修持。则天下太平，人民安乐，庶几可以亲见矣。范古农居士已发其蕴。不慧但将学佛之实行，及了生死之捷径言之。使人人同于此生了生脱死。较比仗自力修其余一切法，其难易不亦日劫相倍乎。（民国庚午孟秋）</p><p class="p-trans">于是用通俗的白话文，写了《普劝学佛谭》数十篇。以期智慧与愚昧的人共同知晓，每个人各自修持。那么天下太平，人民安乐，不久就可以亲自见到了。范古农居士已经阐发过这本书的底蕴。我只是将学佛的实行，以及了生死的捷径来说一说。使得人人同在这一生了生脱死。比起依仗自力修其余一切法，它们的困难容易不是如同一天与一劫所相差的倍数吗？(民国庚午&lt;1930&gt;孟秋&lt;农历七月&gt;)</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【谭】</span>同“谈”。话语、言论。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>4、复邓伯诚居士书一 · 印光法师文钞</title>
+<meta name="description" content="谈恳切志诚和仰信诸佛诸祖诚言">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-004/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4、复邓伯诚居士书一 · 印光法师文钞">
+<meta property="og:description" content="谈恳切志诚和仰信诸佛诸祖诚言">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-004/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第一部分·书信 · 如诚法师、圆涛法师译</div>
+      <h1 class="art-title">4、复邓伯诚居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>谈恳切志诚和仰信诸佛诸祖诚言</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">相晤已来，忽满六年。不但星霜屡更，即国历已非其旧。世相无常，诚可叹悼。</p><p class="p-trans">相见以来，转眼已经有六年了。不但岁月反复更替，就是朝代也出现了变化。世相无常，实在可叹可伤。</p></div>
+<div class="para-pair"><p class="p-orig">接手书，知不废净业，洵足嘉美。而云身心不安之至，为境遇不嘉，致不安耶。抑或疾病缠绵，致不安耶。若境遇不嘉者，当作退一步想。试思世之胜我者固多，而不如我者亦复不少。但得不饥不寒，何羡大富大贵。乐天知命，随遇而安。如是则尚能转烦恼成菩提，岂不能转忧苦作安乐耶。</p><p class="p-trans">接到你的书信，知道你没有荒废净业，实在值得称许赞美。但又说身心非常的不安，是境遇不好，导致不安呢？又或者是疾病缠绵，导致不安呢？如果是境遇不好的话，应当退一步来想。想一想世间上超过我的人固然多，而不如我的人也有不少。只要吃得饱穿得暖，何必羡慕别人大富大贵。乐天知命，随遇而安。这样尚且能转烦恼成菩提，难道不能转忧苦为安乐吗？</p></div>
+<div class="para-pair"><p class="p-orig">若疾病缠绵者，当痛念身为苦本，极生厌离，力修净业，誓求往生。诸佛以苦为师，致成佛道。吾人当以病为药，速求出离。</p><p class="p-trans">如果是疾病缠绵的话，应当痛念色身为痛苦的根本，生起大厌离心，努力修习净业，发誓求往生。诸佛以苦为师，而成就佛道。我们应当以病为药，速求出离娑婆。</p></div>
+<div class="para-pair"><p class="p-orig">须知具缚凡夫，若无贫穷疾病等苦，将日奔驰于声色名利之场，而莫之能已。谁肯于得意烜赫之时，回首作未来沉溺之想乎。</p><p class="p-trans">要知道具足系缚的凡夫，如果没有贫穷疾病等痛苦，就会每天奔忙在声色名利的场所，而不能停息。谁肯在春风得意威风显赫之时，回过头来想想未来会沉溺堕落的事情呢？</p></div>
+<div class="para-pair"><p class="p-orig">孟子曰，故天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为，所以动心忍性，增益其所不能。故知天之成就人者多以逆，而人之祗承天者宜顺受也。</p><p class="p-trans">孟子说：“故天将降大任于斯人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为，所以动心忍性，增益其所不能。”所以要知道上天要成就一个人，大多以逆境来磨炼他，而敬奉上天的人，应该逆来顺受。</p></div>
+<div class="para-pair"><p class="p-orig">然孟子所谓大任，乃世间之爵位，尚须如此忧劳，方可不负天心。何况吾人以博地凡夫，直欲上承法王觉道，下化法界有情。倘不稍藉挫折于贫病，则凡惑日炽，净业难成。迷昧本心，永沦恶道。尽未来际，求出无期矣。古德所谓不经一番寒彻骨，争得梅花扑鼻香者，正此之谓也。</p><p class="p-trans">然而孟子所说的“大任”，是指世间的官爵地位，尚且须要如此的忧心劳苦，方才不辜负上天之心。何况我们以博地凡夫，直接想要上承佛陀觉悟之道，下化法界一切有情。倘若不稍稍凭借贫苦疾病来受一些挫折，那么凡夫的见思二惑就会日日炽盛，净业难以成就。迷失暗昧本心，永远沉沦恶道。尽未来际求出无期啊！古德说过：“不经一番寒彻骨，争得梅花扑鼻香”说的就是这个意思啊！</p></div>
+<div class="para-pair"><p class="p-orig">但当志心念佛以消旧业，断不可起烦躁心，怨天尤人，谓因果虚幻，佛法不灵。须知吾人自无始以来，所作恶业，无量无边。华严经谓假使恶业有体相者，十方虚空，不能容受。岂泛泛悠悠之修持，便可消尽也。</p><p class="p-trans">只要志心念佛以消旧业，千万不可起烦躁心，怨天尤人，认为因果是虚幻，佛法不灵验。要知道我们从无始以来，所作的恶业，无量无边。《华严经》中说：“若此恶业有体相者，尽虚空界，不能容受。”岂能通过泛泛悠悠的修持，便可以消除净尽啊？</p></div>
+<div class="para-pair"><p class="p-orig">所以释迦弥陀两土教主，痛念众生无力断惑，特开一仗佛慈力，带业往生之法门。其宏慈大悲，虽天地父母，不能喻其恒河沙分之一。只宜发惭愧心，发忏悔心，自可蒙佛加被，业消身安耳。</p><p class="p-trans">所以释迦、弥陀两土教主，对我们众生无力断除惑业非常痛心，所以特别开显出这一个专仗阿弥陀佛的慈悲愿力，带业往生西方的净土法门。他们的宏大慈心及广大悲心，就算天地父母的养育恩德，也不能和两土教主慈悲心的恒河沙分之一相比。我们只有怀着惭愧心，发忏悔心，信顺净土法门，老实念佛，自然会蒙佛慈悲摄受，业障消除而身心安泰了。</p></div>
+<div class="para-pair"><p class="p-orig">若病苦至剧，不能忍受者，当于朝暮念佛回向外，专心致志，念南无观世音菩萨。观音现身尘刹，寻声救苦。人当危急之际，若能持诵礼拜，无不随感而应，即垂慈佑，令脱苦恼而获安乐也。</p><p class="p-trans">如果病痛很剧烈，难以忍受时，应当在早晚念佛回向外，专心致志念“南无观世音菩萨”圣号。观世音菩萨现身尘刹，寻声救苦。人在危急的时刻，如果能持诵礼拜，没有不随感而应，立刻降临慈悲护佑，使众生脱离苦恼而获得安乐啊。</p></div>
+<div class="para-pair"><p class="p-orig">念佛一法，乃至简至易，至广至大之法。必须恳切志诚之极，方能感应道交，即生亲获实益。若懒惰懈怠，毫无敬畏，虽种远因，而亵慢之罪，有不堪设想者。纵令得生人天，断难高预海会。</p><p class="p-trans">信愿念佛，求生极乐，是最简单最容易，最广泛最宏大的法门。必须极为恳切志诚，才能感应道交，当生亲自获得念佛的真实利益。如果懒惰懈怠，毫无敬畏之心，虽然种下未来得度的远因，而亵慢的罪过真是不堪设想。就算来生能够得生人天两道，也很难高登净土，参与到莲池海会中去。</p></div>
+<div class="para-pair"><p class="p-orig">至于佛像当作真佛看，不可作土木铜铁等看。经典乃三世诸佛之师，如来法身舍利，亦当作真佛看，不可作纸墨等看。对经像时，当如忠臣之奉圣主，孝子之读遗嘱。能如是，则无业障而不消，无福慧而不足矣。</p><p class="p-trans">至于佛像，应当作真佛看待，不可当作土木铜铁等看。经典是三世诸佛的老师，如来的法身舍利，也应当作真佛看，不可作纸墨等看。面对经像时，应当如忠臣面对面地侍奉圣主，孝子读诵父母的遗嘱一样。能够做到这样，则没有业障不消除，没有福慧不具足啊。</p></div>
+<div class="para-pair"><p class="p-orig">现今士大夫学佛者多，然率皆读其文，解其义，取其供给口头，以博一通家之名而已。至于恭敬志诚，依教修持者，诚为难得其人。余常谓欲得佛法实益，须向恭敬中求。有一分恭敬，则消一分罪业，增一分福慧。有十分恭敬，则消十分罪业，增十分福慧。若无恭敬而致亵慢，则罪业愈增，而福慧愈减矣。哀哉。</p><p class="p-trans">当今士大夫学佛的人很多，然而全是读佛经的文句，理解它的义理，作为口头闲谈，来博取一个“大通家”的虚名而已。至于恭敬志诚，依教修持的人，这样的人实在非常难得。我常说：想得到佛法的真实利益，必须向恭敬心中求。有一分恭敬，则消一分罪业，增一分福慧。有十分恭敬，则消十分罪业，增十分福慧。如果心中毫无恭敬导致亵渎轻慢，则罪业愈增，而福慧愈减了。可悲啊！</p></div>
+<div class="para-pair"><p class="p-orig">凡遇知交，当谆谆以此意告之，乃莫大之法施也。净土法门若信得及，何善如之。若己智有不了，即当仰信诸佛诸祖诚言，断不可有一念疑心，疑则与佛相背，临终定难感通矣。</p><p class="p-trans">凡是遇到知交朋友，应当诚恳的以这个恭敬之法告诉他们，这是很大的法布施。如果能够对净土法门具足真信，是再好不过的事。假如自己的智慧不能理解，就应当仰信诸佛诸祖真实的言教，万万不能起一念疑心，疑惑就会与阿弥陀佛的大愿相背离，临命终时一定非常难于感通啊。</p></div>
+<div class="para-pair"><p class="p-orig">古人谓净土法门，唯佛与佛乃能究尽。登地菩萨，不能知其少分。夫登地大士，尚不全知。岂可以博地凡夫，妄生臆断乎。</p><p class="p-trans">古人说净土法门，只有佛与佛才能究竟明了。登地菩萨也不能少分地知道法门的玄妙。登地的大菩萨们尚且不能全部知道。怎能以我们博地凡夫的身份，妄生主观判断呢？</p></div>
+<div class="para-pair"><p class="p-orig">若欲研究，当看净土十要。此书乃蕅益大师于净土诸书中，采其菁华，妙契时机，最为第一。其开首弥陀要解，自佛说此经以来，为西天东土中，绝无而仅有之注解也。宜恪遵守，不可忽略。</p><p class="p-trans">如果想要研究，应当看《净土十要》。这本书是蕅益大师在净土宗的诸多著作中，采取其中的精华，妙契当时的根机，是第一要紧的一本书。其中开头就是《弥陀要解》，自从佛陀宣说这部《阿弥陀经》以来，是西天东土，绝无仅有的注解啊！应好好的遵守，不可以忽略。</p></div>
+<div class="para-pair"><p class="p-orig">今之聪明人，虽学佛法，以未亲近具眼善知识，率皆专重理性，拨弃事修及与因果。既拨事修因果，并理性而失之。所以每有才高等辈，词惊鬼神，究其行为，与市井无知无识者无异。其病根皆由拨事修因果之所致也。俾上智者徒生怜愍，下愚者依样妄为。所谓以身谤法，罪过无量。</p><p class="p-trans">现在的聪明人虽然学习佛法，因为没有亲近具法眼的善知识，大都专重理性，废弃事修及与因果等事相。既然废弃事修因果，理性也就一并失去了。所以每每有一些才华的高人，说出的话能震惊鬼神，考察他的行为，却与市井无知无识的人没有什么差别。其病根都是由于废弃事修、因果所导致的。使上根利智的人徒劳地为他生怜愍心，令下劣愚蠢的人学他的样子胆大妄为。所谓以身谤法，罪过无量。</p></div>
+<div class="para-pair"><p class="p-orig">法苑珠林一书（一百卷，常州天宁寺订作三十本，苏州玛瑙经房订作廿四本，玛瑙经房板残伤模糊，天宁寺板系新刻），详谈因果，理事并进。事迹报应，历历分明。阅之令人不寒而栗。纵在暗室屋漏，常如面对佛天，不敢稍萌恶念。上中下根，皆蒙利益。断不至错认路头，执理废事，归于偏邪狂妄之弊。</p><p class="p-trans">《法苑珠林》这本书（一百卷，常州天宁寺订作三十本，苏州玛瑙经房订作二十四本，玛瑙经房板残伤模糊，天宁寺板是新刻），详谈因果，理事并进。因果报应的事迹记载得清清楚楚。阅读之后令人不寒而栗。纵然在暗室无人之处，也要常常如同面对佛陀天神，不敢稍生恶念。上、中、下根都能蒙受利益。断然不至于错认道路，执理废事，归向偏邪狂妄的弊病。</p></div>
+<div class="para-pair"><p class="p-orig">梦东所谓善谈心性者，必不弃离于因果。深信因果者，终必大明乎心性。此理势所必然也。梦东此语，乃千古不刊之至论，亦徒逞狂慧者之顶门针也。</p><p class="p-trans">梦东彻悟禅师所说的：“善谈心性者，必不弃离于因果。深信因果者，终必大明乎心性。此理势所必然也。”梦东禅师这个话，是千古不变的定论，也是徒逞狂慧之人的顶门一针。</p></div>
+<div class="para-pair"><p class="p-orig">各流通处皆有，宜请而阅之，其利益当自知之，亦宜令一切知交阅之。令弟去秋复来山，亦曾以恭敬相勉，但未知伊以余言为是否也。</p><p class="p-trans">各个经书流通处都有，应该请来阅读，其中的利益当会自知，也应该令一切知交朋友来阅读。你弟弟去年秋天又来到普陀山，我也曾经以恭敬的意义来勉励他，但不知道他认为我的话对不对呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【星霜】</span>星辰一年一周转，霜每年遇寒而降，因以星霜指年岁。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【悼】</span>悲伤，哀念。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【洵】</span>诚实，实在。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【嘉美】</span>称许；赞美。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【烜赫】</span>昭著；显赫。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【祗承】</span>犹祗奉。祗奉，指敬奉。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【博地】</span>借指人间。明 屠隆 《昙花记·法眷聚会》：“弟子博地凡夫，沈迷宦海，若非二师点化，菩萨钳锤，焉能证悟。”《天台三大部补注卷第十一》：“博地，博广多也。下凡之地广多故耳。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【法王】</span>（术语）佛于法自在。称曰法王。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【率皆】</span>犹言都是。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【谆谆】</span>恳切，诚恳。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【臆断】</span>1.凭臆测而下的决断。2.主观地判断。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【恪】</span>恭敬，谨慎。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【法苑珠林】</span>凡百卷（嘉兴藏作一二○卷）。唐总章元年（668）道世（？-683）所著。又作法苑珠林传、法苑珠林集。收于大正藏第五十三册。本书为一切佛经之索引。系道世根据其兄道宣所著之大唐内典录及续高僧传而编集，具有佛教百科全书之性质。全书分为一百篇六六八部，概述佛教之思想、术语、法数等，博引诸经、律、论、纪、传等，共计四百数十种，其中有现今已不存之经典。又以内容之不同而分类，故使用极为方便。其引用之文并非照经文抄录，而系录其要义。为我国佛教文献中极其珍贵的一部书。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【屋漏】</span>古代室内西北隅施设小帐，安藏神主，为人所不见的地方称作“屋漏”。《诗·大雅·抑》：“相在尔室，尚不愧于屋漏。” 毛 传：“西北隅谓之屋漏。” 郑玄 笺：“屋，小帐也；漏，隐也。”后即用以泛指屋之深暗处。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【佛天】</span>（术语）佛者之尊崇佛，如世人之于天，故云佛天，佛即天也。又一解释：佛与天神也。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【不刊】</span>1.古代文书书于竹简，有误，即削除，谓之刊。不刊谓不容更动和改变。2.引申为不可磨灭。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【顶门针】</span>针灸时自脑门所下的一针。比喻击中要害而能使人警醒的言论或举动。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

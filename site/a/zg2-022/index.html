@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>三十二祖传赞序 · 印光法师文钞</title>
+<meta name="description" content="粤自世尊拈华，迦叶微笑。正法眼藏，涅槃妙心，遂得普播寰区。及至大教东布，达磨西来。其圆悟佛性，彻证自心。续如来之慧命，作人天之导师者，实繁有徒。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-022/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三十二祖传赞序 · 印光法师文钞">
+<meta property="og:description" content="粤自世尊拈华，迦叶微笑。正法眼藏，涅槃妙心，遂得普播寰区。及至大教东布，达磨西来。其圆悟佛性，彻证自心。续如来之慧命，作人天之导师者，实繁有徒。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-022/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">三十二祖传赞序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">粤自世尊拈华，迦叶微笑。正法眼藏，涅槃妙心，遂得普播寰区。及至大教东布，达磨西来。其圆悟佛性，彻证自心。续如来之慧命，作人天之导师者，实繁有徒。</p><p class="p-trans">自从灵山会上，世尊拈花，迦叶微笑。正法眼藏，涅槃妙心，于是得以传遍天下。等到佛教传入东土，达磨祖师从西而来，这之后圆悟佛性，彻证自心，续如来慧命，作人天导师的人，实在很多。</p></div>
+<div class="para-pair"><p class="p-orig">若传灯录，高僧传所载，乃存十一于千百耳。其隐而弗彰，秘而不显者，又何可胜数耶。清世宗宪皇帝，久证法身，乘愿再来。若宗若教，无不穷源彻底。御极以来，十年之内，专理政治，不提佛法。以期天下太平，俗美风醇。然后宣布法化，则易得其益。</p><p class="p-trans">像《传灯录》、《高僧传》中所记载的，只是存录了千百人中的十人、一人而已。其余那些隐藏而没有彰明，秘密而不显著的人，又怎能数得清呢。清世宗雍正皇帝，久已证得法身，乘愿再来，对于宗门、教下，都彻底穷尽本源。登基后，最初的十年内，专心料理政治，不提倡佛法。以期天下安定太平，风俗美善醇和。然后再宣扬流布佛法，人民就容易得到利益。</p></div>
+<div class="para-pair"><p class="p-orig">如器除毒，堪贮甘露。至十一年，则以人王身，行法王事。佛法世法，一肩担荷。儒教释教，一道齐行。取灵山泗水之心法，述传薪续焰之纶音。</p><p class="p-trans">就如同先除去器皿中残存的毒药，才能用来贮存甘露。到雍正十一年，世宗皇帝借着世间帝王的身份，而施行如来的教化。佛法、世法，一肩担荷；儒教、佛教，一齐推行。汲取佛儒二家的心法，述说薪火传续的圆音。</p></div>
+<div class="para-pair"><p class="p-orig">空有不二，真俗圆融。直欲普天人民，同为如来真子。现未有情，共获本地风光。每于朔望，及佛菩萨诞辰。或面训廷臣，或传谕疆臣，以迄士庶。令其咸了自心，悉趣背尘合觉之道。不至徒具佛性，枉受生死轮回之悲。</p><p class="p-trans">空有不二，真俗圆融。只想让普天下的人民，共同成为如来之真子；让现在和未来的众生，共同获得本地之风光。（世宗）常常在初一、十五，以及佛菩萨的诞辰，或者当面训诲朝廷大臣，或者传递诏书给边疆大吏，以至于士人和百姓。让他们全都明了自心，全都趣向背尘合觉之道，而不至于徒然具有佛性，却冤枉地遭受生死轮回的悲苦。</p></div>
+<div class="para-pair"><p class="p-orig">或敕天下丛林，一切僧众。令其恪守清规，精修梵行。真参实悟，明心见性。以期光扬法道，翼赞皇猷。又于朔望，必亲运睿笔，恭绘一古德道像。取彼本传，提纲摘要，作一小传。又作一赞，以发其奥义。亲笔书于像首。刻石大内，以备摹拓而企流布。</p><p class="p-trans">或者敕令天下丛林，一切僧众，令他们严守清规戒律，精进修行，真参实悟，明心见性。以期将法道发扬光大，辅佐国家的管理教化。每到初一、十五，世宗必定亲笔恭绘一位古德的道像。并且取来该古德的传记，提纲挈领，摘录要点，作一篇小传。又作一首赞偈，来阐发其中的奥义，亲笔写在画像的开头。（画像和传记都）刻成石碑保存在大内皇宫，以备拓印而企望广泛流布。</p></div>
+<div class="para-pair"><p class="p-orig">自十一年二月起，至十三年三月止。共绘三十二尊。至四月中，龙驭上宾，致无量古德，未蒙一发幽光，为可惜耳。</p><p class="p-trans">从雍正十一年二月起，到雍正十三年三月止。一共绘出三十二尊古德道像。到四月中，雍正皇帝驾崩，使得其余无数的古德，没能借此机缘显现潜隐的光辉，实在可惜啊！</p></div>
+<div class="para-pair"><p class="p-orig">至乾隆九年，高宗以装潢所拓祖像三十二轴赐武林理安寺。后修寺志，即以此传赞，载于首册，以志恩宠。然此传赞，未刻书板，故世不获见闻。</p><p class="p-trans">乾隆九年，高宗乾隆皇帝将拓印装裱好的三十二轴祖师像，赐给杭州的理安寺。后来修订理安寺志的时候，就将雍正皇帝所写的传文和赞偈，载录在寺志的开头，以表明皇帝的恩宠。然而这些传文赞偈，没有刻成书板，所以世人不能见闻。</p></div>
+<div class="para-pair"><p class="p-orig">窃念古德道风，人天景仰。如皓月当空，万川俱现，其光明皎洁，豁人心目。自可顿开心地，彻见性天。又得世宗睿笔发挥，与古德交光相映，一际无痕。</p><p class="p-trans">我认为，古德的道风，被人、天所共景仰。如同明月悬在夜空，万条河流中全都显现出月影，皎洁的月光，能让人心中豁然开朗。自然可以顿时敞开心地，彻见自性天真。再加上世宗皇帝的御笔发挥，和古德的道风交光相映，完全融合，不留痕迹。</p></div>
+<div class="para-pair"><p class="p-orig">若得一览，当即达本逢源，获衣里之明珠。破尘离著，出大千之经卷。从兹心心相印，灯灯相传。俾自他以共证真常，令凡圣以同登觉岸。庶不负世宗述传一番至意矣。</p><p class="p-trans">如果能看到这些画像和传赞，当会即刻通达本心，左右逢源，重获衣里本有的明珠。破除尘境，远离执著，显出大千世界的经卷。从此心心相印，灯灯相传。使得自己、他人，或凡或圣，共同证得真常，共同登上觉岸，想必就不辜负世宗皇帝叙述传文的良苦用心了。</p></div>
+<div class="para-pair"><p class="p-orig">因募应季中居士，出资刻板，以公同志。于每传前，列其题目，以期一目了然。并书缘起，以告来哲。</p><p class="p-trans">因此我向应季中居士募缘，请他出资刻板，将这些画像、传赞分享给大家。并在每篇传文之前列上题目，以期读者一目了然。就此写下事情的缘起，告知将来的贤哲。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【寰区】</span>天下；人世间。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【实繁有徒】</span>实在有不少这样的人。《书·仲虺之诰》：“简贤附势，实繁有徒。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【存十一于千百】</span>指亡多而存少。晋·陆机《叹逝赋》：“顾旧要于遗存，得十一于千百。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【御极】</span>登极；即位。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【纶音】</span>犹纶言。帝王的诏令。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【朔望】</span>当月亮轨道上绕行到太阳和地球之间，月亮的阴暗的一面对着地球，这时叫朔，正是农历每月的初一。当月亮绕行至地球的后面，被太阳照亮的半球对着地球，这时叫望，一般在农历每月十五或十六日。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【士庶】</span>士人和普通百姓。亦泛指人民、百姓。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【翼赞】</span>辅佐。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【皇猷】</span>帝王的谋略或教化。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【摹拓】</span>1.依样描制，复制。2.拓印碑刻金石等。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【幽光】</span>潜隐的光辉。常用以指人的品德。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【武林】</span>旧时杭州的别称，以武林山得名。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【不获】</span>不得，不能。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【一际】</span>佛家语。谓彼此间无差别。《大智度论》卷十九：“涅槃不异世间，世间不异涅槃，涅槃际世间际，一际无有异故。”</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【达本】</span>谓通晓天理、人心等本源。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【逢源】</span>形容办事顺利。语本《孟子·离娄下》：“资之深，则取之左右逢其原。”</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【大千之经卷】</span>《摩诃止观》卷一下：“一微尘中，有大千经卷；心中具一切佛法，如地种，如香丸者。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

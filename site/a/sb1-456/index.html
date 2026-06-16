@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复志梵居士书二 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。汝书过为谦虚，令人怀惭，以后不须如是。书信一事，关系甚重。若常用草体，或成习惯，久久或致误事。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-456/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复志梵居士书二 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。汝书过为谦虚，令人怀惭，以后不须如是。书信一事，关系甚重。若常用草体，或成习惯，久久或致误事。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-456/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复志梵居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。汝书过为谦虚，令人怀惭，以后不须如是。书信一事，关系甚重。若常用草体，或成习惯，久久或致误事。</p><p class="p-trans">来信尽知。你在信中过分谦虚，令人心中惭愧，以后不要这样。写信这件事，关系很重。如果经常用草书，或许会养成习惯，久了有时会导致误事。</p></div>
+<div class="para-pair"><p class="p-orig">冯梦华厚德君子，其子与孙皆死亡。前年过继之孙，又复死亡。只一一二岁之曾孙，以为其后。而一家之中，寡妇四五人，亦可谓景况凄惨矣。</p><p class="p-trans">冯梦华是一位厚德君子，他的儿子与孙子都死了。前年过继的孙子，又死了。只留下一个一二岁的曾孙，作为他的后嗣。而一家之中，有四五个寡妇，这也可以说是景况凄惨啊！</p></div>
+<div class="para-pair"><p class="p-orig">岂天特酷待厚德之人乎。缘此老一生，喜写草书。与人信札，非用尽心力，按文义推测，则不识者多。其中难免有误，以故致受此报也。</p><p class="p-trans">这哪里是上天特别残酷地对待厚德之人呢？因为这位老人一生，喜欢写草书。写给人的信，如果不用尽心力，按照文义推测，那么不认识的字就很多。其中难免有误，因此导致遭受这样的果报。</p></div>
+<div class="para-pair"><p class="p-orig">汝学医，若习惯过为潦草之书，后来或于医方亦用此套，则危险之极。光故为汝母说，令勿学此派也。实惧后来误事，非仅以不恭为检点也。</p><p class="p-trans">你学医，如果习惯写过分潦草的信，将来或许在开药方时，也用草书，那就极其危险了。我之所以对你母亲说，令你不要学这个派头。实在是害怕你以后误事，并非仅仅以不恭来检点自己。</p></div>
+<div class="para-pair"><p class="p-orig">午餐虽系冷饭，必须煮热方可。倘日常冷食，久则受病，不可不知。</p><p class="p-trans">午餐虽然是冷饭，必须煮热才能吃。倘若每天常常吃冷食，久了就会生病，不可不知。</p></div>
+<div class="para-pair"><p class="p-orig">医药为治病之本，而大医王之法药，又为治业之本。病由业生者多。由外感内伤而得者，药能治之。由业而生者，药不能治，唯法药能治之。能兼世药法药以治诸疾，则若自若他，俱获实益矣。</p><p class="p-trans">医药是治病之本，而大医王的法药，又是治业障之本。疾病多由业障产生。由外感（注1）、内伤（注2）而得的病，医药能够治疗。由业障而生的病，医药就不能治了，只有法药才能治。能够兼带世药、法药来治疗诸多疾病，那么无论自己还是他人，都能获得真实的利益。</p></div>
+<div class="para-pair"><p class="p-orig">茹素及三净，宜斟酌行之。能净素，则净素。不能，则三净亦可。但宜多食菜，少食肉耳。</p><p class="p-trans">吃素以及吃三净肉，应该斟酌而行。能吃净素的话，就吃净素。不能，那么吃三净肉也可以。但应该多吃菜，少吃肉。</p></div>
+<div class="para-pair"><p class="p-orig">世有愚人，谓己未净素，便安意多食肉，则其过非浅。宜发菩提心，誓度此所食之生。且不安意多食则可耳。</p><p class="p-trans">世间有愚痴的人，认为自己还没有吃净素，就安心多吃肉，那么这个过失可不小。应该发菩提心，誓愿度脱这些所吃的众生。而且不安心多吃，才可以。</p></div>
+<div class="para-pair"><p class="p-orig">谛法师以静权法师离观宗，不能来沪讲经。以研究弘法两社，无人主持故也。</p><p class="p-trans">谛闲法师因为静权法师离开了观宗寺，不能来上海讲经。因为研究社、弘法社两社，没有人主持的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">白骨骷髅，曾于红螺见过，其形毕肖。盖百年前亲王送梦东禅师者。若常观之，则可以破我执而成净业，幸甚。无要事不须来信，免得彼此纷烦。（三月十五日）</p><p class="p-trans">白骨骷髅，曾经在红螺山（资福寺）见过，它的形状完全相像。大概是一百年前，亲王送给梦东禅师(即净土宗十二祖彻悟大师)的。如果常常看它，就能破除我执而成就净业，非常好。没有要紧的事，不要来信，免得彼此打扰。（三月十五日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【外感】</span>中医病证名。因风、寒、暑、湿、燥、火等因素使人体感受疾病的统称。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【内伤】</span>中医病证名。由于精神因素、生活或饮食不规律等原因所引起的疾病的统称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

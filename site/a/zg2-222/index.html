@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>劝毁淫书说 · 印光法师文钞</title>
+<meta name="description" content="（维扬张瑞曾居士，重刻格言联璧，令光校订。以原文质略殊难感发，因为笔削，俾文义顺畅。居士欲广流传，劝附入文钞，遂略标缘起，列于附录科中，庶阅者不至以掠人之美见诮也。释印光记）">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-222/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="劝毁淫书说 · 印光法师文钞">
+<meta property="og:description" content="（维扬张瑞曾居士，重刻格言联璧，令光校订。以原文质略殊难感发，因为笔削，俾文义顺畅。居士欲广流传，劝附入文钞，遂略标缘起，列于附录科中，庶阅者不至以掠人之美见诮也。释印光记）">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-222/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 附录</div>
+      <h1 class="art-title">劝毁淫书说</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">（维扬张瑞曾居士，重刻格言联璧，令光校订。以原文质略殊难感发，因为笔削，俾文义顺畅。居士欲广流传，劝附入文钞，遂略标缘起，列于附录科中，庶阅者不至以掠人之美见诮也。释印光记）</p><p class="p-trans">（扬州的张瑞曾居士，重刻《格言联璧》，请我校订。因为原文质朴简略，很难感动启发他人，所以我进行了删改，使文词义理顺畅。张居士希望广泛流传，劝我附入《文钞》当中。于是在此简略标明缘起，列在附录当中，想必读者不至于嘲讽我夺了他人的美名吧。释印光记）</p></div>
+<div class="para-pair"><p class="p-orig">三代而下，世多邪说。而邪说之最足以害人心世道者，莫如淫词小说为甚。</p><p class="p-trans">夏、商、周三个圣明的朝代之后，世间的邪说就多起来。而邪说之中，最能危害世道人心的，莫过于淫词小说。</p></div>
+<div class="para-pair"><p class="p-orig">盖圣贤经传，唯恐不能觉天下之愚迷。而淫词小说，唯恐不能丧斯民之廉耻。以故小说出而淫风炽，淫词兴而贞德衰。</p><p class="p-trans">古圣先贤的经书传著，唯恐不能让天下愚痴迷惑的人觉醒。而淫词小说，唯恐不能让人民的廉耻丧失。所以小说出世而淫风炽盛，淫词兴起而贞德衰微。</p></div>
+<div class="para-pair"><p class="p-orig">然谁无羞恶之心，岂肯作禽兽之事。但以聪明子弟，灵敏妇女，一睹此书，悉为所惑。初则艳其词章，以为佳妙。继则情随文转，不能自持。</p><p class="p-trans">然而谁会没有羞耻厌恶之心，哪里肯做禽兽之事呢？只因为那些聪明子弟、灵敏妇女，一看到这些书，就都被迷惑了。最初是艳羡其中的诗词文章，觉得文词很美妙。接着情思就随淫文而转变，不能把持了。</p></div>
+<div class="para-pair"><p class="p-orig">遂致竟以希圣希贤宜家宜国之身，甘作钻穴逾墙偷香窃玉之事，而绝无顾惜者，皆此等邪书之所蛊惑也。</p><p class="p-trans">于是竟然用这成圣成贤、宜家宜国的身躯，心甘情愿地做那钻洞翻墙、偷香窃玉的苟且之事，而且毫无顾惜自爱的人，都是被这类邪书所迷惑的啊！</p></div>
+<div class="para-pair"><p class="p-orig">其毒人也，烈于蜜饯砒霜。其陷人也，惨于雪覆坑坎。令人灭理而乱伦，折福而损寿，破家而杀身，辱先而绝后。及其死也，尚使神识堕于地狱，受诸极苦。久经长劫，莫由出离。可不哀哉。</p><p class="p-trans">淫书对人的毒害，比让人吃下掺了砒霜的蜜饯还要酷烈；淫书对人的陷害，比使人落入浮雪掩盖的深坑还要惨绝。让人灭天理而乱人伦，折福报而损寿命，破坏家庭而自害身命，辱没先人而断绝子孙。死之后，神识还要堕入地狱，遭受种种极大的痛苦，经历长久劫数，不能出离。能不令人哀痛吗。</p></div>
+<div class="para-pair"><p class="p-orig">凡作此书，及贩卖此书者，其罪甚于叛逆之首，乱贼之魁。当为国法所必诛，天律所不赦也。</p><p class="p-trans">凡是写这类书，以及贩卖这类书的人，他们的罪恶比叛党乱贼的首领还要大。当被国法所诛杀，天律所不赦啊！</p></div>
+<div class="para-pair"><p class="p-orig">奉劝当权诸名公伟人，及一切有心世道仁人君子。凡见此等人，务必劝令改业。凡见此等书及板，务必尽行焚毁。有力则独任其资，无力则劝众共举。</p><p class="p-trans">奉劝诸位当权的名士伟人，以及一切有心于世道的仁人君子。凡是见到写作淫书的人，务必劝他们改行；凡是见到这类书及其底板，务必全部焚毁。有能力的就独自承担费用，没有能力的就劝大家共同完成。</p></div>
+<div class="para-pair"><p class="p-orig">又祈展转化导，俾人各景从。必期于世间永无此书，人民各敦彝伦而后已。将见佛天云护，灾障冰消。身心安泰，家门迪吉。富寿康宁，现身获箕畴之五福。勋徽爵位，后裔纳伊训之百祥矣。</p><p class="p-trans">又祈请大家辗转劝化引导，使得人人都能跟从效仿。必定期望世间永远不再有这类书，人民各各敦守伦常，方才罢休。将会见到佛菩萨、天神如同祥云一般纷纷予以护佑，灾难业障如同冰雪遇到太阳一般消融。身心安泰，家门吉祥。富贵长寿，健康安宁，现生获得箕子在《尚书·洪范》“九畴”中所说的五种幸福；建功立业，高官厚禄，子孙后代也获得《尚书·伊训》中所说的百种吉祥啊！</p></div>
+<div class="para-pair"><p class="p-orig">特将收藏小说四害，并焚毁淫书十法，详列于后。企有心世道者，采取而举行焉（四害十法，见格言联璧）。</p><p class="p-trans">特此将收藏小说的四种危害，以及焚毁淫书的十种方法，详细列在书后。企望有心挽救世道的人，采纳听取而付诸行动（四害与十法，详见《格言联璧》一书）。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【质略】</span>质朴简略。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【感发】</span>感奋激发。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【笔削】</span>1.指著述。笔，书写记录；削，删改时用刀削刮简牍。2.谓对作品删改订正。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【掠美】</span>夺人之美为己有。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【三代】</span>泛指三个朝代。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【经传】</span>儒家典籍经与传的统称。传是阐释经文的著作。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【斯民】</span>指老百姓。《孟子·万章上》：“予将以斯道觉斯民也。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【蛊惑】</span>1.迷乱；惑乱。2.迷惑；诱惑。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【蜜饯砒霜】</span>將砒霜放入蜜饯中。极甜美味的剧毒。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【坑坎】</span>洼地；坑穴。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【景从】</span>如影随形。比喻追随之紧或趋从之盛。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【彝伦】</span>1.常理；常道。2.指伦常。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【迪吉】</span>《书·大禹谟》：“惠迪吉，从逆凶。”孔传：“迪，道也。顺道吉，从逆凶。”后因以“迪吉”表示吉祥，安好。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【五福】</span>五种幸福。《书·洪范》：“五福：一曰寿，二曰富，三曰康宁，四曰攸好德，五曰考终命。”“长寿”是命不夭折而且寿数绵长；“富贵”是钱财富足而且地位尊贵；“康宁”是身体健康而且内心安宁；“好德”是心性仁善而且顺应自然；“善终”是安详离世而且饰终以礼。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【徽】</span>指美德，美善之行。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【爵位】</span>爵号，官位。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【百祥】</span>各种吉利的事物。《书·伊训》：“作善，降之百祥；作不善，降之百殃。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

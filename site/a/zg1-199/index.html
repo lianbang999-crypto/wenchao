@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>募修永嘉罗汉山景德禅寺疏 · 印光法师文钞</title>
+<meta name="description" content="佛法深妙，非凡情所能测度。若非有大智慧，大辩才，大神通之圣人。而欲化导愚俗，共归正法，舍拘墟之劣见，开性具之正知，各舍家珍，创建梵刹。俾得宏宗演教，作长夜之明灯，办道修心，为苦海之巨筏者，诚非易易也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-199/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="募修永嘉罗汉山景德禅寺疏 · 印光法师文钞">
+<meta property="og:description" content="佛法深妙，非凡情所能测度。若非有大智慧，大辩才，大神通之圣人。而欲化导愚俗，共归正法，舍拘墟之劣见，开性具之正知，各舍家珍，创建梵刹。俾得宏宗演教，作长夜之明灯，办道修心，为苦海之巨筏者，诚非易易也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-199/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">募修永嘉罗汉山景德禅寺疏</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法深妙，非凡情所能测度。若非有大智慧，大辩才，大神通之圣人。而欲化导愚俗，共归正法，舍拘墟之劣见，开性具之正知，各舍家珍，创建梵刹。俾得宏宗演教，作长夜之明灯，办道修心，为苦海之巨筏者，诚非易易也。</p><p class="p-trans">佛法精深微妙，非凡夫情见所能测度。如果不是具有大智慧、大辩才、大神通的圣人，为了化导愚痴的俗众共同归向正法，舍弃狭隘低劣的见解并开发自性具足的正知，而各自施舍家中珍宝，创建梵刹寺院，以利于弘扬和修习佛法，作轮回长夜中众生的出苦明灯，生死苦海的大船巨筏，这实在不是容易的事。</p></div>
+<div class="para-pair"><p class="p-orig">永嘉罗汉山景德寺者，唐藤萝尊者之所造也。按寺志，尊者不知何许人，于武宗会昌二年，乘木浮海而至瑞安巡简司前，邑人异之，祈师登岸。由是一方之民，崇信景仰，有如活佛。</p><p class="p-trans">温州罗汉山景德寺，是唐朝的藤萝尊者所创建的。《景德寺志》记载，藤萝尊者：不知道他是什么地方的人，在唐武宗会昌二年（842年），乘着木筏渡海到了瑞安市巡检使的官衙前，乡镇的人感到奇异，祈求法师登岸。因此，一方的人民，崇信景仰尊者，如同活佛一样。</p></div>
+<div class="para-pair"><p class="p-orig">于是随机开导，令生正信。逆知武宗将有灭法之兆，故其建立梵刹，皆悉从缓。至中宗继立，佛日重明，尊者乃普遍化导温州属邑，共建梵刹十有八所，可谓大宏法化，为众福田矣。</p><p class="p-trans">尊者从此随众生根机，加以开导，令他们生起对佛法的正信。预知唐武宗将有毁灭佛法的征兆，所以他使建立梵刹寺院的事，全都从缓。到了唐中宗继位，佛教之光重明，尊者才普遍化导温州的各个附属城镇，一共建造了十八所寺院，可以说是大宏法化，为众生的福田啊！</p></div>
+<div class="para-pair"><p class="p-orig">罗汉山景德寺，乃其一也。其山峰峦峻秀，景趣清幽，为永嘉之首镇，洵修道之灵区。其寺自唐迄今，历一千一百余年，其间宏扬法化，鼎革梵刹者，固难悉数。现以久未修葺，佛殿僧寮，倾颓殆尽，尊者圣迹，将欲湮没。</p><p class="p-trans">罗汉山的景德寺，就是其中一所。罗汉山峰峦峻秀，景致清幽，是温州的第一镇，实在是修道的好地方。这座寺院从唐朝到现在，经历了一千一百多年，这当中宏扬法化，重新翻建寺院的人，多不胜数。现在因为长久没有修理，佛殿僧寮，倾颓殆尽，尊者圣迹，将要湮没。</p></div>
+<div class="para-pair"><p class="p-orig">邑人潘鉴宗，吴碧华，叶健雄等数十人忧之，共议兴复。然以时局艰难，且缩小办，拟建佛殿五楹，前殿三楹，两廊寮舍十余楹，俾凡礼诵栖息，各得其所。安住数位精修净业之比丘居士，常住其中，专修念佛三昧，以期自他同出娑婆，同生净土，为弥陀之弟子，作海会之良朋耳。</p><p class="p-trans">乡人潘鉴宗、吴碧华、叶健雄等几十人觉得忧虑，共同商议兴复。然而因为时局艰难，暂且缩小规模来办理，打算建造佛殿五间，前殿三间，两廊寮舍十多间，使得凡是礼诵休息，各得其所。安住数位精修净业的比丘居士，常住其中，专修念佛三昧，以期自他同出娑婆，同生净土，为弥陀的弟子，作海会的良朋啊！</p></div>
+<div class="para-pair"><p class="p-orig">但以工程浩大，独力难成，恳祈十方檀越善信人等，发菩提心，行方便事，打开宝藏，培植福田，俾含空宝殿，指日成功，满月金容，经劫常住，莲社开而见闻蒙益，净宗阐而僧俗明心。</p><p class="p-trans">但是因为工程浩大，独力难以成办，恳祈十方檀越善信人等，发菩提心，为此事提供帮助，解囊献宝，为自己培植福田，使得宏伟广阔的宝殿，克期而可以建成，佛陀犹如满月的金容，经长久劫而常住世间。开办莲社使见者闻者都蒙受利益，使净土宗得以阐扬，使僧俗二众得以明心。</p></div>
+<div class="para-pair"><p class="p-orig">将见佛天云护，吉庆骈臻，富寿康宁，现身获箕畴之五福，尊徽高爵，裔世纳伊训之百祥矣。</p><p class="p-trans">必将受到佛天齐护，吉庆并至，富寿康宁，身份尊贵，自身获得箕子所说的五种福份，后世子孙获得《伊训》所说的各种吉祥啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【愚俗】</span>犹世俗。亦指愚昧庸俗的人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【拘墟】</span>比喻孤处一隅，见闻狭隘。语本《庄子·秋水》：“井鼃不可语于海者，拘于虚也。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【易易】</span>简易；容易。《礼记·乡饮酒义》：“吾观于乡，而知王道之易易也。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【藤萝尊者《释氏稽古略》】</span>藤萝尊者。温州瑞安本寂禅院僧无绎。因武宗会昌沙汰隐于东北谷。结庵禅定。阅十年藤萝缠绕。俨然不动。人号之藤萝尊者。后人立嗣至今奉祀之（出永宁编）。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【巡简】</span>官名。即巡检使。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【逆知】</span>预知，逆料。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【洵】</span>诚然；实在。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【骈臻】</span>并至，一并到来。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【徽】</span>指美德，美善之行。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【箕畴】</span>指《书·洪范》之“九畴”。相传“九畴”为箕子所述，故名。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【五福】</span>五种幸福。《书·洪范》：“五福：一曰寿，二曰富，三曰康宁，四曰攸好德，五曰考终命。”</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【百祥】</span>各种吉利的事物。《书·伊训》：“作善，降之百祥；作不善，降之百殃。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

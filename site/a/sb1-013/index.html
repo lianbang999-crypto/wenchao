@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复如岑法师书 · 印光法师文钞</title>
+<meta name="description" content="接手书后，又接思归集，不胜感叹。以座下提倡净土法门，光目力精神，二俱不给，不能相助，为憾歉耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-013/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复如岑法师书 · 印光法师文钞">
+<meta property="og:description" content="接手书后，又接思归集，不胜感叹。以座下提倡净土法门，光目力精神，二俱不给，不能相助，为憾歉耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-013/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复如岑法师书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书后，又接思归集，不胜感叹。以座下提倡净土法门，光目力精神，二俱不给，不能相助，为憾歉耳。</p><p class="p-trans">接到你的信后，又接到《思归集》，不胜感叹。由于你提倡净土法门，而我的视力精神，二方面都不足，不能相助，所以实在感到遗憾抱歉。</p></div>
+<div class="para-pair"><p class="p-orig">因将所提之例，并所商各条阅之。所商条内，在字傍加圈者为赞成。或有稍批一二句者，系祈再酌。</p><p class="p-trans">因此将你所提到的范例，以及所商议的各条都看了。所商议的各条意见，在字的旁边加圈的，为赞成。或有稍微批注一二句的，是请你再斟酌一下。</p></div>
+<div class="para-pair"><p class="p-orig">唯法藏追顶法，利人处伏有误人之祸，万万不可录。其诗虽好，亦祈取销。此人乃佛法中怨，初亲近天童密云悟祖，得小悟处，便欲为千古第一高人，自谓无师自悟，密云欲付彼法，不肯受而去。</p><p class="p-trans">唯有汉月法藏禅师所说的追顶念佛法，利人之处却伏有误人的祸端，万万不可以收录。他的诗虽然好，但也请你取消。此人是佛法中的怨家，最初亲近天童密云圆悟祖师，得到一点小小的开悟，便想要成为千古第一的高人，说自己是“无师自悟”，密云祖师想要付法给他，他却不肯接受而离去。</p></div>
+<div class="para-pair"><p class="p-orig">密云追之，追至某处追及，犹不肯受。云强之，乃以三玄三要令密云答，方强受其源流。</p><p class="p-trans">密云祖师追赶他，追到某个地方，追上了，但他还是不肯接受。密云祖师强迫他接受，于是他以三玄三要，令密云祖师作答，这才勉强接受了祖师的法脉源流。</p></div>
+<div class="para-pair"><p class="p-orig">所说之事，均是妄造。士大夫信奉之若活佛。有谈及法藏破处者，必有大祸。故其语录，及其徒弘忍，具德，崇师蔑祖之胡说巴道。通奏康熙附入明藏中。</p><p class="p-trans">他所说的这些事，都是妄造。士大夫信奉他，如同活佛一样。有谈到汉月法藏破绽处的人，必定有大祸临头。所以他的语录，以及他的徒弟弘忍、具德，崇拜师父汉月，污蔑祖师密云的那些胡说巴道。通通奏请康熙皇帝附入明藏中。</p></div>
+<div class="para-pair"><p class="p-orig">至雍正十一年选各语录，备悉讹妄，即令毁板，并禁私藏流通。录其法藏弘忍具德所说，悖道悖伦，妄造悖理之各语言八十余段，一一辟之，名拣魔辨异录，凡四卷二百多页。</p><p class="p-trans">到了雍正十一年，选取各家语录入藏，雍正皇帝完全知道汉月一派的错讹狂妄，立即下令毁销刻板，并禁止私藏流通。另外还抄录法藏、弘忍、具德所说，悖逆大道伦常，妄造悖理的各种言论八十多段，一一加以辟驳，名为《拣魔辨异录》，一共四卷，二百多页。</p></div>
+<div class="para-pair"><p class="p-orig">其文，凡读书人阅之，都增长莫大学识。而于参禅之人更为有益（今之禅者多不知古人言句，皆作拆字会，则禅气也未闻著）。至十三年始脱稿。上谕令入藏流通。</p><p class="p-trans">这部书，凡是读书人看了，都能增长莫大的学识。而且对于参禅的人更有利益（现今参禅的人，大多不知道古人的言句机锋，全都当作拆字解义来领会，这样做恐怕连禅的气味，也没有闻到）。到雍正十三年，这部书才脱稿。雍正皇帝下令录入藏经流通。</p></div>
+<div class="para-pair"><p class="p-orig">未几宾天，乾隆继位，未能亲身料理，令誊清刻板。当时法藏之外护甚众，僧俗不敢谈及，故未入藏。但将上谕列之于首以为序。而官家之事，不派于己者，不敢干涉。</p><p class="p-trans">不久雍正皇帝归天，乾隆皇帝继位，并未能亲自料理这件事，只是令人誊写清楚刻板。当时法藏的外护很多，僧俗都不敢谈论，所以《拣魔辨异录》没有录入藏经。只是将雍正皇帝的诏书列在开头作为序文。而官家的事，如果不委派教内的自己人，旁人不敢干涉。</p></div>
+<div class="para-pair"><p class="p-orig">致钞写之人不甚明白，或有钩挑不清而文理反，或有省写不察而写成讹，如草写谓字作为，竟有一百多谓字，皆刻作为字。</p><p class="p-trans">致使钞写的人不是很明白，或者有文句前后过渡不当而导致文理相反，或者有省略写的字不能觉察而抄写成错误，如草写的“谓”字当作“为”字，竟然有一百多个“谓”字，都刻成“为”字。</p></div>
+<div class="para-pair"><p class="p-orig">世宗所刻经书，均校正的确，唯此书之讹，不胜屈指。板已刻好，印若干部，赐王大臣及高僧。但僧以法藏之外护盛，恐贻祸，均不敢流通。</p><p class="p-trans">清世宗雍正皇帝所刻的经书，都校正的准确，唯有这部书的错讹，数不胜数。板已经刻好，印了若干部，赐给王公贵臣以及高僧。但僧人因为法藏的外护势力大，唯恐招致灾祸，所以都不敢流通。</p></div>
+<div class="para-pair"><p class="p-orig">致此后博学多闻之僧俗，均不知其名。光绪三十年谛公请藏经，令光随去料理，经已印完，尚须几日方行，因至琉璃厂各书店看看，一店中有二部通请来，以一部送谛公，冀彼流通。</p><p class="p-trans">致使此后博学多闻的僧俗，都不知道这部书的名字。光绪三十年（1904年），谛闲老法师请藏经，令我跟随前去料理，藏经已经印完，还须要几天才能离开，因此到琉璃厂各个书店看看，一个书店中，有二部《拣魔辨异录》，我通通请来，一部送给谛闲老法师，希望他流通。</p></div>
+<div class="para-pair"><p class="p-orig">一部自存，三十一年往南京杨公馆，知东洋弘教书院印藏经，祈仁山先生将光之一部寄东洋。</p><p class="p-trans">一部自己保存，光绪三十一年，前往南京杨公馆，知道东洋弘教书院印藏经，请杨仁山先生将我的这一部寄到日本。</p></div>
+<div class="para-pair"><p class="p-orig">民国三年狄楚青来普陀，光劝伊流通此书。云当向谛公处请其书。伊云我有。问从何而得，云在北京烂货摊买的。</p><p class="p-trans">民国三年，狄楚青居士来到普陀山，我劝他流通这部书。我说应当向谛闲老法师那里请这部书。他说：“我有这部书。”我问他从何处得到的，他说是在北京烂货摊上买来的。</p></div>
+<div class="para-pair"><p class="p-orig">伊回申，即付印刷所，照式石印一千部。以八部送光，留二部，余送有缘。遂息心按文义校正。</p><p class="p-trans">他回到上海，就将书交付给印刷所，照原来样式石印一千部。送给我八部，我留下二部，其余送给有缘人。于是息心按照文义加以校正。</p></div>
+<div class="para-pair"><p class="p-orig">民七年刻板于扬州藏经院，印三百部送人。若邮路通时，此书当多请几部，以送具正见之缁素。</p><p class="p-trans">民国七年，在扬州藏经院刻板，印了三百部送人。如果邮路通畅时，这部书应当多请几部，来赠送给具有正知正见的僧俗。</p></div>
+<div class="para-pair"><p class="p-orig">阅此可知法藏之为人，与其法徒等之所说，多分是凭空妄造。光以座下不知其人之真伪，一经列入思归集，后世又将大宏彼法，则于禅于净，均有大损。</p><p class="p-trans">读了《拣魔辨异录》这部书，就可以知道汉月法藏禅师的为人，还有他的法徒等人所说的东西，大多都是凭空妄造。我因为你不知道这个人的真伪，一旦将他的文章列入《思归集》，后世又将大大宏扬他的法，那么就对禅宗、对净土宗，均有很大的损害。</p></div>
+<div class="para-pair"><p class="p-orig">今亦不说彼之行为，但不一提及，若阅拣魔辨异录，则人各悉知矣。邮票已忘其数，仍为寄还，以减我过。</p><p class="p-trans">现今也不说他的行为，但也不要提到他，如果阅读《拣魔辨异录》，就人人都知道了。邮票已经忘记了数目，仍就寄还给你，以减少我的过失。</p></div>
+<div class="para-pair"><p class="p-orig">思归集稿本中，所录俗体甚多，俱不能标。唯段字相传多讹作叚，此须改正，叚即假字，凡俗体破体帖体古体，于经书中用之，殊觉不恭。令有学识之士大夫轻慢所著所印之人，非小可事也。</p><p class="p-trans">《思归集》的稿本中，所录的俗体字很多，都不能一一标明。唯有“段”字相传多误作“叚”，这必须要改正，“叚”就是“假”字，凡是俗体、破体、帖体、古体字，在经书中使用，觉得非常不恭敬。令有学识的士大夫轻慢写书、印书的人，这可不是件小事情。</p></div>
+<div class="para-pair"><p class="p-orig">五十三参之名，决不可用。以两土世尊，与末世凡夫同列，大失尊卑故也。</p><p class="p-trans">五十三参的名称，绝对不可以用。这是由于将两土的世尊，与末世凡夫同列，大大有失尊卑的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">阿弥陀佛名下所录之愿，宜标第几愿云。每愿如是，祈注意。</p><p class="p-trans">阿弥陀佛名下所录的大愿，应该标上“第几愿云”。每愿都是如此，请注意。</p></div>
+<div class="para-pair"><p class="p-orig">四祖五会念法，从未闻见，疑是后人伪造。张观本谓此法能兴净宗，光殊不以为然。祈再详酌，以定去取。</p><p class="p-trans">四祖法照大师的五会念法，从来没有听过见过，怀疑是后人伪造。张观本认为五会念法能够兴盛净土宗，我非常不以为然。请再三详细斟酌，以定取舍。</p></div>
+<div class="para-pair"><p class="p-orig">序文本不能作，以无精神，何能发挥净土妙义。继恐座下见怪，但书光之所信，企免责斥耳。故与信中所说各异。</p><p class="p-trans">序文本来不能写，因为没有精力，如何能够发挥净土妙义呢？接着又恐怕你责备，只是写写我所相信的，企望免除你的责怪罢了。所以序文与信中所说有所不同。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【法藏】</span>（1573-1635）明代临济宗僧。梁溪（位于江苏无锡）人，俗姓苏。号汉月，字于密。十五岁出家，长好禅旨，读高峰语录有疑，潜心参究，历十余年。一日，闻折竹声大悟。天启四年（1624），至金粟寺参诣密云圆悟，蒙其印可付法。开法于苏州虞山中之三峰清凉禅寺（三峰禅院），世称三峰藏公。其后，历住北禅大慈寺、杭州安稳寺，苏州圣恩寺等名刹。师聪敏绝伦，负操任气，学贯佛儒。潜心禅修，沉思有年，见地遂异，倡为新说。著五宗源，指责当世曹洞宗抹杀五家宗旨，仅单传释迦拈华一事，而强调自威音王以来，无一言一法非五家宗旨之符印。一时诸方惊疑，论诤遂起。圆悟曾寄书告诫之，然不能夺其意。后于崇祯八年七月示寂，世寿六十二。清代雍正年间，帝以政令指其教为魔说，毁其书，黜其徒，三峰一脉遂绝。其所著广录三十卷、弘戒法仪三卷、语录三十卷等，迄今仍流传于丛林间。
+追顶念佛法：念佛要一心不乱，只以一句佛名，极力追顶，猛之又猛，情识一断，则过去事思量不来，未来事卜度不着，现在境心识不揽，三心断绝，谓之前后际断。此因追极念极，一闻一见，触境遇缘，逗断心路，直到虚空粉碎，大地平沉，物我同消，一法不立，目前如大圆镜中所现森罗万象，了无一点可指拟分别，荡然身心，如云去来，此个光景，名为一心不乱，到此便无心可乱故也。------《三峰大师追顶念佛法节录》，也就是将禅门参话头的方法用来念佛。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【上谕】</span>即诏书，是皇帝的命令和指示。也指清代皇帝用来发布命令的一种官文书。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【俗体字】</span>指通俗流行而字形不规范的汉字，别于正体字而言。（原为流行于民间的、笔划结构较简单的文字。这些文字有的已被国家语言文字工作委员会正式采用为通行的简体字，但尚有一些虽未经国家审定公布而仍流行民间的则称为俗字。至于未经国家正式审定公布的俗字则坚持不用，以免造成文字上的混乱。）</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【破体字】</span>早在南北朝时，常用的楷体汉字中已有部分在形体简化后流行于民间，如“尔（爾）”，“盖（蓋）”，“刘（劉）”等，时谓“破体字”，意为不合正体（符合“六书”规定之书写体）的俗字。然而直到清朝时，破体字的使用范围仍然相当有限。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【帖体字】</span>碑帖中的字，其中一部分是前人随意别写，改变结构或减省笔画而不影响认读。（指公认为书法范本中的字体，故也称“法体”。旧志中多杂以用楷、隶、行、草等字体刊印的礼赞、碑铭、序跋、诗文等，文字也因之有采用帖体者，如（为幼，不为幻）为了规范文字，避免混淆和讹误起见，点校旧志时，要严谨审慎地予以分辨处理。）</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【古体字】</span>指由远古、中古的文字（金文、甲骨文等）衍变而成，但又区别于近古以来通行的文字，如“灋”(法)、“崈”(崇)、“僊”(仙)等。点校时，则按规范的正字处理。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

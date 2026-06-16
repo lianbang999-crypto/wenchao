@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普陀法雨寺化身塔记 · 印光法师文钞</title>
+<meta name="description" content="甚矣，众生之我执坚固而难破也。只此色身，本地，水，火，风四大所成，而妄执为我。如油入面，永不能出。反将不居阴界，不属凡圣之真我，全体迷背。如镜蒙尘，莫能照鉴。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-127/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普陀法雨寺化身塔记 · 印光法师文钞">
+<meta property="og:description" content="甚矣，众生之我执坚固而难破也。只此色身，本地，水，火，风四大所成，而妄执为我。如油入面，永不能出。反将不居阴界，不属凡圣之真我，全体迷背。如镜蒙尘，莫能照鉴。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-127/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">普陀法雨寺化身塔记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">甚矣，众生之我执坚固而难破也。只此色身，本地，水，火，风四大所成，而妄执为我。如油入面，永不能出。反将不居阴界，不属凡圣之真我，全体迷背。如镜蒙尘，莫能照鉴。</p><p class="p-trans">太厉害了啊！众生的我执坚固难破。这个色身，原本是地水火风四大假合而成，却被错妄地执著为我，如同将油倒入面粉，永远不能滤出。反而把不居五阴界、无凡圣分别的真我，全体迷惑背离，如同明镜蒙上尘垢，不能鉴照外物。</p></div>
+<div class="para-pair"><p class="p-orig">故华严经云，一切众生，皆具如来智慧。但因妄想执著，而不证得。若离妄想，则一切智，无师智，则得现前。是知众生心性，与佛同俦。特因执著，莫能受用。可不哀哉。</p><p class="p-trans">所以《华严经》中说：“一切众生，皆具如来智慧。但因妄想执著，而不证得。若离妄想，则一切智，无师智，则得现前。”从而知道，众生的心性，与佛相同。只因为执著，所以不能得到受用。能不悲哀吗。</p></div>
+<div class="para-pair"><p class="p-orig">以故如来种种说法，令其了知从前妄认四大为自身相，六尘缘影为自心相之非。则常乐我净之真身，寂照圆融之真心，自可全体显现矣。</p><p class="p-trans">所以如来宣说种种法要，令众生了知，自己从前错误地将四大认作身相，将六尘缘影认作心相。（了知以后，）那么常乐我净的真身，寂照圆融的真心，自然可以全体显现了。</p></div>
+<div class="para-pair"><p class="p-orig">又以身相耸然，根机钝者，亦难了悟其妄，不生执著。迨其舍报之后，一经火化，顿成乌有。则存者亡者，皆可悉悟其四大假合之身为非身矣。</p><p class="p-trans">又因为这色身相耸然分明，根机钝的人，也很难完全觉悟到它的虚妄，而不生起执著。然而等他们舍报之后，尸身一经火化，顿时成为乌有。那么无论亡者生者，都可以完全觉悟这四大假合的色身，不是真身了。</p></div>
+<div class="para-pair"><p class="p-orig">同生诸居士，宿有灵根，恪修净行。利人心切，护法情殷。以向来之化身窑，不甚适宜。拟欲改良，殚精研究。仿外国之法而变通之，与法雨普济各造一座。其形类塔，名化身塔。所费计千余圆，意美法良，功德无量。</p><p class="p-trans">同生诸居士，宿世具有慧根，精进修持净行，利人之心迫切，护法之情殷重。因为之前寺里的化身窑，建造得不太合适。居士打算进行改良，竭尽心力加以研究。仿照外国的方法，加以变通，为法雨寺、普济寺各建了一座化身窑。窑的外形像塔，因此命名为化身塔。费用共计一千多圆，用意美善，方法优良，功德无量。</p></div>
+<div class="para-pair"><p class="p-orig">铭曰，众生迷背，非我计我。如蚕作茧，如蛾赴火。本有真我，反不顾问。四大幻质，唯此是认。如来悲愍，种种开导。兼令火化，俾全智照。既知其妄，即识其真。得无碍智，见本有身。乘此智身，回向净土。获无量寿，居诸补处。不违安养，遍入十方。普令迷徒，归本家乡。由是众生，咸复本性。福慧圆足，续佛慧命。愿此功德，普及一切。法界有情，俱登正觉。</p><p class="p-trans">铭文如下：众生因为迷背，非我却认作我。如同蚕作丝茧，又如飞蛾扑火。原本固有真我，反倒不顾不问。四大幻形妄质，唯独认作是真。如来慈悲哀愍，种种劝化开导。教令死后火化，令其完全觉照。既知此身是妄，当下识得真性。证得无碍智慧，亲见本有真身。乘此智慧之身，回向求生净土。获得无量寿命，位居一生补处。不违安养国土，遍入十方刹土。普令迷惑众生，回归本有家乡。由此一切众生，同皆复本心性。福慧圆满具足，承续如来慧命。愿此殊胜功德，普利一切含识。法界一切众生，共皆成就佛道。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

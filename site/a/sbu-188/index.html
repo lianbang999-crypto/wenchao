@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>印光老法师法语（南通崔澍萍录） · 印光法师文钞</title>
+<meta name="description" content="余于民国二十一年壬申十二月初六日皈依印老法师。蒙师开示甚多，谨录如左。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-188/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="印光老法师法语（南通崔澍萍录） · 印光法师文钞">
+<meta property="og:description" content="余于民国二十一年壬申十二月初六日皈依印老法师。蒙师开示甚多，谨录如左。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-188/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 附录</div>
+      <h1 class="art-title">印光老法师法语（南通崔澍萍录）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">余于民国二十一年壬申十二月初六日皈依印老法师。蒙师开示甚多，谨录如左。</p><p class="p-trans">我在民国二十一年（1932年）壬申年十二月初六这一天，皈依了印光老法师。承蒙法师给予我很多开示，现在恭谨地记录如下。</p></div>
+<div class="para-pair"><p class="p-orig">昨接汝信，知汝来求皈依。汝妻既有如斯感应，当教其念佛念观音，父母亦然。</p><p class="p-trans">昨天接到你的来信，知道你来请求皈依。既然你的妻子有如此的感应，应当教导她念诵佛号、念观世音菩萨圣号，对你的父母也应如此。</p></div>
+<div class="para-pair"><p class="p-orig">律师不可为，今世存良心之好律师甚少。昔有讼师，专代人撰状，百出其技，颠倒黑白，反曲为直，无所不用其极。晚年诞一子，颇聪颖，以为获此子嗣，可娱晚年，乃革面洗心，不复为非。旋子目盲，乃大恚，谓自新而子目反盲，诚不若代人撰状之犹获佳子也。</p><p class="p-trans">律师这个职业不能做，当今世上存有良心的好律师太少了。从前有个讼师，专门替人撰写诉状，使出各种手段，颠倒黑白，把歪曲的说成正确的，无所不用其极。到了晚年，他生了一个儿子，颇为聪明伶俐，他以为有了这个子嗣，就可以安享晚年了，于是便洗心革面，不再做那些坏事了。可不久之后，他儿子的眼睛瞎了，他非常愤恨，说自己已经改过自新了，可儿子的眼睛反而瞎了，实在不如替人写诉状还能有个好儿子呢。</p></div>
+<div class="para-pair"><p class="p-orig">遂再执刀笔，一仍旧贯，而子目竟复明。后子及第为大官，固煊赫一时，荣耀自得也。讵未几因犯赃案，全家被戮。盖此子乃向其讨命者也。</p><p class="p-trans">于是他又重新操起旧业，一切照旧，结果他儿子的眼睛竟然又复明了。后来他儿子科举及第做了大官，一时间显赫无比，他自己也荣耀自得。哪知道没过多久，因为犯了贪污的案子，全家都被诛杀了。大概这个儿子就是来向他讨命的。</p></div>
+<div class="para-pair"><p class="p-orig">苟当其子目盲之时，若矢志不移，勇猛忏悔，子当将死以除杀机也（萍按，心能造业，心能转业，彼既改过，嗣后无论子盲与否，一心不二，所谓生死即涅槃，烦恼即菩提，故能除杀机也）。奈其愚痴昏昧，积恶满盈，焉得不招杀戮之祸耶。</p><p class="p-trans">倘若在他儿子眼睛瞎了的时候，他能坚定不移，勇猛忏悔，他儿子应当是会死去从而消除杀机的（崔澍萍按：人心能够造业，也能够转业，既然他已经改过，之后无论儿子眼睛瞎不瞎，只要一心不二，所谓生死就是涅槃，烦恼就是菩提，所以是能够消除杀机的）。无奈他愚痴昏昧，做尽恶事，怎么能不招来杀身之祸呢？</p></div>
+<div class="para-pair"><p class="p-orig">又，沪上某律师，尝办一案，得数万金，居室华丽，陈设精致。迨一二八沪变发生，家中遭洗劫，损失殆尽。斯乃因果毫厘不爽之征（萍按，大学所谓悖入悖出，其斯之谓欤）。世人苟能识得此义，殆亦不啻佛菩萨之现身说法，而坚我辈念佛念观音之志愿也欤。</p><p class="p-trans">另外，上海有个律师，曾经办理一个案子，得到了几万块钱，他家的房子华丽，陈设也很精致。等到“一・二八”淞沪事变发生，他家遭到洗劫，财物损失殆尽。这就是因果丝毫不差的例证啊（崔澍萍按：《大学》里所说的用不正当的手段得来的财物，也会被别人用不正当的手段拿去，说的就是这个意思吧）。世间的人如果能够明白这个道理，大概也就如同佛菩萨现身说法一样，从而坚定我们念诵佛号、念观世音菩萨圣号的志向了吧。</p></div>
+<div class="para-pair"><p class="p-orig">际兹末法时代，人心陷溺，又值刀兵水火饥谨盗劫之世，不久将同归于尽。但是遭劫难同，而念佛人与不念佛人之去处，则有天渊之悬殊焉（萍按，造恶业者堕三恶趣，修善业者生三善道，而念佛求生之人，则超生极乐，位登不退，故云去处则有天渊之悬殊也）。吾人焉得不念佛也。</p><p class="p-trans">处在这末法时代，人心堕落沉溺，又正值有战乱、水火之灾、饥荒、盗贼劫掠的世道，不久大家都要同归于尽了。但是遭受劫难虽然相同，可念诵佛号的人和不念佛号的人死后的去处，却有着天渊般悬殊（崔澍萍按：造作恶业的人会堕入三恶道，修善业的人会投生到三善道，而念诵佛号求生西方极乐世界的人，则能超生极乐世界，证得不退转的果位，所以说去处有天渊般悬殊）。我们怎么能不念佛呢？</p></div>
+<div class="para-pair"><p class="p-orig">问，念佛有时昏沉，杂念涌现，云何对治。师云，吾人在凡夫地，杂念本多，但先求其减少耳。其法，以口称佛号，耳清听之即此佛声，替代杂念。久之，则杂念自少矣。</p><p class="p-trans">问：有时候念诵佛号会昏沉，各种杂念纷纷涌现，该怎么对治呢？法师说：我们处在凡夫的境地，杂念本来就很多，只能先求它逐渐减少罢了。方法就是，用口称念佛号，用耳清楚地聆听这个佛号声，就用这个佛声来替代杂念。时间长了，杂念自然就会减少了。</p></div>
+<div class="para-pair"><p class="p-orig">昏沉对治法，或提起精神，或绕佛念。绕佛之法，由东而南而西而北，不可背此，或直线往返也。近来各地念佛者，每以人多而前后左右参差旋转，实不如法也。（原载民国佛教期刊文献集成第130册第342页，喜报第二十八期，原标题为印光老法师法语。）</p><p class="p-trans">对治昏沉的方法，要么提起精神，要么绕着佛像念诵。绕佛的方法是，从东边开始，然后到南边、西边、北边，不能违背这个顺序，或者也可以直线往返。近来各地念诵佛号的人，常常因为人多，就前后左右参差不齐地旋转着绕佛，实际上是不如法的。（原文刊载于《民国佛教期刊文献集成》第130册第342页，《喜报》第二十八期，原标题为《印光老法师法语》。）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

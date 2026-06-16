@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复崔益荣居士书六 · 印光法师文钞</title>
+<meta name="description" content="接手书，知健庵居士归西，不禁为居士幸为如皋人叹也（已失向导）。观其平生信心，临终正念，虽未闻见佛，而能随家人默念，亦可往生。以佛昔有誓，若有众生，至心信乐，欲生我国，乃至十念，若不生者，不取正觉。又十方众生，发菩提心，修诸功德，至心发愿，欲生我国，临命终时，假令不与大众围绕，现其人前者，不取正觉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-206/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复崔益荣居士书六 · 印光法师文钞">
+<meta property="og:description" content="接手书，知健庵居士归西，不禁为居士幸为如皋人叹也（已失向导）。观其平生信心，临终正念，虽未闻见佛，而能随家人默念，亦可往生。以佛昔有誓，若有众生，至心信乐，欲生我国，乃至十念，若不生者，不取正觉。又十方众生，发菩提心，修诸功德，至心发愿，欲生我国，临命终时，假令不与大众围绕，现其人前者，不取正觉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-206/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复崔益荣居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知健庵居士归西，不禁为居士幸为如皋人叹也（已失向导）。观其平生信心，临终正念，虽未闻见佛，而能随家人默念，亦可往生。以佛昔有誓，若有众生，至心信乐，欲生我国，乃至十念，若不生者，不取正觉。又十方众生，发菩提心，修诸功德，至心发愿，欲生我国，临命终时，假令不与大众围绕，现其人前者，不取正觉。</p><p class="p-trans">接到信，知道沙健庵（注1）居士归西了，不禁为居士庆幸，为如皋人悲叹（已失去向导）。看他平生的信心，临终正念，虽然没有听说见到佛，然而能够随家人默念，也可以往生。因为阿弥陀佛过去有誓愿，“若有众生，至心信乐，欲生我国，乃至十念，若不生者，不取正觉。”又有：“十方众生，发菩提心，修诸功德，至心发愿，欲生我国，临命终时，假令不与大众围绕，现其人前者，不取正觉。”</p></div>
+<div class="para-pair"><p class="p-orig">健庵居士平素修持，临终正念，足可往生，况又有异香顶温之证乎。此系仗佛力往生，往生即了生脱死矣，则可决定，断其了无含糊。若修余法门，勿道如此景象，不能了生脱死，即有大智慧，有大神通，要去就去，要来就来者，不能了生死者，尚有一半多，是以必须要专志修持净土法门也。</p><p class="p-trans">沙健庵居士平时修持，临终正念，足可以往生，何况又有异香、顶温的证明呢？这是仗佛力往生，一往生就了生脱死了，则可决定，断定他已往生了，丝毫也不含糊。如果修其余法门，不要说如此景象，不能了生脱死，即使是有大智慧，有大神通，要去就去，要来就来的人，不能了生死的，还有一半多，所以必须要专志修持净土法门。</p></div>
+<div class="para-pair"><p class="p-orig">所寄事实拟另述一篇，附于新排文钞之后。当与其子说，宜及早将讣启寄来。有可采者，略为采之。又彼以未见光为憾，今则将其事迹附文钞中，亦可释此遗憾。又光于朝暮课诵回向时，称彼名为之回向三七，以尽法门神交之谊。</p><p class="p-trans">所寄的事实，打算另外叙述一篇（注2），附在新排的《文钞》之后。应当对他的儿子说，早点将他父亲的讣文寄来。有可以采用的，略微采用一些。另外，他因为没有见到我，而感到遗憾，现今将他的事迹，附入到《文钞》中，也可以消除这个遗憾。再有，我在朝暮课诵回向的时候，称他的名，为他回向三个七，以尽法门神交之谊。</p></div>
+<div class="para-pair"><p class="p-orig">新排文钞，三四月即可出书，令其子任印若干部，以施送于有信心通文理者。一可释其父之遗憾，二可以传其父之事迹。较彼特印单张送人，看过则置之者超胜万倍也。若肯发心，速为通知，以便书名于后。</p><p class="p-trans">新排的《文钞》，三四月份就可出书，令他的儿子任资印若干部，来施送给有信心、通文理的人。一则可以消除他父亲的遗憾，二则可以传布他父亲的事迹。比起那些特地印单张送人，看过之后弃置一旁的情形，超胜万倍。如果肯发心，快点通知我，以便将功德芳名写在后面。</p></div>
+<div class="para-pair"><p class="p-orig">此次比前多一百三十页，共四百三十页，以现候寿康宝鉴排完（即同付印），便止不附，故尚不能定准页数。此次当印一万部，以后则令书局自印而自卖耳。若向书局请，比此则贵，大约一部须八角上下。观音颂二百十页，尚须三角四分，此系前年八月所定之价。近来战事，纸贵许多矣。</p><p class="p-trans">这次比上次多了一百三十页，一共四百三十页，因为现在等候《寿康宝鉴》排完（即同时交付排印），就停止不再附入，所以还不能确定准确的页数。这次当会印一万部，以后就令书局自印自卖了。如果向书局请书，比起这次自己印要贵，大约一部须要八角上下。《观音颂》二百一十页，还须要三角四分，这是前年八月所定的价格。近来因为战事，纸张又贵了许多。</p></div>
+<div class="para-pair"><p class="p-orig">又健庵居士，深通儒礼，前年陈正有寄来所作论丧中饮酒食肉之弊甚痛快，知居士素以儒道自任。况近又深信佛法，专志修持，其子当仰承其父之志与道，概不徇俗以用酒肉，满其父之志愿。若徇俗而行，不但与佛法不相应，且与其父相违抗。祈与其子说，否则或恐被无知者摇惑，则反为不美也。</p><p class="p-trans">另外，沙健庵居士，深通儒礼，前年陈正有寄来沙居士所作的《论丧中饮酒食肉之弊》，很是痛快，知道居士一向以儒道当作自己的职责。何况最近又深信佛法，专志修持，他的儿子应当仰承他父亲的志向与法道，一概不屈从俗习，丧期用酒肉，满他父亲的志愿。如果遵循俗习而行，不但与佛法不相应，而且与他父亲相违抗。请对他儿子说，否则，或恐被无知的人动摇迷惑，就反为不美了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【沙元炳】</span>(1864年-1927年)，字健庵。江苏如皋人，清进士、翰林。追随张謇创办实业，1913年被选为江苏省议长，不久袁世凯篡权，沙以病辞职，回乡兴办实业，创办了如皋公立医院，主持测绘如皋县境图等。1902年，他创办了中国第一所公立师范学校“如皋师范学堂”。晚年笃信净土，收集慧远大师文章同门生项智源居士一起编为《慧远大师文钞》。丙寅腊月二十六（1927年1月29日）在助念声中正念往生。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【所寄事实拟另述一篇】</span>见《沙健庵居士往生记》-《增广文钞》卷四</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

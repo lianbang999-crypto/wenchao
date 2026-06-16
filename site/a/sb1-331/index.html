@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复（俞慧郁，陈慧昶）二居士书（附来书） · 印光法师文钞</title>
+<meta name="description" content="弟子业障深重，赋质愚蒙，幸闻净土法门，而得皈依座下。惟有恪遵吾师老实念佛之训，以期速了生死，不负婆心。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-331/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复（俞慧郁，陈慧昶）二居士书（附来书） · 印光法师文钞">
+<meta property="og:description" content="弟子业障深重，赋质愚蒙，幸闻净土法门，而得皈依座下。惟有恪遵吾师老实念佛之训，以期速了生死，不负婆心。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-331/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复（俞慧郁，陈慧昶）二居士书（附来书）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">弟子业障深重，赋质愚蒙，幸闻净土法门，而得皈依座下。惟有恪遵吾师老实念佛之训，以期速了生死，不负婆心。</p><p class="p-trans">弟子业障深重，天赋资质愚昧，有幸听闻净土法门，而得以皈依在您的座下。惟有恭谨地遵守师父老实念佛的训导，以期快速了脱生死，不负师父的一片苦心。</p></div>
+<div class="para-pair"><p class="p-orig">夫既为佛子，应发自度度人之心，今弟子等未能自度，焉云度人。然遇亲友方便劝信，亦分内事耳。乃每有二种人所见所说，其自误误人，实非浅鲜。</p><p class="p-trans">既然身为佛子，就应当发起自度度人的心，现今弟子等未能自度，哪里敢说度人。然而遇到亲朋好友，方便地劝导他们生起信心，也是我们分内的事。于是，常常有二种人的所见所说，其自误误人，实在不浅。</p></div>
+<div class="para-pair"><p class="p-orig">一曰佛无欲，阿弥陀经所说种种金宝，似仍为欲，不若金刚经一切皆空，为高超玄妙。因兹藐视净土法门，而不生信。此盖不知金刚弥陀二经之义，而随己意乱道者。</p><p class="p-trans">一种人说：佛是没有欲望的，《阿弥陀经》所说的种种金银七宝，似乎仍然是有欲望，不如《金刚经》所说的“一切皆空”，更为高超玄妙。因此轻视净土法门，而不能生起信心。这大概是不知道《金刚经》、《阿弥陀佛》二部经典的意义，而随自己的心意乱说的人。</p></div>
+<div class="para-pair"><p class="p-orig">一曰佛既令人看破一切，何自己反生此种种贪欲（指阿弥陀经所谓金宝）。吾人又何苦舍目前之实有，而希冀身后之渺茫乎。此则执著邪见，任意谤佛谤法者。然此二者，虽品有高下，其为邪见则一也。其自误误人则一也。</p><p class="p-trans">一种人说：佛既然令人看破一切，为什么自己反而生出这种种的贪欲（指《阿弥陀经》中所说的金宝）。我们又何苦舍弃眼前实有的世界，而希望进入身后虚无飘渺的极乐世界呢？这是执著自己的邪见，任意谤佛谤法的人。然而这二种人，虽然品格有高下，但他们的邪见都是一样的。他们所说的话自误误人，也是一样的。</p></div>
+<div class="para-pair"><p class="p-orig">弟子等力告以西方种种境界，皆系阿弥陀佛功德，现化之庄严实相，自在享用福德之报，与五浊恶世业力所成就者不同。况娑婆所有，悉皆苦空无常，故应弃之而求得实际也。</p><p class="p-trans">弟子等虽极力告诉他们西方净土的种种境界，都是阿弥陀佛功德，现化的庄严实相，自在享用的福德果报，与五浊恶世业力所成就的器界是不同的。何况娑婆世界所有的一切，全都是苦空无常，所以应该舍弃娑婆的一切，而求得极乐净土的实际啊！</p></div>
+<div class="para-pair"><p class="p-orig">然愚夫之言，纵不乖正理，终不克启其正信。伏念吾师所有言论，如杲日丽天，无暗不照，敢乞聊书数语，以破此种邪见。</p><p class="p-trans">然而弟子愚夫般所说的话语，纵然不乖违正理，终究不能启发他们的正信。想到师父您所有的言论，如同耀眼的太阳悬挂在天空，没有幽暗不能照临，所以大胆请您暂且写几句话，来破除这二种邪见。</p></div>
+<div class="para-pair"><p class="p-orig">来书所说二种邪见，乃以凡夫知见，测度如来境界。孔子所谓好行小惠。孟子所谓自暴自弃。此种人本无有可与谈之资格价值。然佛慈广大，不弃一物，不妨设一方便，以醒彼迷梦。</p><p class="p-trans">来信所说的二种邪见，是以凡夫知见，测度如来的境界。这就是孔子所说的“爱耍小聪明”，孟子所说的“自暴自弃”。这种人原本没有可以与他们谈论的资格和价值。然而佛的慈悲广大，不舍弃一物，不妨施设一个方便，来唤醒他们的迷梦。</p></div>
+<div class="para-pair"><p class="p-orig">佛由其了无贪欲，故感此众宝庄严，诸凡化现，不须人力经营之殊胜境界。岂可与娑婆世界之凡夫境界相比乎。</p><p class="p-trans">佛由于没有一丝贪欲，所以感得这个众宝庄严，一切事物均为化现，不须要人力经营的殊胜境界。怎能与娑婆世界的凡夫境界相比呢？</p></div>
+<div class="para-pair"><p class="p-orig">譬如慈善有德之人，心地行为，悉皆正大光明，故其相貌，亦现慈善光华之相。彼固无心求相貌容颜之好，而自然会好。</p><p class="p-trans">譬如慈善、有道德的人，他的心地行为，全都正大光明，所以他的相貌，也现出慈善光华之相。他本来无心求得相貌容颜的美好，然而却自然会美好。</p></div>
+<div class="para-pair"><p class="p-orig">造业之人，其心地龌龊污秽凶恶，其面亦随之黯晦凶恶。彼固唯欲面色之好，令人以己为正大光明之善人。而心地不善，纵求亦了不可得。</p><p class="p-trans">造作恶业的人，他的心地龌龊、污秽、凶恶，他的面色也会随之黯晦、凶恶。他本来是想要面色好看，让他人认为自己是正大光明的善人。然而因为他的心地不善，即使去求，也无法得到。</p></div>
+<div class="para-pair"><p class="p-orig">此约凡夫眼见者。若鬼神则见善人身有光明，光明之大小，随其德之大小。见恶人则身有黑暗凶煞等相，其相之大小，亦随恶之大小而现。</p><p class="p-trans">这是针对凡夫眼睛所能见到的相来说的。像鬼神之类，就能见到善人身上有光明，光明的大小，随着他德的大小而显现；见到恶人，恶人身上有黑暗、凶煞等相，相的大小，也是随着恶的大小而显现。</p></div>
+<div class="para-pair"><p class="p-orig">彼谓金刚经为空，不知金刚经乃发明理性，未言及证理性而所得之果报。实报无障碍土之庄严，即金刚经究竟所得之果报。凡夫闻之，固当疑为无有此事。</p><p class="p-trans">他们认为《金刚经》是讲空，却不知道《金刚经》是阐发显明理性，没有说到证得理性之后，所得的果报。实报无障碍土的庄严，就是《金刚经》究竟所得的果报。凡夫听了，定会怀疑没有这回事。</p></div>
+<div class="para-pair"><p class="p-orig">金刚经令发菩提心之善男女，心不住相，而欲度尽众生。虽度亦不见我为能度，生为所度，及与所得之究竟涅槃之法。所谓无所住而生心，以迄无所得而作佛。将谓金刚经所成之佛，其所住之国土，亦如此五浊恶世之境界乎。为是空空洞洞，一无所有乎。</p><p class="p-trans">《金刚经》令发菩提心的善男子、善女人，心不住相，且想要度尽一切众生。虽然度化众生，也不见我是能度之人，众生是被我所度的，以及所得的究竟涅槃之法。所谓“无所住而生心”，以至 “无所得而作佛”。难道就认为《金刚经》所成的佛，他所住的国土，也如同这个五浊恶世的凡夫境界一样吗？还是空空洞洞，一无所有呢？</p></div>
+<div class="para-pair"><p class="p-orig">净佛国土，人一闻名，身心清净。彼谓之为贪欲，是蛆虫日居粪坑，自命香洁，以栴檀为臭秽，不愿离此粪坑，闻彼香气也。</p><p class="p-trans">净佛国土，人们一听到名字，就身心清净。他们认为这是贪欲，就如同蛆虫每天住在粪坑里，自己还认为香洁，反而认为檀香臭秽，不愿意离开这个粪坑，去闻檀香气啊！</p></div>
+<div class="para-pair"><p class="p-orig">盗跖聚徒数千，横行天下而为盗，反自命有道。而痛斥尧不仁，舜不孝，禹淫佚，汤武暴乱，孔子虚伪，为无道。正与此二种人之知见相同。</p><p class="p-trans">盗跖聚集几千徒众，横行天下而做强盗，反自命为有道。反而痛斥唐尧不仁，虞舜不孝，夏禹淫佚，商汤、周武王暴乱，孔子虚伪，认为他们无道。这正与这二种人的知见相同。</p></div>
+<div class="para-pair"><p class="p-orig">又如近来废经废孝废伦裸体游行，以为禀天地自然之德，不假造作，然夏则竞裸，冬何不裸。谓禀自然，不假造作，掘井，耕田，纺织，方有饮食衣服，非造作乎。</p><p class="p-trans">又如近来废儒经、废孝道、废伦理、裸体游行，认为这是禀承天地自然之德，不假造作，然而夏天就竞相裸体，冬天为什么不裸？认为禀承自然，不假造作，那么掘井、耕田、纺织，才有饮食衣服，这难道不是造作吗？</p></div>
+<div class="para-pair"><p class="p-orig">恶人阻破人之为善，每每如是。谓善须无心为，有心即非真善。然古之圣贤，无不朝乾夕惕，戒慎恐惧，如临深渊，如履薄冰，是有心乎，是无心乎。</p><p class="p-trans">恶人阻拦破坏他人行善，常常都是这样。他们认为：行善必须无心去做，有心去做就不是真善。然而古来的圣贤，无不是一天到晚勤奋、谨慎，警惕、审慎、恐惧，如临深渊，如履薄冰，这是有心呢？还是无心呢？</p></div>
+<div class="para-pair"><p class="p-orig">总之此种人，意欲以不修持为高上，故作此种极下劣之瞽论，以自炫其明理，冀人以己为高明，为大通家，为真名士。而不知其全身在粪坑里。除彼同知见者，其谁肯相许乎。</p><p class="p-trans">总之这种人，想要以不修持为高上，所以说这些极为下劣的瞽论，来自己炫耀自己明白道理，希望他人认为自己很高明，是个大通家，是个真正的名士。然而却不知他全身都在粪坑里。除了与他有相同知见的人，还有谁肯赞许他呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【好行小慧】</span>爱耍小聪明。《论语·卫灵公》：“子曰：‘群居终日，言不及义，好行小慧，难矣哉！’”何晏集解引郑玄曰：“小慧，谓小小之才知。”慧，一本作“惠”。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【自暴自弃】</span>谓自甘堕落，不求进取。语出《孟子·离娄上》：“自暴者，不可与有言也；自弃者，不可与有为也。言非礼义，谓之自暴也；吾身不能居仁由义，谓之自弃也。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【盗跖】</span>相传为古时民众起义的领袖。名跖，一作跖，“盗”是当时统治者对他的贬称。《庄子·盗跖》：“盗跖从卒九千人，横行天下，侵暴诸侯。”《荀子·不苟》：“盗跖吟口，名声若日月，与舜禹俱传而不息。”唐杜甫《醉时歌》：“儒术于我何有哉，孔丘、盗跖俱尘埃。”盗贼或盗魁的代称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

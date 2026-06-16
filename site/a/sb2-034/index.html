@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复温光熹居士书十 · 印光法师文钞</title>
+<meta name="description" content="汝何不知事务，一至于此。光何人斯，何可以与莲池大师并论乎。汝作此说，以为恭维光，不知其为毁谤光也。以后不得如此以凡滥圣的恭维吾。吾见此语，如打如嘲，愧不能支。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-034/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复温光熹居士书十 · 印光法师文钞">
+<meta property="og:description" content="汝何不知事务，一至于此。光何人斯，何可以与莲池大师并论乎。汝作此说，以为恭维光，不知其为毁谤光也。以后不得如此以凡滥圣的恭维吾。吾见此语，如打如嘲，愧不能支。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-034/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复温光熹居士书十</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝何不知事务，一至于此。光何人斯，何可以与莲池大师并论乎。汝作此说，以为恭维光，不知其为毁谤光也。以后不得如此以凡滥圣的恭维吾。吾见此语，如打如嘲，愧不能支。</p><p class="p-trans">你为何不懂事务，竟到了这种地步！我是什么人，怎么能与莲池大师相提并论？你作这种说法，认为是恭维我，却不知这是毁谤我啊！以后不可再这样以凡滥圣地恭维我。我看到这句话，就好像被打被嘲笑一样，惭愧得无法承受。</p></div>
+<div class="para-pair"><p class="p-orig">（一）心清月现，何可死执以论。须知凡夫有凡夫之清现，声闻有声闻之清现，菩萨有菩萨之清现，唯成佛方为究竟清现也。</p><p class="p-trans">（一）心清月现，怎么能死执来说。必须知道凡夫有凡夫的心清月现，声闻有声闻的心清月现，菩萨有菩萨的心清月现，只有成佛才是究竟的心清月现啊！</p></div>
+<div class="para-pair"><p class="p-orig">若如法说，其余一切皆非清现，唯佛方是清现。莲池大师所说，便成错谬。不知自己完全未开正眼，故有此种盲论也。何苦如此。</p><p class="p-trans">如果如法地来说，其余一切都不是心清月现，只有佛才是心清月现。那么莲池大师所说的，便成了错谬。不知自己完全没有打开正法眼，所以有这种盲论。何苦如此呢。</p></div>
+<div class="para-pair"><p class="p-orig">凡夫之清现，乃观行之清现。声闻断见思，乃相似之清现。菩萨在内凡位，从初信至七信，亦与声闻同。八九十信破尘沙，证法空，何可云破法空乎。</p><p class="p-trans">凡夫的心清月现，是观行位的心清月现。声闻断见思惑（声闻初果断见惑，四果断思惑），是相似位的心清月现。菩萨在（圆教十信）内凡位，从初信位到七信位（初信断见惑，七信断思惑），也和声闻相同。八九十信位破尘沙惑，证法空，怎么能说是破法空呢？</p></div>
+<div class="para-pair"><p class="p-orig">初住即破无明，证法身，此分证位之初位。至十住十行十回向十地等觉（等觉，乃分证位之后位。分证位，凡佛所证者，皆证之，但未圆满究竟证耳）四十一位，乃分证之清现。唯佛方为究竟清现。且即一位中，尚有无量无边浅深之不同。</p><p class="p-trans">初住位菩萨就已破无明，证法身，这是分证位（注1）的初位。到十住、十行、十回向、等觉（等觉，是分证位的最后位。分证位，凡是佛所证的，都证得了，但尚未圆满究竟证得罢了）等四十一位（法身大士），这是分证位的心清月现。只有佛才是究竟位的心清月现。而且即使在一个阶位之中，尚且还有无量无边浅深的不同。</p></div>
+<div class="para-pair"><p class="p-orig">譬如外国人到中国，一到中国界上，即可云已到中国。而从兹尚有数千里之途程，方可到中国京都。</p><p class="p-trans">譬如外国人到中国，一到中国界上，就可以说已经到了中国。而从这里还有数千里的路程，才能到达中国的京城。</p></div>
+<div class="para-pair"><p class="p-orig">在汝意既云到，即无所谓途程。既未得道，说清现便成错谬。且于仗佛力带业往生之事相违。其咎在汝好充通家，非莲池大师所说有不恰当也。</p><p class="p-trans">以你的意思，既然说到了，就无所谓路程了。既然还未得道，说心清月现就成了错谬。而且与仗佛慈力、带业往生的事相违。这种过错在于你喜欢妄充大通家，并不是莲池大师所说的有什么不恰当。</p></div>
+<div class="para-pair"><p class="p-orig">以后认真念佛，少张罗所说。要是如此以凡滥圣的恭维光，即是教天下后世人唾骂光。何苦作此种有损无益之事。</p><p class="p-trans">以后认真念佛，少张罗你的论说。要是再这样以凡滥圣地恭维我，就是让天下后世人唾骂我。何苦作这种有损无益的事。</p></div>
+<div class="para-pair"><p class="p-orig">（二）莲池大师乃圆融无碍之说。根机若深，依之修持，则有大益。根机若浅，或有执理废事之弊。只宜按事相志诚持名，方为稳妥。</p><p class="p-trans">（二）莲池大师（所说）是圆融无碍的论说。如果根机深，依照来修持，那么就有大利益；如果根机浅，或许会有执理废事的弊病。只应按照事相志诚持名念佛，方才稳当。</p></div>
+<div class="para-pair"><p class="p-orig">理一心之说，做不到者，说之无益。但不提倡即已。排斥二字，何下之无谓也。是心作佛，是心是佛。若不作佛，说是心是佛，即可排斥。若念佛说是心是佛，正是劝人之根本，何可混言排斥。若排斥，则成邪见，其罪极重。凡作观持名，通名为作佛。</p><p class="p-trans">（念佛念到）理一心不乱之说，做不到的人，说了也没什么利益。只要不提倡就可以了。“排斥”二个字，底下的没有意义。“是心作佛，是心是佛。”（出自《佛说观无量寿经》）如果不作佛，说“是心是佛”，就可以排斥他。如果是在念佛，说“是心是佛”，这正是劝化他人的根本，怎么可以笼统地说“排斥”。如果排斥，那么就成了邪见，这个罪过极重。凡是作观想、持名念佛，全都名为“是心作佛”。</p></div>
+<div class="para-pair"><p class="p-orig">（三）莲池大师此语，对专志作观者说。汝将汝之散心所想者引例，则成不知身分之话。</p><p class="p-trans">（三）莲池大师的这句话，是对专志作观的人说的。你却将你散心所想的引以为例，就成了不知身分的话。</p></div>
+<div class="para-pair"><p class="p-orig">凡夫心如猿猴，刻不能定，何能想某相即见某相乎。若深心作观，观此见彼，即不相应。故名曰邪，言不相应也。汝又作魔，则过矣。然不相应不觉察，久则或有魔事。</p><p class="p-trans">凡夫的心如同猿猴一样，一刻也不能定下来，怎么能做到想什么相，就见到什么相呢？如果是深心作观，观想此相而见到彼相，就是不相应。所以名为邪，是不相应的意思。你又当作魔，就过分了。然而不相应又不觉察，久了或许有著魔的事（发生）。</p></div>
+<div class="para-pair"><p class="p-orig">（四）汝真真是不知天高地厚的糊涂虫，竟敢引善导大师舍身为例。善导念佛口出光明，乃大神通圣人。临终登柳树说偈，即跳下立化。</p><p class="p-trans">（四）你真真是一个不知天高地厚的糊涂虫，竟敢引用善导大师舍身作为例子。善导大师念佛口出光明，是有大神通的圣人。临终登上柳树说偈后，就跳下来立化了。</p></div>
+<div class="para-pair"><p class="p-orig">汝认做从树上跌死了，汝真罪过，瞎著眼专好瞎说。汝要舍身，则是枉死鬼。想生西方，梦也梦不著了。</p><p class="p-trans">你却认做是从树上跳下来跌死了，你真是罪过，瞎着眼专好瞎说。你要是舍身，就是个枉死鬼。想往生西方，梦也梦不到。</p></div>
+<div class="para-pair"><p class="p-orig">善导大师传中，或有文笔未能显此妙义，故致汝认做舍身而死。汝曾见金刚经感应朱进士事否。</p><p class="p-trans">《善导大师传》中，或许有的文笔未能显示这个妙义，所以致使你认做大师是舍身而死。你曾看过《金刚经持验录》中朱进士的事迹没有？</p></div>
+<div class="para-pair"><p class="p-orig">彼以听金刚经四句偈，生欢喜心。不久梦随五人，坐车至一家。五人皆饮汤，彼欲饮，其领彼之人不许饮即醒。</p><p class="p-trans">他因为听了《金刚经》的四句偈，心生欢喜。不久，梦到跟随五个人，坐车到了一户人家。五个人都喝了汤，他想喝，那个带领他们的人不许他喝，他随即梦醒。</p></div>
+<div class="para-pair"><p class="p-orig">心甚异之，访至其家，云生六狗，有一死者。以此专持金刚经。至八十九岁登树说偈，乃跳下立化。</p><p class="p-trans">他心中很诧异，寻访到梦到的那户人家，说（家中）生了六只小狗，有一只死了。因此，他专门受持《金刚经》。到了八十九岁时，登树上说偈，然后跳下来立化了。</p></div>
+<div class="para-pair"><p class="p-orig">此人现生变狗，由数十年持金刚经，尚能由高至下而化。况善导大师之大圣人，神妙不测者。汝认做舍身，可怜可怜。此与愚人以佛涅槃为佛死，同一知见。</p><p class="p-trans">这个人原本要现生变狗的，由于几十年持诵《金刚经》，尚且能够由高处跳下而立化。何况善导大师那样的大圣人，神妙不测呢？你认做是舍身，可怜可怜。这与愚昧的人把佛陀涅槃当作佛死了，是同一种知见。</p></div>
+<div class="para-pair"><p class="p-orig">（五）汝穷妄想，比海中波浪，还要沸腾得很些。但谅己身分而行，何怕人讥诮。若回成都家去，固当将彼心相，说与汝父桓君翁稍微放松些，庶可两将就。</p><p class="p-trans">（五）你的穷妄想，比海中的波浪，还要沸腾得厉害些。只要度量自己的身分而行事，何必怕他人的讥笑嘲弄。如果回成都老家去，固然应当将那种心相，说给你父亲温桓君老人听，使他稍微放松些，才能彼此将就。</p></div>
+<div class="para-pair"><p class="p-orig">汝果精诚念佛，眷属亦会有转机。汝祖父兴全翁尚遗有家业，尚谓苦得不能忍受。倘汝本是一个穷汉，汝将不要做人乎。</p><p class="p-trans">你果真精诚念佛，眷属也会有所转化。你祖父温兴全老人尚且留有家业，你却还认为苦得不能忍受。如果你本来是一个穷人，你就不要做人了吗？</p></div>
+<div class="para-pair"><p class="p-orig">今极力的要撑空架子，而自己又完全起此种不按道理之妄想。汝这个妄想，是耀祖光宗，尽子职，报答继祖妣柴老太夫人，尽佛教徒之责任否也。</p><p class="p-trans">现在极力地要撑这个空架子，而自己又完全生起这种不按道理的妄想。你这个妄想，是光宗耀祖，克尽子孙的职责，报答继祖妣柴老太夫人，尽佛教徒的责任吗？</p></div>
+<div class="para-pair"><p class="p-orig">既知感人引进之恩，何得自己又作普负亲恩佛恩之事乎。汝此后但看文钞，切勿再来信。我实在没有精神应酬汝这些魔话。</p><p class="p-trans">既然知道感激他人的引进之恩，怎么能自己又作普遍辜负亲恩、佛恩的事呢？你以后只看《文钞》，千万不要再来信。我实在没有精神应酬你这些魔话。</p></div>
+<p class="p-trans">【朱进士《居士传》】朱进士，遗其名，苏州人也。尝游虎邱寺，听佛印禅师讲金刚经，至六如偈，饮然有会。次日午睡，梦一鬼吏，督五人行而，已随后，致一舍有青布帘悬焉，鬼吏揭帘，众皆入至厨下，见桶内盛汤，五人各就饮。朱方渴亦欲饮之，鬼吏呵曰：“听佛法人不得饮此。”惊而觉，信步访之，果得一舍，如梦所历，其人言：“厨下新产六犬，其一死矣！”朱大恐怖，自言：“不闻佛法，且为此畜矣。殆哉！”遂绝世务，日诵金刚经。年八十九，八月望，要诸道友相别，入后园，登树杪，说偈曰：“八十九年，朱公两手劈破虚空，两脚踏著白云，立化菩提树东。”言讫端然而化。(金刚证果录)</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【观行、相似】</span>天台智者以六即释佛。一理即佛，二名字即佛，三观行即佛，四相似即佛，五分证即佛，六究竟即佛。（《印光法师文钞续编·卷下·地藏菩萨偈赞》）
+六即：谓与真理相即、成为一体之阶段有六。又作六是、六绝、六如。华严经谓大乘菩萨之阶位有十信、十住、十行、十回向、十地、等觉、妙觉等五十二位；天台宗以之为别教菩萨之行位，而另立圆教菩萨六行位，称为“六即”。即：
+(一)理即，谓一切众生悉住于佛性如来藏之理。
+(二)名字即，指听闻一实菩提之说，而于名字（名言概念）之中通达解了之位。
+(三)观行即，谓既知名字而起观行，心观明了，理慧相应之位。此位分随喜、读诵、说法、兼行六度、正行六度等五品之深浅次第，称为五品弟子位。即圆教外凡之位，与别教十信位相同。
+(四)相似即，谓止观愈趋明静而得六根清净，断除见思之惑，制伏无明，相似于真证者。即圆教内凡十信之位，又称六根清净位，与别教之三贤位相同。
+(五)分证即，又作分真即。谓分断无明而证中道之位，即由十住、十行、十回向、十地、等觉等位，渐次破除一品之无明而证得一分之中道者。以上皆为圣位，在别教中，十地相当此中之十住位，等觉位相当十行中之初行，妙觉位相当十行中之第二行，至于圆教十行中第三行以上，在别教则未论及。
+(六)究竟即，谓断除第四十二品之无明，究竟诸法实相之位，此即妙觉位，为圆教究竟之极果。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【朱进士】</span>《居士传》：朱进士，遗其名，苏州人也。尝游虎邱寺，听佛印禅师讲金刚经，至六如偈，饮然有会。次日午睡，梦一鬼吏，督五人行而，已随后，致一舍有青布帘悬焉，鬼吏揭帘，众皆入至厨下，见桶内盛汤，五人各就饮。朱方渴亦欲饮之，鬼吏呵曰：“听佛法人不得饮此。”惊而觉，信步访之，果得一舍，如梦所历，其人言：“厨下新产六犬，其一死矣！”朱大恐怖，自言：“不闻佛法，且为此畜矣。殆哉！”遂绝世务，日诵金刚经。年八十九，八月望，要诸道友相别，入后园，登树杪，说偈曰：“八十九年，朱公两手劈破虚空，两脚踏著白云，立化菩提树东。”言讫端然而化。(金刚证果录)</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>立山老人派下子孙公堂序（代开如和尚作） · 印光法师文钞</title>
+<meta name="description" content="一切众生，具有如来智慧德相。但因妄想执著，不能证得。究其原由，总因不了真如妙性。妄认四大为自身相，六尘缘影为自心相。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-035/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="立山老人派下子孙公堂序（代开如和尚作） · 印光法师文钞">
+<meta property="og:description" content="一切众生，具有如来智慧德相。但因妄想执著，不能证得。究其原由，总因不了真如妙性。妄认四大为自身相，六尘缘影为自心相。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-035/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">立山老人派下子孙公堂序（代开如和尚作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">一切众生，具有如来智慧德相。但因妄想执著，不能证得。究其原由，总因不了真如妙性。妄认四大为自身相，六尘缘影为自心相。</p><p class="p-trans">一切众生，都具有如来智慧德相。只因妄想执著，而不能证得。追究其中的原由，都是因为不明了真如妙性。错妄地把“地水火风”四大，当作自身相，把“色声香味触法”六尘缘影，当作自心相。</p></div>
+<div class="para-pair"><p class="p-orig">既已认贼为子，遂致背觉合尘。从此根尘互黏，人我敌立。起惑造业，轮回六道。经尘点劫，莫能解脱。</p><p class="p-trans">既然已经认贼为子，于是就背离觉性，合于尘境了。从此六根与六尘互相粘缚，并产生人我分别之相，互相对立。生起烦惑，造作恶业，轮回于六道当中，经历尘点长劫，不能够解脱。</p></div>
+<div class="para-pair"><p class="p-orig">大觉世尊，愍兹剧苦。施大法药，令修四念处观。一观身不净，二观受是苦，三观心无常，四观法无我。及余正勤，如意足，根，力，觉，道，三十七品法门。</p><p class="p-trans">大觉世尊，怜愍众生所受的剧苦，施大法药，令我们修习四念处观：一观身不净，二观受是苦，三观心无常，四观法无我。以及其余的四正勤、四如意足、五根、五力、七觉支、八正道、三十七道品等诸多法门。</p></div>
+<div class="para-pair"><p class="p-orig">虽根有利钝，乘有大小。莫不皆以四念处而为根本。良以四观若成，则我执即破。我执既破，则五蕴皆空，六尘即觉。返本还原，亲证妙性。</p><p class="p-trans">虽然众生根机有利有钝，法门有大乘小乘，然而全都是以四念处为根本。实在因为四观如果修成，那么我执就破除了。我执破除之后，五蕴就空了，六尘外境即是觉性。从而返本还原，亲证真如妙性。</p></div>
+<div class="para-pair"><p class="p-orig">譬如垢尽镜明，云开日朗。日即本具，明非外来。得无所得，获大自在。凡情圣见，两俱消亡。尚无涅槃，何有生死。</p><p class="p-trans">譬如污垢除尽之后，宝镜重现光明，云雾散开之后，阳光重新朗照。太阳原本就在天上，宝镜的光明也不是从外而来。得无所得，获大自在。凡情圣见，双双消亡。涅槃尚且没有，哪里又有生死呢？</p></div>
+<div class="para-pair"><p class="p-orig">至于世寿若尽，则焚其形骸者。一则恐彼亡者所作未办，身见未泯。令其豁悟真空，当下解脱。二则正欲存者了知此身，全体虚妄。力修圣道，复本心源。务于动作云为处，亲见主翁。</p><p class="p-trans">至于世寿如果尽了，去世后则焚烧亡者的身体形骸。一是怕亡者生死大事没有了办（没有证道），对于身相的执见没有泯灭。所以烧掉形骸，让他豁然悟得真空，当下得到解脱。二是想要让活着的人，了知这个色身完全是虚妄不实的。从而努力修习圣道，复归心性本源。必定要在日常生活言语行为之中，亲自见到主人翁。</p></div>
+<div class="para-pair"><p class="p-orig">则能自作主宰，不被此臭皮袋多方驱使。庶可以上继佛慧，下化有情。即此苦无常无我不净之幻妄身心，彻证常乐我净之真如佛性。以故无论圣凡，举皆焚化。而天下丛林，无不遵行也。</p><p class="p-trans">那么就能自己作自己的主宰，而不会被这个臭皮袋多方驱使了。想必才可以续佛慧命，度化众生，就着这个苦、空、无常、无我、不净的幻妄身心，彻底证得常、乐、我、净的真如佛性。所以无论圣人还是凡夫，离世之后，都进行火化。而全天下的丛林，没有不遵行这一规程的。</p></div>
+<div class="para-pair"><p class="p-orig">当唐宋佛法盛时，士大夫家，亦多仰遵佛制，而用此法，不独唯僧为然。僧既焚化，拾其余骨，置于普同塔中，亦如丛林之海众同居。其中凡圣莫测，行位难辨。凡既附圣，亦易解脱。如苍蝇附于骥尾，不劳而得至千里也已。</p><p class="p-trans">在唐宋佛法兴盛的时候，士大夫的家里，也大多仰遵佛制，而采用火化，并不只是僧人才如此。僧人焚化之后，收集其剩余的灵骨，安置在普同塔中。如同丛林当中大众同住在一起，谁是凡夫谁是圣人，不能够测度，他们的修行位次，也难以辨别。凡夫既然依附于圣人，也就容易得到解脱。就如同苍蝇附着在骏马的尾巴上，不费辛劳而能够到达千里之外。</p></div>
+<div class="para-pair"><p class="p-orig">法雨常住，当前清咸同间，以久经兵荒，香火断绝，遂致一败涂地。至同治十年，众挽先师公立山老人住持，法道由是重兴。而剃度法嗣，实繁有徒。化开师伯，谋诸本派法眷，各出净资若干圆，修一子孙普同塔，于海会桥东。</p><p class="p-trans">法雨寺常住，因为前清咸丰、同治年间久经兵灾，香火断绝，所以导致一败涂地。到了同治十年，众人挽请我的师公立山老人来住持，法道因此重新兴盛。立山老人剃度传法的弟子，实际有很多。化开师伯，和本派的法亲眷属们商量，各各捐出净资若干圆，在海会桥的东面，修建了一座子孙普同塔。</p></div>
+<div class="para-pair"><p class="p-orig">凡立山老人派下子孙，及诸法徒，皆可入焉。又买众香塘田五十亩，以岁所收租，充春冬祭荐之费。俾伴山，常明，长生，杨枝，宝称，五庵。及化恒师派下子孙。六柱轮流，承值当办。</p><p class="p-trans">凡是立山老人派下的法子法孙，以及诸位法徒，都可以在死后安入这座普同塔。又买下了众香塘的五十亩田地，用每年所收的地租，作为春冬二季的祭祀超荐的费用。由伴山庵、常明庵、长生庵、杨枝庵、宝称庵，这五座寺庵，以及化恒师派下的子孙。一共六柱，轮流当值承办。</p></div>
+<div class="para-pair"><p class="p-orig">使亡者时受祭荐，蒙法利而超极乐之天，存者识破幻妄，修净业而预莲池之会。爰书缘起，以告同伦。</p><p class="p-trans">从而使得，亡者能够按时受到祭祀超荐，蒙获佛法利益而超升到极乐；活着的人能够识破幻妄，修习净业而参预到莲池海会。就此写下事情缘起，告知大众。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【尘点劫】</span>1．指三千尘点劫，即磨一三千大千世界所有之物而为墨，每经一三千大千世界便下一点，墨完了，而所经过的世界又全部碎为微尘，再以每一微尘当作一劫来计算，这是表显大通智胜佛出世迄今非常久远的比喻。2．指五百尘点劫，即抹五百千万亿那由他阿僧祇之三千大千世界为微尘，每经过一五百千万亿那由他阿僧祇之国便下一微尘，微尘尽了，而所经过的世界又全碎为微尘，再以每一微尘当作一劫来计算，这是表显释迦如来成佛迄今非常久远的比喻。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【四正勤】</span>已生恶令断灭、未生恶令不生、未生善令生起、已生善令增长。此四正勤就是精进，精进勤劳修习四种道法，以策励身口意，断恶生善。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【四如意足】</span>又名四神足，原系四种禅定，谓修此四者，则能如意开发神通。一、欲如意足，谓修道趣果的欲望增进。二、念如意足，谓念念一心，住于正理。三、进如意足，谓精进直前，功无间断。四、慧如意足，谓真照离妄，心不散乱。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【五根】</span>信根、进根、念根、定根、慧根、因此五法是生圣道的根本，故名五根。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【五力】</span>五根坚固发生力量，叫做五力，即信力、精进力、念力、定力、慧力。信力是信根增长，能破诸邪信；精进力是精进根增长，能破身之懈怠；念力是念根增长，能破诸邪念；定力是定根增长，能破诸乱想；慧力是慧根增长，能破三界之诸惑。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【七觉分】</span>又名七菩提分、七觉支、七等觉支，为五根五力所显发的七种觉悟。一、择法菩提分，即以智慧简择法的真伪。二、精进菩提分，即以勇猛心，力行正法。三、喜菩提分，即心得善法，而生欢喜。四、轻安菩提分，即除去身心粗重烦恼，而得轻快安乐。五、念菩提分，即时刻观念正法，而令定慧均等。六、定菩提分，即心唯一境，而不散乱。七、舍菩提分，即舍离一切虚妄的法，而力行正法。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【八正道】</span>又名八圣道，即八条圣者的道法。一、正见，即正确的知见。二、正思惟，即正确的思考。三、正语，即正当的言语。四、正业，即正当的行为。五、正命，即正当的职业。六、正精进，即正当的努力。七、正念，即正确的观念。八、正定，即正确的禅定。修此八正道，可证得阿罗汉果。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【承值】</span>当值；侍奉。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

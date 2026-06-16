@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>6、复高邵麟居士书一 · 印光法师文钞</title>
+<meta name="description" content="讲改过迁善方法">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-006/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6、复高邵麟居士书一 · 印光法师文钞">
+<meta property="og:description" content="讲改过迁善方法">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-006/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第一部分·书信 · 如诚法师、圆涛法师译</div>
+      <h1 class="art-title">6、复高邵麟居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>讲改过迁善方法</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">谢恩光来山，持阁下书，展读之下，见其慕道心切，而愿力宏大，誓期深入，而不肯得少为足，欣慰无量。至于过赞不慧，令人惭愧无似耳。</p><p class="p-trans">谢恩光来到普陀山，带来你的书信，展读之后，见你慕道之心很迫切，而且愿力宏大，誓期进一步深入，并不肯得少为足，非常欣慰。至于你在信中过分地称赞我，真是令人惭愧无比呀！</p></div>
+<div class="para-pair"><p class="p-orig">阁下欲了生死大事，况复年临知命，来日无多。又无知识益友之可亲近，而不专修净业，一心念佛。而欲泛泛然研究诸经奥义典句，似未深知净土法门之所以然者。宜往华严寺借阅净土十要，及净土圣贤录，息心详阅，自知所趣。</p><p class="p-trans">你想要了脱生死大事，年纪已近五十岁了，来日无多。又没有善知识益友可以亲近，却不专修净业，一心念佛。而想要广泛研究佛经的奥义典句，你似乎没有深知净土法门的所以然。应该到华严寺借阅《净土十要》，以及《净土圣贤录》，专心详读，自然知道该趋向何方。</p></div>
+<div class="para-pair"><p class="p-orig">一切众生，皆是过去父母，未来诸佛。杀而食之，何能下咽。若知此义，即丧身失命，亦不能吃一切肉矣。然佛之教人，循循善诱。上根则令其全断。中下则令其渐减，而遂至于全断耳。</p><p class="p-trans">一切众生，都是我们过去的父母，未来的诸佛。杀来吃，如何能下咽？如果知道这个道理，即使丧失身命，也不能吃一切众生肉啊！可是佛陀教化世人，总是有步骤地引导、教化。上根的人就让他们全断肉食。中下根的人就让他们渐渐减少吃肉，而最终全断肉食。</p></div>
+<div class="para-pair"><p class="p-orig">发愿文，文虽宏大。然须真实从心而发，方名为愿。否则心口相违，何名为愿。现世之愿，虽亦无妨。欲生福慧子孙，须从大积阴德广行方便中求。</p><p class="p-trans">你作的发愿文，文词虽然宏大。然而必须是真实从内心而发，才能称为愿。否则内心与口说相违，如何能说是愿呢？现世的愿，虽然没有妨碍。想要生福慧的子孙，应该从大积阴德，广行方便当中去求。</p></div>
+<div class="para-pair"><p class="p-orig">况阁下年当六八，续娶三妻，但止生女。即此可征宿世现生，皆少栽培。今欲转回天心，必须真实改过迁善。如明季袁了凡先生之笃实做去，断未有不蒙感格而满所愿者。且勿谓吾家素寒，不能广积阴德，大行方便。须知身口意三业皆恶，即莫大之恶。倘三业皆善，即莫大之善。</p><p class="p-trans">何况你年纪正当四十八岁，连续娶了三房妻妾，都只生女儿。就可以证验你过去世和这一生，都很少栽培阴德。现在想要回转天意，必须真实地改过向善。如同明朝末年的袁了凡先生一样脚踏实地去做，绝对没有不蒙感通而满你所愿的。不要说我家里一向贫寒，不能够广积阴德，大行方便。要知道身口意三业都恶，就是最大的恶。倘若身口意三业都善，就是最大的善。</p></div>
+<div class="para-pair"><p class="p-orig">至如愚人不信因果，不信罪福报应。侃侃凿凿，依安士全书等所说，为其演说。令其始则渐信因果，继则深信佛法，终则往生西方，了生脱死。一人如是，功德尚无量无边，何况多人。然须躬行无玷，方可感化同人。</p><p class="p-trans">至于愚昧的人不相信因果，不相信罪福报应。你就应该从容明确、理直气壮的，依照《安士全书》里面所说的，为他演说。让他开始渐渐相信因果，继而深信佛法，最终往生西方，了生脱死。能如此教化一个人，功德尚且无量无边，何况教化很多人呢。不过要身体力行地去做，没有瑕疵，方才可以感化身边的人。</p></div>
+<div class="para-pair"><p class="p-orig">自己妻女，能信受奉行，别人自能相观而善矣。岂在资财多乎哉。但求不饥不寒，何思财发巨万。遗子黄金满籝，不如教子一经。祖德若亏，便当愧死。祖业纵亏，有何所伤。而以来日无多之身，思欲顿复。徒生妄想，了无实益。且自随缘度日，便为乐天知命矣。</p><p class="p-trans">自己的妻女，能够信受奉行，别人自然能够互相观察学习而向善了。哪里在于钱财的多少呢？只要能求不饥不寒，何必想发巨万之财。遗留给子孙满箱黄金，不如教导子孙一部经书。祖先的功德如果被你亏损了，应当惭愧而死。祖先的家业纵然亏损，有什么妨碍呢？然而凭借自己来日无多之身，想要一下子复兴家业。只是白白的打妄想，没有一点实际利益。你只管自己随缘度日，就是乐天知命了。</p></div>
+<div class="para-pair"><p class="p-orig">健寿处世，有顺无逆，世人谁不愿得。然而得者甚少，不得者甚多。以宿世现生，无大栽培，无因不能得果故也。</p><p class="p-trans">健康长寿的活着，有顺境没有逆境，世间人谁不愿意得到。可是得到的人很少，得不到的人很多。因为过去世、这一生，没有栽培大的福德，没有种因不能得果的缘故啊！</p></div>
+<div class="para-pair"><p class="p-orig">今阁下欲生西方了生死。但当愿高曾祖父母等神识，仗自己自行化他修持净业之力，即蒙佛慈接引往生，则可谓大孝尊亲。其不绝先祖祀，及复祖业等，皆世间凡情所共知见之浅近境界也。况求生西方者，不可怕死。若今日即死，今日即生西方。所谓朝闻道，夕死可矣。</p><p class="p-trans">现在你想要生西方了生死。应当发愿让高、曾、祖父母等祖先神识，依仗自己自行化他，修持净业的力量，蒙佛陀慈悲接引往生，这可以说是大孝尊亲。你所说的，不断绝先祖的祭祀，以及恢复祖先家业等等，这些浅近境界都是世间凡夫共同的知见。何况求生西方的人不可以怕死。如果今天就死，今日即刻往生西方。孔子所说：“朝闻道，夕死可矣”就是这个意思。</p></div>
+<div class="para-pair"><p class="p-orig">岂可今日要死，且不愿死。既贪恋尘境，不能放下。便因贪成障，净土之境不现，而随业受生于善恶道中之境便现。境现，则随业受生于善恶道中矣。往生西方，便成画饼。</p><p class="p-trans">哪里可以说，今日要死，还不愿死。既然贪恋六尘境界，不能放下。就会因为贪执成为障碍，净土的境界不现前，而随业受生在善恶道中的境界便显现。境界一出现，就随着业力受生在善恶道中了啊！往生西方的利益，便成为画饼充饥的泡影。</p></div>
+<div class="para-pair"><p class="p-orig">故修西方人，今日死也好，再活一百二十岁死也好。一切任彼前业，不去妄生计校。倘信愿真切，报终命尽，便即神超净域，业谢尘劳。莲开九品之花，佛授一生之记矣。</p><p class="p-trans">所以修往生西方净土的人，今天死也好，再活一百二十岁死也好。一切随我前世的业力，不去妄想分别计较。倘若信愿真切，业报终止，寿命享尽，神识马上超生到净土，业力凋谢在五浊恶世。九品莲花化生，蒙佛为我们作一生作佛的授记啊！</p></div>
+<div class="para-pair"><p class="p-orig">又世人无子，每多广置妾媵，不知培德节欲。如此乃是速死之法，非求子之道。此事上关风化，及与宗祀，人皆冒昧而为，其于人之大伦，不亦有愧于衷乎。</p><p class="p-trans">又者，世间人没有儿子，大多娶好几房小妾，不知道培植道德节制欲望。这种做法是快速求死的方法，不是求子之道。这件事关乎社会风气，以及与宗祀相续，人们却都无知而大胆地去做，这样对于人伦道德，不会有愧于心吗？</p></div>
+<div class="para-pair"><p class="p-orig">不慧人微德薄，百无一能。寄食普陀，苟延残喘，不敢为人作师。故谢恩光在先亦有此说，皆辞而不受。阁下皈依三宝，随于本地择其品行端方者，拜以为师，则已得为如来弟子矣。</p><p class="p-trans">我身份卑微道德浅薄，百无一能。依附在普陀山生活，苟延残喘，不敢当别人的师父。所以谢恩光之前也有这么说，我都推辞不接受。你皈依三宝，顺便在本地选择其中品行端正的出家人，拜他作师父，就可以成为如来弟子了。</p></div>
+<div class="para-pair"><p class="p-orig">下次再有笔札，不得用皈依字样。贵地既无明眼通人，光自愧道业未成，不敢作师，然复随缘开示者。喻如无足之人，一步难移，安坐三叉路口。有欲直达家乡，不知所趣者，指令得其正道，速达家乡。而归家之人，断不以彼之不能行，并其言而废之也。</p><p class="p-trans">下次再有信来，不要用皈依这些字。贵地既然没有明眼开悟的通家，我自己惭愧道业没有成就，不敢作人的师父，却又给你随缘开示。这样做，就如同无脚的人，一步难动，只安坐在三叉路口。如果有想要直达家乡，不知道道路方向的人，就指示他正确的道路，使他快速回到家乡。而回家的人，断然不会因为指路的人不能行走，就一并连他的话也废弃吧。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【无似】</span>犹无比。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【知命】</span>《论语·为政》：“五十而知天命。”后因以“知命”代称五十岁。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【天心】</span>犹天意。《书·咸有一德》：“克享天心，受天明命。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【感格】</span>谓感于此而达于彼。感通；感动。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【侃侃】</span>刚直貌。谓直抒己见，从容不迫。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【凿凿】</span>鲜明貌。确实。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【躬行】</span>亲身实行。《论语·述而》：“躬行君子，则吾未之有得。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【无玷】</span>没有瑕疵；不受玷污。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【同人】</span>志趣相同或共事的人。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【相观】</span>观察。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【籯】</span>箱笼等类盛器。《汉书·韦贤传》：“故邹鲁谚曰：‘遗子黄金满籯，不如一经。’”颜师古注：“如淳曰：‘籯，竹器，受三四斗。今陈留俗有此器。’……然则筐笼之属是也。今本籯字或作盈，又是盈满之义，盖两通也。”</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【高曾】</span>1.高祖和曾祖。2.泛指远祖。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【祖祀】</span>祭祖。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【夕死】</span>语出《论语·里仁》：“朝闻道，则夕死可矣。”后以“夕死”谓为追求真理，死亦无憾的精神。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【画饼】</span>1.画成的饼。比喻徒有虚名无补实用的人和物。2.喻落空的事情。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【尘劳】</span>佛教徒谓世俗事务的烦恼。为烦恼之异称。因烦恼能染污心，犹如尘垢之使身心劳惫。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【佛授一生之记】</span>《佛说大乘无量寿庄严经》卷上：“世尊。我得菩提成正觉已。所有众生令生我剎。皆具三十二种大丈夫相。一生令得阿耨多罗三藐三菩提。”</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【妾媵】</span>古代诸侯贵族女子出嫁，以侄娣从嫁，称媵。后因以“妾媵”泛指侍妾。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【风化】</span>犹风教；风气。指社会上公认的道德规范。</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【宗祀】</span>谓对祖宗的祭祀。</p>
+<p class="note-item"><span class="note-n">[21]</span><span class="note-term">【笔札】</span>毛笔与简牍。指文章、书信等。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

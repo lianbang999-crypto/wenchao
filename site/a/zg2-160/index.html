@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>康母往生纪念册发隐（为康寄遥作） · 印光法师文钞</title>
+<meta name="description" content="父母之恩，毕世莫酬。孝之为道，其大无外。如来大教，以孝为本。菩萨视诸六道众生，皆是过去父母，未来诸佛。故地藏有众生度尽，方证菩提，地狱未空，誓不成佛之愿。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-160/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="康母往生纪念册发隐（为康寄遥作） · 印光法师文钞">
+<meta property="og:description" content="父母之恩，毕世莫酬。孝之为道，其大无外。如来大教，以孝为本。菩萨视诸六道众生，皆是过去父母，未来诸佛。故地藏有众生度尽，方证菩提，地狱未空，誓不成佛之愿。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-160/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">康母往生纪念册发隐（为康寄遥作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">父母之恩，毕世莫酬。孝之为道，其大无外。如来大教，以孝为本。菩萨视诸六道众生，皆是过去父母，未来诸佛。故地藏有众生度尽，方证菩提，地狱未空，誓不成佛之愿。</p><p class="p-trans">父母之恩，终生难报。孝道广大，没有边际。如来的教法，以孝为根本。菩萨看待六道一切众生，都是过去的父母、未来的诸佛。所以地藏菩萨有“众生度尽，方证菩提，地狱未空，誓不成佛”的大愿。</p></div>
+<div class="para-pair"><p class="p-orig">梵网戒经，以孝顺为至道之法。不但令其孝顺父母师僧三宝，且令其于一切众生，生慈悲心，孝顺心，方便救护，戒杀放生。以一切众生，皆我宿世之父母，兄弟，妻子，眷属故。</p><p class="p-trans">《梵网经》中，把孝顺作为最高的法则。不但让我们孝顺父母、师、僧、三宝，而且让我们对一切众生，生出慈悲心、孝顺心，施设种种方便来加以救护，戒杀放生。因为一切众生，都是我们过去世的父母、兄弟、妻子、眷属的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">由是言之，佛教之孝，前溯无始，后尽未来，无不弥纶而包括之。故莲池云，亲得离尘垢，子道方成就。彼恃现生服劳奉养之孝，以诽谤佛教为不孝者，乃固执己井蛙之见，作此未见大海之瞽论也。</p><p class="p-trans">如此说来，佛教的孝道，向前追溯到无始，向后穷尽于未来，无不统摄包括在其中。所以莲池大师说：“双亲得以脱离尘垢，为子之道方才成就”。那些仗着现生勤劳服侍、奉养父母的世间孝，而诽谤佛教为不孝的人，乃是固执于自己井底之蛙的见解，从而说出这番没见过大海不明事理的言论。</p></div>
+<div class="para-pair"><p class="p-orig">为人子者，父母之德，固宜表彰。其表彰之法，注重躬行。必须克己复礼，闲邪存诚。知过必改，见义必为。明因识果，戒杀放生。诸恶莫作，众善奉行。生信发愿，持佛名号。自行化他，同生净土。</p><p class="p-trans">身为人子，自然应该表彰父母的美德。表彰的方法，注重于实践躬行。必须克己复礼（战胜己私、还归真理），闲邪存诚（防止邪念、心怀诚敬）。知过必改，见义必为。明白因果，戒杀放生。诸恶莫作，众善奉行。生信发愿，持佛名号。自行化他，同生净土。</p></div>
+<div class="para-pair"><p class="p-orig">能如是者，人纵不知其父母之德，而以景仰其人之德，并景仰其父母祖宗之德。以为潜修已久，故有如是之令嗣。</p><p class="p-trans">能够做到这些的人，别人纵然不知道他父母的德行，但是因为景仰这个人的德行，所以也一并景仰他父母祖宗的德行。认为他的父母已经潜密修持了很久，所以才能有这样的好儿子。</p></div>
+<div class="para-pair"><p class="p-orig">否则纵父母祖宗有懿德，人所共知。因其人不肖，人必疑其父母祖宗虽有懿德，或复兼有隐恶。否则懿德之门，何为出此不肖之子孙耶。</p><p class="p-trans">否则，纵然一个人的父母祖宗有美德，被众人所共知。因为这个人的品行不好，所以人们必定认为他的父母祖宗虽然有美德，或许还有隐藏的恶行。否则美德之家，为何会生出这样品行不好的子孙呢。</p></div>
+<div class="para-pair"><p class="p-orig">以是知立身行道，即为表彰父母祖宗之德。为人子者，宜何如主敬慎独，躬行实践，以期无忝所生也。至于名人之挽诔志铭，乃末事耳。</p><p class="p-trans">从而知道，修养自身奉行道义，就是在表彰父母祖宗的德行。身为人子，应该想着怎样恪守诚敬，谨慎独处，躬行实践，以期不让父母蒙羞。至于父母亲去世后，名人的挽联诔文、志记铭文等等，都是枝末而已。</p></div>
+<div class="para-pair"><p class="p-orig">康母之德，具见于挽诔志铭，故不复赘。吾欲康子以孝亲之心，善守父母之遗体。勿令一言一动，一起心动念，稍违正理，以失孝道。</p><p class="p-trans">康母一生的美德，挽诔和墓志铭中有完整的记述，所以这里不再多说。我希望康君借着对母亲的孝顺之心，而好好守护母亲留给自己的身体。不要让一言一行，以及丝毫的起心动念，稍有违背正理的地方，从而失去了孝道。</p></div>
+<div class="para-pair"><p class="p-orig">语虽似乎宽泛不贴，实为儒释正本清源之道。倘康子与阅此册者，各加勉勖，则天下国家之大幸也。岂特康母有光荣哉。</p><p class="p-trans">话虽然似乎有些宽泛不贴切，实际上却是儒家、佛家的正本清源之道。如果康君和读到这篇文章的人，各各加以勉励，那就是天下国家的大幸。哪里只是康母有光荣呢。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【发隐】</span>指一种阐发隐奥的文体。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【康寄遥】</span>陕西省临潼县人，生于1880年，卒于1968年。是陕西近代一位虔诚的佛教徒、杰出的佛教活动家和著名的佛教学者。他所创办的佛化社及以此为阵地所从事的佛教复兴活动，对近代西北佛教产生了很大影响。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【弥纶】</span>统摄；笼盖。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【令嗣】</span>1.指才德美好的儿子。 2.用为称对方儿子的敬词。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【诔】</span>悼念死者的文章。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

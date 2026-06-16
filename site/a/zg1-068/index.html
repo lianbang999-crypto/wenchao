@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复戚智周居士书二 · 印光法师文钞</title>
+<meta name="description" content="光顺师至，持汝手书。并夏布莲子交光。言汝已住伊庵等情。窃念汝资非余裕，何须效世谛人情，作投桃报李之仪。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-068/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复戚智周居士书二 · 印光法师文钞">
+<meta property="og:description" content="光顺师至，持汝手书。并夏布莲子交光。言汝已住伊庵等情。窃念汝资非余裕，何须效世谛人情，作投桃报李之仪。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-068/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复戚智周居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光顺师至，持汝手书。并夏布莲子交光。言汝已住伊庵等情。窃念汝资非余裕，何须效世谛人情，作投桃报李之仪。</p><p class="p-trans">光顺师来，带来你的信。并将夏布、莲子交给我。说到你已经住在她的庵里等等情况。我知道你的手头并不是很宽裕，何必要效仿世俗人情，作投桃报李的礼节呢？</p></div>
+<div class="para-pair"><p class="p-orig">尔我以道相交，当以直道而行耳。兹既寄来，当以为作福之资。谢谢。令严，令岳母，既生信向。当时以净土利益为之启迪。令其信心，由微而著。倘能信愿真切，决定可生净土。其为孝也，岂世间之孝所能比拟乎哉。</p><p class="p-trans">你我以道相交，应当以直道而行。现在既然已经寄来，当用来作福田的资粮。谢谢。你父亲，你岳母，既然对佛法生起信心向往。应当时常以净土的利益为他们开导启发。令他们的信心，由微小而显著。倘若能够信愿真切，决定可以往生净土。这个孝，哪里是世间的孝所能比的呢？</p></div>
+<div class="para-pair"><p class="p-orig">汝于净土修法，尚未了了。当唯以翻阅研究净土为事。半日学解，半日学行。必期于彻头彻尾，了无疑惑而后已。</p><p class="p-trans">你对于净土的修学方法，尚未十分明了。应当只以翻阅研究净土为事。半天学习义解，半天学习行持。必定要从头到尾，彻彻底底，没有一丝疑惑才可停止。</p></div>
+<div class="para-pair"><p class="p-orig">楞严正脉，且作缓图。纵亲见如来藏妙真如性，亦不能即了生死。见性是悟，非是证。证则可了生死。</p><p class="p-trans">《楞严正脉疏》，暂且放缓研究。纵然亲见如来藏妙真如性，也不能即刻了生死。见性是悟，不是实证。实证才可以了脱生死轮回。</p></div>
+<div class="para-pair"><p class="p-orig">若唯悟未证，纵悟处高深，奈见思二惑不能顿断，则三界轮回，决定莫由出离矣。若不通楞严，倘净土法门，能仰信佛言，决定无疑。真信切愿，以修实行。则决定往生，为极乐世界中人。</p><p class="p-trans">如果只是开悟而没有实证，纵然悟到高深的境界，奈何见思二惑不能顿时断除，那么三界轮回，决定不能出离啊！如果不通达《楞严经》，倘若对于净土法门，能够仰信佛言，决定无疑。真信切愿，来修实行。则决定能往生，成为极乐世界中的人。</p></div>
+<div class="para-pair"><p class="p-orig">况兼现世国界危岌。尚欲以危险时际，有限精神，作不急之法务，企得大通家之名闻，以充体面。致自己专修一事，竟成瞒盰乎哉。倘净土法门，悉皆谛信深知。不妨再研楞严，及各经论。汝昔求光开示，光以文钞相寄，尚不一一全阅。</p><p class="p-trans">更何况现在国家岌岌可危。在这个危险的时候，还想以自己有限的精神，作不急的佛法事务，企望得到大通家的名声，来扩充体面。导致自己专修的这件事，竟然成了胡涂马虎呢？倘若净土法门，都已经谛信深知。不妨再研究《楞严经》，以及各种经论。你过去求我开示，我将《文钞》寄给你，你尚且不能一一全部阅读。</p></div>
+<div class="para-pair"><p class="p-orig">光固知汝不知缓急，泛泛然学时人研究佛经，只期作一通家而已。光文钞文字虽劣，颇能示人修持门径。</p><p class="p-trans">我原本就知道你不知缓急，泛泛然学习时下之人研究佛经，只期望作一个大通家而已。我文钞的文字虽然拙劣，颇能开示人修持的门径。</p></div>
+<div class="para-pair"><p class="p-orig">昔大智律师，深通台教，严净毗尼。行愿精纯，志力广大。唯于净土，不生信向。后因大病，方知前非。嗣后二十余年，手不释卷，专研净土。方知此法，利益超胜。遂敢于一切人前，称性发挥，了无怖畏。虽则三岁孩子，亦会念佛。</p><p class="p-trans">过去大智律师，深通天台教法，严净毗尼律藏。行持愿心精纯，志向愿力广大。唯独对于净土法门，没有信心向往。后来因为大病，方才知道从前的错误。这之后的二十多年，手不释卷，专门研究净土。方知这个法门，利益超胜。于是敢在一切人的面前，称性发挥，一点没有怖畏。从而使得即使三岁的小孩也懂得念佛。</p></div>
+<div class="para-pair"><p class="p-orig">汝此法门径，尚未认清。又非讲期见逼，如讲家之拟撑门庭，何须先研楞严，不以归家识路为急务乎。</p><p class="p-trans">你对于这个净土之法的门径，尚未认清。又不是讲经的日期逼近，如同讲经家，准备要支撑门庭，何必要先研究《楞严经》，不以归家认路为急务呢？</p></div>
+<div class="para-pair"><p class="p-orig">至于光之所说，不过搪塞差事，不致负彼来意。岂真能显示楞严之要义乎。如来欲令一切众生，就路还家。故令二十五圣，各陈宿因。末世众生，无论上中下根，皆当以势至念佛法门，自利利人。都摄六根，净念相继。反念念自性，性成无上道。</p><p class="p-trans">至于我所说的，不过是搪塞差事，不致有负她的来意。哪里真的能够显示《楞严经》的要义呢？如来想要使令一切众生，就路还家。所以让二十五位圣者，各自陈述过去证得圆通的宿因。末世的众生，无论上中下根，都应当以大势至菩萨的念佛法门，自利利人。都摄六根，净念相继。反念念自性，性成无上道。</p></div>
+<div class="para-pair"><p class="p-orig">此居士所当致力者。至于征心辨见，破阴超浊。且待念到心佛不二，心佛两忘，亲证念佛三昧后，再商量。则可如世尊拈华，迦叶微笑矣。否则入海算沙，脑晕心迷。说食数宝，饥寒莫济。知好歹者，决不以吾言为河汉也。</p><p class="p-trans">这是居士你所应当致力的地方。至于七处征心，十番辨见，破除五阴，超出五浊。暂且等到你念佛念到心佛不二，心佛两忘，亲证念佛三昧之后，再商量。那么就可以如世尊拈华，迦叶微笑般契会了。否则，就是入于大海，计算沙数，脑子发晕，内心迷惑。口说食物，不能充饥，心中数宝，不济贫寒。知好歹的人，绝对不以我的话，认为是浮夸不可信的空话。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【投桃报李】</span>意思是他送给我桃儿，我以李子回赠他。比喻友好往来或互相赠送东西。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【启迪】</span>开导；启发。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【楞严正脉】</span>四十卷，明释真鉴述。其卷首自序曰：“经本分明，而注多齿莽。正脉既失，本旨多乖。后贤指摘成帙，甚至但说本文。学者莫决从违，而临文浩叹者多矣。鉴长夜迷徒，释宗晚学。赖圣贤加被，发薄少善根。偶窥华屋之门，辄悯宫墙之望。僭伸管见，请正大方。实非横陈臆说而蔑先贤，意惟曲顺佛言而资后学。”云云。杨仁山居士曰：“正脉为注本之最善者，披剥陈言，独申正见。发挥经义，超越古今。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【岌】</span>山耸起的样子；亦喻危险。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【大智律师】</span>元照律师，字湛然，俗姓唐，浙江余杭人，是北宋时期弘传律宗和净土教的一位高僧。幼时依钱塘祥符寺慧鉴律师为童行（沙弥候补者），治平二年（1065年）遇度僧考试，因通诵「妙法莲华经」得度，时年十八。熙宁元年（1068年）和同学择瑛从神悟处谦（1011-1075年）习天台教观，同时博究诸宗，而以戒律为主。后览天台《净土十疑论》，始归心净土法门。并依善导之说一意专持阿弥陀佛名号，发愿领众同修念佛，更编成《净业礼忏仪》，以自修持。绍圣五年（1098）二月，元照于明州（今浙江宁波）开元寺，建筑戒坛依律传戒。政和六年（1116年）九月一日圆寂，年六十九，葬于灵芝寺西北隅。南宋高宗绍兴十一年（1141年），谥号大智律师，一般称为灵芝律师。曾云：“生弘律范，死归赡养，平生所得，唯此法门。”出家后数十年间，以奉持戒律，专修净土自行；以聚徒讲学，弘法著书，并祥究律宗传承，楷定南山九祖，后世称为律宗中兴的大师。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【河汉】</span>比喻浮夸而不可信的空话，转指不相信或忽视某人的话。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

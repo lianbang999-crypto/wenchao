@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复丁福保居士书十四 · 印光法师文钞</title>
+<meta name="description" content="接手书，谆谆以遍阅大词典为嘱，足征阁下虚怀无我，犹如大海，普纳众流，了无满足之日。光目力类盲，愧不能一效寻行数墨之劳，愧何如之。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-181/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复丁福保居士书十四 · 印光法师文钞">
+<meta property="og:description" content="接手书，谆谆以遍阅大词典为嘱，足征阁下虚怀无我，犹如大海，普纳众流，了无满足之日。光目力类盲，愧不能一效寻行数墨之劳，愧何如之。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-181/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复丁福保居士书十四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，谆谆以遍阅大词典为嘱，足征阁下虚怀无我，犹如大海，普纳众流，了无满足之日。光目力类盲，愧不能一效寻行数墨之劳，愧何如之。</p><p class="p-trans">接到信，恳切嘱咐我遍阅《佛学大词典》，足见阁下虚怀无我，犹如大海，普纳众流，完全没有满足之日。我的视力如同盲人，惭愧不能效拜读大著之劳（注1），实在惭愧。</p></div>
+<div class="para-pair"><p class="p-orig">廿三日，方接到黄君所注之大士碑。窃思此碑文字典故，极难详悉，以故孙玉仙属意于阁下，拟为注出，以发起一切阅者之善根，俾现生得入净土，将来辅助龙华，其利益实非浅鲜。</p><p class="p-trans">二十三日，才接到黄君所注解的《傅大士碑记》。暗想这个石碑的文字典故，很难详知，所以孙玉仙仰慕于阁下，打算请你注解，以发起一切读者的善根，使得现生得以往生净土，将来辅助龙华胜会，这个利益实在不浅。</p></div>
+<div class="para-pair"><p class="p-orig">今见黄君之注，凡人所不易知之典，悉一一指出，不但光与玉仙欣慰不已，即弥勒菩萨在常寂光及兜率天，亦当开颜而谓其能畅己出世本怀矣。此文一刻，必遍界流布，永永无已。</p><p class="p-trans">今天见到黄君的注解，凡是他人所不容易知道的典故，全都一一指出，不但我与孙玉仙欣慰不已，即使是弥勒菩萨，在常寂光及兜率天中，也当欢喜开颜，说这个注解能够畅达自己出世的本怀啊！这个碑文一旦刻出，必会遍界流通传布，永远不会停止。</p></div>
+<div class="para-pair"><p class="p-orig">光以无知，更欲助其流通，因将其中有彼此传写之讹处，及注中发挥不甚显畅处，用号码法标之，另书于纸，以期再为正订。</p><p class="p-trans">我因为无知无识，更加想要助这个碑文的流通，因此将其中彼此传写有错讹的地方，以及注解中发挥不是很显明畅达之处，用号码法标示出来，在另外的纸上写好，以期黄君再加以匡正修订。</p></div>
+<div class="para-pair"><p class="p-orig">古人著书，不嫌三四易稿，知黄君与阁下心交，断不以光之琐屑见怪，而乐于更订，以期于龙华会上，蒙弥勒世尊推为多闻智慧第一也。</p><p class="p-trans">古人著书，不嫌三、四次修改文稿，知道黄君与阁下是知心好友，断然不会因为我的琐屑而责怪，而乐于更订，以期在龙华会上，蒙弥勒世尊推为多闻智慧第一。</p></div>
+<div class="para-pair"><p class="p-orig">所惜者，山川遥阻，不能面晤于著时以尽朋友切磋琢磨之谊。其所标者，未必尽是，但以光之愚见，只如此耳。譬如野人献芹，童子奉沙，尽其自分，岂必欲人之见用哉。</p><p class="p-trans">所可惜的是，山川路遥阻隔，不能在修订时，面对面地，以尽朋友切磋琢磨的友谊。其中所标出的，未必都全对，只是以我的愚见，只能如此了。譬如乡野之人向富豪献上野芹（注2），无知童子奉沙供佛，只是竭尽自己的本分，哪里必定要人取用呢？</p></div>
+<div class="para-pair"><p class="p-orig">缅维阁下无我，黄君亦当无我，唯欲成就自他善根，当不以光为多事也。若黄君肯另修，则何幸如之，如其不肯，祈即将原稿寄回，即令玉仙刻之可也。</p><p class="p-trans">遥想阁下谦虚无我，黄君也应当是谦虚无我，只想成就自己和他人的善根，应当不认为我是多事。如果黄君肯另外再修订，那么就非常庆幸，如果他不肯，请将原稿寄回，令孙玉仙刻板就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">大词典七本，一○二九中层，印坏文成，下注谓熔蜡作印，置之泥土上，不的确。此殆指金泥，乃以蜡印印于熔化之金泥上。以金泥未冷，故软而能受印，以虽能受蜡印之印而成文，而其热力，随即化其蜡印，虽则化其蜡印，而印文一一显现，如是则印坏文成，同在一时。若作印于泥土，何能即令印坏。此虽不关紧要，聊表光之愚诚而已。</p><p class="p-trans">《佛学大词典》的第七本，一○二九中间，“印坏文成”（注3），下面注解说：“熔蜡作印，置之泥土上”，这个不准确。这大概是指金泥，是用蜡印，印在熔化的金泥上。因为金泥没有冷却，所以温软而能受印，金泥虽然能够受蜡印之印而成为文字，而金泥的热度，随即就融化了这个蜡印，虽然融化了这个蜡印，而所印的文字一一显现，如此则是：印坏文成，同在一时。如果是作“印在泥土上”，如何能够马上令印模融坏。这虽然不关紧要，聊表我的愚诚而已。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【寻行数墨】</span>寻行：一行行地读；数墨：一字字地读。指只会诵读文句，而不能理解义理。也指专在文字上下功夫。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【献芹】</span>《列子·杨朱》：“宋国有田夫……谓其妻曰：‘负日之暄，人莫知者，以献吾君，将有重赏。’里之富告之曰：‘昔人有美戎菽、甘枲茎芹萍子者，对乡豪称之。乡豪取而尝之，蜇于口，惨于腹，众哂而怨之，其人大惭。’”后遂以“献芹”谦言自己赠品菲薄或建议浅陋。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【印坏文成】</span>安乐集上曰：“如蜡印印泥，印坏文成，此命断时，即是生安乐国时。”是以印坏喻死，文成譬生，显死生同时也。又摩诃止观九曰：“过去无明业是蜡，现在父母精血是泥。过去业不住，故各印坏。现在托识，名色具足。故名文成。”是譬十二因缘相续循环之理也。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

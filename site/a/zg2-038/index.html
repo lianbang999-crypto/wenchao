@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>化闻老人公堂序（代开如和尚作） · 印光法师文钞</title>
+<meta name="description" content="窃以春秋祭祀，儒礼所重。岁时追荐，释教尤崇。念水源木本之恩，修慎终追远之事。世出世间，又何间然。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-038/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="化闻老人公堂序（代开如和尚作） · 印光法师文钞">
+<meta property="og:description" content="窃以春秋祭祀，儒礼所重。岁时追荐，释教尤崇。念水源木本之恩，修慎终追远之事。世出世间，又何间然。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-038/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">化闻老人公堂序（代开如和尚作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">窃以春秋祭祀，儒礼所重。岁时追荐，释教尤崇。念水源木本之恩，修慎终追远之事。世出世间，又何间然。</p><p class="p-trans">儒家礼法注重春秋两季的祭祀，佛教推崇每年按时追思超荐先德。就如同流水追念源头之恩，树干感怀树根之德，在慎终追远（慎重地办理父母丧事，虔诚地祭祀远代祖先）这件事情上，世出世间，又有什么差别呢？</p></div>
+<div class="para-pair"><p class="p-orig">先师闻老人，多劫熏修，堪为人天福田。乘愿再来，特整大士门庭。生虽示迹都城，世荣以只眼而觑破。身遂栖迟海岛，佛法以通肩而担当。布濩慈云，兴隆法雨。</p><p class="p-trans">先师化闻老人，经历多劫熏修，可作人天福田；乘着愿力再来，特为整治大士门庭。虽然出生在大都城，却一眼看破世间荣华；晚年栖息普陀海岛，而一肩担当佛法事业。散布慈悲云，兴隆法雨寺。</p></div>
+<div class="para-pair"><p class="p-orig">不愧为普门之功臣，直可作别庵之嫡子。去旧更新，梵宇复辉煌之制。宏宗演教，法源得流通之祥。</p><p class="p-trans">不愧为普门的功臣，真可以作别庵性统祖师的传法弟子。去旧更新，梵宇恢复辉煌的规模；宏宗演教，法源得到祥瑞的流通。</p></div>
+<div class="para-pair"><p class="p-orig">视人若己，急公犹私。住持法雨，十有余年。未曾买一畦养老之田，盖一椽栖身之所。惟欲恢宏祖道，利益将来。日夜焦思，忧劳成疾。功圆果满，撒手西归。</p><p class="p-trans">看待他人如同自己，热心公事犹如私事。住持法雨寺十多年，没有买过一块养老田地，没有盖过一间栖身房屋。只想着恢复宏扬祖师法道，利益将来的人。日夜焦心思虑，忧劳成疾。功圆果满，撒手西归了。</p></div>
+<div class="para-pair"><p class="p-orig">德月嗣德未能，报恩无地。欲崇追荐之仪，兼使后人感发。故将老人所筑众香塘田，拨一百亩，以作法眷春冬公堂祭祀之资。使后之登堂荐献，礼像投诚者。诚惶诚恐，自愧自惭。各各取则，人人效法。</p><p class="p-trans">德月我没能承继先师的德行，无处报答他老人家的深恩。想要推崇追思超荐的仪式，同时让后人受到感动启发。所以将老人所筑的众香塘田地，拨出一百亩，用作法眷们春冬二季公堂祭祀的资费。使得后来登堂祭献，礼像投诚的人，诚惶诚恐，自愧自惭。各各取作准则，人人加以效法。</p></div>
+<div class="para-pair"><p class="p-orig">以老人之心为心，以老人之事为事，庶可不愧为老人儿孙矣。凡我同伦，尚勉之哉。</p><p class="p-trans">以老人之心为己心，以老人之事为己事，想必就不愧为老人的徒子徒孙了。我们大家，尚需勉励啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【水源木本】</span>水的源头，树的根本。比喻事物的根本或事情的原因。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【慎终追远】</span>谓居父母丧，祭祀祖先，要依礼尽哀；要恭敬虔诚。终，指父母丧。远，指祖先。《论语·学而》：“慎终追远，民德归厚矣。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【栖迟】</span>游息。滞留。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【布濩】</span>遍布；布散。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【取则】</span>取作准则、规范或榜样。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

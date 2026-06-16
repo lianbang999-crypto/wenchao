@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普劝施资助刻大藏疏 · 印光法师文钞</title>
+<meta name="description" content="夫大藏者，乃般若之丛林，真如之府库，一切世出世间诸法之渊海也。举凡如来究竟亲证之道，众生即心本具之法，及十方世界之广，三世因果之微，与夫日用伦常孝弟慈善之道。悉皆显阐赞导，了无佚遗。以故宏法大士，莫不以流通大藏，为宏法利生之急务焉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-188/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普劝施资助刻大藏疏 · 印光法师文钞">
+<meta property="og:description" content="夫大藏者，乃般若之丛林，真如之府库，一切世出世间诸法之渊海也。举凡如来究竟亲证之道，众生即心本具之法，及十方世界之广，三世因果之微，与夫日用伦常孝弟慈善之道。悉皆显阐赞导，了无佚遗。以故宏法大士，莫不以流通大藏，为宏法利生之急务焉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-188/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">普劝施资助刻大藏疏</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">夫大藏者，乃般若之丛林，真如之府库，一切世出世间诸法之渊海也。举凡如来究竟亲证之道，众生即心本具之法，及十方世界之广，三世因果之微，与夫日用伦常孝弟慈善之道。悉皆显阐赞导，了无佚遗。以故宏法大士，莫不以流通大藏，为宏法利生之急务焉。</p><p class="p-trans">一部《大藏经》，是修习佛法得般若智慧的丛林道场，是真如实相自性的仓库，如无边的海洋一样涵盖一切世间、出世间诸法！无论是如来亲证佛果之道，众生心中本具的佛性之法，以及十方世界的广大无边，三世因果的细微难测，还是人世赖以维系的伦理纲常、孝弟慈善之道。全部都加以明确地阐述，并提倡这些道理以教导众生，一点也没有遗漏。所以宏扬佛法的大德，没有不以流通《大藏经》，作为宏法利生的首要任务啊！</p></div>
+<div class="para-pair"><p class="p-orig">刻大藏经，与单刻一二部经论有异。不得谓此功德大，彼功德小，此法当机，彼不当机。良以一大藏虽有经律论，及西竺此方种种著述，部类各别，卷数逾万，总是一部大藏经故。</p><p class="p-trans">刻印《大藏经》，与单刻一二部经论有所不同。不得说刻印某些经论功德大，刻印其他经论功德小，或者刻印某些经论契合当前的时机，刻印其他经论则不契合。我这么说，实在是因为一部《大藏经》虽然有经、律、论三藏，以及印度、中国的种种著述，部类各别，有万卷之多，全都是收归于一部《大藏经》的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">既是一部，何可割裂疆域，妄分优劣。譬如万川归海，同一咸味。百华成蜜，同一甜味。卉木虽有大小，春光原无偏僻。形相虽有殊异，明镜岂有二照。如修九层之塔，施砖石于各级，功德同等。如铸千尺之佛，镕金铜于一炉，那分高低。但可即末以得本，岂宜执源而废流。</p><p class="p-trans">既然是一部，怎么能人为地划分界限割裂彼此，妄自计较各经论的高低。譬如万川归于大海，一同汇成海水，同是一种咸味。百花酿成的蜜，共同化为蜜汁，同是一种甜味。如小草和树木虽然有大小之别，但春天的阳光，原本没有偏心，是平等普照的。又如镜子照物，外物的形相虽然有种种差异，但明亮的镜子，哪里有两种不同的映照呢？又如同修建九层高的佛塔，布施每一级的砖石，功德是同等的。如同铸造千尺高的佛像，熔化金铜在一个锅炉，哪里能分别高低。我们看待大藏经中的各部经论，应该像看一株繁茂的大树，枝叶虽多，各有不同，但循着不同的树枝看去，原本属于同根而生；又如一条长河，源头和下游均是一河之水，不应该只认得源头而不认得下游。</p></div>
+<div class="para-pair"><p class="p-orig">菩萨度生，不见能度所度之相。菩萨行施，不著色声香味触法。故得一心无住，三轮体空，致其福德，直与十方虚空，同一广大悠久。</p><p class="p-trans">菩萨化度众生，不见能度的我、所度众生的相。菩萨修行布施，不住色、声、香、味、触、法六尘。所以能够心中全无执著，能施的人、所施的物、受施的人，这三轮体空，而致使他的福德，与十方虚空，同样的广大悠久啊！</p></div>
+<div class="para-pair"><p class="p-orig">一大藏教，虽有大小权实，偏圆顿渐，显密真俗，禅净性相，种种不同。然其心光血脉，固皆融会贯通，一无滞碍。如帝网千珠，重重交映。如佛殿千灯，光光相涵。</p><p class="p-trans">一部《大藏经》，虽然有大乘小乘、权教实教、偏教圆教、顿教渐教，显教密教、真谛俗谛，禅宗净土、性宗相宗，种种不同。然而各种教法的核心思想与法脉起源原本都是融会贯通，完全没有隔阂的。如同帝释宫殿中的梵网千珠，重重交互映辉。又如同佛殿中的千盏明灯，光光互相涵容。</p></div>
+<div class="para-pair"><p class="p-orig">助刻檀越，但取钱不落空，勿论刊刻何种。庶经理之人，少费心力，而汪洋大藏，速得圆成矣。倘或以分别心，妄生拣择，则人各效尤，必致或有一种，多人愿刻，以成重复。或有一种，无人发心，常时阙漏。功德虽有，缓急失当。全藏流通，知在何时。</p><p class="p-trans">助刻印经的檀越，只要自己的钱没有落空即可，不要执著刊印哪种经书。使得经营料理的人，少费一些心力，而如同汪洋一般的《大藏经》，迅速得以圆满成办啊！倘若用分别心，妄生拣择，那么每个人都来效仿，必然导致或者有一种经，很多人愿意助刻，成为重复。或者有一种经，没有人发心助印，常常有阙漏。功德虽然也有，而缓急就有所失当。整部《大藏经》的流通，又不知要到什么时候了。</p></div>
+<div class="para-pair"><p class="p-orig">况此时经理校对，悉皆有人。胜缘难再，忍令错过耶。须知为实施权，权是实家之权。开权显实，实是权家之实。</p><p class="p-trans">何况现在组织料理与校对经文，都已有专职人员负责。殊胜因缘难以再有，怎么忍心错过呢？必须知道，为实教而施设权巧，权朽是实家之权。开权显实，实是权家之实。</p></div>
+<div class="para-pair"><p class="p-orig">如来说经，菩萨造论。若无西竺此方诸宗古德著述，辅弼翼赞。何能中外流通，至今不替。且世主治国，尚赖文武辅弼，方得万民仰德而畏威，观光而自化。况如来所证之三德秘藏，实相妙理。</p><p class="p-trans">如来说经，菩萨造论。如果没有印度中国诸宗的古德著述，辅佐赞助。怎么能够在中外流通，至今不变呢？况且世间君主治理国家，尚且要依赖文武大臣的辅佐，才能得到万民仰慕圣德，畏惧圣威；观圣德的光辉而自然得到教化。何况是如来所证的法身、般若、解脱三德的秘密宝藏，实相妙理呢。</p></div>
+<div class="para-pair"><p class="p-orig">若舍古德随顺机宜种种发挥，则佛心所证，唯佛与法身大士能知。其余劣机众生，将何由而知，何由而证乎哉。</p><p class="p-trans">如果舍弃古德们随顺众生根机而作的种种发挥，那么佛心所证的境界，唯独只有佛陀与法身大士才能够知道了。其余劣机的众生，由什么途径而知道，由什么途径而证得呢？</p></div>
+<div class="para-pair"><p class="p-orig">是知一大藏万余卷经，同是一法，何可分别。所愿施资助刻诸大檀越，同以无所住而生心，不住法而行布施。则一大藏之不思议功德，人人各获全分。如一月当空，万川普映。一气值节，大地皆春矣。</p><p class="p-trans">所以要知道一部《大藏经》有几万卷的经，同是一种佛法，怎么可以生分别心？所愿布施资助刻经的诸位大施主，同样以菩萨的无所住而生心，不住法而行布施。那么刻印一部《大藏经》的不可思议功德，人人都获得全分。如同一月当空，万流普遍映照。一个节气当值，大地全都回春啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【丛林】</span>佛教多数僧众聚居的处所。《大智度论》卷三：“僧伽秦言众，多比丘一处和合，是名僧伽；譬如大树丛聚是名为林。”后泛称寺院为丛林。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【真如】</span>谓永恒存在的实体、实性，亦即宇宙万有的本体。与实相、法界等同义。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【府库】</span>旧指国家贮藏财物、兵甲的处所。《孟子·梁惠王下》：“君之仓廪实，府库充。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【渊海】</span>深渊和大海。多比喻事物包容深广或荟萃之处。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【伦常】</span>人与人相处的常道。特指封建社会的伦理道德。即认为这种道德所规范的君臣、父子、夫妇、兄弟、朋友五种关系，即五伦，是不可改变的常道。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【疆域】</span>国土；国境。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【无住】</span>无所住着的意思。法无自性，无自性故，无所住着，随缘而生。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【三轮体空】</span>就布施言，施者、受者和所施之物，谓之三轮，行施后，此三轮相，不存于心，名三轮体空。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【权实】</span>（术语）适于一时机宜之法名为权，究竟不变之法名为实。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【偏圆】</span>判释教理胜劣之用语。偏者，偏僻之理，偏于空乃至中；圆者，圆满具足一切。就大、小乘而言，则小乘为偏，大乘为圆。然大乘之中，亦有偏圆之别。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【渐顿教】</span>渐教与顿教。渐教是由浅入深逐渐成功的教法；顿教是立刻速成的教法。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【真俗】</span>1．事理的别名。因缘所生之事相叫做俗，不生不灭之理体叫做真。2．在假空中三谛中，假是俗，空与中是真。3．世间是俗，出世间是真。4．在家是俗，出家是真。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【心光】</span>指心智明朗，或智慧鉴照之光。又称智光、内光。智光又有二义，一为法照，即谓真俗双鉴；一为机照，即谓普应群品。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【血脉】</span>指师徒之法门相承，而以人体之血脉相连比喻之，表示不绝之意。故法门相承，又称血脉相承。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【翼赞】</span>1.辅佐。2.指帝王的辅弼之臣。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【观光】</span>观览国之盛德光辉。语出《易·观》：“观国之光，利用宾于王。”</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【自化】</span>自然化育。语本《老子》：“法令滋彰，盗贼多有，故圣人云：我无为而民自化。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

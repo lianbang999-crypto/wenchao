@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>聂云生居士生西记（陈展西记） · 印光法师文钞</title>
+<meta name="description" content="居士，讳传曾，号云生，江西清江人。幼失怙，受母氏教养。端重好学，光绪甲辰成进士。官湖北，伯兄丧，返籍，后被选为江西咨议局议员。入民国，为省议会议员。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-182/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聂云生居士生西记（陈展西记） · 印光法师文钞">
+<meta property="og:description" content="居士，讳传曾，号云生，江西清江人。幼失怙，受母氏教养。端重好学，光绪甲辰成进士。官湖北，伯兄丧，返籍，后被选为江西咨议局议员。入民国，为省议会议员。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-182/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 附录</div>
+      <h1 class="art-title">聂云生居士生西记（陈展西记）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">居士，讳传曾，号云生，江西清江人。幼失怙，受母氏教养。端重好学，光绪甲辰成进士。官湖北，伯兄丧，返籍，后被选为江西咨议局议员。入民国，为省议会议员。</p><p class="p-trans">聂居士，名传曾，号云生，江西清江人。幼年丧父，接受母亲的教养。端重好学，光绪甲辰（1904年）考中进士。在湖北做官，因为伯兄丧命而返籍，后来被选为江西谘议局议员。建立民国后，成为省议会议员。</p></div>
+<div class="para-pair"><p class="p-orig">均克尽言责，不为媕婀游移。筹安会时，贿选劝进代表，投票则千金立至，违则以兵劫持。居士竟拂袖归，所守类如此。喜为古文辞，然非有关世道大防不苟作。</p><p class="p-trans">都能克尽言责，从不没有主见、游移不决。杨度等人成立筹安会时，贿赂选举支持袁世凯称帝的代表，投一票就立刻得到千金；不投票，就用武力劫持。居士竟然拂袖而归，守护气节的行为大都是这样。喜欢写古文辞句，但是，如果不是有关防护世道人心的重大问题，就不会轻易写作。</p></div>
+<div class="para-pair"><p class="p-orig">晚近二十年来，究心佛典，取法华，楞严，金刚，圆觉诸大乘经，循环持诵，而归宿于净土五经，长斋念佛有定课。</p><p class="p-trans">晚年以后，近二十年来，专心研究佛典，取《法华经》、《楞严经》、《金刚经》、《圆觉经》诸大乘经，循环受持读诵，最终以《净土五经》为归宿，长斋念佛，有定课。</p></div>
+<div class="para-pair"><p class="p-orig">读印光法师文钞，恨未得亲炙。丁丑祷雨如愿，遂成立膏雨念佛林。常至樟树镇鹿江念佛林演讲，感化甚众。</p><p class="p-trans">读《印光法师文钞》，遗憾没有亲近大师得到教诲。丁丑（1937年）年求雨，如愿以偿，于是成立膏雨念佛林。常到樟树镇鹿江念佛林演讲，受到感化的人非常多。</p></div>
+<div class="para-pair"><p class="p-orig">己卯夏，屡患泄泻，自以笃志西归，不复乞灵药饵。十月，衰病益剧，屡梦佛菩萨示现，自知时至，口授遗嘱，延僧侣戚友，率儿孙念佛。</p><p class="p-trans">己卯（1939年）年夏天，多次患腹泻，自己因为笃志西归，所以不再乞望灵丹妙药。十月，病情加剧，屡次梦见佛、菩萨示现，自己知道往生的时候已经到了，就口授遗嘱，延请僧侣、亲戚、好友，率领儿、孙念佛。</p></div>
+<div class="para-pair"><p class="p-orig">绵惙之际，气息渐微，犹能金刚念，毫无痛苦。正念分明，一心不乱，舍报安详，如入禅定。通身柔软，顶门后冷。颜色悦豫，威仪如生。</p><p class="p-trans">临终的时候，虽然气息渐渐微弱，但是仍然能够金刚念，毫无痛苦。正念分明，一心不乱，舍报安详，如入禅定。全身柔软，顶门后冷，颜色悦豫，威仪如生。</p></div>
+<div class="para-pair"><p class="p-orig">凡诸瑞相，与往生证例吻合，考之观经，莲品必高。良由净土法门，以自力感佛力，故能即生取办也。</p><p class="p-trans">所有各种瑞相，都和往生证例吻合，如果参考《观经》，居士往生的莲品一定很高。这实在是由于净土法门，通过自力感应佛力，所以才能够在这一生了办生死大事啊！</p></div>
+<div class="para-pair"><p class="p-orig">居士生于清同治八年己巳，于民国二十八年己卯，十一月初一日西归，世寿七十有一。所著思补堂诗文日志，多阐明净宗教义，藏于家。</p><p class="p-trans">居士生于清同治八年己巳（1869年），于民国二十八年己卯（1939年），十一月初一日西归，世寿七十一。所著的《思补堂诗文日志》，大多阐明净宗的教义，收藏在家中。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【媕娿】</span>无主见，犹豫不决。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【筹安会】</span>是民国初年为袁世凯复辟帝制制造舆论的政治团体。1915年8月14日，杨度串联孙毓筠、李燮和、胡瑛、刘师培及严复，联名发起成立“筹安会”，以讨论国体问题为名支持袁世凯称帝。杨度、孙毓筠是筹安会的中坚人物，而其余四人都是被拉来装点门面的。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【劝进】</span>劝说实际上已经掌握政权而有意做皇帝的人做皇帝。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【大防】</span>谓重要的、原则性的界限。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【笃志】</span>1专心致志;一心一意。2忠诚专一的志向。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【绵缀】</span>谓病情沉重，气息仅存。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>岳步云为亲所设佛堂说 · 印光法师文钞</title>
+<meta name="description" content="众生一念心性，与佛无殊。由迷背故，不得受用。反承此佛性功德力，起贪瞋痴，造杀盗淫。以致轮回三途六道，了无已时，可不哀哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-154/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="岳步云为亲所设佛堂说 · 印光法师文钞">
+<meta property="og:description" content="众生一念心性，与佛无殊。由迷背故，不得受用。反承此佛性功德力，起贪瞋痴，造杀盗淫。以致轮回三途六道，了无已时，可不哀哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-154/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">岳步云为亲所设佛堂说</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">众生一念心性，与佛无殊。由迷背故，不得受用。反承此佛性功德力，起贪瞋痴，造杀盗淫。以致轮回三途六道，了无已时，可不哀哉。</p><p class="p-trans">众生的一念心性，与佛没有区别。由于迷惑背离的缘故，而不能得到受用。反倒承着这佛性功德之力，生起贪瞋痴三毒，造作杀盗淫三业。以致于轮回在三途六道中，没有停止的时候。能不悲哀吗。</p></div>
+<div class="para-pair"><p class="p-orig">阿弥陀佛，于往劫中，发四十八种大愿。有一愿云，若有众生，称我名号，求生我国。乃至十念，若不生者，不取正觉。</p><p class="p-trans">阿弥陀佛，在往劫中发了四十八大愿。有一愿说：“若有众生，称我名号，求生我国。乃至十念，若不生者，不取正觉。”</p></div>
+<div class="para-pair"><p class="p-orig">是知佛念众生，如母忆子。众生若能生信发愿，持佛名号，求生西方，如子忆母。自然上契佛心，感应道交。现生蒙佛加被，业障消灭，诸缘顺适。临终蒙佛接引，带业往生极乐世界。</p><p class="p-trans">从而知道，阿弥陀佛悯念众生，如同母亲忆念自己的孩子。众生如果能够生信发愿，持佛名号，求生西方，如同孩子忆念自己的母亲一样。自然就向上契合佛心，感应道交。现生蒙佛加被，业障消灭，诸事顺利；临终蒙佛接引，带业往生西方极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">从兹入圣超凡，了生脱死。校彼仗自力修戒定慧，直至惑业净尽，方了生死者，其难易奚啻天渊之别。</p><p class="p-trans">从此超凡入圣，了生脱死。相比于那些依仗自力，修戒定慧，直到惑业净尽，才了脱生死的通途法门，难易程度何止天差地别。</p></div>
+<div class="para-pair"><p class="p-orig">岳步云居士，信心真切，而且至孝出于天性。其父运生，年老丧明。步云志心念佛，又劝其父念佛，遂得双目复明。由是其父母，各皆长时念佛矣。</p><p class="p-trans">岳步云居士，对佛法信心真切，而且至孝之心出于天性。他的父亲岳运生，年老之后双目失明。岳步云专心念佛，又劝他的父亲念佛，结果使得父亲双目复明。因此他的父母各自都长时念佛了。</p></div>
+<div class="para-pair"><p class="p-orig">又以公事羁绊，不能常修定省。因请双亲至省，租屋而居，以便承侍。特设一佛堂，以作父母修持之所。而己与妻子，相侍念佛，以祈得亲欢心。亦可谓善于事亲，谕亲于道矣。</p><p class="p-trans">岳居士又因为公事繁忙，不能常时陪伴父母。因此将父母奉请到了省城，租了房子居住，以便于侍奉。还特别设置了一间佛堂，作为父母修持的场所。而自己与妻子侍奉在父母身边念佛，祈望父母心中欢喜。可以说是善于侍奉父母，又能让父母晓谕法道了。</p></div>
+<div class="para-pair"><p class="p-orig">诗云，孝子不匮，永锡尔类。当必有闻风相继而兴起者。</p><p class="p-trans">诗经中说：“孝子不匮，永锡尔类。”当必定会有听到岳居士的事迹，而奋起效法的人。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【至孝】</span>谓极尽孝道。《礼记·祭义》：“至孝近乎王，至弟近乎霸。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【羁绊】</span>犹言束缚牵制。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【定省】</span>《礼记·曲礼上》：“凡为人子之礼，冬温而夏凊，昏定而晨省。”郑玄注：“定，安其床衽也；省，问其安否何如。”后因称子女早晚向亲长问安为“定省”。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【孝子不匮，永锡尔类】</span>出自《诗·大雅·既醉》:“孝子不匮永锡尔类。”朱熹集传:“类善也……孝子之孝诚而不竭则宜永锡尔以善矣。”意思有两种：1.孝顺的子子孙孙层出不穷，上天会恩赐福祉给孝顺的人。2.孝子的孝没有穷尽，永远会想把孝心分给与他（孝子）同类的人。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

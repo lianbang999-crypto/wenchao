@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复徐蔚如居士书 · 印光法师文钞</title>
+<meta name="description" content="接手书，以琐务纷沓，未能即复。光为太夫人虽则朝暮回向，岂能有益于太夫人。实则企太夫人悯我一念之诚，挽弥陀观音而拔济我耳。阁下誉之过甚，不禁令人惭惶。令弟同皆发心，祈为讲演。足知宿世同种善根，将来同作莲池海会之永劫昆季。慰慰贺贺。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-150/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复徐蔚如居士书 · 印光法师文钞">
+<meta property="og:description" content="接手书，以琐务纷沓，未能即复。光为太夫人虽则朝暮回向，岂能有益于太夫人。实则企太夫人悯我一念之诚，挽弥陀观音而拔济我耳。阁下誉之过甚，不禁令人惭惶。令弟同皆发心，祈为讲演。足知宿世同种善根，将来同作莲池海会之永劫昆季。慰慰贺贺。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-150/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复徐蔚如居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，以琐务纷沓，未能即复。光为太夫人虽则朝暮回向，岂能有益于太夫人。实则企太夫人悯我一念之诚，挽弥陀观音而拔济我耳。阁下誉之过甚，不禁令人惭惶。令弟同皆发心，祈为讲演。足知宿世同种善根，将来同作莲池海会之永劫昆季。慰慰贺贺。</p><p class="p-trans">接到你的信，因为琐事繁多，没能马上回复。虽然我为你的母亲早晚都做回向，（然而）哪里能对你母亲有所利益，实在是企望太夫人悯我一念诚心，挽从阿弥陀佛、观世音菩萨来拔济我啊。阁下你赞誉太过，不禁令人惭愧惶恐。你弟弟也同样发心，希望你为他讲演佛法。足以说明你们在过去世中一同种下善根，将来又在莲池海会永劫作兄弟，快慰祝贺！</p></div>
+<div class="para-pair"><p class="p-orig">戒烟方登报，须长年常登，方能广知。须拉有财力者共之。若一人供费，恐力绵而难久矣。</p><p class="p-trans">《戒烟方》登报，必须长年一直登载，才能被人们广泛知道。必须拉一些有财力的人共同来做这件事。如果仅一个人出钱，恐怕财力绵薄而难以持久。</p></div>
+<div class="para-pair"><p class="p-orig">芜钞所节，皆恰当之至。以光信笔所书，原只对彼一人。若普及大众，当须了无所妨，方可不招讥议。唯斥魔子之狂妄处，用撮略叙法，于文体甚合。</p><p class="p-trans">你对文钞所做的节选，都非常恰当。我随意所写的书信，原本只针对一个人。如果要普及大众，就必须要一点妨碍都没有，才不会招来讥讽和议论。唯有指斥魔子狂妄的地方，采取摘要式引用，在文体方面很契合。</p></div>
+<div class="para-pair"><p class="p-orig">然今之宗徒，多不识宗。既未指彼妄造谣言之实迹，彼宗徒必谓光为谤宗。即宗教不宜混滥论，不知宗气之宗徒，亦以为谤宗。宗徒多分之见识皆如是，则宗法殆扫地而尽矣。</p><p class="p-trans">然而现如今的宗门信徒，大多不了解宗门。如果不指出他们妄造谣言的真实事迹，那些宗门的信徒必定会认为我是在诽谤宗门。就连《宗教不宜混滥论》一文，不知道宗门气象的信徒看了，也会认为是在诽谤禅宗。宗门的信徒大多数见识都是如此，这样宗门的法脉就丧失殆尽了。</p></div>
+<div class="para-pair"><p class="p-orig">近来佛法流通，潮州居士王弘愿，素好密宗。依之修持，颇有效验。于余宗虽未大通，亦各涉其藩篱。彼译出东瀛密教纲要，刻出寄两部来。今寄上一部，以祈随喜。然彼系弘密之人，故偏抬高密宗。约教而论，固无大碍。若与净土三根普被，教机相投之法门论，固相悬殊。</p><p class="p-trans">近来佛法流通，潮州王弘愿居士，一向爱好密宗，依密宗修持，很有效验。他对其余的宗派虽然没有大为通达，但也有一些涉猎。他翻译出《东瀛密教纲要》一书，刻印出版后寄了两部给我。现在寄一部给你，希望你随喜（送人）。然而他是弘扬密宗的人，所以特别抬高密宗。对于教理来说，固然没什么大碍。如果与三根普被，教理与根机两相契合的净土法门来比较，就相差悬殊了。</p></div>
+<div class="para-pair"><p class="p-orig">王弘愿来书所说，皆约教而遗机。光与彼书，乃约机而论教之利益也。虽不相合，亦无大背。其人年四十余，若再研究得十余年。当亦可为一大通家矣。禅宗秘密了义经跋，断宜取消，免滋疑误。</p><p class="p-trans">王弘愿来信所说的，都是针对教理，但却遗漏了众生的根机。我给他的回信，是针对众生根机而讨论如何从教理中得到实际利益。即使不相契合，也没有什么大的违背。他现在四十多岁，如果再研究十几年。应当也可以成为一个大通家了。《禅宗秘密了义经跋》，绝对应该取消，免得疑误他人。</p></div>
+<div class="para-pair"><p class="p-orig">至于声闻回己所证小果，趣向如来大道。虽则顿渐有异，而中间位次，必不磨灭。大鹏一举九万，亦是自下升高。利刀一截千纸，亦是从一至千。顿教唯约顿说，故有无位次之论。然无位次中，不妨位次历然。若异渐，则渐非顿家之渐，顿非渐家之顿。二法判然各别，了不相即。唯宜以实义立言，不当以渐顿之表语为据。则佛法无一法不相通矣。</p><p class="p-trans">声闻回自己所证的小果，趣向如来大道。虽然有顿渐的不同，而中间修行经历的位次，必定不会磨灭。大鹏鸟一飞就是九万里，也是从下面一点一点升高；锋利的刀一次截断一千张纸，也是从第一张开始一张一张截断。顿教是专门就顿悟来阐说的，所以有“无位次”的论述。然而所谓的＂无位次＂过程当中，却也不妨各个位次历然分明。如果（刻意）与渐教来分别，那么渐教不是顿家所说的渐教，顿教不是渐家所说的顿教。顿和渐完全成了两回事，一点都不关联了。（因此）只应当根据实义（按，或可理解为实际内涵）来论述，不应当把渐顿的表面意思作为依据。那么佛法就没有一法不互相融通了。</p></div>
+<div class="para-pair"><p class="p-orig">王弘愿论密宗，亦以弘密宗之诠表为论。是知尚未知如来教须契机之至意也。罗汉根性，亦不一定。有回向即超证深位者，有入住渐升者。然顿渐有异，位次仍复历然，似无大谬。</p><p class="p-trans">王弘愿谈论密宗，也是用弘扬密宗（的论著中）诠释表象的话语作为论据。由此知道，他还没有明白如来设教必须契合众生根机，这一至要的道理。阿罗汉的根性，也不是一定的。有回向后立刻就证入菩萨深位的，有进入初住位，渐渐上升的。然而顿渐虽然有不同，修证的位次，仍是历然不乱。（这样阐说）应当没有大的错误。</p></div>
+<div class="para-pair"><p class="p-orig">十方世界随类现身，圆教初住即能。不历住行向等，唯佛后所示罗汉则然。若实证，实回小向大之罗汉，恐无此本领。若有，则住行向地等位菩萨，皆成钝根无奇之人矣。有是理乎。离顿说渐，离渐说顿。离教说宗，离宗说教。高抬密宗，藐视显教。皆所谓徐六担板，只见一边耳。</p><p class="p-trans">十方世界随类现身，圆教初住菩萨就能做到。不经历十行、十住、十回向等位次，唯有成佛之后所示现的阿罗汉才可以，如果确实是回小向大的阿罗汉，恐怕没有这个本领。如果有，那么十住、十行、十回向、十地等位次的菩萨，都成了钝根无奇之人了。有这样的道理吗？离开顿教说渐教，离开渐教说顿教。离开教下说宗门，离开宗门说教下。高抬密宗，轻视显教。这都像是徐六担着板子行走，只见到（板子的）一边罢了。</p></div>
+<div class="para-pair"><p class="p-orig">佛法善会，则法法皆通，否则法法互碍。光实少闻少见，然约理约义而论，当如是为融通，断无两个道理。鄙见如是，不知阁下以为何如。</p><p class="p-trans">佛法，如果善于领会，那么法法都相互融通，否则，法法都互相障碍。我实在孤陋寡闻，然而针对教理、实义来讨论，应当这样理解才算融通，绝对不会有两套不同的道理。我的见解如此，不知阁下以为如何？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【纷沓】</span>纷冗繁杂。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【昆季】</span>兄弟。长为昆，幼为季。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【撮略】</span>摘取，摘引。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【王弘愿】</span>（1873-1937年）广东潮安县人。先名师愈，号慕韩，皈依佛法后改名弘愿，号圆五居士。40岁时因读《华严经》而开始信佛，常向开元寺怡光法师请教教义，借阅经典。民国八年（1919年）译日本权田雷斧大僧正所著《密教纲要》，并寄呈权田雷斧。后又译权田雷斧所著《大日经疏续弦秘曲》。民国十三年（1924年）6月，权田雷斧偕小林正盛等共12人来潮弘传密法，王弘愿特受两部传法灌顶，得遍照金刚密号，绍真言宗第四十九世传灯大阿阁黎职位。同年在居所（今城内义安路新街头圆五居）创“震旦密教重兴会”，招募会员，开坛灌顶，讲演教义，刊行经籍。民国十五年创办《密教讲习录》（双月刊），至民国二十三年停刊。民国十五年东渡日本，谒权田雷斧。民国一至七年、二十一年、二十二年三度在广州六榕寺解行精舍开坛灌顶，受法者颇众。民国二十三年四月，在汕头创办“汕头密教重兴会”，并编行《世灯月刊》。民国二十六年（1937年）二月五日病逝。所著有《大日经疏》、《金刚顶经义诀》、《四度次第及私勘集译》、《缵槐堂文集·诗集》。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【藩篱】</span>比喻事物的界限；障碍。比喻界域，境界。用以指某一范畴。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【相即】</span>（术语）谓如波即水，水即波，彼此互废己而同于他也。色即是空，空即是色，是相即也。两镜相照为相入，非相即也。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【实义】</span>（杂语）真实之义理也。华严经二十九曰：“分别实义得究竟。”报恩经六曰：“不可以实义。”正理论二十三曰：“能止推征令证实义。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【诠表】</span>解释和表达。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【徐六担板】</span>喻学人不解圆义，死执一边。所谓担板，用一个肩头背了一块木板走路，只能看到一边而已。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

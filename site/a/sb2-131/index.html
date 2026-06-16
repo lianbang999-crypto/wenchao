@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复康寄遥居士书三 · 印光法师文钞</title>
+<meta name="description" content="接手书并经塔铭等，不胜欣慰。自述一篇，颇诚恳发露。但所说者，务必见之于行，方为实义。否则便是妄语，自瞒瞒人矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-131/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复康寄遥居士书三 · 印光法师文钞">
+<meta property="og:description" content="接手书并经塔铭等，不胜欣慰。自述一篇，颇诚恳发露。但所说者，务必见之于行，方为实义。否则便是妄语，自瞒瞒人矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-131/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复康寄遥居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书并经塔铭等，不胜欣慰。自述一篇，颇诚恳发露。但所说者，务必见之于行，方为实义。否则便是妄语，自瞒瞒人矣。</p><p class="p-trans">接到信以及《经塔铭》等，非常欣慰。一篇“自述”，相当诚恳发露。但是所说的，务必要见于实行中，才有真实意义。否则，就是妄语，自欺欺人了。</p></div>
+<div class="para-pair"><p class="p-orig">令慈之塔，不知作何仪式。按佛制，轮王方修塔，无级。出家证初二三四果，各以所证之果，分级多少。若是凡夫，不应修塔。近世僧各修塔，但作表式，不起层级，尚有可原。在家绝未闻修塔者。</p><p class="p-trans">你母亲的塔，不知要作什么样式。按照佛制，转轮圣王方可修塔，没有塔级。出家证得初、二、三、四果，各以所证的果位，来分塔级的多少。若是凡夫，则不应该建塔。近世的僧人各有修塔，只是作一个表彰形式，不起塔层级数，还情有可原。在家人，绝对没有听说修塔的。</p></div>
+<div class="para-pair"><p class="p-orig">杨仁山诸弟子为其修塔，其仪式几同佛塔，不足为法。但彼有流通弘扬佛法之益，故诸弟子尊之过甚耳。令慈虽一生清修，临终正念往生，其所证未可知。在此方决不能以圣人冒拟之。拟则谓之以凡滥圣。若往生后所证，不能引于此方生前。故在此生彼，各按各处分位，方为不违佛制。然已修好，只可任之以传。但不得以此为是，令凡有心者，皆袭而效之。此光之不容不说明也。</p><p class="p-trans">杨仁山的诸位弟子为他修塔，塔的样式几乎与佛塔相同，不值得学习效法。但是他有流通弘扬佛法的功德利益，所以诸位弟子尊敬他太过了。你母亲虽然一生清净修行，临终正念往生，她所证的境界尚不知道。在此娑婆世界，决不能以圣人来冒充虚拟。虚拟就是以凡滥圣。如果是往生之后所证的果位，不能引用到婆婆世界的往生前。所以在此娑婆世界、往生到极乐世界，各按各处的本分位置，方才不违佛制。然而已经修好，只好任凭流传。但是不能将修塔认为是对的，令凡是有心修塔的人，都沿袭而来效仿。这是我不得不说明的。</p></div>
+<div class="para-pair"><p class="p-orig">八大人觉经，写得甚好，令人看之生欢喜心。九月二十六，光下山，月尽到上海，意谓汝与家眷通回家去，以故绝未过问。至腊月初五，李级仁来，方知未曾全回。光回陕事，实为不易。以陕地撩乱，又兼寒冷。若将衣物通丢了，到秦则置不起。若带上，则东西累堆，实属两难。以故光绝无回秦之心。</p><p class="p-trans">《八大人觉经》，写得很好，令人看了，心生欢喜。九月二十六日，我下普陀山，月底到上海，以为你与家眷全都回家去了，所以完全没有过问。到了腊月初五，李级仁来了，才知道你们没有全都回去。我回陕西的事，实在不容易。因为陕西地方混乱，又加上寒冷。如果将衣物全都丢了，到了陕西就置办不起。如果带上，那么东西累赘，实在是两难。所以，我绝无回陕西的心。</p></div>
+<div class="para-pair"><p class="p-orig">况现在普陀修山志，虽非光自主，然光固不能置之度外。又大士本迹一门，光托江西友人已修有八九个月，此事万万不能假手于人。须彼修好，光阅过，然后或合于山志中，或别行，皆须光自料理耳。</p><p class="p-trans">何况现在在普陀修《普陀山志》，虽然不是由我主持，然而我也无法置身事外。还有《观音大士本迹颂》这件事，我委托江西的友人已经编修八九个月了，这件事万万不能借他人之手。必须等他编修好，我看过，然后或者合编在《普陀山志》中，或者单本别行，都必须我自己来处理。</p></div>
+<div class="para-pair"><p class="p-orig">汝既知一切众生，皆是过去父母，未来诸佛，家中悉是本支眷属，固当永断荤腥，方为实行。世之儒者，被习所锢，视吃肉为理之所宜，绝不念及彼被杀时之痛苦。况论过去与未来乎。哀哉。此身不向今生度，更向何生度此身。改度为修，颇不合宜。</p><p class="p-trans">你既然知道一切众生，都是过去父母，未来诸佛，家中全都是本宗的眷属，本来就应当永断荤腥，才是真实行持。世间的儒者，被习俗所禁锢蔽塞，将吃肉看作是理所应当，绝不考虑那些动物被宰杀时的痛苦。何况是讨论过去与未来呢？悲哀啊！“此身不向今生度，更向何生度此身”。改“度”字为“修”字，很不合适。</p></div>
+<div class="para-pair"><p class="p-orig">现在天开泰运，人庆丰年，缅想献岁以来，诸缘如意，起居纳福。志常与儿女辈，通皆吉祥安乐，不胜欣慰。书此顺候禅安，兼贺新禧。并候阖潭均安。若无要事，不必来山。光恐三四月去杭州，顺便可一会耳。</p><p class="p-trans">现在上天开泰运，众人庆丰年，遥想新年以来，诸事如意，生活起居，迎祥纳福。志常与儿女们，全都吉祥安乐，非常欣慰。写到这里，顺便问候禅安，恭贺新禧。并问候合家平安。如果没有要紧事，不必来普陀山。我也许三四月份会去杭州，顺便可以见一面。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【本支】</span>同一家族的嫡系和庶出子孙。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【顺候】</span>书信结尾时表示问候的套语。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

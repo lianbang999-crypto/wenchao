@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>净土五经后附华严经净行品缘起序（民二十三年） · 印光法师文钞</title>
+<meta name="description" content="华严妙典，理事圆融，理由事显，事因理成，理事各臻其极，圆证毗卢法身。以故如来初成正觉，与十住，十行，十回向，十地，等觉四十一位法身大士，说如来自证法门诸因果法。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-003/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="净土五经后附华严经净行品缘起序（民二十三年） · 印光法师文钞">
+<meta property="og:description" content="华严妙典，理事圆融，理由事显，事因理成，理事各臻其极，圆证毗卢法身。以故如来初成正觉，与十住，十行，十回向，十地，等觉四十一位法身大士，说如来自证法门诸因果法。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-003/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">净土五经后附华严经净行品缘起序（民二十三年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">华严妙典，理事圆融，理由事显，事因理成，理事各臻其极，圆证毗卢法身。以故如来初成正觉，与十住，十行，十回向，十地，等觉四十一位法身大士，说如来自证法门诸因果法。</p><p class="p-trans">《华严经》这部妙典，理事圆融无碍，理通过事来彰显，事因理得以成就，事理两方面都达到了极致，圆证毗卢遮那法身。所以如来刚成正觉，就对十住、十行、十回向、十地、等觉，四十一阶位的法身大士，宣说如来自证法门的各种因果法。</p></div>
+<div class="para-pair"><p class="p-orig">因果，即事。如来自证之法，即一真法界，寂照圆融，不生不灭，非有非空之真如佛性也。</p><p class="p-trans">因果，就是事。如来自证之法，就是一真法界，就是寂照圆融，不生不灭，非有非空的真如佛性。</p></div>
+<div class="para-pair"><p class="p-orig">此之佛性，在凡不减，在圣不增。佛以究竟证故，常享常乐我净之法乐。众生以彻底迷故，恒受生死轮回之妄苦。</p><p class="p-trans">此佛性，在凡夫位并不减少，在圣者位也不增多。佛陀因为究竟证得的缘故，所以常享常、乐、我、净的法乐；众生因为彻底迷惑的缘故，所以恒受生死轮回的妄苦。</p></div>
+<div class="para-pair"><p class="p-orig">譬如大圆宝镜，经劫蒙尘，虽有照天照地之光，莫由发现而得受用。故借诸菩萨，互相酬倡，为说十信，十住，十行，十回向，十地，等觉各法门。又复以十大愿王，导归极乐，以期圆满佛果。</p><p class="p-trans">譬如大圆宝镜，经长久劫蒙上尘垢，虽然有照天照地的光芒，但是也不能发现并得到受用。所以如来借着与诸位菩萨的互相酬答倡和，为他们宣说十信、十住、十行、十回向、十地、等觉各种法门。又再以十大愿王，导归极乐，以期圆满佛果。</p></div>
+<div class="para-pair"><p class="p-orig">此如来以自证之因果，普示一切众生，令其各各亲证之一大轨范也。其在信位，则以净行品，为以因地心，上契果觉之弘誓大愿。虽进而登十住，十行，十回向，十地，等觉各深位，犹复以此一百四十一愿，而为进修之据。</p><p class="p-trans">这就是如来用自证的因果，普示一切众生，令众生各各亲证的一大轨范。在十信位的菩萨，就以《净行品》，作为因地的发心，向上契合果觉的弘誓大愿。即使进一步登上十住、十行、十回向、十地、等觉的各个深位，也仍然用一百四十一愿的《净行品》，作为进修的依据。</p></div>
+<div class="para-pair"><p class="p-orig">是知此一品经，关系甚大，不徒为入佛之初基，洵可谓成佛之大本。而末世众生，根机浅薄，果能心心念念，常诵此文，常发此愿，便可三业顿获清净，念念上契佛心，临终直登上品，与普贤行愿品功德，交光互映，无或差池。</p><p class="p-trans">由此可知，这一品经，关系非常大，不仅仅是入佛门的初基，实在可以说是成佛的大根本。但是，末法时期的众生，根机浅薄，若果真能够心心念念，常诵此文，常发此愿，便可使身口意三业顿时获得清净，念念向上契合佛心，临终直登上品莲台，与《普贤菩萨行愿品》的功德，交光互映，没有一点差异。</p></div>
+<div class="para-pair"><p class="p-orig">故宋初省常法师，慕庐山远公之风，提倡净土法门，刺血书此品，又以净行名其社。而莲宗得以丕振者，以深致力于日用云为，悉使与如来无上觉道合之所以也。</p><p class="p-trans">所以宋初的省常法师，仰慕庐山慧远大师的道风，提倡净土法门，并剌血书写了这品经文，又以“净行”命名莲社。当时莲宗之所以得以大力振兴，正是因为深下功夫，致力于使日常的行持全都与如来的无上觉道相合的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">一弟子杨慧导，拟以净行品，与普贤行愿品，合印流通。光谓，欲令初机息心念佛，当以净土五经为先导，不宜于五经中只取行愿一品。使彼遍读五经，再以净行一品，作一切时一切处之警策，则自可欣欣就道矣。</p><p class="p-trans">有一位弟子杨慧导，打算将《净行品》，与《普贤菩萨行愿品》，合印流通。我对他说：想要使初机学人息心念佛，应当以净土五经作为先导，不应该在五经中只取《普贤菩萨行愿品》这一品。应使他们遍读五经，再用《净行品》，作为一切时，一切处的警策，自然就可以欣欣向道了。</p></div>
+<div class="para-pair"><p class="p-orig">呜呼，今之时，是何时也。乃废弃纲常伦理，专尚机械变诈，互相残杀之时也。若不以信愿念佛，求生西方为导，则后世为人，恐先圣所立纲常伦理之名，亦不可得而闻矣。</p><p class="p-trans">呜呼，现今之时代，是什么样的时代？是废弃伦理纲常，专门崇尚机巧欺诈，互相残杀的时代。如果不以信愿念佛，求生西方作为引导，那么后世子孙，恐怕连先圣所建立伦理纲常的名目，也不可能听闻到了啊！</p></div>
+<div class="para-pair"><p class="p-orig">以故凡具正知见，正信心者，咸皆以修持净业为志事。兹特述其缘起，以附于经文之后，庶后之读者，无所疑焉。</p><p class="p-trans">所以，凡是具有正知正见，正信心的人，全都要以修持净业作为抱负。在此特别叙述其中的缘起，附在经文之后，使将来的读者，不会产生疑惑。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【毗卢遮那佛】</span>即是中道理体的法身佛；佛以法为身，故称法身，法身处于常寂光净土。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【法乐】</span>即法味之乐。听受佛法之法味，以长养法身之慧命而生喜乐。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复秉初和尚书 · 印光法师文钞</title>
+<meta name="description" content="佛法法法圆通。若以志诚心受持，必有不测之感应。然唯念佛念观音，尤为易于感通也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-025/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复秉初和尚书 · 印光法师文钞">
+<meta property="og:description" content="佛法法法圆通。若以志诚心受持，必有不测之感应。然唯念佛念观音，尤为易于感通也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-025/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复秉初和尚书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法法法圆通。若以志诚心受持，必有不测之感应。然唯念佛念观音，尤为易于感通也。</p><p class="p-trans">佛法法法圆通。如果以志诚心受持，必定有不可思议的感应。然而唯有念佛、念观音，才特别容易感通。</p></div>
+<div class="para-pair"><p class="p-orig">而普通人无不知观音大士救苦救难者。当令志脱吃长素，日常礼念南无阿弥陀佛及念南无观世音菩萨圣号，必有感应。</p><p class="p-trans">而普通人，没有不知道观音大士救苦救难的。应当令志脱吃长素，每天常常礼拜念诵“南无阿弥陀佛”以及念“南无观世音菩萨”圣号，必定会有感应。</p></div>
+<div class="para-pair"><p class="p-orig">今为取法名为通畅。谓念圣号，俾宿业消灭，心地通达，语言舒畅也。早晚念佛若干，念观音若干。此外从朝至暮，专念观音（无论出声念，默念，均须摄耳而听。听则功德更大。行住坐卧，均可念。卧及衣冠未整齐，手口未洗漱，均宜默念）。</p><p class="p-trans">现今为他取法名为通畅。就是念诵佛菩萨圣号，使得宿业消灭，心地通达，语言舒畅。早晚念佛若干声，念观世音菩萨若干声。此外，从早到晚，专念观音菩萨（无论出声念，默念，都必须摄耳而听。谛听，功德更大。行住坐卧，都可以念。躺卧以及衣冠不整齐，手口没有洗漱，都只适合默念）。</p></div>
+<div class="para-pair"><p class="p-orig">楞严经观音谓我得佛心，证于究竟。能以珍宝种种供养十方如来，傍及法界六道众生。求妻得妻（求妻者，求得贤善之妻也），求子得子，求三昧得三昧，求长寿得长寿，如是乃至（如是乃至包括一切所求在内）求大涅槃得大涅槃。大涅槃者，究竟佛果，尚可求而得之。况其余之小事，有不能得乎。</p><p class="p-trans">《楞严经》中观世音菩萨说：“我得佛心，证于究竟。能以珍宝种种供养十方如来，傍及法界六道众生。求妻得妻（求妻者，求得贤善之妻），求子得子，求三昧得三昧，求长寿得长寿，如是乃至（如是乃至包括一切所求在内）求大涅槃得大涅槃。”大涅槃，是究竟佛果，尚且可以求而得之。何况其余的小事，有不能得到的吗？</p></div>
+<div class="para-pair"><p class="p-orig">当发善心为自利利他。则随求者心之诚，与行之淳之大小，而得其感应。若欲做恶事求菩萨，则不但不得福，而且有大祸矣。</p><p class="p-trans">应当发起善心，为自利利他。那么随祈求之人内心的诚意，与行持淳厚的大小，而得到多少的感应。如果想要做恶事来求菩萨，则不但不能得福，而且有大祸啊！</p></div>
+<div class="para-pair"><p class="p-orig">凡一切医不能治之病，均以此一味阿伽陀药而治之。（民廿九年八月初五日）</p><p class="p-trans">凡是一切医生不能治好的病，都以这一味阿伽陀药来医治。（民国二十九年，八月初五日）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

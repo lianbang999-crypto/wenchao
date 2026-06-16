@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>12、复泰顺林介生居士书一 · 印光法师文钞</title>
+<meta name="description" content="开示逆境、圣贤之学和在家学佛法则">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-012/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12、复泰顺林介生居士书一 · 印光法师文钞">
+<meta property="og:description" content="开示逆境、圣贤之学和在家学佛法则">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-012/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第一部分·书信 · 如诚法师、圆涛法师译</div>
+      <h1 class="art-title">12、复泰顺林介生居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>开示逆境、圣贤之学和在家学佛法则</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">不慧为儒未能，学佛不就。久离故乡，欲反未能。每一省察，惭惶无地。忽接华翰，若遇故人。但书中赞誉过分，令人如临鈇钺耳。祈以后再有笔谈，勿用此套。</p><p class="p-trans">我学习儒家，没什么收获，学习佛法，也没有什么成就。离开故乡很久了，想要回去也不能够。每每自己反省思察，真是惭愧惶恐极了。忽然接到你的来信，如同遇到了老朋友。但是您在书信当中过分的称赞我，令人如同面临刀斧刑具啊！祈望以后再有来信，不要再说这些称赞的话。</p></div>
+<div class="para-pair"><p class="p-orig">令兄枝芬，于七月十四日晤面。因询居士修持家道，言其为善益力，道念日增。但以家门不幸，令郎早夭，二孙尚幼，颇怀忧思。予闻之不禁慨然长叹。</p><p class="p-trans">你哥哥枝芬，在七月十四日见过面。因此询问你修持佛法、以及家境的情况，说你做善事更加努力，道念一天天在增长。但因为家门不幸，儿子夭折，二个孙子还小，你心里很忧虑。我听后不禁慨然长叹。</p></div>
+<div class="para-pair"><p class="p-orig">须知逆来顺受，始名乐天。修身植德，方曰尽性。世有愚人，不知夙生善恶，惟观眼前吉凶。见作善而得祸，便谓善不当为。作恶而得福，便谓恶不足戒。不知善恶之报，非一朝一夕之故，其所由来者渐。譬如三尺之冰，岂一朝之寒所能结。百川之泮，亦岂一日之暖所能消。切不可怨天而尤人，犹豫而退悔。宜学俞净意之修身，袁了凡之立命。将见二孙必成佳士，麟儿屡见诞生矣。</p><p class="p-trans">要知道逆来顺受，才称为乐天知命。修身植德才叫穷理尽性。可惜世间愚痴的人，不知道过去世善恶的因，只看眼前的吉凶祸福。见行善人得到祸害，便认为善不应当做。见作恶的人得到福报，便认为恶不必革除。不知善恶的因果报应，不是一朝一夕形成的，事情发生的原因由来已久。譬如三尺冰冻不是一夜的寒冷所能冻结。百千江河结冰消融，也不是一天的温暖所能消融。切不可面对逆境怨天尤人，更不可对善法犹豫退悔。应该学俞净意的修养身行、袁了凡立命的志向。将会见到二个孙子必定成为品学出众之人，聪慧的后世子孙不断诞生啊！</p></div>
+<div class="para-pair"><p class="p-orig">至于华严重建，诚属莫大功德。然居处深山，募化维艰。只可随缘，不宜勉强。有殿可以供佛，有寮可以安身，行道居处有所庇覆，足矣。何必多造殿宇，广列长廊。不为利益自他，惟取快悦俗目乎。</p><p class="p-trans">至于华严寺的重建，确实有很大的功德。然而居住在深山中，化缘筹钱非常艰难。只可以随缘来做，不应该勉强。有殿堂可以供佛，有寮房可以安身行道，住处有所庇覆，就满足了。何必要建造很多殿宇长廊。不是为了利益自己他人，只是为了取悦世俗人的眼睛吗？</p></div>
+<div class="para-pair"><p class="p-orig">谢友才志虽高，可惜从未一遇通人。所言自悔时过难学者，特举业耳。不知学圣学贤之时，无过无不过。其学亦无难无易。</p><p class="p-trans">你那位姓谢的朋友，才志虽然很高，可惜从来没有遇到过精通佛法的人。他所说的：自己后悔时间年纪超过了，难以再学习，这只是就科举考试来说罢了。他不知道学习圣人、贤人的时间，无所谓年龄超过或不超过的。学习也没有困难容易的分别。</p></div>
+<div class="para-pair"><p class="p-orig">何以言之。孔子七十，尚欲假年学易，为免大过计耳。岂为熟其词义以雄笔札，得高爵者哉。十五志学，七十尚学。彼年临四十，岂时过不能为学耶。</p><p class="p-trans">为什么这么说呢？孔子七十岁，尚且想要延长寿命来学习《周易》，这是为了免除犯大的过失而作的打算。哪里是为了精熟词义来雄壮文章，得到高官爵位呢？孔子十五岁就专心求学，到了七十岁还要学习。他的年纪刚到四十岁，哪里是时间年纪超过就不能学习呢？</p></div>
+<div class="para-pair"><p class="p-orig">尧舜之道，孝弟而已矣。一日克己复礼，天下归仁焉。圣罔念而作狂，狂克念而成圣。有何难易之可论于其间哉。</p><p class="p-trans">尧舜先圣的大道，就是孝顺父母，敬爱兄长啊！一天能够克己复礼（克除私欲，行为符合天理），天下就归附仁德了。圣人失去正知正觉就成为狂妄的人，狂妄的人克服邪念就能成为圣人。这当中，有什么困难容易可说呢？</p></div>
+<div class="para-pair"><p class="p-orig">予谓谢友，为学莫善此际。有父母可以尽孝，有兄弟可以尽弟，有儿女可以教训，有诗书可以取法，正合夫子居家为政之道。此时不学，真是时过难学矣。纵令文章盖世，官居一品，终是一穷微极妙之艺人，非适时力学之儒士也。因闻佛语，遂持长斋，可知宿因深厚。废弃前功，意欲出家，可知道眼昏朦。</p><p class="p-trans">我对这位姓谢的朋友说：学习圣贤之道，最好就在这个时候。有父母可以尽孝道，有兄弟可以尽悌道，有儿女可以教训，有诗书可以取法，正合孔夫子居家为政之道。这个时候不学，真的是时过难学了啊！纵然文章盖世，官居一品，终究只是一个穷微极妙的艺人，不是顺适时机努力学习圣贤的儒士。因为听到佛语，就持长斋，可见他宿因深厚。废弃以前事功，想要出家，可知他道眼昏朦。</p></div>
+<div class="para-pair"><p class="p-orig">如来说法，恒顺众生。遇父言慈，遇子言孝。外尽人伦，内消情虑，使复本有真心，是名为佛弟子，岂在两根头发上论也。</p><p class="p-trans">如来说法，恒顺众生的根性。遇父亲说慈爱，遇儿子说孝顺。对外要恪尽人伦道德，向内要消除情见疑虑，恢复本有的真心，才名为佛弟子，哪里是在两根头发上理论呢？</p></div>
+<div class="para-pair"><p class="p-orig">况贵乡僻居深山，知法者少。高明者以语言不通之故，皆不至其地。仗此好心，竭力学道。孝弟修而闾里感化。斋戒立而杀盗潜消。研究净土经论，则知出苦之要道。受持安士全书，则知淑世之良谟。以净土法门谕亲，以净土法门教子，及诸亲识。正以生死事大，深宜痛恤我后。</p><p class="p-trans">何况你的家乡在偏僻的深山，知道佛法的人很少。高明的人因为语言不通的缘故，都不到那个地方。你要仗着学佛的好心，努力学道。孝顺父母，友爱兄弟，感化乡里民众。吃斋守戒，杀盗等事便会暗中消除。研究净土经论，就知道出苦的要道。读诵遵行《安士全书》，就知道济世的良谋。以净土法门告知双亲，以净土法门教导子女，以及诸位亲友知识。正因为生死事大，更应该好好顾念自己的将来。</p></div>
+<div class="para-pair"><p class="p-orig">不必另择一所，即家庭便是道场。以父母兄弟妻子朋友亲戚，尽作法眷。自行化他，口劝身率，使其同归净域，尽出苦轮。可谓戴发高僧，居家佛子矣。</p><p class="p-trans">不必另外选一个处所，家庭就是道场。因为父母，兄弟，妻子，朋友，亲戚都是法眷属。自行化他，言语劝说，以身表率，使他们都归依三宝，出离轮回。这样就可以说是戴发的高僧，居家的佛子了。</p></div>
+<div class="para-pair"><p class="p-orig">宜以鄙意告之。倘闻此不加诽毁，又欲进步，路头不决。身事暇适，不妨亲至普陀来访一番。否则但观净土十要，及净土圣贤录，自知取法，不劳更问他人矣。</p><p class="p-trans">应该将我的意思告诉他。倘若听后不加诽毁，又想要进一步修学，而道路不明。如果身体事务有空合适，不妨亲自到普陀山来访一次。否则只看《净土十要》，以及《净土圣贤录》，自然知道取法，不须再问他人了。</p></div>
+<div class="para-pair"><p class="p-orig">令兄忠厚有余，似与此道有缘。宜劝受持安士全书，庶不虚此一晤。弥陀疏钞，安士全书各一部，随书带来，以结净缘。</p><p class="p-trans">你的哥哥很忠厚，似乎与净土法门有缘。应该劝他受持《安士全书》，才不白白浪费这一次见面。《弥陀疏钞》，《安士全书》各一部，随信带来，以结清净法缘。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【无地】</span>犹言至极；不尽。形容无限喜爱、惶恐、惊喜、感愧等感情。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【华翰】</span>对他人来信的美称。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【鈇钺】</span>斫刀和大斧。腰斩、砍头的刑具。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【尽性】</span>儒家谓人物之性均包含天理，唯至诚之人，才能发挥人和物的本性，使各得其所。《易·说卦》：“穷理尽性，以至于命。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【夙生】</span>前生。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【百川】</span>江河湖泽的总称。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【俞净意】</span>明嘉靖时人，讳都，字良臣，多才博学。俞先生改过自新，力行三年得真实效验。详见《俞净意公遇灶神记》。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【袁了凡】</span>明朝人，原名黄，字坤仪，出生在江苏省苏州府的吴江县，原本命中注定没有孩子、寿五十三岁、官做到县长。但他喜欢做善事，并且信仰佛教，因积极修福积德而改变了命运——无子得子、高中进士、官位追赠到尚宝司少卿、享寿七十四岁。详见《了凡四训》。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【佳士】</span>品行或才学优良的人。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【麟儿】</span>指颖异的小孩子。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【举业】</span>为应科举考试而准备的学业。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【孝弟】</span>亦作“孝悌”。孝顺父母，敬爱兄长。《论语·学而》：“其为人也孝弟，而好犯上者鲜矣。”朱熹集注：“善事父母为孝，善事兄长为弟。”</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【归仁】</span>归附仁德仁政。晋张华《励志》诗：“复礼终朝，天下归仁。”</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【圣罔念而作狂，狂克念而成圣】</span>出自《尚书·多方》。圣：通明。狂：昏愚。罔：迷惑。克：克服。意思是：明白人迷失了正念，就成为昏愚的恶人。糊涂人能够克服妄念，就成为通明的圣人。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【淑世】</span>犹济世。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【良谟】</span>良谋。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

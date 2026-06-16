@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复（康寄遥，郑子屏）二居士函 · 印光法师文钞</title>
+<meta name="description" content="初十日接王一亭书，言初六已将光所拨之三千元，并后捐之五百元，及真达师之二百，孙月三之三百，并王一亭自己及黄涵之各五百元，共五千元，交义源厚宋子才君汇去。又义源厚等五家烟号，各出一百元，共五千五百元汇去，以救眉急。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-037/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复（康寄遥，郑子屏）二居士函 · 印光法师文钞">
+<meta property="og:description" content="初十日接王一亭书，言初六已将光所拨之三千元，并后捐之五百元，及真达师之二百，孙月三之三百，并王一亭自己及黄涵之各五百元，共五千元，交义源厚宋子才君汇去。又义源厚等五家烟号，各出一百元，共五千五百元汇去，以救眉急。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-037/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复（康寄遥，郑子屏）二居士函</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">初十日接王一亭书，言初六已将光所拨之三千元，并后捐之五百元，及真达师之二百，孙月三之三百，并王一亭自己及黄涵之各五百元，共五千元，交义源厚宋子才君汇去。又义源厚等五家烟号，各出一百元，共五千五百元汇去，以救眉急。</p><p class="p-trans">初十接到王一亭的信，说初六已经将我所划拨的三千元，和后来捐的五百元，以及真达法师的二百，孙月三的三百，和王一亭自己以及黄涵之各五百元，共五千元，交给义源厚的宋子才汇去。另外，义源厚等五家烟号，各出一百元，一共五千五百元汇去，以救燃眉之急。</p></div>
+<div class="para-pair"><p class="p-orig">华洋义赈之款，待陕西分会电来再议。此上皆一亭语。以去年王一亭接光书，不几日，华洋义赈会开会，一亭以光所寄书，及子屏书，与会众看。众许筹五万。后华洋氏来沪，言已于税关拨十万矣。故此五万，尚不能定。因打电去问情形，候复电来，再为议决。</p><p class="p-trans">华洋义赈会（注1）的钱款，等陕西分会的电报来了再商议。以上都是王一亭所说。因为去年王一亭接到我的信，不到几天，华洋义赈会开会，王一亭将我所寄的信，以及邓子屏的信，给开会的大众看。众人许诺筹款五万。后来华洋义赈会的主事人来上海，说已经在关税中拨了十万。所以这五万元，尚不能确定。因此打电报询问情形，等回电来了，再行决议。</p></div>
+<div class="para-pair"><p class="p-orig">前日接真达师信，言孙月三之三百元，当另具一收据，恐彼或疑钱落空耳。似乎宜作一谢书，较为克己。光之三千五百元，作一书寄光，以便寄与拨款之居士。彼虽不疑光，得此谢书，益生欢喜。</p><p class="p-trans">前天接到真达法师的信，说孙月三的三百元，要另外写一张收据，恐怕他可能怀疑捐出的钱没有到位。似乎要写一封感谢信，比较合适。我的三千五百元，作一封信寄给我，以便寄给捐款的居士。他们虽然不会怀疑我，但收到这封感谢信后，会更加欢喜。</p></div>
+<div class="para-pair"><p class="p-orig">书中但叶德广居士三千元，贞净庵主一百元，香涛居士三百元，备去轩一百元。真达师，孙月三，作二书，一封寄上海陈家浜太平寺交真达和尚。一亭即寄彼家。光本不欲用此种手续，以真达师来信言及。似乎如此，方为妥贴。以人以多金相助，办事者岂惜此笔墨之劳乎。</p><p class="p-trans">信中就写：叶德广居士三千元，贞净庵主一百元，香涛居士三百元，备去轩一百元。真达法师，孙月三，写二封感谢信，一封寄到：上海陈家浜太平寺交真达和尚。王一亭就寄到他家里。我本来不想用这种手续，因为真达法师来信说到了。似乎如此办理，方才妥当。因为他人以许多金钱来帮助，办事的人哪能吝惜这种笔墨之劳呢？</p></div>
+<div class="para-pair"><p class="p-orig">即款已收到，混然之收据已寄来，不妨再寄谢书。而王一亭处，当用感激赞叹之笔，况彼尚欲提议又筹。虽能筹与否，未可决定。然彼一念慈心，当令人感佩不忘也。</p><p class="p-trans">即使钱款已经收到，整笔钱款的收据已经寄来，不妨再寄感谢信。而王一亭那里，应当用感激赞叹的文笔，何况他还想提议再筹灾款。虽然能不能筹到，不能决定。可是他的一念慈心，应当令人感佩不忘啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝等绝不懂事，当此急难求人，与人书，不具名，但以佛教会同人启了之。若不求人，又将作何种傲慢书法也。光与一亭书，尚用顿首。以求人急济，兼劳心思。一亭为此事，往来相帮数次，与光书亦五六次。</p><p class="p-trans">你们一点都不懂事，在这急难求人的时候，给人写信，不写上名字，只写“佛教会同人启”来了事。如果不求人，又将用哪种傲慢的写法呢？我给王一亭写信，尚且用“顿首”。因为求人紧急救济，又烦劳心思。王一亭为了这件事，往来相助好多次，给我写信也有五、六次。</p></div>
+<div class="para-pair"><p class="p-orig">汝二人之书，一亭皆寄与光看。一概但以佛教会署名。一亭问当交何人，光乃与彼言，寄遥，子屏，皆佛教会中办事人。</p><p class="p-trans">你们二人的信，王一亭都寄给我看过。一概只以佛教会署名。王一亭询问应当交给谁，我于是对他说，康寄遥，郑子屏，都是佛教会中办事的人。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【华洋义赈会】</span>中国华洋义赈救灾会（简称“华洋义赈会”）成立于1921年，解散于1949年。该会是由中外人士联合组成的以在中国开展慈善事业、从事赈灾、倡导并推动农村各项合作事业及社会公共事业为主要工作的社会团体。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

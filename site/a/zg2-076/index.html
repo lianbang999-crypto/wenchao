@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>慈悲道场忏法随闻录序（俗称梁皇忏） · 印光法师文钞</title>
+<meta name="description" content="吾人之心，体本明净，由无明故，烦惑遂生。烦惑既生，便成昏浊，而明净之体，遂为隐没，实未尝减损一丝毫也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-076/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="慈悲道场忏法随闻录序（俗称梁皇忏） · 印光法师文钞">
+<meta property="og:description" content="吾人之心，体本明净，由无明故，烦惑遂生。烦惑既生，便成昏浊，而明净之体，遂为隐没，实未尝减损一丝毫也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-076/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">慈悲道场忏法随闻录序（俗称梁皇忏）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">吾人之心，体本明净，由无明故，烦惑遂生。烦惑既生，便成昏浊，而明净之体，遂为隐没，实未尝减损一丝毫也。</p><p class="p-trans">我们的心，体性本来清净光明。因为无明，烦恼惑业便由此生起。烦惑一旦生起，心就昏浊了。清净光明的本体，于是就隐没了。（虽然隐没，）而实际上没有减损一丝一毫。</p></div>
+<div class="para-pair"><p class="p-orig">欲令复本还元，非竭诚尽敬，恭对三宝，忏悔业障不可。诸大乘经，具有令忏悔之文，随人所宗，述为忏法，如法华，光明，净土，大悲等。</p><p class="p-trans">要想让心体恢复本来的清净光明，非得在三宝前，竭尽诚敬，忏悔业障不可。许多大乘经中，都有令我们忏悔的文句。后人就随着自己所宗主的法门，编述成种种忏法，如《法华忏》、《金光明忏》、《净土忏》、《大悲忏》等。</p></div>
+<div class="para-pair"><p class="p-orig">此之忏法，详于披陈罪相者，以梁武帝为度元配郗氏夫人，堕于蟒蛇之苦，兼欲一切人民同沾法利。特请志公，并诸高僧，检阅经文，述为忏法，帝亦时运睿笔，发挥意致。</p><p class="p-trans">《梁皇宝忏》当中，对于罪相的披露陈述很是详尽。当时梁武帝为了超度元配夫人郗氏，堕于蟒蛇之苦，同时想让一切人民都沾受佛法利益。所以特地迎请宝志和尚，以及诸位高僧，检阅经文，编述成忏法。梁武帝也亲自运用御笔，发挥其中的意旨。</p></div>
+<div class="para-pair"><p class="p-orig">惜帝未悉净土法门，故于述成之时，郗氏特现天人妙庄严身，而为致谢。使帝详知净宗，则其夫人当必仗佛慈力，往生西方，高预海会，登不退地，又何得资此大法大心，竟以生天结其局哉。</p><p class="p-trans">可惜梁武帝不知道净土法门。所以忏法编成时，郗氏特地现出天人的妙庄严身，而来致谢。假如梁武帝知道净土法门，那么他的夫人应当仗着佛的大慈悲力，往生西方，参加莲池海会，登入不退转位。又怎么会导致这样的大法、大心，最终只是以生天作为结局呢。</p></div>
+<div class="para-pair"><p class="p-orig">后之礼忏者，悉当注意于回向往生，方获究竟实益。此忏以大菩提心为本，从兹竭诚尽敬，外慕诸圣，披陈罪咎，内重己灵，故得生佛心融，感应道交，消除历劫之罪垢，开发本具之心光，其为利益，莫能具宣。</p><p class="p-trans">之后（按照这一忏法）进行礼忏的人，都应当注重于回向往生西方，才能获得究竟的实益。这一忏法以大菩提心为根本，由此而竭尽诚敬，仰慕诸位圣者，陈述自己的罪过，珍重自己的性灵。所以能够心与佛合，感应道交，消除历劫的罪垢，开发本具的心光。其中的利益，宣说不尽。</p></div>
+<div class="para-pair"><p class="p-orig">文虽显浅，校比台宗注重理观，不详披陈罪相诸忏，为能普被三根也。自昔以来，未有讲与注者，盖以文义显豁，无须讲注。</p><p class="p-trans">文辞虽然浅显，而相比于天台宗注重于理观，不详细陈述罪相的诸种忏法，更能普被三根。自古以来，没有人注释讲解这一忏法，大概是因为文义显明，不需要讲解注释吧。</p></div>
+<div class="para-pair"><p class="p-orig">须知法无浅深，唯取利人，律无玄义，以道宣律师之上根利智，尚须十次听讲，及其为注，则不厌其详，何独于此法而忽之。</p><p class="p-trans">必须知道，佛法不论浅深，只取利益于人。戒律当中并没有玄妙义理，而道宣律师这样的上根利智，尚且必须听讲十次。后来他为戒律作注解时，也尽可能地详尽。（自古以来注释讲解的人）为何单单忽视了这个忏法呢。</p></div>
+<div class="para-pair"><p class="p-orig">观宗谛公，以时当末法，人多不知自省，遂致所行与所学相悖。因发心讲演，以期人各主敬存诚，洗心涤虑，戒慎乎其所不睹，恐惧乎其所不闻。学行相顾，必期于自立于无过之地而后已。</p><p class="p-trans">观宗寺的谛闲老法师，因为看到末法时期的人们大都不知道反省自己，从而导致行为和所学的教理相违背，所以发心讲演《梁皇宝忏》。期望每个人恭敬至诚，洗心涤虑，在别人眼睛看不到的地方，警惕谨慎；在别人听不到的地方，唯恐有失。所学与所行相符合，必定要让自己处于无过之地才罢休啊。</p></div>
+<div class="para-pair"><p class="p-orig">方子远凡，宿具灵根，虽出富室，颇好清修，每聆妙义，悉能领会。</p><p class="p-trans">方远凡居士，宿世以来具有慧根。虽然出生在富裕家庭，但是很喜欢清净修行。每次聆听到微妙义理，都能领会。</p></div>
+<div class="para-pair"><p class="p-orig">此次听讲，随为记录，又经宝静，诚一，常静三师为之辅弼，遂得成帙。其父母同预讲筵，躬为缮写，可谓见其子即知其父母，非是父母不生是子也。</p><p class="p-trans">这次听讲《梁皇宝忏》的过程中，随笔作了记录。又经过宝静、诚一、常静三位法师的辅助，于是得以成书。方居士的父母也一同参加了讲经法会，他们更是亲自誊抄书稿。真可谓是，见到儿子就知其父母，不是这样的父母就不会生出这样的儿子啊。</p></div>
+<div class="para-pair"><p class="p-orig">方子欲排印，祈余作序。余惟修行之要，敬为第一，人能主敬存诚，则一切凡情无由而起，本具圣智自然发现，凡一切人我是非，无明贡高，以及懒惰懈怠，因循委靡之习气，皆悉消灭。</p><p class="p-trans">方居士想要将这本《慈悲道场忏法随闻录》排印流通，请我写序。我认为修行的关键，恭敬是首要的。人如果能够心中诚敬，那么一切凡情就无从生起，本有的圣智就自然发现。凡是一切人我是非，无明傲慢，以及懒惰懈怠，因循不前，萎靡不振的习气，全都会消灭。</p></div>
+<div class="para-pair"><p class="p-orig">而况恭对三宝，披陈往罪，则惭愧恐惧之心，希圣希贤之念，如饥如渴，油然而生。上慕诸圣，下重己灵，痛念我与诸佛，同一心性，彼何以圆证三觉，我何以久轮六道。</p><p class="p-trans">何况是恭敬地面对三宝，披露陈述自己以往的罪过，那么惭愧恐惧，追随圣贤的心念，就会如饥如渴，油然而生。仰慕圣者，注重己灵，痛念自己和诸佛，同一心性。佛为什么圆满证得三觉，我为什么长久轮回六道。</p></div>
+<div class="para-pair"><p class="p-orig">从兹改往修来，返迷归悟。譬如摩尼宝珠，堕于圊厕，直下取出，屡次洗濯，俾复本净。待至净极，则悬之高幢，必能随意雨宝。</p><p class="p-trans">从此改正以往的过失，修行将来的觉道，脱离迷惑，回归觉悟。如同摩尼宝珠落在厕坑里，立刻取出来，多次洗涤，使它恢复本来的清净。等清净到极点时，就悬放在高幢上，必定能够随心所愿而降下珍宝。</p></div>
+<div class="para-pair"><p class="p-orig">此种大事因缘，若不发挥若文若义之意致，则或有不得实益者，此随闻录之所宜普遍流通也。</p><p class="p-trans">这样的大事因缘，如果不对文义进行发挥，或许就会有人得不到实际利益。这就是这本《慈悲道场忏法随闻录》应当普遍流通的原因。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【戒慎乎其所不睹，恐惧乎其所不闻】</span>《礼记·中庸》：“是故君子，戒慎乎其所不睹，恐惧乎其所不闻。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【缮写】</span>誊写；编录。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【因循】</span>疏懒；怠惰；闲散。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

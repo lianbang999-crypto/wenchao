@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复罗智声居士书四 · 印光法师文钞</title>
+<meta name="description" content="世之聪明人，每每欲为千古尊崇之人，卒至学说偏僻，立异树奇，以致遗误后人，为圣道障。在当时则人皆推尊，其学说之毒气大发，则知此种学说，实伏祸根于近千年之前耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-170/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复罗智声居士书四 · 印光法师文钞">
+<meta property="og:description" content="世之聪明人，每每欲为千古尊崇之人，卒至学说偏僻，立异树奇，以致遗误后人，为圣道障。在当时则人皆推尊，其学说之毒气大发，则知此种学说，实伏祸根于近千年之前耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-170/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复罗智声居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">世之聪明人，每每欲为千古尊崇之人，卒至学说偏僻，立异树奇，以致遗误后人，为圣道障。在当时则人皆推尊，其学说之毒气大发，则知此种学说，实伏祸根于近千年之前耳。</p><p class="p-trans">世间的聪明人，常常想要成为千古受人尊崇的人，然而最终却导致他所建立的学说偏僻，标新立异，以致贻误后人，成为圣道的障碍。在当时，世人都推尊他，等到他的学说毒气大发，才知道这种学说，实际上在一千年之前就伏下了祸根。</p></div>
+<div class="para-pair"><p class="p-orig">程朱阐儒宗，专主于正心诚意，凡因果报应，生死轮回，皆谓之为无有。又谓有所为而为善，即非真善。</p><p class="p-trans">二程（程颢、程颐）、朱熹阐述儒学宗旨，专主于正心诚意，凡是因果报应、生死轮回，都认为没有。又认为有所求来行善，就不是真善。</p></div>
+<div class="para-pair"><p class="p-orig">彼既欲与佛立异，故后之儒者一宗其说。既无因果报应生死轮回，则善无以劝，恶无以惩，大家都在迷梦中。以致世风日下，正人日希。</p><p class="p-trans">他们早就想要与佛教建立不同的说法，因此后来的儒者一概宗奉他们的学说。既然没有因果报应、生死轮回，那么就无法劝人行善，惩人作恶，大家都在迷梦之中。以致社会风气一天天败坏，正直的人一天天稀少。</p></div>
+<div class="para-pair"><p class="p-orig">及乎欧风一至，则一切推翻礼教，越理犯分之事，汲汲然提倡，而欲举世实行。使程朱不破斥因果轮回，后儒各各相传相守，欧风纵烈，谁肯依彼邪说乎。</p><p class="p-trans">等到欧风一到，则一切推翻礼教，越理犯分的事，都急切地提倡，而且想使全世界的人都来实行。假使二程（程颢、程颐）、朱熹不破斥因果轮回，后来的儒者各各相互传承、相互遵守，即使欧风再猛烈，又有谁肯依从他们的邪说呢？</p></div>
+<div class="para-pair"><p class="p-orig">由是言之，今日之各种恶剧，其祸根实从程朱破斥因果轮回起。</p><p class="p-trans">由此说来，今天的各种恶剧，其祸根实际是从二程（程颢、程颐）、朱熹破斥因果轮回开始的。</p></div>
+<div class="para-pair"><p class="p-orig">今欲家庭社会保存古道，当以提倡因果报应，生死轮回为急务。知因果轮回，信因果轮回，虽庸人亦能诚意正心。不信因果轮回，虽上等天姿如程朱者，亦不能完全诚意正心。</p><p class="p-trans">现今想要使家庭、社会保存古时的风尚，应当以提倡因果报应、生死轮回作为急务。知道因果轮回，相信因果轮回，虽然是平庸的人也能够诚意正心；不相信因果轮回，虽然是上等天姿，如二程（程颢、程颐）、朱熹那样的人，也不能完全诚意正心。</p></div>
+<div class="para-pair"><p class="p-orig">何以言之，彼由佛学发明圣人心法，反辟佛。此心意为正耶诚耶，或邪耶伪耶。</p><p class="p-trans">为什么这么说呢？二程（程颢、程颐）、朱熹由佛学阐发显明儒家圣人的心法，却反过来辟佛。这个心意是正呢，还是诚呢？抑或是邪呢，还是伪呢？</p></div>
+<div class="para-pair"><p class="p-orig">彼欲与佛立异，将圣人因果报应之事理皆抹杀。将格物致知说得泛而不切。非彼全不知格烦恼之物，致本有真知。但不愿与佛气分同，故作此说。其违经畔圣也大矣。</p><p class="p-trans">他们想与佛法不同，将圣人因果报应的事理全都抹杀。将“格物致知”说得泛泛而不切实际。不是他们完全不知道格除烦恼之物，恢复本有的真知。而是他们不愿与佛法的气分相同，所以作这样的解说（他们认为格物致知是：研究认识万事万物，获得知识）。其违背经典、背叛圣人的地方，实在很大啊！</p></div>
+<div class="para-pair"><p class="p-orig">此心此意，皆欲天下后世推尊于己，谓为直接道统者之妄想。使未见欧风之祸，谁敢说彼之所说，乃有如此之过愆乎。</p><p class="p-trans">这种心、这种意，都是想要天下后世之人推尊自己，认为自己是直接道统者的妄想。假使后世之人没有见到欧风的祸害，谁敢说他们所说的，有如此的过失呢？</p></div>
+<div class="para-pair"><p class="p-orig">光欲汝等各各提倡因果报应，生死轮回，以为挽回世道人心之据，因推本言其近世祸害之所由来。</p><p class="p-trans">我想使你们各各提倡因果报应、生死轮回，作为挽回世道人心的依据，因此寻究根源，说到近世祸害的所由来。</p></div>
+<div class="para-pair"><p class="p-orig">光作此说，非逞己臆见，妄论古人，实为平心和气，准理准情之论。恐汝等或不知致力，故为激发耳。</p><p class="p-trans">我这样说，不是夸耀自己的主观臆见，来胡乱评论古人，实在是心平气和，依准道理、依准人情的论说。恐怕你们或许不知道如何著力用功，所以为你们激发而已。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

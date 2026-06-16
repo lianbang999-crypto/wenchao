@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与福建刘廷诚居士书 · 印光法师文钞</title>
+<meta name="description" content="原夫诸佛为一大事因缘故，出现于世。所谓大事因缘者，无非欲令众生开示悟入佛之知见，直下成佛而已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-017/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与福建刘廷诚居士书 · 印光法师文钞">
+<meta property="og:description" content="原夫诸佛为一大事因缘故，出现于世。所谓大事因缘者，无非欲令众生开示悟入佛之知见，直下成佛而已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-017/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">与福建刘廷诚居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">原夫诸佛为一大事因缘故，出现于世。所谓大事因缘者，无非欲令众生开示悟入佛之知见，直下成佛而已。</p><p class="p-trans">诸佛为了一件大事的缘故才出现在这个世间。所谓的“一件大事”，无非是想要使一切众生开、示、悟、入佛之知见，直至成佛而后已。</p></div>
+<div class="para-pair"><p class="p-orig">第以众生之根性不一，故如来之教法万殊。是以一代时教，随机演畅。法门虽浩若尘沙。而行人依教修持，究竟归元，皆证即心自性。</p><p class="p-trans">因为众生的根性不同，所以如来的各种教法也有很大不同。所以本师释尊一代时教，随众生根机演畅妙法。法门虽然浩瀚如同尘沙之多。而修行人依教修持，究竟归元，全都能证得即心本具的自性。</p></div>
+<div class="para-pair"><p class="p-orig">然于尘沙法门之中，求其不离事修，全彰心性，三根普被，利钝全收。上上根不能逾其阃，下下根亦可臻其域。高超一切禅教律，统摄一切禅教律。下手易而成功高，用力少而得效速，最利末法，直出五浊者，无如净土持名念佛之殊胜超绝也。</p><p class="p-trans">然而在尘沙法门之中，要想找出一种特别法门——不离事相而能修持、并能完全彰显心性，普被上中下三根，无论利根钝根皆可修持，上上根人不能超越其高妙，下下根人也可以进入其门槛。高超一切禅、教、律诸宗，统摄一切禅、教、律各派。下手易而成功高，用力少而得效速，最利于末法时代的众生，直接超出五浊恶世——没有比净土宗持名念佛这一法门更殊胜超绝的了！</p></div>
+<div class="para-pair"><p class="p-orig">诚所谓九界众生离此法，上不能圆成佛道。十方诸佛舍此法，下不能普利群生。所以千经万论，处处指归，往圣前贤，人人趣向。若群星之拱北，万水之朝东也。</p><p class="p-trans">实在是所谓的：“九界众生离此法，上不能圆成佛道。十方诸佛舍此法，下不能普利群生。”所以“千经万论，处处指归，往圣前贤，人人趣向。”如同群星环绕护卫着北极星，万条河流向东归向大海一样。</p></div>
+<div class="para-pair"><p class="p-orig">居士既深信念佛。若未参承净业知识。又不广阅净土经论。则真信切愿，从何而生。纵能执持名号，只因不求出离，便成人天因果，受享痴福。因福造业，仍沉恶道。倘再路头不真，涉入邪见，则善因反招恶果。人天福报，亦不可得。阿鼻极苦，长劫难出。</p><p class="p-trans">你既然深信念佛。如果没有参学承侍修学净业的善知识。又不广泛阅读净土经论。那么真信切愿，从何而生？纵然能够执持名号，只因为不求出离，便成为人天因果，享受痴福。因福而造业，仍旧沉沦恶道。倘若再有道路认不清，入了邪见，那么善因反而招来恶果。人天福报，也得不了了。将受阿鼻地狱的极苦，长劫难出。</p></div>
+<div class="para-pair"><p class="p-orig">譬如入海，既无导师，又乏指南。漂流于狂波巨浪之中，茫茫不知所趣。纵能撑篙摇橹，岂能免于沉溺。</p><p class="p-trans">譬如入于大海，既没有向导，又没有指南针。漂流在狂波巨浪之中，茫茫然不知趣向何处。纵然能够撑篙摇橹，哪能幸免于沉溺呢？</p></div>
+<div class="para-pair"><p class="p-orig">光少乏问学，长无所知。唯于净土一法，颇切向往。感子之诚，今将净土经论之最切要者略开一二，一一标其大意。若能归而求之，则心领神会，自有手之舞之足之蹈之而不自知者，远胜愚之喋喋也。</p><p class="p-trans">我幼年没有学习，长大了一无所知。唯独对于净土法门，很是迫切向往。感于你的诚心，现在将净土经论中最重要的内容大概地指明一二，一一标出其中大意。你如果能够归心净土而求，则心领神会，自然会有不觉得就手舞足蹈的快乐，远胜过我在这儿喋喋不休啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【一大事因缘】</span>谓佛陀出现于世间之唯一大目的，是为开显人生之真实相，此即所谓一大事。依法华经方便品之说，佛为使众生开示悟入，遂出现世间。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【开示悟入】</span>开，开发之意，即破除众生之无明，开如来藏，见实相之理。示，显示之意，惑障既除则知见体显，法界万德显示分明。悟，证悟之意，障除体显后，则事（现象）、理（本体）融通而有所悟。入，证入之意，谓事理既已融通，则可自在无碍，证入智慧海。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【第】</span>副词。但是。表示转折。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【阃】</span>门槛，门限。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【末法】</span>佛法分三个时期，即正法时期、像法时期、末法时期。正法时期一千年，像法时期一千年，末法时期一万年。现在正是末法时期，即佛法进入了微末的时期。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【五浊】</span>一、众生浊，谓众生多诸弊恶，不孝敬父母尊长，不畏恶业果报，不作功德，不修斋法，是名众生浊。二、见浊，谓正法已灭，像法渐起，邪法转生，邪见增盛，不修善道，是名见浊。三、烦恼浊，谓众生多诸爱欲、悭贪、斗诤、谄曲、虚诳，摄受邪法，恼乱心神，是名烦恼浊。四、命浊，谓往古世时，人寿八万四千岁，今时人寿转减，百岁者稀。以恶业增故，寿数短促，是名命浊。五、劫浊，劫，梵语具云劫波，华言分别时节。谓减劫中，人寿减至三十岁时，饥馑灾起。减至二十岁时，疾疫灾起。减至一十岁时，刀兵灾起。世界众生，无不被害，是名劫浊。出自《法苑珠林》。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【拱北】</span>犹拱辰。拱辰，拱卫北极星。拱，环绕的意思。语本《论语·为政》：“为政以德，譬如北辰，居其所，而众星共（拱）之。”后因以喻拱卫君王或四裔归附。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【阿鼻】</span>即无间地狱。涅槃经十九曰：“阿者言无，鼻者名间，间无暂乐，故名无间。”受苦无间断之义。八大地狱之一。是最苦处。极恶之人堕之。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【喋喋】</span>多言；唠叨。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

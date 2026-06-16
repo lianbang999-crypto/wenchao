@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>催生子（长生蜗） · 印光法师文钞</title>
+<meta name="description" content="催生子，亦名长生蜗，生海沙中。普陀所出无几，他处土人捡之，售于普陀各店铺。香客购去，以备妇女临产之用。藏于干净箱箧中，永远不坏不死，故有长生蜗之名。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-186/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="催生子（长生蜗） · 印光法师文钞">
+<meta property="og:description" content="催生子，亦名长生蜗，生海沙中。普陀所出无几，他处土人捡之，售于普陀各店铺。香客购去，以备妇女临产之用。藏于干净箱箧中，永远不坏不死，故有长生蜗之名。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-186/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 传记记事祭文</div>
+      <h1 class="art-title">催生子（长生蜗）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">催生子，亦名长生蜗，生海沙中。普陀所出无几，他处土人捡之，售于普陀各店铺。香客购去，以备妇女临产之用。藏于干净箱箧中，永远不坏不死，故有长生蜗之名。</p><p class="p-trans">催生子，也叫长生蜗，生长在海沙中。普陀山所产的很少，其它地方的当地人捡了，售卖到普陀山的各个店铺。香客买去，以备妇女临产之用。藏在干净的箱箧中，永远不坏不死，所以有长生蜗之名。</p></div>
+<div class="para-pair"><p class="p-orig">若有难产者，至诚念观世音菩萨，用温和开水（热恐烫死此物，冷恐有碍产妇），吞一粒下，儿即时生。随即向儿手中取之，男在左手，女在右手，洗净藏之，屡次可用。此物不经普陀山转则不灵，以故别处无有卖者。</p><p class="p-trans">如果有难产的人，至诚念观世音菩萨，用温和开水（太热恐烫死这种动物，太冷恐对产妇不好），吞一粒下去，小孩马上便生出来，随即就在小孩的手中取出催生子，男孩在左手，女孩在右手，洗干净了藏好，可用很多次。这个催生子不经普陀山转过就不灵，所以别的地方没有卖的。</p></div>
+<div class="para-pair"><p class="p-orig">余初闻吃之催生，即在儿手拿出，疑绝无此理。以为吃下肚去，当归大肠，何能即入子宫。况儿在母腹，外有衣胞，儿之手足拳曲，如衣服之褶叠挤紧，何能伸手取持此物。</p><p class="p-trans">我起初听说吃了催生子，就在刚出生的婴儿手中拿出来，怀疑绝对没有这样的道理。认为吃到肚子里去，应当进入大肠，怎么能进入子宫。何况婴儿在母亲腹中，外面有衣胞，婴儿的手足拳曲，如衣服的褶叠一样挤得很紧，如何能伸手拿这个催生子？</p></div>
+<div class="para-pair"><p class="p-orig">民国七年，有陕西朝邑同乡刘芹浦来访（芹浦，乃历代书香，盛德君子），闻余说及，谓曰，天下事，有不可以凡情测度者。公所说之理则诚然，事则公未之见。吾家祖传有一粒，每逢自家及亲朋妇女生产常用之，所用不计其数。后被人借去，云失之矣。不知真失也，抑昧之也，为之痛息。</p><p class="p-trans">民国七年（1918），有一位陕西朝邑的同乡刘芹浦来访（刘芹浦，是历代书香世家，有盛德的君子），听我说到这件事，对我说：天下的事，有些是不能用凡情来测度的。您所说的道理确实是如此，而真实的事情，您却并未见过。我家里祖传有一粒，每逢自家以及亲戚朋友的妇女生小孩时经常使用，所用的次数不计其数。后来被人借走，说丢失了。不知道是真的丢了，还是被私吞了，真让人痛惜。</p></div>
+<div class="para-pair"><p class="p-orig">次年到扬州，与张瑞曾居士述与芹浦酬答语。彼云，吾家向有一雷震子，凡妇女生产，吞之儿即生，其物即在儿手，取而洗净，藏以备用。用过许多次，后被人借去不还，云已失之矣。天地之大，事物之繁，虽圣人亦有所不知焉。此世间事，尚不可以凡情测度，况佛菩萨之境界乎。</p><p class="p-trans">第二年，我到扬州，与张瑞曾居士叙述与刘芹浦对答的话语。他说：我家里一直有一粒雷震子，凡是妇女临产，吞下去，婴儿很快便生出，这个东西就在婴儿的手中，取出来洗干净，藏起来备用。用过很多次，后来被人借去不还，说已经丢失了。天地之广大，繁奇的事物，即使是圣人，也有其所不知道的啊！这是世间的事，尚且不可以用凡情来测度，何况佛菩萨的境界呢？</p></div>
+<div class="para-pair"><p class="p-orig">所可恶者，店铺恐人不相信，谓此名醋鳖，能催生，放醋中即会动。偶以醋试之，果验。而不知其一经醋蜇即死，便不可用矣。</p><p class="p-trans">可恶的是，店铺老板恐怕人们不相信，说这个东西名为醋鳖，能催生，将其放在醋中立即会动。拿醋来试，果然灵验。然而却不知催生子一经醋蜇立即死亡，就不能再用了。</p></div>
+<div class="para-pair"><p class="p-orig">一般文人，由见闻此说，不加深察，遂循声附和，谓为实然。如朱绪曾撰昌国典咏谓，见醋即活，因以醋试之，果如珠之走盘也。周公谨亦言，长生蜗置之醋中则活。正字通谓有雌雄，置醋中，雌雄相逐，逡巡便合，即下卵如粟。</p><p class="p-trans">一般的文人，由于听到这个说法，不深入调察，于是便随声附和，认为确实是如此。如朱绪曾撰《昌国典咏》（注1）中说：“见醋即活，因以醋试之，果如珠之走盘也。”宋朝周公谨（注2）在《云烟过眼录》中也说：“长生蜗置之醋中则活。”明朝张自烈的《正字通》（注3）中说：“有雌雄，置醋中，雌雄相逐，逡巡便合，即下卵如粟。”</p></div>
+<div class="para-pair"><p class="p-orig">此种无稽绮语，深可痛恨。不知令多少人起试心而害物命。若犹以此所试过者催生，则误事，或误人性命。此等文人，后世必难免无因而妄受人害之祸，而不知其由于前生欲以文自豪，妄造谣言之所致也。可不哀哉。</p><p class="p-trans">这种无稽绮语，真是让人痛恨。不知道让多少人生起试一试的心而杀害物命。如果还用这个试过醋的催生子来催生，就误事了，或许会误人性命。这些文人，后世必定难免会有无缘无故遭受他人迫害的灾祸，却不知道这正是由于他前生想以文章自豪，而妄造谣言所导致的。能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">所言生子则诚然。此物上规圆而下平，其底下有几匝纹路，愈向中愈密。久之，于中心脱出一小者，即是生子。其大者，中心便成洼形，非如前之平平也。故藏之久久，则见多矣。须详察死活，死者不可用。若通身带温润微红若肉色者，则是活者。若通身枯白，无一点温润微红若肉色者，则是死者。</p><p class="p-trans">所说催生子生子，确实是有这种情况。催生子上面浑圆而下面扁平，底下有几匝纹路，愈向中心纹路就愈密。久而久之，在中心脱出一个小的，就是生子。大的催生子，中心便成为洼形，不像以前那样平平的了。所以藏得久了，就见多了。必须详细观察它的死活，死的不可用。如果全身带温润微红如肉色的，就是活的。如果全身枯白，没有一点温润微红如肉色的，就是死的。</p></div>
+<div class="para-pair"><p class="p-orig">又此物善消红肿眼疾。人之眼中，无论何物，俱不可加入。唯此物之活者，纵一二分大，揭眼皮放入眼内，绝无丝毫难受相。若好眼，彼不肯钻入，手一离，随即落出。若眼有红肿热病，放之则随便按按，自会钻入。不但不觉碜碍，并且不见眼皮何处有高相，与未加此物一样。其后便无所知觉。迨眼病已退，则自会钻出。但人不知觉，十有九失。若放入眼，时常留心，或可不失，然而难矣。以彼在眼中，人绝不觉知故。此亦不可以理判断者。</p><p class="p-trans">另外，催生子这个东西很善于消除红肿眼病。人的眼睛里，无论什么东西，都不可以放进去的。只有这个活的催生子，纵然有一二分大，揭开眼皮放入眼内，绝对没有丝毫的难受之相。如果是没有病的眼睛，它就不肯钻入，手一离开，它随即就落出来。如果眼睛有红肿热病，放在眼睛上，随便按按，它会自然地钻进去。不但不觉得像砂子似的阻碍，并且眼皮上看不出何处有增高的样子，与未放进催生子时一样。放入之后便没有一点感觉。等到眼病已经消退，它就自然会钻出来。但是人们没有感觉，十个有九个会丢失掉。如果已放入眼中，要时常留心，或许能不丢失，然而很难。因为它在眼中，人们绝无感觉的缘故。这也是不能用常理来判断的。</p></div>
+<div class="para-pair"><p class="p-orig">雷震子，即万年青所结之红果，当打雷时，随即堕地者。若在前后，均无有效。夫催生子尚易得，雷震子更难得。然有比此二物更有益，而求无不得者，惜人多不知。使人各知之，则此二物均可不用。</p><p class="p-trans">雷震子，就是万年青所结的红果，在打雷的时候，随雷声堕到地上的。如果在雷声前后堕地的，都没有效果。催生子还容易得到，雷震子就更难得到了。然而有比这二样东西更加有益，而求无不得的奇事，可惜人们大多不知道。假使人人都知道，那么这二样东西都可以不用了。</p></div>
+<div class="para-pair"><p class="p-orig">妇女难产，总因宿世今生杀业所致。若平素爱惜物命，戒杀护生，常念观世音菩萨圣号，则业障消除，生产自易。即平素不知念菩萨，临产能至诚恳切念，及照应眷属同为之念，亦能平安速产，母子两全，且又种大善根，其利益何可限量。</p><p class="p-trans">妇女难产，总是因为宿世今生的杀业所导致。如果平时爱惜物命，戒杀护生，常念观世音菩萨圣号，那么业障消除，生产自然容易。即使平时不知道念菩萨，临产时能够至诚恳切地念，同时照应产妇的眷属一同为她念，也能平安快速生产，母子两全，而且又种下大善根，这样的利益怎么能限量。</p></div>
+<div class="para-pair"><p class="p-orig">有谓临产裸露不净，念菩萨名，恐获罪咎。不知佛菩萨，视一切众生，如亲生儿女。儿女若堕水火，求父母救，父母必不以彼衣冠不整齐，身体不洁净，而弃之不救。</p><p class="p-trans">有人说，临产裸露不净，念菩萨名号，恐怕获取罪过。他们不知道佛菩萨，视一切众生，犹如亲生儿女。儿女如果堕到水火之中，求父母前来救援，父母必定不会因为儿女的衣冠不整齐，身体不洁净，而舍弃不救。</p></div>
+<div class="para-pair"><p class="p-orig">又如日月丽天，净秽等照，了无分别。但在吾人分上，固应致诚尽敬，方可仰冀垂应。力能为者，必须身心同皆致敬。力不能为者，须一心恭敬，而身形边，固可不须死执著也。</p><p class="p-trans">又如日月当空，清净污秽平等普照，没有丝毫分别。但是在我们的分上，固然应该至诚恭敬，才可仰乞菩萨垂慈感应。能力做得到的，必须身心同样都要恭敬。能力做不到的，必须一心恭敬，而身形外相这一边，固然可以无须死板执着。</p></div>
+<div class="para-pair"><p class="p-orig">有种吃素念佛，不知变通之人，因家中有妇将生产，遂出外寓月余始归。谓被血冲，从前所念之经咒皆无效。其知见崖板，以致违情悖理有如此者。故于此表而出之，以冀一切通皆平安而生，母子均吉。所生之子，皆孝友仁慈，福寿康宁。处则表率乡邑，宜室宜家。出则平治天下，护国救民。吾人虽欲早生西方，亦愿世有贤人善士，为国家社会之倡导，此所以朝暮馨香祝祷者，欲其一一如愿也。</p><p class="p-trans">有一种吃素念佛，不知道权达变通的人，因为家中有妇女将要临产，就到外面去住一个多月才回来。说是被产妇的血一冲，从前所念的经咒便都无效了。他们知见的崖板，以致违人情，悖义理，有如此荒谬的情形。所以在这里讲出来说明，来希望一切产妇全都平安而生，母子全都吉祥。所生的孩子，都孝友仁慈，福寿康宁。隐退（注4）则成为一个地方的表率榜样，家庭和睦。出仕则治理天下，护国救民。我们虽然想早点往生西方，也祈愿世间有贤人善士，作为国家社会的倡导，这是我之所以早晚焚香祝祷的，想令这些都一一如愿啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【《昌国典咏》】</span>浙江舟山文獻志。朱绪曾（1805～1860），近代诗人、学者。字述之，号北山。上元（今南京）人。少从邑人孙铃问业，清道光二年（1822）举人，官至知府及秀水、孝丰知县。斋名开有益，藏书甲于江浙。通经史训诂，于《尔雅》用力尤深，咸丰间以研经博物，闻名东南。---一生著述甚多，颇有散佚，著述甚丰，存世有《曹子建集考异》、《梅里诗辑》、《昌国典咏》等。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【周密】</span>字公谨，号草窗，祖籍山东济南，流寓吴兴(浙江省湖州市)，曾官义乌县令，精鉴赏，富收藏。约元贞二年（1296)完成此书。《云烟过眼录》四卷。中国第一部以著录私家藏画为主要内容兼录南宋皇室部分藏品的著录著作。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【正字通】</span>一部按汉字形体分部编排的字书。明代崇祯末年国子监生张自烈撰。自烈字尔公,号芑山,江西宜春人。这部书总12卷。---清代修《康熙字典》即根据《正字通》，而加详备。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【出、处】</span>出，出仕；处，隐退。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【参考图片】</span></p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

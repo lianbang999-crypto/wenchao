@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>钱武肃王强弩射潮发隐颂 · 印光法师文钞</title>
+<meta name="description" content="（此稿到时，版多制定，无处安置，故插于此，亦称附录。）">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-161/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="钱武肃王强弩射潮发隐颂 · 印光法师文钞">
+<meta property="og:description" content="（此稿到时，版多制定，无处安置，故插于此，亦称附录。）">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-161/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">钱武肃王强弩射潮发隐颂</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">（此稿到时，版多制定，无处安置，故插于此，亦称附录。）</p><p class="p-trans">（这篇文稿到的时候，刻版大多制定完毕，没有地方安置这篇文稿，所以插录在此，也称为附录。）</p></div>
+<div class="para-pair"><p class="p-orig">曰稽武肃王，降神自上苍。编民奋义勇，灭巢而诛昌。鸿功及大业，古今少克当。受封在吴越，泽国患无央。拟筑捍海堤，大兴夫农桑。潮大基难固，祭神祈降祥。</p><p class="p-trans">查考说说这位武肃王的事迹，是上天降下的神人。编民兵，奋发义勇，剿灭黄巢，诛杀董昌。功绩大业，古今少有。后梁时受封为吴越王，江南泽国水患无穷。他捍筑大海堤坝，大兴农耕与蚕桑。海潮太大，坝基难以巩固，祭祀海神，祈求降下吉祥。</p></div>
+<div class="para-pair"><p class="p-orig">又令诸精兵，强弩射潮疆。潮徙堤基固，害无而利强。一诚即有感，射潮成虚张。盖恐群雄心，犹欲来侵攘。射潮潮迁徙，藉此慑虎狼。数十年乱世，吴越颂平康。至人所计虑，其意甚深长。</p><p class="p-trans">又命令诸多精兵，用强弩射向潮水。潮水退却，堤基稳固，潮害消除，利益强大。一发诚心就有感应，射退潮水只是表演。大概是担心周围群雄的野心，还想来侵扰。射潮潮水迁徙他处，凭此来慑伏周围虎狼之心。中原几十年的乱世，吴越国却很平静安康。世间圣贤的思虑，用意很是深长。</p></div>
+<div class="para-pair"><p class="p-orig">经唐季五代，无一处清凉。吴越儒佛教，阐扬追盛唐。此际无吴越，纲常悉丧亡。古今忠义士，无一不表彰。德惠饫民深，全国民仰望。</p><p class="p-trans">经过唐末五代，天下没有一处可名清凉。吴越国的儒学佛教，发扬光大到可以追上盛唐的程度。这时候如果没有吴越国，纲常伦理全都丧亡。古今的忠义之士，没有一个不表彰。武肃王对于人民的德泽惠施很深广，全国人民都景仰他。</p></div>
+<div class="para-pair"><p class="p-orig">永叔性偏僻，辟佛护门墙。奋志修二史，拟为万古防。删尽佛徒语，诬蔑吴越王。致令忠义士，各各怀感伤。</p><p class="p-trans">欧阳修性情怪僻，辟驳佛法，护持儒学门墙。奋志修《新唐书》、《新五代史》，打算作为万古的堤防。删尽了佛教徒的言语，诬蔑吴越王。致令忠义之士，各各心怀感伤。</p></div>
+<div class="para-pair"><p class="p-orig">观彼泷冈表，亲德甚炜煌。修史任私心，大为无忝妨。大学明明德，格物为总纲。居心有私欲，难得好下场。</p><p class="p-trans">看看他写的《泷冈阡表》，双亲之德很是辉煌。修治历史却随任私心，大大有愧于父母以及所学之道。《大学》中，明明德（使自己的本有真知显现），格除私欲是总纲。心存私欲，难有好下场。</p></div>
+<div class="para-pair"><p class="p-orig">奉劝诸文士，谦抑自审量。勿矜奇立异，须循天理常。克念狂作圣，罔念圣作狂。聪明能克念，万代永流芳。</p><p class="p-trans">奉劝诸位文人学士，谦下抑己，自我审量。不要夸奇，标新立异，必须遵循天理伦常。克制恶念，昏愚的人也可成为圣人；亡失善念，圣人也会成为昏愚。聪明的人，能够克制恶念，万代永远流芳。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【泷冈表】</span>即宋欧阳修的《泷冈阡表》。泷冈：1.山冈名。在江西省永丰县南凤凰山。宋欧阳修葬其父母于此，并为文镌于阡表，即世所传诵的《泷冈阡表》。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【炜煌】</span>1.犹辉煌。2.华盛貌。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【无忝】</span>不玷辱；不羞愧。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

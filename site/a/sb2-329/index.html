@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>湖州道场山万寿寺募化长年斋米疏（代作） · 印光法师文钞</title>
+<meta name="description" content="食轮转在法轮先，无粮难修深妙禅。若肯布施助道业，定感福寿广增延。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-329/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="湖州道场山万寿寺募化长年斋米疏（代作） · 印光法师文钞">
+<meta property="og:description" content="食轮转在法轮先，无粮难修深妙禅。若肯布施助道业，定感福寿广增延。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-329/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">湖州道场山万寿寺募化长年斋米疏（代作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">食轮转在法轮先，无粮难修深妙禅。若肯布施助道业，定感福寿广增延。</p><p class="p-trans">食轮转在法轮先，无粮难修深妙禅。若肯布施助道业，定感福寿广增延。</p></div>
+<div class="para-pair"><p class="p-orig">道场山万寿寺者，五代高僧伏虎志逢禅师所建之大道场也。禅师于峰顶结庵行道，一夕宴坐，毫光烛天。四方人士，谓遭回禄。次晨往观，见师深入三昧，知为放大慈光。由是善信感化，各输净资，营建寺宇，成大丛林。咸谓师为地藏菩萨化身，故又称其山为小九华焉。</p><p class="p-trans">道场山万寿寺，是五代高僧伏虎志逢禅师所建的大道场。禅师在峰顶结庵行道，一晚静坐，毫光四射，光明照亮了天空。周围的人，以为失火。次日早晨，前往观看，见禅师深入三昧，知道是禅师放大慈光。因此善男信女被感化，各各捐出净资，营建寺宇，成为大丛林。大众都认为禅师是地藏菩萨的化身，所以又称这座山为小九华。</p></div>
+<div class="para-pair"><p class="p-orig">自后代有高人，住持其中。及至清初，宏觉禅师曾主此山。德为世祖所钦，因赐寺额为万寿焉。盖以万国咸宁，同登寿域，一人有庆，共用太平是祝也。从此道风丕振，云水咸归，虽诸方大刹，无能过焉。</p><p class="p-trans">从此以后，历代都有高人，住持其中。到清朝初年时，宏觉禅师曾主持道场山。他的德行为清世祖所钦重，因此赐寺名为万寿寺。这是以万国皆安宁，同登长寿之域；一人有吉庆，共享太平盛世，作为祝愿的意思。从此道风大振，四方云水僧都来归集，即使是诸方的大丛林，都不能超过它的兴旺。</p></div>
+<div class="para-pair"><p class="p-orig">至咸同间，一遭兵燹，遂赋式微。幸仗前人惨澹经营，得免泯灭。衲以菲材，滥膺住持，虽欲广安大众，专修净业。日常朝暮课诵，三时念佛。每至腊月，打一佛七。以此功德，用祝国运昌隆，人民安乐。转竞争为仁让，变浇俗为淳风。</p><p class="p-trans">至咸丰、同治年间，遭遇战火焚毁，于是衰微。庆幸仰仗前人的惨淡经营，得免泯灭。我以薄才，滥充住持，虽然想要广安大众僧，专修净业。日常朝暮课诵，三时念佛。每年到腊月，打一个佛七。以此功德，祝愿国运昌隆，人民安乐。转竞争为仁让，变浇俗为淳风。</p></div>
+<div class="para-pair"><p class="p-orig">但以寺无恒产，道粮莫出。以故谨遵佛制，入里托钵。恳祈诸大檀越，各供长年斋米。俾所住清众，安心办道，十方云水，得所栖迟。将见佛天云护，吉祥骈臻。福寿康宁，现身获箕畴之五福。簪缨爵位，后裔纳伊训之百祥矣。唯冀不吝，共结胜缘。</p><p class="p-trans">但因为寺院没有固定资产，道粮没有出处。所以谨遵佛制，行入街道托钵。恳祈诸位大檀越，各供长年斋米。使得所住的清净僧众，安心办道，十方云水僧人，能有栖息之所。将要见到佛天如云护佑，吉祥一并来临。幸福长寿，健康安宁，现身获得箕子在《洪范·九畴》所说的五福。簪缨尊贵，爵位高显，后代子孙享受伊尹在《尚书·伊训》中所说的百种吉祥啊！希望诸位不吝资财，共结殊胜法缘。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【毫光】</span>如毫毛一样四射的光线。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【菲材】</span>浅薄的才能。多用作自谦之词。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【簪缨】</span>古代达官贵人的冠饰。后遂借以指高官显宦。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【爵位】</span>又称封爵、世爵，是古代皇族、贵族的封号，用以表示身份等级与权利的高低。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复王子立居士书二 · 印光法师文钞</title>
+<meta name="description" content="一无量寿经有五译。初译于后汉月支支娄迦谶，三卷，文繁，名佛说无量清净平等觉经。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-441/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复王子立居士书二 · 印光法师文钞">
+<meta property="og:description" content="一无量寿经有五译。初译于后汉月支支娄迦谶，三卷，文繁，名佛说无量清净平等觉经。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-441/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复王子立居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">一无量寿经有五译。初译于后汉月支支娄迦谶，三卷，文繁，名佛说无量清净平等觉经。</p><p class="p-trans">一部《无量寿经》有五种译本。最初翻译的版本是后汉月支国的支娄迦谶，有三卷，经文繁多，经名为《佛说无量清净平等觉经》。</p></div>
+<div class="para-pair"><p class="p-orig">次译于吴月支支谦，有二卷，名佛说阿弥陀经。以日诵之经，亦名佛说阿弥陀经，故外面加一大字以别之。</p><p class="p-trans">第二次翻译的版本是孙吴国的月支国居士支谦，有二卷，经名为《佛说阿弥陀经》。因为每天课诵的另一部佛经，也名为《佛说阿弥陀经》，所以在译本外面加上一个“大”字来区别。</p></div>
+<div class="para-pair"><p class="p-orig">又有赵宋王龙舒居士，会前二译及第三译，并第五赵宋译，四部取要录之，名大阿弥陀经。当时大兴，后因莲池大师指其有不依经文之失，从此便无人受持者。大藏内有此经，各流通处均不流通。有谓另有一种者，即此经也。</p><p class="p-trans">另外还有赵宋王龙舒居士，会集前二种译本及第三次译本，以及第五次的赵宋译本，从这四部译本中集取出精要录出，也名为《大阿弥陀经》。当时很时兴这个本子，后来因为莲池大师指出其中有不依经文的过失，从此便无人受持了。大藏经中有这部经，各个流通处都不流通。有人说，另外还有一种经本，就是指这个会集本。</p></div>
+<div class="para-pair"><p class="p-orig">第三译，即佛说无量寿经二卷，现皆受持此经，即曹魏康（国名）僧铠译。</p><p class="p-trans">第三次翻译的版本，是《佛说无量寿经》二卷，现在都受持这部经，就是曹魏康居（这是一个国的名称）僧铠翻译的版本。</p></div>
+<div class="para-pair"><p class="p-orig">第四，即大宝积经，第十七无量寿如来会，此经王龙舒未见过，乃唐菩提流志译。前有元魏名菩提留支，非唐人，世多将留支讹引之。</p><p class="p-trans">第四次翻译的版本，就是《大宝积经》中，第十七卷《无量寿如来会》，这部经，王龙舒没有见过，是唐朝菩提流志翻译的。前元魏年间，有菩提留支三藏，他不是唐朝人，然而，世人经常张冠李戴，误用 “留支”代指“流志”。</p></div>
+<div class="para-pair"><p class="p-orig">第五译，名佛说大乘无量寿庄严经，赵宋法贤译。原本二卷，以宋人以所译经多为荣，故分两卷，于绝不宜分处而分，今刻书本作一卷。就中无量寿如来会，文理俱好，而末后劝世之文未录，故皆以康僧铠之无量寿经为准则焉。</p><p class="p-trans">第五次翻译的版本，名《佛说大乘无量寿庄严经》，由赵宋法贤翻译。原本二卷，因为宋人译经，译文以多为荣，所以分为两卷，在绝不适合分卷的地方分卷，现今刻书本作一卷。其中《无量寿如来会》，文理都好，然而末后的劝世之文却没有录出。所以都以康僧铠的《无量寿经》译本作为准则了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【月支】</span>古族名，曾于西域建月氏国。其族先游牧于敦煌、祁连间。汉文帝前元三至四年时，遭匈奴攻击，西迁塞种故地（今新疆西部伊犁河流域及其迤西一带）。西迁的月氏人称大月氏，少数没有西迁的人入南山（今祁连山），与羌人杂居，称小月氏。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【支娄迦谶】</span>中国东汉僧人，佛经译师。简称支谶，本是月氏国人。在东汉桓帝末年到洛阳，于汉灵帝时翻译《道行般若经》、《兜沙经》等，是最早将大乘佛教传入中国的西域高僧。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【支谦】</span>三国时佛经翻译家，又名支越，字恭明，生卒年不详（约三世纪）。本月氏人，其祖父法度于汉灵帝时率国人数百移居中国，支谦随之俱来。受业于支谶门人支亮，深通梵典，有“天下博知，不出三支”之谓。东汉末，迁居吴地。因聪明超众，时人称为“智囊”。吴主孙权拜其为博士，辅导太子孙亮。从吴孙权黄武二年到孙亮建兴二年（公元223-253年），约三十年间，译出佛经《大明度无极经》、《大阿弥陀经》等八十八部、一百一十八卷，创作了《赞菩萨连句梵呗》三契，其翻译以大乘“般若性空”为重点，为安世高、支谶以后译经大师。他虽不是僧人，但对佛教的贡献却十分伟大。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【康僧铠】</span>音译僧伽跋摩。三国时代译经僧。相传为印度人。然从其所冠之康姓，可推测或与中亚康居国有关。曹魏嘉平四年（252）至洛阳，于白马寺译出郁伽长者经二卷、无量寿经二卷、四分杂羯磨一卷等。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【大宝积经】</span>唐代菩提流志等译，凡一二〇卷，收于大正藏第十一册。系纂辑有关菩萨修行法及授记成佛等之诸经而成。宝积，即“积集法宝”之意。因其为大乘深妙之法，故谓之“宝”；聚集无量之法门，故谓之“积”。全经计收四十九会（部），其中，魏晋南北朝隋唐之诸译经家，用不同经名，陆续译出二十三会八十卷余，称为“旧译”；菩提流志新译出二十六会三十九卷半，称为“新译”，本经即为新旧译之合编本。全经内容泛论大乘佛教之各种主要法门，涉及范围甚广，每一会相当一部经，亦各有其独立主题，例如四十六会“文殊说般若会”，主要论述“般若性空”之思想；第五会“无量寿如来会”，宣说弥陀净土之信仰；另如第二、第三、第七、第十一、第二十四会等则阐扬密教之各种重要教义。此外，本经各会所属部类亦极纷杂，如第十四会“佛说入胎藏会”属于小乘部，第一“三律仪会”、第二十三“摩诃迦叶会”属于律部，第四十六会“文殊说般若会”属于般若部，第四十七会“宝髻菩萨会”属于大集部。故可说全经每一会虽然各有特色，然若就整体而言，则缺乏一贯之系统。又于菩提流志所译二十六会中，有十一会二十二卷为初次翻译者，其余十五会则属重译部分。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【菩提流志】</span>（？-727）原名达摩流支（意译法希），著名佛经翻译家。南印度人，出身婆罗门，姓迦叶。十二岁从外道出家，熟悉数论学说，并通晓声明、术数等。直到六十岁，遇着大乘上座部三藏耶舍瞿沙（称音），辩论屈服，才改信佛教，注意实践，五年间就通达了三藏教典，名称远闻。唐高宗于永淳二年（683）派人去印度邀请，十年之后即武周长寿二年（693）到达了东都洛阳。当年，他在佛授记寺译出《宝雨经》，于序分末加入东方月光天子受记在中国现女人身统治世间一段，博得武后欢心，替他改名菩提流志，意译觉爱。他在那时还译了《实相般若经》等小部经典十几种。不久实叉难陀来华，翻译大部《华严经》，流志即停止译事，和义净一同帮助他。后来中宗复位，流志随着回到长安，住在崇福寺，从神龙二年（706）起，他重新专译《广大宝楼阁善住秘密陀罗尼》等经，并开始编译《大宝积经》，历时七年，到睿宗先天二年（713）完毕。这中间还夹着译出密典《不空罥索神变真言经》等经。流志译完《宝积经》之后，就不再翻译了，专门修持，十分精进，又经十几年，到玄宗开元十五年（727）去世，据说寿一百五十六岁。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【菩提留支】</span>一作菩提流支，意译道希，北印度人。他是大乘瑜伽系的学者，得到世亲直系的传承（依《金刚仙论》所说，留支是世亲四传弟子）。他不但深通显教，还熟悉当时流行的秘密陀罗尼法门。北魏永平元年（508），携带大量梵本，经过西域来到中国洛阳，受到北魏宣武帝的礼遇，住在规模宏大的永宁寺。当时受帝室供养的印度、西域僧人多到七百人，内有著名学者勒那摩提（意译宝意）、佛陀扇多（意译觉定）等；但在翻译佛典方面，留支被推尊为领导人物。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【法贤】</span>（？-1001）北宋时代中印度那烂陀寺僧。据佛祖统纪卷三十三载，师初名法天。开宝六年（973）来中国。曾奉进其与河中府开元寺之梵僧法进所译圣无量寿经七佛赞，帝召赐紫袍。太平兴国五年（980），师应法进之请，入河中府译经。次年，移鄜州龙兴寺译无量寿决定光明王经。又次年，受赐“传教大师”之号。复奉进其所携来之吉祥持世经之译本。帝尝赐三藏圣教序，冠于其所译之经前。咸平四年示寂，年寿不详。谥号玄觉大师。师所译经典凡一二○部。或谓师与法天为不同之二人。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

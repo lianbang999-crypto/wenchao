@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复刘观善居士书二 · 印光法师文钞</title>
+<meta name="description" content="昨接手书，并令慈传心汇录，阅之不禁慨叹不置。光常谓之丧乱，由于家庭失教所致。教子固要紧，而教女更甚。以女若得其善教，则成就四德，相夫教子。俾有天资者，成就圣贤学问品格。即无天资者，亦必为一循分良民。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-220/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复刘观善居士书二 · 印光法师文钞">
+<meta property="og:description" content="昨接手书，并令慈传心汇录，阅之不禁慨叹不置。光常谓之丧乱，由于家庭失教所致。教子固要紧，而教女更甚。以女若得其善教，则成就四德，相夫教子。俾有天资者，成就圣贤学问品格。即无天资者，亦必为一循分良民。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-220/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复刘观善居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接手书，并令慈传心汇录，阅之不禁慨叹不置。光常谓之丧乱，由于家庭失教所致。教子固要紧，而教女更甚。以女若得其善教，则成就四德，相夫教子。俾有天资者，成就圣贤学问品格。即无天资者，亦必为一循分良民。</p><p class="p-trans">昨天接到信，以及你母亲的《传心汇录》，读之不禁慨叹不止。我常常说时局动乱，是由于家庭失去善教所致。教导儿子固然要紧，而教导女儿更加要紧。因为女儿如果得到好的教导，就能成就女子四德（注1），相夫教子。使得有天资的人，成就圣贤的学问品格。即使没有天资的人，也必定成为一个安守本分的良民。</p></div>
+<div class="para-pair"><p class="p-orig">女若失教，不但不能相夫教子，于义于道，且将诱子为非，教其作恶。凡古今之大奸大恶，皆非贤母所生。欲家之兴，国之治，当从教养子女起，此根本解决之道也。</p><p class="p-trans">女子如果失去教导，不但不能在义理、正道上相夫教子，而且将会诱导儿子为非作歹，教他作恶。凡是古今的大奸大恶之人，都不是贤母所生。想家庭兴旺，国家安定，应当从教养子女开始，这是根本的解决之道。</p></div>
+<div class="para-pair"><p class="p-orig">春间见阁下出身富贵，少年老成。虽居沪上，志慕真修。意其家庭教育，当必有出于寻常富贵家之上者。今见令慈之纯孝苦节，岂但阁下亲炙休光为之转变，即千百年后，见闻其懿德淑范，亦当为之转变。惜世之讲求治安者，弃圣道而崇夷法。不知其本何齐其末，以致愈欲治而愈乱，虽圣贤出世，亦末如之何矣。</p><p class="p-trans">春天，见到阁下出身富贵，少年老成。虽然居住在上海，但志向仰慕精诚修持。认为你的家庭教育，当必有超出平常富贵人家之上的情形。现今见到你母亲的纯孝苦节，哪里只是阁下亲受其美德的教育熏陶，而为之转变，即使千百年后，见到听到她美德懿范的人，也应当为之转变。可惜世间讲求长治久安的人，遗弃圣贤之道而崇尚外国法律。不知道根本，如何整治枝末，以致于越是想要治理，却越混乱，即使圣贤出世，也无可奈何啊！</p></div>
+<div class="para-pair"><p class="p-orig">尚祈阁下与侪辈常言之，亦未始非敦本重伦，齐家治国之一助也。令慈坤德克全，所歉者，未闻净土法门而已。祈阁下于朝暮回向时，代为回向往生，则可谓大孝尊亲也已。</p><p class="p-trans">还请阁下对你们同辈常常讲说，也未尝不是敦本重伦（崇尚根本、注重伦常），齐家治国（管理家庭、治理国家）的帮助，你母亲妇德克全，所歉缺的，就是没有听到净土法门而已。请阁下在朝暮回向的时候，代为你母亲回向往生，就可说是大孝尊亲啊！</p></div>
+<div class="para-pair"><p class="p-orig">法华经注，流通有数种。其大义当以法华会义为首，其消文则法华指掌最详。会义，科注，入疏，三种皆宗文句。而蕅益大师发挥，远胜余师。然欲得其实益，尚须依光前次所说为主。</p><p class="p-trans">《法华经》的注解，流通的有好几种。诠释大义应当以《法华会义》（注2）为首，消释文句则是《法华指掌》（注3）最为详细。《法华会义》，《法华科注》（注4），《法华入疏》（注5），这三种都是宗从《法华文句》（注6）。而蕅益大师的发挥，远胜其余诸师。然而想得其中的真实利益，还必须依我上次所说为主。</p></div>
+<div class="para-pair"><p class="p-orig">令慈已往，难已劝进净业，只可代为回向。令本生慈，既有信心，可不日为讲论，以期其高登莲品乎哉。人子报亲，度生，皆以此为第一。祈勉之，则幸甚。</p><p class="p-trans">你母亲已经往生，已很难劝她增进净业，只可以代为回向。你的亲生母亲，既然有信心，能不每天为她讲论，以期望她高登莲品吗？为人之子报答亲恩，度化众生，都以此为第一。请勉励行之，则非常庆幸。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【四德】</span>指妇女应有的四种德行。《周礼·天官·九嫔》：“掌妇学之法，以教九御妇德、妇言、妇容、妇功。”郑玄注：“妇德谓贞顺，妇言谓辞令，妇容谓婉娩，妇功谓丝枲。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【法华会义】</span>十六卷，明·蕅益大师著</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【法华经指掌疏】</span>七卷，清·通理述</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【法华科注】</span>有三种：十卷，宋·守伦撰，明法济参订。八卷，元·徐行善科注。七卷，明·一如集注。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【法华经入疏】</span>十二卷，宋·道威入注。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【法华文句】</span>十卷（或二十卷）。隋·智顗说，灌顶记。具名《妙法莲华经文句》，或称《法华经文句》。收在《大正藏》第三十四册。是天台宗对于《妙法莲华经》本文的主要解释，为天台三大部之一。即天台宗的开祖智顗，于陈后主祯明元年（587年），在金陵光宅寺开讲《妙法莲华经》，就经中字句及其意义详加解说，弟子章安灌顶笔录成书。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

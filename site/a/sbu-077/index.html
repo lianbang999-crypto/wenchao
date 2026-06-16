@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复崔德振居士书五 · 印光法师文钞</title>
+<meta name="description" content="生此末法，自无资本，承诸人之厚意，于此朝不保夕之乱世，欲将诸宗之经论悉通，而为此朝不保夕之人民，弘各宗之法。此语乃汝敢说，光则不敢说。何以故。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-077/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复崔德振居士书五 · 印光法师文钞">
+<meta property="og:description" content="生此末法，自无资本，承诸人之厚意，于此朝不保夕之乱世，欲将诸宗之经论悉通，而为此朝不保夕之人民，弘各宗之法。此语乃汝敢说，光则不敢说。何以故。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-077/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复崔德振居士书五</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">生此末法，自无资本，承诸人之厚意，于此朝不保夕之乱世，欲将诸宗之经论悉通，而为此朝不保夕之人民，弘各宗之法。此语乃汝敢说，光则不敢说。何以故。</p><p class="p-trans">生在这个末法时代，自己没有什么资本，承蒙众人的厚意，在这朝不保夕的乱世，想将诸多宗派的经论全都通达，从而为这些朝不保夕的人民，弘扬各宗各派的法门。这些话是你敢说，我则不敢说。为什么呢？</p></div>
+<div class="para-pair"><p class="p-orig">勿道汝无此本领，即有此本领，与佛无异，亦只是契理而不契机。何竟不以净土为提倡乎。将谓一提倡净土，便不显阅藏之所得，而失自己大通家之身分乎。</p><p class="p-trans">不要说你没有这个本领，即使有这个本领，与佛无异，也只是契理而不契机。为何竟然不提倡净土呢？难道说一提倡净土，就不能显示你阅读藏经有所得，而有失自己大通家的身分吗？</p></div>
+<div class="para-pair"><p class="p-orig">汝完全在梦中说梦话。光恐汝后来著魔发狂，故不惜苦口，息汝狂见。阅藏则可，弘法当有专主。汝于佛所说三根普被，九界同遵之法，于朝不保夕之时，尚不欲专一其志，足知汝不知世务，狂妄自是。</p><p class="p-trans">你完全是在梦中说梦话。我怕你将来著魔发狂，所以不惜苦口相劝，来止息你的狂妄知见。阅读藏经（中的各宗）是可以的，弘法应当专弘一宗。你对于佛所说的三根普被，九界同遵的净土法门，在这朝不保夕的时世，尚且不想专一注重于此志向，足以知道你不知世务，狂妄自大，自以为是。</p></div>
+<div class="para-pair"><p class="p-orig">又既知阅藏知津，何又先说多少章程。光意汝未知有此书，后又提及，益知汝自作聪明，不依古人之极善成规。至论各宗专经论，当看法海观澜（二本，扬州藏经院有版）。</p><p class="p-trans">另外，既然知道《阅藏知津》（注1），为什么又先说多少章程。我以为你不知道有这本书，后来又提到，更加地知道你自作聪明，不依古人极善的成规。至于说到各宗各派重要的经论，应当看《法海观澜》（这两本书，扬州藏经院有版）。</p></div>
+<div class="para-pair"><p class="p-orig">即遍通各宗，其弘法于朝不保夕，救死不暇之时，决定不可不依净土法门，此万无一疑之定章也。汝宜自谅，否则非吾徒也。</p><p class="p-trans">即使周遍通达各宗各派，要在这朝不保夕，救死不暇的时世弘法，决定不可不依净土法门，这是绝无一点怀疑的铁定章程。你应该自我体察，否则就不是我的徒弟。</p></div>
+<div class="para-pair"><p class="p-orig">所求法名，另纸书之。光初六往申，十七即回。初九起七，不入众念诵，在寮房自念。午后只说一次开示，无论何人均不会，不受馈遗。十六留一日，为说三皈五戒（此事光不许，屈文六再三说，故为说一章程）。因目不见字，只照平常方便说。光令人代，彼不许，亦只好随他去。</p><p class="p-trans">所求的法名，在另外的纸上写好。我初六前往上海，十七就回去。初九开始七天的法会，不入众念诵，在寮房自己念。午后只说一次开示，无论什么人都不见，不接受馈赠供养。十六日留住一天，为大众说三皈五戒（这件事我不答应，屈文六再三劝说，所以为大众说一次）。因为眼睛看不见字，只照平常方便宣说。我让人代说，他不答应，也只好依从他。</p></div>
+<div class="para-pair"><p class="p-orig">所有香敬，无论多少，均作会中费用，故能不至累死，否则非至累死不可（十八回来又入关，以避各处邀请）。光老矣，以后永不许来信，亦不许介绍人皈依，凡阅经所钞，及所悟，所发挥之稿，均不许寄来，以无目力应酬故也。</p><p class="p-trans">所有的香敬供养，无论多少，都作为护国法会中的费用，故能不至于累死，否则非到累死不可（十八日回来，又入关房，以逃避各处的邀请）。我老了，以后永远不许来信，也不许介绍人皈依，凡是阅经所钞写的，以及悟到的、所发挥的文稿，都不许寄来，因为没有视力应酬的缘故。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【阅藏知津】</span>《阅藏知津》、《法海观澜》均为蕅益大师著作。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复汤慧振居士书（民国二十年） · 印光法师文钞</title>
+<meta name="description" content="人于少年，若未遇良师善友，日与燕朋邪友相往还，则危险万状。重则不久即死，轻亦或成孱弱，或成残废。究其原由，皆由认彼寻花问柳为乐，而不知其惨酷，或同杀人，或同杀其世世子孙也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-067/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复汤慧振居士书（民国二十年） · 印光法师文钞">
+<meta property="og:description" content="人于少年，若未遇良师善友，日与燕朋邪友相往还，则危险万状。重则不久即死，轻亦或成孱弱，或成残废。究其原由，皆由认彼寻花问柳为乐，而不知其惨酷，或同杀人，或同杀其世世子孙也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-067/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复汤慧振居士书（民国二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人于少年，若未遇良师善友，日与燕朋邪友相往还，则危险万状。重则不久即死，轻亦或成孱弱，或成残废。究其原由，皆由认彼寻花问柳为乐，而不知其惨酷，或同杀人，或同杀其世世子孙也。</p><p class="p-trans">人在少年时代，如果没有遇到良师善友，每天与燕朋邪友互相来往，则非常危险。严重的不久就会死；轻的也会要么使身体衰弱、要么成为残废。追究其原由，都是由于将那些寻花问柳的事当作快乐，而不知道淫乐的惨烈残酷，或同于杀人，或同于杀害自己世世代代的子孙啊！</p></div>
+<div class="para-pair"><p class="p-orig">好嫖之人，每每染梅毒，所生儿女，小时尚不现，一到十二三岁，精血已行之期，便发现矣。子又传子，孙又传孙，可不哀哉，可不痛哉。</p><p class="p-trans">好嫖的人，往往染上梅毒，所生的儿女，小时候还不会显现出来，一到了十二、三岁，精血开始运行的时候，就显现出来了。然后儿子又传给儿子，孙子又传给孙子，能不悲哀吗？能不痛心吗？</p></div>
+<div class="para-pair"><p class="p-orig">汝亲朱子权，半身不遂，恐亦是贪色所致。邪色不可贪，即夫妇同居，亦不可贪，贪则一样送命，致病。</p><p class="p-trans">你的亲戚朱子权，半身不遂，恐怕也是贪色所导致的。邪淫女色不能贪，即使是夫妇同居之正淫，也不可贪，贪则一样送命、生病。</p></div>
+<div class="para-pair"><p class="p-orig">彼既发心欲皈依，当至诚念南无阿弥陀佛，及南无观世音菩萨圣号。心中一切杂念，概不令起。改过迁善，并戒杀吃素。必须永断房事，非病体复原年余，万万不可与女人相亲。否则，万难好矣。</p><p class="p-trans">他既然发心想要皈依，应当至诚念“南无阿弥陀佛”，以及“南无观世音菩萨”圣号。心中一切杂念，一概不令它生起；改过向善，并且戒杀吃素；必须永断房事，除非病体复原一年有余，万万不可与女人亲近。否则，就很难好了。</p></div>
+<div class="para-pair"><p class="p-orig">又当令彼女人，及其儿女，亦当为彼念佛，及念观音。果真至诚，当可速愈。今为彼取法名为慧脱，谓以智慧，脱除从前种种恶习，更以念佛求生西方，永脱生死轮回之苦，常享真常无漏之乐。则是因此恶疾，得大利益，并及其妻，与其儿女，同皆由此脱苦得乐，则为大幸。</p><p class="p-trans">还应当令他家中的女人，以及他的儿女，也都为他念佛，以及念观音圣号。果真至诚，当可迅速痊愈。现今为他取法名为慧脱，意思是以智慧，脱除从前的种种恶习，更以念佛求生西方，来永脱生死轮回的痛苦，常享真常无漏的快乐。这样的话，就是因为这个恶疾，而得到大利益，并连同他的妻子、儿女，共同都因此离苦得乐，这是何等的大幸啊！</p></div>
+<div class="para-pair"><p class="p-orig">彼既不能动，则终日以志诚心念佛，或大声，或小声，或心中默念，皆可。出声念，则可念六字。心中默念，字多难念，宜念四字。无论大声小声，均须心里念得清清楚楚，口里念得清清楚楚，耳中听得清清楚楚。</p><p class="p-trans">他既然不能动弹，那么正好可以整天以志诚心来念佛，或者大声，或者小声，或者心中默念，都可以。出声念，可以念六字佛号。心中默念，字多了难念，宜念四字佛号。无论大声念，小声念，都必须心里念得清清楚楚，口里念得清清楚楚，耳中听得清清楚楚。</p></div>
+<div class="para-pair"><p class="p-orig">虽不能礼拜，然心中常须存恭敬心，如对佛前，如堕水火，以求救援，绝不敢起一念不正当之心。</p><p class="p-trans">虽然不能礼拜，然而心中必须恒常存有恭敬心，如同佛在面前一样，也如同堕入水火，而求佛救援，绝对不敢生起一念不正当的心。</p></div>
+<div class="para-pair"><p class="p-orig">从日至夜，睡著则任他去，醒来即接著念。以念佛为自己本命元辰，便可消除恶业，增长善根，可望病愈身安。病愈之后，仍不可放舍，庶可超凡入圣，了生脱死，往生西方矣。</p><p class="p-trans">从白天到夜晚，睡着了就随它去，醒来就接着念。以念佛当作自己的本命元辰，便可以消除恶业，增长善根，就有希望病愈身安了。病愈之后，仍然不能放弃念佛，才可以超凡入圣，了生脱死，往生西方啊！</p></div>
+<div class="para-pair"><p class="p-orig">现今是一患难世道，若肯志诚念佛，便可逢凶化吉。女人家，若常念佛，决定无有难产之祸。即平常不念佛人，到临产时，产不下来，肯志诚念南无观世音菩萨，定规即刻安然而生。</p><p class="p-trans">现今是一个患难世道，如果肯志诚念佛，便可逢凶化吉。女人家，如果常常念佛，决定没有难产的祸患。即使平常不念佛的人，到临产之时，生不下来，如果肯志诚念“南无观世音菩萨”，一定能立刻平安生产。</p></div>
+<div class="para-pair"><p class="p-orig">切不可谓裸露不净，念之获罪。当知平常必须恭敬洁净，如衣冠不整齐，身体不洁净，或洗澡，抽解，并睡觉（音教），均宜心里默念，不宜出声。唯生产时，宜出声，不可默念。旁边照应的人，也帮他念，则彼此均有功德利益矣。</p><p class="p-trans">千万不可认为裸露不净，念了获罪。应当知道平常必须恭敬洁净，例如衣冠不整齐，身体不洁净，或者洗澡，大小便，以及睡觉（发音“教”），都应该在心里默念，不应该出声念。唯有在生产的时候，应该出声念，不可默念。旁边照应的人，也要帮她念，那么彼此都有功德利益啊！</p></div>
+<div class="para-pair"><p class="p-orig">此书宜与彼看，并令一切人知之，方为于彼有益也。</p><p class="p-trans">这封信应该给他看，并令一切人知道，才是对他们有利益啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【孱弱】</span>1.瘦弱；衰弱。2.胆小怕事；软弱无能。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【本命元辰】</span>禅林用语。指本性。本命，指人出生年之干支；值其干支之星，称本命星。元辰，谓人之命运受阴阳二星所左右，而以阳八阴六配合卜算。故本命、元辰皆为支配人命运之星。禅宗则将之比喻为自己之本性。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

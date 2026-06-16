@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>地藏经石印流通序（民十七年） · 印光法师文钞</title>
+<meta name="description" content="众生之心，与佛无二。其不能作佛，常作众生者，以其自无慧力，不能觉悟，又无善知识为之开导。由是以本具佛性之妙心，作起惑造业之根本。致令长劫轮回，了无出期，可不哀哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-005/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="地藏经石印流通序（民十七年） · 印光法师文钞">
+<meta property="og:description" content="众生之心，与佛无二。其不能作佛，常作众生者，以其自无慧力，不能觉悟，又无善知识为之开导。由是以本具佛性之妙心，作起惑造业之根本。致令长劫轮回，了无出期，可不哀哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-005/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">地藏经石印流通序（民十七年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">众生之心，与佛无二。其不能作佛，常作众生者，以其自无慧力，不能觉悟，又无善知识为之开导。由是以本具佛性之妙心，作起惑造业之根本。致令长劫轮回，了无出期，可不哀哉。</p><p class="p-trans">众生的心，与佛的心没有两样。而众生之所以不能作佛，常作众生的原因，是因为众生自己没有智慧之力，不能觉悟，又没有善知识为其开导。因此以本来具足佛性的妙心，作起惑造业的根本。致使长久劫轮回于六道，没有出离之期，怎能不让人悲哀呢？</p></div>
+<div class="para-pair"><p class="p-orig">故我世尊，初成正觉，升忉利天，为母说法。欲令一切众生，悉皆图报父母之恩，特为表彰地藏菩萨往劫因救母故，广发菩提之誓愿，以作未来众生得出苦海之舟航。</p><p class="p-trans">所以我佛释迦世尊，最初示现成就正觉时，升到忉利天，为母说法。希望让一切众生，都能生起报答父母之恩的心，并特别表彰地藏菩萨过去劫中因为救度母亲的缘故，广发菩提誓愿，来作为未来众生得以出离苦海的舟航。</p></div>
+<div class="para-pair"><p class="p-orig">全部经文，理事详明，文词显豁。圆彰是心作佛，是心是佛。是心作众生，是心是众生。及心能造业，心能转业。心不能转业，业即能缚心等义。</p><p class="p-trans">《地藏经》中全部经文，理和事详细清楚，经文词句显明通达。圆满彰显了是心作佛、是心是佛，是心作众生、是心是众生，以及心能造业、心也能转业，心如果不能转业、业就能系缚心等深义。</p></div>
+<div class="para-pair"><p class="p-orig">而地藏往劫救母二事，于此义意，更为真切著明。诚可谓险道之导师，昏衢之慧炬。贫乏之宝藏，凶岁之稻粮。俾一切迷昧众生，速得觉悟。一切孝顺儿女，有所师承。经之利益，莫能宣说。西天东土，读此经而兴起者，何可胜数。</p><p class="p-trans">而且，地藏菩萨在往劫救度母亲的这两件事，对于这些道理和意义，彰显得更为真切显明。实在可以称为轮回险道的导师，黑暗道路上的智慧明灯。贫乏中的宝藏，荒年的稻粮。使得一切迷昧的众生，能够迅速觉悟，使得一切孝顺的儿女学习并传承。这部经的无边利益，无法用语言来表达。西天竺与东方中国，读诵此经而自度度人的人，多得数也数不过来。</p></div>
+<div class="para-pair"><p class="p-orig">真达和尚，欲报罔极之恩，拟请善书者恭写此经，石印施送。适智准居士鲁指南，以自所书金刚经请正。</p><p class="p-trans">真达和尚，想要报答父母的深恩，打算请善于书法的人恭敬抄写《地藏经》，石印成书，并布施赠送。恰巧智准居士，鲁指南，拿来自己所抄写的《金刚经》请和尚指正。</p></div>
+<div class="para-pair"><p class="p-orig">师以居士为报亲恩，自己恭写，以常持诵。则书写此经，必所乐为。因以恳请，即蒙允许。</p><p class="p-trans">真达和尚想到居士因为想要报答父母的深恩，自己恭敬抄写《金刚经》，来常常持诵。如果请他书写《地藏经》，他必定乐意做这件事。由此恳请，当下就得到了居士的允诺。</p></div>
+<div class="para-pair"><p class="p-orig">命光作序，以抒经益，而发起世间人子之孝心。冀其随时随事，以尽孝道。念劬劳之深恩，必致吾亲于究竟安隐之宝所而后已。</p><p class="p-trans">和尚令我作序，来阐明《地藏经》的利益，从而发起世间为人子的孝心。希望一切时一切处，恪尽孝道。感念父母抚养儿女操劳的深恩，务必使我们的父母亲，去到一个究竟安隐的宝所（往生极乐）而后已。</p></div>
+<div class="para-pair"><p class="p-orig">由是以至诚心，念佛圣号。兼以恪敦伦常，尽己天职。诸恶莫作，众善奉行。以此功德，资益吾亲。必期生则业障消除，善根增长，福寿增崇，智慧开发。没则神超净域，业谢尘劳，忍证无生，位登不退。庶可稍尽乌私，无忝所生矣。</p><p class="p-trans">从此，以至诚心，念佛圣号。再加上恪守、敦笃伦理道德，竭尽自己的天职本份。诸恶莫作，众善奉行。以此功德，资助利益我们的父母亲。必定期望父母在世时业障消除、善根增长、福寿增崇、智慧开显；去世时，神识超升到净土，恶业凋谢在尘劳，证得无生法忍、圣果位次不退。这样才能稍微尽到如乌鸦反哺般的孝心，对得起父母的生育之恩了。</p></div>
+<div class="para-pair"><p class="p-orig">又须知一切众生，皆是过去父母，未来诸佛。当以大菩提心，随顺机宜而为宣说，及与救济。于以契佛心而符己愿，扇慈风以息杀业。将见礼让兴而干戈永息，风俗美而天下和平矣。</p><p class="p-trans">另外，还必须懂得，一切众生，都是过去的父母，未来的诸佛。应当以大菩提心，随顺众生的根机，宣说适宜的教法，并给予救济。由此来契合佛心、符合自己的誓愿，兴起慈悲的风气来息止杀业。我们将会看到世间礼让兴起而斗争平息，风俗淳美而天下和平了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【石印】</span>是平版印刷的一种技术，已有二百多年历史，曾一度取代中国古老的雕版印刷而占居主导地位；20世纪30年代以后，石印的地位逐步被更为完善的铅印所取代。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【凶岁】</span>旧谓不吉利的年份。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【师承】</span>《后汉书·儒林传序》：“若师资所承，宜标名为证者，乃着之云。”后以“师承”指学术、技艺上的一脉相承。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【兴起】</span>因感动而奋起。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【罔极】</span>《诗·小雅·蓼莪》：“父兮生我，母兮鞠我……欲报之德，昊天罔极。”朱熹集传：“言父母之恩，如天无穷，不知所以为报也。”后因以“罔极”指父母恩德无穷。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【乌私】</span>晋李密《陈情事表》：“臣密今年四十有四，祖母刘今年九十有六，是臣尽节于陛下之日长，报养刘之日短也，乌鸟私情，愿乞终养。”后因以“乌私”为孝养父母之典实。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【无忝】</span>不玷辱；不羞愧。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【于以】</span>因此；是以。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【礼让】</span>守礼谦让。《论语·里仁》：“能以礼让为国乎？何有？不能以礼让为国，如礼何？”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

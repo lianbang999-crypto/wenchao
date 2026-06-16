@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复于归净居士书（民国二十二年） · 印光法师文钞</title>
+<meta name="description" content="欲学佛，必须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行方可。不能为世间贤人善人，何能得佛法真实利益乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-093/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复于归净居士书（民国二十二年） · 印光法师文钞">
+<meta property="og:description" content="欲学佛，必须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行方可。不能为世间贤人善人，何能得佛法真实利益乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-093/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复于归净居士书（民国二十二年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">欲学佛，必须敦伦尽分，闲邪存诚，诸恶莫作，众善奉行方可。不能为世间贤人善人，何能得佛法真实利益乎。</p><p class="p-trans">想要学佛，必须敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行方才可以。若不能成为世间的贤人善人，如何能得到佛法的真实利益呢？</p></div>
+<div class="para-pair"><p class="p-orig">汝母既长斋念佛，当将净土宗旨，及修持要义，与汝母说，庶可母子同生莲邦。又须以此普为一切亲朋有缘说，俾大家同沐佛化，同修净业，同生西方也。</p><p class="p-trans">你母亲既然长斋念佛，你应当把净土的宗旨，以及修持的要义，对你母亲讲说，才可以使你们母子同生莲邦。还必须将这些普遍对一切亲朋好友及有缘人讲说，使得大家共同沐浴佛陀的教化，共同修习净业，共同往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">汝既学校卒业，处今之世，断不宜出家，况汝母又不许乎。即掩关亦不必。为汝计，或为私塾之师，或为人司书启管帐，均可稍得薪水，以资日用。然须认真读书，俾文字通畅方可。断不可懒惰懈怠，以致无所成就耳。</p><p class="p-trans">你已经从学校毕业，处于当今的世道之中，绝对不宜出家，何况你母亲又不允许呢？即使闭关也不必要。为你考虑，或者做一个私塾老师，或者为他人做秘书管帐，都可以稍稍得到一些薪水，来维持日常用度。不过必须认真读书，使得文字通畅方才可以。千万不可以懒惰懈怠，以致于无所成就。</p></div>
+<div class="para-pair"><p class="p-orig">法名，即原归净二字甚妙。古云，纵然生到非非想，不如西方归去来。果能老实念佛，乘弥陀之愿船，归极乐净土家乡，是可预卜。</p><p class="p-trans">法名，就用原来的“归净”二字就很妙。古人说：纵然生到非非想天，不如西方归去来。果真能够老实念佛，那么乘上阿弥陀佛的大愿船，回归到极乐净土家乡，是可以预知的。</p></div>
+<div class="para-pair"><p class="p-orig">此乃千经万论，处处指归，若不此是归，定如贫子，不识故土，不忆慈父，而甘漂泊他乡，以转于沟壑也。若不拟不议，一心归去，始知自性本来清净，又何处求归相净相耶。</p><p class="p-trans">这是千经万论，处处指归，如果不以西方为归，一定如同乞儿，不认识故土，不记得慈父，而甘心漂泊在他乡，最终死在沟壑之中啊！如果能不揣度、不疑议，一心归去，这才知道自性本来清净，又哪里有归去的相、清净的相可求呢？</p></div>
+<div class="para-pair"><p class="p-orig">古又云，自是不归归便得，故乡风月有谁争。归净归净，念兹在兹。</p><p class="p-trans">古人又说：自是不归归便得，故乡风月有谁争。归净归净，你要念念不忘。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【书启】</span>1.古代专指下级给上级的信件，后来用为信札的通称。2.旧时官署里专管起草书信等事的人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【预卜】</span>1.事先选择。2.事先断定。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【转于沟壑】</span>壑：山沟。指死在山沟里。《孟子·公孙丑下》：“凶年饥岁，子之民，老羸转于沟壑，壮者散而之四方者，几午人矣。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【拟议】</span>揣度议论。多指事前的考虑。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【念兹在兹】</span>念：思念；兹：此，这个。泛指念念不忘某一件事情。《尚书·大禹漠》：“帝念哉！念兹在兹，释兹在兹。名言兹在兹，允出兹在兹，惟帝念功。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

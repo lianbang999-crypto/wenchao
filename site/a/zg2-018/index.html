@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>金刚经线说铸板流通序 · 印光法师文钞</title>
+<meta name="description" content="此一卷经。人人具足，个个不无。但由迷真逐妄，背觉合尘，不知返观内照，致使不能亲得受用耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-018/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="金刚经线说铸板流通序 · 印光法师文钞">
+<meta property="og:description" content="此一卷经。人人具足，个个不无。但由迷真逐妄，背觉合尘，不知返观内照，致使不能亲得受用耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-018/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">金刚经线说铸板流通序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">此一卷经。人人具足，个个不无。但由迷真逐妄，背觉合尘，不知返观内照，致使不能亲得受用耳。</p><p class="p-trans">这一卷经，人人具足，个个都有。只是因为迷惑真心，追逐妄尘，背离觉性，合于尘境，不知道返观内照自心，所以导致不能得到受用而已。</p></div>
+<div class="para-pair"><p class="p-orig">故华严如来出现品云，如来成正觉时，叹曰，奇哉奇哉，一切众生，皆具如来智慧德相。但以妄想执著，而不证得。若离妄想，则一切智，自然智，无碍智，则得现前。</p><p class="p-trans">所以《华严经·如来出现品》中说，如来成就正觉的时候，感叹说：“奇哉奇哉，一切众生，皆具如来智慧德相。但以妄想执著，而不证得。若离妄想，则一切智，自然智，无碍智，则得现前。”</p></div>
+<div class="para-pair"><p class="p-orig">此经由须菩提见佛威仪，叹为希有世尊，善护念付嘱诸菩萨。欲令护念付嘱之法，大明于世。故问菩萨发无上菩提心，云何应住，云何降伏其心。此二句，乃护念付嘱之要旨也。</p><p class="p-trans">这部经是尊者须菩提见到佛的威仪，赞叹说：“希有世尊，如来善护念诸菩萨，善付嘱诸菩萨”。想让如来护念、付嘱的法要，大大显明于世。所以向佛请问：菩萨发无上菩提心，云何应住，云何降伏其心。这两句，就是护念付嘱的关键义旨。</p></div>
+<div class="para-pair"><p class="p-orig">而如来以所有一切九类众生，悉皆令入无余涅槃而灭度之，不见众生得灭度相，答其降伏。以菩萨于法，应无所住，不住色声香味触法而行布施，答其应住。又谓不应住色生心，不应住声香味触法生心。应无所住而生其心。</p><p class="p-trans">而如来用“所有一切九类（胎、卵、湿、化、有色、无色、有想、无想、非有想非无想）众生，都让他们进入无余涅槃而加以灭度，且不见有众生得到灭度的相”，作为“降伏其心”的回答；用“菩萨于法，应无所住，不住色声香味触法而行布施”，作为“云何应住”的回答。又说“不应住色生心，不应住声香味触法生心。应无所住而生其心。”</p></div>
+<div class="para-pair"><p class="p-orig">且深叹其不住相布施之福德，与十方虚空，同一不可思量。何以度尽一切众生，而曰实无众生得灭度者。以无余涅槃，即众生本具性体。由迷背不知，初非有失。菩萨为指示之，令其了知衣里之珠，项上之头。既了知已，岂复有得。</p><p class="p-trans">并且深深赞叹，不住相布施所得的福德，与十方虚空，同样不可思量。为什么“度尽一切众生”，而说“实无众生得灭度者”呢？因为无余涅槃，就是众生本自具有的心性本体。最初因为迷惑背离，所以不知晓，而心性本体并没有失去。菩萨为众生指示出来，让他们了知自己衣服里的宝珠，自己脖子上的头颅。（之前并未失去，）了知以后，哪里又有得到。</p></div>
+<div class="para-pair"><p class="p-orig">不过众生自性自度，岂有能度之我，所度之人与众生，并所入无余涅槃之寿者相哉。四相既无，则三轮体空，一道清净矣。</p><p class="p-trans">不过是众生的自性在自行救度，哪还有能度的我，所度的人与众生，以及所入无余涅槃之寿者相呢？四相既然没有，那么就三轮体空，一道清净了。</p></div>
+<div class="para-pair"><p class="p-orig">由其三轮体空一道清净。故万行云兴，心无所住。虽复万行云兴，实则一法不立。凡所见情与无情，同一实相。故得山河及大地，全露法王身。而楞严以五阴，六入，十二处，十八界，七大，皆如来藏妙真如性，即是其证。</p><p class="p-trans">因为三轮体空，一道清净，所以六度万行如同云腾波涌一般兴起，而心无所住著。虽然六度万行如云兴起，实则一法不立。举凡所见到的有情众生与无情器界，是同一真如实相。所以，山河及大地，全露法王身。而《楞严经》中说，五阴、六入、十二处、十八界、七大，都是如来藏妙真如性，就是明证。</p></div>
+<div class="para-pair"><p class="p-orig">是知如来智慧德相，本自具足，无欠无余。但以迷背之故，无端幻起妄想执著，致智慧德相隐而不现。若肯穷究此妄想执著之所从来处，则弥空云雾，彻底消灭。本有天日，全体显现矣。</p><p class="p-trans">从而知道，如来智慧德相，一切众生本自具足，没有欠缺，没有多余。只因为迷惑背离，从而无端无由、幻妄地生起了妄想执著，使得智慧德相隐没不现。如果肯穷究这妄想执著是从哪里来，那么漫天云雾，就会彻底消灭。本有的性天慧日，就全体显现了。</p></div>
+<div class="para-pair"><p class="p-orig">云雾封时，天日亦不曾失。云雾散时，天日又岂是得。度尽一切众生，不见一众生得度者，此之谓也。其能见此理以行此行者，以无所住而生心，悉见诸相非相也。</p><p class="p-trans">云雾遮蔽时，性天慧日也不曾失去；云雾消散时，性天慧日又哪里是得到呢。度尽一切众生，不见有一众生得度，说的就是这个意思。之所以能够见到这样的理性，行这样的行持，是因为无所住著而生心，完全见到诸相非相的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">如是之人，受持此经，乃至四句三句二句一句，为人演说。其福德虽满大千世界七宝布施，尚不能及。以一句染神，永为道种。住相布施，报在人天故也。以故说是经处，即为塔庙。经所在处，即三宝具足。故一切世间天人阿修罗，皆应供养也。</p><p class="p-trans">这样的人，受持这部经，乃至将经中的四句、三句、二句、一句，为他人演说。所得到的福德，即使用充满大千世界的七宝来布施，尚且不能企及。因为只要有这部经的一句经文染入神识，就永远种下了成道的种子。而住著于相行布施，只能得到人天福报啊。所以，演说这部经的处所，就是佛塔庙宇；这部经所在的地方，就是三宝具足之地。因此一切世间天、人、阿修罗，都应该供养。</p></div>
+<div class="para-pair"><p class="p-orig">以说者能不取于相，如如不动。以如如智，契如如理。佛如众生如，一如无二如。终日说而实未尝说，即杜默不说亦未尝不说。以其人行住坐卧，周旋俯仰，著衣吃饭，扬拳竖指，无不是不生不灭无余涅槃，无住心之全体大用。</p><p class="p-trans">这是因为演说的人，能够不取著于相，如如不动，以如如之智，契如如之理。
+佛如众生如，一如无二如。整天地说，而实际上没有说；即使闭口沉默不说，也未必是不说。因为这个人走路、站立、坐下、躺卧、旋转、俯身、仰头、穿衣、吃饭、举拳、竖指，全都是不生不灭的无余涅槃、无住心的全体大用。</p></div>
+<div class="para-pair"><p class="p-orig">劫外田地，故乡风月。任人自得，有谁阻止。以故卖柴翁闻一句，即得嗣祖传灯，腾辉宇宙。彼既丈夫我亦尔，不应自轻而退屈。则受持之人，宜何如发大菩提心，宜何如生无所住心也。</p><p class="p-trans">劫外田地，故乡风月。任人自得，有谁阻止。所以卖柴翁出身的慧能大师，听到一句“应无所住而生其心”，就得以嗣承祖位，传续慧灯，腾辉宇宙。他是大丈夫，我们也是大丈夫，不应该轻视自己而委屈退缩。则受持此经的人，应当发起大菩提心为好，应当生起无所住心为好啊。</p></div>
+<div class="para-pair"><p class="p-orig">清道光末，有无住老人陈柱者。宿有慧根，弱冠即诵此经。至七旬外，广阅诸注。折衷其义而为线说。以不住相一线，直贯到底。其语句颇平实显豁，有益初机。</p><p class="p-trans">清朝道光末年，有一位“心无所住”的老人，名叫陈柱，宿世具有慧根，二十岁起就诵持这部经。到了七十岁，广泛阅读诸家注解。折中各注解的义理而编著了《金刚经线说》，全书用“不住相”这一条线，从头贯穿到尾。语句平实而显明，有益于初学的人。</p></div>
+<div class="para-pair"><p class="p-orig">倘由是而得其旨归，则古德之注，如来之经，如开宝藏，随意受用矣。粤东简照南玉阶二昆弟。以母氏逝世，诸亲友吊奠者，各送诔词挽联。汇而刻之，名哀思录。</p><p class="p-trans">如果通过本书而得到宗旨和归趣，那么古德注疏，如来经文，就如同宝藏开启一般，可以随意受用了。广东的简照南、简玉阶二位兄弟，因为母亲逝世，诸位来吊奠的亲友都送了诔词挽联。于是就将这些诔词挽联汇集刻印成一册，命名为《哀思录》。</p></div>
+<div class="para-pair"><p class="p-orig">又欲藉母氏之故，普利一切。因铸金刚经线说板，印数千卷。与哀思录同赠吊奠亲友，以酬嘉贶。一以冀母氏莲品高升，一以冀亲友善根增长。诚所谓孝子不匮，永锡尔类者矣。</p><p class="p-trans">又想要藉着母亲逝世这个因缘，来普遍利益一切人。因此就铸了《金刚经线说》的铅板，印了几千卷。连同《哀思录》一起赠送给前来吊奠的亲友，酬谢他们的厚意。借此，一方面希望母亲莲品升高，一方面希望亲友善根增长。实在是所谓的“孝子不匮，永锡尔类”啊。</p></div>
+<div class="para-pair"><p class="p-orig">或疑金刚无相，净土有相，二法如何相融。予曰，金刚经令度尽一切众生，而不见度相。不住色声香味触法而行布施。布施乃六度万行之首。既令不住相布施，则持戒忍辱精进禅定智慧，以及万行，莫不皆然。</p><p class="p-trans">或许有人疑惑，《金刚经》无相，净土有相，这二法如何相互融通。我说：《金刚经》令度尽一切众生，而不见能度所度之相。不住色声香味触法而行布施。布施是六度万行之首。既然让（修行的人）不住相行布施，那么持戒、忍辱、精进、禅定、般若，以及万行，无不是如此。</p></div>
+<div class="para-pair"><p class="p-orig">然则金刚经乃令人遍行六度万行，普度一切众生之规矩准绳也。遍与一代时教一切法门而为纲要。盖是即相离相，何得谓与净土不相融通乎。</p><p class="p-trans">然则，《金刚经》是让人普遍修行六度万行，普度一切众生的规矩和准绳。是如来一代时教所说一切法门的纲要。应当说是即相而离相，怎能说与净土不相融通呢。</p></div>
+<div class="para-pair"><p class="p-orig">夫度生之法，唯净土最为第一。欲生净土，当净其心。随其心净，则佛土净。以不住相之清净心念佛，则是心作佛，是心是佛。其往生西方，证无生忍，乃决定不易之理事也，又何疑乎。</p><p class="p-trans">救度众生的方法，唯有净土法门最为第一。想要往生净土，应当先净其心。心净，则佛土净。用不住相的清净心念佛，则是心作佛，是心是佛。那么往生西方，证得无生法忍，就是决定不变的事理了，又有什么好怀疑的呢。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【九类生】</span>将三界众生，按照受生的不同状况而分成九种，谓之九类生。即︰卵生、胎生、湿生、化生、有色、无色、有想、无想、非有想非无想。出自《金刚经》。“所有一切众生之类，若卵生、若胎生、若湿生、若化生、若有色、若无色、若有想、若无想、若非有想非无想，我皆令入无余涅槃而灭度之。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【衣珠喻】</span>法华七喻之一。又作系珠喻、衣内明珠喻。比喻有大器而满足于小智者，犹如衣内系宝珠而不自知。据法华经卷四“五百弟子授记品”载，有人至亲友家醉酒而卧，此时亲友忽有官事当行，以无价宝珠系其衣里，与之而去，其人醉卧都不觉知。起已，行至他国，为求衣食，倍受艰难，若稍有得，便以为足。后会遇亲友，具语前事，其人乃以宝珠购其所需。盖昔佛为菩萨时，教化声闻弟子，令发一切智心，而今彼等忘失不觉知，既得阿罗汉道，即谓真灭度；今佛出现令彼等觉醒，指示其所得非为究竟，而令其归入一乘。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【迷头认影】</span>据大佛顶首楞严经卷四载，室罗城中演若达多，一日于晨朝以镜照面，于镜中得见己头之眉目而喜，欲返观己头却不见眉目，因生大嗔恨，以为乃魑魅所作，遂无状狂走。此系以自己之本头比喻真性，镜中之头比喻妄相。喜见镜中之头有眉目，比喻妄取幻境为真性而坚执不舍；嗔责己头不见眉目，则比喻迷背真性。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【劫外田地】</span>禅林用语。乃禅林常用以指点学人自己本来面目之语句，意同“父母未生以前”、“天地未开以前”、“空劫以前”等语。故乡风月也是此义。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【弱冠】</span>古时以男子二十岁为成人，初加冠，因体犹未壮，故称弱冠。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【折衷】</span>1.取正，用为判断事物的准则。2.调节使适中。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【嘉贶】</span>厚赐。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【永锡尔类】</span>出自《诗·大雅·既醉》“孝子不匮，永锡尔类。”孝子的德行无穷无尽，永远能赐你同类者以孝道。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

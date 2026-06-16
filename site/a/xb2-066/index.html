@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>歧路指归序（民二十五年） · 印光法师文钞</title>
+<meta name="description" content="三界无非旅邸，六道均是穷人。虽所受之苦乐，暂有不同，而乐尽苦临，终非究竟安身立命之地。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-066/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="歧路指归序（民二十五年） · 印光法师文钞">
+<meta property="og:description" content="三界无非旅邸，六道均是穷人。虽所受之苦乐，暂有不同，而乐尽苦临，终非究竟安身立命之地。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-066/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">歧路指归序（民二十五年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">三界无非旅邸，六道均是穷人。虽所受之苦乐，暂有不同，而乐尽苦临，终非究竟安身立命之地。</p><p class="p-trans">三界无非是旅店，六道都是穷苦人。虽然所遭受的苦乐，暂时有些不同，而快乐尽了，痛苦随之来临，这里终究不是究竟安身立命的地方。</p></div>
+<div class="para-pair"><p class="p-orig">于是我释迦世尊，特垂哀愍，示生世间，示成正觉，随众生机，说种种法，普令众生，就路还家，领取家珍，永享安乐。</p><p class="p-trans">于是，我佛释迦世尊，特别垂慈哀愍，示生世间，示现成等正觉，随顺众生根机，宣说种种法门，普令众生，就路还家，领取自家珍宝，永享安然法乐。</p></div>
+<div class="para-pair"><p class="p-orig">然此诸法，各利一类之机，又且不易修习，即修亦难即生了脱。以全仗自己戒定慧力，断尽烦惑，方出生死，末法众生，颇难冀望。</p><p class="p-trans">然而这些法门，只是分别利益某一类众生的根机，而且还不容易修习，即使修习也很难当生了脱生死。因为这些法门完全依仗自己戒定慧的力量，须断尽烦惑，方能出离生死，末法时代的众生，很难有这样的希望。</p></div>
+<div class="para-pair"><p class="p-orig">如来以大慈悲，又设一特别法门，所谓信愿念佛，求生西方。俾彼已断惑者，仗佛慈力，速证菩提。未断惑者，仗佛慈力，即出生死。三根普被，利钝全收。上圣与下凡同归，初心与久修并进。</p><p class="p-trans">如来以大慈悲，又开设了一个特别法门，即所谓信愿念佛，求生西方。使得那些已经断尽惑业的圣者，仗佛慈力，快速证得菩提。没有断除惑业的凡夫，仗佛慈力，当生出离生死。三根普被，利钝全收。上圣与下凡同归净土，初心与久修同进极乐。</p></div>
+<div class="para-pair"><p class="p-orig">此之法门，不但具缚凡夫，所当专修。即将成佛之等觉菩萨，亦须以十大愿王，导归极乐，始可圆满佛果。法门之大，如空普含，法门之益，如春普育，尽劫赞扬，亦难穷尽。</p><p class="p-trans">这个法门，不但具缚凡夫，应当专门修习。即使是将要成佛的等觉菩萨，也必须以十大愿王，导归极乐，才能圆满佛果。法门的广大，如虚空普含万象；法门的利益，如春天普育万物，尽劫赞扬，也很难穷尽。</p></div>
+<div class="para-pair"><p class="p-orig">光业障深厚，智慧浅薄，数十年来，专修此法。近有山东莒城战德克，李德明者，谬闻人言，函祈归依。</p><p class="p-trans">我业障深厚，智慧浅薄，几十年来，专修净土法门。近来有山东莒城的战德克、李德明等人，错谬听信他人的言论，写信来请求归依。</p></div>
+<div class="para-pair"><p class="p-orig">因示以博地凡夫，欲于现生了生脱死，若不念佛求生西方，绝无一法能满愿者。又为寄文钞等，以为修持之据。</p><p class="p-trans">因此便开示，以博地凡夫的地位，想要在现生了生脱死，如果不念佛求生西方，绝对没有一法能够满愿。又给他们寄去《文钞》等书籍，作为修持的依据。</p></div>
+<div class="para-pair"><p class="p-orig">德克因取其义，述歧路指归，借为问答，以释疑虑而明宗旨。又祈德明为之参订，志期利人，不惜心力。</p><p class="p-trans">战德克因此摘取其中的义理，编述为《歧路指归》，借着双方的问答，来解释疑虑并阐明宗旨。又请李德明为这本书考查、修订，一心希望利益他人，不惜自己的心力。</p></div>
+<div class="para-pair"><p class="p-orig">已经排印流通，寄书求为印证。光阅之，不胜欣慰。以间有词意欠圆，恐阅者或难领会，稍为修正，令其一目了然，绝无疑议。</p><p class="p-trans">已经排印流通，寄书给我，求为这本书作印证。我看了，非常欣慰。因为其中有些词意欠缺圆融，担心读者可能难以领会，所以就稍稍做了修正，令其一目了然，绝对没有疑议。</p></div>
+<div class="para-pair"><p class="p-orig">另行排板，期广流通。庶可于佛一代教典中，唯依契理契机，信愿念佛求生西方一法而修。其他高深玄妙，广大精微，契理而不契机之各法，皆作往生以后，自行化他之根据。</p><p class="p-trans">另行排板，期望广泛流通。这样才能使读者，在佛陀一代教典中，唯依契理契机，信愿念佛求生西方的这个法门来修。其他高深玄妙，广大精微，契理而不契机的各种法门，都当作往生以后，自行化他的根据。</p></div>
+<div class="para-pair"><p class="p-orig">至于一切外道，私相授受，秘密不传之种种邪知谬见，自命为真得佛祖心传之胡说巴道，又何足挂齿也哉。</p><p class="p-trans">至于一切外道，私相授受，秘密不传的种种邪知谬见，自命为真得佛祖心传的胡说八道，又何足挂齿呢？</p></div>
+<div class="para-pair"><p class="p-orig">修订已竟，将付手民，适成复初之发露忏悔文至，此又一最普通之大歧路指归也。因附于后，以广流通，普作世人殷鉴焉。</p><p class="p-trans">修订已经完毕，将要交付排印，刚好成复初的发露忏悔文到了，这又是一个最普通的大歧路指归。因此附录在了后面，广泛流通，普作世人的借鉴。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【手民】</span>古时仅指木工。后指雕板排字工人。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

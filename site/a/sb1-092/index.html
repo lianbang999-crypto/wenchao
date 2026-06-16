@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复王照离居士书一 · 印光法师文钞</title>
+<meta name="description" content="前接手书，并款六百元，即复一函。以一百元托友人交金陵流通处，彼有信与君，想已收到。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-092/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复王照离居士书一 · 印光法师文钞">
+<meta property="og:description" content="前接手书，并款六百元，即复一函。以一百元托友人交金陵流通处，彼有信与君，想已收到。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-092/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复王照离居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前接手书，并款六百元，即复一函。以一百元托友人交金陵流通处，彼有信与君，想已收到。</p><p class="p-trans">前些天接到你的信，以及六百元钱，随即回了一封信。将一百元托友人，交给金陵流通处，他有信给你，想来已经收到了。</p></div>
+<div class="para-pair"><p class="p-orig">兹近数日，又接到三百四十四元，文钞，安士，嘉言，宝鉴，四种之书及邮费，通已两清。</p><p class="p-trans">最近几天，又接到三百四十四元，《文钞》、《安士全书》、《嘉言录》、《宝鉴》，四种书费以及邮费，全都已经两清。</p></div>
+<div class="para-pair"><p class="p-orig">弥陀经白话注，感应篇直讲，不久当可寄来。又有学佛浅说，颇合初机，今年二次各印二万，又拟另排略大之三号字，年内或明正可出书，如要祈示知。</p><p class="p-trans">《阿弥陀经白话注》、《感应篇直讲》，不久应当可以寄来。又有《学佛浅说》，很适合初学之人，今年二次各印二万册，又打算另外排印略大的三号字，年内或者明年正月，可以出书，如果要请，请告知我。</p></div>
+<div class="para-pair"><p class="p-orig">又下次汇款，宜在交通银行汇。交通银行接到信，并信与银一并送来，颇便利。中国银行接到信，先送其信与票，令签名去取，尚须有别银行之保证。其意似慎重，其事实欲多延日期，以求得息，可恶之极。</p><p class="p-trans">另外，下次汇款，最好到交通银行汇。交通银行接到信，将信与钱一起送来，很便利。中国银行接到信，先送来信与汇票，令人签名去取，还须要有其它银行的保证。其用意似乎慎重，其事实是想要多拖延日期，以求得利息，可恶之极。</p></div>
+<div class="para-pair"><p class="p-orig">光固无碍，若小人家不能得此种保证，则受其抑勒不小。此种借名慎重，特令延期之手段，直是恶劣之极。如无交通，则中国亦可。否则不必令彼汇也。</p><p class="p-trans">我固然不受影响，如果是一般人去取钱，不能得到其它银行这种保证，就会受到中国银行为数不小的压制克扣。这种借慎重之名，故意使令延期的手段，简直是太恶劣了。如果没有交通银行，那么中国银行也可以。否则，不必让他汇钱。</p></div>
+<div class="para-pair"><p class="p-orig">八九月间令大中书局寄（挂号寄）三十包安士书（一百二十部），乃光陪水湿者，曾收到否。几次信中，皆未言及。此虽不算费，收到亦当示知，以释系念耳。</p><p class="p-trans">八、九月份，令大中书局寄（挂号寄）三十包《安士全书》（一百二十部），是我出的邮资，有没有收到呢？几次的信中，都没有提到这件事。这虽然不算费用，收到了，也应当告知，以解除挂念。</p></div>
+<div class="para-pair"><p class="p-orig">纸板拟送新加坡及贵堂。前接新加坡一弟子信，言彼处人工纸价，比上海贵数倍，令千万勿寄，不知贵处如何。若便宜，即将纸板寄来。若在贵处反贵，则何须作此吃亏事。当在上海印以寄去，较为便宜。此语实因新加坡之说，恐反吃亏，非舍不得此纸板也。</p><p class="p-trans">纸板准备送到新加坡以及贵堂。前些天，接到新加坡一位弟子的信，说他那个地方，人工纸价，比上海贵了好几倍，令千万不要寄去，不知贵处是如何。如果便宜，就将纸板寄来。如果在贵处反而昂贵，那何须作这种吃亏的事。应当在上海印好后寄去，比较便宜。这话，实在是因为新加坡那边的说法，恐怕反而吃亏，不是舍不得这付纸板。</p></div>
+<div class="para-pair"><p class="p-orig">现拟将文钞，安士书，观音颂，寿康宝鉴，又设法打四付纸板。以原只两付，去年烧一付，只留一付。中华书局虽有两付，不肯借用。</p><p class="p-trans">现在打算将《文钞》、《安士全书》、《观音颂》、《寿康宝鉴》，再想办法打四付纸板。因为原来只有两付，去年烧了一付，只留下了一付。中华书局虽然有两付，但不肯借用。</p></div>
+<div class="para-pair"><p class="p-orig">又且印书之价，比余书局贵。是以光又欲舍一千元，打此数付纸板，以作后来人得书之缘耳。</p><p class="p-trans">而且印书的价格，比其余的书局贵。所以，我又想要舍一千元，打这几付纸板，来作为后来人得到这些书的因缘。</p></div>
+<div class="para-pair"><p class="p-orig">现嘉言录，弥陀经白话注，感应篇直讲，学佛浅说，家庭宝鉴，纪文达笔记摘要，江慎修放生杀生现报录，莲池放生文合刊，龙舒净土文，护法论，此九种，俱要打四付纸板。俾后来之人，易于流通。</p><p class="p-trans">现在《嘉言录》、《阿弥陀经白话注》、《感应篇直讲》、《学佛浅说》、《家庭宝鉴》、《纪文达笔记摘要》、《江慎修放生杀生现报录》、《莲池放生文合刊》、《龙舒净土文》、《护法论》，这九种书，都要打四付纸板。使得后来的人，容易流通。</p></div>
+<div class="para-pair"><p class="p-orig">光之为人，了无私心，以故一生不收徒众，不立门庭，不结社会。有人送光之钱，不用于印书，即用于赈急，不令由他人之钱，长自己之业。况今已六十八岁，来日无多，正好为自己与他人作往生西方之缘而已。（民十七十月十四灯下）</p><p class="p-trans">我的为人，没有私心，所以一生不收徒众，不立宗派门庭，不结社会团体。有人送给我钱，不用来印书，就用来赈急救灾，不令由于他人的钱财，而增长自己的罪业。何况今年已经六十八岁，来日不多，正好作为自己与他人作往生西方的助缘而已。（民国十七年十月十四日灯下）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【抑勒】</span>1.强逼；压制。2.勒索；克扣。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【纸板】</span>印刷用的纸型。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

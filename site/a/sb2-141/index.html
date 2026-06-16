@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复袁德常居士书三 · 印光法师文钞</title>
+<meta name="description" content="杨荫鸿发心护国挽劫，只教人戒杀吃素，不提念佛菩萨一句，可知于佛法，尚未具足正信。倘真知佛力法力不可思议，当此大劫临头，欲唯以戒杀吃素之愿消之，其所见如察秋毫之末，而不见泰山也（决无此理）。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-141/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复袁德常居士书三 · 印光法师文钞">
+<meta property="og:description" content="杨荫鸿发心护国挽劫，只教人戒杀吃素，不提念佛菩萨一句，可知于佛法，尚未具足正信。倘真知佛力法力不可思议，当此大劫临头，欲唯以戒杀吃素之愿消之，其所见如察秋毫之末，而不见泰山也（决无此理）。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-141/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复袁德常居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">杨荫鸿发心护国挽劫，只教人戒杀吃素，不提念佛菩萨一句，可知于佛法，尚未具足正信。倘真知佛力法力不可思议，当此大劫临头，欲唯以戒杀吃素之愿消之，其所见如察秋毫之末，而不见泰山也（决无此理）。</p><p class="p-trans">杨荫鸿发心护国息灾、挽救劫运，只是教人戒杀吃素，却不提一句念佛菩萨的话，可知他对于佛法，尚未具足正信。倘若真正知道佛力、法力不可思议，在这大劫临头，想只以戒杀吃素的愿力来消除劫难，他的所见如同能看到秋天野兽身上新长的细毛，却看不到巍巍泰山（绝对没有这样的道理）。</p></div>
+<div class="para-pair"><p class="p-orig">通告社员书菩萨示现四字，万万不可用。用之则罪过无量。且令具眼者，谓印光与汝均属狂妄之徒。敢以博地凡夫，妄称菩萨。此尚无引人造罪之咎，亦可与尔我消其罪业。</p><p class="p-trans">通告社员的招贴上写“菩萨示现”四个字，千万不可用。用了就罪过无量。而且令具法眼正见的人，认为我和你都是狂妄之徒。胆敢以博地凡夫，妄称菩萨。这件事尚没有引人造罪的过失，还可让你我消除其罪业。</p></div>
+<div class="para-pair"><p class="p-orig">否则无知之人见之，则引以为例，而一切僧俗，通以菩萨示现为称。此种大罪过，由尔我而始，则其流弊何所底止。宜以墨涂此四字，旁书洞鉴时机。庶于事于理，于自于他，均无妨碍矣。祈慧察。</p><p class="p-trans">无知的人见了，就援引作为例子，而一切僧俗，全都以“菩萨示现”来称呼。这种大罪过，是由你我开始的，这样的流弊哪有完呢。应该用墨涂掉这四个字，旁边写上“洞鉴时机”。使得于事于理，于自于他，都没有妨碍。请智慧思察。</p></div>
+<div class="para-pair"><p class="p-orig">以后凡有提及光之文字，只直叙其事，不得妄戴高帽子。在汝意以为荣，不知既不是自己之帽子，妄为戴上，人便指为假冒，为瞎充，其辱大矣。</p><p class="p-trans">以后凡有提到我的文字，只要直接叙述事情就好，不得妄戴高帽子。在你的意思认为是荣耀，却不知道既然不是自己的帽子，给我妄戴上，他人便会认为是假冒，是瞎充，这样的羞辱就大了。</p></div>
+<div class="para-pair"><p class="p-orig">民九年常州庄蕴宽到普陀法雨寺，作一首诗，光往彼房与光。光视之，笑笑，放在他桌子上，不拿去。何以故，以帽子太高，万不敢戴故。然世之好名者，尚求人为己做高帽子。光与彼心相不同，彼以为荣，光以为辱。祈以此语备告同门，至嘱至嘱。</p><p class="p-trans">民国九年（1920），常州的庄蕴宽到普陀山法雨寺，作了一首诗，我到他房里，他给我看。我看了看，笑一笑，放在他桌子上，不拿去。为什么呢？因为帽子太高，万万不敢戴的缘故。然而世间好名的人，尚求他人为自己做高帽子戴。我与他们的心思不同，他们以为光荣，我却认为是羞辱。请将这个话，遍告同门法友，这是我最恳切的嘱咐。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【杨荫鸿】</span>翻译家。1908年生于山东滕州。与其弟杨荫渭翻译《西方哲学史话》。后夫妻二人双双出家。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【明察秋毫】</span>明察：看清；秋毫：秋天鸟兽身上新长的细毛。原形容人目光敏锐，任何细小的事物都能看得很清楚。后多形容人能洞察事理，明辨是非，有时指视力很好。《孟子·梁惠王上》：“明足以察秋毫之末，而不见舆薪，则王许之乎？”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【具眼】</span>谓对事物具有特殊之见识，或指具有特殊见识之人。又作具眼睛。禅林中，对能透见宇宙之原则，及一切现象之实相者，称具眼者。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

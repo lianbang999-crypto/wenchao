@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复胡慧彻居士书二 · 印光法师文钞</title>
+<meta name="description" content="南通乩风大兴，江易园被乩赞叹得头脑已昏。且以乩语号召通海启如四县。在彼意尚欲号召全国，汝等切勿随彼所转。世间正人君子，亦不肯过赞誉人，况得道之圣人乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-105/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复胡慧彻居士书二 · 印光法师文钞">
+<meta property="og:description" content="南通乩风大兴，江易园被乩赞叹得头脑已昏。且以乩语号召通海启如四县。在彼意尚欲号召全国，汝等切勿随彼所转。世间正人君子，亦不肯过赞誉人，况得道之圣人乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-105/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复胡慧彻居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">南通乩风大兴，江易园被乩赞叹得头脑已昏。且以乩语号召通海启如四县。在彼意尚欲号召全国，汝等切勿随彼所转。世间正人君子，亦不肯过赞誉人，况得道之圣人乎。</p><p class="p-trans">江苏南通的扶乩之风很是兴盛，江易园被扶乩赞叹得头脑已昏。并且以乩语号召南通、海安、启东、如皋四县。他的心思还想要号召全国，你们千万不要随他所转。世间的正人君子，也不肯过份赞誉他人，何况得道的圣人呢？</p></div>
+<div class="para-pair"><p class="p-orig">乩皆灵鬼假冒（百有九十九），又多半是扶者伪为。易园以好誉而迷之至极，竟将乩语视作圣旨。设不好誉，即以所誉而责之。则何至丧心病狂，真伪邪正不分乎。</p><p class="p-trans">扶乩都是灵鬼假冒（一百回有九十九回），又多半是扶乩的人弄虚作假。江易园因为好名誉，而迷乱到极点，竟然将乩语看作圣旨。假设他不喜好名誉，就用别人赞叹他的话来责备他。那么何至于丧心病狂，真伪邪正不分呢？</p></div>
+<div class="para-pair"><p class="p-orig">祈与各莲友说之，庶不至坏乱佛法，疑误众生，了无底止也。（民廿八五月廿）</p><p class="p-trans">请对各位莲友说，才不至坏乱佛法，疑误众生，没有终止。(民国二十八年五月二十日)</p></div>
+<div class="para-pair"><p class="p-orig">念佛真利益，唯大智慧人及愚夫愚妇能得。其似有智慧，不愿随愚夫愚妇之班者，皆不能得。若易园者，初则知见尚好，提倡颇切，屡有感应。</p><p class="p-trans">念佛的真实利益，只有大智慧人以及愚夫愚妇才能得到。那些似有智慧，而不愿意随愚夫愚妇之列的人，都不能得。像江易园，最初的知见还好，提倡念佛很迫切，屡有感应。</p></div>
+<div class="para-pair"><p class="p-orig">今则正知见已无，专欲将其师啬公，奉于莲池海会之中，以报其恩。由此私欲之物，障蔽其心。正知正见，遂转为邪知邪见。若不速改，则将来亦莫由往生。欲随徐邱愿月之后，恐无由而得矣。</p><p class="p-trans">如今则是正知正见已无，专门想将他的老师张謇，供奉到莲池海会之中，来报答老师之恩。由于这种私欲之物，障蔽了他的心。正知正见，于是转为了邪知邪见。如果不迅速改正，那么将来也没办法往生。想要跟随在徐邱愿月之后，恐怕也没有办法得到了。</p></div>
+<div class="para-pair"><p class="p-orig">半月刊从未请的看过。光老矣，目力精神均不给，凡无关紧要之书报，皆不看，以无此目力故也。</p><p class="p-trans">《半月刊》从来没有请来看过。我老了，视力精神都不好，凡是无关紧要的书报，都不看，因为没有这个视力的缘故。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

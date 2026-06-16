@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>念佛三昧摸象记 · 印光法师文钞</title>
+<meta name="description" content="（了余师原稿，略为笔削。以佛学丛报检错数句，故录原文。）">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-221/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="念佛三昧摸象记 · 印光法师文钞">
+<meta property="og:description" content="（了余师原稿，略为笔削。以佛学丛报检错数句，故录原文。）">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-221/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 附录</div>
+      <h1 class="art-title">念佛三昧摸象记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">（了余师原稿，略为笔削。以佛学丛报检错数句，故录原文。）</p><p class="p-trans">（这是了余师的原稿，略加删改。因为《佛学丛报》检查排错了几句，所以这里录出原文。）</p></div>
+<div class="para-pair"><p class="p-orig">岁在丙午，予掩关于慈溪之宝庆寺。谢绝世缘，修习净业。值寺主延谛闲法师，讲弥陀疏钞于关傍。予遂效匡衡凿壁故事，于关壁开一小窦。不离当处，常参讲筵。</p><p class="p-trans">丙午年（1906年），我在浙江慈溪的宝庆寺闭关，谢绝一切世缘，修习净业。正好遇到寺主礼请谛闲法师，在关房旁边宣讲《弥陀疏钞》。我于是效仿匡衡凿壁借光的故事，在关房的墙壁上开了一个小洞。不用离开关房，就能常常参加讲经法会。</p></div>
+<div class="para-pair"><p class="p-orig">从兹念佛，愈觉亲切。佛号一举，妄念全消。透体清凉，中怀悦豫。直同甘露灌顶，醍醐沃心。其为乐也，莫能喻焉。</p><p class="p-trans">从此之后，念佛更加觉得亲切。佛号一提起，妄念全消。透体清凉，内心充满喜悦。简直如同甘露灌顶，醍醐沃心，其中的法乐，无法形容。</p></div>
+<div class="para-pair"><p class="p-orig">一日，有客诣关而问曰，念佛一法，吾已修持二十余年。于生信发愿修行，非不真切。而业深障重，终未能到一心不乱境界。窥吾根性，只合带业往生。虽念佛三昧，非此生所敢冀。其能得之法，与所得之相，师其为我言之。</p><p class="p-trans">一天，有位客人到关房请问：“念佛这一法，我已经修持了二十多年。对于生信发愿修行，并不是不真切。然而业障深重，终究没能达到一心不乱的境界。看我的根性，只适合带业往生。虽然念佛三昧这一境界，不是我今生所敢期望的，然而还是请师父为我说说，得念佛三昧的方法，和得到之后的境相吧！”</p></div>
+<div class="para-pair"><p class="p-orig">予曰，三昧境相，唯证方了。如人饮水，冷暖自知。我既未证，焉能宣说。客固请不已。</p><p class="p-trans">我说：“念佛三昧的境界相状，唯有证得的人，才能明了。如同人喝水，是冷是热只有自己知道。我既然没有证得念佛三昧，又哪能说得出来呢？”而客人却执意请求不肯放弃。</p></div>
+<div class="para-pair"><p class="p-orig">予曰，若论其法，必须当念佛时，即念返观。专注一境，毋使外驰。念念照顾心源，心心契合佛体。返念自念，返观自观。即念即观，即观即念。务使全念即观，念外无观。全观即念，观外无念。</p><p class="p-trans">我说：要说方法，必须在念佛的时候，即念反观。专注一境，不能外弛。念念照顾心源，心心契合佛体。返念自念，反观自观。即念即观，即观即念。务必要使全部的念就是观，念外无观；全部的观就是念，观外无念。</p></div>
+<div class="para-pair"><p class="p-orig">观念虽同水乳，尚未鞫到根源。须向者一念南无阿弥陀佛上，重重体究，切切提撕。越究越切，愈提愈亲。及至力极功纯，豁然和念脱落，证入无念无不念境界。</p><p class="p-trans">观和念虽然水乳交融，但还没穷究到根源。必须要向这一念“南无阿弥陀佛”的佛号上，重重地体究，切切地提撕。越究越切，愈提愈亲。到了力极功纯的时候，豁然和念脱落，证入无念无不念的境界。</p></div>
+<div class="para-pair"><p class="p-orig">所谓灵光独耀，迥脱根尘。体露真常，不拘文字。心性无染，本自圆成。但离妄念，即如如佛者。此之谓也。</p><p class="p-trans">所谓“灵光独耀，迥脱根尘。体露真常，不拘文字。心性无染，本自圆成。但离妄念，即如如佛者。”说的就是这个境界!</p></div>
+<div class="para-pair"><p class="p-orig">工夫至此，念佛法得。感应道交，正好著力。其相如云散长空，青天彻露。亲见本来，本无所见。无见是真见，有见即随尘。</p><p class="p-trans">工夫到了这个地步，念佛就得法了。感应道交，正好著力。它的相状好比浮云从长空中散去，青天彻底显露出来。亲自见到本来面目，本来也无所见。无所见即是真见，有所见就是随六尘。</p></div>
+<div class="para-pair"><p class="p-orig">到此则山色溪声，咸是第一义谛。鸦鸣鹊噪，无非最上真乘。活泼泼应诸法，而不住一法。光皎皎照诸境，而了无一物。</p><p class="p-trans">到了这个境界，则山色溪声，都是第一义谛；鸦鸣鹊噪，无非最上真乘。活泼泼应诸法，而不住一法；光皎皎照诸境，而了无一物。</p></div>
+<div class="para-pair"><p class="p-orig">语其用，如旭日之东升，圆明朗照。语其体，犹皓月之西落，清净寂灭。即照即寂，即寂即照。双存双泯，绝待圆融。</p><p class="p-trans">说其用，好比旭日东升，圆明朗照；说其体，犹如皓月西落，清净寂灭。即此观照即是寂灭，即此寂灭即是观照。寂照双存而双泯，绝待圆融。</p></div>
+<div class="para-pair"><p class="p-orig">譬若雪覆千山，海吞万派。唯是一色，了无异味。无挂无碍，自在自如。论其利益，现在则未离娑婆，常预海会。临终则一登上品，顿证佛乘。唯有家里人，方知家里事。语于门外汉，遭谤定无疑。</p><p class="p-trans">就好像是雪覆盖千山，海容纳万条江河。只是一色，没有异味。无挂无碍，自在自如。论其利益，现在虽然没有离开娑婆世界，却已常常在定中参与莲池海会；临终一登上品，顿证佛乘。只有家里人才知道家里的事。告诉门外汉，肯定会遭到诽谤。</p></div>
+<div class="para-pair"><p class="p-orig">又问，人于日用，普应诸缘。何能触目菩提，头头是道乎。</p><p class="p-trans">又问：人在日常生活中，要普遍应对很多外缘。如何能够做到：所见皆是菩提，每桩事物都是法道呢？</p></div>
+<div class="para-pair"><p class="p-orig">答，心生则种种法生，心灭则种种法灭。万境不出一心，一心融通万境。若了心体本空，何妨该罗万象。须知万象如幻，生灭唯是一心。诸缘无缚，本自解脱。六尘不恶，还同正觉。心境一如，有何挂碍。</p><p class="p-trans">答：心生，则种种法生；心灭，则种种法灭。万境不超出一心，一心融通万境。如果明了心体本空，何妨包罗万象。必须知道，万象如幻，象生象灭只是一心；一切缘境没有系缚你，本来是解脱无碍的；不憎恶六尘境界，就如同正觉。心与境是一体真如，有什么挂碍呢？</p></div>
+<div class="para-pair"><p class="p-orig">不见华严事事无碍法界。所谓一一尘中一切刹，一一心中一切心。一一心尘复互周，重重无尽无障碍。以故器界毛尘，云台宝网。咸宣性海，悉演真乘。</p><p class="p-trans">没有看见《华严经》中的事事无碍法界。所谓的：“一一尘中一切刹，一一心中一切心。一一心尘复互周，重重无尽无障碍。”所以器界毛尘，云台宝网。全都宣扬深广如海的真如理性，全都演畅真实教乘。</p></div>
+<div class="para-pair"><p class="p-orig">竖穷三际，横遍十方。觅一毛头许不是道者，亦不可得。则法法头头，无非大寂灭场。心心念念，悉契萨婆若海。唯心妙境，唯境妙心。离四句，绝百非，绝待圆融，何可得而思议也哉。</p><p class="p-trans">竖穷三际，横遍十方。寻觅一毛头那样微细不是道的地方，也不可得。那么法法头头，无非都是大寂灭场。心心念念，全都契入萨婆若海。唯心妙境，唯境妙心。离四句，断百非，绝待圆融，哪里可以得而思议呢？</p></div>
+<div class="para-pair"><p class="p-orig">上来所说，如盲摸象。虽未离象，恐非全象。笔以记之，以质诸亲见之者。</p><p class="p-trans">上面所说的，如同盲人摸象。虽然没有离开大象，但恐怕并不是大象的完整形象。写下来，接受亲见念佛三昧的人质疑。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【笔削】</span>谓对作品删改订正。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【佛学丛报】</span>佛教杂志季刊。民国元年（1912），狄葆贤（楚卿）、濮一乘发行。狄氏与康有为、梁启超等皆为主张变法维新之激进派，于变法失败后，至上海刊行时报。因转向研究佛教，而发行佛学丛报；虽至十二期即停刊，仍为我国佛教刊物之先驱，其后始陆续出现佛教月报、觉社丛书、海潮音等刊物。狄氏修持净土，并习禅法，著有平等阁笔记。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【检字】</span>印刷工序之一。排字工人从铅字架上按文稿检取铅字，以供排版。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【匡衡凿壁】</span>西汉时期，宰相匡衡从小因为家贫，没有条件进学堂，他白天帮人干活，晚上没钱买灯油，就只好在家里土墙上凿一个洞，借隔壁的灯光来读书，甚至到有书的人家去免费帮工换取书本，他刻苦学习，终于在汉元帝时期当上太子少傅。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【透体】</span>比喻透彻；彻底。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【中怀】</span>内心。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【悦豫】</span>喜悦，愉快。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【醍醐】</span>1.从酥酪中提制出的油。2.比喻佛性。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【沃心】</span>谓使内心受启发。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【鞫】</span>1.查究，查问。2穷尽。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【体究】</span>体察考究。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【提撕】</span>1.拉扯；提携。2.教导；提醒。3振作。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【皎皎】</span>1.洁白貌；清白貌。2.明亮貌。3.明白貌；分明貌。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【头头是道】</span>原是禅语，指开悟以后的境界：心境融合，内外打成一片，乃至吃饭穿衣、挑水打柴、一举一动、开口闭口，无一事不与“妙道”冥合。所谓“头头是道，法法本圆成。”</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【六尘不恶，还同正觉】</span>《信心铭》：“欲趣一乘，勿恶六尘。六尘不恶，还同正觉。”三祖僧璨著。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【一毛端】</span>（术语）极少之称。楞严经二曰：“不动道场，于一毛端，遍能含受十万国土。”</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【萨婆若】</span>即一切智，佛的智慧。萨婆若海：形容佛的大觉悟大智慧，如海洋一样的深广。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【四句】</span>通常指有、无、亦有亦无、非有非无等四句，或指肯定、否定、部分肯定部分否定、两者均否定等作为判断一般论议形式之四句。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【百非】</span>百者，概称其数之多；非者，指非有、非无等种种否定。又称四句百非。谓一切字语皆非实在。意在拂除众生之迷执，令悟入诸法无相、不可得之理。北本涅槃经金刚身品，就如来之金刚身举出实数之百非。</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【质】</span>询问；就正。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

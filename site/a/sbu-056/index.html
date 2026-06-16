@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与齐用修书一 · 印光法师文钞</title>
+<meta name="description" content="接手书，以冗繁之极，故迟复，歉甚。翀田分社，凑七百余字，而于佛光究未能发挥。祈请令师易居士为之斧削，庶不至有刺雅目也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-056/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与齐用修书一 · 印光法师文钞">
+<meta property="og:description" content="接手书，以冗繁之极，故迟复，歉甚。翀田分社，凑七百余字，而于佛光究未能发挥。祈请令师易居士为之斧削，庶不至有刺雅目也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-056/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">与齐用修书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，以冗繁之极，故迟复，歉甚。翀田分社，凑七百余字，而于佛光究未能发挥。祈请令师易居士为之斧削，庶不至有刺雅目也。</p><p class="p-trans">接到信，因为琐事极其繁忙，所以回信迟了，非常抱歉。《婺源翀田佛光分社发隐》（注1），凑成了七百多字，然而对于“佛光”二字也未能究竟发挥。还请你的老师江易园居士为此斧正修改，才不至于刺人雅目。</p></div>
+<div class="para-pair"><p class="p-orig">易师续诗已阅过，所言二处插入，恐不易办。如未排及，则续于各门之后。已排过，则只好另附于后耳。</p><p class="p-trans">江易园老师的《续诗》已经看过了，所说的在两处插入新的文章，恐怕不容易做到。如果没有排版校对到的，就续接在各门之后。已经排版校对好的，就只好另外附录在后面了。</p></div>
+<div class="para-pair"><p class="p-orig">阁下宿根深厚，若用十年功，当于佛门独标赤帜。若最初即皈依一粥饭庸僧，岂不成终身一大歉憾乎。以故不敢擅为阁下作皈依之师耳。</p><p class="p-trans">阁下宿根深厚，如果用上十年的功夫，当会在佛门中独树一帜。如果最初就皈依一个只会吃喝粥吃饭的庸僧，岂不成终身的一大歉缺遗憾了吗？所以不敢擅自作阁下的皈依师父。</p></div>
+<div class="para-pair"><p class="p-orig">寿亲纪念接到，三十寿诗甚好。又光年已七十一，宿少栽培，精神目力均不给。德森师年虽未老，精神亦颇衰弱。</p><p class="p-trans">《寿亲纪念》接到，三十寿诗写得很好。另外，我年纪已经七十一，宿世少有栽培，精神视力都不好。德森法师年纪虽然还不老，精神也颇为衰弱。</p></div>
+<div class="para-pair"><p class="p-orig">现有净土十要，圆净又欲排圣贤录。许止净所编之救劫编，亦允其代为校对付排。易师文集，不但无此学识，亦且无此精神。祈勿寄来，以免或有延误。</p><p class="p-trans">现在有《净土十要》，李圆净又想要排印《净土圣贤录》。许止净所编的《佛学救劫编》，也答应他代为校对付排。江易园老师的文集，我不但没有这个学识，而且也没有这个精神校排。请不要寄来，以免或许延误。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【翀田分社，凑七百余字】</span>《婺源翀田佛光分社发隐》：见《印光法师文钞续编》卷下。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与齐用修书二 · 印光法师文钞</title>
+<meta name="description" content="佛光分社文，意似可取，文颇芜朴。易师与汝均以为好，殆以人情之爱，并其文之不好，亦为好耶。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-057/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与齐用修书二 · 印光法师文钞">
+<meta property="og:description" content="佛光分社文，意似可取，文颇芜朴。易师与汝均以为好，殆以人情之爱，并其文之不好，亦为好耶。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-057/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">与齐用修书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛光分社文，意似可取，文颇芜朴。易师与汝均以为好，殆以人情之爱，并其文之不好，亦为好耶。</p><p class="p-trans">《婺源翀田佛光分社发隐》，文意似乎可取，文词却颇为杂乱质朴。江易园老师和你都认为好，应该是因为感情上偏爱作者，以致连不好的文章，也认为是好了。</p></div>
+<div class="para-pair"><p class="p-orig">至谓皈依之说，切恐汝后来有悔，故不敢应允。今既又说，只好将错就错。迨其深知其错，不妨以为路人。或又令反从而师之，亦无不可。</p><p class="p-trans">至于皈依，实在是怕你后悔，所以不敢答应。今天既然又说起，只好将错就错。等到你深知拜错了师父，不妨当作陌路人。或者反过来以你为师，也不是不可以。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝取法名为慧懋，谓以智慧自勉勉人，必期于敦伦尽分，闲邪存诚。诸恶莫作，众善奉行。生信发愿，持佛名号，求生西方。果能如此实行，则可不孤佛化，不负己灵。为一乡之向导，作后学之南针，则何幸如之。</p><p class="p-trans">现今为你取法名为慧懋，就是以智慧自我勉励，勉励他人，必定要敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬）。诸恶莫作，众善奉行。生信发愿，持佛名号，求生西方。果真能够如此实行，就能不辜负佛陀的教化，不辜负自己的性灵。成为一乡的向导，作后学的指南，还有比这更庆幸的吗？</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，名为难信之法。前有讲华严法师，骂学者发心念佛，为下劣种性。近闻一法师，亦讲华严，闻其学者为彼善信讲心经毕，又与彼念佛一次。其法师云，汝已做银行经理，何得又去卖五香豆乎。窥其意，盖以念佛为辱浼也大矣。</p><p class="p-trans">净土法门，名为难信之法。以前有位讲《华严经》的法师，骂学生发心念佛，是下劣种性。最近听说有位法师，也讲《华严经》，听说他的学生为善信男女讲完《心经》，又与他们念佛一次。这个法师说：你已经做了银行经理，怎么能又去卖五香豆呢？听他这话的意思，大概将念佛认为是很大的辱没玷污。</p></div>
+<div class="para-pair"><p class="p-orig">光非好说是非，且祈汝死心塌地，做愚夫妇修持，庶不至以善因而招恶果，为可怜可悯也。</p><p class="p-trans">我不是好说是非，暂且请你死心塌地，做愚夫愚妇那样的修持，才不至于以善因而招恶果，成为可怜可悯之人啊！</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复（顾显微，黄涵之）书 · 印光法师文钞</title>
+<meta name="description" content="显微，涵之二居士钧鉴，杭湖鱼事，前日杭钟康侯已将呈稿及报寄来，令光作疏。本拟昨日即寄去，以有人客，致未写完。昨康侯又寄信，并将已决之议并政府批寄来，今当将疏寄去。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-106/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复（顾显微，黄涵之）书 · 印光法师文钞">
+<meta property="og:description" content="显微，涵之二居士钧鉴，杭湖鱼事，前日杭钟康侯已将呈稿及报寄来，令光作疏。本拟昨日即寄去，以有人客，致未写完。昨康侯又寄信，并将已决之议并政府批寄来，今当将疏寄去。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-106/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复（顾显微，黄涵之）书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">显微，涵之二居士钧鉴，杭湖鱼事，前日杭钟康侯已将呈稿及报寄来，令光作疏。本拟昨日即寄去，以有人客，致未写完。昨康侯又寄信，并将已决之议并政府批寄来，今当将疏寄去。</p><p class="p-trans">显微、涵之两位居士均鉴（注1）：杭州西湖赎买放生鱼的事情（注2），前天杭州的钟康侯已经将呈给政府的文稿以及报纸寄来，让我写篇疏文（注3）。本打算昨天就寄去，因为有客人，所以没有写完。昨天钟康侯又寄信来，并将已定的决议和政府的批文寄来，今天当会将写好的疏文寄去。</p></div>
+<div class="para-pair"><p class="p-orig">钟原令寄一份与涵之。今闻已令许止净作。止净之文，高过于光多多。今将其稿寄来，或俱用之，亦更可发人深省。光之文拙朴，但有其意义而已。许之文则词理俱妙。若俱用，亦当再将许文寄与康侯，光即今已挂号寄去矣。</p><p class="p-trans">钟康侯原来让我寄一份给黄涵之，现在听说已经让许止净写疏文。许止净的文笔，高过我太多了。现今将他的文稿寄来，或者全都用这篇文稿，也可更加发人深省。我的文稿拙朴，只有放生的意义而已。许止净的文稿则是词理俱妙。如果全部采用，也应当再将许止净的文稿寄给钟康侯，我现在已经挂号寄去了。</p></div>
+<div class="para-pair"><p class="p-orig">念佛歌尚祈显微居士再为修改方好。光春间拟拨一千印书洋，前以事未成，故不敢任，今事已成，当助少许。前江易园寄二百元令放生，光详察时机不敢放，因改作印书。已录于白话嘉言功德名中。今仍作放生。</p><p class="p-trans">念佛歌，还请顾显微居士再加修改才好。我在春天打算拨出一千元的印书款赎鱼放生，上次因为西湖放生池的事情没有办成，所以不敢任捐，现今事情已经办成，本当捐助一点。上次，江易园寄二百元让作放生用，我详察时机不到，不敢放生，因此将二百元改作印书。已经录在白话嘉言的功德芳名中。现今将这二百元仍作放生。</p></div>
+<div class="para-pair"><p class="p-orig">又曹石如寄二百元荐母，半念佛，半作善举。今亦以此一百元放生。祈到太平寺，向真达师要三百元，上光帐。至于捐册，二百书江易园名，一百书曹石如名。勿用印光之名，或者作印光拨江曹印书洋若干亦可。光本不欲书名，或欲借此提倡，亦属有益之举。</p><p class="p-trans">另外，有曹石如寄来二百元超荐亡母，一半念佛，一半作善事。现今也将这一百元放生，请到太平寺，向真达法师要三百元，记在我的帐上。至于捐款名册，二百元写江易园的名字，一百元写曹石如的名字。不要用我的名字，或者写：印光拨江、曹印书洋元若干，也可以。我本来不想写名字，或许想借此来提倡，也是有益之举。</p></div>
+<div class="para-pair"><p class="p-orig">佛教前途，危险万状，普陀之情景不易言宣，虽未如黄岩永康之烈，然二三年愈入愈深，直成入室操戈，喧宾夺主。而山上僧中无人头前办事者，又无道德学问见识。光系吃闲饭人，以彼既无能事之人，光亦不能为力。欲前途转好，非菩萨大显神通，则永世无望矣。祈与厚在居士说其所以，光事多不暇另函。</p><p class="p-trans">佛教的前途，危险万分，普陀山的情景不容易说明白，虽然没有如黄岩、永康那样惨烈，然而这二三年越陷越深，简直成了入室操戈，喧宾夺主。而山上的僧人中，没有一个在人前办事的人，又没有道德学问见识。我是吃闲饭的人，因为他们既没有能办事的人，我也不能助力。想要前途转好，若没有菩萨大显神通，就永远没有希望了。请对厚在居士说明其中的所以然，我的事情繁多没有时间另外再写信了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【均鉴】</span>书信敬辞。共同阅览之义。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【背景】</span>民国十六年（1927年）春间，杭州市政府以改善西湖水卫生为由，标卖西湖历代积累下来的放生鱼。适逢江浙两省缁素齐集上海成立江浙佛教联合会，随即开会筹议救济办法。决议除集资承标迁放外，别无良策。下半年，杭州市公安局发出限期标卖广告后，江浙佛教联合会通函佛教缁素，并派孙嘉荣居士由沪赴杭，向市政府发出呈请，要求以8000洋元的价格购买湖鱼，鱼款分三期呈缴。黄涵之和顾显微居士请印光大师撰《赎迁西湖放生鱼募缘疏》，许止净居士代江浙佛教联合会撰《西湖放生募缘启》并刺血书写。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【令光作疏】</span>《赎迁西湖放生鱼募缘疏》，见《印光法师文钞三编》卷四。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

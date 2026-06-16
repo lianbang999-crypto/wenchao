@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复高鹤年居士书五 · 印光法师文钞</title>
+<meta name="description" content="二十三日接手书，如见故友，不胜欣慰。罗浮杯渡，雁荡天台，天下名胜之地，悉入居士眼中，真宿生栽培所致也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-042/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复高鹤年居士书五 · 印光法师文钞">
+<meta property="og:description" content="二十三日接手书，如见故友，不胜欣慰。罗浮杯渡，雁荡天台，天下名胜之地，悉入居士眼中，真宿生栽培所致也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-042/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复高鹤年居士书五</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">二十三日接手书，如见故友，不胜欣慰。罗浮杯渡，雁荡天台，天下名胜之地，悉入居士眼中，真宿生栽培所致也。</p><p class="p-trans">二十三日接到你的信，如见故友，不胜欣喜宽慰。罗浮山、杯渡山，雁荡山、天台山，是天下的名胜之地，全都进入居士眼中，真是宿世因缘栽培所致啊！</p></div>
+<div class="para-pair"><p class="p-orig">光色力尪羸，不能远行，坐老海山，无所见闻，每一思及，惭感无喻。杯渡一山，居士莅至，当必有兴发之气象，慰甚。</p><p class="p-trans">我身体羸弱，不能远行，坐着老死在普陀山，无所见闻，每想到这些，惭愧感叹，无法言喻。杯渡山，居士到了之后，必定有兴盛发生的气象，很是欣慰。</p></div>
+<div class="para-pair"><p class="p-orig">光于九月二十四日回至法雨，至二十九日，即将何东夫人之开示，寄至上海交甘璧生居士。彼十月初六来函，云恭录一张自存，以光原稿并书同寄去。</p><p class="p-trans">我在九月二十四日，回到法雨寺，到了二十九日，就将何东夫人的开示，寄到上海交给甘璧生居士。他十月初六来信，说恭录一张，自己保存，将我的原稿以及书籍一同寄去。</p></div>
+<div class="para-pair"><p class="p-orig">十一月初二来信，云已将光之法语楷书两分，一送照南居士，一送何东夫人。然先寄法语，尚未得其回音，若回音至，当即奉告耳。</p><p class="p-trans">十一月初二来信，说已将我的法语用正楷书写了两份，一份送简照南居士，一份送何东夫人。不过先前寄的法语，还没有得到回音，如果回信到了，应当立即奉告。</p></div>
+<div class="para-pair"><p class="p-orig">法语近二千字，文钞刻时，当附入。安士全书，托尤惜阴，张云雷，丁福保三位料理。而惜阴意欲遍布全国二千四十一县。</p><p class="p-trans">《法语》近二千字，《文钞》刻印的时候，应当附入。《安士全书》托尤惜阴，张云雷，丁福保三位处理。而尤惜阴想要把这本书遍布全国二千四十一个县。</p></div>
+<div class="para-pair"><p class="p-orig">惜阴之友刘木士与惜阴心愿相同，拟令南洋相识之富商各出资助印。半归南洋新嘉坡，槟榔屿，荷兰施送。</p><p class="p-trans">尤惜阴的朋友刘木士与惜阴的心愿相同，准备让南洋认识的富商各各出资助印。印好后一半给南洋新加坡，槟榔屿，荷兰（南洋大部分为荷兰殖民地）施送。</p></div>
+<div class="para-pair"><p class="p-orig">南洋各岛中学校，以欲海回狂，作修身教科书。半于祖国施送，令彼各各培植本生国界。此心诚溥，其果遂与否，尚不能定。</p><p class="p-trans">南洋各岛中学校，以《欲海回狂》，作修身教科书。一半给祖国施送，令他们各各培植好自身与国家。这个发心实在广大，结果成就与否，还不能确定。</p></div>
+<div class="para-pair"><p class="p-orig">近来本国所募印者，当已至万，待至明春印时，二三万部或可凑成。若南洋华侨肯发心助，则一二十万尚未可定，且任缘办。</p><p class="p-trans">近来本国所募资任印的，应当已经上万，等到明年春天刻印的时候，二三万部或许可以凑成。如果南洋华侨肯发心相助，那么一二十万，也不可预定，就随缘办理即可。</p></div>
+<div class="para-pair"><p class="p-orig">若吾国及南洋之人宿有善根，得闻佛法中之即俗修真，随机可入之道，天龙当为感动。有心世道者群起而共赞之，则全国各县，各散百十部，亦不为难。</p><p class="p-trans">如果我国以及南洋人宿世有善根，得以听闻到佛法当中的即俗修真，随各人根机就可进入之道，天龙八部应当为之感动。有心改善社会风气的人，群起而共同赞助，那么全国各县，各各施散一百来部，也不是很困难。</p></div>
+<div class="para-pair"><p class="p-orig">若国人无此法缘，则人将以印光无道无德，不肯见信共相感发，止以所募一二万，了此心事而已。</p><p class="p-trans">如果国人没有这个法缘，那么他人将因为我没有道行，没有厚德，不肯相信，共同互相感奋激发，就只以所募的一二万部，来了结这个心事吧。</p></div>
+<div class="para-pair"><p class="p-orig">此事虽是私事，实于国计民生大有关系。其大成与否，皆有定数。光与尤刘张丁四居士，岂能令无缘者转为有缘，而溥遍流布乎。今寄上办法章程一纸，以慰远怀。</p><p class="p-trans">此事虽然是私事，但实在对于国计民生，大有关系。能否有大的成就，皆有定数。我与尤惜阴、刘木士、张云雷、丁福保四位居士，岂能令无缘的人转为有缘，而普遍流布呢？现今寄上办法章程一张，以慰藉你们远大的抱负。</p></div>
+<div class="para-pair"><p class="p-orig">贞节堂碑尚未作。自回山至今，了无闲暇。光订正安士全书（以缩板有图，及目次等各项，另行排一样子），次则校对安士全书。</p><p class="p-trans">贞节堂碑还没有撰写。自从回到普陀山至今，没有一点闲暇。我订正《安士全书》（因为缩印板有插图，以及目次等各项编排，所以要另外排出一个样子），其次是校对《安士全书》。</p></div>
+<div class="para-pair"><p class="p-orig">又有扬州欲海回狂，万善先资，及印光文钞，并格言联璧等，不时寄来校对，兼复往来信札。夜不能用目，日间直无暇时。幸三宝加被，目尚能成天用，为万幸事也。</p><p class="p-trans">又有扬州《欲海回狂》，《万善先资》，以及《印光文钞》，并《格言联璧》等书，不时寄来校对，兼又有来往的信件。夜晚不能用眼睛，白天简直没有一点空闲。幸好得三宝加被，眼睛还能用一整天，真是万幸之事。</p></div>
+<div class="para-pair"><p class="p-orig">末法众生，多多皆是不知因果。佛经深奥，看亦不能领会，故成今日之现象。光常曰，因果者，世出世间圣人，平治天下，转凡成圣之大权也。当今之世，不将因果昌明，而欲世道太平，佛法兴隆，不可得也。（民九）</p><p class="p-trans">末法众生，大多都是不知道因果。佛经深奥，看了也不能领会，所以成为今天的现象。我常常说，因果，是世出世间圣人，平治天下，转凡成圣的大权。当今之世，不将因果道理，发扬光大，而想要使世道太平，佛法兴隆，不可能得到的啊！（民国九年）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【杯渡山】</span>位于广东宝安县南。又称屯门山，即今香港青山。山上有青山寺，大雄宝殿后现存有杯渡岩，杯渡禅师之石像坐于岩中。据舆地纪胜载，有杯渡禅师者，渡海来居东莞。又广州府志东莞县载，杯渡山，位于县城南一百九十里；南汉时，封为瑞应，山上有瑞应岩。以昔时杯渡禅师尝来此居住，故称为杯渡山</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【本生】</span>1.犹个人，自身。2.巴利文意译，音译“阇陀伽”。佛教经典，为十二部经之一，通过叙述佛陀前生所行善业功德的寓言故事，发挥佛教的基本教义。故亦以指佛的前生事迹。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【国界】</span>国与国的分界；国家的疆界。中国古代也指地方团体的境界。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

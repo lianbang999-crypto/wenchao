@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复罗智声居士书三 · 印光法师文钞</title>
+<meta name="description" content="手书备悉，大病已愈，曷胜欣慰。灵岩山寺，专修净业，其功课与平常打七相同，实为江南第一认真行道之处。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-169/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复罗智声居士书三 · 印光法师文钞">
+<meta property="og:description" content="手书备悉，大病已愈，曷胜欣慰。灵岩山寺，专修净业，其功课与平常打七相同，实为江南第一认真行道之处。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-169/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复罗智声居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉，大病已愈，曷胜欣慰。灵岩山寺，专修净业，其功课与平常打七相同，实为江南第一认真行道之处。</p><p class="p-trans">来信尽知，你的大病已经痊愈，非常欣慰。灵岩山寺，专修净业，寺中的功课与平常打佛七相同，实在是江南第一认真行道的道场。</p></div>
+<div class="para-pair"><p class="p-orig">现今世运危险，无论何人，均当以志诚念佛念观音为主。以期消除恶业于目前，往生西方于临终，则可谓因祸而得福。</p><p class="p-trans">现今世运危险，无论什么人，都应当以志诚念佛、念观世音菩萨为主。以期消除眼前的恶业，在临终时往生西方，则可以说是因祸而得福。</p></div>
+<div class="para-pair"><p class="p-orig">否则自兹以后，益难做人。以杀人害人之法，无奇不有，无处可逃。唯有生西一事，为安身立命，千稳万当之计。愿为一切人说之，则其利益深且远矣。</p><p class="p-trans">否则，从此以后，更难做人。因为杀人害人的方法，无奇不有，无处可逃。只有往生西方这件事，是安身立命，千稳万当的计策。祈愿对一切人讲说，那么这个利益就深远了。</p></div>
+<div class="para-pair"><p class="p-orig">所生麟儿，当名宗诚。宗者主也。诚者真实不虚，即所谓明德也。能宗乎诚，则便可明明德矣。乃性修双彰，体用圆显之义。</p><p class="p-trans">所生的儿子，应当名为宗诚。宗是主的意思。诚是真实不虚，就是所谓的明德。能够主于诚，就可以明明德了。这是性德修德，双双彰显；本体照用，圆满显现的意思。</p></div>
+<div class="para-pair"><p class="p-orig">以此为名，令其顾名思义，以期实有诸己，则可以丕振家声，自利利他矣。法名当名契觉。</p><p class="p-trans">以此作为他的名字，令他顾名思义，以期躬行实践，就可以大振家族声望，自利利他了。法名应当名为契觉。</p></div>
+<div class="para-pair"><p class="p-orig">觉即佛性。众生迷故，不与佛性相契相合，能契乎觉，即迷消觉著也。此二名如不犯从上祖父之讳，则即终身用之，不必又另取冠名等也。</p><p class="p-trans">觉就是佛性。众生迷背的缘故，不与佛性相契相合，能够契合觉性，就是迷惑消除、觉性显著。这二个名字，如果不犯从上祖父的名讳，就终身使用，不必又另外取冠名等。</p></div>
+<div class="para-pair"><p class="p-orig">寿昌经禅师，闽人，生时难产，其祖于其窗外念金刚经，只念出金刚二字，即安然而生。其祖喜，因为取名慧经，冠亦不另取名，后出家亦不另取名，此乃明万历间高僧。</p><p class="p-trans">寿昌慧经禅师，福建人，出生时（母亲）难产，他祖父在窗外念《金刚经》，只念出“金刚”二个字，他就安然而生。他祖父很欢喜，因此为他取名慧经，冠名也不另外再取，后来出家也不另外取名，这是明朝万历年间的高僧。</p></div>
+<div class="para-pair"><p class="p-orig">是知女人临产，当志诚念南无观世音菩萨，无一不安然而生者。要出声念，不可默念。旁边照应者，亦出声念。</p><p class="p-trans">所以应知女人临产，应当志诚念“南无观世音菩萨”，没有一个不安然而生的。要出声念，不可默念。旁边照应的人，也要出声念。</p></div>
+<div class="para-pair"><p class="p-orig">切不可谓临产裸露不净，念之恐获罪咎。须知此系性命相关，无可奈何，非平常能恭敬而慢忽不致恭洁者比也。</p><p class="p-trans">千万不可认为，临产裸露不净，念了恐怕获罪过。必须知道这是性命相关（的时刻），无可奈何，不是平常能够恭敬，却轻慢怠忽，不致恭敬洁净的情形可比的。</p></div>
+<div class="para-pair"><p class="p-orig">光前数年绝不说及此事，后屡闻难产殒命，并愚人因家有生产，平素念佛之人，不敢在家住，须过月余方归，谓血腥一冲，前功尽弃，此种胡说巴道，诚可怜悯。</p><p class="p-trans">我前些年，绝对不说到这件事，后来多次听闻难产丧命，以及愚痴的人因为家中有人生孩子，平时念佛的人，不敢在家里住，必须过一个月后方才回家，说血腥一冲，（念佛就）前功尽弃，这种胡说八道，实在可怜。</p></div>
+<div class="para-pair"><p class="p-orig">故近数年常与人说之。依而行者无不应验，可知菩萨真大慈悲也。</p><p class="p-trans">所以近些年，常常对人讲说。依照而行的人，没有不应验的，可知菩萨真是大慈大悲啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【实有诸己】</span>理学名词。大意为：通过自身的体察与践履，使道德意识成为主体的内在德性。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【家声】</span>家族世传的声名美誉。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【从祖父】</span>父亲的堂兄弟。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【冠名】</span>男子到了二十岁成人，要举行冠礼，这标志着本人要出仕，进人社会。要取冠名，供外人呼唤。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【寿昌禅师】</span>讳慧经。字无明。因住寿昌寺，故称寿昌禅师。师，江西崇仁裴氏子。诞时，难产，祖父诵金刚经而娩，因名“经”。生而颖异，长貌苍古。九岁，入乡塾，便问：“‘浩然之气’，是个甚黦？”塾师异之。居，恒若无意于人间世者。年十七。遂弃笔砚，慨然有向道志。年二十一，偶入居士舍，见案头金刚经，阅之，不终卷，忻然若获故物。由是，断荤酒，决志出家，父母听之。时，邑之蕴空忠禅师说法于廪山，遂往依之，即其本名曰“慧经”。《正源略集》卷三</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

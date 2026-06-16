@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>大方广佛华严经楷书序（民二十四年） · 印光法师文钞</title>
+<meta name="description" content="实际理地，不立一尘，凡圣生佛，均难称谓。修持门中，须备众德，一法若缺，莫证法身。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-068/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大方广佛华严经楷书序（民二十四年） · 印光法师文钞">
+<meta property="og:description" content="实际理地，不立一尘，凡圣生佛，均难称谓。修持门中，须备众德，一法若缺，莫证法身。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-068/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">大方广佛华严经楷书序（民二十四年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">实际理地，不立一尘，凡圣生佛，均难称谓。修持门中，须备众德，一法若缺，莫证法身。</p><p class="p-trans">实际理地，一尘也不能建立，凡夫、圣者、众生、佛陀，都很难表述它。但修持的行门中，必须具备一切功德，如果缺少一法，就不能证得法身。</p></div>
+<div class="para-pair"><p class="p-orig">我释迦牟尼世尊，尘点劫前，早成正觉，为度众生，示生世间。隐其圣德，示同未悟，为物作则，出家修道。</p><p class="p-trans">我们的释迦牟尼世尊，在尘点劫前，早已成就正等正觉，为了度化众生，示生于世间。隐藏自己的圣德，示现同没有觉悟的人一样，为一切有情众生作榜样，出家修道。</p></div>
+<div class="para-pair"><p class="p-orig">迨其一睹明星，豁然大悟。叹曰，奇哉，一切众生，皆具如来智慧，但以妄想执著，而不证得。若离妄想，则一切智，无师智，自然智，则得现前。</p><p class="p-trans">等到他夜睹明星，豁然大悟。赞叹说：“奇哉，一切众生，皆具如来智慧，但以妄想执著，而不证得。若离妄想，则一切智，无师智，自然智，则得现前。”</p></div>
+<div class="para-pair"><p class="p-orig">于是华藏世界，海会云集，悉为十住，十行，十回向，十地，等觉，四十一位法身大士。于菩提场，及余六处，说一真法界，寂照圆融，生佛不二，空有莫名之理性。及由十信，十住，十行，十回向，十地，等觉，以至妙觉佛果，修因证果各阶级。</p><p class="p-trans">于是华藏世界，海会众菩萨如云聚集，都是十住、十行、十回向、十地、等觉，四十一个阶位的法身大士。佛在菩提场，以及其余的六个地方，宣说一真法界，寂照圆融、众生与佛不二、空或有都不能表达说明的理性。以及由十信、十住、十行、十回向、十地、等觉，一直到妙觉佛果，修因证果的各个阶级。</p></div>
+<div class="para-pair"><p class="p-orig">是知理由事显，事由理成，理事圆融，方合佛道。世有狂人，专重理性，不务事修，上违佛教，下负自心，自误误人，诚可怜悯。</p><p class="p-trans">由此可知，理性通过事修才能彰显，事修通过理性才能成就，理事圆融，方才契合佛道。世间有些狂妄的人，专门注重理性，不务事修，向上违背佛的教诲，向下辜负自己的本心，自误误人，的确令人怜悯。</p></div>
+<div class="para-pair"><p class="p-orig">此经凡八十一卷，三十九品。清凉国师分为信，解，行，证四分。又以信分六品经，名为所信因果周。</p><p class="p-trans">这部经一共八十一卷，三十九品。清凉国师，把全经分成信、解、行、证四分。又把信分的六品经，取名叫所信因果周。</p></div>
+<div class="para-pair"><p class="p-orig">解分三十一品经，分为二周，以前二十九品为差别因果周，以后二品为平等因果周。</p><p class="p-trans">解分的三十一品经，分为两周，把前二十九品，称为差别因果周；把后两品，称为平等因果周。</p></div>
+<div class="para-pair"><p class="p-orig">三，行分一品经，为成行因果周。四，证分一品经，为证入因果周。周者，事理周备，无所欠缺之谓也。</p><p class="p-trans">三，行分的一品经，称为成行因果周。四，证分的一品经，称为证入因果周。“周”，是事理周备，无所欠缺的意思。</p></div>
+<div class="para-pair"><p class="p-orig">全经大纲，揭示殆尽，依此修持，直达堂奥。前之八会，绝无凡夫二乘，虽有天龙八部，皆是大权示现，实非业系凡夫。</p><p class="p-trans">全经的大纲，揭示无遗，如果依这个纲要修持，就能直达华严堂奥。前面的八会，绝对没有凡夫、二乘参与，虽然有天龙八部，但都是大权菩萨示现的，其实并不是业力系缚的凡夫。</p></div>
+<div class="para-pair"><p class="p-orig">后之一会，虽有声闻舍利弗等，已证圣果。纵然在会，不见如来胜妙法身，不闻一乘圆顿妙理，但见如来应化之身，及闻生灭四谛之法而已。</p><p class="p-trans">后面的一会，虽然有声闻众舍利弗等参与，并且已证圣果，但是，即使在法会上，也不见如来的胜妙法身、听闻不到一佛乘的圆顿妙理，只能见到如来的应化之身，以及听闻到生灭四谛（苦、集、灭、道）的声闻法而已。</p></div>
+<div class="para-pair"><p class="p-orig">所谓一身示相，胜劣殊观。一音说法，偏圆异闻。及文殊往福城大塔庙前，善财亲近文殊，已证十信满心。承文殊教，南参五十三位诸善知识。</p><p class="p-trans">这正是所谓的：佛陀一身示现色相，是殊胜，还是劣应，大众所见不同。佛陀一音说法，说偏教、说圆教，大众所听不同。等到文殊菩萨前往福城大塔庙前，善财童子亲近文殊菩萨，已经证得十信满心（十信位的最后阶段，再往上就破一分无明，证一分法身，登入初住位）。承蒙文殊菩萨的教导，向南参访五十三位各类善知识。</p></div>
+<div class="para-pair"><p class="p-orig">首参德云，即证初住，以后随闻随证。末后至普贤所，普贤以威神加被，俾善财所证，与普贤等，与诸佛等，是为等觉菩萨。</p><p class="p-trans">最先参访德云比丘，就证得了初住位，以后每参访一位善知识，即证得高一阶果位。最后到了普贤菩萨那里，普贤菩萨以威神加被，使得善财童子所证的境界，与普贤菩萨齐等，与诸佛齐等，这就是等觉菩萨。</p></div>
+<div class="para-pair"><p class="p-orig">普贤为彼称赞如来胜妙功德，劝进善财，及华藏海众，同以十大愿王功德，回向往生极乐世界，以期圆满佛果。</p><p class="p-trans">普贤菩萨为善财童子称赞如来胜妙功德，劝进善财，以及华藏海众菩萨，一同以十大愿王的功德，回向往生极乐世界，以期圆满佛果。</p></div>
+<div class="para-pair"><p class="p-orig">此经备明一生成佛之因果，而以求生西方为结归。可知念佛求生西方一法，为十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门。</p><p class="p-trans">这部经全面阐明了一生成佛的因果，而且以求生西方作为最终的结归。由此可知，念佛求生西方这个法门，是十方三世一切诸佛，向上成就佛道，向下度化众生，成始成终的总持法门。</p></div>
+<div class="para-pair"><p class="p-orig">世有行人，藐视因果，及与净土者，皆由不知因果净土，为成佛之根本，而只以愚夫愚妇当之，以致自失善利也。</p><p class="p-trans">世间有一些修行人，之所以藐视因果，藐视修持净土法门，都是因为不懂得因果、净土，是成佛的根本，而只是认为愚夫愚妇才适合修行这种法门，结果导致自己失去了最大的利益。</p></div>
+<div class="para-pair"><p class="p-orig">曹崧乔居士，笃信佛乘，秉己立立人，自利利他之心，行周急济贫，赈灾救苦之事。十余年兢兢业业，力办善举，所费不赀。</p><p class="p-trans">曹崧乔居士，笃信大乘佛法，秉持己立立人、自利利他的心，实行周急济贫，赈灾救苦的事。十多年来，兢兢业业，努力筹办慈善事业，所投入的资财无数。</p></div>
+<div class="para-pair"><p class="p-orig">最初所拟十事，尚有二事，未能举行。以募款维艰，故发心书华严全部，以期大慈善家，请而受持读诵，不惜巨资，以成就二善举，则书者受者，均为财法两施。</p><p class="p-trans">最初预备做的十件善事，还有二件，未能实行。因为募捐善款非常艰难，所以发心书写整部《华严经》，以期大慈善家，请去受持读诵，从而不惜捐出巨资，来成就剩余的两项善举，那么，书写的人、受持的人，就都是财、法两种布施。</p></div>
+<div class="para-pair"><p class="p-orig">彼贫苦得受帡幪，并生感激，称念佛号，或于现生，或于将来，往生西方，皆由书经诵经而为发起。其为功德，曷能名焉。</p><p class="p-trans">那些贫苦众生能够受到庇护，并生起感激之心，称念佛号，或在现生、或在将来，往生西方，就都是通过写经、诵经才发起的了。这样做的功德太大了，怎么能够用语言说得清楚呢？</p></div>
+<div class="para-pair"><p class="p-orig">行愿品云，菩萨若能随顺众生，则为随顺供养诸佛。若于众生尊重承事，则为尊重承事如来。若令众生生欢喜者，则令一切如来欢喜。何以故，诸佛如来，以大悲心而为体故。因于众生，而起大悲，因于大悲，生菩提心，因菩提心，成等正觉。</p><p class="p-trans">《普贤菩萨行愿品》中说：“菩萨若能随顺众生，则为随顺供养诸佛。若于众生尊重承事，则为尊重承事如来。若令众生生欢喜者，则令一切如来欢喜。何以故，诸佛如来，以大悲心而为体故。因于众生，而起大悲，因于大悲，生菩提心，因菩提心，成等正觉。”</p></div>
+<div class="para-pair"><p class="p-orig">是知乾父坤母，民胞物与，一视同仁，分所应尔。</p><p class="p-trans">由此可知，天为父，地为母，人民是同胞，万物是同辈，一视同仁，这才是我们应尽的职分。</p></div>
+<div class="para-pair"><p class="p-orig">光愧无财力，又无道德，感彼为贫民之诚，略摅此经大意，以期见者闻者，于济贫，念佛二事，各为兴起。庶不致以本具可以作佛之佛性，长沦于三途六道之中，枉罹苦荼，而不得受用也。</p><p class="p-trans">我很惭愧，既没有财力，又没有道德，有感曹居士为贫民百姓的诚心，大略表达这部经的大意，以期见者闻者，对于济贫、念佛这两件事，各各都能发心兴起。才不至于以本具可以作佛的佛性，长劫沦回在三途六道之中，白白地遭受痛苦，而得不到受用啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【十信满心】</span>十信心已证圆满。十信心乃菩萨五十二位修行位次中的前十位，为信顺佛之教法而不疑之位次。即信心、念心、精进心、慧心、定心、不退心、回向心、护法心、戒心、愿心。十信满心是十信位的最后阶段，再往上就破一分无明，证一分法身，登入初住位。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【不赀】</span>无从计量，表示多或贵重（多用于财物）。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【帡幪】</span>古代称帐幕之类覆盖的东西。在旁的叫帡，在上的叫幪。喻为庇护。幪，盖衣也。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

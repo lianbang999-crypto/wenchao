@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>16、复永嘉某居士书一 · 印光法师文钞</title>
+<meta name="description" content="讲自反才能入道，开示启发信愿之法">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-016/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="16、复永嘉某居士书一 · 印光法师文钞">
+<meta property="og:description" content="讲自反才能入道，开示启发信愿之法">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-016/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第一部分·书信 · 如诚法师、圆涛法师译</div>
+      <h1 class="art-title">16、复永嘉某居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>讲自反才能入道，开示启发信愿之法</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">综观二十年间决择问学，备历艰险。竟能从儒入佛，即俗修真。简去自力，专宗净土。可谓三生有幸，一道同归者也。幸甚慰甚。</p><p class="p-trans">综观（你）二十年来的决择问学，备历艰险。竟然能够从儒家进入佛教，在世俗中基于俗谛来修真谛。简除自力的通途法门，专心修习净土。可以说是三生有幸，一起同归极乐的人啊！实在庆幸安慰！</p></div>
+<div class="para-pair"><p class="p-orig">夫人宿世果种善根，且无论为学求道，可为出世大事之前茅。即贪瞋痴等烦恼惑业，疾病颠连种种恶报，皆可以作出生死入佛法之因缘。</p><p class="p-trans">假如一个人宿世果真种了善根，暂且不要说为学求道，可以成为出世大事的前锋。就是贪瞋痴等烦恼惑业、疾病困苦种种恶报，都可以作为出离生死，进入佛法的因缘。</p></div>
+<div class="para-pair"><p class="p-orig">顾其人之能自反与否耳。不能自反，且无论碌碌庸人，为世教之所拘。即晦庵，阳明，靖节，放翁等，虽学问操持见地，悉皆奇特卓荦。然亦究竟不能彻悟自心，了脱生死。其学问操持见地，虽可与无上妙道作基。由不能自反，竟为入道之障。可知入道之难，真难于登天矣。</p><p class="p-trans">关键看这个人能不能自我反省罢了。不能自我反省，不要说庸庸碌碌的常人，被世间的教法所拘束系缚。就是如朱熹、王阳明，陶渊明，陆游等人，虽然学问、操持、见地，都是奇特卓越。然而也究竟不能彻悟自心，了脱生死。他们的学问操持见地，虽然可以给无上妙道（佛法）作基础。由于不能够自我反省，竟然成为进入佛道的障碍。由此可知，进入佛道是很难的，真是难于登天啊！</p></div>
+<div class="para-pair"><p class="p-orig">不执著等语，理则是，而事非博地凡夫之所能为也。终日穿衣吃饭，侈谈不执饥寒。与终日枵虚，不得杯水粒米，饿且将死，而谓人曰，吾视龙肝凤髓，直同秽物，思之即呕，况其下者乎。同一空谈耳。</p><p class="p-trans">“不执着”这个话，从理上讲是如此，而在事相上，不是博地凡夫所能做到的。每天穿衣吃饭，奢侈地谈论不执着饥寒。每天饿着肚子，没有一杯水一粒米，快要饿死，而对人说：“我看那些珍奇美味，如同肮脏之物，想到就想呕吐，何况珍奇美味之下的东西呢？”这些同样是空谈罢了。</p></div>
+<div class="para-pair"><p class="p-orig">今时不明教理，即参禅宗者，每多中此空解脱病。至于静坐澄思，空境现前。不过以静澄伏妄，偶尔发现之幻境耳。若错认消息，生大欢喜，则丧心病狂，佛亦难医矣。幸能体察而不执著，弃舍幻妄，卒得贯通诸法法门。可谓久历荆棘，忽达康庄矣。</p><p class="p-trans">现在不明白教理，就去参究禅宗的那些人，每每大多中了这种执空解脱的毛病。至于静坐澄思，空境现前。不过以静澄伏住妄念，偶尔发现的幻境罢了。如果错认消息，生大欢喜，就丧心病狂，佛也难以医治了。你有幸能够体察到这种偏差而不执着，舍弃幻妄，最终得于贯通诸法的（净土）法门。可说是久历荆棘险路，忽然到达康庄大道啊！</p></div>
+<div class="para-pair"><p class="p-orig">末世人根陋劣，知识稀少。若不仗佛慈力，专修净业。但承自力，参叩禅宗。不第明心见性，断惑证真者，罕有其人。而以幻为真，以迷为悟，著魔发狂者，实繁有徒矣。所以永明莲池等，观时之机，极力主张净土法门也。</p><p class="p-trans">末法之世的人根机陋劣，善知识希少。如果不仰仗阿弥陀佛的慈力，专修净业。只承自力，参究叩问禅宗心要。不但有能力明心见性，断惑证真的人很罕见。而以幻为真，以迷为悟，著魔发狂的人实在有很多啊！所以永明、莲池大师等祖师，观察时代根机，极力主张宏扬净土法门。</p></div>
+<div class="para-pair"><p class="p-orig">至于逐吏之譬，乃现今数年来千真万真之确论也。兴利除弊，必须推及将来毕竟结果处，方为济时之务。否则与断头脚而医头脚，同一覆辙。能不令人痛哭流涕长太息也耶。</p><p class="p-trans">至于你说到“逐吏”的譬喻，这是最近几年来千真万真的确切言论。兴利除弊，（不能着眼于一时），须要推及将来究竟结果处，（看是否有利于后世），方才是救济时弊的要务。否则，就与断头医头，断脚医脚，是同样的错误。怎能不令人痛哭流涕，长长叹息呢？</p></div>
+<div class="para-pair"><p class="p-orig">若夫信心真切，行愿专一之问答，理虽的确，但未能发或人之信心，伸自己之主见。今代为答曰，吾已遍研教理，普亲诸圣，故能如是。岂寻常所谓研究亲近者哉。</p><p class="p-trans">如果是信心真切，行愿专一的问答，虽然你说的道理的确正确，但是还没能发起他人的信心，伸明自己的主张见解。现在代为回答说：我已经遍研教理，普遍亲近诸位圣人，所以能够如此。哪里是寻常所说的研究教理，亲近圣人呢？</p></div>
+<div class="para-pair"><p class="p-orig">何以言之。净土法门，释迦弥陀之所建立也。文殊普贤之所指归也。马鸣龙树之所弘扬也。匡庐，天台，清凉，永明，莲池，蕅益之所发挥倡导，以普劝夫若圣若凡或愚或智也。</p><p class="p-trans">为什么这么说呢？净土法门是本师释迦如来与阿弥陀佛所建立的。文殊、普贤菩萨所指归的。马鸣、龙树大士所弘扬的。庐山慧远大师、天台智者大师、清凉贤首国师、永明大师、莲池大师、蕅益大师所发挥倡导，来普劝一切圣者、凡夫、愚痴、智慧的人。</p></div>
+<div class="para-pair"><p class="p-orig">此诸菩萨大士，于千百年前，早已为吾遍研藏教，特地拣出此不断惑业，得预补处，即此一生，定出樊笼，至圆至顿，至简至易，统摄禅教律而高出禅教律，即浅即深，即权即实，殊特超越天然妙法也。</p><p class="p-trans">这些菩萨大士在千百年以前，早就为我们普遍研究三藏教典，特地挑出这个不断惑业，得预补处，即此一生定出三界，最圆满顿超，最简单容易，统摄禅、教、律而高出禅、教、律，即浅显而深妙，即权教而实教，殊特超越的天然妙法啊！</p></div>
+<div class="para-pair"><p class="p-orig">吾信仰佛祖，以古为师。岂不如亲近今时知识之为愈乎。华严一经，王于三藏，末后一著，归重愿王。华藏海众，悉证法身，咸求往生，企圆佛果。吾何人斯，敢不景从。</p><p class="p-trans">我信仰佛祖，以古德为师。难道还不如亲近现在时下的善知识更好吗？《华严经》是三藏经王，最后一著汇归到十大愿王。华藏海众菩萨都证得法身，都求往生净土，期望圆满佛果。我们是什么人，敢不景仰跟从？</p></div>
+<div class="para-pair"><p class="p-orig">舍尔狂心，力行斯道。功德利益，当自证知。何待遍参，方为知法哉。</p><p class="p-trans">舍弃你的狂心，努力修行净土。功德利益，自会证知。不是要等到遍参一切善知识，才是知法啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【周孟由】</span>（1887-1958），法名师导，自号寒香，生于1887年8月20日，卒于1958年12月2日。1910年（23岁）毕业于杭州高等师范学校，以后东渡日本，考入早稻田大学读史地专业、因体弱提前回国，曾办过明伦学校。家庭传统信仰佛教，民国六年春到普陀山初次拜访印光大师。民国八年，27岁，奉庶祖母登山，再四恳求印光大师收为弟子。大师为各赐法名，此为师许人皈依之始。归来后即开始长斋念佛，专修净土，以后全家皈依印光大师。1921年春，与吴璧华居士一同去杭州礼请弘一大师来温闭关潜修，编写《四分律比丘戒相表记》，与弟弟周群铮一起按月供养弘一大师在温州的伙食费。与吴璧华，刘景晨、李德生、潘景开等居士一起创办过菩提学会。50年代曾为刘景晨、金嵘轩、李德生等创办过鹿城佛学会及佛慈义务诊所。印光大师文钞中载有复永嘉某居士书和复念佛居士书数十封，就是印光大师给周孟由居士的书信。在母亲生病至往生前后，得到印光大师书信开示十一封，周居士兄弟编为《法雨涓滴录》流通，又出资流通《莲宗正传》和《了凡四训》等。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【问学】</span>求知；求学。《礼记·中庸》：“故君子尊德性而道问学，致广大而尽精微。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【颠连】</span>困顿不堪；困苦。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【王守仁】</span>（1472－1528年），字伯安，号阳明，中国浙江余姚人。中国明代最著名的思想家、哲学家、书法家和军事家。陆王心学之集大成者，非但精通儒家、佛家、道家，而且能够统军征战，是中国历史上罕见的全能大儒。因他曾在余姚阳明洞天结庐，自号阳明子，故被学者称为阳明先生，现在一般都称他为王阳明，其学说世称“阳明学”。在中国、日本、朝鲜半岛以及东南亚国家都有重要而深远的影响。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【陶渊明】</span>（约365-427），字符亮，晚年更名潜。一说名潜，字渊明。自号五柳先生，卒后亲友私谥靖节，世称靖节先生。九江柴桑（九江县）人，东晋末期南朝宋初期诗人、辞赋家、散文家。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【卓荦】</span>超绝出众。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【枵虚】</span>空虚。指腹空，谓饥饿。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【龙肝凤髓】</span>喻指珍奇的佳肴。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【康庄】</span>四通八达的大道。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【不第】</span>不但。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【实繁有徒】</span>意谓确实有不少这样的人。一般用贬义。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【逐吏】</span>《明史》记载：“赵璜，字廷实，安福人。少从父之官，坠江中不死。稍长，行道上，得遗金，悉还其主。登弘治三年进士，授工部主事。改兵部，历员外郎。出为济南知府。猾吏舞文，积岁为蠹。璜择愿民教之律令，得通习者二十余人，逐吏而代之。”</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【覆辙】</span>翻车的轨迹。比喻招致失败的教训。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【或人】</span>某人；有些人。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

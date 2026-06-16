@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与灵岩某师书 · 印光法师文钞</title>
+<meta name="description" content="流俗僧妙圆师，安徽人，普陀清虚阁钟芳师徒弟，系真达老和尚同乡，真师乃彼之二师父。十月廿九下午来（从未来过），言到雷允上家来，彼家到普陀认识。系先到雷家（必是化缘），云东西放雷家，空手来，住两夜。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-113/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与灵岩某师书 · 印光法师文钞">
+<meta property="og:description" content="流俗僧妙圆师，安徽人，普陀清虚阁钟芳师徒弟，系真达老和尚同乡，真师乃彼之二师父。十月廿九下午来（从未来过），言到雷允上家来，彼家到普陀认识。系先到雷家（必是化缘），云东西放雷家，空手来，住两夜。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-113/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">与灵岩某师书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">流俗僧妙圆师，安徽人，普陀清虚阁钟芳师徒弟，系真达老和尚同乡，真师乃彼之二师父。十月廿九下午来（从未来过），言到雷允上家来，彼家到普陀认识。系先到雷家（必是化缘），云东西放雷家，空手来，住两夜。</p><p class="p-trans">流俗（注1）僧妙圆法师，安徽人，普陀山清虚阁钟芳法师的徒弟，是真达老和尚的同乡，真达法师是他的二师父。十月二十九日下午来的（以前从未来过），说到雷允上（注2）家来的，雷家到普陀山时认识。他是先到雷家（必是化缘），说东西放在雷家，空手来，住了两夜。</p></div>
+<div class="para-pair"><p class="p-orig">昨吃夜饭后，坐黄包车，半路要死了，警察来报，急令吴谷宜看，已死定矣。抬至明道师之屋中，夜间派人念佛看守，早间雇船令老肖撑来，当预先令小工抬龛子下去，待船一到，即装龛抬至化身窑，过几日即化，入普同塔。</p><p class="p-trans">昨天吃完晚饭后，坐黄包车，半路要死了，警察来报，急忙让吴谷宜去看，已经死了。抬到明道法师的屋中，夜晚派人念佛看守，早上雇船让老肖撑来，应当预先令小工抬灵龛下去，等船一到，就装龛抬到化身窑，过几天就火化，骨灰放入普同塔。</p></div>
+<div class="para-pair"><p class="p-orig">彼云，无有徒弟，在弘隐庵住。见悟师回，到上海太平寺报知即已，别无关系。或先勿入塔，待后无人取再入。</p><p class="p-trans">他说，没有徒弟，在弘隐庵常住。见悟师回来，到上海太平寺报告通知一声就好了，没有其他关系。或者先不要入塔，等到以后没有人来取骨灰再入塔。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【流俗】</span>指世间平庸的人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【雷大升】</span>（约1662-1794），字允上，号南山。清代医学家，六神丸的创始者，吴县人。在长期的医疗实践中，积累了许多民间验方、丹、膏、散，在处方和炮制方面独辟蹊径，颇多创造，偏重于应用治疗性较强的麝香、牛黄、珍珠、犀角、蟾酥等细料药物，取得较为满意的疗效。他创制的六神丸驰名中外，深受广大群众的欢迎，享誉300年而不衰。撰有《金匮辨正》、《丹丸方论》等书。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

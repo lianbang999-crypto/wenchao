@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>南五台山圆光寺观音菩萨示迹之记 · 印光法师文钞</title>
+<meta name="description" content="（山去陕西省城七十里）">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-218/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="南五台山圆光寺观音菩萨示迹之记 · 印光法师文钞">
+<meta property="og:description" content="（山去陕西省城七十里）">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-218/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 附录</div>
+      <h1 class="art-title">南五台山圆光寺观音菩萨示迹之记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">（山去陕西省城七十里）</p><p class="p-trans">（南五台山距离陕西省城西安有七十里）</p></div>
+<div class="para-pair"><p class="p-orig">示迹之记，文词典雅，叙事精详。惜于菩萨不思议无作妙力，殊欠发挥。量不揣固陋，勉述一赞，以冠于首。俾事理交融，体用咸彰。</p><p class="p-trans">《南五台山圆光寺观音菩萨示迹之记》，文词典雅，叙事精详。可惜对于菩萨不可思议的无作妙力，还欠缺发挥。于是我不顾自己的浅陋，勉强撰述一篇赞颂，放在开头。使得事理相互交融，体用全都彰显。</p></div>
+<div class="para-pair"><p class="p-orig">生之所以能感，圣之所以能应，俱在斯焉。以企后之览者，发菩提心，见贤思齐。以观音之心为心，以观音之事为事。庶可亦为未来世之观世音耳。虽文不雅驯，而其意义有可取焉。赞曰</p><p class="p-trans">众生之所以能感，佛菩萨之所以能应，（其中的事理）全都在此了。企望后来的读者，发菩提心，见贤思齐。以观世音菩萨的心为自己的心，以观世音菩萨的事业为自己的事业，想必就可以成为未来世的观世音了。虽然文词不够典雅流畅，而文中的意义却有可取之处。赞文如下：</p></div>
+<div class="para-pair"><p class="p-orig">观音大士，于无量劫，久成佛道。为度众生，不离寂光，现菩萨身。又复普应群机，垂形六道。以三十二应，十四无畏，四不思议无作妙力，寻声救苦，度脱群萌。</p><p class="p-trans">观音大士，在无量劫前早已成佛（号正法明如来）。为了救度众生，不离常寂光土，而现菩萨身。又普遍响应不同根机的众生，垂示形迹于六道之中。以三十二应、十四无畏、四不思议无作妙力，寻声救苦，度脱众生。</p></div>
+<div class="para-pair"><p class="p-orig">应以何身得度者，即现何身而为说法。直同月印千江，春育万卉。虽则了无计虑，而复毫不差殊。</p><p class="p-trans">众生应以何种身形得到度脱，就现出何种身形而为说法。如同月亮映在千条江河，阳春抚育万种卉木。虽然丝毫没有计划和谋虑，而又丝毫不会差错。</p></div>
+<div class="para-pair"><p class="p-orig">良由彻证唯心，圆彰自性。悲运同体，慈起无缘。即众生之念以为心，尽法界之境以为量。</p><p class="p-trans">实在由于菩萨彻底证得唯心，圆满彰显自性。运用同体大悲，兴起无缘大慈，即众生之心念以为心，尽法界之境界以为量。</p></div>
+<div class="para-pair"><p class="p-orig">是知无尽法界，无量众生，咸在菩萨寂照心中。故得云布慈门，波腾悲海，有感即赴，无愿不从也。（释圣量和南谨述，此下乃示迹之记）</p><p class="p-trans">从而知道，无尽法界、无量众生，全都在菩萨的寂照心中。所以大慈大悲如同风起云涌，又如大海扬波，众生有感，菩萨即应，没有愿望不顺从啊！（释圣量和南谨述，以下是《南五台山圆光寺观音菩萨示迹之记》的原文）</p></div>
+<div class="para-pair"><p class="p-orig">大山岩穴，龙蛇所居。岁久成妖，肆其凶孽。吞啮不已，祸及生民。变怪升腾，非人所制。若非应身大士，孰能救济。</p><p class="p-trans">大山中的岩洞，成为龙蛇的住处。时间一久成了妖孽，肆意行凶，不断有人被吃掉。这妖孽可以变成怪物，腾上天空，不是人力所能制伏的。如果不是现身应化的大菩萨，有谁能够进行救济呢？</p></div>
+<div class="para-pair"><p class="p-orig">巍巍乎妙智神力，其容思议。然于不思议境，强以文字纪述事迹者。冀千载之下，方来君子，启深信耳。</p><p class="p-trans">菩萨巍巍荡荡的妙智神力，哪里能心思口议？而之所以对这不可思议的境界，勉强用文字来记述其事迹，是希望千年之后，将来的君子，能够发起深切的信心而已。</p></div>
+<div class="para-pair"><p class="p-orig">昔隋时仁寿中，此山有毒龙焉。以业通力，变形为羽人。携丹药货于长安，诈称仙术，以欺愚俗。谓此药之灵，服者立升于天。</p><p class="p-trans">隋朝仁寿年间（公元601-604年），这座山中有一条毒龙。凭借着业报所得的神通力量，变换成道士的形象。携带着丹药在长安城中售卖，诈称自己有仙术，来欺骗愚昧的俗人。说自己的丹药很灵，吃了之后立刻能升天。</p></div>
+<div class="para-pair"><p class="p-orig">呜呼，无知之民，轻信此语，凡服此药而升天者，不知其几何。又安知堕彼羽人之穴，以充口腹耳。而一方之民，尚迷而不悟。</p><p class="p-trans">呜呼，无知的百姓，轻信了他的话。吃了丹药而升天的人，不知有多少。却又怎能知道自己落入了那道士的洞穴，成了他肚中的食物啊。而一方的人民，还是迷惑而不觉悟。</p></div>
+<div class="para-pair"><p class="p-orig">唯我大士，以悲愿力，现比丘身。结草为庵，止于峰顶。以妙智力，伏彼妖通。以清净风，除其热恼。慈念所及，毒气潜消。龙获清凉，安居岩穴。民被其德，各保其生。昔之怪异，不复见矣。</p><p class="p-trans">观音大士，以慈悲愿力，示现为比丘身。编结茅草为庵屋，住在峰顶。用妙智力，降伏了妖怪的神通，用清净风，除去了毒龙的热恼。菩萨慈悲念力所到之处，毒气暗中消除。毒龙获得了清凉，于是安心居住在岩洞之中。人民蒙受菩萨的恩德，各各得以保全性命。之前的怪异，再也见不到了。</p></div>
+<div class="para-pair"><p class="p-orig">由此灵贶达于朝廷。以其于国有功，于民有惠。建寺峰顶，而酬酢之。大士以慈风法雨，普济含灵。慧日净辉，破诸冥暗。于是缙绅向慕，素俗钦风。割爱网以归真，弃簪缨而入道。</p><p class="p-trans">由此，灵异的事迹传到了朝廷。因为这位比丘有功于国家，有恩于人民。于是在峰顶建了一座寺院，作为对比丘的酬答。观音大士以慈悲之风、法雨甘露，普遍济度一切众生。如同慧日，放出清净的光辉，破除了幽暗。于是士人、乡绅，僧侣俗众，纷纷仰慕向往，钦敬尊崇，割断贪爱尘网而归向真际，舍弃富贵荣华而步入佛道之门。</p></div>
+<div class="para-pair"><p class="p-orig">大士尝居磐石，山猿野兽，驯绕座隅。百鸟聚林，寂然而止。如听法音，久而方散。</p><p class="p-trans">大士曾经安坐在磐石之上，山猿等野兽，温顺地围绕在四周；百鸟聚集在林中，寂静无声。如同在倾听法音一般，很久才散去。</p></div>
+<div class="para-pair"><p class="p-orig">呜呼，建寺之明年，六月十九日，大士忽示无常，恬然入灭。异香满室，愁雾蔽空。鸟兽哀鸣，山林变色。</p><p class="p-trans">呜呼，建寺的第二年，六月十九日，大士忽然示现无常，安然入灭。室内充满异香，愁雾遮蔽天空，鸟兽悲哀鸣叫，山林都变了颜色。</p></div>
+<div class="para-pair"><p class="p-orig">于是寺众闻于朝廷。中使降香，奉敕赙赠，以崇冥福。荼毗之际，天地晦冥。斯须之间，化为银界。忽闻空中箫鼓响，山岳摇。瑞云奔飞，异香馥郁。</p><p class="p-trans">于是寺内僧众上报到朝廷。宫中使者奉旨前来焚香叩拜，送来丧礼，以增冥福。荼毗（火化）的时候，天昏地暗。一瞬间，天地都变为银色。忽然听到空中箫鼓声响起，山岳摇动，祥云奔流，异香浓郁。</p></div>
+<div class="para-pair"><p class="p-orig">忽于东峰之上现金桥，桥上列诸天众，各竖幢幡，及雨金华，纷纷而不至于地。最后于南台上，百宝灿烂，广莫能知，冲天无际。</p><p class="p-trans">忽然在东峰之上现出一座金桥，桥上罗列着众多天人，各各竖起幢幡，以及洒下金色妙花，纷纷扬扬而不落地。最后在南台之上，现出百种珍宝，光明灿烂，冲入天空，无边无际。</p></div>
+<div class="para-pair"><p class="p-orig">影中隐隐现自在端严之相。慈容伟丽，缨络铢衣。天风飘飘，焕然对目。尔时缁白之众，千百余人，咸睹真仪，悲喜交集。莫不涕泣瞻依，称名致敬。始知观音大士示迹也。</p><p class="p-trans">光影之中，隐隐约约现出观世音菩萨庄严之相。慈悲颜容宏伟壮丽，身着缨络铢衣。天风飘飘，光彩焕然，就在眼前。当时在场的僧俗大众有一千多人，全都看到了菩萨的真容，悲喜交集。无不是哭泣流泪，瞻仰归依，称念菩萨名号，恭敬礼拜。这才知道是观音大士显示化迹啊！</p></div>
+<div class="para-pair"><p class="p-orig">清气异香，经于累月。左仆射高公，具奏其事。皇上览表，嘉叹久之。收骨起塔，御书牌额，锡号为观音台寺。拨赐山林田土，方广百里。每岁时降御香。度僧设供，大崇法化。</p><p class="p-trans">奇异的清香，过了几个月才消散。左仆射高大人，将这件事详细奏报朝廷。皇上看了奏表，赞叹了许久。下命收存灵骨，建造骨塔，并且亲笔书写寺庙牌匾，赐号为观音台寺。又拨赐了方圆百里的山林田地。每年按期派人焚香叩拜。剃度僧人，施设供养，大兴佛法教化。</p></div>
+<div class="para-pair"><p class="p-orig">至唐大历六年，改号为南五台山圣寿寺焉。五代之世，兵火连绵。诸台殿宇，并遭焚毁。虽有残僧坏屋，尚与木石共处矣。</p><p class="p-trans">到了唐朝大历六年（公元771年），改名为南五台山圣寿寺。五代时期，战火连绵不断。寺中的诸多台基和殿宇，都遭到了焚毁。虽然还有一些零落的僧人、崩坏的房屋，尚存在树木山石之间。</p></div>
+<div class="para-pair"><p class="p-orig">至宋太平兴国三年夏，前后六次，现五色圆相，祥云等瑞。主僧怀伟具申府尹，被奏天廷。敕赐金额，为五台山圆光之寺。</p><p class="p-trans">到了宋朝太平兴国三年（公元978年）夏天，寺中前后六次，现出五色圆相、祥云等瑞相。当时的住持怀伟法师，将这些祥瑞全都报告到开封府，接着又被上奏到朝廷。皇帝于是御赐金匾，命名为五台山圆光寺。</p></div>
+<div class="para-pair"><p class="p-orig">由是增修宝殿，绘塑真仪。烟霞与金碧争辉，铎韵共松风演妙。诸台屋宇，上下一新。嗣续住持，香灯不绝。慈辉所烛，石孕祥云。法雨所沾，水成甘露。</p><p class="p-trans">由此，增修宝殿，塑造宝像。金砖碧瓦，香烟彩霞，争相辉映；松林清风，铃铎梵音，共演妙法。楼台屋宇，焕然一新。后续的住持，代代香火传灯不绝。慈辉所照之处，顽石也能孕育祥云；法雨所沾之处，流水全都变成甘露。</p></div>
+<div class="para-pair"><p class="p-orig">台南数百步，有石泉焉。注之方池，色味甘洁。能除热恼，能润焦枯。舒之则沙界滂沱，卷之则石池澄湛。或时亢旱，迎请者相继于道途。感应如期，州郡已彰于简牍。怀生蒙祐，草木沾恩。自昔迄今，声华不泯。</p><p class="p-trans">台南几百步远的地方，有一汪石泉。流注到方形的池子里，水质清洁，味道甘甜。能除去热恼，滋润焦枯。（泉水似乎取之不尽），舒洒开来，可在恒河沙数世界降下滂沱大雨；收储起来，就只有石池那么大。有时遇到大旱，前来迎请泉水的人连绵不绝于道路。泉水灵验，饮用之后都如愿以偿，这些事迹在州郡的地方志当中已经得到了彰显。一切众生都蒙受到庇佑，一草一木都沾沐了恩泽。从古至今，名声不绝。</p></div>
+<div class="para-pair"><p class="p-orig">噫，大圣以悲愿力，福被一方。而一方之民，亦不忘于慈祐。每遇清明之月，及夏季忌辰。不远百里，陟险登危。皆以净心踵足而至者，何啻百千万耶。扶老携幼，阗溢道路，相继月余。</p><p class="p-trans">噫！观音大圣以慈悲愿力，福泽加被一方。而一方的人民，也不忘记慈悲保佑他们的菩萨。每到清明这个月，还有夏季的忌辰，不远百里，涉险登高，怀着清净心，接连赶来的人，又何止百千万呢。扶老携幼，遍满道路，持续一个多月。</p></div>
+<div class="para-pair"><p class="p-orig">各以香花音乐，缯盖幢幡资生之具，持以供养。于是头面顶礼，致敬致恭。睹相瞻仪，旋绕赞叹。莫不洗罪蒙福，弭障沾恩。岂徒为奔走跋涉而已哉。</p><p class="p-trans">各各用香花音乐、缯盖幢幡、生活器具等，进行供养。于是头面顶礼，恭敬至诚，瞻睹妙相威仪，右旋围绕赞叹。无不是洗除罪障、蒙受福佑、消弭障碍、沾沐恩泽。哪里只是徒然为了奔走跋涉而已呢。</p></div>
+<div class="para-pair"><p class="p-orig">寺僧法忍，虑其岁月经久，灵迹湮没。持诸残碑，嘱为斯记。普明固辞弗获，甚愧非文。倘遇贤士，改而正诸，不亦宜乎。</p><p class="p-trans">寺中的僧人法忍，担心年月久了以后，大士的灵感事迹或许会被埋没。于是拿来残损的石碑，让我写下这篇记文。我极力推辞，还是没有推辞掉。很惭愧自己写得不好，如果遇到贤哲予以改正，也是应该的啊。</p></div>
+<div class="para-pair"><p class="p-orig">太白山释普明谨撰。元至元七年庚午正月十五日都院主僧释澄渊立石。</p><p class="p-trans">太白山释普明谨撰。元朝至元七年（公元1270年）庚午正月十五日  都院主僧释澄渊立石。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【雅驯】</span>典雅纯正；文雅不俗。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【三十二应】</span>（术语）由观音普现色身三昧应现之三十二身也。楞严经六曰：“我身成三十二应，入诸土。”法华经所说三十三身与此大同小异。一佛身，二独觉身，三缘觉身，四声闻身，五梵王身，六帝释身，七自在天身，八大自在天身，九天大将军身，十四天王身，十一四天王太子身，十二人王身，十三长者身，十四居士身，十五宰官身，十六婆罗门身，十七比丘身，十八比丘尼身，十九优婆塞身，二十优婆夷身，廿一女主国夫人命妇大家身，廿二童男身，廿三童女身，廿四天身，廿五龙身，廿六药叉身，廿七干闼婆身，廿八阿修罗身，廿九紧那罗身，三十摩睺罗迦身，三十一人身，三十二非人身。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【十四无畏】</span>《楞严经》卷六：“世尊我复以此闻熏闻修金刚三昧无作妙力。与诸十方三世六道。一切众生同悲仰故。令诸众生于我身心。获十四种无畏功德。一者由我不自观音以观观者。令彼十方苦恼众生。观其音声即得解脱。二者知见旋复。令诸众生设入大火火不能烧。三者观听旋复。令诸众生大水所漂水不能溺。……十四者此三千大千世界百亿日月。现住世间诸法王子。有六十二恒河沙数修法垂范。教化众生随顺众生。方便智慧各各不同。由我所得圆通本根发妙耳门。然后身心微妙含容遍周法界。能令众生持我名号。与彼共持六十二恒河沙诸法王子。二人福德正等无异。世尊我一名号与彼众多名号无异。由我修习得真圆通。是名十四施无畏力福备众生。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【四不思议无作妙力】</span>《楞严经》：“世尊我又获是圆通修证无上道故。又能善获四不思议无作妙德。一者由我初获妙妙闻心心精遗闻。见闻觉知不能分隔。成一圆融清净宝觉。故我能现众多妙容。能说无边秘密神咒。……四者我得佛心证于究竟。能以珍宝种种供养十方如来。傍及法界六道众生。求妻得妻求子得子。求三昧得三昧。求长寿得长寿。如是乃至求大涅槃得大涅槃。佛问圆通我从耳门圆照三昧。缘心自在因入流相。得三摩提成就菩提斯为第一。世尊彼佛如来。叹我善得圆通法门。于大会中授记我为观世音号。由我观听十方圆明。故观音名遍十方界。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【计虑】</span>计议谋虑。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【差殊】</span>差错。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【凶孽】</span>凶恶的叛乱分子。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【应身】</span>佛三身之一，即应他之机缘而化现的佛身。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【羽人】</span>道家学仙，因称道士为羽人。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【灵贶】</span>神灵赐福。贶：赐给；赐与。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【酬酢】</span>宾主互相敬酒（酬：向客人敬酒，酢：向主人敬酒。），泛指交际应酬。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【缙绅】</span>插笏于绅带间，旧时官宦的装束。亦借指士大夫。缙：插。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【钦风】</span>谓敬慕其风俗教化。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【簪缨】</span>古代达官贵人的冠饰。后遂借以指高官显宦。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【中使】</span>宫中派出的使者。多指宦官。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【降香】</span>旧谓每至朔望，官吏入庙焚香叩拜。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【赙赠】</span>谓赠送丧家以财物。赙：送给丧家的布帛、钱财等。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【荼毗】</span>指僧人死后火化。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【铢衣】</span>传说神仙穿的衣服。重量只有数铢甚至半铢。因用以形容极轻的分量，如舞衫之类。</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【仆射】</span>魏晋南北朝至宋，尚书省的长官。</p>
+<p class="note-item"><span class="note-n">[21]</span><span class="note-term">【岁时】</span>每年一定的季节或时间。</p>
+<p class="note-item"><span class="note-n">[22]</span><span class="note-term">【府尹】</span>官名。始于汉代之京兆尹。一般为京畿地区的行政长官。后亦用以泛称太守。</p>
+<p class="note-item"><span class="note-n">[23]</span><span class="note-term">【澄湛】</span>纯净，清晳。</p>
+<p class="note-item"><span class="note-n">[24]</span><span class="note-term">【阗溢】</span>充满。</p>
+<p class="note-item"><span class="note-n">[25]</span><span class="note-term">【简牍】</span>指文书；书籍；书简。</p>
+<p class="note-item"><span class="note-n">[26]</span><span class="note-term">【怀生】</span>谓有生命之物。《史记·司马相如列传》：“怀生之类，沾濡浸润。”</p>
+<p class="note-item"><span class="note-n">[27]</span><span class="note-term">【声华】</span>美好的名声；声誉。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

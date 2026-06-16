@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复边无居士书一 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。五台山广济茅篷（或称寺），现于去年由光与山西现主席赵次陇（名戴文）。将山上各寺及碧山寺子孙串通一气，并五台山区长，县长皆与彼串通一气，欲将广济茅蓬僧逐下山，以便彼等吃肉喝酒，人不经见。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-270/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复边无居士书一 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。五台山广济茅篷（或称寺），现于去年由光与山西现主席赵次陇（名戴文）。将山上各寺及碧山寺子孙串通一气，并五台山区长，县长皆与彼串通一气，欲将广济茅蓬僧逐下山，以便彼等吃肉喝酒，人不经见。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-270/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复边无居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。五台山广济茅篷（或称寺），现于去年由光与山西现主席赵次陇（名戴文）。将山上各寺及碧山寺子孙串通一气，并五台山区长，县长皆与彼串通一气，欲将广济茅蓬僧逐下山，以便彼等吃肉喝酒，人不经见。</p><p class="p-trans">来信尽知。五台山的广济茅篷（或称碧山寺），是在去年由我与山西省主席赵次陇（名戴文）。将山上各寺和碧山寺的子孙串通一气，还有五台山区长，县长都与他们串通一气，想将广济茅蓬的僧人驱逐下山，来方便他们吃肉喝酒，并使他人不知不见。</p></div>
+<div class="para-pair"><p class="p-orig">以广济茅篷皆成年修持之人，两相形比，自己觉得太难为情。而又不肯改良，致成诬谤，谓茅篷之僧，恶于本山僧十倍。区长县长受贿，致阎锡山赵戴文亦以为真，其势甚危。</p><p class="p-trans">因为广济茅篷都是整年修持的僧人，两方互相比较之下，（碧山寺子孙）自己觉得太难为情。而又不肯改良，以致成为诬陷诽谤，说广济茅篷的僧人，比本山的僧人要恶十倍。区长县长收受了贿赂，致使阎锡山、赵戴文也认为真有其事，形势很危急。</p></div>
+<div class="para-pair"><p class="p-orig">胡子笏在山，亦无法可设，遂与广慧和尚同来见光，将事实一一说明。光令茅篷大众念文殊菩萨，当有感应。</p><p class="p-trans">胡子笏在山上，也没有办法可想，于是与广慧和尚一同来见我，将事实一一说明。我令广济茅篷的大众念文殊菩萨，应当会有感应。</p></div>
+<div class="para-pair"><p class="p-orig">初台林逸来报国寺皈依，彼系山西省政府驻京办事处主任，光以此事托他与赵次陇详细说之。次陇前与光通过信，未曾晤面。</p><p class="p-trans">最初台林逸来报国寺皈依，他是山西省政府驻京办事处主任，我将这件事委托他对赵次陇详细说明。赵次陇以前与我通过信，但没见过面。</p></div>
+<div class="para-pair"><p class="p-orig">林与赵说，赵遂派僧俗十人上山料理。与碧山寺子孙一万元，前已与过几次，约二三万元，令彼迁出（移去二十余里）。才成了一个清净道场。</p><p class="p-trans">台林逸对赵次陇说明了情况，赵次陇于是派了僧俗十人上山料理。给碧山寺的子孙一万元，以前已经给过几次，约二三万元，令他们迁出寺院（迁移到二十多里外）。这才成就了一个清净道场。</p></div>
+<div class="para-pair"><p class="p-orig">上海聂云台，王一亭，屈文六等诸居士，各代为料理缘簿，已曾叙中说明。佛学新闻报社在上海，岂有不知其事者。盖小人生忌妒而坏人之事，或想广慧送他些钱，其人亦可想而知。</p><p class="p-trans">上海的聂云台，王一亭，屈文六等诸位居士，各各代为料理化缘簿，已曾在序文中说明。佛学新闻报社在上海，哪有不知道这件事的。大概是小人生了忌妒心而来破坏他人的好事，或许又想让广慧和尚送他一些钱，这个人也可想而知。</p></div>
+<div class="para-pair"><p class="p-orig">光非但此次发起，乃发起前之摧邪辅正，为文殊菩萨留一清净道场之根本发起人也。人心之险，险于春冰，佛学新闻会说此话，完全没有人格了，可叹可叹。太平后去五台山朝文殊菩萨，住碧山寺，自知光言不谬。</p><p class="p-trans">我不但是此次的发起人，而且是发起之前摧邪辅正，为文殊菩萨留一个清净道场的根本发起人。人心险恶，比春天的薄冰还要险恶，佛学新闻报说这样的话，完全没有了人格，实在可叹。时世太平后，去五台山朝文殊菩萨，住到碧山寺，自然会知道我的话不错。</p></div>
+<div class="para-pair"><p class="p-orig">沪战虽烈，光了无所畏。不但贵地不肯去，即灵岩山亦不肯去。今住于飞机长来之地，日诵大悲咒，念佛念观音，尚不敢住而逃之远方，岂不令人见诮。若光只孤孑一人，去住均无关系，况尚有弘化社事。</p><p class="p-trans">松沪抗战虽然激烈，我却没有一点畏惧。不但你那里不肯去，即使是灵岩山也不肯去。如今住在敌人飞机长来之地，每天念诵大悲咒，念佛，念观世音菩萨。仍不敢安住却要逃往远方，岂不令人嘲笑。像我只是孤身一人，离开住下都没有关系，何况还有弘化社的事。</p></div>
+<div class="para-pair"><p class="p-orig">光虽非寺之住持，然诸事皆以我为主。主人去，他人或亦各去，则其事便成废弛。于流通益世益人之经书事，大有关系。若大劫临头，大家同归于尽，光与之同死，亦分所应尔也。（廿六年八月初四）</p><p class="p-trans">我虽然不是寺庙的住持，然而一切事都以我为主。主人若离开，其他人或许也会各自离去，那么社中的事务，就会荒废懈怠了。对于流通有益世道，有益人心的经书事务，大有关系。如果是大劫临头，大家同归于尽，我与大家同死，也是分内应当如此之事。（民国二十六年&lt;1937年&gt;八月初四日）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

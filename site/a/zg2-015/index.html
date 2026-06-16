@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>法华入疏序 · 印光法师文钞</title>
+<meta name="description" content="如来一代所说大小权实，偏圆顿渐，种种法门，无非随机施教，对病发药。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-015/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="法华入疏序 · 印光法师文钞">
+<meta property="og:description" content="如来一代所说大小权实，偏圆顿渐，种种法门，无非随机施教，对病发药。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-015/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">法华入疏序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来一代所说大小权实，偏圆顿渐，种种法门，无非随机施教，对病发药。</p><p class="p-trans">释迦如来一代时教所宣说的大、小、权、实，偏、圆、顿、渐，种种法门，无不是随顺众生的根机而施设教法，针对众生的病症而开出良药。</p></div>
+<div class="para-pair"><p class="p-orig">及至法华会上，开权显实，会三归一。开迹显本，示本寿量。举手低头，皆成佛道。治世语言，皆顺正法。即一切法，显示实相。即所迷心，示觉道体。</p><p class="p-trans">到了法华会上，开权显实（开除权教执著，显示真实之义），汇集声闻、缘觉、菩萨三乘，归于一佛乘。开迹显本（开除以释尊为伽耶近成垂迹示现之权佛之情执，以显示久远实成之本地本佛），显示久远实成之本地本佛的寿量。举手低头，皆成佛道；治理世间的语言，都顺应如来正法。即于一切诸法，显示真如实相；即于所迷之心，显示觉道本体。</p></div>
+<div class="para-pair"><p class="p-orig">凡一代时教之所以然，皆悉显阐赞导，彻了无疑。普令上中下根，悉得开示悟入佛之知见，究竟畅佛出世本怀。猗欤妙哉。故其义理深固幽远，不易测度。传至震旦，千余年来，注者虽多，唯天台智者为得其宗。</p><p class="p-trans">举凡释迦如来一代时教的所以然，全都显明阐扬，赞叹化导，究竟彻底，不留疑惑。使上、中、下根机的一切众生，全都能开、示、悟、入佛之知见。究竟彻底地舒畅了释迦如来出世的本怀。实在伟大奇妙啊！所以法华经，义理深邃，幽微广远，不容易测度。传到中国一千多年，注解的人虽然多，只有天台智者大师，得到了其中的宗旨。</p></div>
+<div class="para-pair"><p class="p-orig">故以五重玄义，总释经题。以因缘，约教，本迹，观心，消释经文，名为文句。可谓无义不显，无机不被矣。</p><p class="p-trans">智者大师用五重玄义，来总体解释经题。用“因缘、约教、本迹、观心”四种方法来解释经文，命名为《法华文句》。可以说没有义理不显明，没有根机不加被了。</p></div>
+<div class="para-pair"><p class="p-orig">又以止观，发明行相。俾法华教行理三，彻底圆彰，了无余蕴。以故在昔依之而修者，得道如林。</p><p class="p-trans">又用《摩诃止观》，来阐明修行方法。从而使《法华经》教法、行持、义理三方面，都彻底圆满彰显，丝毫没有隐藏。所以，过去依止于天台止观而修行的人，得证道果的非常多。</p></div>
+<div class="para-pair"><p class="p-orig">至唐而荆溪尊者，以三大部文理深邃，不便初机。乃于玄义，文句，止观，各撰注释。注文句者，名文句记。</p><p class="p-trans">唐朝时荆溪尊者，认为三大部的文字义理深邃，不方便初学人。于是对《法华玄义》、《法华文句》、《摩诃止观》，分别作了注释。注释《法华文句》的，名为《法华文句记》。</p></div>
+<div class="para-pair"><p class="p-orig">昔者经疏记三，悉皆各行。初学阅之，颇费心力。宋四明道威法师，撮取文句及记，揉而录于经文之下，名为入疏。俾学者不劳遍翻，即得明了，其利大矣。因兹流通中外。</p><p class="p-trans">一开始，法华经文、智者大师的疏文、荆溪尊者的记文，三者是分别刊行的。初学人阅读起来，很费心力。到宋朝，四明的道威法师撮取了疏文和记文，分别抄录在经文下面，命名为《法华入疏》。这样一来，学习的人不需要在三本之间翻阅，就能明了，其利益很大。因此这部书流通中外。</p></div>
+<div class="para-pair"><p class="p-orig">元明以来，中国失传。清光绪末，式定大师，请得东洋宏教书院新印藏经，内有此书。因交金陵净戒寺灭尽师洋数百圆，令其刻板。</p><p class="p-trans">元、明以来，《法华入疏》在中国失传。清朝光绪末年，式定大师请到了日本宏教书院新印的大藏经，里面有这部书。因此拿出几百银元交给金陵净戒寺的灭尽法师，让他刻板。</p></div>
+<div class="para-pair"><p class="p-orig">灭师分作二十卷，样本通皆写完校讫。只刻成六卷，而灭师谢世，因搁置数年。光于民国八年，因刻安士全书等，自普陀来维扬，方知其事。意欲续成，苦无财力。</p><p class="p-trans">灭尽法师将《法华入疏》分作二十卷，样本全都书写校对完毕。可是只刻成了六卷，灭尽法师就谢世了，因此这件事搁置了几年。民国八年，我因为刻印《安士全书》等事务从普陀山到扬州，知道了这件事。有意将这部书继续刻成，却苦于没有财力。</p></div>
+<div class="para-pair"><p class="p-orig">有张瑞曾居士者，宿植德本，笃信佛乘。颇伤世道人心，日趋日下。谓非如来大法，莫能挽回。故于戒杀放生之事，则实力奉行。于戒杀放生之文，则多方流通。以及种种劝善格言，皆不惜巨资，刊刻传布。唯欲同人，共推乾父坤母之心，各怀民胞物与之念。必期于己立立人，自利利他，同登寿域，咸沐佛恩而后已。</p><p class="p-trans">有一位张瑞曾居士，宿世培植善根，笃实信奉佛法。看到世道人心一天天堕落，心中很是感伤。认为除了如来大法之外，没有什么能加以挽回。所以，就切实努力地奉行戒杀放生，并且多方流通戒杀放生的文章。还有种种劝人向善的格言，都不惜巨资来刊板刻印，传播流布。只是希望大家，共同推广天地父母的化育之心，各各怀着民胞物与（人民是我同胞，万物是我同伴）的心念，自己成就也成就他人，自己获利也利益他人，共同登上无量光寿的国土，共同沐浴佛恩而后已。</p></div>
+<div class="para-pair"><p class="p-orig">闻光至扬，频来见访。因以此告，企其成就。彼欣然允许，令光任其校对。奈其书传久，错讹甚多。初未详视，意谓灭师校过，当无大讹。及刻出再校，方知遗漏甚多。因按文句及记，为之改正。</p><p class="p-trans">张居士听说我到了扬州，多次前来拜访。因此我将续刻《法华入疏》的想法告诉了他，希望他成就这件事。张居士高兴地答应了，并且让我来负责校对工作。奈何这部书流传得太久，错误讹谬很多。起初没有细看，心想灭尽法师已经校对过，应当没有大问题。等到刻出来再校对时，才知道遗漏的地方很多。因此又按照《法华文句》和《法华文句记》，加以改正。</p></div>
+<div class="para-pair"><p class="p-orig">其中每有字句不甚圆润，似欠似赘，而于大意无所妨碍者任之。以板已刻成，不便修治耳。</p><p class="p-trans">其中常常有字句读起来不很圆润，似乎有欠缺或多余，而对大意并没有妨碍的地方，就保留下来不做修改。因为字板已经刻成，不便于修改整理了。</p></div>
+<div class="para-pair"><p class="p-orig">所愿阅是书者，各于自己一念心中，直下开示悟入佛之知见。则不负自己本具佛性。亦不负如来说经，智者造疏，荆溪述记，威师汇入，以及式定大师，瑞曾居士等流通也。刻既竣，遂叙其缘起云。</p><p class="p-trans">祈愿阅读这部书的人，各各在自己的一念心中，直下开、示、悟、入佛之知见。那么，也就不辜负自己本具的佛性，也不辜负如来演说《法华经》，智者大师撰写注疏，荆溪尊者述写记文，道威法师汇集录入，以及式定大师、张瑞曾居士等人流通（的恩德和苦心啊）。现在书板已经刻成，就此叙述刻书的缘起，如上。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【开权显实】</span>开除权教之执著，显示真实之义。“开”含开除、开发、开拓等义；开除乃除却权执，开发乃由内机缘纯熟而脱权执，开拓乃权即实而广其体之义。即开除三乘之权便，显示一乘真实之义。此系天台宗对于法华经所作判释之语。谓法华经以前之诸经乃应未熟之机根而设，为权便之法，实欲引众生入真实之教；以权便之法显真实之义，故称开权显实。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【会三归一】</span>又称会三入一。即开三乘之方便归入一乘之真实。系天台宗就法华经之教义所立之名目。天台宗谓，佛于法华以前之诸经，说声闻、缘觉、菩萨等三乘，此系应未熟之根机而方便施设者，故未开显真实以前为权法；逮根机圆熟，则为之开显一乘，若隔历之情执脱落时，则权即实，三即一，是为唯一佛乘。如此开三乘会归入一乘，称为会三归一。与“开权显实”、“废权立实”其事相同，然开权显实系就教体而立，废权立实就教用而立，会三归一则就所修之行而立。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【开迹显本】</span>又作发迹显本。此系天台宗对于法华经所作判释之语。天台大师智顗说明法华经旨趣之时，谓法华经有“本迹二门”之开显，其本门之开显，就佛身而言，乃开迹显本。即开除以释尊为伽耶近成垂迹示现之权佛之情执，以显示久远实成之本地本佛。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【五重玄义】</span>天台宗用语。天台智顗为诠显一经内容深义所设的五种体例。即(1)释名︰解释一经之名称；(2)辨体︰辨一经之指归；(3)明宗︰明一经所主之修行；(4)论用︰论一经之胜能；(5)判教︰详称教相判释，即判释一经之教相及价值。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【天台四释】</span>智者大师解释“法华经”之方法。又云天台四大释例、四大释例、四种消释、四种消文。即：
+1. 因缘释：又称感应释。以佛与众生关系之因缘而作解释。谓教法系由感应道交而起，以四种悉檀为因缘，作四种释义：①世界悉檀：导众生认识空有。②为人悉檀：使众生起正信。③对治悉檀：破除恶执。④第一义悉檀：使众生证入于实相。
+2. 约教释：就藏、通、别、圆四教义，由浅至深解释经文。
+3. 约本迹释：依本地与垂迹二门而解法义。
+4. 观心释：虽了法义，但行未随解，于己无益，故再用文句以观己心为圆证趋入妙境!</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【消释】</span>消除经文难解之义，解释义理之蕴结，使阅经者易于了解。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【如林】</span>形容多。《诗·小雅·大明》：“殷商之旅，其会如林。”毛传：“如林，言众而不为用也。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【湛然】</span>（711-782）唐代僧。天台宗第九祖。常州荆溪（江苏宜兴）人，俗姓戚。家世业儒，而独好佛法。十七岁从金华方岩（又作芳岩）受天台止观。二十岁入左溪玄朗之门，研习天台宗教义，尽得其学。三十八岁于宜兴净乐寺出家，又至越州从昙一学律，后于吴郡开元寺讲摩诃止观。玄朗示寂后，师继其席，以中兴天台宗自任，提出无情有性之说，主张木石等无情之物亦有佛性，发展天台教义。历住兰陵、清凉诸刹，所至之处，四众景从，德誉广被。天宝、大历年间，玄宗、肃宗、代宗优诏连征，皆称疾不就。晚年居于天台国清寺。建中三年二月，示寂于佛陇道场，世寿七十二，法腊四十三。弟子梁肃为撰碑铭。
+师为天台宗中兴之祖，世称荆溪尊者、妙乐大师，又称记主法师。北宋开宝年中，吴越王钱氏追谥“圆通尊者”之号。弟子有道邃、普门、元皓、行满、智度、法颙等三十九人。生平撰述宏富，主要著作有法华经玄义释签十卷、法华文句记十卷、止观辅行传弘决十卷、止观搜要记十卷、止观大意一卷、金刚錍论一卷、法华三昧补助仪一卷、始终心要一卷、十不二门一卷等，均行于世。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

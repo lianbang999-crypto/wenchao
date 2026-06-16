@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>佛顶山万年水陆募缘疏（此其悬叙下叙事不录） · 印光法师文钞</title>
+<meta name="description" content="窃以无缘之慈，方能度无缘之辈。非常之事，必须待非常之人。溯水陆之缘起，由观音之善权。现面然以警阿难，恳如来以宣秘咒。普使饥虚，悉获饱满。咸令鬼狱，尽生人天。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-192/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="佛顶山万年水陆募缘疏（此其悬叙下叙事不录） · 印光法师文钞">
+<meta property="og:description" content="窃以无缘之慈，方能度无缘之辈。非常之事，必须待非常之人。溯水陆之缘起，由观音之善权。现面然以警阿难，恳如来以宣秘咒。普使饥虚，悉获饱满。咸令鬼狱，尽生人天。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-192/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">佛顶山万年水陆募缘疏（此其悬叙下叙事不录）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">窃以无缘之慈，方能度无缘之辈。非常之事，必须待非常之人。溯水陆之缘起，由观音之善权。现面然以警阿难，恳如来以宣秘咒。普使饥虚，悉获饱满。咸令鬼狱，尽生人天。</p><p class="p-trans">我认为：以无缘的慈心，才能够救度无缘之人。非常的事情，必须等待非常的人来做。追溯水陆法会的缘起，是由于观音菩萨的善巧方便。示现面然大士来警告阿难尊者，恳请如来宣扬秘密神咒。普遍使得饥饿虚弱的饿鬼，全都获得饱满。令一切饿鬼地狱的众生，全都生到人天。</p></div>
+<div class="para-pair"><p class="p-orig">迨至大教西来，梁武御极。虔修斋戒，感通幽冥。梦孤魂以求度，遂设法以荐拔。广请禅教之高僧，遍阅显密之奥典。运丝纶之睿藻，制水陆之仪文。仗三乘三密之真诠，承万德万灵之威力。销镕惑业，灭除罪愆。若轻霜之对于赫日，犹片雪之落于洪炉。</p><p class="p-trans">到了佛教传来，梁武帝即位。他虔诚地修行奉持斋戒，感应通于幽冥界。梦到孤魂来求他救度，于是设法来超荐救拔。广泛请教禅门教下的高僧，遍阅显宗密教的经典。以皇帝之尊，亲自撰写制定水陆仪轨之文。仰仗三乘三密的真诠，秉承万德万灵的威力。销熔烦惑恶业，灭除罪过愆尤。就如同薄霜被炽烈的太阳所照耀，又如一片雪花落在正在燃烧的洪炉上。</p></div>
+<div class="para-pair"><p class="p-orig">利益难名，功勋罔测。其有往劫根熟，即舍苦域而顿超乐邦。纵令宿世机生，亦升人天而永离鬼狱。以故当时求佛证明，灭烛而烛遂自然。后代依科作范，荐亲而亲蒙度脱也。</p><p class="p-trans">其中的利益难以说尽，功德不能测量。其中有过去劫中善根成熟者，就舍离苦趣而顿时超升到极乐之邦。纵使过去世根机生而未熟者，也升到人天而永离饿鬼地狱。所以梁武帝当时制作仪轨之后，求佛证明，灭去蜡烛，而蜡烛自己复燃。后代的人依照科文，作为轨范，荐拔亲人而亲人便得蒙度脱啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【御极】</span>登极；即位。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【丝纶】</span>《礼记·缁衣》：“王言如丝，其出如纶。”孔颖达疏：“王言初出，微细如丝，及其出行于外，言更渐大，如似纶也。”后因称帝王诏书为“丝纶”。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【睿藻】</span>指皇帝或后、妃所作的诗文。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【制水陆之仪文】</span>《法界圣凡水陆胜会修斋仪轨》卷第六：水陆仪文。世传起自梁武帝。昔白起以长平一坑。至四十万。罪大恶极。久沈地狱。无繇出离。致梦于武帝。武帝与志公诸师议拔救之策。知大藏有水陆仪文。祷之。则光明满堂。繇此举行。传之后世。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【灭烛而烛遂自然】</span>《六道集》卷五：水陆大斋：梁武帝天监年。梦神僧曰。四生受大苦恼。何不作水陆大斋救拔之。帝问志公。公劝帝寻经。必有因缘。乃躬览藏经。造仪文。三年乃成。于夜捧文。停灯烛。白佛。若理协圣凡。愿拜起。灯烛自明。或仪式未详。暗如初。言讫。投地一礼。灯烛尽明。遂于天监乙酉二月十五日。在金山寺。修设水陆道场。帝亲临地席。诏僧佑律师。主其事。出苇江集。
+（梁武帝天监年间。梦到一位神僧对他说：六道四生，受大苦恼。为何不作水陆大斋救拔他们呢？武帝询问宝志公。志公劝武帝寻找大藏经。必定有因缘。于是武帝亲自阅览三藏经典。制造水陆仪文。三年后完成。这天夜里手捧仪文。灭去灯烛。禀白佛陀说：如果所作的仪文义理能够协助圣凡，愿我拜起的时候，灯烛自然明亮。如果所作的仪式未能详尽，则灯烛依旧暗黑。说完，就地一拜。灯烛全都明亮。于是在天监乙酉二月十五日。在金山寺。修设水陆道场。武帝亲自临席。诏令僧佑律师。主法其事。出自宗赜禅师的《苇江集》。）</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

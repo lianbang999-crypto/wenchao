@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>项伯吹先生定海县监狱讲经参观记跋 · 印光法师文钞</title>
+<meta name="description" content="为政贵得大体。得大体则事无大小，皆有成效。否则但具仪文，而难得实益矣。大体维何，曰唯诚而已。当事者行政，果出于诚。虽异类尚能感化，况人为万物之灵乎哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-103/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项伯吹先生定海县监狱讲经参观记跋 · 印光法师文钞">
+<meta property="og:description" content="为政贵得大体。得大体则事无大小，皆有成效。否则但具仪文，而难得实益矣。大体维何，曰唯诚而已。当事者行政，果出于诚。虽异类尚能感化，况人为万物之灵乎哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-103/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 跋</div>
+      <h1 class="art-title">项伯吹先生定海县监狱讲经参观记跋</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">为政贵得大体。得大体则事无大小，皆有成效。否则但具仪文，而难得实益矣。大体维何，曰唯诚而已。当事者行政，果出于诚。虽异类尚能感化，况人为万物之灵乎哉。</p><p class="p-trans">为官行政，贵在得大体。如果能得大体，那么无论大事小事，都有成效。否则的话，就只有礼仪形式，而难以得到实际利益了。大体是什么呢？就是一个“诚”字而已。当权的人行使政令，如果出于真诚，那么即使是动物，尚且能被感化，更何况是作为万物之灵的人呢。</p></div>
+<div class="para-pair"><p class="p-orig">故虎不入境，鱼徙他方等异征，载于史册。而大学释书如保赤子曰，心诚求之，虽不中不远矣。</p><p class="p-trans">所以才有老虎不入境内，鳄鱼迁移他方等奇事，这些都载录在史书里面。《大学》当中解释《尚书》“如保赤子”这句话时说：“以真诚的心来追求，即使不能完全实现目标，相差也不远了。”</p></div>
+<div class="para-pair"><p class="p-orig">以保赤子之心保民，谋无不中。其言虽与不远者，唯恐人致诚未极，乃反激其致诚之心必至其极。系决断语，非疑豫语。</p><p class="p-trans">实际上，用保养婴儿的心来保养人民，没有什么计划不能成功。《大学》当中之所以说“虽不中、不远”这样的话，是唯恐人没有诚心到极点，于是反激他，使他的心必定要真诚到极点不可。这是决断的话，而不是犹疑的话。</p></div>
+<div class="para-pair"><p class="p-orig">定海邑令在东陶公，学道爱民，穷理尽性，于儒释圣人心法，大有所得。其居心行政，唯以己立立人，自利利他为本。</p><p class="p-trans">定海县长陶在东先生，修学佛道，爱护人民，穷理尽性，对于儒、佛二教圣人的心法，都大有所得。陶先生为官行政，只以己立立人、自利利他为根本。</p></div>
+<div class="para-pair"><p class="p-orig">甫下车，即痛念愚民失教，犯法囚监之苦。其原在于不知因果报应，福善祸淫。及生死轮回，三途恶报等事。一本利己之野心，不惧害人之恶报，故陷乎此。</p><p class="p-trans">刚刚到任，就痛念愚昧的人民因为失去教导，所以违犯法纪而承受囚监之苦。根源就在于不懂得因果报应、行善得福、淫放招祸，以及生死轮回、三途恶报等事理。完全本着自私自利的野心，而不畏惧祸害他人所得的恶报，所以才会身陷牢狱之中。</p></div>
+<div class="para-pair"><p class="p-orig">因拟欲与彼宣讲三世因果，六道轮回，三途苦楚，佛国安乐等。庶彼怵然惊怖，顿革先心。翕然信从，聿修后德。</p><p class="p-trans">因此就打算给他们宣讲三世因果、六道轮回、三途恶道的痛苦、佛国的安乐等事理。想必他们会怵然惊恐，立刻改正过去的错误思想，纷纷相信依从，修行以后的德业。</p></div>
+<div class="para-pair"><p class="p-orig">以知吾人一念心性，与尧舜无二，与佛无二。谁肯舐刀头之微蜜，而取割舌之祸。以随意雨宝之摩尼宝珠，俾永沉圊厕。不但了无所用，而且常与大粪同其臭秽乎哉。</p><p class="p-trans">因为，知道了我们每个人的一念心性，与尧、舜没有区别，与佛陀没有两样。谁还会为了舔刀尖上的一点蜂蜜，而招取割掉舌头的灾祸呢。谁还会把能够随意降下珍宝的摩尼宝珠，永远沉没在粪坑当中，不但丝毫派不上用场，而且长久地像大粪一样臭秽呢？</p></div>
+<div class="para-pair"><p class="p-orig">从兹敦行孝友仁慈，及戒定慧道。纵不能即生便与尧舜及佛之道德相齐。然希骥之马，亦骥之乘。希颜之士，亦颜之徒。</p><p class="p-trans">从此之后，敦行实践孝、友、仁、慈，以及戒定慧之道。即使不能在这一生中，就和尧、舜、佛陀的道德相齐等，然而仰慕良马的马匹，也是良马的同类；仰慕颜回的士人，也是颜回的同类之人。</p></div>
+<div class="para-pair"><p class="p-orig">当仗佛慈力，带业往生，以成就超凡入圣之最胜因缘。使圣贤佛菩萨垂训教人之真语实语，不付东流，其心方惬。</p><p class="p-trans">应当仰仗阿弥陀佛的大慈悲力，带业往生西方，来成就超凡入圣的最胜因缘。使得圣贤佛菩萨慈悲训导、教化的真实言语，不至于付之东流，心中方才满足啊。</p></div>
+<div class="para-pair"><p class="p-orig">夫因果报应，实儒教圣人治天下之大权。但其言约略，遂致儒者习矣不察，漠然置之。致使上焉者，只作自了汉，而不能移风易俗。下焉者即便肆意横行，以期享一时安乐。因兹世道人心，日趋日下，不可救药。</p><p class="p-trans">因果报应，实在是儒教圣人治理天下的大权。只是因为圣人的言词很简略，从而导致儒家学人习惯了就不觉察，漠然置之。致使上等的人，就只是自己得到了脱，而不能移风易俗；下等的人，就肆意横行，以期能够享受一时的安乐。因此，世道人心一天天变得下劣，不可救药。</p></div>
+<div class="para-pair"><p class="p-orig">乃命普陀前后两寺住持，择山中戒行精严，经教通明僧，为教诲师。两寺住持祈选在家通人，以充此任。陶公谓以言教者讼，以身教者从。教化狱囚，不徒在于能宣说也。遂举智德法师应聘。至开讲日，其布置，与其演说，及所拟之章程，无不一本于诚。</p><p class="p-trans">陶县长于是请普陀山前后两寺的住持，选择山中戒行精严、通达经教的僧人，作为监狱的教诲师。两寺住持请求选择通达佛法的在家人，来担任这个职务。陶县长说，用言语来教育，会引起争执；用行动来教育，对方就会听从，教化监狱的囚犯，不单是要善于讲说啊。于是就推举智德法师应聘。到了开讲那天，会场的布置、讲说的内容，以及所拟定的章程，完全是本着真诚。</p></div>
+<div class="para-pair"><p class="p-orig">居然以监狱为道场，以狱囚为法侣。为定海立县以来之所未有。良以陶公知狱囚以失教而犯法，一本格物致知，明明德，止至善，及人皆可以为尧舜，人皆可以作佛之意，而为此举。</p><p class="p-trans">居然把监狱当成了道场，把囚犯当成了法侣。这是定海县立县以来从来没有过的事。实在因为陶县长知道囚犯是因为缺失了教导而犯法，完全本着格物致知、明明德、止至善，以及人人都可以作尧舜，人人都可以作佛的事理来做这件事情。</p></div>
+<div class="para-pair"><p class="p-orig">可谓知大体，本赤诚，不愧为民父母矣。而又不以光之不才见弃，以项君之参观记寄示于光。阅之，不胜欣忭，遂忘其固陋，略跋芜语。企阅者知教化狱囚之宗旨，并陶公之诚。想必有踵其事而为之者，当不止一二三四五六七也。</p><p class="p-trans">可以说是知大体，本赤诚，不愧是百姓的父母官啊。而且不嫌弃我的平庸，将项伯吹所写的《参观定海县监狱讲经记》寄给我。我看过之后，喜悦不已，于是忘记了自己的浅陋，简略写了几句跋文。期望读者知道教化囚犯的宗旨，以及陶县长的一片诚心。想必跟随着做同样事情的人，不止一二三四五六七个啊。</p></div>
+<div class="para-pair"><p class="p-orig">虽然，其说法固不必尽用僧人。其所说若不以三世因果，六道轮回，三途苦楚，佛国安乐为本，纵令妙义能感天华，亦无实效。何也，以其无可动于中，而如风过树，泛泛然与己不相干涉故也。</p><p class="p-trans">然而，宣说佛法不一定全都用僧人。所说的内容，如果不以三世因果、六道轮回、三途恶道苦楚、佛国安乐为根本，那么即使所讲的妙义能够感得天花降落，也不会有实际的效果。为什么呢？因为不能触动囚犯们的内心，就如同微风吹过树林，泛泛然与自己不相关啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【大体】</span>1.重要的义理，有关大局的道理。2.大要；纲领。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【如保赤子曰，心诚求之，虽不中不远矣】</span>康诰曰：“如保赤子。”心诚求之，虽不中，不远矣。未有学养子而后嫁者也！”《康浩》说：“如同爱护婴儿一样。”内心真诚地去追求，即使达不到目标，也不会相差太远。要知道，没有先学会了养孩子再去出嫁的人啊！如保赤子：《尚书·周书·康诰》原文作“若保赤子。”这是周成王告诫康叔的话，意思是保护平民百姓如母亲养护婴孩一样。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【下车】</span>《礼记·乐记》：“武王克殷，反商，未及下车，而封黄帝之后于蓟。”后称初即位或到任为“下车”。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【怵然】</span>戒惧、惊惧貌。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【翕然】</span>忽然；突然。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【聿修】</span>《诗·大雅·文王》：“无念尔祖，聿修厥德，永言配命，自求多福。”毛传：“聿，述。”聿本助词，后多训为“述”，因以“聿修”谓继承发扬先人的德业。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【希骥】</span>谓仰慕才俊。《后汉书·文苑传下·赵壹》：“君学成师范，缙绅归慕，仰高希骥，历年滋多。”李贤注：“《法言》曰：‘希骥之马，亦骥之乘；希颜之士，亦颜之徒。’希，慕也。”按，希，今本汉扬雄《法言·学行》作“睎”。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【欣忭】</span>喜悦。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

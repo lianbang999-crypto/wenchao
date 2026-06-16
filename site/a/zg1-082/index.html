@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复乔智如居士书 · 印光法师文钞</title>
+<meta name="description" content="凡人做事，当认真做，不可潦草塞责。况佛弟子为监狱之教诲师，有感化人心，成就正器之责任乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-082/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复乔智如居士书 · 印光法师文钞">
+<meta property="og:description" content="凡人做事，当认真做，不可潦草塞责。况佛弟子为监狱之教诲师，有感化人心，成就正器之责任乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-082/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复乔智如居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">凡人做事，当认真做，不可潦草塞责。况佛弟子为监狱之教诲师，有感化人心，成就正器之责任乎。</p><p class="p-trans">凡是一个人做事情，都应当认真去做，不可潦草马虎敷衍了事。何况你身为佛弟子，且为监狱的教诲师，有感化人心，成就合格公民的责任呢？</p></div>
+<div class="para-pair"><p class="p-orig">语云，君子思不出其位，既膺此职，必期于令监犯革心服化为事，则功德大矣。</p><p class="p-trans">《论语》中说：“君子思不出其位”。既然担任了这个职务，必定期望使监狱的犯人都洗心革面，服从教化为事，那么功德就很大了。</p></div>
+<div class="para-pair"><p class="p-orig">所言三女居士，既欲归依，当与彼说，要吃素念佛，求生西方，不可求来生人天福报。必须要诸恶莫作，众善奉行，戒杀护生，善教儿女。</p><p class="p-trans">所说的三位女居士，既然想要归依，应当跟她们说，要吃素念佛，求生西方，不可求来生的人天福报。必须要诸恶莫作，众善奉行，戒杀护生，善教儿女。</p></div>
+<div class="para-pair"><p class="p-orig">儿女虽小，万不可任性㤭惯，必须对彼常说因果报应，使彼心中常存畏惧，自然不至将来作伤天损德之事。此提倡因果报应，及善教儿女，乃天下太平之根本法轮，对一切人，皆当以此相劝，非但为女人言也。</p><p class="p-trans">儿女虽然还小，千万不可随任他们的性情，骄惯宠爱，必须对他们常说因果报应的道理，使他们心中常常存有畏惧，将来自然就不至于做出伤天损德的事情。提倡因果报应，以及善教儿女，是天下太平的根本法轮，对于一切人，都应当以此相劝，并不是单单对女人说的。</p></div>
+<div class="para-pair"><p class="p-orig">陈吴氏法名志清，康金氏法名志净，倪康氏法名志澄，总以出此浊恶世界，生彼清净佛国为志而已。</p><p class="p-trans">陈吴氏，法名志清，康金氏，法名志净，倪康氏，法名志澄，都是以出离此五浊恶世，生彼清净佛国为志向而已。</p></div>
+<div class="para-pair"><p class="p-orig">祈为函致，兼说光所嘱之意，令彼作一真实修行人，并教儿女亦修行，庶不愧归依佛法之一大事也。</p><p class="p-trans">祈望你为她们写信说明，兼带说说我所嘱咐的意思，令她们作一个真实的修行人，并且教导儿女也要修行，才不愧归依佛法这一件大事啊！</p></div>
+<div class="para-pair"><p class="p-orig">天下治乱，在于家庭中操之有道与否，此根本上之切实议论也。</p><p class="p-trans">天下平治还是动乱，全在于每个家庭日常的持守与实践是否合乎道义，这是根本而切实的见解啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【塞责】</span>对自己应尽的责任敷衍了事。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【正器】</span>谓合乎标准的治具或器具。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【君子思不出其位】</span>《论语·宪问》曾子曰：“君子思不出其位。”意思是君子思索和考虑事情不超出自己的职责和本分。也就是要尽到自己的本分，作好本职工作。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【膺】</span>担任。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【根本法轮】</span>三论宗所立三法轮之一，指佛初成道华严经之说法。这是喻指世间法的根本法则。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

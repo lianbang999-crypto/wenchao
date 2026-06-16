@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复方子藩居士书 · 印光法师文钞</title>
+<meta name="description" content="令姨丈染腥红，当是用心过度。祈令彼通身放下，一心念观世音菩萨，当可即愈。又大悲香灰水饮之，或可见效。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-353/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复方子藩居士书 · 印光法师文钞">
+<meta property="og:description" content="令姨丈染腥红，当是用心过度。祈令彼通身放下，一心念观世音菩萨，当可即愈。又大悲香灰水饮之，或可见效。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-353/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复方子藩居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">令姨丈染腥红，当是用心过度。祈令彼通身放下，一心念观世音菩萨，当可即愈。又大悲香灰水饮之，或可见效。</p><p class="p-trans">你姨丈染上猩红热，应当是用心过度。请让他通身放下，一心念“观世音菩萨”，当会很快痊愈。另外，让他喝大悲咒香灰水，或许能够见效。</p></div>
+<div class="para-pair"><p class="p-orig">前所寄二千圆功德主，系甘肃平凉人，姓郑，名浚，字哲侯，年六十四岁，曾作议县知事等。人极正直，而不信佛。</p><p class="p-trans">上次所寄二千圆的功德主，是甘肃平凉人，姓郑，名浚，字哲侯，六十四岁，曾作过议县知事（县长）等职务。为人极其正直，然而却不信佛。</p></div>
+<div class="para-pair"><p class="p-orig">六十岁前，闻佛法避之若浼。六十岁见光文钞，安士全书，生正信，急欲往生西方。故以一万三千圆汇来，令光为斋僧，放生，荐祖先父母，超度怨家，并请各经书。</p><p class="p-trans">六十岁前，听到佛法就避开，如同玷污了自己一样。六十岁时看到我的《文钞》，《安士全书》，生起正信。急切想要往生西方。所以将一万三千圆汇来，令我为他斋僧，放生，超荐祖先父母，超度怨家，以及奉请各种经书。</p></div>
+<div class="para-pair"><p class="p-orig">普陀以五百圆打一堂千僧斋。于灵岩南京法云寺，江西寿量寺，各为分配。甘肃苦寒之地，无巨富，此人亦非巨富，但以志切往生，故为此破天荒之一事。然亦不能继续，而为此大施也。净圆寺放生园，可补黄涵之遗憾。</p><p class="p-trans">在普陀山用五百圆打一堂千僧斋。在灵岩山，南京法云寺，江西寿量寺，各各为之分配。甘肃是苦寒之地，没有巨富，这个人也不是巨富，只是因为志在急切求往生，所以才做了这样破天荒的事。然而也不能继续做这样的大布施。净圆寺有放生园，可以弥补黄涵之的遗憾。</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，精神目力均不给，如本寺有通家，即请其人作，固不必只取虚名也。如不肯作，此事亦愿效劳。</p><p class="p-trans">我老了，精神视力都不好，如果本寺中有大通家，就请这个人写，没必要只取我的虚名。如果寺中的人不肯写，这件事我也愿意效劳。</p></div>
+<div class="para-pair"><p class="p-orig">但须详述来历，庶不至有遗漏。闻最初发起，系令慈与白云庵当家，其名亦当表出。当立一大碑。</p><p class="p-trans">但是必须详细叙述来历，才不至于有所遗漏。听说最初发起，是你母亲与白云庵的当家，她们的名字也应当写出来。应当立一个大碑。</p></div>
+<div class="para-pair"><p class="p-orig">今为寄其折本，祈阅之，以便照办。又凡作事当圆通，不当捱板。其一千五百圆放生，当作三分。一分放生，一分买食料，一分作基金。</p><p class="p-trans">现今为你寄上折本，请参阅，以便照办。另外，凡作事情，应当圆融变通，不应捱板执着。一千五百圆放生，应当分作三分。一分放生，一分买食料，一分作基金。</p></div>
+<div class="para-pair"><p class="p-orig">以不放生，则违施主之心。无食料，则生尚有累他人。无基金，则后难为继。以后所有款项，均当以此为准。又款项虽多，不宜一时尽款买。以防后有欲买无款之虑。</p><p class="p-trans">因为不放生，就违背施主的心愿。没有食料，所放的众生就会拖累他人。没有基金，以后就很难持续下去。以后所有的款项，都应当以此为准。再有，款项虽然多，不应一时用尽钱款来买物。以防将来想买却没钱的顾虑。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【方子藩】</span>（1908-1968）号善堃，浙江镇海人。清光绪一九〇八年出生。于一九三一年前后曾留学日本，学习化工；后来又到德国考察化学工业，深有心得。抗战之前回国，在上海企业家林涤庵所创办的大丰工业原料公司及天丰化学制药厂工作。中日战争期间，他研究出中国自制的消炎药“消治龙”，抗战期间，中国西药来源极为困难，消治龙的问世，为战时受伤的军民作了极大贡献。子藩自幼出身于佛教家庭，他因母亲笃信佛教而皈依三宝。一九四六年，与上海众居士成立上海佛教青年会，并任会长多年。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【知事】</span>1.官名。地方行政长官的名称。民国改知县为县知事，省称知事，后又改知事为县长。2.官名。明清时代的属官名。明清之廉访司、通政司、按察司、盐运司等及各府皆置知事。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【郑浚】</span>（1870-1939）字哲侯，甘肃平凉市人。清光绪二十七年（1901）以《政在养民义》考取举人。光绪三十四年簒辑《平凉县志》稿2册。中华民国2年（1913）后，曾任甘肃省议会秘书长，省立第二中学（今平凉一中）校长，甘肃环县县长，甘凉道尹，甘肃省民政厅长等。因感宦海浮沉，归里后一心向佛，在平凉城区和崆峒山兴建佛寺，建佛教会。在崆峒山主持修葺茶庵寺、佛赖寺、莲花寺，在城内南后街建佛赖精舍暨大雄殿、藏经楼、讲经阁。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【浼】</span>沾污；玷污。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【折本】</span>古代由长卷折迭成的书本。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

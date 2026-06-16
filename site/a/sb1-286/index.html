@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复常逢春居士书八 · 印光法师文钞</title>
+<meta name="description" content="十法名，另纸书之。彼等多有入同善社及理门等，今既皈依佛法，不可又做以前之外道工夫。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-286/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复常逢春居士书八 · 印光法师文钞">
+<meta property="og:description" content="十法名，另纸书之。彼等多有入同善社及理门等，今既皈依佛法，不可又做以前之外道工夫。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-286/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复常逢春居士书八</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">十法名，另纸书之。彼等多有入同善社及理门等，今既皈依佛法，不可又做以前之外道工夫。</p><p class="p-trans">十个人的法名，用另外的纸写好。他们有很多人加入过同善社和理门等团体，现今既已皈依了佛法，就不可再做以前的外道工夫。</p></div>
+<div class="para-pair"><p class="p-orig">凡属外道，均守秘密，妄说彼等得六祖之真传，彼传道之师，乃某佛某祖师降生。此种大妄语罪，其报甚惨。一气不来，当直堕阿鼻地狱。以其坏乱佛法，疑误众生故也。</p><p class="p-trans">凡是外道，均守秘密，妄说他们得到了六祖的真传，他们传道的师父，是某佛某祖师降生。这种大妄语罪，果报很惨。一口气不来，必当直接堕入阿鼻地狱。因为他坏乱佛法，疑误众生的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">所云念佛记数，只取其心归于一，不许又记百记千。汝所立之法虽好，恐久则心力不堪，或致受病。所云忏法，唯以虔诚礼诵为主。或礼净土忏，小净土忏，均可，十要中有文。</p><p class="p-trans">你所说的念佛记数，只取心念归于一，不许又记百、记千。你所立的法虽然好，恐怕时间久了，则心力不能承受，或许导致受病。所说的忏悔法，只以虔诚礼诵为主。或者礼《净土忏》、《小净土忏》，都可以，《净土十要》中有这些忏悔文。</p></div>
+<div class="para-pair"><p class="p-orig">所寄之书若无，当备价向弘化社请。常为续送，光何有此力。今为寄一函遍复一包，祈与各皈依者一纸，以资彼前途修持。（五月廿七日）</p><p class="p-trans">所寄的书如果没有了，应当备好钱向弘化社请购。经常为你连续赠送经书，我哪有这样的能力。如今为你寄《一函遍复》一包，请给各位皈依的人每人一张，以资助他们前途的修持。（五月二十七日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【同善社】</span>同善社是以同善的伪善名义创立的邪教组织。创立者彭泰荣，四川永川县人，不第秀才，清宣统元年自立为“礼门”教主。民国六年在北京创立同善社，因为许多实力派军阀支持，同善社发展迅速，分部遍及全国22省及特别行政区，还发展到境外香港、新加坡等地，与一贯教同为民国时期邪教大宗。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【理门】</span>理门公所，是流行于民间的带有宗教色彩的秘密团体，分布相当广泛，参加的人数相当多，入理门被俗称为“在理儿”。……加入理门的人必须经人介绍，并到公所接受“点传”，新入理门的人要先由公所执事人领于演参处，教导他如何“下参（即参拜）”的礼节（理教不主张磕头)。执事人还要给新师弟填写“喜单”，一般写上“皈依弟子某某，求师某某，引师某某，点传师某某，点传的年月日”即可。举行仪式时，公所领众师父坐在坛正中，左右各有二位陪坐师父，众承办人先下参师父，然后才进行点传。先由“提调”将新师弟领见求师，再到坛前求引师，求师先将新入门弟子的名帖递给师父，再跪着向师父说：“讨师父慈悲，我弟子某某，求某某（引师），引一位新弟子某某”，师父则答“功德”，然后引师再报，并由求师和引师领着新师弟到师父坛前进行点传。执坛人将坛桌挪开，请领众老师父前边升座，以便更接近新师弟。这时，新师弟要跪下，师问；“你在理儿是自发心愿？入理后不能反悔，否则其罪难逃。”新师弟表示自愿在理儿，决无反悔之意。这时，师父传给新师弟五字箴言：“观世音菩萨”（也有人说最早是“反清复大明”5个字，到后来不提倡反清了，就改成了“观世音菩萨”)。师父在点传5个字时，让新师弟伸出左手，从大拇指开始，念一个字，扳一个手指，这样连续3遍，新师弟随声照念。在理儿之人，对此五字箴言要严守秘密，不能对第三个人讲，所谓“法不传六耳”也。对妇女的点传方式是师父与女师弟隔坛桌相对，两个人的手不接触，而是让女师弟用右手牵着一条白布带，名曰“登岸”。两人各牵着布的一头，师父先念：“左手拉住登岸布，我念你也念，得去师父理，从此登上菩提岸”。然后，师父与女师弟共念五字箴言3遍。整个仪式的最后，点传师父还要嘱咐新师弟53句话，其包括戒律和教规、道德规范等。理门有八大戒律：一不吸烟；二不饮酒；三不烧草香；四不焚纸帛；五不拜偶像；六不吹打念唱；七不书写符咒；八不养鸡猫犬。天津的理门按地域上分东路和西路，河北、河东一带的理门公所称为“东路”，城区附近及西头一带的理门公所称作“西路”。公所的历任当家的都是按代排辈。他们向下传位时必有一信物，东路的公所一般要下传一个葫芦，而西路的公所都是下传理教“修真养性”的“大法”。在理门中，一向把“大法”看做是一件机密的文件，给人以特别神秘的感觉。一些规模较大的理门公所，大多从事一些慈善救济事业，因此它在天津社会上具有一定的影响。其从事公益事业的经费，多是向各方募化而来，对于所募化的善款，都有详细记载，并明示于人以昭信誉。中华人民共和国成立以后，理门公所自行消亡。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

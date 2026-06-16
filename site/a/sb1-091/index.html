@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复张佩芬慕兰居士书 · 印光法师文钞</title>
+<meta name="description" content="近来兵匪各灾，相继而来。其根本，由于家庭无教育所致。学佛之人，必须各尽其分。所谓尽分者，务须父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠。此八种事，一人皆备。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-091/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复张佩芬慕兰居士书 · 印光法师文钞">
+<meta property="og:description" content="近来兵匪各灾，相继而来。其根本，由于家庭无教育所致。学佛之人，必须各尽其分。所谓尽分者，务须父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠。此八种事，一人皆备。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-091/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复张佩芬慕兰居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">近来兵匪各灾，相继而来。其根本，由于家庭无教育所致。学佛之人，必须各尽其分。所谓尽分者，务须父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠。此八种事，一人皆备。</p><p class="p-trans">近来官兵土匪各种灾祸，相继而来。其根本原因，是由于家庭中没有教育所导致的。学佛之人，必须各自恪尽自己的本分。所谓“尽分”，就是务必父慈、子孝，兄友、弟恭，夫和、妇顺，主仁、仆忠。这八种事，一个人全都具备。</p></div>
+<div class="para-pair"><p class="p-orig">上有父母，则是子职。下有儿女，则是父职。自己用人，则是主职。为人作事，则是仆职。</p><p class="p-trans">上有父母，就要尽儿子的职分；下有儿女，就要尽父亲的职分；自己用人，就要尽主人的职分；为人作事，就要尽仆人的职分。</p></div>
+<div class="para-pair"><p class="p-orig">余职分均好尽，惟父母之职分难尽。实非难尽，以举世无人提倡。大家只知溺爱而不知教育。以致养成败类，互相残杀。弄得国不成国，民不成民。</p><p class="p-trans">其余的职分都好尽，惟有父母的职分难尽。实际上父母的职分不难尽，因为全世界无人提倡。大家只知道溺爱孩子，而不知道教育孩子。以致养成败类，互相残杀。弄得国不成国，民不成民。</p></div>
+<div class="para-pair"><p class="p-orig">所言教育者，儿童从初开知识时，即与彼说因果报应，及做人之道理。必使心有畏恶报而慕善报，则不致犯上不肯依教而行。小时如是，习以成性，养成良善天姿，是名为育。</p><p class="p-trans">所说的“教育”，是指儿童从初开知识时起，就对他们讲说因果报应，以及做人的道理。必定使他们在心中畏惧恶报而羡慕善报，则不致犯上，不肯依教而行。小时候如此，习惯了就养成性格，养成良善的天姿，这名为“育”。</p></div>
+<div class="para-pair"><p class="p-orig">育者，养也。若不知此，则养成凶恶性质，轻则忤逆不孝，重则杀父杀母。溯其本源，皆由其父母，小时不教所致。</p><p class="p-trans">“育”，养的意思。如果不知道这些道理，则养成凶恶的性质，轻则忤逆不孝，重则杀父杀母。追溯其本源，都是由于他们的父母，小时候不教育他们所导致的。</p></div>
+<div class="para-pair"><p class="p-orig">吾常曰，世间最大的功德，莫过于善教儿女。世间最大的罪过，莫过于不教儿女。人人善教儿女，天下自然太平。人人不教儿女，天下决定丧乱。故曰，天下不治，匹夫有责。此语举世无人说，故与汝等略说。</p><p class="p-trans">我常常说，世间最大的功德，莫过于教育好儿女；世间最大的罪过，莫过于不教育好儿女。人人都教育好儿女，天下自然就太平；人人不教育好儿女，天下决定丧乱。所以说：“天下得不到好的治理，平民百姓都有责任。”这些话，全世界没有人说，所以给你们大略说说。</p></div>
+<div class="para-pair"><p class="p-orig">至于吃素念佛，求生西方，自有所寄各书在。光已七十九岁，朝不保夕。以后不得再来信，亦不得介绍人皈依，以无目力精神应酬也。（民廿八正月廿八）</p><p class="p-trans">至于吃素念佛，求生西方，自有所寄的各种书籍在。我已经七十九岁了，朝不保夕。以后不得再来信，也不得介绍人皈依，因为没有视力和精神应酬啊！（民国二十八年正月二十八日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【丧乱】</span>死亡祸乱。后多以形容时势或政局动乱。《诗·大雅·云汉》：“天降丧乱，饥馑荐臻。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

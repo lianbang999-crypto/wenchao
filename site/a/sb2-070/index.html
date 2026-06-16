@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复王砚生居士书二 · 印光法师文钞</title>
+<meta name="description" content="来函备悉。佛菩萨为度众生示生世间，在众生见之，则同有生死。在佛菩萨分上，实无生死。譬如梦幻，虽有非实。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-070/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复王砚生居士书二 · 印光法师文钞">
+<meta property="og:description" content="来函备悉。佛菩萨为度众生示生世间，在众生见之，则同有生死。在佛菩萨分上，实无生死。譬如梦幻，虽有非实。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-070/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复王砚生居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">来函备悉。佛菩萨为度众生示生世间，在众生见之，则同有生死。在佛菩萨分上，实无生死。譬如梦幻，虽有非实。</p><p class="p-trans">你的来信我都看过了。佛菩萨为度化众生，示现降生于世间，在众生看来，好像同样有生有死。在佛菩萨分上，实际上并无生死。譬如梦幻，虽然有但却并不真实。</p></div>
+<div class="para-pair"><p class="p-orig">有生死则有苦，无生死则无苦。何得以了生死苦了生死分之为二。死即是苦，由有生死。既了生死，自无有苦。须知佛菩萨之生死，乃为众生示现其相耳。非实先未了而今始了也。</p><p class="p-trans">有生死就有苦，无生死就没有苦。怎么能将了生死苦和了生死分成两件事情。死就是苦，是因为有生死。既然了结了生死，自然就没有苦了。要知道佛菩萨的生死，是为众生示现这个事相而已。实际上佛菩萨早已了生脱死，而并非是现在才了生死啊！</p></div>
+<div class="para-pair"><p class="p-orig">鱼子放生，载于编内，虽有佛言二字，亦未见出于何经。岂以此故，致人谤法。世有多少人放鱼子乎。须知南方近海之处，与普通江海不同。海鱼一见淡水即死，江河中鱼，一见咸水即死，未能知其所出。纵能生，亦不能生矣。</p><p class="p-trans">鱼子放生，记载于《感应篇汇编》之内，虽然有“佛言”二个字，但也没有见到出自于哪部经。岂能因为这样的缘故，就致使他人谤法。世间有多少人放生鱼子呢？必须知道南方近海的地方，与普通江海不同。海鱼一遇到淡水就会死，江河中的鱼，一遇到咸水也马上会死。如果不能知道鱼子出于咸水还是淡水，即使能放生，也不能存活。</p></div>
+<div class="para-pair"><p class="p-orig">放生是感发人戒杀吃素之慈心耳，岂专欲以多为事，而作此不急之讲求乎。须知世间事，多有不能以理事论者。</p><p class="p-trans">放生是感发人们戒杀吃素的慈悲心，哪里是专门要以多放生为事务，而作这些不急迫的讲求呢？要知道世间的事，有很多是不能以道理事相来一概而论的。</p></div>
+<div class="para-pair"><p class="p-orig">一友言，一年江北一处生蝗，地方人祈官去验。有数里长，二三里宽。蝗子尚未生翅。蠕蠕动，有一尺多厚。人履其上，则陷下数寸。不禁惊惶之极，急令挖坑掩埋。而午后一场大雨，完全消灭矣。此蝗子究是何蝗所下之子，盖其化生，现此灾象耳。</p><p class="p-trans">一位朋友说，有一年江北有个地方生蝗虫，地方上的人请官府去检验。有几里长，二三里宽。蝗子还没有生翅膀。蠕蠕爬动，有一尺多厚。人踩在上面，就会陷下几寸。大家不禁惊煌到了极点，急忙令人挖坑掩埋。然而午后一场大雨，就将其完全消灭了。这些蝗子究竟是什么蝗虫所下的子，大概是化生，现出这个灾象。</p></div>
+<div class="para-pair"><p class="p-orig">今年江北亦有数寸厚蝗子者，火车轨道都没，先须驱去，方敢开。凡修行人当在大关紧要处著力。若泛泛然讲求，恐无此精力以克办也。</p><p class="p-trans">今年江北也有几寸厚的蝗子，将火车轨道都埋没了，必须先将蝗虫驱走，才敢开车。凡是修行人应当在大关紧要处著力。如果泛泛然讲求，恐怕没有这个精力来克定成办啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【鱼子放生，载于编内】</span>“杨序梦神曰：子逾旬当死。若能救亿万命可免。序告：期迫不及。神曰：佛言：鱼子不经盐渍。三年尚可再活。序醒。日买有子鱼放之。且大书神语于通衢。人见知戒。见人杀鱼。取子投之江中。数日复梦神曰：亿万之数已满。寿可延矣。附施愚山放鱼子法。凡鱼既死。将子轻轻取出。勿损坏。勿著盐水。摊置稻草把上。俟水迹略干。浅埋水际沙泥中。庶免鱼吞。自得全活。但埋处不可离水。又法。将干泥拌裹。晒暖收藏。自冬底及三春。积至四月望后。放河滩水草中。无不全活。余月随时可放。尤为至便。”参见《太上感应篇汇编》</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

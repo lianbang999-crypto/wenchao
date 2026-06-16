@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>循陔小筑发隐记 · 印光法师文钞</title>
+<meta name="description" content="孝之为道，其大无外。一切诸善，无不弥纶。然有世出世间，大小本迹之异。世间之孝，服劳奉养以安其身，先意承志以悦其心，乃至立身行道以扬名于后世。虽其大小不同，皆属色身边事。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-122/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="循陔小筑发隐记 · 印光法师文钞">
+<meta property="og:description" content="孝之为道，其大无外。一切诸善，无不弥纶。然有世出世间，大小本迹之异。世间之孝，服劳奉养以安其身，先意承志以悦其心，乃至立身行道以扬名于后世。虽其大小不同，皆属色身边事。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-122/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">循陔小筑发隐记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">孝之为道，其大无外。一切诸善，无不弥纶。然有世出世间，大小本迹之异。世间之孝，服劳奉养以安其身，先意承志以悦其心，乃至立身行道以扬名于后世。虽其大小不同，皆属色身边事。</p><p class="p-trans">孝道广大，没有边际。一切诸善，无不包含其中。然而又有世间孝、出世间孝，大孝、小孝、本孝、迹孝的不同。世间孝，服侍奉养父母，使他们的身体安适；不等父母开口，就先迎合他们的心意，使他们的心中欢喜。乃至修养自身，奉行道义，扬名后世。虽然这些事有大有小，但都属于奉养双亲的色身这方面。</p></div>
+<div class="para-pair"><p class="p-orig">纵令大孝格天，究于亲之心性生死，无所裨益。所谓徒徇其迹而不究其本。况乎杀生以养以祭，俾亲之怨对固结，永劫酬偿不已者乎。</p><p class="p-trans">纵然这方面的大孝感动上天，终究对于父母的心性和生死，没什么利益。正所谓：徒然追寻形迹，却不探究根本。更何况还有杀害生命来奉养、祭祀父母，使得父母结下怨家，永劫酬报偿还不完的情况呢。</p></div>
+<div class="para-pair"><p class="p-orig">出世间之孝，其迹亦同世间服劳奉养，以迄立身扬名。而其本则以如来大法，令亲熏修。</p><p class="p-trans">出世间孝，形迹也与世间孝相同，要服侍奉养父母，乃至立身行道，扬名后世。根本则是以如来大法，让父母熏修。</p></div>
+<div class="para-pair"><p class="p-orig">亲在，则委曲劝谕，冀其吃素念佛，求生西方。吃素则不造杀业，兼灭宿殃。念佛则潜通佛智，暗合道妙。果能深信切愿，求生西方。必至临命终时，蒙佛接引，托质九莲也。从兹超凡入圣，了生脱死。永离娑婆之众苦，常享极乐之诸乐。</p><p class="p-trans">父母健在，就委曲方便，晓喻劝勉，希望他们吃素念佛，求生西方。吃素则不造杀业，并且能灭除宿世的灾殃。念佛，则潜通佛智，暗合道妙。如果能深信切愿，求生西方。临命终时，必定蒙佛接引，化生在九品宝莲啊。从此超凡入圣，了生脱死。永离娑婆世界的种种痛苦，常享极乐世界的一切安乐。</p></div>
+<div class="para-pair"><p class="p-orig">亲没，则代亲笃修净业，至诚为亲回向。心果真切，亲自蒙益。若未往生，可即往生。若已往生，高增莲品。</p><p class="p-trans">父母如果去世，就代替他们笃实修持净业，至诚为他们回向。如果心念真切，父母自会蒙受利益。没有往生，可以即此往生；已经往生，可以增高品位。</p></div>
+<div class="para-pair"><p class="p-orig">既能如是发心，则与四宏誓愿相应，菩提觉道相契。岂独亲得蒙益，而己之功德善根，莲台品第，当更高超殊胜矣。而况以身说法，普令同伦发起孝思乎。</p><p class="p-trans">能够如此发心，就与四宏誓愿相应，与菩提觉道相合。哪里只是父母得到了利益，自己的功德善根，莲台品位，应当更加高超殊胜了。更何况以身说法，普令大众发起孝思呢。</p></div>
+<div class="para-pair"><p class="p-orig">此其孝方为究竟实义。非若世间只期有益于色身及现世，竟遗弃其心性与未来而不论也。</p><p class="p-trans">这，才是孝道的究竟实义。而不像世间孝，只期望利益父母的色身以及现世，竟然抛开父母的心性与未来不管啊。</p></div>
+<div class="para-pair"><p class="p-orig">是知佛教，以孝为本。故梵网经云，孝顺父母师僧三宝，孝顺至道之法，孝名为戒。又于杀盗淫各戒中，皆言应生慈悲心，孝顺心。</p><p class="p-trans">从而就知道，佛教以孝为根本。所以《梵网经》中说：“孝顺父母师僧三宝，孝顺至道之法，孝名为戒。”又在杀、盗、淫各戒条中，都说应生慈悲心，孝顺心。</p></div>
+<div class="para-pair"><p class="p-orig">于不行放救戒中，则云一切男子是我父，一切女人是我母，我生生无不从之受生，故六道众生，皆是我父母。而杀而食者，即杀我父母。</p><p class="p-trans">在第二十条不行放救戒中则说：“一切男子是我父，一切女人是我母，我生生无不从之受生，故六道众生，皆是我父母。而杀而食者，即杀我父母。”</p></div>
+<div class="para-pair"><p class="p-orig">由是言之。佛教之孝，遍及四生六道。前至无始，后尽未来，非只知一身一世之可比也。知是而不戒杀放生，吃素念佛者，岂究竟至极无加之孝乎哉。</p><p class="p-trans">由此说来，佛教的孝，遍及四生六道一切众生。前自无始，后尽未来，不是只知道一身一世（的世间孝）可以相比啊。知道了这一点，而不戒杀放生，吃素念佛的人，哪里能说是尽到了究竟至极的孝道呢？</p></div>
+<div class="para-pair"><p class="p-orig">杭垣紫荫张公，孝思无既。亲没数十年，每一念及，尚复挥涕。因念亲故，专念佛名。盖以我此色身，即亲之身。我既为亲念佛，亲必蒙佛摄受也。其孝也，可谓兼世出世而两全之也。</p><p class="p-trans">杭州的张紫荫居士，孝思无尽。双亲亡故已经几十年，每当想到，还是会流泪。因为想念双亲，所以专念佛名。大概是因为自己的色身，就是父母的身体。自己既然为父母念佛，父母必定蒙佛摄受啊。张居士的孝，可以说是同时兼顾了世间、出世间两全之孝啊。</p></div>
+<div class="para-pair"><p class="p-orig">而有其父必有其子。其令嗣馨谷，善体亲心，笃修净业，广行众善。初则遍请名贤，发挥祖母费太孺人，苦节抚孤，德镇坤维之贤。刻其文为旌节录。冀所以慰祖母之贞灵，而安父终身孺慕之孝思也。</p><p class="p-trans">而且，有其父必有其子。张居士的儿子张馨谷，善于体察父亲的心意，笃实修持净业，广做种种善事。起初则遍请名人贤士作文，来发挥祖母费太夫人苦守贞节、抚育孤儿、德镇女流的淑贤事迹，辑录成为《旌节录》一书，并加以刻印。希望借此告慰祖母的贞灵，安慰父亲终身念母的孝思。</p></div>
+<div class="para-pair"><p class="p-orig">继则以父常时思慕，因筑一室，罗植松竹，额曰循陔小筑。中供祖母之像，四壁铺张名贤题咏。以期其父常奉颜色，而致其如在之诚也。</p><p class="p-trans">继而又因为父亲常时怀念祖母，因此就修了一间屋，周围种上松竹，题名为循陔小筑。中间供奉祖母的遗像，四壁张挂名人贤士的题咏。期望父亲能够常常供奉祖母的慈颜，以表达祭祀祖母时就如祖母在眼前的诚心啊。</p></div>
+<div class="para-pair"><p class="p-orig">又以循陔小筑，遍求名贤题咏。一以彰其父之孝思，一以冀感发于同人。深合观经孝顺父母，奉事师长，慈心不杀，修十善业之道。既有净业正因，必获往生实果。</p><p class="p-trans">又因为建造了循陔小筑，遍求名人贤士吟咏题词。一来彰显父亲的孝思，一来希望感发大众。（这样的做法）深深契合《观无量寿佛经》中“孝顺父母，奉事师长，慈心不杀，修十善业“的意旨。既然具备净业正因，必定获得往生实果。</p></div>
+<div class="para-pair"><p class="p-orig">然则紫荫公之父子，及诸眷属。虽则尚居娑婆，实皆西方极乐世界中之诸上善人也。世之欲孝其亲者，可不以此为法乎哉。</p><p class="p-trans">而张紫荫居士父子，以及家中的眷属。虽然还居住在娑婆世界，实际都是西方极乐世界中的诸上善人了啊。世间想要孝顺父母的人，能不学习效法吗。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【循陔】</span>《诗·小雅》有《南陔》篇。毛传谓：“《南陔》，孝子相戒以养也。”《文选·束晳〈补亡诗·南陔〉》：“循彼南陔，言采其兰。眷恋庭闱，心不遑安。”李善注：“循陔以采香草者，将以供养其父母。”后因称奉养父母为“循陔”。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【小筑】</span>指规模小而比较雅致的住宅，多筑于幽静之处。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【发隐】</span>指一种阐发隐奥的文体。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【弥纶】</span>统摄；笼盖。《易·系辞上》：“《易》与天地准，故能弥纶天地之道。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【服劳】</span>服事效劳。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【先意承志】</span>谓孝子先父母之意而承顺其志。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【立身】</span>处世、为人。《孝经·开宗明义》：“立身行道，扬名于后世，以显父母，孝之终也。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【行道】</span>实践自己的主张或所学。《孝经·开宗明义》：“立身行道，扬名于后世，以显父母，孝之终也。”</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【格天】</span>感通上天。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【固结】</span>凝结；郁结。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【劝谕】</span>劝勉晓喻。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【无既】</span>无穷；不尽。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【孺人】</span>古代称大夫的妻子，明清则为七品官的母亲或妻子的封号。亦通用为妇人的尊称。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【旌节】</span>1.古代使者所持的节，以为凭信。2.借以泛指信符。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【孺慕】</span>《礼记·檀弓下》：“有子与子游立，见孺子慕者，有子谓子游曰：‘予壹不知夫丧之踊也，予欲去之久矣，情在于斯，其是也夫。’”郑玄注：“丧之踊，犹孺子之号慕。”后谓对父母的哀悼、悼念为“孺慕”。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【常奉】</span>1.指固定的奉祀者。2.谓定期祭祀。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【如在】</span>《论语·八佾》：“祭如在，祭神如神在。”谓祭祀神灵、祖先时，好像受祭者就在面前。后称祭祀诚敬为“如在”。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

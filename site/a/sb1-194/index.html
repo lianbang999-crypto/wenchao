@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复慧清居士书 · 印光法师文钞</title>
+<meta name="description" content="汝年已到古稀，兼以教学为糊口，尚狂心不歇，欲研究楞严禅宗，欲得有禅有净之令名，汝真可谓不到黄泉不死心者（世俗云，不到黄河不死心，乃巧以黄河代黄泉耳。若到黄泉，即不肯死心，也只得死心而已）。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-194/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复慧清居士书 · 印光法师文钞">
+<meta property="og:description" content="汝年已到古稀，兼以教学为糊口，尚狂心不歇，欲研究楞严禅宗，欲得有禅有净之令名，汝真可谓不到黄泉不死心者（世俗云，不到黄河不死心，乃巧以黄河代黄泉耳。若到黄泉，即不肯死心，也只得死心而已）。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-194/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复慧清居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝年已到古稀，兼以教学为糊口，尚狂心不歇，欲研究楞严禅宗，欲得有禅有净之令名，汝真可谓不到黄泉不死心者（世俗云，不到黄河不死心，乃巧以黄河代黄泉耳。若到黄泉，即不肯死心，也只得死心而已）。</p><p class="p-trans">你已年近古稀，兼以教学为生，狂心还不歇，想要研究《楞严经》、禅宗，想要得到有禅有净土的美名，你真可以说是：不到黄泉不死心的人（世俗人说，不到黄河不死心，这是巧妙地用黄河代替黄泉罢了。如果到了黄泉，即使不肯死心，也只得死心而已）。</p></div>
+<div class="para-pair"><p class="p-orig">今之邪知谬见者，遍满世界，谁能有此精神，与伊辩论乎。八识之批判，既知是非，何得复送人乎。</p><p class="p-trans">现今的邪知谬见，遍满世界，谁能有这个精神，与他们辩论呢？《佛学八识之批评与研究》，既然知道是错的，怎么还拿来送人呢？</p></div>
+<div class="para-pair"><p class="p-orig">今之知识各有所宗，汝且熟阅净土各书，以古为师，庶不致迷。若亲近时髦知识，或有迷而不知其迷者。</p><p class="p-trans">现今的知识各有所属的宗派，你暂且熟读净土各种书籍，以古人为师，才不至于迷惑。如果亲近时髦的知识，或许会有迷惑而不自知的情形。</p></div>
+<div class="para-pair"><p class="p-orig">要解一书，汝尚不满意，谓其学问不及莲池。然古人所证，吾人何敢妄拟。若论要解之义理扼要，实为千古所未有。</p><p class="p-trans">《弥陀要解》这本书，你尚且不满意，认为蕅益大师的学问不及莲池大师。然而古人所证悟的境界，我们哪敢随便揣度推测。如果说到《弥陀要解》的义理扼要，实在是千古以来所未曾有的。</p></div>
+<div class="para-pair"><p class="p-orig">藏经院有净土十要，宝王论亦在内，何得又谓求之不得。开蒙之注，可有可无。通公之学，乃有通不通处。</p><p class="p-trans">藏经院有《净土十要》，《念佛三昧宝王论》也在其中，怎么又说：“求之不得。”《楞严开蒙》的注解，可有可无。通智法师的学识，有通与不通的地方。</p></div>
+<div class="para-pair"><p class="p-orig">楞严古注，其多无数，何须看彼开蒙。开蒙亦系钞录前人之文，而彼尚安顿不次第。试看文钞中与万寿寺寂山和尚书，可以意知。欲看楞严大意，须推文句，注释详细，则唯指掌。</p><p class="p-trans">《楞严经》的古注，多得无数，何须看他的《楞严开蒙》。《楞严开蒙》也是钞录前人的注文，而他尚且编排得不好。试看《文钞》中《与万寿寺寂山和尚书》，便可以知道了。想看《楞严经》大意，须推《楞严文句》，注释最详细的，就只有《楞严指掌》了。</p></div>
+<div class="para-pair"><p class="p-orig">汝年已近七十，净土法门，尚未明白。痴心妄想，尚欲研究楞严，又欲知禅宗滋味。禅宗滋味，勿道不知，即知亦不名有禅。</p><p class="p-trans">你年纪已近七十，净土法门，还没有弄明白。痴心妄想，还想要研究《楞严经》，又想要知道禅宗滋味。禅宗的滋味，不要说不知道，即使知道，也不名为有禅。</p></div>
+<div class="para-pair"><p class="p-orig">汝何不看光之净土决疑论，及宗教不宜混滥论乎。汝欲得有禅，必须要做梦，否则不会有禅。</p><p class="p-trans">你为什么不看看我的《净土决疑论》，以及《宗教不宜混滥论》呢？你想要有禅，必须要做梦，否则不会有禅。</p></div>
+<div class="para-pair"><p class="p-orig">心之所在，即在求之不可得处。此于能亲见固为大幸，否则一心念佛，念到极处，自可即知。即不知，得生西方，何愁不知。</p><p class="p-trans">心的所在，就在求之不可得处。能够亲见，固然是大幸，否则一心念佛，念到极处，自然可以立刻知道。即使不知道，等往生西方后，何愁不知道。</p></div>
+<div class="para-pair"><p class="p-orig">汝欲人指一定所在，则是痴人胶柱鼓瑟也。汝完全无有禅门气分，妄谓古人将心与汝安等语为儱侗，不惧堕谤法之罪乎。</p><p class="p-trans">你想要他人指出一定的所在，就是愚痴人胶住调音的弦柱来鼓瑟了。你完全没有禅门的气分，狂妄地认为，古人“将心与汝安”等话语为笼统，难道不怕堕入谤法之罪吗？</p></div>
+<div class="para-pair"><p class="p-orig">此系古人用心参究至极，故于一言之下，亲见本来。如人饮水，冷暖自知。汝以卜度思量之心，领会文字皮面，宜其谓儱侗不亲切分明也。</p><p class="p-trans">这是古人用心参究到极点，所以在一句话之下，亲见本来面目。如人饮水，冷暖自知。你以卜度思量的分别心，领会文字皮面，适合说这句“笼统不亲切分明”的话吗？</p></div>
+<div class="para-pair"><p class="p-orig">纯想即飞，谓其上升也。何得妄谓心在顶上，真是外道知见，胡说巴道。感应汇编所引之经，未曾校勘，然大义谓天神鉴察，不相远离，亦不必死执其分寸也。</p><p class="p-trans">“纯想即飞”，是说他上升天道。怎么能错误地认为，心在顶上，真是外道知见，胡说八道。《太上感应汇编》所引的经典，没有经过校勘，然而其中的大义说“天神鉴察”，并未远离经典中所说，也不必死执其中的细微分寸。</p></div>
+<div class="para-pair"><p class="p-orig">心如止水明镜，约本体而言。明镜非台，则圣凡情尽，能所两亡。汝只作恐人执著，其错奚啻万里。金刚旁注，乃外道所说，汝当作佛法，可叹孰甚。</p><p class="p-trans">“心如止水明镜”，是指本体而说。“明镜非台”，是圣凡情尽，能所双亡。你只当作恐怕他人执著，其中的错误何止千万里。《金刚旁注》，是外道所说，你却当作佛法，还有比这更可叹的吗？</p></div>
+<div class="para-pair"><p class="p-orig">求的即是心，然须识得此心方好。否则不但求的即是心，即放的又何尝不是心。即行杀盗淫的，又何尝不是心。汝可谓多知多解，但于此中，不知何所归趣而得受用耳。</p><p class="p-trans">“求的即是心”，然而必须认得这个心，方才好。否则，不但求的即是心，放的又何尝不是心。行杀盗淫的，又何尝不是心呢。你可说是多知多解，只是在这当中，不知归向何处而得受用。</p></div>
+<div class="para-pair"><p class="p-orig">汝且死心认真念佛，勿作此种善能分别法义之大通家。则可不虚此生不虚此遇矣。否则生死到来，依旧随业受报。再想遇见净土法门，恐无此侥幸也。</p><p class="p-trans">你姑且死心来认真念佛，不要作这种善能分别法义的大通家。那么就可以不虚此生不虚此遇了。否则生死到来，依旧随业受报。再想要遇见净土法门，恐怕就没有这样的侥幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【令名】</span>美好的声誉。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【楞严文句】</span>（书名）明智旭撰，首楞严经文句也。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【通理】</span>清代僧（1701-1782）河北新河县人。俗姓赵。字达天。幼年出家，跟随显如珍学习经论，二十岁就潭柘山岫云寺德彰受具足戒。通净土教、《法华经》、《楞严经》、南山律等，尤其通晓《华严经》，为清代华严宗中兴之祖。曾在万善、嘉兴、善应、香界、拈花诸山讲经三十余会，弘戒十四期。又登山西五台山万缘庵，讲《报恩经》，感得文殊现身。乾隆十八年（1753），奉命管理僧录司之印务，受赐紫衣。乾隆四十四年，曾与第六世班禅喇嘛论佛法之大义，得喇嘛赠与香帛、曼答等物。后被敕封为阐教禅师。著有《法华指掌疏》、《楞严指掌疏》、《圆觉新义疏》、《金刚经偈》、《心经合释》、《盂兰摘要》、《五教仪增注》等。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【膠柱鼓瑟】</span>鼓瑟时胶住瑟上的弦柱，就不能调节音的高低。比喻固执拘泥，不知变通。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

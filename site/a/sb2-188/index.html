@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复丁福保居士书廿一 · 印光法师文钞</title>
+<meta name="description" content="接手书，及三藏法数，不胜欣慰。然光一向要书根印字，以后印书，通须书根印字，以便检查，而防遗失，此法乃保存书之良法也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-188/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复丁福保居士书廿一 · 印光法师文钞">
+<meta property="og:description" content="接手书，及三藏法数，不胜欣慰。然光一向要书根印字，以后印书，通须书根印字，以便检查，而防遗失，此法乃保存书之良法也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-188/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复丁福保居士书廿一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，及三藏法数，不胜欣慰。然光一向要书根印字，以后印书，通须书根印字，以便检查，而防遗失，此法乃保存书之良法也。</p><p class="p-trans">接到信，及《三藏法数》，非常欣慰。然而我一向要在书根上印字，以后印书，通通必须在书根上印字，以便检查，从而防止遗失，这个方法是保存书籍的好办法。</p></div>
+<div class="para-pair"><p class="p-orig">高僧传尚待三年方刻板，五年始出书，其中错讹甚多，以喻昧庵身有职业，代为纂辑，写排之际，皆未详校。彼再三祈光校，而光直日不暇给。今日来信，言期缓三年，则不足忧。然其所阅书，多属各省府县志，及所列种书固不甚多，其中遗佚当不在少。</p><p class="p-trans">《高僧传》还要等三年才能刻板，五年才能出书，其中的错讹很多，因为喻昧庵自身有职业，是代为纂辑，抄写编排的时候，都没有详细校对。他再三请我校对，而我简直是每天没有一点空暇。他今天来信，说期望延缓三年，那么就没有什么忧虑了。然而他所看的书，大多属于各省、府、县志，还有所列的种种书籍本来不是很多，但其中遗漏散失的，应当也不在少数。</p></div>
+<div class="para-pair"><p class="p-orig">汝于群籍，颇称博览，凡有出格古德传中无者，当为抄出，按订年时，以备刻时随科前后附入。又此集无论。光欲请许止净居士作论。俾与前三集体裁一同。</p><p class="p-trans">你对于群书，可谓博览，凡是杰出古德、高僧传中没有的，应当抄出来，编订好年代时间，以备刻板的时候，随分科前后附录进去。另外，这次所集的《高僧传》没有后面的论赞之文。我想请许止净居士作论。使得这部书与前面的三集《高僧传》的体裁一致。</p></div>
+<div class="para-pair"><p class="p-orig">又梁唐宋三集，皆有遗佚，如于古书中见有出格高僧传中无者，亦抄出，附一补遗一编于后。许止净笔高万英，文雄一代。现为光作观音感应颂。正文已成，光令加注，明年三月当可告圆，则大士恩泽，普被寰宇矣。</p><p class="p-trans">还有，梁、唐、宋三集《高僧传》，都有遗漏散失，如果在古书中见到有杰出高僧而传记中没有的，也抄录出来，在后面附一个补遗编录。许止净文笔高超万英，文章雄视一代。现在为我作《观音感应颂》。正文已经完成，我让他加注解，明年三月，应当可以宣告圆满，那么观音大士的恩泽，就普被天下了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【书根】</span>书籍下端的切口部分。线装书卧置,为便于检阅,常利用书根书写或加印书名、卷次和册数。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【又此集无论】</span>论：概括了前序和后议，对每一科的主旨源流有所阐明，对其中突出的人物也予以评定。另外还透露出作者对某些事物的看法，反映出一些历史上的情况。慧皎大师说：“及夫讨复源流，商榷取舍，皆列诸赞论，备之后文。而论所著辞，微异恒体：始标大意，类犹前序，末辩时人，事同后议。若间施前后，如谓烦杂，故总布一科之末，通称为论。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【高僧传】</span>十四卷，梁慧皎撰。外有续高僧传三十卷，唐道宣撰。宋高僧传三十卷，宋赞宁等撰。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复永嘉某居士书八 · 印光法师文钞</title>
+<meta name="description" content="接手书，知由病中蒙三宝力，化险为夷。方知生死了手，非一门深入，不克济事。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-053/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复永嘉某居士书八 · 印光法师文钞">
+<meta property="og:description" content="接手书，知由病中蒙三宝力，化险为夷。方知生死了手，非一门深入，不克济事。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-053/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复永嘉某居士书八</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知由病中蒙三宝力，化险为夷。方知生死了手，非一门深入，不克济事。</p><p class="p-trans">接到你的信，知道在病中承蒙三宝的力量，化险为夷。方才知道了脱生死，非一门深入，不能成办大事。</p></div>
+<div class="para-pair"><p class="p-orig">因研阅净宗各书。方知弥陀为我发愿立行，以期成佛。我违弥陀行愿，以故长劫恒沦六道，永作众生。了知弥陀乃我心中之佛，我乃弥陀心中之众生。心既是一而凡圣天殊者，由我一向迷背之所致也。</p><p class="p-trans">因此研究阅读净土宗的各种书籍。阿弥陀佛为我发四十八大愿，通过兆载永劫的修行，希望成就佛道。我违背弥陀的大行大愿，所以长劫沦落在六道之中，永远做众生。完全明白弥陀为我真心中的佛，我乃弥陀真心中的众生。真心既是一，而凡夫和圣人有天殊的差别，是由于我一向迷背真心所致啊。</p></div>
+<div class="para-pair"><p class="p-orig">如是信心，可为真信。从此信心上，发决定往生之愿，行决定念佛之行。庶可深入净宗法界，一生取办，一超直入如来地，如母子相会，永乐天常矣。虽然，知之匪艰，行之维艰。</p><p class="p-trans">能有这样的信心，可以成为“真信”。从这种信心基础上，发决定往生的誓愿，行决定念佛的行持。才可以深入净宗法界，一生成就道业，顿超生死，往生西方佛土，亲见阿弥陀佛，如母子相会而不分离，永远享受天伦之乐。虽然懂得道理并不难，按道理真实修行就很难了。</p></div>
+<div class="para-pair"><p class="p-orig">世有一班掠虚汉，闻得心佛众生三无差别之理，或由阅教参宗，悟及此理。遂谓我与佛同，而了无所用其若修若证。遂放心恣意于一切境缘之中。误谓六尘即觉，贪瞋痴即戒定慧，何须制心摄身，无绳自缚。</p><p class="p-trans">世界上有一帮仅知道模仿他人表面言行的人，听闻到“心佛众生三无差别之理”，或者由阅读教典参悟禅宗，悟到这种道理。就说：“我和佛相同，完全不需要再修行和证道。”于是就在一切境缘中放纵自己的心意。错误地认为：“六尘即觉，贪瞋痴即戒定慧，哪里用得着制心摄身，作茧自缚呢？”</p></div>
+<div class="para-pair"><p class="p-orig">此种见解，最为下劣。谓之执理废事，拨无因果。如以画饼充饥，陵空作屋。自误误人，罪岂有极。以善因而招恶果。三世诸佛，名为可怜悯者。</p><p class="p-trans">这种见解最为下劣。叫作执理废事，拨无因果。如同画饼充饥，陵空造空中楼阁，自误误人，能不罪大恶极吗？以求证道的善因而招感三途的恶果。三世诸佛将他们称为可怜悯的人啊。</p></div>
+<div class="para-pair"><p class="p-orig">汝当仗此心佛因果不二之理，切实修持信愿行法。则往生可期，成佛有望矣。幸甚慰甚。</p><p class="p-trans">你应当仗此心佛因果不二的道理，切实修持信愿行三法。那么往生可期，成佛有望啊！则何等庆幸！何等宽慰！</p></div>
+<div class="para-pair"><p class="p-orig">一行居集禅宗秘密了义经序，已与蔚如言之。彼回书云，彼绝未见此经，故刻时忽略过去。当将此序抽去，免滋疑误。又令刻字须粗，以期多刷。彼亦言已与刻工嘱令粗些。</p><p class="p-trans">《一行居集》中的《禅宗秘密了义经序》，已经对徐蔚如说过了。他回信说：他绝对没有见过这部经，所以刻书的时候忽略过去。应当将这个序文抽去，免得滋生怀疑误会。又令他将刻印的字体，必须刻得粗大，以期望（雕版经磨耐用而能）多印刷一些。他也说，已经对刻字的工人嘱咐要刻粗一些。</p></div>
+<div class="para-pair"><p class="p-orig">又言于二月初当即北上。光亦不问仍复从政与否。然北京现创刻经处，非蔚如照应不可。</p><p class="p-trans">又说在二月初，要到北京。我也不问他，是不是仍要从政做官。然而北京现在创办刻经处，非得徐蔚如照应不可。</p></div>
+<div class="para-pair"><p class="p-orig">戒烟方散布四远，有依之戒者，皆得药尽病除，真神方也。</p><p class="p-trans">“戒烟方”散布远近四方，有依这个药方而戒烟的，都是药到病除，真是神奇的方子。</p></div>
+<div class="para-pair"><p class="p-orig">如来说法，原为被机。故有为实施权，开权显实，五时施化之事。又以仗自力了脱则难，仗佛力了脱则易。兼以末世众生，根机陋劣。故特开净土法门，俾上中下三根，等蒙利益，同登不退。</p><p class="p-trans">如来说法，原本为了普被所有众生的根机。所以才有为了开显真实教法而施设权宜教法，开示权宜教法而显示真实教法，佛陀一生分为五个时段施设教化的事迹。又因为众生修行仗自力了脱生死非常困难，仗佛力了脱生死则很容易。再加上末世众生根机陋劣。所以特别开示净土法门，让一切上中下三根的众生，平等地蒙受佛法的利益，一同登临不退转的果位。</p></div>
+<div class="para-pair"><p class="p-orig">世有好高务胜者，不观时机，每以多分不能契悟者，令人修习。其意虽亦甚善，然约教而遗机，则其用力也多，而得益者少矣。</p><p class="p-trans">世上有一些好高骛远，追求胜妙境界的人，不观察现在的时节因缘及众生的根机，每每将大部分内容无法令人契入而证悟的法门，让人去修习。教法者的意图虽然也是善意，然而只着眼于教法而忽视受众的根器，这样将事倍功半，费力多而得益少。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【了手】</span>完毕；完了。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【知之匪艰，行之维艰】</span>出自《尚书·说命中》。匪：不，不是。维：文言助词，用于句首或句中。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【掠虚汉】</span>掠虚头汉：禅林用语。斥詈慢心躁急、似是而非之禅者。又作掠虚汉。掠，即掠取之意；虚，即虚妄不实；掠虚，即指仅模仿他人言语之表面行动。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【陵空作屋】</span>升到空中作房屋。比喻执理废事，毫无实益。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【五时施化】</span>指释尊之五时说法，度化众生。有一首偈说明五时说法的过程：华严最初三七日，阿含十二方等八，二十二年般若谈，法华涅槃共八载。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

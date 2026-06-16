@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复马香瑞居士书 · 印光法师文钞</title>
+<meta name="description" content="数日前接手书，知居士近来道心真切，不胜欣忭。所谓修净业者，唯在一心求生西方，不作此世来生一切人天福乐想耳。凡所持诵经咒，并一切种种功德，无论大小，皆以此功德，回向往生，则心无二念。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-042/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复马香瑞居士书 · 印光法师文钞">
+<meta property="og:description" content="数日前接手书，知居士近来道心真切，不胜欣忭。所谓修净业者，唯在一心求生西方，不作此世来生一切人天福乐想耳。凡所持诵经咒，并一切种种功德，无论大小，皆以此功德，回向往生，则心无二念。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-042/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复马香瑞居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">数日前接手书，知居士近来道心真切，不胜欣忭。所谓修净业者，唯在一心求生西方，不作此世来生一切人天福乐想耳。凡所持诵经咒，并一切种种功德，无论大小，皆以此功德，回向往生，则心无二念。</p><p class="p-trans">几天前接到信，知道居士你近来道心真切，非常喜悦。所谓修习净业，唯在一心求生西方，不作此世、来生一切人天福乐的妄想而已。凡是所持诵的经咒，以及一切种种功德，无论大小，都以此功德，回向往生，那么就心无二念了。</p></div>
+<div class="para-pair"><p class="p-orig">凡一切读诵礼拜，及诸善行，皆成净土助行。念佛之正行，再加以种种功德助之，则如船遇顺风，又加高挂风帆，则一日千里，速登彼岸矣。所忌者，心口不相应，则一切善行，只得现世虚名，无有了生脱死之实果矣。</p><p class="p-trans">凡是一切读诵、礼拜，及一切善行，都成为净土的助行。念佛的正行，再加上种种功德相助，就如同行船遇到顺风，又加上高挂风帆，那么就一日千里，快速登上彼岸了。所怕的是，心口不相应，那么一切善行，只会得到现世的虚名，没有了生脱死的实果啊！</p></div>
+<div class="para-pair"><p class="p-orig">纵令来生得其人天福乐，则由享福故，必定大造恶业。及至命终，则永堕地狱，万劫难出矣。哀哉。由是之故，诸佛诸祖，皆劝众生求生西方也。</p><p class="p-trans">纵然是来生得到那些人天福乐，但由于享福的缘故，必定大造恶业。等到命终，便会永堕地狱，万劫难出了。悲哀啊！因为这样的原因，一切诸佛、诸位祖师，都劝众生求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">又居士向于炼丹一法，颇生尊重，极力修习。若欲专修净业，及以教人，必须将此种工夫，尽情丢开。倘犹惑于炼丹家所说，谓性命双修，方可成道，如慧命经等，以佛法为邪法，以邪法为佛法，则是醍醐甘露，与砒霜鸩毒同服。欲得法身慧命不永丧亡，不可得也。既提倡净土，普劝大众，必须邪正分明，庶不孤负自他向往之意。</p><p class="p-trans">另外，居士你一向对于炼丹法，很是尊重，极力修习。如果想要专修净业，并以此教导他人，必须将这种工夫，全部丢开。倘若还被炼丹家所说迷惑，认为性命双修，才能成道，如《慧命经》等书，把佛法当作邪法，把邪法当作佛法，就是将醍醐甘露，和砒霜鸩毒一起服用。想使法身慧命不永远丧亡，是不可能的啊！既然提倡净土，普劝大众，就必须邪正分明，才不孤负自他向往极乐的本意。</p></div>
+<div class="para-pair"><p class="p-orig">念佛一法，人人皆可在家修持，何必定要入社。但祈普为大众，依净土法门之义，委曲开导。令一切男女，各尽其职，敦伦守分，兼以念佛求生西方。能如是，则生为良民，没预海会，岂唯出家人能提倡，而余人不能提倡也。</p><p class="p-trans">念佛法门，人人都能在家修持，何必一定要入莲社（才能修持）。只祈望普为大众，依照净土法门的义旨，委曲宛转开导。令一切男女，各自尽其职责，敦笃伦常、安守本分，同时以念佛来求生西方。能够如此，那么在生成为良民，临终预入莲池海会，哪里是只有出家人能够提倡，而其余的人就不能提倡呢？</p></div>
+<div class="para-pair"><p class="p-orig">若不务敦伦守分，并脚踏实地，精修净业。纵令会众逾百千万，也只是魔眷纵横，适足以为佛法累耳。</p><p class="p-trans">如果不致力于敦笃伦常、安守本分，并脚踏实地，精修净业。即使参加莲社的大众超过百千万人，也只是魔眷属纵横，正好成为佛法的拖累。</p></div>
+<div class="para-pair"><p class="p-orig">欧阳渐，马一浮二居士所立之法，非普通人所能尽学。即学而有得，尚非即生了脱之法，乃自力修戒定慧，断惑证真，了生脱死之法。系佛教通途修证之法，非具缚凡夫仗佛慈力横超三界之法也。但依净土经论语录，实行修持信愿念佛一法即已。彼诸法门，既不当机，不须讨论。</p><p class="p-trans">欧阳渐、马一浮二位居士所立的法，并不是普通人所能全部学得的。即使学习而能有所得，也还不是即生了脱生死的法门，而是靠自力修习戒定慧，断惑证真，了生脱死的法门。是佛教通途修证的法门，不是具缚凡夫仗佛慈力，横超三界的（特别）法门。只要依照净土经论、语录，实行修持信愿念佛这一法门就好了。他们那些法门，既然不适应众机，就不必讨论了。</p></div>
+<div class="para-pair"><p class="p-orig">世有深信佛法，又欲往生，而于食肉一事，又不能全体放下者。乃不深体佛言，及深体自心众生心之所以然耳。使于佛言，自心，众生心，一一体悉，不但不肯吃，吾恐加以白刃，逼彼令食，亦不可得矣。</p><p class="p-trans">世间有深信佛法，又想要往生，然而对于吃肉这件事，又不能全体放下的人。这是不能深深体察佛陀的言教，以及深深体察自心、众生心的所以然罢了。假使对于佛陀的言教、自心、众生心，一一都能体察了知（注1），不但不肯吃肉，我恐怕就算把刀架在他脖子上，逼他吃肉，他也不会吃了。</p></div>
+<div class="para-pair"><p class="p-orig">光南浔修放生池疏，颇为揭其底里。若能日诵几遍，并一一深思其义，犹然以食肉为事者，无有是理也。大悲咒后四娑婆诃，乃流俗知见所讹传之语也，不可依从。</p><p class="p-trans">我的《南浔修放生池疏》（注2），较为明白地揭示了其中的根本道理。如果能够每天诵读几遍，并且一一深思其中的义理，如果还把吃肉作为事务，没有这样的道理。大悲咒后面的四句“娑婆诃”，是世俗知见所讹传的咒语，不能依从。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【体悉】</span>体念而知其衷曲。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【南浔修放生池疏】</span>即《南浔极乐寺重修放生池疏》，收录于《增广印光法师文钞》卷二。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

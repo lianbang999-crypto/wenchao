@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>江苏兴化刘庄场贞节净土院碑记 · 印光法师文钞</title>
+<meta name="description" content="佛法者，九法界公共之法也。无一人不堪修，亦无一人不能修。以凡有心者，无不同具佛性。但以迷而未悟，反承此佛性功德之力，起惑造业，轮回六道。经尘点劫，莫能出离，岂不大可哀哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-119/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="江苏兴化刘庄场贞节净土院碑记 · 印光法师文钞">
+<meta property="og:description" content="佛法者，九法界公共之法也。无一人不堪修，亦无一人不能修。以凡有心者，无不同具佛性。但以迷而未悟，反承此佛性功德之力，起惑造业，轮回六道。经尘点劫，莫能出离，岂不大可哀哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-119/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">江苏兴化刘庄场贞节净土院碑记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法者，九法界公共之法也。无一人不堪修，亦无一人不能修。以凡有心者，无不同具佛性。但以迷而未悟，反承此佛性功德之力，起惑造业，轮回六道。经尘点劫，莫能出离，岂不大可哀哉。</p><p class="p-trans">佛法，是九法界公共之法。没有一个人不应当修习，也没有一个人不能够修习。因为凡是具有心识的众生，都同样地具有佛性。只因为迷惑而没有觉悟，反而承着这佛性功德力，起惑造业，轮回六道，经历微尘般的劫数，不能出离，难道不是太悲哀了吗。</p></div>
+<div class="para-pair"><p class="p-orig">然以生佛同体之故，遂感如来出世，为之倡明。由兹舍俗出家，力修定慧，断惑证真，了生脱死者，何可胜数。</p><p class="p-trans">然而因为众生与佛同体的缘故，于是感得如来出现世间，为众生阐明佛法。从此，舍弃尘俗出家学道，努力修持戒定慧，断除惑业证得真常，了脱生死轮回的人，哪里能够数得过来呢。</p></div>
+<div class="para-pair"><p class="p-orig">亦有居尘学道，即俗修真，亲证法身，诞登道岸。如维摩居士，傅大士，庞居士等，全家修持，俱证圣果。此诸大士，为物作则。足知其人皆可修，修必获益也。</p><p class="p-trans">也有居于红尘学道，在俗修真，并且亲证法身，立刻登上觉岸的人。如维摩诘居士、傅大士、庞居士等，全家修持佛法，全都证得圣果。这些大菩萨们，在为众生作榜样。足以证明，佛法每个人都可以修学，只要修学必定获得利益。</p></div>
+<div class="para-pair"><p class="p-orig">故自法流东土，王臣士庶，闺阁英贤。不离尘劳，精修净业。遂得亲见佛性，断惑证真，与夫感应道交，蒙佛接引，带业往生者，又何可得而胜数也。</p><p class="p-trans">所以，自从佛法传到中国，帝王大臣，士人百姓，女中英贤等等，不离六尘烦劳，精进修习净业。于是得以亲见佛性，断惑证真，以及感应道交，蒙佛接引，带业往生的人，又哪里能数得清呢。</p></div>
+<div class="para-pair"><p class="p-orig">鹤年居士高恒松者，江苏兴化人也。宿植德本，笃信佛乘。年当弱冠，即慕真修。弃俗世之缠缚，事选佛之宏猷。于是遍历丛林，咨参宗匠。冀其顿明自性，彻悟唯心。报答四恩，济度群品。</p><p class="p-trans">高鹤年居士（高恒松，字鹤年），是江苏兴化人，宿植德本，坚定信奉佛法。二十岁时，就仰慕于真实的修行。放弃俗世的缠缚，潜心禅法的修行。于是周遍游历名山丛林，叩问参访禅宗大德。希望能够顿明自性，彻悟唯心，报答四恩，救度众生。</p></div>
+<div class="para-pair"><p class="p-orig">高堂奉养，托之夫人。数月一归，以修定省。而夫人某氏，赋性贤淑，克尽孝道。虽复于归，志慕清修。以故居士无失养之忧，高堂得底豫之乐。若非宿愿所结，其能如是也耶。</p><p class="p-trans">双亲的奉养就托付给夫人。（高居士）几个月回去一次，看望问候父母。而居士的夫人，天性贤淑，恪尽孝道。虽然已经嫁为人妻，心中却志慕清修。所以高居士不用担忧双亲失去奉养，双亲也能享受天伦之乐。如果不是宿世志愿所结的良缘，能够如此美满吗。</p></div>
+<div class="para-pair"><p class="p-orig">及至椿萱凋谢，遂得无所顾虑。如天际野鹤，任意飞腾。由兹五台，峨嵋，天台，鸡足，所有名山圣道场地，每多一再巡礼。</p><p class="p-trans">父母过世之后，高居士就没有了顾虑。如同天边的野鹤一般，任意飞腾。从此，五台、峨嵋、天台、鸡足等所有的名山圣道场地，常常一再地礼拜巡行。</p></div>
+<div class="para-pair"><p class="p-orig">独于终南观音大士道场，更有深契，恍悟宿世曾住此山。足见多生多劫，久修佛道。不于一佛二佛，三四五佛而种善根也。</p><p class="p-trans">而唯独对终南山的观音大士道场（即南五台山，印祖即在此山出家）有更深的契合，恍然觉悟到自己过去世中，曾经住在这座山。足以看出高居士是多生多劫中，长久修行佛道，不只是在一佛二佛，三四五佛前种下善根啊。</p></div>
+<div class="para-pair"><p class="p-orig">民国十年，自鸡足归，回家祭扫。见夫人已老，孤身无依。念其代己奉亲之劳，悯其守节清修之志。因将本宅，改为贞节净土院。以其令贞女节妇居之，专修净业，求生净土，而立名焉。</p><p class="p-trans">民国十年（1921年），高居士从鸡足山回来，到家中祭祀扫墓。见到夫人已经年老，孤苦一人，没有依靠。想到她代替自己侍奉双亲的劳苦，悯念她守节清修的志向。因此将自家的宅院，改为贞节净土院，供贞节的女子居住，专门修持净业，求生西方，所以定了这个院名。</p></div>
+<div class="para-pair"><p class="p-orig">乡绅好义者，为之禀县出示。凡高氏子孙，及各界人士，不得干预。以此院系私业义币所建，与庵庙性质各别。原产若干亩，增置若干亩。岁所收租，以供院中人衣食之费。量入安人，庶无亏空。</p><p class="p-trans">乡绅中崇尚道义的人，为他禀请县府，告示众人：凡是高家的子孙，以及社会的各界人士，都不得干预（净土院的事务），因为这座净土院是私人产业加上义款所修建的，与寺庙庵堂性质不同。原有几亩田产，又增置了几亩，每年所收的田租，用来供应院中人的衣食费用。根据收入来安置人员，想必就不至于亏空。</p></div>
+<div class="para-pair"><p class="p-orig">其修建之费，皆居士挚友之所佽助。正室三楹，以作佛殿。内供西方三圣坐像，俾诸人于中，朝暮礼诵，以备往生资粮。</p><p class="p-trans">净土院修建的费用，都是来自高居士好友的资助。三间正屋作为佛殿，里面供奉西方三圣坐像，使得众人能够在殿中早晚礼拜持诵，来预备往生的资粮。</p></div>
+<div class="para-pair"><p class="p-orig">两旁厢房，悉为安宿之所。其来住者，贞女节妇，皆无所择。但须长斋念佛，决志往生。性情柔和，无诸乖戾。不事妆饰，不茹荤酒，断绝俗亲，不妄游行者，方可。否则概不许住。</p><p class="p-trans">两旁的厢房都作为宿舍。来住的人，无论贞女还是节妇，都不加挑选。但是必须要吃长素，念佛决志往生，并且性情柔和，没有乖戾的习气，不化妆，不穿戴饰品，不吃荤，不喝酒，断绝世俗往来，不随处游逛的人，才能入住。否则，一概不许入住。</p></div>
+<div class="para-pair"><p class="p-orig">又于每年夏冬，两佛诞日。延请通法女士，讲说旬日。庶修途宗旨，各各悉知。不至以了生死法，获人天福。此则上宏下化，一举两得。即悲成敬，二田兼备。</p><p class="p-trans">每年夏冬二季，在释迦、弥陀两尊佛的诞辰，礼请通达佛法的女士，讲经说法十天，想必每个人都能了知修学的宗旨，不至于用了脱生死的佛法，换取人天福报了。这样上宏佛法，下化众生，一举两得。即对众生的悲心，而成对两佛的崇敬，福慧二田兼备。</p></div>
+<div class="para-pair"><p class="p-orig">是以此议一成，而好义诸友，乐为捐输。如广东简照南，简玉阶，潘达微，李柏农，黎乙真及沪上诸居士，各随心力，出资相助。</p><p class="p-trans">所以这个倡议一提出来，崇尚道义的友人，都欢喜地捐助。如广东的简照南、简玉阶、潘达微、李柏农、黎乙真，以及上海的诸位居士，都各随自己心力，出资相助。</p></div>
+<div class="para-pair"><p class="p-orig">以其事与恤嫠局相同，其利益则天地悬隔故也。彼不过令其身有所托，不致饥寒。而饱食终日，无所用心。不诵经咒，不戒酒肉。唯恤现生之志，不计没后神识之归于何所。</p><p class="p-trans">这件事的性质虽然与恤嫠局（恤养寡妇的机构）相同，然而其中的利益却天地悬隔。恤嫠局只不过是让她们的身体有所依托，不致于挨饿受冻。然而每天填饱肚子，心中却没有追求。不诵经咒，不戒酒肉，只是体恤她们活着时的心情，却不考虑她们死后神识归向何处。</p></div>
+<div class="para-pair"><p class="p-orig">居此院者，镇日持佛名号，晨昏恳到忏悔。岂但生有所托，不虚度日。兼令没有所归，永出轮回。意美法良，猗欤懿哉。</p><p class="p-trans">而居住在这净土院里，整日持佛名号，早晚恳切忏悔。哪里只是活着时有所依托，不虚度年日而已。更是让她们死后有所归向，永远出离轮回。用意和方法都很美善，真是太好了！</p></div>
+<div class="para-pair"><p class="p-orig">此法既兴，后必有通法义士，行之于恤嫠局。庶可贞节英贤，同预莲池海会。其为功德，无能名焉。</p><p class="p-trans">这个方法一旦兴起，以后必定会有通达佛法的义士，将这个方法在恤嫠局中推行。想必可以让所有的贞节女子，共同加入莲池海会了。其中的功德，难以言说啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【尘点劫】</span>尘，指微尘；劫，为极大之时限。尘点劫，为譬喻时间甚长久远之词。略称尘劫。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【选佛】</span>原指选出可成佛成祖之师，后引申为坐禅修行之意。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【宏猷】</span>远大的谋略；宏伟的计划。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【定省】</span>泛指探望问候父母或亲长。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【于归】</span>出嫁。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【失养】</span>谓不能奉养父母。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【底豫】</span>谓得到欢乐。《孟子·离娄上》：“舜尽事亲之道，而瞽瞍底豫。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【椿萱】</span>比喻父母。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【佽助】</span>帮助。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【恤嫠会】</span>旧时一种救济贫苦寡妇的慈善机构。清张焘《津门杂记》卷中：“恤嫠会，专养寒苦孀居，月给口粮。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

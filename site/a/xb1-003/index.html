@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>印光法师文钞续编发刊序 · 印光法师文钞</title>
+<meta name="description" content="净土法门，其大无外，如天普盖，似地均擎。无一法不从此法建立，无一人不受此法钧陶。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-003/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="印光法师文钞续编发刊序 · 印光法师文钞">
+<meta property="og:description" content="净土法门，其大无外，如天普盖，似地均擎。无一法不从此法建立，无一人不受此法钧陶。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-003/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷首</div>
+      <h1 class="art-title">印光法师文钞续编发刊序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，其大无外，如天普盖，似地均擎。无一法不从此法建立，无一人不受此法钧陶。</p><p class="p-trans">净土法门，其大无外，如天穹普盖，似大地均载。没有一法不是从此法建立的，没有一人不受此法的熏陶造就。</p></div>
+<div class="para-pair"><p class="p-orig">以如来一代所说一切大小乘法，皆随众生根性而说。或契理而不能遍契群机。或契机而不能彻契至理。因兹如来出世度生之本怀，郁而不畅。众生即生了脱之大法，卷而未舒。</p><p class="p-trans">因为如来一代时教，所说的一切大小乘法，都是随顺众生的根性而说。或者契佛理而不能普遍契合大众的根机。或者契合众生的根机而不能彻底契合了义真理。因此，如来出世度生的本怀，郁塞而不能畅达。众生当生了脱生死的大法，卷缩而未能舒展。</p></div>
+<div class="para-pair"><p class="p-orig">华严虽已导归西方，而人天权乘未闻。诸经亦多略示端倪，而法门纲要未著。由是如来兴无缘慈，运同体悲，特于方等会上，说弥陀净土三经。普被三根，全收九界。阐如来成始成终之妙道，示众生心作心是之洪猷。</p><p class="p-trans">《华严经》虽然已经在最后《普贤菩萨行愿品》中，以十大愿王导归西方，而人、天、权乘菩萨却未能听闻。诸多经典中也多是大略显示端倪，而法门纲要也没有明显昭示。因此，如来兴无缘大慈，运同体大悲，特地在方等会上，宣说《阿弥陀经》、《无量寿经》、《观无量寿佛经》等净土三经。普被上中下三种根机，全部收摄六凡三圣九法界众生。阐明如来成始成终的妙道，开示众生是心作佛，是心是佛的大法。</p></div>
+<div class="para-pair"><p class="p-orig">机理双契，凡圣齐资。如阿伽陀药，万病总治。如十方虚空，万象总含。普令圣凡，现生成办道业。大畅如来，出世度生本怀。倘如来不说此法，则末法众生，无一能于现生了生死者。</p><p class="p-trans">根机佛理双双契合，凡夫圣者全都得益。如同阿伽陀药，所有疾病都能治愈。如同十方虚空，包含万象。使得圣者凡夫，都能在这一生就成办道业。大畅如来，出世度生的本怀。倘若如来不宣说这个法门，那么末法众生，没有一人能够在现生了生脱死的。</p></div>
+<div class="para-pair"><p class="p-orig">光宿业深重，受生佛法断灭之乡。出世半年，又遭六月闭目之痛。入塾读书，屡受盗匪兵戈之扰。稍开知识，复中程朱辟佛之毒。</p><p class="p-trans">我宿业深重，出生在佛法断灭的地方（陕西郃阳）。出生半年，又遭受六个月不能睁眼的病痛。进入私塾读书，经常遭受强盗土匪战乱的袭扰。稍微懂得一点道理，又中了二程（程颢、程颐）、朱熹辟佛学说的毒害。</p></div>
+<div class="para-pair"><p class="p-orig">所幸学识全无，不能造生陷阿鼻之业。设或才智等伊，必至作十虚莫容之愆。由此意恶，长婴病苦。数年直同废人，一旦始知错误。于是出家为僧，冀灭罪咎。</p><p class="p-trans">庆幸的是没有什么学问见解，不能造作今生陷入阿鼻地狱的罪业。假设才智与他们一样，必定会造作十方虚空也不能容下的罪愆。由于这种意地的恶业，长时间遭受疾病的痛苦。好多年简直如同废人，直到有一天开始知道了自己的错误。于是出家为僧，希望能够灭除自己的罪咎。</p></div>
+<div class="para-pair"><p class="p-orig">宗教理深，无力研究。净土道大，决志遵行。拟作粥饭自了僧，不做宏法利生梦。三十三岁，至普陀法雨寺，住持化闻和尚，知光只会吃饭，别无所能。遂令常作食客，不委一毫事务。二十余年，颇得安乐。经年无一人来访，无一函见投。</p><p class="p-trans">宗门、教下的义理很深，没有能力去研究。净土宗的法道很大，决心遵照奉行。打算作一个只知道吃饭的自了僧，不做宏法利生的大梦。三十三岁时，我来到了普陀山法雨寺，住持化闻和尚，知道我只会吃饭，没有其他能耐。于是令我常年作一个只管吃饭的僧人，不委任一丝一毫的事务。二十多年来，很是安乐。多少年也没有一个人来拜访，没有一封信寄来。</p></div>
+<div class="para-pair"><p class="p-orig">宣统三年，上海出佛学丛报，高鹤年屡为邮寄。见所载文字，多合公道。间有涉政治而稍侧重者，窃恐人以此讥诮佛法，因用云水僧释常惭之名，寄书祈其秉公立论，勿令美玉生瑕，编辑者并未寓目。</p><p class="p-trans">宣统三年（1911年），上海出版《佛学丛报》，高鹤年居士多次邮寄给我。我见其中所记载的文字，大多合于世间公道。有时有涉及政治而稍微有所侧重的文章，我怕别人因此讥诮佛法，于是用“云水僧释常惭”的笔名，写信给他们希望能够秉公立论，不要让美玉出现瑕疵，编辑的人并没有过目。</p></div>
+<div class="para-pair"><p class="p-orig">后鹤年来山，为说所以。伊绐去数稿登报，署常惭名，绝无知者。民国六年，徐蔚如得与其友三信，印五千本，名印光法师信稿，送人。</p><p class="p-trans">后来高鹤年来到普陀山，对他说明其中的所以然。他骗去了我的几篇文稿登在《佛学丛报》上，署名“常惭”，没有人知道是谁。民国六年（1917年），徐蔚如得到我给他朋友的三封信，印了五千本，名为《印光法师信稿》，赠送他人。</p></div>
+<div class="para-pair"><p class="p-orig">七年，搜罗二十余篇，排于北京，名印光法师文钞，持其书来普陀求归依，光令归依谛公。八年，又印续编。</p><p class="p-trans">民国七年（1918年），他又搜罗了二十多篇，在北京排印，名为《印光法师文钞》。他拿着印的书来普陀山求我给他授皈依，我令他皈依了谛闲老法师。民国八年（1919年），又排印了《印光法师文钞续编》。</p></div>
+<div class="para-pair"><p class="p-orig">秋，其母没于申寓，丧事毕，令商务印书馆，合初续为一部，作一册。十二年，光令商务馆另排增订本，作四册，留板，初次印二万部。十四年，又令中华书局排增广本，仍作四册。</p><p class="p-trans">这年秋天，徐蔚如的母亲在上海寓所去世，丧事完毕，他让上海商务印书馆，集合初编、续编成为一部，作一册书。民国十二年（1923年），我让上海商务馆另外排印增订本，作四册，保留印板，第一次印了二万部。民国十四年（1925年），又让中华书局排印增广本，仍然作四册。</p></div>
+<div class="para-pair"><p class="p-orig">此后，无论何种文字，概不留稿，一免旷用施主钱财，一免徒刺明人慧眼。十九年，掩关苏报国寺，当家明道师，令人偷钞。二十四年，彼去世，遂止。二十六年，避难灵岩山，钞者以其稿交当家妙真师，妙师又令于半月刊等报钞录。</p><p class="p-trans">从此之后，无论什么文字，我都一概不留底稿。一来免得长期浪费施主的钱财，一来免得徒然刺痛聪明人的慧眼。民国十九年（1930年），我在苏州报国寺闭关，当家明道法师，令人偷偷钞录信稿。民国二十四年（1935年），他去世了，这件事才停止。民国二十六年（1937年），我到灵岩山避难，钞录信稿的人，将那些信稿交给了当家妙真法师，妙真法师又让在《佛学半月刊》等报刊上钞录。</p></div>
+<div class="para-pair"><p class="p-orig">光知之，势不能已，只好详校令排，满彼之愿。光幼失问学，长无所知，文极拙朴，不堪寓目。然其所说，皆取佛经祖语之意，而随机简略说之，不敢妄生意见以误人。又加五十余年之阅历，若肯略其文而取其义，不妨作一直指西归之木标。宜致力于西归，勇往直前，勿以木标恶劣，并西归之路程亦不愿视，则竖标归西，两无所憾矣。</p><p class="p-trans">我知道后，见这件事已无法阻止，只好详细校对，令他们排印，满他们的心愿。我小时候没有好好求学，长大了一无所知，文字极为拙劣粗糙，不堪入目。然而其中所说的，都是摘取佛经祖语的义理，而随机简略地宣说，不敢妄生自己的私见来误导他人。又加上五十多年的阅历，如果肯不计较文句的拙朴，而取用其中的义理，不妨作一个直指西归的木标。应当致力于前往西方的归程，勇往直前，不要因为木标的恶劣，一并连西归的路程也不愿意看，那么我竖木标，你归西方，两方面就都没有遗憾了。</p></div>
+<div class="para-pair"><p class="p-orig">又初编虽印上十万部，大通家以专说信愿念佛，因果报应，敦伦尽分，家庭教育，直是劝世白话文，绝无拨云见月，开门见山，豁人心目，畅佛本怀之语句，故若将浼焉。</p><p class="p-trans">又者，初编（《增广印光法师文钞》）虽然印了十万部，大通家认为其中专说信愿念佛，因果报应，敦伦尽分，家庭教育，简直就是劝世白话文，绝无拨云见月，开门见山，豁人心目，畅佛本怀的语句，所以好像自己看了就会被玷污一样，避之不及。</p></div>
+<div class="para-pair"><p class="p-orig">亦有与光同一根性者，视作妙宝，由兹返迷归悟，返邪归正，生敦伦常，没生极乐者，大有其人焉。续编于初编所说外，益产妇念观音，毒乳杀儿女，此皆古今高僧医人所未说者，光则屡屡说之。</p><p class="p-trans">但也有与我同样根性的人，把文钞当作妙宝，由此返迷归悟，返邪归正。活着的时候，敦笃伦常；临终往生极乐的人，也大有人在。《印光法师文钞续编》在初编（《增广印光法师文钞》）所说之外，又增加了产妇念观音，毒乳杀儿女，这都是古今高僧、医生所没有说到的，我则多次反复地提及。</p></div>
+<div class="para-pair"><p class="p-orig">古人不为良相，必为良医，以期济世活人。光以无知无识粥饭僧，由徐蔚如一人传虚，竟致承虚接响之万人传实，以为善知识。彼既以讹传讹，光不妨将错就错，教人生有恃怙，死有归宿，产无厄难，子不横死，以尽我心。</p><p class="p-trans">古人说：不做好的宰相，必做好的医生，以期救济世道，救活他人。我以一个无知无识的只会吃饭的僧人，因为徐蔚如一个人的虚传，竟然导致承虚接响的万人传实，把我当作善知识。他们既然以讹传讹，我也不妨将错就错，教导他人，在生有所依靠，死后有个归宿，产妇没有厄难，孩子不会横死，来尽我的一点诚心。</p></div>
+<div class="para-pair"><p class="p-orig">虽有刺于明人慧眼，但以有益于人，无害于世，因随顺明道，妙真二师之意，而令其流通，并略叙其缘起。知我罪我，所不计也。</p><p class="p-trans">虽然有碍于聪明人的慧眼，但因为有益于他人，无害于世间，于是随顺明道、妙真二位法师的意思，而令《印光法师文钞续编》流通，并大略叙述其中的缘起。他人了解我、责怪我，这些都不是我需要考虑的。</p></div>
+<div class="para-pair"><p class="p-orig">民国二十八年己卯孟夏，常惭愧僧释印光敬撰。（年七十九）</p><p class="p-trans">民国二十八年（1939年），己卯，孟夏（农历4月），常惭愧僧释印光敬撰。（年七十九岁）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【钧陶】</span>用钧制造陶器。比喻造就。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【权乘菩萨】</span>《佛学常见辞汇》：“【权乘菩萨】指藏通别三教的菩萨，因他们的功行尚浅，实在还没有达到真实菩萨地位。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【方等会】</span>释尊五时说法之第三时，其余四时为：华严时、阿含时、般若时、法华涅槃时。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【洪猷】</span>宏大的计划。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【食客】</span>古代寄食在贵族官僚家里为主人谋划、奔走的人。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【绐】</span>1破旧的丝。2缓慢；倦怠。3欺骗；欺诈。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【问学】</span>求知；求学。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【木标】</span>作标志的木桩。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【若将浼焉】</span>好像自己会沾染肮脏似的。《孟子·公孙丑上》：“推恶恶之心，思与乡人立，其冠不正，望望然去之，若将浼焉。”</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【粥饭僧】</span>（杂语）言但吃粥饭无有一用之僧也。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【一人传虚，万人传实】</span>虚：指没有的事情。一人传出没有根据的事，众多的人就当作实有的事传开了。指根本无事，因传说的人多，就使人信以为真。出处：《全唐文·张怀瓘〈书断论〉》：“一人措虚，百人传实。”宋·释道原《景德传灯录·东禅契纳禅师》：“问：‘如何是东禅家风？’师曰：‘一人传虚，万人传实。’”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

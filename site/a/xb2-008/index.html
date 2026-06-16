@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>大佛顶首楞严经楷书以供众读诵序 · 印光法师文钞</title>
+<meta name="description" content="如来藏妙真如性，生佛同具，了无增减。佛以究竟证故，安住寂光，享常乐我净之法乐。众生以彻底迷故，起惑造业，受生死轮回之妄苦。虽则染净不同，苦乐各别，而其本具之妙真如性，仍自无增无减。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-008/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大佛顶首楞严经楷书以供众读诵序 · 印光法师文钞">
+<meta property="og:description" content="如来藏妙真如性，生佛同具，了无增减。佛以究竟证故，安住寂光，享常乐我净之法乐。众生以彻底迷故，起惑造业，受生死轮回之妄苦。虽则染净不同，苦乐各别，而其本具之妙真如性，仍自无增无减。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-008/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">大佛顶首楞严经楷书以供众读诵序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来藏妙真如性，生佛同具，了无增减。佛以究竟证故，安住寂光，享常乐我净之法乐。众生以彻底迷故，起惑造业，受生死轮回之妄苦。虽则染净不同，苦乐各别，而其本具之妙真如性，仍自无增无减。</p><p class="p-trans">如来藏妙真如性，众生与佛同样具足，没有一丝一毫的增减。佛陀因为究竟证得的缘故，安住在常寂光净土，享常、乐、我、净的法乐；众生因为彻底迷惑的缘故，起贪嗔痴三惑造杀盗淫三业，遭受生死轮回的幻妄之苦。虽然杂染清净不同，受苦受乐各别，但这本具的妙真如性，仍然还是无增无减。</p></div>
+<div class="para-pair"><p class="p-orig">然众生但有性德，绝无修德，不能得其受用。反承此妙性功德之力，作生死因，受轮回果。以是因缘，感佛慈悲，示生世间，随机说法。俾彼各各就路还家，识取衣珠，庶不致孤露无依，了无恃怙也。</p><p class="p-trans">然而众生只有性德，绝无修德，不能得到妙真如性的受用。反而承着这个妙性功德之力，造作生死之因，枉受轮回之果。以此因缘，感得佛陀慈悲，示生世间，随机说法。使得众生各自就近路回家，认识并取出衣服里的摩尼宝珠，才不至于孤露无依，没有依靠啊！</p></div>
+<div class="para-pair"><p class="p-orig">大佛顶首楞严经者，乃三世诸佛圆满菩提之密因，一切菩萨趣向觉道之妙行，故名之为首楞严也。</p><p class="p-trans">《大佛顶首楞严经》，阐述的是三世诸佛圆满菩提的密因、一切菩萨趣向觉道的妙行，所以名为“首楞严”。</p></div>
+<div class="para-pair"><p class="p-orig">梵语首楞严，华言一切事究竟坚固。何谓一切事，即心境二法。开而言之，即五阴，六入，十二处，十八界，七大也。此一切事，皆如来藏妙真如性之全体大用，本自坚固，了无生灭，垢净，增减之相。而众生迷真逐妄，背觉合尘，若心若境，皆成幻妄，皆是生灭，皆不坚固矣。</p><p class="p-trans">梵语首楞严，汉译一切事究竟坚固。什么叫一切事呢？就是心、境二法。展开来说，就是五阴、六入、十二处、十八界、七大。这一切事，都是如来藏妙真如性的全体大用，本自坚固，毫无生灭、垢净、增减这些相状。但是，众生迷背真心、追逐妄境，背离觉性、合于尘境，致使心和境，都成了幻妄，都是生灭，都不坚固了。</p></div>
+<div class="para-pair"><p class="p-orig">故因阿难请问十方如来得成菩提，妙奢摩他，三摩，禅那最初方便，如来于是征心显见，历五阴，六入，十二处，十八界，七大，以显示一一皆如来藏，随众生心，循业发现，令其开悟。</p><p class="p-trans">所以在经中，因阿难请问十方如来得成菩提、妙奢摩他、三摩、禅那的最初方便，如来于是七处征心，十番显见，历数五阴、六入、十二处、十八界、七大，来显示一一都是如来藏妙真如性，随众生心，循业发现，令大众开悟。</p></div>
+<div class="para-pair"><p class="p-orig">后又以二十五圣，于二十五法，各证圆通，以实其说。此经为对阿难多闻，及娑婆闻性最利之机，故文殊选择，唯取观音。</p><p class="p-trans">后面又以二十五位圣者，以二十五种法门，各证圆通，来证实前面所说。这部经是针对阿难的多闻，以及娑婆世界众生的根机闻性最利所说的法，所以文殊菩萨在选择圆通法门时，只取了观世音菩萨的耳根圆通法门。</p></div>
+<div class="para-pair"><p class="p-orig">而净土念佛法门，普逗十方三世一切众生之机，故列于弥勒之后，观音之前，以密示其普逗群机之意。否则当列于虚空藏之后，弥勒之前矣。</p><p class="p-trans">但是，净土念佛法门（《大势至菩萨念佛圆通章》所示），普遍适合十方三世一切众生的根机，所以列在弥勒菩萨之后，观世音菩萨之前，来密示念佛法门普遍适合一切根机的意思。否则，《大势至菩萨念佛圆通章》就应当列在虚空藏菩萨之后，弥勒菩萨之前了。</p></div>
+<div class="para-pair"><p class="p-orig">刻论普通法门，必须断尽烦惑，方可了生脱死，唯上上最利根人，可于现生即了。若非此等根性，则或二三四五生，或二三四五劫，或至尘沙劫又尘沙劫，仍在轮回六道中者多多矣。</p><p class="p-trans">严格地说，普通法门，必须断尽烦恼惑业，方才可以了生脱死，唯有上上等的最利根的人，才能在现生了生脱死。如果不是此等根性的人，那么也许二、三、四、五生，也许二、三、四、五劫，甚至尘沙劫又尘沙劫，仍旧在六道中轮回的人，太多太多了。</p></div>
+<div class="para-pair"><p class="p-orig">以仗自己戒定慧力，断尽贪瞋痴烦恼惑业，故难。况时丁末法，人根陋劣，寿命短促，知识稀少，魔外纵横，正见稍亏，即堕魔罥乎。</p><p class="p-trans">这是因为要依仗自己的戒定慧力，来断尽贪瞋痴烦恼惑业，所以很难。何况时值末法，人根陋劣，寿命短促，善知识稀少，邪魔外道到处都是，正见稍微欠缺，就堕入魔网了。</p></div>
+<div class="para-pair"><p class="p-orig">唯净土特别法门，仗弥陀慈悲誓愿，与自己信愿忆念之力，于临命终时，蒙佛接引，往生西方。俾上上根人，速证无生，即下下根人，亦预圣流。其为利益，何可名言。此义乃华严末后归宗之一著，切不可以光之人微，而谓为谬妄也。</p><p class="p-trans">唯有净土特别法门，依仗阿弥陀佛的慈悲誓愿力，与自己信愿忆念的力量，在临命终时，蒙佛接引，往生西方。使得上上根人，速证无生法忍，即使是下下根人，也得以预入圣流。这个利益，怎么能用语言表达得清楚呢？这个义理是《华严经》最后归宗的一著，千万不可因为我人微言轻，就认为这些道理荒谬背理啊！</p></div>
+<div class="para-pair"><p class="p-orig">吾人果能具真信切愿，如子忆母，都摄六根，净念相继而念。即是以势至反念念自性，观音反闻闻自性，两重工夫，融于一心，念如来万德洪名。</p><p class="p-trans">我们果真能够具足真信切愿，如子忆母，“都摄六根，净念相继”来念佛。就是把大势至菩萨反念念自性、观世音菩萨反闻闻自性的这两重工夫，融于一心，来念如来万德洪名。</p></div>
+<div class="para-pair"><p class="p-orig">久而久之，则即众生业识心，成如来秘密藏，所谓以果地觉，为因地心，故得因该果海，果彻因源也。有缘遇者，幸勿忽诸。此是微尘佛，一路涅槃门，况我末法人，何敢不遵循。</p><p class="p-trans">久而久之，就会即此众生业识心，成为如来秘密藏，所谓：“以果地觉，为因地心；故得因该果海，果彻因源。”有缘遇到这个法门的人，希望你们千万不要忽视。“此是微尘佛，一路涅槃门”，何况我们这些末法时代的人，哪敢不遵循呢？</p></div>
+<div class="para-pair"><p class="p-orig">此后严示四重戒律，以培其基。备说神咒功德，以期恃卫。详谈十法界因果，一一皆是循业发现。显示五阴魔境，令知功行深者，尚有著魔造罪堕狱之事，况初心者乎。</p><p class="p-trans">这之后，严格诫示四重戒律，来培植成道的根基。周备详说楞严神咒的功德，以期大家依靠并得到保护。还详谈了十法界的因果，一一都是循着业力发生显现的。显示了五阴魔境，令大众知道即使功德、行持都很深的修行人，还有著魔、造罪、堕落地狱的事发生，更何况是初发心的修行人呢？</p></div>
+<div class="para-pair"><p class="p-orig">观经初七处征心，十番显见，历阴，入，处，界，大，重重开示，方令最利根之阿难，圆悟藏性（即宗门所谓，亲见父母未生前本来面目也），则大彻大悟，诚非易易。</p><p class="p-trans">纵观全经，起初七处征心，十番显见，又经过五阴、六入、十二处、十八界、七大，重重开示，才令最利根的阿难（多闻第一），圆满证悟如来藏性（就是禅宗所说的：亲见父母未生前的本来面目），可见，大彻大悟，实在不是容易的事。</p></div>
+<div class="para-pair"><p class="p-orig">经后禅定力深，已破色受二阴，尚被魔惑，失其正见，造诸恶业，生陷王难，死堕地狱。是知欲了生死，唯仗自力，其难与险，莫可比喻。</p><p class="p-trans">经的后面又说到，禅定力深的修行人，已经破了色受二阴，尚且还被阴魔所迷惑，失去正见，造作诸多的恶业，活着陷入王难，死后堕入地狱。由此可知，想要了生死，如果只依仗自力，其中的艰难与危险，不可比喻。</p></div>
+<div class="para-pair"><p class="p-orig">愿诸同伦，依势至忆佛念佛，及普贤十大愿王导归极乐之教，与尽华藏世界海诸菩萨，一致进行，求生西方，实为万全之计。</p><p class="p-trans">祈愿诸位同修，依大势至菩萨所说的方法忆佛念佛，以及普贤菩萨十大愿王导归极乐的教诲，与尽华藏世界海的诸位菩萨，一致进行求生西方的行持，才真的是万全之计。</p></div>
+<div class="para-pair"><p class="p-orig">智茂居士许文菁，楷书楞严经，以供觉社莲友读诵。瞿智鸿，叶圣方二居士，为之购纸。书毕，祈光作序。</p><p class="p-trans">智茂居士许文菁，用楷书恭写《楞严经》，以供觉社莲友读诵。瞿智鸿、叶圣方二位居士，为他购买了纸张。书写完毕后，祈请我来作序。</p></div>
+<div class="para-pair"><p class="p-orig">光以觉社乃念佛道场，理宜显示净土法门胜妙之义，庶不致好高务胜者，专主自力，弃舍佛力，卒成求升反坠，弄巧成拙之结果，故其言似乎泛滥迂腐。纵有以此见责者，亦只曰阿弥陀佛，阿弥陀佛耳。</p><p class="p-trans">我认为，觉社是念佛道场，理应宣传、开示净土法门的胜妙义理，才不至于使好高务胜的人，专门主张自力，而弃舍佛力，最终落得求上升，反而坠落，弄巧成拙的结果，所以上述所说似乎泛滥迂腐。即使有人以此来指责我，我也只会说：阿弥陀佛，阿弥陀佛。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【七处征心】</span>从心在身内、身外、潜于眼根、有暗则藏有窍则明、随有、在中间、乃至无著，每征一次，被世尊破为无有是处，阿难穷其所闻终于七征不得其心，这才放下自己的思想，五体投地拜伏在世尊面前，请求开示。世尊指出了无始生死根本，阿难现在把攀缘心当作了自性，以至于颠倒轮转，一切众生一俱如是，故执攀缘心为真，这是众生轮回的第一个根本原因。进而世尊又开示无始菩提涅槃，元清净体。第八识体如来藏摄一切法，生一切法，全体是真，众生虽然皆有无缺，终日承其功能利用，但不认识这个真本，所以颠倒轮转，故不识真本是众生颠倒轮回的第二个根本原因。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【十番显见】</span>显见是心、显见不动、显见不灭、显见不失、显见无还、显见不杂、显见无碍、显见不分、显见超情、显见离见。佛陀通过十次比喻来开示我们能看到东西的那个见的本质。如果说七处征心是破妄，那么十番显见就是显真。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【谬妄】</span>荒谬背理。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

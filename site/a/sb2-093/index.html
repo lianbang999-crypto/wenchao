@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复郑慧洪居士书三 · 印光法师文钞</title>
+<meta name="description" content="去冬今春二函，均收到。去冬一函，所说之事均不错。而整顿僧伽，恢复试僧，乃万万做不到。外道均假借佛法之名，然皆鄙劣不堪。若真遇佛法能了大意者，彼岂能引诱哉。所引诱者，皆无知无识之流也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-093/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复郑慧洪居士书三 · 印光法师文钞">
+<meta property="og:description" content="去冬今春二函，均收到。去冬一函，所说之事均不错。而整顿僧伽，恢复试僧，乃万万做不到。外道均假借佛法之名，然皆鄙劣不堪。若真遇佛法能了大意者，彼岂能引诱哉。所引诱者，皆无知无识之流也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-093/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复郑慧洪居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">去冬今春二函，均收到。去冬一函，所说之事均不错。而整顿僧伽，恢复试僧，乃万万做不到。外道均假借佛法之名，然皆鄙劣不堪。若真遇佛法能了大意者，彼岂能引诱哉。所引诱者，皆无知无识之流也。</p><p class="p-trans">去年冬天，今年春天的二封信，都收到了。去年冬天的一封信，所说的事都不错。然而整顿僧伽，恢复考试录僧，是万万做不到的。外道都假借佛法之名，然而都鄙陋下劣不堪。如果真正遇到能够明了佛法大意的人，外道岂能引诱得了他呢？所引诱的，都是无知无识之类的人。</p></div>
+<div class="para-pair"><p class="p-orig">汝父用心于经学多年，惜未遇佛法，仍被程朱所关闭。今既不以光言为谬，则已出关而可为儒释二圣作使者矣。</p><p class="p-trans">你父亲用心研究儒家经典多年，可惜没有遇到佛法，仍然被二程（程颢、程颐）、朱熹的学说所关闭。现今既然不以我的话为错谬，实际已经走出关门，因而可以为儒释二圣作使者了。</p></div>
+<div class="para-pair"><p class="p-orig">外道通通以炼丹运气为道，其所立传道之章程，已将其道之鄙劣，完全揭出。惜世人无知，反由此而争先趋入。如蝇赴膻，如蛾扑火，诚可哀悯（所言揭出鄙劣者，即彼各守秘传，及六耳不传道，并欲入彼道，先发反道遭种种恶报之愿等）。此等邪教，遍满世界。真法既明，彼徒自无大势力，不能昌炽矣。</p><p class="p-trans">外道通通以炼丹运气为道，他们所立传道的章程，已经将他们传道的鄙陋下劣，完全揭示出来。可惜世人无知，反而由此而争先恐后地加入。如苍蝇奔赴腥膻，如飞蛾扑向灯火，实在可哀可悯（所说揭出鄙劣，就是他们各守秘密传道，不当着第三者传道，以及想要进入他们的道门，先要发如果背叛道门，遭种种恶报的誓愿等等）。这些邪教，遍满世界。真正的正法既已明了，那些邪徒就自然没有大势力，不能猖獗炽盛了。</p></div>
+<div class="para-pair"><p class="p-orig">念佛一法，至极稳当。小慧之流，每弃佛力而修仗自力之法，非愚即狂，莫由挽救。吾人但当深信佛言，固守净宗之旨。当不至流入邪外，及以意见明了为亲证也。</p><p class="p-trans">念佛一法，极为稳当。小智慧的人，常常舍弃佛力而修依仗自力之法，不是愚痴，就是狂妄，无法挽救。我们只应当深信佛言，固守净宗的宗旨。当不至于流入邪魔外道，以及将意识见解层面的明了误认为是亲证道果。</p></div>
+<div class="para-pair"><p class="p-orig">近有高明真切用功，流入偏知谬见。贡高我慢，藐视念佛者，亦复不少。此等皆因不自量，而妄以己之能了知，为能证得也。岂知坯器未火，经雨即化为尘土耳。</p><p class="p-trans">近来有一些高明真切用功的人，流入偏知谬见。贡高我慢，轻视念佛的人，也有不少。这些人都是因为不自量力，而狂妄地以自己能够了知，便认为能够证得。哪里知道泥坯之器未经火烧，一经雨淋立刻就化为尘土了。</p></div>
+<div class="para-pair"><p class="p-orig">光于今年八九月印书事了，当即灭踪长隐。此刻不说，后莫由说矣。汝父欲于一二年来浙见光，祈彼但依文钞嘉言录修持。又依之提倡。俾贵地之人同沾佛化，则为弥陀弟子，大士良朋矣。</p><p class="p-trans">我在今年八九月份，印书的事了结之后，当会灭迹隐居。现在不说，以后没有机会说了。你父亲想在这一二年来浙江见我，请他只依《文钞》、《嘉言录》来修持。再依书中所说的，加以提倡。使得贵地之人同沾佛的教化，就成为阿弥陀佛的弟子，菩萨大士的良朋了。</p></div>
+<div class="para-pair"><p class="p-orig">光之粥饭僧，不见又有何憾。纵不灭踪，当此时局不靖之时代，何必费许多川资，白吃辛苦，而只期一见于光乎。</p><p class="p-trans">我这个只会吃饭的僧人，不见又有何遗憾。纵然不隐居，在这时局动荡的时代，何必花费许多的路费，白吃辛苦，而只是期望见一见我呢？</p></div>
+<div class="para-pair"><p class="p-orig">令表兄鼎才，既欲皈依，当为取法名，又为一书，祈为转寄。今为汝寄文钞，嘉言录，弥陀经白话注，现报录，观音颂，阴骘文注证，普贤行愿品，金刚经（相片夹于此中），各一包，祈为分送。</p><p class="p-trans">你表兄鼎才，既然想要皈依，当会为他取法名，再为他写一封信，请转寄给他。现在为你寄《文钞》、《嘉言录》、《弥陀经白话注》、《现报录》、《观音颂》、《阴骘文注证》、《普贤行愿品》、《金刚经》（相片夹在这部经书中），各一包，请分送给大家。</p></div>
+<div class="para-pair"><p class="p-orig">潜消劫运序，已见大意广序，不须寄来。以光以印书事，日不暇给。况于此半年内，要了一切手续。否则九月尚不能了矣。</p><p class="p-trans">《潜消劫运序》，已经看到大意的《广序》，不须要寄来。因为我料理印书的事，每天没有空闲。何况在这半年内，要了结一切手续事务。否则九月份依旧不能了结。</p></div>
+<div class="para-pair"><p class="p-orig">楞严大义，当推楞严文句为第一。其释文，则楞严指掌为第一。法华大意，则会义，释文亦推指掌。此四部，当须十余元。书之以作后来欲请之备。</p><p class="p-trans">《楞严经》的大义，当推《楞严文句》为第一。注释经文，那么《楞严指掌》为第一。《法华经》大意，则《法华会义》为第一，注释经文也推《法华指掌》。这四部书，当须十多元钱。写下来，作为以后想请书的准备。</p></div>
+<div class="para-pair"><p class="p-orig">现须专修净业。以时局不靖，非仗念佛念观音之力，决难得所恃怙。当以此告汝父，及汝表兄，及一切世人。</p><p class="p-trans">现在必须专修净业。因为时局不安定，若不依仗念佛、念观世音菩萨之力，决定很难得到依靠。应当以此告诉你父亲和你表兄，以及一切世人。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【经学】</span>以儒家经典为研究对象的学问。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【六耳不传道】</span>不当着第三者传道。比喻保密。六耳：谓第三者。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【不靖】</span>不安宁；骚乱。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【日不暇给】</span>暇：空闲；给：足够。指事情繁多，时间不够，来不及做完。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【楞严文句】</span>指《楞严经文句》十卷，明智旭撰。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【楞严指掌】</span>指《楞严指掌疏》十卷，清·通理述。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【法华大意，则会义，释文亦推指掌】</span>会义：指《法华经会义》十六卷，明·蕅益大师撰。指掌：指《法华指掌疏》十卷，清·通理述。通理：清代僧（1701-1782），河北新河县人。俗姓赵。字达天。幼年出家，跟随显如珍学习经论，二十岁就潭柘山岫云寺德彰受具足戒。通净土教、《法华经》、《楞严经》、南山律等，尤其通晓《华严经》，为清代华严宗中兴之祖。曾在万善、嘉兴、善应、香界、拈花诸山讲经三十余会，弘戒十四期。又登山西五台山万缘庵，讲《报恩经》，感得文殊现身。乾隆十八年（1753），奉命管理僧录司之印务，受赐紫衣。乾隆四十四年，曾与第六世班禅喇嘛论佛法之大义，得喇嘛赠与香帛、曼答等物。后被敕封为阐教禅师。著有《法华指掌疏》、《楞严指掌疏》、《圆觉新义疏》、《金刚经偈》、《心经合释》、《盂兰摘要》、《五教仪增注》等。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

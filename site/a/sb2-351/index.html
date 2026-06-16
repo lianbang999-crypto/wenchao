@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>批念佛居士书（顶格写者，均系印公批答之语。其低一格写者，则为永嘉念佛居士之原书） · 印光法师文钞</title>
+<meta name="description" content="奉读慈谕，极谆切，极方便，数载泣歧，一朝知正。今后当一心念佛，普为众生回向净土。其余期图，若俗若真，皆已放下，唯此一著，确可安身立命，自利利他，上慰悲愿，而报鸿恩。乞赐加被，常行精进。兹拟来月或八月再事禁语，默持观音圣号，日期长短，随力随缘。所有关中礼念仪式，及诸疑问，谨陈于后，即请诲迪，祗遵为感。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-351/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="批念佛居士书（顶格写者，均系印公批答之语。其低一格写者，则为永嘉念佛居士之原书） · 印光法师文钞">
+<meta property="og:description" content="奉读慈谕，极谆切，极方便，数载泣歧，一朝知正。今后当一心念佛，普为众生回向净土。其余期图，若俗若真，皆已放下，唯此一著，确可安身立命，自利利他，上慰悲愿，而报鸿恩。乞赐加被，常行精进。兹拟来月或八月再事禁语，默持观音圣号，日期长短，随力随缘。所有关中礼念仪式，及诸疑问，谨陈于后，即请诲迪，祗遵为感。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-351/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">批念佛居士书（顶格写者，均系印公批答之语。其低一格写者，则为永嘉念佛居士之原书）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">奉读慈谕，极谆切，极方便，数载泣歧，一朝知正。今后当一心念佛，普为众生回向净土。其余期图，若俗若真，皆已放下，唯此一著，确可安身立命，自利利他，上慰悲愿，而报鸿恩。乞赐加被，常行精进。兹拟来月或八月再事禁语，默持观音圣号，日期长短，随力随缘。所有关中礼念仪式，及诸疑问，谨陈于后，即请诲迪，祗遵为感。</p><p class="p-trans">奉读恩师慈悲开示，极为真诚、恳切，极为善巧、方便，多少年在歧路哭泣（注1），今天终于知道正道。今后应当一心念佛，普为众生回向净土。其余的期望图谋，无论俗家事、法门事，都已经放下，唯有念佛求生这一著，确实可以安身立命、自利利他，向上安慰佛陀的悲愿，而报鸿慈大恩。乞赐加被弟子，常行精进。现在打算在下个月或者八月，再从事禁语，默持观音圣号，日期的长短，随力随缘。所有关中的礼拜念诵仪式，以及诸多疑问，谨慎地陈列在后，请恩师教诲开导（注2），弟子以谨遵为感恩。</p></div>
+<div class="para-pair"><p class="p-orig">心常存于修持，关与不关，皆无甚紧要。然须圆通，不可死执，或致心有不安，反为无益。观音慈悲广大，决定有感即应。但不可过于急躁求应。譬如种谷，今日下种，今日即望收谷，便成痴人。而菩萨固有一举念，即蒙加被者。但不可作此种崖板观念期望，则有大益矣。</p><p class="p-trans">心中常存修持之心，闭关还是不闭关，都没什么要紧。然而必须圆通，不可死板执着，或许导致内心有所不安，反而没有益处。观世音菩萨慈悲广大，决定有感即应。但不可过于急躁求感应。譬如种谷，今天下种，今天就指望收获谷子，就成了痴人。而菩萨固然有众生一动念，就蒙加被的威神。但不可作这种崖板的观念期望，那么就有大利益了。</p></div>
+<div class="para-pair"><p class="p-orig">入关第一天</p><p class="p-trans">入关第一天</p></div>
+<div class="para-pair"><p class="p-orig">早起念十气佛，盥漱毕，礼十方常住三宝，各一拜，本师释迦牟尼佛三拜，西方教主四十八拜，净土经论三拜，观音三十二拜，势至海众各三拜，地藏莲宗诸祖（现在师僧）各一拜，念供养咒廿一遍，念莲大师西方愿文一遍，念观音赞一遍，继续专念圣号，于其中间，除眠食外，兼于近午过午，近晚正晚，礼观音三十二拜。</p><p class="p-trans">早起念十口气的佛号，盥漱完毕，礼十方常住三宝，各一拜，本师释迦牟尼佛三拜，西方教主阿弥陀佛四十八拜，净土经论三拜，观世音菩萨三十二拜，大势至菩萨和清净大海众菩萨各三拜，地藏菩萨及莲宗诸祖（现在师僧）各一拜，念《供养咒》二十一遍，念莲池大师《西方发愿文》一遍，念《观音赞》一遍，继续专念圣号，在这期间，除了睡眠、饮食之外，还在近午、过午，近晚、正晚，礼观世音菩萨三十二拜。</p></div>
+<div class="para-pair"><p class="p-orig">仪节以简为妙。</p><p class="p-trans">仪式礼节以精简为好。</p></div>
+<div class="para-pair"><p class="p-orig">以后各天</p><p class="p-trans">以后各天</p></div>
+<div class="para-pair"><p class="p-orig">早起念十气佛，盥漱毕，礼观音三十二拜，继续专念圣号，于其中间，除眠食外，兼于近午过午，近晚正晚，礼观音三十二拜，如第一天。</p><p class="p-trans">早起念十口气的佛号，盥漱完毕，礼观世音菩萨三十二拜，继续专念圣号，在这期间，除睡眠、饮食外，还在近午、过午，近晚、正晚，礼观世音菩萨三十二拜，如第一天。</p></div>
+<div class="para-pair"><p class="p-orig">完满一天</p><p class="p-trans">完满一天</p></div>
+<div class="para-pair"><p class="p-orig">早起及近晚各仪如前，正晚圣号念毕，念西方愿文一遍，礼西方教主四十八拜，观音三十二拜，势至海众各三拜。</p><p class="p-trans">早起以及近晚，各种仪式如前，正晚圣号念完，念《西方发愿文》一遍，礼西方教主阿弥陀佛四十八拜，观世音菩萨三十二拜，大势至菩萨和清净大海众菩萨各三拜。</p></div>
+<div class="para-pair"><p class="p-orig">又莲大师愿文中，专念阿弥陀佛万德洪名句，自应改为专念观世音菩萨万德洪名，余句尚须改易否。</p><p class="p-trans">另外，莲池大师的《西方发愿文》中，“专念阿弥陀佛万德洪名”一句，自然应改为“专念观世音菩萨万德洪名”，其余的句子还须要改动吗？</p></div>
+<div class="para-pair"><p class="p-orig">宜酌量。</p><p class="p-trans">应斟酌衡量。</p></div>
+<div class="para-pair"><p class="p-orig">愿文中首段，今于佛前翘勤五体，念至此句时，只须一礼便起，或须伏至以下某句才起。</p><p class="p-trans">《发愿文》中的第一段，“今于佛前翘勤五体”，念到这句时，只须礼一拜便起，还是必须伏拜到下面某句才起来？</p></div>
+<div class="para-pair"><p class="p-orig">久伏或致伤气。不可不知。</p><p class="p-trans">长久伏拜有时会导致伤气。不可不知。</p></div>
+<div class="para-pair"><p class="p-orig">通行观音赞云，观音大士，悉号圆通，十二大愿誓弘深，十二大愿四字，恐系误引药师如来因缘，应改何语。</p><p class="p-trans">通行的《观音赞》为：观音大士，悉号圆通，十二大愿誓弘深，“十二大愿”四字，恐怕是误引药师如来的因缘，应改成什么语句？</p></div>
+<div class="para-pair"><p class="p-orig">十二大愿无出处。改为慈悲誓愿最弘深。亦可。</p><p class="p-trans">十二大愿，没有出处。改为“慈悲誓愿最弘深”。也可以。</p></div>
+<div class="para-pair"><p class="p-orig">临卧如不成寐，只管忆念圣号，以治之，抑须暂停圣号，静心以治之。</p><p class="p-trans">临睡如果睡不着，只管忆念圣号，来对治，还是必须暂停圣号，静心来对治？</p></div>
+<div class="para-pair"><p class="p-orig">静心念圣号。</p><p class="p-trans">静心念圣号。</p></div>
+<div class="para-pair"><p class="p-orig">欲念起时，须作已死想，抑作将死想，关中尚有应须注意之事，统祈指示。</p><p class="p-trans">欲念生起时，须作已死来想，还是作将死来想？闭关中还有哪些应须注意的事，请您全部给予指示。</p></div>
+<div class="para-pair"><p class="p-orig">事岂能尽指出，唯志诚恭敬，不急躁求灵应。但取心与圣号相应。不求感通，自获感通。否则或至著魔。</p><p class="p-trans">事情哪能全部指出，唯有志诚恭敬，不急不躁求灵应。只取心与圣号相应。不求感通，自然获得感通。否则，或许导致著魔。</p></div>
+<div class="para-pair"><p class="p-orig">平日屡梦，在屋内飞行念佛，惟被椽瓦盖住，不能冲升。又一日在某寺见一帧水墨画观音像，身眼巨大，至今尚觉怖畏，以上二缘，未知是何罪障。</p><p class="p-trans">平时多次做梦，在屋内飞行念佛，只是被屋顶的椽瓦盖住，不能冲出飞升。还有一天，在某座寺院，见到一幅水墨画的观音像，身形眼睛巨大，至今还觉得怖畏，以上二事，不知是什么罪障？</p></div>
+<div class="para-pair"><p class="p-orig">此梦系好境界。但尚未至业力大消，故仍有碍。见像怖畏，亦无碍。然不得常存念在心。</p><p class="p-trans">这个梦是好境界。但还没有到业力大消，所以仍然有障碍。见到佛像怖畏，也没有妨碍。然而不得常常存念在心。</p></div>
+<div class="para-pair"><p class="p-orig">又恩师尝谓行人所见之境，有一分不可说一分一，亦不可说九厘九，过说亦罪过，少说亦不可。又谓此种境界，向知识说，为证明邪正是非，则无过，若不为证明，唯欲自炫亦有过。若向一切人说，则有过，除求知识证明外，俱说不得云云。然则行人见有境界，或因心想不周，或因文字疏拙，以致少说多说，亦有妨碍否。弟子曾蒙恩师三次示梦，当向某友等宣说，虽非欲自炫，亦非为证明，实为令其启信，不知仍属有过否。</p><p class="p-trans">另外，恩师曾经说：“修行人所见到的境界，有一分，不可说一分一，也不可说九厘九，说过了也有罪过，说少了也不可。”又说：“这种境界，向善知识说，为了证明邪正是非，就没有罪过。如果不是为了证明，只是想自我炫耀，也有罪过。如果向一切人说，就有罪过，除了求善知识证明之外，都说不得等等。”然而修行人见到有境界，或者因为心里想得不周全，或者因为文字粗疏笨拙，以致少说多说，也有妨碍吗？弟子曾蒙恩师三次示现在梦中，当向某朋友等人说，虽然不是想自我炫耀，也不是为了证明，实在是为了令他们开启信心，不知是不是仍属于有罪过呢？</p></div>
+<div class="para-pair"><p class="p-orig">梦境尚无大关系。禅定中之境，切须慎重。修行人每每犯未得为得之病。</p><p class="p-trans">梦境还没有大关系。禅定中的境界，千万要慎重。修行人常常犯未得为得的毛病。</p></div>
+<div class="para-pair"><p class="p-orig">居家处世，见人有不如法，既无威德，足资制服，又不善劝谕，使令感悟，只好忍耐随任，忆念观音，以祈慈佑得乎，并恳开示幸甚。</p><p class="p-trans">居家处世，见到他人有不如法的地方，自己既没有威德，足以制止摄服，又不善于劝导晓谕，使他感悟，只好忍耐随任，忆念观世音菩萨，来祈求菩萨慈悲护佑，可以吗？并恳求恩师开示，非常庆幸。</p></div>
+<div class="para-pair"><p class="p-orig">诚之所至，金石为开。即彼不得益，自己却得大益。</p><p class="p-trans">诚之所至，金石为开。即使对方得不到利益，自己却能得大利益。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【泣岐路】</span>指战国杨朱临歧路而哭泣之事。事出《淮南子·说林训》：“杨子见逵路而哭之，为其可以南，可以北。”三国魏阮籍《咏怀》之二三：“杨朱泣岐路，墨子悲染丝。”亦省作“泣岐”。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【诲迪】</span>教诲开导。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

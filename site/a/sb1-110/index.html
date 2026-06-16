@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复万梁居士书三 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。三人法名，另纸书之。以后勿再来信，亦勿介绍人皈依，以无力应酬故也。来亦不复。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-110/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复万梁居士书三 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。三人法名，另纸书之。以后勿再来信，亦勿介绍人皈依，以无力应酬故也。来亦不复。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-110/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复万梁居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。三人法名，另纸书之。以后勿再来信，亦勿介绍人皈依，以无力应酬故也。来亦不复。</p><p class="p-trans">来信尽知。三个人的法名，在另外的纸上写好。以后不要再来信，也不要介绍人皈依，因为无力应酬的缘故。来信也不回复。</p></div>
+<div class="para-pair"><p class="p-orig">家庭教育丛书稿，千万勿寄来，若寄来，当即为寄回。以光目力衰极，即此来复之信，尚须手眼二镜，始勉强看复。</p><p class="p-trans">《家庭教育丛书》稿，千万不要寄来，如果寄来，当立即寄回。因为我的视力非常衰弱，就是这来往的信，还必须用手、眼二个镜子，才勉强看信、回信。</p></div>
+<div class="para-pair"><p class="p-orig">代光校对之师（谨按即德森老法师），因前年赣州政府，要灭彼之寿量寺（破极之古寺）。开马路，做小菜场。彼向各军政伟人处呼吁得免。政府又逼著即时便建筑，否则仍废。遂竭力经营，得以恢复。</p><p class="p-trans">代我校对的法师（谨按：即德森老法师），因为前年赣州政府，要拆除他那个地方的寿量寺（非常破败的一座古寺）。要开通马路，做小菜场。他向各个军政伟人处呼吁，得以幸免。政府又逼着立即进行建筑，否则仍然废除。他于是竭力经营，得以恢复这座古寺。</p></div>
+<div class="para-pair"><p class="p-orig">去年彼区专员，以军事退后，作善后之计画，呈文中央，提寺产善后，中央令提十程之八。兵区之寺庙一空如洗，绝无积蓄，再提十程之八，则僧将完全饿死。又托各界伟人呈文，一概不通消息，以中央办事人压而不呈。</p><p class="p-trans">去年，那个地区的专员，因为军事退后，作善后的计划，呈文给中央政府，要提寺院财产来善后，中央令提十分之八。驻兵地区的寺庙一空如洗，绝对没有积蓄，再提十分之八，那么僧人将要完全饿死了。他又委托各界伟人呈文中央政府，一概没有消息，因为中央办事人压住呈文而不呈上。</p></div>
+<div class="para-pair"><p class="p-orig">至今年祈与此专员有深交者疏通，始得止息。二三年来，为江西事劳悴已极，人已成病。九华志，按例前年冬即可出，由此停止。不知明年后年能出否。</p><p class="p-trans">到了今年，请与这位专员有深交的人疏通，才得以止息。二三年来，他为江西的事劳累辛苦到了极点，人已经生病。《九华山志》，按计划前年冬天就可以出书，因此停止。不知明后年能不能出书。</p></div>
+<div class="para-pair"><p class="p-orig">光七十有七，旦暮将死，无论何等事，均不敢经手。弘化社中人，亦无闲工夫，且无此手眼。恐汝不谅，故为略说原由，祈慧察。</p><p class="p-trans">我七十七岁了，早晚之间将会死去，无论什么事，都不敢经手。弘化社的人，也没有闲工夫，而且没有这个（校对的）本领。恐怕你不体谅，所以为你大略说明其中的原由，请慧察。</p></div>
+<div class="para-pair"><p class="p-orig">廖云峰法名慧峻。周晓初法名慧朗。周洪生法名慧深。为寄净土五经，歧路指归，饬终津梁，各一包。（民廿五年九月初四日）</p><p class="p-trans">廖云峰，法名慧峻。周晓初，法名慧朗。周洪生，法名慧深。为你寄《净土五经》、《歧路指归》、《饬终津梁》，各一包。（民国二十五年九月初四日）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

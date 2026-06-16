@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复何慧昭居士书 · 印光法师文钞</title>
+<meta name="description" content="接手书，知宿根甚深，现行颇纯，故有种种胜境相现。然今人多半是要体面，凭空造楼阁，有一分半分，便说有百千万分，如某居士录，其境界皆是手笔所做，不是心地所做。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-162/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复何慧昭居士书 · 印光法师文钞">
+<meta property="og:description" content="接手书，知宿根甚深，现行颇纯，故有种种胜境相现。然今人多半是要体面，凭空造楼阁，有一分半分，便说有百千万分，如某居士录，其境界皆是手笔所做，不是心地所做。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-162/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复何慧昭居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知宿根甚深，现行颇纯，故有种种胜境相现。然今人多半是要体面，凭空造楼阁，有一分半分，便说有百千万分，如某居士录，其境界皆是手笔所做，不是心地所做。</p><p class="p-trans">接到你的信，知道你过去的善根很深，现在的修行也很精纯，所以有种种殊胜的境相现前。然而现在的人多数好面子讲体面，凭空造楼阁，有一分半分功夫，便说有百千万分。如某居士所作的笔录，他说的境界都是用手笔所写的，不是心地修行所成就的。</p></div>
+<div class="para-pair"><p class="p-orig">汝固不妄，诚恐或有此习气，则其过不小。佛以妄语列于根本五戒者，正为防此弊也。若或见言不见，不见言见，乃妄语之流类，若凭空造楼阁，妄说胜境界，即犯大妄语戒，乃未得谓得，未证谓证，其罪甚于杀盗淫百千万亿倍。</p><p class="p-trans">你当然不会妄语，但恐怕你或许也有这种习气，那么这种过失可不小。佛将“妄语”列于根本五戒，正是为了防此弊病啊。看到说没看到，没看到说看到，这属于通常的妄语。如果凭空造楼阁，妄说胜境界，就犯了大妄语戒，乃至没有得到说已经得到，没有证果说已经证果，这个罪业比杀、盗、淫严重百千万亿倍。</p></div>
+<div class="para-pair"><p class="p-orig">其人若不力忏，一气不来，即堕阿鼻地狱，以其能坏乱佛法，疑误众生故也。汝切须慎重，所见之境有一分，不可说一分一，亦不可说九厘九，过说亦罪过。少说亦不可。</p><p class="p-trans">如果这个人不下大力气去忏悔，一口气上不来（死后），即刻堕入阿鼻地狱，这是因为大妄语能坏乱佛法、疑误众生的缘故。你切记要慎重，所见到的境界有一分，不可说一分一，也不可说九厘九，说多一点是罪过。说少了也不可以。</p></div>
+<div class="para-pair"><p class="p-orig">何以故，以知识未得他心道眼，但能以所言为断耳。此种境界，向知识说，为证明邪正是非，则无过，若不为证明，唯欲自炫，亦有过。若向一切人说则有过，除求知识证明外，俱说不得。说之则以后便永不能得此胜境界。此修行人第一大关，而台教中屡言之。</p><p class="p-trans">为什么呢？因为善知识没有得到他心通的道眼，所以只能根据你所说的话去论断。这种境界向善知识说，来证明（境界的）邪正是非，则没有过失。若不是为了证明，只是想自我炫耀，也有过失。若向一切人说自己的境界就有过失。除了求善知识证明之外都说不得，说了以后便永远不能再得这种殊胜的境界。这是修行人的第一大关，天台教中多次说明这一点。</p></div>
+<div class="para-pair"><p class="p-orig">所以近来修行者，多多著魔，皆由以躁妄心，冀胜境界。勿道其境是魔，即其境的是胜境，一生贪著欢喜等心，则便受损不受益矣，况其境未必的确是胜境乎。</p><p class="p-trans">所以近来修行的人，很多都著魔发狂，这都是因为用躁妄心，来期盼得到殊胜境界。不要说他的境界是魔境界，就算他的境界确实是殊胜的境界，一旦生起贪著欢喜的心，也就只受损不受益了，更何况他的境界未必的确是胜境啊。</p></div>
+<div class="para-pair"><p class="p-orig">倘其人有涵养，无躁妄心，无贪著心，见诸境界，直同未见，既不生欢喜贪著，又不生恐怖惊疑。勿道胜境现有益，即魔境现亦有益。何以故，以不被魔转，即能上进故。此语不常对人说，因汝有此种事，固不得不说也。</p><p class="p-trans">假如这个人有涵养，没有躁妄心，没有贪著心，看到一些境界，就好像没看到一样，既不生欢喜贪著心，又不生恐怖惊疑的念头。不要说胜境现前有利益，即便是魔境现前也有利益。为什么呢？因为如果不被魔所转，修行就能上进。这些话我不常对人说，因为你遇到了这种情况，才不得不说。</p></div>
+<div class="para-pair"><p class="p-orig">汝最初礼佛所见之大士像不的确，以若果实是，不至因念与观经不合而隐。然汝由此信心更切，是亦好因缘，但不宜常欲见像，但志诚礼拜而已，庶无他虑。</p><p class="p-trans">你最初礼佛所见到的大士像，不确切。因为如果真是大士所现的相，就不至于因为你想到这与《观经》中所描绘的不符合，而相就隐去了。不过你因此而信心更恳切，这也是好因缘。只是不应当时常想看到佛菩萨显相，只要志诚礼拜就好，这样应当就不会有其他的隐忧。</p></div>
+<div class="para-pair"><p class="p-orig">临睡目前白光，及礼佛见佛像悬立虚空，虽属善境，不可贪著，以后不以为冀望，当可不现。窥汝根性，似是宿生曾习禅定者，故致屡有此相也。</p><p class="p-trans">临睡时眼前的白光，及礼佛时看到佛像悬立虚空，虽然这属于善境界，但不可贪著，以后只要不期望看到佛像，应该就不会出现了。看你的根性，似乎是过去世曾修习过禅定，所以才导致常常见到这些境相。</p></div>
+<div class="para-pair"><p class="p-orig">明虞淳熙在天目山高峰死关静修，久之，遂有先知，能预道天之阴晴，人之祸福。彼归依莲池大师，大师闻之，寄书力斥，谓彼入于魔罥，后遂不知矣。</p><p class="p-trans">明朝的虞淳熙在天目山的山峰上闭关静修，久而久之就有了未卜先知的能力，能预先知道天之阴晴、人之祸福。他归依莲池大师。大师听到这些事情后，就写信去大力呵斥他，说他已经进入魔网圈套。他后来就没有这种能力了。</p></div>
+<div class="para-pair"><p class="p-orig">须知学道人，要识其大者，否则得小益必受大损。勿道此种境界，即真得五通，尚须置之度外，方可得漏尽通，若一贪著，即难上进，或至退堕，不可不知。</p><p class="p-trans">要知道学佛人，要能识大体，否则得小益必受大损。不要说这种小境界，就算真得到了五通，仍然必须置之度外，才能得到漏尽通。如果一生起贪著心，就很难再上进，甚至会退转堕落，不可不知。</p></div>
+<div class="para-pair"><p class="p-orig">梦入佛殿所记之二句经文，固属善境，然此二句，语甚明白，返虚依觉路，归真悟常空者，谓人妄认世间诸法为实，故迷入生死，若能返观诸法当体本空，则便依乎觉路，出迷入悟，归真谛而悟真常之真空实相矣。</p><p class="p-trans">梦中进入佛殿，所记的二句经文，自然是好的境界，然而这二句经文，语义很是明白，“返虚依觉路，归真悟常空”，就是一个人妄认世间诸法为实有，所以迷惑入于生死，如果能够返观诸法当体本空，就依循觉路，出迷惘，入觉悟，归真谛，进而悟到真常的真空实相了。</p></div>
+<div class="para-pair"><p class="p-orig">魔境胜境之分别，在与经教合不合上分。果是圣境，令人一见，心地直下清净，了无躁妄取著之心。若是魔境，则见之心便不清净，便生取著躁妄等心。</p><p class="p-trans">魔境、胜境的分别，在于和经教符不符合。如果真是圣境，人一见，心地当下清净，没有一点浮躁虚妄求取贪著的心。如果是魔境，那么看见之后，心就不清净，就生出取著躁妄等心念。</p></div>
+<div class="para-pair"><p class="p-orig">又佛光虽极明耀，而不耀眼，若光或耀眼，便非真佛。佛现以凡所有相，皆是虚妄之理勘，则愈显。魔现以此理勘，则便隐，此勘验真伪之大冶洪炉也。</p><p class="p-trans">另外，佛光虽然极为明耀，但并不耀眼，如果光耀眼的话，就不是真佛。佛现前，以“凡所有相，皆是虚妄”的义理来勘验，相就会更加明显。魔现前，以这个义理来勘验，相就会隐没不现，这是勘验真伪的大冶洪炉。</p></div>
+<div class="para-pair"><p class="p-orig">夜见白光，及虚空清白等境，乃心净所现，何可以法界一相，寂照不二自拟，以此自拟，则成以凡滥圣矣，其过殊非浅浅。</p><p class="p-trans">夜晚见到白光，以及虚空清白等境界，这是心中清净所现的，怎么可以用“法界一相，寂照不二”来自我比拟，这样来自我比拟，就成以凡滥圣了，这个罪过实在不小。</p></div>
+<div class="para-pair"><p class="p-orig">二句经文，未见所出，盖亦宿生记忆之文，未必即经中文也。修净业人，不以种种境界为事，故亦无甚境界发生。若心中专欲见境界，则境界便多。倘不善用心，或致受损，不可不知。</p><p class="p-trans">那两句经文，不知出自哪里，大概也是你过去生中记忆的文字，未必就是佛经中的经文。修习净业的人，不以得到种种境界为事，所以也就没有什么境界发生。如果心中专门想要见到境界，那么境界就多。倘若不善于用心，或许会导致受到损害，这个不可不知。</p></div>
+<div class="para-pair"><p class="p-orig">彼头陀之所说，乃属禅家道理。彼尚不破净土，是其长处，然彼绝不知净土宗旨，故与禅对论。彼注重祥光胜境一语，大须斟酌，否则误人不浅。又谓不可著，以佛法无量，著则成有量，即不能入佛智。何止不入佛智。亦复或入魔界耳。</p><p class="p-trans">那位头陀所说的，是属于禅宗的道理。他不破斥净土，这是他的长处，然而他绝对不知道净土的宗旨，所以将净土与禅宗相对而论。他＂注重祥光胜境”这句话，必须大为斟酌，否则误人不浅。又说（祥光胜境）不可以住著，因为佛法无量，住著就成为有量，就不能入佛智。其实何只是不能入佛智，也许还会入魔界。</p></div>
+<div class="para-pair"><p class="p-orig">至所云之各佛，乃禅家约心理之论，与净宗无涉。白光清空，既为如来一毛头许功德，汝何得以法界一相，寂照不二妄认。实则宿世定境，由净心而发，固不得当作奇特也。</p><p class="p-trans">至于他所说的各佛，是禅家真对自心理体来说的，与净土宗没有关系。白光清空，既然是如来一毛头许功德，你怎么可以用“法界一相，寂照不二”来错妄地加在自己身上。实际是过去世禅定之境，由于清净心而显发，所以不要当作奇特的事。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，以信愿行三法为宗，有信愿，无论行之多少浅深，皆得往生。无信愿，即到能所两忘，根尘迥脱之地步，亦难往生。以真证到能所两忘，根尘迥脱之实理，便可自力了生死，则不必论。若但有工夫见此理，尚未实证，若无信愿，亦难往生。</p><p class="p-trans">净土法门，以信愿行三法为纲宗。有信愿，无论行持的多少浅深，都能够往生西方。没有信愿，即使达到能所两忘、根尘迥脱的地步，也很难往生。因为真能证得能所两忘、根尘迥脱的实理，便可以靠自己的力量了生死了，那就不必说了。如果只是有工夫见到这个实理，尚没有证得，若无信愿，也很难往生。</p></div>
+<div class="para-pair"><p class="p-orig">禅家说净土，仍归于禅宗，去信愿说，果能依之而做，亦可开悟。而未断惑业，欲了生死，则梦也梦不著。</p><p class="p-trans">禅家说净土，仍然归于禅宗，除去信愿，果真能依照去做（即念佛），也可以开悟。然而没有断除惑业，想要了生死，那是梦也梦不着的。</p></div>
+<div class="para-pair"><p class="p-orig">以凡夫往生，由信愿感佛，故能仗佛慈力，带业往生。今既不生信愿，又将佛一一说归自心，何由感佛。感应不符，则生自生，佛自佛，以横超法，作竖出用，其得益浅而受损深，不可不知。</p><p class="p-trans">因为凡夫往生，是由于有信愿之心感佛，所以能仗佛慈力，带业往生。现在既不生信发愿，又将佛全部归于自心，哪里能感应佛呢？不符合感应道交，那么众生还是众生，佛还是佛。将横超的法门，借用来修竖出的法门，得到的利益很浅而受到的损害很深，不可不知啊。</p></div>
+<div class="para-pair"><p class="p-orig">得益者，依彼所说，亦能开悟，受损者，既去信愿，则无由仗佛慈力。吾故曰，真修净土人，用不得禅家开示，以法门宗旨不同故，祈为慧察。如不以为然，请求之大通家，庶可契汝心志矣，光固不执著也。</p><p class="p-trans">得到的利益是什么呢？如果依靠他的说法去修持，也能开悟。受到的损害是什么呢？既然除去信愿，那就没有办法仰仗佛的慈悲愿力（带业往生）了。所以我说：真正修行净土法门的人，不能听受禅家的开示，这是因为法门的宗旨不相同的缘故，祈望你以智慧体察。如果不以为然，请你去求问大通家，就可契合你的心志了，我自然是不会执著的。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【虞淳熙】</span>（1553年-1621年），字长孺，浙江钱塘人。生下来睡着不闭眼。曾任兵部职方事、礼部员外郎等职，曾隐居于回峰。著有《虞德园集》、《孝经集灵》一卷。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【高峰禅师】</span>高峰禅师。讳原妙。苏之吴江人。姓徐氏。受业乌戌之密印寺。得法于雪岩钦禅师之门。生于宋嘉熙戊戌。十五出家。十七受具戒。十八习天台教。二十更衣入净慈立死限。三年二十一。请益断桥参雪岩于北涧。住双径得悟。后隐龙须迁双髻至元己卯上天目西峰。入张公洞扁死关。不越户者十五年。学徒参请无虚日。僧俗受戒者几数万人。开山师子大觉二刹。是年乙未腊月朔。焚香说偈告众坐亡。世寿五十七。僧腊四十三。度弟子几百人。塔全龛于死关之内。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【能所】</span>即“能”与“所”之并称。某一动作之主体，称为能。其动作之客体（对象），称为所。例如能见物之“眼”，称为能见；为眼所见之“物”，称为所见。又被依靠者，称所依；依靠他人者，称能依。修行者，称能行；所行之内容，称所行。而归依者，称能归；为其所归依者，称所归。教化人者，称能化；被教化者，称所化。认识之主体，称为能缘；其被认识之客体，称为所缘。以语句、文章、教法等表示意义者，称能诠；为其所表示之意义、内容者，称所诠。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【根尘】</span>又作根境。乃五根与五尘，或六根与六尘之并称。色之所依而能取境者，称为根，乃认识对象之器官；根之所取者，称为尘（亦称境），乃所认识之对象。五根即眼、耳、鼻、舌、身，加上“意”则称六根；五尘即色、声、香、味、触，加上“法”则称六尘。根尘二字并举，犹如主观、客观之并列，含有相依又相对立之意。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

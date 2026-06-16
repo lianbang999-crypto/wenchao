@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>江苏吴县佛教会通告各寺院僧众巽言（民二十三年） · 印光法师文钞</title>
+<meta name="description" content="大觉世尊，乘悲愿以示生，本人心而立教。俾迷头认影者，亲见本来面目。怀宝受窘者，顿获原有家珍。故得三乘速证菩提，六凡同登觉岸。此道传天上天下，教布三千大千之所由来也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-148/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="江苏吴县佛教会通告各寺院僧众巽言（民二十三年） · 印光法师文钞">
+<meta property="og:description" content="大觉世尊，乘悲愿以示生，本人心而立教。俾迷头认影者，亲见本来面目。怀宝受窘者，顿获原有家珍。故得三乘速证菩提，六凡同登觉岸。此道传天上天下，教布三千大千之所由来也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-148/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">江苏吴县佛教会通告各寺院僧众巽言（民二十三年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大觉世尊，乘悲愿以示生，本人心而立教。俾迷头认影者，亲见本来面目。怀宝受窘者，顿获原有家珍。故得三乘速证菩提，六凡同登觉岸。此道传天上天下，教布三千大千之所由来也。</p><p class="p-trans">大觉世尊，乘悲愿示现降生在世间，根据人们的心性来建立教法。使得迷失自己头，妄认镜中影的人，亲眼见到本来面目；怀揣珍宝受穷的人，顿时获得原有的自家珍宝。因此才使三乘（声闻、缘觉、菩萨）圣者都速证菩提，六道凡夫都同登觉岸。这就是释迦本师法道传遍天上天下，教化流布三千大千世界的原因。</p></div>
+<div class="para-pair"><p class="p-orig">良由佛法者，心法也。此之心法，生佛同具，凡圣一如。在凡不减，在圣不增。佛由究竟悟证，故得福慧两足，烦惑永亡，享真常之法乐，施随机之大教。众生由彻底迷背，以致烦惑永炽，轮回不休，如暗室之触宝，反更受其损伤。</p><p class="p-trans">实在是因为，佛法就是心法。这个心法，众生与佛同具，凡夫与圣者一样。在凡夫位并不减少，在圣者位也不增多。佛因为究竟悟证，所以福慧两足圆满，烦惑永远消亡，永享真常法乐，施设随顺众生根机的大教。众生由于彻底迷惑背离，所以导致烦惑永远炽然，轮回不休，如同在暗室中触摸到珍宝，（不但得不到受用，）反而还会受到它的损伤。</p></div>
+<div class="para-pair"><p class="p-orig">世间诸教，咸属权说。契理契机，唯独佛教。以故自汉以来，教传东土，历朝钦敬，举世尊崇。使无明因示果，俾世人敦伦尽分，以辅治道，识心达本，令学者断惑证真，以入圣流者，何能延至而今，仍复不坠厥绪耶。</p><p class="p-trans">世间诸多教法，都属于权巧方便之说。唯独只有佛教，既契理又契机。所以，自从汉朝以来，佛教传入东土，历朝钦敬，举世尊崇。假使没有阐明因行，显示果报，使得世人敦伦尽分（敦笃人伦、恪尽己分），从而辅助治理之道；假使不能认识心地，通达本源，令学习的人断惑证真，进入圣流的话，佛法教化的事业又如何能够延续到今天，仍然不荒废这种传统呢？</p></div>
+<div class="para-pair"><p class="p-orig">况经三武之暴君，韩欧之拘儒，以及程朱阴奉阳违之辟驳，仍复振兴于世者，以其有大力王臣为之卫护，大德高僧为之宏扬故也。</p><p class="p-trans">更何况经过三武这样的暴君灭佛，韩愈、欧阳修这类儒生的井蛙之见，以及二程（程颢、程颐）、朱熹阴奉阳违的辟驳，仍然还能再振兴在世间，正是因为佛法有大力王臣来卫护、大德高僧来宏扬的缘故啊！</p></div>
+<div class="para-pair"><p class="p-orig">清末，世风日下，国家无暇提倡，僧众类多懈于修持，以致无正知见者，各怀驱僧夺产之念。然以世乱日亟，有心人各群起而学佛，尚不致于受大困厄。</p><p class="p-trans">清朝末年，世风日下，国家无暇提倡佛法，僧众大多懈怠修持，因此导致没有正知正见的人，各个怀有驱僧夺产的恶念。但是，因为世道混乱一天天加剧，有心的人各自群起来学佛，所以还不致于遭受大的困厄。</p></div>
+<div class="para-pair"><p class="p-orig">我同袍当念为佛弟子，当宏佛化，教化众生，为世津梁，报佛恩德。若自己尚不自励，反资驱僧夺产者之根据，为在家精修者所藐视，岂非自贻伊戚乎。</p><p class="p-trans">我们这些出家人应当考虑，自己身为佛弟子，应当弘扬佛法，教化众生，作世人得度的渡口和桥梁，来报佛恩德。如果自己仍然不加勉励，就会反过来给驱僧夺产的人提供根据，被在家精进修持的人所藐视，这难道不是自招忧患吗？</p></div>
+<div class="para-pair"><p class="p-orig">人未有不愿人恭维者，若不勉力修持，即是自讨下作。佛法非天魔外道所能败坏，唯不遵佛教戒之僧能败坏。譬如狮子身上虫，自食狮子肉。惟圣罔念作狂，惟狂克念作圣。人皆可以为尧舜，人皆可以作佛，所贵者自勉耳。</p><p class="p-trans">人没有不愿意被他人恭维的，如果不努力修持，就是自讨下作。佛法并不是天魔外道所能败坏的，只有不遵佛教戒的僧人能够败坏。譬如狮子身上虫，自食狮子肉。圣者亡失正念，就成为昏愚的人；昏愚的人克服邪念，就成为圣人。人人都可以成为尧舜，人人都可以作佛，人最宝贵的就在于自我勉励。</p></div>
+<div class="para-pair"><p class="p-orig">明末，蕅益大师，木渎钟氏子，天姿聪敏，少即随母吃素礼诵。七岁读书，以圣学自任，誓灭释老，开荤酒，作论数十篇辟佛。十七岁，阅莲池大师自知录序，及竹窗随笔，乃不谤佛。后遂极力研究，二十四岁出家，彻悟自心，深入经藏。一生著述数十种，均为古今不多见者。</p><p class="p-trans">明朝末年的蕅益大师，是江苏木渎镇钟家之子，天姿聪敏，少年时就随母亲吃素、礼佛、诵经。七岁读书后，却以宋儒理学为己任，发誓灭除佛教和道教，开荤喝酒，并作了数十篇论来辟驳佛法。十七岁时，阅读莲池大师的《自知录序》，以及《竹窗随笔》之后，才不再谤佛。后来就极力研究佛法，二十四岁出家，彻悟自心，深入经藏。一生著述有几十种，都是古往今来所不多见的。</p></div>
+<div class="para-pair"><p class="p-orig">现有四川邓奠坤，乃法政学堂毕业生，狂悖特甚。民国初，专门毁坏佛教，无论神庙佛寺，悉率其徒党拆毁。后忽知非，力行改悔，来普陀求皈依。住上海居士林八年，精进修持。</p><p class="p-trans">在现代，有个四川的邓奠坤，是法政学堂的毕业生，特别狂妄悖逆。民国初年，专门毁坏佛教，无论神庙、佛寺，都率领他的徒党拆毁。后来忽然知道错了，努力进行改悔，来普陀山求皈依。住在上海居士林八年，精进修持。</p></div>
+<div class="para-pair"><p class="p-orig">前年沪战，彼住林中，不惊不动。林前后左右，均成一片焦土，林中所落大小炸弹，无一开炸。足见人能改过迁善，佛菩萨即为嘉奖而保护之。</p><p class="p-trans">前年淞沪抗战，他住在居士林中，既不惊慌，也不逃走。居士林的前后左右，都成了一片焦土，居士林中，所落下的大小炸弹，却没有一个开炸。足见一个人能够改过向善，佛菩萨就会来嘉奖并保护他。</p></div>
+<div class="para-pair"><p class="p-orig">吾人纵不如蕅益，亦岂不如奠坤乎。奠坤以罪大恶极之人，尚有如是感应，吾人何可因循度日，不加勉力，如登宝山，空手而归乎。</p><p class="p-trans">我们这些人纵然不如蕅益大师，难道还不如邓奠坤吗？邓奠坤是罪大恶极的人，尚且有这样殊胜的感应，我们这些人怎能因循苟且，碌碌度日，不加努力，如同登上宝山，却空手而归呢？</p></div>
+<div class="para-pair"><p class="p-orig">近来政府，每有明令，于中国佛教总会，令其诫饬僧伽，各守清规。须知僧为人天师范，政府教饬，已失僧体。若犹梦梦，则后来之驱僧夺产，恐难苟免。</p><p class="p-trans">近来，政府常有明令，下达到中国佛教总会，让总会要训诫、整顿僧伽队伍，各自遵守清规。必须知道，僧人是人天导师、楷模，现在政府下令让整顿僧众，已有失僧众的体面。如果仍然还在深梦之中不知道警醒，那么，将来驱僧夺产这些事，恐怕难以苟且幸免。</p></div>
+<div class="para-pair"><p class="p-orig">现本县佛教会既已成立，大家都要一致进行，维持佛教大局，不可只期自了。若佛教会无法维持，则欲自了者，不能了矣。是以各须认真修持，以自尊重。</p><p class="p-trans">现在本县的佛教会既然已经成立，大家都要一致努力，维持佛教大局，不可只想着自了。如果佛教会无法维持，那么想要自了的人，也不能了了。所以每个人都必须认真修持，自尊自爱。</p></div>
+<div class="para-pair"><p class="p-orig">现今在家居士，各务精修，及与研究。忍以堂堂比丘，反出居士之下乎。有血性者，当为奋发。又当各出资斧，以助会务。会务与己，休戚相关，譬如两手两足，互相为用。一不相辅，便难生活。</p><p class="p-trans">现今的在家居士，各个都努力精进修持，以及研究佛法。难道我们就忍心使自己这堂堂的比丘，反而不如在家居士吗？有血性的人，应当为此努力奋发。另外还应当各出资金，来资助会务。会务与我们自己是休戚相关的，譬如双手双脚，互相为用。一旦不互相辅助，就难以维持生活。</p></div>
+<div class="para-pair"><p class="p-orig">光以待死之粥饭庸僧，一生空过，尚惭愧忏悔之不暇，何敢于诸山各善知识前献丑。因主席道恒和尚，以光年老，所说人当见听，祈为宣示由致。</p><p class="p-trans">我是一个待死的只会吃饭的庸僧，一生空过，自己惭愧、忏悔还来不及，怎么敢在诸山长老，各位善知识面前献丑呢？只因为佛教会主席道恒和尚，认为我年老，说出的话他人应当会听进去，所以才请我来宣讲开示这个通告的由致。</p></div>
+<div class="para-pair"><p class="p-orig">虽自知无道德以服人，而一番为法门计虑之诚，谅必有所见许也。因将佛教历来景况，及近时情形，略为叙述。</p><p class="p-trans">虽然我自知没有道德来服人，但是一番为佛门谋划、考虑的诚心，想必会得到大家的认可。因此就将佛教历来的发展情况，以及近时的情形，简略地作个叙述。</p></div>
+<div class="para-pair"><p class="p-orig">凡我同袍，祈各奋发大心，以期上续佛祖慧命，下作众生福田，俾佛法重兴于危亡之秋，人民尽被夫法化之益，则幸何如之。</p><p class="p-trans">凡是我等同披僧袍的僧人，祈望各自奋发大心，以期向上延续佛祖慧命，向下广作众生福田，使得佛法重兴在危亡之秋，人民全都得到佛法教化的利益，那么还有比这更值得庆幸的事吗？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【巽言】</span>语本《论语·子罕》：“巽与之言，能无说乎？绎之为贵。”后因以“巽言”谓恭顺委婉的言词。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【迷头认影】</span>比喻不理解真实而追求幻想。出自《首楞严经》卷四所载的譬喻，室罗城有一狂人演若达多，蓬头垢面。古代没有镜子，他也无法认识自己的面目。一天，他口渴了，走到河边喝水，河水清澈见底，当他俯下身子的时候，看见水里有一蓬头垢面、狰狞可怕的影像，演若达多转身就跑，逢人便说：河里有一鬼魅，是如何如何的形象。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【怀宝受窘】</span>法华七喻之一，把佛性比喻衣中的宝珠。《法华经·五百授记品》说：“有人至亲友家，醉酒而卧。这时亲友因公事要出门，就把无价宝珠缝在他衣里，才离去。这个人因醉卧，一点也没有察觉。起来后也走了，后来流浪到他国。为衣食的缘故，勤力求索，日子过得非常艰难。稍微赚点钱，就很满足。以后那位亲友，偶尔遇见他，诧异地说：‘我的天！为了衣食，你竟然辛苦到这种程度！我过去想让你过得安乐、自在，在某年月日，把无价宝珠，缝在你衣里。现在仍然还在那里，可你却不知道！勤苦忧恼，来养活自己，太愚痴啦！你现在可以把宝珠，贸易所须，常可如意，无所匮乏短缺。’”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【自贻伊戚】</span>释义，贻：遗留；伊：此；戚：忧愁，悲哀。比喻自寻烦恼，自招忧患。《诗经·小雅·小明》：“心之忧矣，自诒伊戚。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【自任】</span>自觉承担；当作自身的职责。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【诫饬】</span>训诫整肃；告诫。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【苟免】</span>苟且免于损害。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

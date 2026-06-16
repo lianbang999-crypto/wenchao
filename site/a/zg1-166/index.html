@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复郁智朗居士书 · 印光法师文钞</title>
+<meta name="description" content="福峻之事，若汝所叙，生前死后，种种是实，则可决定往生。以生时已将躯壳看破，此系最大一种利益。以女人每每唯恋幻质，日事妆饰，既无此念，自与净土法门，容易相应。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-166/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复郁智朗居士书 · 印光法师文钞">
+<meta property="og:description" content="福峻之事，若汝所叙，生前死后，种种是实，则可决定往生。以生时已将躯壳看破，此系最大一种利益。以女人每每唯恋幻质，日事妆饰，既无此念，自与净土法门，容易相应。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-166/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复郁智朗居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">福峻之事，若汝所叙，生前死后，种种是实，则可决定往生。以生时已将躯壳看破，此系最大一种利益。以女人每每唯恋幻质，日事妆饰，既无此念，自与净土法门，容易相应。</p><p class="p-trans">福峻的事，如果你所说的，生前死后种种情况都是事实，那么决定可以往生。因为在生前已经将这个躯壳看破，这是最大的一种利益。因为女人大都只是贪恋这个虚幻的色身，每天都从事妆饰打扮，既然没有这个念头，自然与净土法门，容易相应。</p></div>
+<div class="para-pair"><p class="p-orig">临终之瘦削，及病苦，乃多劫之业障，以彼笃修净业，殆转重报，后报，为现报，轻报耳。汝谓由修持精进，致身体日弱，此语不恰当，兼有令信心浅者，因兹退惰之过。</p><p class="p-trans">临终的时候她的身体很瘦削，以及有病苦，这是多生多劫的业障显现，因为她笃修净业，想必是将重报转为了轻报，后报转为了现报。你说她是由于修持精进，导致身体日渐虚弱，此话说得不恰当，同时也含有让信心浅的人，因此而懈怠退惰的过失。</p></div>
+<div class="para-pair"><p class="p-orig">须知念佛之人，决定能消除业障。其有业障现前者，系转将来堕三途之恶报，以现在之病苦即了之也。</p><p class="p-trans">必须知道念佛决定能够消除业障。那些业障现前的人，是将堕落三途的恶报，转化成现在的病苦来了结掉。</p></div>
+<div class="para-pair"><p class="p-orig">金刚经谓持金刚经者，由被人轻贱之小辱，便灭多劫三途恶道之苦。则福峻之将往西方，固以此小苦，了无量劫来之恶报，实为大幸。切不可学不知事务人，谓因修持而致病及死也。</p><p class="p-trans">《金刚经》说，持《金刚经》的人，由于被人轻贱的小小侮辱，便灭除了多劫堕落三途恶道的苦报。那么福峻即将往生西方极乐世界，自然是用这种小病苦，来了却无量劫来的恶报，实在是非常大的幸运。万万不可效仿那些不懂事务的人，说这是因为修持佛法而致病死亡的。</p></div>
+<div class="para-pair"><p class="p-orig">念佛人平时有真信切愿，无一不得往生者，况福峻临终正念昭彰，作问讯顶礼等相，而死后身体柔软洁净，颜貌如生，又何必以彼工夫浅为疑乎。夫弥陀愿王，十念尚度，况彼精进修持，已二三年，又有何疑。</p><p class="p-trans">念佛人平时有真信切愿，没有一个不得往生的。何况福峻在临终时正念分明，作问讯顶礼等相，而死后身体柔软洁净，容颜宛如生前，又何必以她的工夫浅而生怀疑呢？阿弥陀佛大愿王，至心十念佛名尚且得到救度，何况她精进修持已经有二三年，又有什么可怀疑的呢？</p></div>
+<div class="para-pair"><p class="p-orig">世有种人，志意下劣，虽常念佛，不求往生，唯欲求人天福报，此种人纵毕世修行，只得来生之痴福而已。有正信者，自己以信愿感佛，佛以慈悲摄受，感应道交，必能仗佛慈力，带业往生，又何须问彼见佛与否，方可断判也。</p><p class="p-trans">世间有一种人，志向意愿很下劣，虽然常常念佛，却不求往生，只想求人天福报。这种人纵然一辈子修行，也只能得来生的痴福而已。有正信的人，自己以真信切愿感佛，佛以慈悲摄受，感应道交，必定能够仗佛慈力，带业往生，又何必问她有没有见佛，才可以判断她的往生呢？</p></div>
+<div class="para-pair"><p class="p-orig">至于人未终前，若彼自能沐浴更衣，则甚善。如其不能，断不可预行沐浴更衣，令彼难受疼痛，致失正念。以汝尚以未著法衣，令其盘膝趺坐为遗憾。不知当此之时，只好一心同声念佛，万万不可张罗铺排（指沐浴，更衣，令坐等）。若一张罗铺排，即成落井下石，切记切记。</p><p class="p-trans">至于人没有命终之前，如果她自己能沐浴更衣，这很好。如果她不能做到，绝对不可预先为她进行沐浴更衣，让她难受疼痛，从而导致失去正念。你还在因为她没有穿着法衣，没有让她盘脚趺坐为遗憾。却不知道正当这个时候，只可一心同声念佛，万万不可张罗铺排（指沐浴、更衣、令坐等事）。一旦张罗铺排，就成了落井下石，千万记住。</p></div>
+<div class="para-pair"><p class="p-orig">令慈年迈，光若不说此弊，汝后会以尽孝之心，阻亲往生，俾长劫流转于生死中，莫之能出也。吾人但取其实，毋矜其名，汝之记颇好，并不必求人作文以传，此皆世间虚浮之事。但宜自己，并其家属念佛，以期同生西方即已。</p><p class="p-trans">你母亲年纪大了，我如果不说出这中间的弊端，你以后就会用尽孝的心，来阻碍母亲往生，使她长劫流转于生死中，不能出离。我们只应当求取事情的实质，不要在乎名义。你写的记文很好，并不需要求他人作文来传世，这些都是世间虚浮的事。只要自己和家属念佛，以期同生西方就好了。</p></div>
+<div class="para-pair"><p class="p-orig">光每日朝暮课诵回向时，兼称福峻名，回向一七，以尽师徒之谊。又福峻此番之生与死，可谓不虚生浪死矣，幸甚。</p><p class="p-trans">我每天早晚课诵回向的时候，也称说福峻的名字，为她回向一个七日，以此来尽师徒之谊。福峻这一辈子，可以说是没有虚生浪死（即没有白活），很庆幸。</p></div>
+<div class="para-pair"><p class="p-orig">至于骨作面丸之事，甚好。但不可粗心为之，必须将骨研成细粉，用细罗罗过，与面无异方可。倘粗心大概研之，便和面作丸，恐小鱼食之，或有鲠刺于腹之患。光恐汝粗心，不得不说。</p><p class="p-trans">至于将骨灰作面丸的事情，很好。但不可以粗心去做，必须将骨灰研成细粉，用细的罗筛筛过，与面粉一样细才可以。如果粗心大意地研碎一下，就混和面粉做成丸子，恐怕小鱼吃了，或许有卡住刺破肚子的隐患。我怕你粗心，不得不说一下。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【浪死】</span>徒然死去；白白送死。前蜀贯休《行路难》诗：“九有茫茫共尧日，浪死虚生亦非一。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

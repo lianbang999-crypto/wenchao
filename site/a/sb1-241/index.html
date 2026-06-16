@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书十四 · 印光法师文钞</title>
+<meta name="description" content="今日之世道，乃患难世道，欲其于患难中不遭患难，非志诚恳切持念观音圣号不可。而况身膺邑宰，当土匪军横行之时，若不仗佛慈威，欲以自己才智料理，则难如登天，险于履冰矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-241/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书十四 · 印光法师文钞">
+<meta property="og:description" content="今日之世道，乃患难世道，欲其于患难中不遭患难，非志诚恳切持念观音圣号不可。而况身膺邑宰，当土匪军横行之时，若不仗佛慈威，欲以自己才智料理，则难如登天，险于履冰矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-241/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书十四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">今日之世道，乃患难世道，欲其于患难中不遭患难，非志诚恳切持念观音圣号不可。而况身膺邑宰，当土匪军横行之时，若不仗佛慈威，欲以自己才智料理，则难如登天，险于履冰矣。</p><p class="p-trans">今天的世道，是个患难的世道，想在患难的世道中不遭遇患难，非得志诚恳切持念观世音菩萨圣号不可。更何况你身为一县之长，在土匪军队横行之时，如果不仰仗佛菩萨的慈悲威神，想要凭借自己的才智来料理应对，则难如登天，危险如履薄冰了。</p></div>
+<div class="para-pair"><p class="p-orig">若秉除暴安良之大慈悲心，即得此种恶类，势必须办者，但存哀矜之心，自不至于结怨与遭祸也。</p><p class="p-trans">如果秉持除暴安良的大慈悲心，即使捕得这种恶人，势必要严办的情况下，只要存着哀怜的心，自然不至于结怨与遭祸。</p></div>
+<div class="para-pair"><p class="p-orig">去年一弟子曹运鹏，在安徽广德作县长，因办一案杀过人，其党侣谋报仇。彼于十一月间退回上海，至腊月十三来十人至其家，问彼在否。</p><p class="p-trans">去年，一位弟子叫曹运鹏，在安徽广德作县长，因为办一桩案子杀过人，那个人的同党图谋报仇。他在十一月份退职回到上海，到了腊月十三，来了十个人到他家，问他在不在家。</p></div>
+<div class="para-pair"><p class="p-orig">其妻言出外去，其妻与女十九亦皈依光，见其形势，志心念观音。匪搜其箱得二千元一摺子，及百余元现洋，遂坐其家候彼回。</p><p class="p-trans">他的妻子说他外出了，他的妻子与女儿曹十九也皈依我，看到这种形势，就诚心念观世音菩萨圣号。匪徒搜他们的箱子，搜得二千元的一个存折，以及一百多元的银元，于是就坐在他家等他回来。</p></div>
+<div class="para-pair"><p class="p-orig">彼回家，见十人各执手枪。问其所以，言特来报仇。问为何事，言为办杀彼之人。问以何故行杀，遂言由上宪发来令杀。</p><p class="p-trans">他回到家，看见十个人各自拿着手枪。问他们原因，说是特地前来报仇的。曹问为何事报仇，匪徒说是为了曹办案杀某某的事。匪徒问曹为什么要杀那个人。曹于是说是由于上头发命令要杀。</p></div>
+<div class="para-pair"><p class="p-orig">彼云此系上宪之命，非曹某自杀。匪徒不以为然。问汝等可认得曹某否。云认得。相谈许久，匪徒不耐烦，谓大家曰，我们且去，明天再来，遂去。</p><p class="p-trans">曹说：这是上司的命令，不是曹某自己要杀的。匪徒不以为然。曹问：你们是否认得曹某？匪徒说：认得。相谈了许久，匪徒不耐烦了，就对大家说：我们暂且先回去，明天再来。于是就离去了。</p></div>
+<div class="para-pair"><p class="p-orig">曹运鹏与匪谈说许久，问认得否，言认得，而竟不认得。且不问汝是甚么人而去，期以明日再来。匪去后，运鹏打电话于银行，令勿给钱，恐匪又来，挟家同往青岛去矣。此种感应，多不暇书，能实力持念，决定逢凶化吉。</p><p class="p-trans">曹运鹏与匪徒谈说了很久，问他们认不认得自己，匪徒说认得，然而却竟然不认得。而且匪徒也不问你是什么人，就离开了，想明天再来。匪徒走了之后，曹运鹏就打电话给银行，让银行不要给他们钱，恐怕匪徒再来，就带着全家到青岛去了。这种感应，多得没有空写，能够真实竭力持念观世音菩萨圣号，决定逢凶化吉。</p></div>
+<div class="para-pair"><p class="p-orig">演稿包内，附闺范一部，寿康宝鉴二三本，令子弟详阅。庶不致斫丧元精，致成孱弱，及与夭折也。</p><p class="p-trans">演讲稿的包裹内，附有《闺范》一部，《寿康宝鉴》二三本，令家中子弟详细阅读。才不致摧残元精，以致成为单薄瘦弱，以及夭折之人。</p></div>
+<div class="para-pair"><p class="p-orig">明道师在上海赫德路佛教净业社办流通，若欲请所有诸书送人者，照章程直与彼信可也。</p><p class="p-trans">明道法师在上海赫德路佛教净业社办流通处，如果想请流通处所有的诸多经书送人，照着章程直接给他写信，就可以了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【邑宰】</span>县邑之长。即县令。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【斫丧】</span>摧残；伤害。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【孱弱】</span>瘦小虚弱。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

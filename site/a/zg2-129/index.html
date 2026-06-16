@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>重修百丈大智怀海禅师塔院记 · 印光法师文钞</title>
+<meta name="description" content="自世尊拈华，迦叶微笑。正法眼藏，涅槃妙心，遂得永传。而西天四七，东土二三诸祖。心心相印，固已腾辉竺震矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-129/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重修百丈大智怀海禅师塔院记 · 印光法师文钞">
+<meta property="og:description" content="自世尊拈华，迦叶微笑。正法眼藏，涅槃妙心，遂得永传。而西天四七，东土二三诸祖。心心相印，固已腾辉竺震矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-129/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">重修百丈大智怀海禅师塔院记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">自世尊拈华，迦叶微笑。正法眼藏，涅槃妙心，遂得永传。而西天四七，东土二三诸祖。心心相印，固已腾辉竺震矣。</p><p class="p-trans">自从灵山会上，世尊拈华，迦叶微笑。正法眼藏，涅槃妙心，于是得以永传。而西天的二十八位祖师，东土的六位祖师，心心相印，自然已经照耀印度和中国了。</p></div>
+<div class="para-pair"><p class="p-orig">迨至南岳让下，出马祖一。其启迪之法，超越常格。机用无方，善巧莫喻。即彼迷情，示本觉心。不离当念，超凡入圣。如惊天霹雳，闻之则丧身失命。如甘露醍醐，尝之则起死回生。</p><p class="p-trans">等到南岳怀让禅师的座下，出了马祖道一禅师。马祖启迪学人的方法，超越常规。玄机妙用，没有固定的形式；善巧方便，无法用语言说明。即众生的迷惑凡情，开示本有的觉悟真心。不离当下一念，超越凡夫，入于圣流。如同惊天霹雳，听到了就会丧失身命。如同甘露醍醐，尝了就会起死回生。</p></div>
+<div class="para-pair"><p class="p-orig">不但如来大教，悉彰常住真心。且令山河大地，全显法王妙体。直教举世间形形色色，咸归本地风光。尽宇宙法法头头，亲见当人自己。故得会下杰出八十四位知识，而怀海禅师，实为第一。</p><p class="p-trans">不但如来大教，全都彰显常住真心；而且令山川河流大地，全都显现法王妙体。直下让整个世间的形形色色，全都归于本地风光；整个宇宙的法法头头，亲见自己本来面目。所以马祖道一禅师的座下，出了八十四位杰出的善知识。其中怀海禅师，实为第一。</p></div>
+<div class="para-pair"><p class="p-orig">当野鸭飞去，鼻头扭回。振威一喝，耳聋三日时。直如金像脱模，光明遍照。狮子出窟，威猛无敌。遂于百丈山，大开选佛之场。以一法不立之洪炉，铸万德本具之佛体。</p><p class="p-trans">正当野鸭飞过去时，马祖道一禅师以此事启问怀海，因此将怀海禅师的鼻子扭回。在怀海禅师向马祖道一禅师请法之时，马祖振威一喝，怀海禅师当下大悟，说自己耳聋三日的这些时刻。就如同金像脱去外面的模具，光明遍照十方。又如刚刚走出洞窟的狮子，威猛无可匹敌。于是怀海禅师在百丈山，大开禅修道场。用一法不立的禅宗洪炉，铸万德本具的自性佛体。</p></div>
+<div class="para-pair"><p class="p-orig">其自行化他也，则律教莲圆修无间，戒定慧一道齐行。其随机说法，了无辙迹。而灵光独耀，迥脱根尘。体露真常，不拘文字。心性无染，本自圆成。但离妄念，即如如佛一段，最为亲切。</p><p class="p-trans">怀海禅师无论自己修行还是教化他人，都是律、教、净圆修没有分别，戒定慧三学一道齐行。怀海禅师随机说法，丝毫没有痕迹可寻。而“灵光独耀，迥脱根尘。体露真常，不拘文字。心性无染，本自圆成。但离妄念，即如如佛”这一段开示，最为亲切。</p></div>
+<div class="para-pair"><p class="p-orig">深虑法久弊生，严立清规，预为防范。殆禀佛律制，以期因时适宜耳。遂为天下丛林金科玉律，而天下师表阁，由兹建焉。</p><p class="p-trans">禅师深深忧虑年代久了，佛门中容易生出弊端。于是建立了严格的清规，预先加以防范。清规禀承佛门戒律而制定，以期适合不同的时代背景，于是成为天下丛林的金科玉律。而天下丛林的师表阁，由此也就建立了。</p></div>
+<div class="para-pair"><p class="p-orig">其律身也严，作务必先众，或有阻之，则不食，故有一日不作，一日不食之训。其诫众也挚，故有不昧因果一语，令彼误道不落因果者，立脱野狐业报之身。</p><p class="p-trans">怀海禅师律己精严，每逢劳作，必定要抢在大家前面。如果有人阻拦，他就不吃饭。所以就有了“一日不作，一日不食”的训诲。禅师对大众的劝诫也很诚挚，所以有“不昧因果”这句话流传下来。让那个错妄地说出“不落因果”这句话的人，当下脱离野狐报身。</p></div>
+<div class="para-pair"><p class="p-orig">若约实际理体而论，则凡圣生佛，因果修证，俱不可得。若据修持法门而谈，则如来上成佛道，众生下堕阿鼻，皆不出因果之外。明理性不废事修，则为正知。执理性废弃事修，则成邪见。</p><p class="p-trans">如果就实际理体来说，那么凡夫、圣人、众生、佛陀，因、果、修、证，都了不可得；如果就修持法门来说，那么如来成就佛道，众生堕落阿鼻地狱，都不超出因果之外。明了理性而不废弃事上的修持，就是正知；执著理性而废弃了事上的修持，就是邪见。</p></div>
+<div class="para-pair"><p class="p-orig">毫厘之差，佛狱立判。前百丈主人，欲拯末世狂慧之堕落，不惜现身示报。实与百丈禅师，砧锤相成，煅淬相济。</p><p class="p-trans">毫厘之差，成佛还是下地狱，当下立判。百丈山的前一任主人，想要拯救末法时期狂慧之人的堕落，从而不惜亲身示现受报。实际上他和百丈禅师，如同砧石铁锤，相辅相成；煅烧淬炼，互相济助。</p></div>
+<div class="para-pair"><p class="p-orig">俾后之禅者，彻悟不涉因果之理，实行修因证果之事，以期究竟彻证而圆彰焉。此两百丈之深心，学者不可瞒盰读之也。</p><p class="p-trans">使得后来修禅的人，彻悟不涉因果之理，实行修因证果之事，以期将这一理性，究竟彻证，圆满彰显啊。这是百丈山前后两位主人的深切用心，修学的人不可稀里糊涂地读过。</p></div>
+<div class="para-pair"><p class="p-orig">其山属江西奉新县，其寺当百丈创建后，即敕赐为寿圣禅寺。宪宗元和九年，百丈示寂，寿六十六岁。</p><p class="p-trans">百丈山在江西省奉新县，寺院在怀海禅师创建之后，就被皇帝敕赐为寿圣禅寺。唐宪宗元和九年（814年），怀海禅师示寂，世寿六十六岁。</p></div>
+<div class="para-pair"><p class="p-orig">穆宗长庆元年，敕谥大智禅师，塔曰大宝胜轮。塔距寺二里许，自唐迄今，千一百余年，其法道不无兴衰。赖有负荷法道之人，为之住持，故得寺塔常存，宗风依旧。</p><p class="p-trans">唐穆宗长庆元年（821年），皇帝敕命追谥为大智禅师，灵塔名为大宝胜轮塔。灵塔距离寺院有二里多，从唐朝至今，经过一千一百多年，这期间法道有兴有衰。幸赖有担负法道的人来山住持，所以寺院和灵塔得以常存，禅风依然像从前一样。</p></div>
+<div class="para-pair"><p class="p-orig">清末以来，屡罹兵灾，加以荒歉。以致寺无高人，塔院颓败。民国八年，岁在己未，寺主自成师，不忍祖道湮没，躬请先勤和尚住持，永为十方传贤丛林。</p><p class="p-trans">清朝末年以来，多次遭到兵乱，加上荒年歉收，导致寺中没有高僧主持，塔院倾颓败坏。民国八年己未（1919年），当时的寺院主人自成法师，不忍心祖师道场湮没。因而躬请先勤和尚来寺担任住持，永久成为十方传贤丛林。</p></div>
+<div class="para-pair"><p class="p-orig">至十二年，先勤交与了然。二人系法门挚友也。同念祖师塔院，破败不堪。乃具启募于诸方同衣，得洋若干圆。</p><p class="p-trans">民国十二年（1923年），先勤和尚交班给了然和尚。他们二人是法门挚友，都挂念着不能让祖师的塔院破败不堪。于是写了启示向各方僧人募资，募得若干洋圆。</p></div>
+<div class="para-pair"><p class="p-orig">遂将塔殿献殿，揭底重修。而院墙僧寮，悉令完好，共用洋若干圆。余者赎回田地若干亩，以供塔院住僧道粮。</p><p class="p-trans">于是将塔殿、献殿彻底重修，院墙和僧寮也都整修完好，共花费若干洋圆。将剩余的钱赎回了若干亩田地，用来供养塔院常住僧人的道粮。</p></div>
+<div class="para-pair"><p class="p-orig">夫剥极则复，否极则泰。先勤，了然二师，先后住持百丈，殆非偶然。塔院既修，欲发挥百丈道要，与寺塔兴复之由，命光记之。光愧不知禅，姑就百丈故事，及现事，而直言之。俾未来诸贤哲，有所考稽焉。</p><p class="p-trans">衰败到极点，就会转而兴盛；坏到极点，就会转而向好。先勤、了然二位法师，先后住持百丈山，大概不是偶然吧。塔院修好之后，想要发挥怀海禅师的禅道要旨，以及寺塔复兴的缘由，请我写文加以记述。我惭愧自己不懂禅宗，姑且就着公案中记载的百丈禅师故事，以及现在的实际情况，直接作一番说明。使未来的诸位贤哲，有所考据罢了。</p></div>
+<div class="para-pair"><p class="p-orig">又自世尊入灭以后，凡诸寺宇，莫不以佛为主，而特立其殿于寺之正中。百丈立清规，凡祝厘祈祷佛诞等，皆于大殿诵经，而朝暮课诵，更不待言。</p><p class="p-trans">另外，自从释迦世尊入灭以后，但凡寺院，无不是以佛像为主，因而特别将大雄宝殿建在寺院正中。怀海禅师所立的清规当中，凡是祝福、祈祷、佛诞等佛事，都要在大殿诵经，早晚课诵就更不用说了。</p></div>
+<div class="para-pair"><p class="p-orig">自宋高僧传，以前立佛殿，后树法堂，讹作不立佛殿，唯树法堂。而杨大年作清规序，遂踵其谬。不思若无佛殿，凡诸祝厘祈祷等，当于何处施行。</p><p class="p-trans">宋本的《高僧传》中，将“前立佛殿，后树法堂”这一句，错讹地写成“不立佛殿，唯树法堂”。于是杨大年所作的《百丈清规序》中，延续了这个错误。也不想想，如果没有佛殿，凡是祝福、祈祷等佛事，应当在哪里举行呢？</p></div>
+<div class="para-pair"><p class="p-orig">将寺中并无一佛耶，抑供佛于偏殿耶。无一佛，则与外道无异。自居正位，供佛偏殿，以行祝厘祈祷等事，则与蔑国慢佛何殊。</p><p class="p-trans">寺院中一尊佛像都没有呢？还是将佛像供在偏殿呢？寺院中如果没有一尊佛像，那么就与外道无异了；自己居于正位，佛像供在偏殿，这样来举行祝福、祈祷等佛事，那和蔑视国家、轻慢佛陀有什么分别。</p></div>
+<div class="para-pair"><p class="p-orig">只此最极显著之讹，自宋及元明清，年将近千，无人表正。俾百丈禅师，横遭诬蔑，岂不令人痛心疾首。证义记改作不立余殿，先树法堂，亦不成话。此乃一时急先之说，岂可以为永垂定范。</p><p class="p-trans">就是这一点最明显的错误，宋、元、明、清将近一千年过去，竟然没有人来指明和匡正。致使怀海禅师横遭后人诬蔑，难道不令人痛心疾首吗。《百丈清规证义记》中又改成了“不立余殿，先树法堂”，也不成话。这只是一时急先的说法，哪里可以作为轨范永远流传呢。</p></div>
+<div class="para-pair"><p class="p-orig">故将事理略表于此，以期后贤知宋僧传，及各藏清规序之讹。俾百丈禅师，大畅本怀于常寂光中，则幸甚幸甚。</p><p class="p-trans">就此大略表明相关事理，期望后来的贤哲了知宋本《高僧传》以及各版藏经《百丈清规序》中的错误。使得百丈怀海禅师，在常寂光中大畅本怀，那就太庆幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【怀海】</span>（720-814）唐代禅宗高僧，我国禅宗丛林清规之制定者。福州长乐（福建）人，俗姓王（一说姓黄）。以师之后半生皆住于洪州百丈山（江西奉新），故世称百丈禅师。从潮阳西山（广东潮安）慧照禅师落发，依衡山法朝律师受具足戒。后至庐江（安徽）浮槎寺阅藏。于大历初年（766）顷，闻马祖道一禅师在南康（位于江西）竖立南禅法幢，师遂前往投其座下。……祖堂集卷十四载其风范，谓师平生苦节高行，凡日常作务必先于众，主事者不忍，密收其作具而请息焉，师以“吾无德，焉可劳于人”而拒之，并遍求作具，既不获而亦忘食，故丛林有“一日不作，一日不食”之佳话。师至晚年，犹勤劳不息。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【正法眼藏】</span>佛的心眼彻见正法，名正法眼，深广而万德含藏，叫做藏。正法眼藏，是禅宗用来称其教外别传的心印。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【二十八祖】</span>禅宗所传之二十八位祖师。全称西天二十八祖。即：(一)摩诃迦叶，(二)阿难尊者，(三)商那和修，(四)优婆鞠多，(五)提多迦，(六)弥遮迦，(七)婆须蜜，(八)佛陀难提，(九)伏驮蜜多，(十)胁尊者，(十一)富那耶舍，(十二)马鸣大士，(十三)迦毗摩罗，(十四)龙树大士，(十五)迦那提婆，(十六)罗睺罗多，(十七)僧伽难提，(十八)伽耶舍多，(十九)鸠摩罗多，(廿)阇夜多，(廿一)婆修盘多，(廿二)摩拏罗，(廿三)鹤勒那，(廿四)师子尊者，(廿五)婆舍斯多，(廿六)不如蜜多，(廿七)般若多罗，(廿八)菩提达摩（兼东土初祖）。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【六祖】</span>禅宗衣钵相传凡六世。即初祖达摩，二祖慧可，三祖僧璨，四祖道信，五祖弘忍，六祖慧能，是为震旦六祖。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【腾辉】</span>闪耀光辉。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【南岳怀让】</span>（677-744）唐代僧。金州安康（陕西汉阴）人，俗姓杜。又称大慧禅师。十五岁出家，一度习律，后参曹溪，为六祖慧能之高足，留侍十五年，六祖示寂，始于唐玄宗先天二年（713）住于湖南南岳般若寺观音台，宣扬慧能学说，开南岳一系，世称南岳怀让。其法系相对于青原行思之法系（青原下），而称南岳下，同为南宗禅之二大法流。弟子马祖道一继其法流，其后发展成临济、沩仰等宗派。另有普化、黄檗等两宗亦属其法流系统。于天宝三年示寂，世寿六十八。敬宗时，追谥“大慧”。有南岳大慧禅师语录行世。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【马祖道一】</span>（709-788）唐代禅僧。南岳怀让之法嗣。汉州（四川广汉）人，俗姓马，世称马大师、马祖。名道一。容貌奇异，牛行虎视，引舌过鼻，足下有二轮纹。依资州唐和尚（即处寂）剃染，就渝州圆律师受具足戒。开元年间，就怀让习曹溪禅法，言下领旨，密受心法。初止于建阳之佛迹岭，未久，迁至临川之南康、龚公二山。大历四年（769），驻锡钟陵（江西进贤）开元寺，是时学者云集，化缘大盛。马祖以“平常心是道”、“即心是佛”大弘禅风，入室弟子有百丈怀海、南泉普愿、大梅法常等一百三十九人。禅门甫启时，禅僧皆寄居律院，法制有限，不得别住而龃龉时生，皆以为苦。马祖乃创丛林，以安禅侣，由是宗门益盛，转化无穷。贞元四年正月，登建昌石门山，经行林中托付后事，于二月四日示寂，世寿八十。唐宪宗谥其号为“大寂禅师”。其派发展甚大，称为洪州宗。道一之于怀让，恰如希迁之于行思，于禅法之弘扬二者并称。马祖因于江西阐扬南岳系禅风，亦称江西禅，故以“江西马祖”闻名于世。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【机用】</span>禅林用语。玄机妙用之意。大彻大悟之禅林师家，以拄杖、手势，或棒喝等超越言诠之方法教化学人进入深禅境地，称为机用。无方：无定法；无定式。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【本地风光】</span>又曰本来面目。形容自己心性本分之禅语也。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【马大师野鸭子】</span>禅宗公案名。又作百丈野鸭子。此则公案系叙述马大师（江西马祖道一）借物显性，以令弟子开悟之过程。一次，马大师与其弟子百丈怀海行路时，见野鸭子飞过，大师云（大四八·一八七下）：“是什么？”百丈云：“野鸭子。”大师云：“什么处去也？”百丈云；“飞过去也。”大师遂扭其鼻头，百丈作忍痛声，大师云：“何曾飞去？”按浩瀚宇宙本无东南西北之别，若无分别之识，即无飞过来、飞过去之别。野鸭飞过仅为一象征而已，不特野鸭为虚妄之象征，世上一切皆是虚妄；若执妄相，难以悟道，故马大师以迅雷不及掩耳之霹雳手段，闪击百丈不悟之心，使其破妄而见性。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【百丈三日耳聋】</span>（公案）百丈再参马祖之顷，祖见丈来。拈禅床角头拂子竖起。丈云：即此用，离此用。祖挂拂子于旧处。侍立片时，祖曰：你已后将什么为人？丈挂拂子于旧处。祖即振威一喝，丈大悟。后来谓黄檗云：我当时被马祖一喝，直得三日耳聋。黄檗不觉悚然吐舌。见传灯录六，百丈传，会元三大智章。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【选佛】</span>原指选出可成佛成祖之师，后引申为坐禅修行之意。又以选佛场、选佛道场为禅堂、僧堂、坐堂之异称；此因僧众于僧堂坐禅办道，以达证悟之境界，故有此称。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【灵光】</span>（术语）人人固有之佛性，灵灵照照，而放光明者。百丈禅师上堂曰：“灵光独耀，迥脱根尘。体露真常，不拘文字。心性无染，本自圆成。但离妄缘，即如如佛。”</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【砧】</span>捣衣石。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【淬】</span>锻造时，把烧红的锻件浸入水中，急速冷却，以增强硬度。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【颟顸】</span>糊涂而马虎。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【荒歉】</span>荒年歉收。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【剥极则复】</span>剥卦阴盛阳衰，复卦阴极而阳复。后以喻物极必反，否极泰来剥复：《易》二卦名。坤下艮上为剥，表示阴盛阳衰。震下坤上为复，表示阴极而阳复。后因谓盛衰、消长为“剥复”。《易》卦名。全卦六爻，仅一条阳爻在上，而五条阴爻在下，阴气盛，阳气衰，象征小人得势，君子不利。后谓时运不利为剥。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【否极泰来】</span>谓厄运终而好运至。否泰：《易》的两个卦名。天地交，万物通谓之“泰”；不交闭塞谓之“否”。后常以指世事的盛衰，命运的顺逆。</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【祝厘】</span>祈求福佑，祝福。</p>
+<p class="note-item"><span class="note-n">[21]</span><span class="note-term">【杨大年】</span>《居士传》记载，杨大年，名亿，浦城人也。少能文，年十一，宋太宗召试诗赋，授秘书，省正字。真宗朝累，迁至左司谏。……大年初不知有佛，后会翰林李维勉以宗门事相策发，遂生深信，著《发愿文》。</p>
+<p class="note-item"><span class="note-n">[22]</span><span class="note-term">【百丈清规证义记】</span>九卷。清·源供仪润述，妙永校，清·道光三年（1823）序刊，全名为《百丈丛林清规证义记》。收在《卍续藏》第一一一册、《禅宗全书》第八十一册。系杭州（浙江省）真寂寺的源供仪润为《敕修百丈清规》所作的注解。仪润在凡例中谓“证义之作，或随文释题，或即事显理，或补其要义，或推广衍说”，由此可见该书之特质。卷首收录杨亿的原序、仪润的自序、其它序跋等五篇，以及目录、凡例、五重玄义，卷末则附载地舆总目，以便知晓地名的异同。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

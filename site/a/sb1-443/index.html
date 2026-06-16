@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复叶福备居士书一 · 印光法师文钞</title>
+<meta name="description" content="汝父已许汝出家，当发至诚恳切心，一心念佛，求生西方极乐世界。一切众生，从无始来，在六道中无业不造。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-443/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复叶福备居士书一 · 印光法师文钞">
+<meta property="og:description" content="汝父已许汝出家，当发至诚恳切心，一心念佛，求生西方极乐世界。一切众生，从无始来，在六道中无业不造。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-443/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复叶福备居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝父已许汝出家，当发至诚恳切心，一心念佛，求生西方极乐世界。一切众生，从无始来，在六道中无业不造。</p><p class="p-trans">你父亲已经允许你出家，应当发至诚恳切的心，一心念佛，求生西方极乐世界。一切众生，从无始劫以来，在六道中轮回，无业不造。</p></div>
+<div class="para-pair"><p class="p-orig">若无心修行，反不觉得有此种稀奇古怪之恶念。若发心修行，则此种念头更加多些（此系真妄相形而显，非从前无有，但不显耳）。</p><p class="p-trans">如果无心修行，反而不能觉察出有这些稀奇古怪的恶念；如果发心修行，那么自己就会发现，这些念头反而更多（这是心地趋于清净而容易显露妄念，妄念从前并非没有，只是不能发觉罢了）。</p></div>
+<div class="para-pair"><p class="p-orig">此时当想阿弥陀佛在我面前，不敢有一杂念妄想，至诚恳切念佛圣号（或小声念，或默念）。必须字字句句，心里念得清清楚楚，口里念得清清楚楚，耳朵听得清清楚楚。能如此常念，则一切杂念，自然消灭矣。</p><p class="p-trans">这个时候应当想，阿弥陀佛就在我面前，因此不敢有一丝杂念妄想，就会至诚恳切念佛圣号（或小声念，或默念）。必须字字句句，心里念得清清楚楚，口里念得清清楚楚，耳朵听得清清楚楚。能如此常念，则一切杂念，自然就消灭了。</p></div>
+<div class="para-pair"><p class="p-orig">当杂念起时，格外提起全副精神念佛，不许他在我心里作怪。果能如此常念，则意地自然清净。</p><p class="p-trans">当杂念产生时，格外提起全副精神念佛，不许它在我心里作怪。果然能如此常念，则意地里自然清净。</p></div>
+<div class="para-pair"><p class="p-orig">当杂念初起时，如一人与万人敌，不可稍有宽纵之心。否则彼作我主，我受彼害矣。若拌命抵抗，彼当随我所转，即所谓转烦恼为菩提也。</p><p class="p-trans">当杂念刚刚生起时，如一人与万人作战，不可稍有宽恕纵容的心。否则它就做了我的主人，我就受它的危害了。如果拼命抵抗，它就会随我所转，即所谓转烦恼为菩提了。</p></div>
+<div class="para-pair"><p class="p-orig">汝现能常以如来万德洪名极力抵抗，久而久之，心自清净。心清净已，仍旧念不放松，则业障消而智慧开矣。切不可生急躁心。</p><p class="p-trans">你能常以如来万德洪名极力抵抗，久而久之，心地自然清净。心清净以后，仍旧念佛不放松，就会业障消除而智慧开启了。切不可生急躁心。</p></div>
+<div class="para-pair"><p class="p-orig">无论在家在庵，必须敬上和下。忍人所不能忍，行人所不能行。代人之劳，成人之美。</p><p class="p-trans">无论在家在庵，必须敬上和下，忍人所不能忍，行人所不能行。代人之劳，成人之美。</p></div>
+<div class="para-pair"><p class="p-orig">静坐常思己过，闲谈不论人非。行住坐卧，穿衣吃饭，从朝至暮，从暮至朝，一句佛号，不令间断。或小声念，或默念，除念佛外，不起别念。</p><p class="p-trans">静坐常思己过，闲谈不论人非。行住坐卧，穿衣吃饭，从朝至暮，从暮至朝，一句佛号，不令间断。或者小声念，或者默念，除念佛外，不起别念。</p></div>
+<div class="para-pair"><p class="p-orig">若或妄念一起，当下就要教他消灭。常生惭愧心，及生忏悔心。纵有修持，总觉我工夫很浅，不自矜夸。</p><p class="p-trans">若或妄念一起，当下就要叫它消灭。常生惭愧心，及生忏悔心。即使有修持，总觉我功夫很浅，不可自夸自大。</p></div>
+<div class="para-pair"><p class="p-orig">只管自家，不管人家。只看好样子，不看坏样子。看一切人皆是菩萨，唯我一人实是凡夫。汝果能依我所说而行，决定可生西方极乐世界。</p><p class="p-trans">只管自家，不管人家，只看好样子，不看坏样子。看一切人都是菩萨，只有我一人实是凡夫。你果然能依我所说而修行，一定可生西方极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">极乐世界无有女人。女人，畜生，生彼世界，皆是童男之相，莲华化生。一从莲华中出生，皆与极乐世界人一样，不是先小后渐长大。</p><p class="p-trans">极乐世界没有女人。女人，畜生，生到极乐世界，都是童男之相，莲华化生。一从莲华中出生，都与极乐世界的人一样，不是先为小孩，之后渐渐长大。</p></div>
+<div class="para-pair"><p class="p-orig">彼世界人无有烦恼，无有妄想，无有造业之事。以仗佛慈力，且极容易生，但以念佛为因。生后见佛闻法，必定圆成佛道。</p><p class="p-trans">极乐世界的人没有烦恼，没有妄想，没有造业之事。因为仗佛慈力，而且很容易往生，只要以念佛为因。往生以后，见佛闻法，必定圆成佛道。</p></div>
+<div class="para-pair"><p class="p-orig">十方世界，唯此最为超胜。一切修持法门，唯此最为易修。而且功德最大。汝且莫听别人话，自可得此最胜益。</p><p class="p-trans">十方世界，唯有这个法门，最为超胜。一切修持法门，唯有这个法门，最容易修持。而且功德最大。你千万不要听别人的话，自然能得到这个最殊胜的利益。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

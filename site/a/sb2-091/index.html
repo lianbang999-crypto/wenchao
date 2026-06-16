@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复郑慧洪居士书一 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。末法众生，可怜之极。不知香臭，不知邪正。既无正法，致一一悉入于炼丹运气之中。而复妄造谣言，以自雄诩也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-091/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复郑慧洪居士书一 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。末法众生，可怜之极。不知香臭，不知邪正。既无正法，致一一悉入于炼丹运气之中。而复妄造谣言，以自雄诩也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-091/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复郑慧洪居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。末法众生，可怜之极。不知香臭，不知邪正。既无正法，致一一悉入于炼丹运气之中。而复妄造谣言，以自雄诩也。</p><p class="p-trans">来信尽知。末法众生，可怜之极。不知香臭，不知邪正。既然没有正法，以致一一全都入于炼丹运气之法中。而且还妄造谣言，来自我夸耀。</p></div>
+<div class="para-pair"><p class="p-orig">汝未知佛法，一见文钞，即生正信，可谓宿有善根。今为汝寄文钞二包，汝所见者恐系以前所印，比此尚少。安士书二包，嘉言录一包，念佛直指一包，弥陀经白话注一包，寿康宝鉴一包，观音颂一包，共九包，挂号以寄。</p><p class="p-trans">你还不懂佛法，一见到《文钞》，就能生起正信，可以说是宿世有善根。现在为你寄《文钞》二包，你所看的版本，恐怕是以前印的，（里面收录的）比现在的版本要少。《安士全书》二包、《嘉言录》一包、《念佛直指》一包、《弥陀经白话注》一包、《寿康宝鉴》一包、《观世音菩萨本迹感应颂》一包，一共九包，挂号寄给你。</p></div>
+<div class="para-pair"><p class="p-orig">最初当详看嘉言录，则一切疑惑，可皆破除。所言作论以辟哲学及理学。但能真实修持，及能会通此各书之义。彼等邪说，自无所惑。若以攻彼，亦复有恃。</p><p class="p-trans">初期应当详细看《嘉言录》，那么一切疑惑，都能破除。所说的写论文来辟驳哲学以及理学。只要能够真实修持，并能会通这些书籍中的义理。（面对）他们的邪说，自然就不会被迷惑。如果要来攻破他们，也有了依据。</p></div>
+<div class="para-pair"><p class="p-orig">光不唯无暇作论，即书札答复，亦颇不暇。今年将此诸事了结以后，当离普陀，居无定处。以免信札应酬之劳，得以专修净业耳。</p><p class="p-trans">我不仅没有时间写论文，即使答复书信，也几乎没有时间。今年将这些事务了结以后，当会离开普陀山，居住的地方不定。以免书信应酬的辛劳，以便能专修净业。</p></div>
+<div class="para-pair"><p class="p-orig">现尚有未出之书，不能即寄。待出后，当与汝各寄一二包，以为自利利人之据。汝欲来普陀，此心祈取消。但息心研究光所寄之书，则利益大矣。</p><p class="p-trans">现在还有未印出的书，不能马上寄给你。等印出后，当会给你各寄一二包，来作为自利利人的依据。你想来普陀山，请你取消这个想法。只要专心研究我所寄的书，那么利益就很大了。</p></div>
+<div class="para-pair"><p class="p-orig">汝欲皈依，不妨为汝遥取法名，须礼佛虔诚领受。今为汝取名慧洪。谓以智慧大洪净土法门，以期同登觉岸云。</p><p class="p-trans">你想要皈依，不妨为你遥取法名，你必须礼佛，虔诚领受。现在为你取法名“慧洪”。就是以智慧大洪净土法门，以期（众生）同登觉岸的意思。</p></div>
+<div class="para-pair"><p class="p-orig">然学佛之人，必须敦笃伦常，恪尽己分。闲邪存诚，克己复礼。诸恶莫作，众善奉行。戒杀护生，屏除酒肉。加以生信发愿，念佛名号，求生西方。</p><p class="p-trans">然而学佛之人，必须敦笃伦常，恪尽己分（即敦伦尽分）。闲邪存诚（防止邪念、心怀诚敬），克己复礼（战胜己私、还归真理）。诸恶莫作，众善奉行。戒杀放生，屏除酒肉。加上生信发愿，念佛名号，求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">以此自行，复以此化他。内而父母兄弟姊妹妻子，外而亲戚乡党相识，俱宜以上诸事告之。</p><p class="p-trans">以此自己行持，再以此化导他人。家内的父母、兄弟、姊妹、妻子、儿女，家外的亲戚、乡亲、相识，都应该将以上这些事告诉他们。</p></div>
+<div class="para-pair"><p class="p-orig">又须极力提倡因果报应，及家庭教育。而家庭教育，又须注重因果报应。又须注重教女。欲挽回世道人心，舍此二途，虽佛菩萨圣贤同出于世，亦末如之何矣。</p><p class="p-trans">另外，必须极力提倡因果报应，以及家庭教育。而家庭教育，又必须注重因果报应。又必须注重教育女儿。想要挽回世道人心，舍弃这二条路，即使是佛菩萨圣贤一同出现在世间，也无可奈何啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝但至诚恳切念佛，其利益有非凡情所能测度者。此九包书通收到后，祈来一信。此外不必来信，以免彼此烦神。</p><p class="p-trans">你只要至诚恳切念佛，其中的利益不是凡情所能测度的。这九包书全都收到后，请来一封信告知。除此之外，不必来信，以免彼此烦扰伤神。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【自雄】</span>自豪；自以为了不起。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

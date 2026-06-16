@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复温光熹居士书十一 · 印光法师文钞</title>
+<meta name="description" content="手书及汇票收到。观汝此书，知汝境遇之穷，知汝不安本分。汝无余钱，何得于光分上，尚硬撑架子。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-035/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复温光熹居士书十一 · 印光法师文钞">
+<meta property="og:description" content="手书及汇票收到。观汝此书，知汝境遇之穷，知汝不安本分。汝无余钱，何得于光分上，尚硬撑架子。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-035/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复温光熹居士书十一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书及汇票收到。观汝此书，知汝境遇之穷，知汝不安本分。汝无余钱，何得于光分上，尚硬撑架子。</p><p class="p-trans">来信以及汇票收到了。看你这封信，知道你境遇穷困，知道你不安守本分。你没有多余的钱，何必在我面前，还要硬撑架子。</p></div>
+<div class="para-pair"><p class="p-orig">君子素其位而行，穷则不以钱财为礼。况自己认以为如父如母之师乎。是知汝一向都是此种情见，因架子撑不起来，便要寻死。不知汝此种心行，死了更比此架子撑不起来，当难受无量无边恒河沙恒河沙倍矣。</p><p class="p-trans">君子安于现在所处的地位，去做应做的事。穷，就不要以钱财作为礼物。何况是对自己认作如父如母的师父呢？所以知道你一向都是这种情见，因为架子撑不起来，便要寻死。你不知道你这种心念行为，死了比这个架子撑不起来，更应当难受无量无边、恒河沙又恒河沙倍啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝前谓重庆佛学社颇尚密宗，汝欲另设一专修净土之机关。此亦是不安本分之话。凡建立机关，第一要人皆信服。第二要有钱贴垫。虽募众人，亦须自己先能调动。汝二者一皆无有，何得起此种分外之计虑乎。</p><p class="p-trans">你上次说重庆佛学社很崇尚密宗，你想要另设一个专修净土的机关。这也是不安守本分的话。凡是建立机关，第一要使他人都信服。第二要有钱来贴垫。即使向众人募化，也必须自己先能调动。二个条件，你一个都没有，怎么能起这种本分之外的谋划呢？</p></div>
+<div class="para-pair"><p class="p-orig">家中既有饭吃，不须又要发财巨万。今之军政两界，汝若不顾来生头面，则非不可入。若犹顾及来生头面，则以莫入为最上上策。</p><p class="p-trans">家中既然还有饭吃，不必又想着去发巨万之财。如今的军政两界，你如果不顾来生的头面（堕落到三恶道中的某一道），那么并非不可进入；如果还顾及来生的头面，那么以不进入为最上上策。</p></div>
+<div class="para-pair"><p class="p-orig">当详告德正嵇氏，放下富贵骄奢之习气，作乡间田妇之服饰。与彼回成都家庭，恪守祖父之业，乃为究竟妥当办法。余皆先已说过，用不著再说。</p><p class="p-trans">应当详细告诉嵇德正，放下富贵骄奢的习气，穿乡间农妇的服饰。与她回成都家中，谨慎守好祖父的家业，才是究竟妥当的办法。其余的以前都已经说过了，用不着再说。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

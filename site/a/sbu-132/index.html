@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>佛学救劫编后附佛法导论之原由 · 印光法师文钞</title>
+<meta name="description" content="佛学救劫编，以世人不知三世因果，六道轮回之理事，故居心行事每与忠恕慈悲相反。其意盖欲自利，而不知违理以自利，必至人受其害，己虽暂得其利，冥冥之中必至反失其己所应得之利，且贻以身后多生多劫，及与子孙无穷之祸。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-132/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="佛学救劫编后附佛法导论之原由 · 印光法师文钞">
+<meta property="og:description" content="佛学救劫编，以世人不知三世因果，六道轮回之理事，故居心行事每与忠恕慈悲相反。其意盖欲自利，而不知违理以自利，必至人受其害，己虽暂得其利，冥冥之中必至反失其己所应得之利，且贻以身后多生多劫，及与子孙无穷之祸。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-132/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 序跋疏</div>
+      <h1 class="art-title">佛学救劫编后附佛法导论之原由</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛学救劫编，以世人不知三世因果，六道轮回之理事，故居心行事每与忠恕慈悲相反。其意盖欲自利，而不知违理以自利，必至人受其害，己虽暂得其利，冥冥之中必至反失其己所应得之利，且贻以身后多生多劫，及与子孙无穷之祸。</p><p class="p-trans">《佛学救劫编》，因为世人不知道三世因果、六道轮回的道理事实，所以存心行事常常与忠恕慈悲相反。人们的本意是想要利益自己，然而却不知道违背正理来自利，必定导致他人受到损害，自己虽然暂时得到利益，但冥冥之中，必定导致反而失去他自己所应该得到的利益，而且遗留给身后多生多劫，以及留给子孙无穷的灾祸。</p></div>
+<div class="para-pair"><p class="p-orig">人若知此，谁肯以小利而贾大祸乎。于是以六种佛经以为倡导，俾一切人各各受持三归五戒，以修十善，期为身口意三业清净之善人。人果依此修持，则争竞之风自息，胞与之念自深。又何劫运之有乎。</p><p class="p-trans">人们如果知道这个道理，谁肯因为小利益而引来大灾祸呢？于是（《佛学救劫编》）以六种佛经作为倡导，使一切人各各受持三归五戒，来修持十善，希望成为身口意三业清净的善人。人们果真依此修持，那么竞争的风气自然止息，世人是我同胞、万物是我朋友的观念自然深刻。又哪里会有劫运呢？</p></div>
+<div class="para-pair"><p class="p-orig">又复示以仗佛慈力，即于现生了生脱死之净土法门，不但不造恶业，不受恶报，即人天善报，亦所不受。良以不了生死，纵得人间福报，以未断烦惑，难免因享福而复造恶业，以致更加堕落耳。</p><p class="p-trans">另外，又指示仗佛慈力，即于现生，了生脱死的净土法门，不但不造恶业，不受恶报，即使是人天善报，也不想再受。实在是因为不了生死，纵然得到了人间福报，但因为未断烦恼惑业，难免因享福而又造作恶业，以致更加堕落了。</p></div>
+<div class="para-pair"><p class="p-orig">纵令生天，而天福一尽，仍复降生人间。或有宿业，或造新愆，仍复堕落三途恶道，为可畏也。以故令其兼修信愿念佛法门，以期超凡入圣，了生脱死，是为究竟救劫之道。</p><p class="p-trans">纵然生到天上，而天福一旦享尽，仍然又降生人间。或者有宿业，或者造新罪，仍又堕落三途恶道，实在可怕啊！所以令大众兼修信愿念佛法门，以期超凡入圣，了生脱死，这才是究竟救劫的大道。</p></div>
+<div class="para-pair"><p class="p-orig">其书三卷，分为二册。上册厚而下册薄，不能适均。因思去年李圆净居士所著之佛法导论，颇契初机。其宗旨与救劫编相同。其措词立议，尤易引起近时学界中之信心。附于下册之后，则两册均等，且令阅者得彼此互证之益。</p><p class="p-trans">这本书一共三卷，分为二册。上册厚而下册薄，不能均等。因此想到去年李圆净居士所著的《佛法导论》，很契合初机学人。其中的宗旨与《救劫编》相同。其中的措词立议，尤其容易引起近来知识分子的信心。附在下册的后面，那么上下两册就均等了，而且还令读者得到两本书互相证明的利益。</p></div>
+<div class="para-pair"><p class="p-orig">而乐简者不妨先从导论以入手，待至识其指归，则再详阅全书，势如破竹。方知不通佛法，不能究竟圆成世法。是以古今来建大功，立大业，浩气塞天地，德泽被民生者，多从学佛得力而来。</p><p class="p-trans">而喜欢简约的人，不妨先从《佛法导论》入手，等到自己认识了其中的指归，那么再详细阅读全书，就势如破竹了。才知道不通达佛法，就不能究竟圆满成就世间法。所以，古往今来建大功，立大业，浩气塞天地，德泽被民生的人，大多从学佛得力而来。</p></div>
+<div class="para-pair"><p class="p-orig">果能遍阅群籍，息心审察，自可悉知。若以浮躁之心阅之，则无不当面错过。果具此知见，则佛法世法不但两不相碍，且两得相成。如二月互照，两手互援。丽泽并滋，双轮并进。俾世运归乎大同，人民享夫安乐。则何幸如之。</p><p class="p-trans">果真能够遍读群籍，静心审察，自然能全都知道。如果用浮躁的心来阅读，那么没有不当面错过的。果真具有这些知见，那么佛法、世间法不但两不妨碍，而且两方面得以相辅相成。如同两个月亮互相照耀，两只手互相援助。两个沼泽互相滋益，两个车轮共同前进。使世运归于大同，人民长享安乐。还有比这更庆幸的事吗？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【世运】</span>时代盛衰治乱的气运。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复宁德晋居士书十八 · 印光法师文钞</title>
+<meta name="description" content="常念恭敬观世音菩萨，乃常念常恭敬。常字贯下恭敬，何可作朗念恭敬观世音菩萨乎。须知南无二字，即是皈依顶礼，恭敬，度我等义。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-159/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复宁德晋居士书十八 · 印光法师文钞">
+<meta property="og:description" content="常念恭敬观世音菩萨，乃常念常恭敬。常字贯下恭敬，何可作朗念恭敬观世音菩萨乎。须知南无二字，即是皈依顶礼，恭敬，度我等义。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-159/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复宁德晋居士书十八</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">常念恭敬观世音菩萨，乃常念常恭敬。常字贯下恭敬，何可作朗念恭敬观世音菩萨乎。须知南无二字，即是皈依顶礼，恭敬，度我等义。</p><p class="p-trans">“常念恭敬观世音菩萨”，是常念、常恭敬。“常”字贯通下面的“恭敬”二个字，怎么可以当作 “朗念恭敬观世音菩萨”呢？必须知道“南无”二个字，就是皈依顶礼，恭敬，度我等意思。</p></div>
+<div class="para-pair"><p class="p-orig">现上海习勤所，已印二三十万发往各处。而南京，南通，汉口，无锡，各有印者。汝印只在秦地分送。</p><p class="p-trans">现在上海习勤所，已经印了二、三十万份，发往全国各地。而南京、南通、汉口、无锡，各有翻印的。你印的只在陕西分送。</p></div>
+<div class="para-pair"><p class="p-orig">一心念佛，无事不办。而观音慈悲寻声救苦，当此极苦之时，令念观音，较彼令念佛，尤易生信。以佛之威神，人多不知。经中于救苦救难之事，绝少发挥。</p><p class="p-trans">一心念佛，无事不成。而观世音菩萨慈悲寻声救苦，在这极苦的时候，令大家念观世音菩萨，比起令他念佛，更容易生起信心。因为佛的威神，人们大多不知道。经中对于佛救苦救难的事，很少发挥。</p></div>
+<div class="para-pair"><p class="p-orig">观音救苦救难之事，则大乘经中屡屡发挥。如法华经普门品，楞严经第二十五观音耳根圆通章，华严经善财参观音章（第二十八参），大悲经则专说大悲咒及观音救苦之事，悲华经说观音因地发愿救苦之事，其他经中说者甚多。因此因缘，世无不知观音救苦救难者。</p><p class="p-trans">观音菩萨救苦救难的事，则在大乘经中多有发挥。如《法华经·观世音菩萨普门品》，《楞严经》第二十五《观音耳根圆通章》，《华严经》中《善财参观音章》（第二十八参），《大悲经》则专门说大悲咒，以及观世音菩萨救苦的事，《悲华经》是说观世音菩萨在因地发愿救苦的事，其它经中宣说的很多。因这个因缘，世间没有不知道观世音菩萨救苦救难的人。</p></div>
+<div class="para-pair"><p class="p-orig">当此大劫，令上等人（乃上等智识）念佛则易。下等人（乃下等智识）以经中未曾说及，或不生信，故令念观音也。汝何可以佛与菩萨果位神通等较量乎。</p><p class="p-trans">在这个大劫难中，令上等人（是上等的智慧见识）念佛则容易。下等人（是下等的智慧见识）因为经中没有说到过，或许（对佛）不生信心，所以令他们念观世音菩萨。你怎么可以将佛与菩萨的果位神通等来较量呢？</p></div>
+<div class="para-pair"><p class="p-orig">须知观音与我世界有大因缘。乃于无量劫前，久已成佛，号正法明。但以慈悲心重，不离寂光（乃佛住处），垂形九界，以行救济耳。况示迹为阿弥陀佛法王子。</p><p class="p-trans">必须知道观世音菩萨与我们（娑婆）世界有大因缘。在无量劫前，久已成佛，号正法明如来。但因为慈悲心重，不离常寂光净土（是佛的住处），垂形九法界，来实行救济。何况示迹为阿弥陀佛的法王子。</p></div>
+<div class="para-pair"><p class="p-orig">如民众欲求皇帝恩泽，即向太子求耳。念观音发愿求生西方，亦可满愿。以弥陀观音同一度生之事，非有二义也。</p><p class="p-trans">如同民众想求皇帝的恩泽，就向太子求了。念观世音菩萨发愿求生西方，也可以满愿。因为阿弥陀佛、观世音菩萨（行的）是同一个度生的事业，并非有二个意义。</p></div>
+<div class="para-pair"><p class="p-orig">德恒充渭阳师范教员，而欲光开示（了凡四训，安士全书，令彼常看）。须知吾国之大乱，其根本由于程朱辟因果轮回。</p><p class="p-trans">德恒做了渭阳师范的教师，想让我为他开示（《了凡四训》、《安士全书》，让他常常看）。必须知道我国的大乱，其根本原因，是由于二程（程颢、程颐）、朱熹辟驳因果轮回。</p></div>
+<div class="para-pair"><p class="p-orig">谓人一死之后，形既朽灭，神亦飘散，纵有地狱锉斫舂磨之苦，其将何所施。又神已散矣，令谁受生。是无地狱，无轮回，作善作恶，均无报应。是阻人为善，任人造恶也。</p><p class="p-trans">认为人一死之后，身形既然腐朽毁灭，神识也就飘散了，纵然有地狱锉斫舂磨的苦，又将向谁施用呢？另外，神识已经飘散了，又让谁来受生呢？所以没有地狱，没有轮回，行善作恶，都没有报应。这是阻碍他人行善，任由他人造恶啊！</p></div>
+<div class="para-pair"><p class="p-orig">此后理学，皆不敢说因果轮回。则善无以劝，恶无以惩。以驯至于大加提倡，实行兽化矣。须知此之大乱，由程朱辟因果轮回以开其端。</p><p class="p-trans">此后的理学，都不敢说因果轮回。则没有办法来劝善，也没有办法来惩恶了。以至于渐渐地发展到大加提倡，实行兽化了。必须知道这个大乱，是由于二程（程颢、程颐）、朱熹辟驳因果轮回，而为开端的。</p></div>
+<div class="para-pair"><p class="p-orig">由国家不提倡教育事，致家庭父母，只教儿女开智识，不与儿女讲因果报应，道德仁义。学堂先生，只知教学做文章，于学圣学贤躬行实践，一句也不提及。</p><p class="p-trans">由于国家不提倡教育的事，致使家庭中的父母，只教导儿女开智识，不与儿女讲因果报应、道德仁义；学堂中的先生，只知道教学做文章，对于学习圣人、学习贤人，亲身实践，一句话也不提及。</p></div>
+<div class="para-pair"><p class="p-orig">以此种先生，从少至老，也不知读书是为学圣学贤。只知道做文章，求功名。及功名已得，则借势欺人，为地方害者，十有八九。为地方益者，但一二耳。</p><p class="p-trans">因为这种先生，从少到老，也不知道读书是为了学习圣人、学习贤人。只知道做文章，求功名。等到功名已经得到，就借势欺人，成为地方祸害的，十个有八九个。有益于地方的，只有一二个罢了。</p></div>
+<div class="para-pair"><p class="p-orig">古人云，师者人之模范也。模不模，范不范，为害不小。须知人与天地，并称三才，才者才能。天不知多高多大，地不知多厚多广，人以五六尺六七十岁之小小东西，何可与不可测量之天地并称乎。</p><p class="p-trans">古人说，为人师的人，是他人的模范。模不成模，范不成范，这个危害不小。必须知道人与天地，并称为三才，才是才能的意思。天不知道有多高多大，地不知道有多厚多广，人以五六尺身高、六七十岁寿命的小小东西，怎么可以与不可测量的天地并称呢？</p></div>
+<div class="para-pair"><p class="p-orig">须知天地虽能生成万物，若无人以参赞教育，则不成世道。故以人能继往圣，开来学，此乃为父为师之责负。若知我为人师，纵我无德感人，亦当自己一举一动，皆不失仪。</p><p class="p-trans">必须知道天地虽然能够生成万物，但如果没有人来协助教育，就不会成为世道。所以人能够继承往圣、开启来学，这是作为父亲、作为师长的责任。如果知道我是他人的老师，纵然我没有德行感化他人，也应当使自己的一举一动，都不失礼仪。</p></div>
+<div class="para-pair"><p class="p-orig">所谓非礼勿视，非礼勿听，非礼勿言，非礼勿动，战战兢兢，如临深渊，如履薄冰，唯恐人以我之不肖而效之。则可希圣希贤，超凡入圣矣。宜多录几张，以公有志为人者共阅之。</p><p class="p-trans">所谓：非礼勿视，非礼勿听，非礼勿言，非礼勿动，战战兢兢，如临深渊，如履薄冰，唯恐他人因为我的品行不好而效仿。那么就可以仰慕效法圣贤，超凡入圣了。应该多抄录几张，以公布给有志成为好人的人，共同阅读。</p></div>
+<div class="para-pair"><p class="p-orig">苏州飞机，日来三四五六七八次，也不定。有日屡下炸弹，有日不下。有劝光他往者，光宁被炸死，不愿奔跋劳苦死。</p><p class="p-trans">（经过）苏州的（日本）飞机，每天飞来三、四、五、六、七、八次，也不一定。有些天，屡屡投下炸弹。有些天，不投炸弹。有人劝我前往他处，我宁可被炸死，也不愿奔波劳苦死。</p></div>
+<div class="para-pair"><p class="p-orig">切勿多说空话，以后不许再来信，以大家在死里求生，尚可应酬闲事乎。（廿六年九月十八日）</p><p class="p-trans">千万不要多说空话，以后不许再来信，因为大家在死里求生，还能应酬闲事吗？（民国二十六年九月十八日）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

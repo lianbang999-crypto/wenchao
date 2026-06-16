@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复盛机师书 · 印光法师文钞</title>
+<meta name="description" content="昨接汝书，不胜慨叹。汝学佛者，何得以自己知见，测佛境界，测之不得，遂生疑惑乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-086/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复盛机师书 · 印光法师文钞">
+<meta property="og:description" content="昨接汝书，不胜慨叹。汝学佛者，何得以自己知见，测佛境界，测之不得，遂生疑惑乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-086/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复盛机师书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接汝书，不胜慨叹。汝学佛者，何得以自己知见，测佛境界，测之不得，遂生疑惑乎。</p><p class="p-trans">昨天收到你的信，非常感慨。你是学佛的人，怎么可以以自己的知见，来妄测佛的境界，因为不能测得，于是就生出疑惑的心呢。</p></div>
+<div class="para-pair"><p class="p-orig">夫证真如者，则三际坐断，十界平沉，有因缘故，亦可于一念现无量劫，于无量劫作一念，念劫圆融，两不混滥。</p><p class="p-trans">证得真如的人，则三际（过去、现在、未来）坐断，十界（佛、菩萨、缘觉、声闻、六道）平沉，如果有特定的因缘，也可以于一念现无量劫，于无量劫作一念，念和劫圆融无碍，两不混乱。</p></div>
+<div class="para-pair"><p class="p-orig">汝谓六十小劫，犹如食顷，五十小劫，只如半日，无此事理。然则经中所有大小互入，念劫互现之说，皆为妄语乎。</p><p class="p-trans">你说六十小劫像吃顿饭的时间，五十小劫却像半天，没有这种道理。那么经中所有“大小互入，念劫互现”的说法，都成妄语了吗？</p></div>
+<div class="para-pair"><p class="p-orig">如来初成正觉，现圆满报身相，为四十一位法身大士，说华严经，二乘在座，不见不闻。</p><p class="p-trans">如来刚成佛时，现圆满报身相，为四十一位法身大士，说《华严经》，当时二乘弟子（声闻、缘觉）也在座，但他们却不见佛的报身，也听不到佛说法。</p></div>
+<div class="para-pair"><p class="p-orig">所见之佛，乃老比丘相，所闻之法，乃生灭四谛。故维摩经云，佛以一音演说法，众生随类各得解，汝将谓无此事理乎。</p><p class="p-trans">他们所看见的佛，是老比丘的形相，所听到的法，是生灭四谛法。所以《维摩经》说：＂佛以一音演说法，众生随类各得解＂，你能说没有这种道理吗？</p></div>
+<div class="para-pair"><p class="p-orig">须知时无定法，随人所见不同，佛菩萨境界且置，姑以凡小之境明之。</p><p class="p-trans">必须知道时间的概念没有定法，随着不同人的所见而各不相同。佛菩萨的境界姑且放在一边不说，暂以凡夫的小境界来向你说明。</p></div>
+<div class="para-pair"><p class="p-orig">周灵王子子晋，学仙，过七日，于缑山出现，已到晋朝。故有诗曰，王子去求仙，丹成入九天，洞中方七日，世上几千年（几，读平声，近也。从周灵王至晋彼出时，将及一千年耳）。</p><p class="p-trans">周灵王的儿子子晋学仙，他自己感觉刚刚过了七天，当他再从缑山出现时，俗世的时间已经到了晋朝。所以有诗说：“王子去求仙，丹成入九天，洞中方七日，世上几千年（几，读平声，将近。从周灵王，到晋朝他再出来时，将近有一千年了）。”</p></div>
+<div class="para-pair"><p class="p-orig">又吕纯阳遇钟离权于邯郸逆旅中，钟劝其学仙，吕意欲得富贵后方学，钟与一枕令睡，则梦见由小至大，以至宰相，五十年富贵荣华，世所罕有，子孙满堂，其乐无央，后以一事与上意不合，遂自引退，乃醒。</p><p class="p-trans">还有，吕纯阳（吕洞宾）在邯郸的一个旅店里遇到了汉钟离，钟离劝他学仙，可他想得到富贵后再学。钟离就给他一个枕头让他躺在上面睡觉，他梦到自己的官职越做越大，以至做到了宰相，五十年间享尽了举世罕见的荣华富贵，而且子孙满堂，其乐融融。后来因为有件事与皇帝的意见不合，于是辞官回家，梦到这里他就醒来了。</p></div>
+<div class="para-pair"><p class="p-orig">睡时逆旅主人煮黄粱米粥，梦中出入将相，做许多大事，经五十年之久，及醒，黄粱粥尚未煮熟，此不过仙人所现，尚能于一念中作五十年境界事业。</p><p class="p-trans">他睡的时候，店主人正在煮黄粱米粥，梦中出将入相做了许多大事，历经五十年之久，等他醒来，黄粱粥还没有煮熟。这不过是仙人所现的境界，就能于一念中完成五十年的事业。</p></div>
+<div class="para-pair"><p class="p-orig">况佛为天中天，圣中圣，诸大菩萨已证法身之境界乎。故善财入弥勒楼阁，入普贤毛孔，皆于十方世界，行六度万行，经佛刹微尘数劫，汝看此文，又将何以测度乎。</p><p class="p-trans">何况佛为天中天、圣中圣，以及诸位大菩萨已证得法身的境界呢。所以善财童子入弥勒楼阁，入普贤毛孔，皆于十方世界，行六度万行，经佛刹微尘数劫。你看到这段文字，又会做怎样的测度呢？</p></div>
+<div class="para-pair"><p class="p-orig">须知三际无实体，而在凡夫分中，只见凡夫所应见之境，不得以凡夫所见之境，谓佛菩萨亦复如是，了无有异也。</p><p class="p-trans">须知过去、现在、未来三际没有实体，可是在凡夫的分上，就只见到凡夫所能见到的境界。不能因为凡夫见到某种境界，就认为佛菩萨境界也是这样的，和凡夫所见没有什么两样。</p></div>
+<div class="para-pair"><p class="p-orig">今为喻明，如镜照数十重山水楼阁，实无远近，而复远近历然。</p><p class="p-trans">为了说明白，打个比方：就好比镜子照到十几重的山水楼阁，他们在镜子的表面没有什么远近之分，可观者却能远近都分得清清楚楚。</p></div>
+<div class="para-pair"><p class="p-orig">世间色法，尚能如是，况已证唯心自性之心法者乎。故曰，于一毫端，现宝王刹，坐微尘里，转大法轮。</p><p class="p-trans">世间肉眼所见的色法尚且有这样的情况，更何况是已经证得唯心自性的心法的人呢。所以说：在一根毫毛的顶端，可以呈现广大的佛刹；坐在细小的微尘里，可以转大法轮；</p></div>
+<div class="para-pair"><p class="p-orig">十世古今，始终不离于当念，无边刹土，自他不隔于毫端也。</p><p class="p-trans">十世那样长的时间，始终不离开当前一念；无量无边刹土那样远的距离，自他不隔于毫端之间。</p></div>
+<div class="para-pair"><p class="p-orig">汝既发心闭关，当恳切至诚礼拜持诵，以求三宝加被，令其业消智朗，障尽福崇。</p><p class="p-trans">你既然发心闭关，应当恳切至诚礼拜持诵，以求三宝的加被，令业障消除智慧明朗，业障消尽，福德圆满。</p></div>
+<div class="para-pair"><p class="p-orig">凡属不思议境界，但当仰信佛言，勿妄测度。果能恳切至极，自可悉皆明了，亦不须问人也。</p><p class="p-trans">凡属不思议境界，只应当仰信佛言，不要随意去猜测。如果真能如此至诚恳切，自然就能彻底明白，也就不须问别人了。</p></div>
+<div class="para-pair"><p class="p-orig">若不在恳切至诚礼拜持诵上致力，终日取非凡夫所能测之境界而妄测之，则与幻人法师同一覆辙，欲不受谤佛，谤法，谤僧之罪报，何可得乎。祈慧察是幸。</p><p class="p-trans">如果不在恳切至诚、礼拜持诵上下功夫，整天用凡夫的心去揣测凡夫所不能理解的境界，那么就与幻人法师同出一辙了。想不受谤佛、谤法、谤僧的罪报，又怎么可能呢？希望你能慧察为好。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【三际】</span>即三世。(一)前际，指过去。(二)后际，指未来。(三)中际，指现在。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【坐断】</span>禅林用语。坐，平坐之意。坐断，原意谓“彻底的坐”，引申为拼命做之意。又作坐破。即由坐禅之力以断迷，用以形容坐破差别相，彻底达于平等一如之境地。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【十界】</span>地狱、饿鬼、畜生、阿修罗、人、天、声闻、缘觉、菩萨、佛。前六是六凡，后四是四圣。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【平沉】</span>沉没；隐没。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【食顷】</span>（杂语）一食之顷，谓暂时也。法华经序品曰：“时会听者，亦坐一处。六十小劫，身心不动。听佛所说，谓如食顷。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【五十小劫，只如半日】</span>见《妙法莲华经卷》第五 安乐行品第十四：“是时释迦牟尼佛默然而坐，及诸四众亦皆默然五十小劫；佛神力故，令诸大众谓如半日。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【大小互入】</span>谓一可摄多，多亦含一，大可入小，小可容大。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【生灭四谛】</span>台宗所立四种四谛之一。此系三藏教之说，主张因缘生灭实有；认为苦、集、道三谛依因缘实有而生灭，灭谛亦可视为实有灭法。亦即指立于实生实灭上四谛。即1.苦谛：苦，逼迫义；有三苦、八苦等。即观色、心等诸法无常逼迫而知生死实苦。2.集谛：即观烦恼惑业，实能招集生死之苦。3.灭谛：即观涅槃理，而将生死诸苦归于寂灭。4.道谛：即观戒、定、慧之道，而断尽惑业，生起正智以证入涅槃为旨趣。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【缑氏山】</span>山名。在河南省偃师县。汉刘向《列仙传·王子乔》：“王子乔者，周灵王太子晋也。好吹笙，作凤凰鸣。游伊洛之间，道士浮丘公接以上嵩高山。三十余年后，求之于山上，见桓良曰：‘告我家：七月七日待我于缑氏山巅。’至时，果乘白鹤驻山头，望之不得到，举手谢时人，数日而去。”</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【逆旅】</span>客舍；旅馆。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【上意】</span>君上的心意、意旨。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【出入】</span>谓朝廷内外。指出将入相。出将入相：谓文武双全，出战领兵为将，入阁理事为相。亦泛指官居高位。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【天中天】</span>谓诸天中之最胜者。又作天人中尊、天中王。为佛尊号之一。以释尊诞生之后，曾受诸天礼拜，故而有此尊号。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【于一毫端，现宝王刹，坐微尘里，转大法轮】</span>《楞严经》卷四：“于一毛端，现宝王剎。坐微尘里，转大法轮。”</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【自他不隔于毫端】</span>《新华严经论》卷第一 长者李通玄撰 “无边剎境。自他不隔于毫端。十世古今。始终不移于当念。”</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【幻人法师】</span>与印祖同时代的法师，不信净土，曾讥笑净土法门。太虚大师《太虚大师全书》佛法总学第四章 禅台贤流归净土行谈夺禅超教律之净时说：“至此期，乘禅之衰，转由净土宗承袭其超教律且倚透禅之势而夺禅，而成为仅存孤零的念弥陀名号之势。幻人（印光大师曾与争辩）法师以&#x27;昔玄奘携所取经，过河落水，晒河岸石上，被一龟食尽，今只存阿弥陀佛四字&#x27;讥之。”</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【覆辙】</span>翻过车的道路，比喻曾经错误的做法。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

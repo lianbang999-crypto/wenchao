@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复江易园居士书四 · 印光法师文钞</title>
+<meta name="description" content="初三接有朋书，谓令严去世，阁下哀毁欠调，不能秉笔，命代为述，不禁戚伤不已。然令严寿高七十有五，子妇孙曾满前，无大病而终。且阖家念一天多佛，不断佛声，当必赖孝眷之诚，蒙佛接引往生矣。如是则有何所憾。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-027/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复江易园居士书四 · 印光法师文钞">
+<meta property="og:description" content="初三接有朋书，谓令严去世，阁下哀毁欠调，不能秉笔，命代为述，不禁戚伤不已。然令严寿高七十有五，子妇孙曾满前，无大病而终。且阖家念一天多佛，不断佛声，当必赖孝眷之诚，蒙佛接引往生矣。如是则有何所憾。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-027/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复江易园居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">初三接有朋书，谓令严去世，阁下哀毁欠调，不能秉笔，命代为述，不禁戚伤不已。然令严寿高七十有五，子妇孙曾满前，无大病而终。且阖家念一天多佛，不断佛声，当必赖孝眷之诚，蒙佛接引往生矣。如是则有何所憾。</p><p class="p-trans">初三接到江有朋的信，说你父亲去世，你因为哀痛损伤身体，失于调养，不能执笔，命他代为叙述，我不禁戚然悲伤不已。然而你父亲高寿七十五岁，儿子媳妇、孙子曾孙满堂，没有大病而终。而且全家念一天多的佛号，不断佛声，一定会因为孝子贤孙的诚心，蒙佛接引往生了。这样又有什么遗憾的呢？</p></div>
+<div class="para-pair"><p class="p-orig">虽孝子不忍离亲，而世相无常，决无长住世间之理。但当以佛法资益其神识，固不必执著世礼，而过为哀毁也。事亲之道，必取其大者。彼不知佛法者，只知哀毁为孝，究竟于亲无益，于己有损。何若转哀毁之心以念佛，则其益何止天地悬殊也。</p><p class="p-trans">虽然孝子不忍父亲离开，然而世相无常，绝对没有长住世间的道理。只应当以佛法来资助利益他的神识，原本就不必要执着世俗礼节，而过份地哀痛损伤身体。事奉双亲之道，必定要取其中的大节。那些不知道佛法的人，只知道哀痛伤身是孝，然而这样究竟对于父母亲没有利益，对于自己却有损伤。不如转哀痛伤身之心来念佛，那么这个利益何止天地悬殊呢？</p></div>
+<div class="para-pair"><p class="p-orig">阁下明理，当不以光言为谬。光贫无所有，凡朋友亲丧，皆于朝暮课诵回向时，称彼亡人之名，为之回向。今为令严回向三七，以尽友谊。</p><p class="p-trans">你是明理之人，应当不会认为我的话是错谬。我贫无他物，凡是朋友的亲人故去，皆在早晚课诵回向时，称亡人的名字，为他回向。现今为你父亲回向三个七，以尽友谊。</p></div>
+<div class="para-pair"><p class="p-orig">至云令令侄知源寄洋二百元，以一百供养三宝，以一百放生。窃谓去年令夫人之丧，以百元打一堂佛七，今亦如是办。适值念佛堂止十二人，故不加请，共九十圆。以十圆于十日午，供养大众攒菜。则阁下供养三宝之心愿已满，而念佛之事，亦复不缺，为两适其宜耳。</p><p class="p-trans">至于说令你的侄儿江知源寄二百洋元，以一百元供养三宝，以一百元放生。我认为去年你夫人的丧事，用一百元来打一堂佛七，如今也这样办。正好念佛堂只有十二人，所以不用多请人，一共九十圆。剩下的十圆在十日的中午，供养大众加菜。那么阁下供养三宝的心愿已满，而念佛的事，也不缺少，就两方面都合适了。</p></div>
+<div class="para-pair"><p class="p-orig">放生之洋，依光愚见，宜择其利益大者为之。现已于九月将观音大士颂付排，约于明春正二月出。似宜将此洋印大士颂三百部流布，令一切人同沾大士慈恩，同知戒杀护生为超胜耳。</p><p class="p-trans">放生的钱，依我的愚见，应该选择利益大的事来做。现已在九月份将《观音大士颂》交付排印，大约在明年春天正、二月出书。似乎宜将这一百元印《大士颂》三百部来流布，令一切人同沾大士慈恩，同知戒杀护生，更为殊胜。</p></div>
+<div class="para-pair"><p class="p-orig">如必欲放生，当为示知，普陀不可放生，以在大海中，生多无所归（海水咸，淡水中鱼，一入即死）。当寄南京法云寺，此现在南方第一处放生道场也。</p><p class="p-trans">如果一定想要放生，应当要告诉你，普陀山不可放生，因为在大海中，所放的生命大多没地方可去（海水是咸的，淡水中的鱼，一入海水就死）。应当寄到南京法云寺，这里现在是南方第一处放生道场。</p></div>
+<div class="para-pair"><p class="p-orig">观音颂，光欲募印数十万部，遍布中外。故令打四付纸板，以为预备。然以人微德薄，恐无此感格。上十万部，当可做到。现已有五六万部任者矣。</p><p class="p-trans">《观音颂》，我想要募印几十万部，遍布中外，所以令他们打四付纸板，作为预备。然而因为人微德薄，恐怕没有如此的感通。上十万部，应当可以做到。现在已经有五六万部任资的人了。</p></div>
+<div class="para-pair"><p class="p-orig">一居士以五千圆为母祈，寿未终则速愈，寿已终则往生。光令印大士颂一万部，系三千三百，余一千七百印不可录。彼已应允。</p><p class="p-trans">一位居士出五千圆为母亲祈祷，寿命未终则快速痊愈，寿命已终则往生西方。我让他印《大士颂》一万部，是三千三百元。剩余的一千七百元印《不可录》。他已经答应了。</p></div>
+<div class="para-pair"><p class="p-orig">其二百圆，不知令寄何处。普陀不便，当令寄上海为最便当，最稳妥耳。祈息哀念佛，并率家人念佛，为报亲尽孝之至谊。勿拘于世礼，是为得焉。</p><p class="p-trans">这二百圆，不知道让江知源寄到何处。普陀山不方便，当让他寄到上海最为方便，最为稳妥。请息哀念佛，并率家人念佛，作为报亲尽孝的深厚情谊。不要拘于世俗礼节，这样才能得益啊！</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

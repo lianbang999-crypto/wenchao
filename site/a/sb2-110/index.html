@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复慧海居士书六 · 印光法师文钞</title>
+<meta name="description" content="献岁以来，起居纳福，诸缘如意，贺贺。腊月二十九魏梅荪由南京来信，并附汝书，知任印大士颂已逾三千，不胜欣幸。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-110/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复慧海居士书六 · 印光法师文钞">
+<meta property="og:description" content="献岁以来，起居纳福，诸缘如意，贺贺。腊月二十九魏梅荪由南京来信，并附汝书，知任印大士颂已逾三千，不胜欣幸。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-110/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复慧海居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">献岁以来，起居纳福，诸缘如意，贺贺。腊月二十九魏梅荪由南京来信，并附汝书，知任印大士颂已逾三千，不胜欣幸。</p><p class="p-trans">新年以来，起居纳福，诸缘如意，祝贺祝贺。腊月二十九，魏梅荪从南京来信，并附上你的信，知道你们任印《观世音菩萨本迹感应颂》已经超过三千部，非常欢喜庆幸。</p></div>
+<div class="para-pair"><p class="p-orig">所言汇费邮费等，光当垫出。以哈地辽远，即无任者，亦当寄若干部，以广大士慈化。此不过一二百元，又何须斤斤计算乎哉。</p><p class="p-trans">所说的汇费邮费等，我当会垫出。因为哈尔滨地方遥远，即使没有任印的人，也应当会寄若干部，来广宣观音大士的慈悲教化。这不过一二百元，又何必斤斤计较呢？</p></div>
+<div class="para-pair"><p class="p-orig">大士颂已排完，共二百零六页，加两页功德名，成零八页，每部当加一分，千部当加十元，然此不必令其补足。如后有欲任者问及，当以此告之，令知所以耳。</p><p class="p-trans">《观世音菩萨本迹感应颂》已经排完，共二百零六页，加上两页的功德芳名，共有二百零八页，每部加一分，一千部当会增加十元，然而这些钱不必令他们补足。如果将来有想任印的人问到，应当将这个情况告诉他们，让他们知道所以然。</p></div>
+<div class="para-pair"><p class="p-orig">至于汇款，此次若中华已付收据，即已。后若有寄，无论多人，只与汇款之人付一总收据，不必人人交收据，以此与捐款作善事不同。此有书交彼，何须又要收据。汇款人既得收据，知其款寄到不致误即已。书出时，其书多数当由转运公司寄于贵寓，祈按各捐户为之分发，较为稳妥。</p><p class="p-trans">至于汇款，如果这次中华书局已经付了收据，就算了。以后如果寄钱，无论多少人，只给汇款的人交付一张总收据，不必每个人都交收据，因为这与捐款作善事不同。这是有书交给他，何必又要收据。汇款人既然得到了收据，就知道这笔钱款已寄到，不致错误就可以了。书印出来的时候，大部分书应当会由转运公司寄到你的住处，请按照各位捐款的人来分发，比较稳妥。</p></div>
+<div class="para-pair"><p class="p-orig">梅荪不在上海，故将汝书寄光，令通知中华云。功德名拟作省纸办法，十元以上则名。十元以下但总计零任共若干部而已。以省一张纸，二万部即省三十元，十万部即省一百五十元。况此有书交彼，不致或有异议，谓钱没落空等。其叙功德名并书数者，一以彰任者之善心，一以彰所流通有若干也。</p><p class="p-trans">魏梅荪不在上海，所以将你的信寄给我，令我通知中华书局。功德名打算作一省纸的办法，十元以上的记名。十元以下的只总计零任共多少部而已。因为节省一张纸，二万部就能节省三十元，十万部就能节省一百五十元。何况这样有书交给他们，不致或许有异议，认为钱没有落空等。记功德名和书数量的原因，一是彰显任印者的善心，一是表明流通的书有多少部。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【献岁】</span>进入新的一年；岁首正月。《楚辞·招魂》：“献岁发春兮，汨吾南征。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周志诚居士书一 · 印光法师文钞</title>
+<meta name="description" content="凡修行人，当在自己家中修，不必定到林中修。若皆到林中修，何有此大屋可容，人多则林中缴用多，诸人奔走辛苦，家中诸事，或有顾不到处。所有居士林，净业社，不过作一提倡之机关耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-200/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周志诚居士书一 · 印光法师文钞">
+<meta property="og:description" content="凡修行人，当在自己家中修，不必定到林中修。若皆到林中修，何有此大屋可容，人多则林中缴用多，诸人奔走辛苦，家中诸事，或有顾不到处。所有居士林，净业社，不过作一提倡之机关耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-200/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复周志诚居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">凡修行人，当在自己家中修，不必定到林中修。若皆到林中修，何有此大屋可容，人多则林中缴用多，诸人奔走辛苦，家中诸事，或有顾不到处。所有居士林，净业社，不过作一提倡之机关耳。</p><p class="p-trans">凡是修行人，应当在自己的家中修，不必非要到居士林中修。如果都到居士林中修，哪有这样的大屋可以容身。人多了，居士林中的费用也多，大家奔走辛苦，家中的一切事务，或许有顾及不到之处。所有的居士林，净业社，不过是作一个提倡学佛的机关罢了。</p></div>
+<div class="para-pair"><p class="p-orig">每月或一次二次，礼佛人多难容，宜分男女日期。礼佛后讲演佛经一二时，即令其回家。庶不至外人怀妒忌造谣言耳。</p><p class="p-trans">每个月，或者一次二次，礼佛人多，难以容纳，宜分出男女轮流的日期。礼佛后，讲演佛经一二个小时，就令他们回家。才不至于令外人心怀妒忌，妄造谣言。</p></div>
+<div class="para-pair"><p class="p-orig">至于修持法门，固无高下，禅律密净，皆是了生死之大法。然末世众生分上论，则非修净土法门，决难现生了脱。以余法门，皆仗自力。净土法门，兼仗佛力。佛力自力，奚啻天渊悬殊。</p><p class="p-trans">至于修持法门，固然没有高下之分，禅、律、密、净，都是了生死的大法。然而从末法时代的众生分上来论，则不修净土法门，决定很难现生了脱（生死轮回）。因为其余的法门，都是依仗自力。而净土法门，却兼仗佛力。佛力自力，何只天地悬殊。</p></div>
+<div class="para-pair"><p class="p-orig">不知此义，妄效大力量人之修法，殊难得其实益。以故禅宗百丈禅师，谓修行以念佛为稳当。而祈祷病僧，化送亡僧，皆以往生为事。从知西方极乐世界，为一切上圣下凡，修佛道者之归宿处也。</p><p class="p-trans">不知道这个义理，狂妄效仿大力量人的修法，实在很难得到其真实利益。所以禅宗百丈禅师，说修行以念佛为稳当。而且为病僧祈祷，焚化亡僧，都以往生净土作为事务。从而知道西方极乐世界，是一切上至圣者下至凡夫修佛道之人的归宿处啊！</p></div>
+<div class="para-pair"><p class="p-orig">华严经普贤行愿品，尽华藏世界海诸法身大士，以十大愿王功德，回向往生西方极乐世界，以期圆满佛果。况末世众生，根机陋劣者乎。</p><p class="p-trans">《华严经·普贤菩萨行愿品》，尽华藏世界海诸位法身大士，以十大愿王功德，回向往生西方极乐世界，以期圆满佛果。何况末法时代的众生，根机陋劣的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">禅宗功夫，虽到大彻大悟地位，以烦惑未断，犹不能即生了脱。五祖戒再为东坡，草堂清复作鲁公，是为前鉴</p><p class="p-trans">禅宗功夫，即使到了大彻大悟的地位，但因为烦惑没断，还不能当生了脱生死。五祖师戒禅师，再转世为苏东坡；草堂清禅师，又作了曾鲁公，这是前车之鉴</p></div>
+<div class="para-pair"><p class="p-orig">（五祖，寺名。戒，即师戒，人名。师戒曾作五祖寺住持，故称五祖戒，乃云门法孙大觉琏国师法祖，见地高超，门庭高峻，学者多畏惧不敢亲近，死后做苏东坡，大有证据。草堂，寺名。清，人名。曾鲁公名公亮，乃草堂清后身，五十七拜相，封鲁国公，亦大有证据）。</p><p class="p-trans">（五祖，寺名。戒，就是师戒，人名。师戒禅师曾经作过五祖寺的住持，所以称五祖戒，是云门法孙大觉怀琏国师的法祖，见地高超，门庭高峻，学者大多畏惧不敢亲近，死后做苏东坡，有很多证据。草堂，寺名。清，人名。曾鲁公，名公亮，是草堂清的后身，五十七岁拜为宰相，封鲁国公，也有很多证据）。</p></div>
+<div class="para-pair"><p class="p-orig">观此可知仗自力了生死之难。禅宗每云明心见性，见性成佛。明心见性，乃大彻大悟也。言见性成佛者，以亲见自性天真之佛，名为成佛，乃理即佛与名字佛也。非福慧圆满之究竟佛也。</p><p class="p-trans">看了这些，就可以知道仗自力了生死之难。禅宗常说明心见性，见性成佛。明心见性，是指大彻大悟。说见性成佛，是指以亲见自性天真之佛，名为成佛，这是理即佛与名字即佛。不是福慧圆满的究竟佛。</p></div>
+<div class="para-pair"><p class="p-orig">此人虽悟到极处，亲见佛性，仍是凡夫，不是圣人。若能广修六度，于一切境缘，对治烦恼习气，令其清净无余，则可了生脱死，超出三界之外，不在六道之中矣。佛世此种人甚多，唐宋尚有，今则大彻大悟尚不易得，况烦恼净尽者乎。</p><p class="p-trans">此人虽然悟到了极处，亲见佛性，但仍然是个凡夫，不是圣人。如果能够广修六度，在一切境缘上，对治烦恼习气，令习气清净无余，就可以了生脱死，超出三界之外，不在六道之中了。佛在世时，这种人很多，唐朝、宋朝还有，如今则大彻大悟尚且不容易得到，何况烦恼净尽的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">密宗现身成佛，或云即生成佛，此与禅宗见性成佛之话相同，皆称其工夫湛深之谓，不可认做真能现身成佛。</p><p class="p-trans">密宗现身成佛，或者说即生成佛，这与禅宗见性成佛的话相同，都是称赞其功夫湛深的意思，不可认做真能现身成佛。</p></div>
+<div class="para-pair"><p class="p-orig">须知现身成佛，唯释迦牟尼佛一人也。此外即古佛示现，亦无现身成佛之事。无知之人，每每错认，其失大矣。</p><p class="p-trans">必须知道现身成佛，唯有释迦牟尼佛一人。此外，即使是古佛示现，也没有现身成佛的事。无知的人，常常错认，这个过失很大啊！</p></div>
+<div class="para-pair"><p class="p-orig">在家近事男女，以老实念佛为本。居士信佛有年，想修持定有把握矣。切勿以净土法门，看作等闲。并祈转令贵地信佛男女努力修持，一心念佛。则为最合时机也。</p><p class="p-trans">在家的操持俗事的男女信众，以老实念佛为本。居士信佛有些年头了，想来修持一定有把握了。千万不要将净土法门，看作等闲平常。并请转令贵地信佛的男女努力修持，一心念佛。就是最合时机了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【怀琏】</span>（1009-1090）宋代云门宗僧。漳州（福建省）龙溪人。俗姓陈。号“琏三生”。禀性聪慧，不夸世荣。幼年出家，笃志道学，寝食双废。曾参学于泐潭怀澄十余年，受印可后，游庐山圆通，在居讷会下任书记。仁宗皇祐二年（1050），诏令居讷住东都十方净因禅院，讷以目疾举师代之。同年二月，奉诏于化成殿答帝问佛法大意，奏对称旨，受赐“大觉禅师”号。
+至和二年（1055），师进颂乞归。帝慰谕，仍留京师。英宗治平二年（1065）复上表请归山林，获准。师即东归，住金山西湖。后因四明郡守之请，移住阿育王广利禅寺。四明人相与协力造大阁，翰林学士苏轼为撰〈宸奎阁碑记〉。元祐五年无疾而终，世寿八十二。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

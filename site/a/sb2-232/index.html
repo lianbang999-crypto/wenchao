@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>药师琉璃光如来本愿功德经重刻序 · 印光法师文钞</title>
+<meta name="description" content="佛与众生之心体，（至）以期共知所以耳（与增广文钞卷三，药师如来本愿功德经重刻序，完全相同）。此前文，民国十一年壬戌仲夏，为扬州张瑞曾重刻所作者。经之大义，流通之源委，已略说之。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-232/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="药师琉璃光如来本愿功德经重刻序 · 印光法师文钞">
+<meta property="og:description" content="佛与众生之心体，（至）以期共知所以耳（与增广文钞卷三，药师如来本愿功德经重刻序，完全相同）。此前文，民国十一年壬戌仲夏，为扬州张瑞曾重刻所作者。经之大义，流通之源委，已略说之。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-232/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">药师琉璃光如来本愿功德经重刻序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛与众生之心体，（至）以期共知所以耳（与增广文钞卷三，药师如来本愿功德经重刻序，完全相同）。此前文，民国十一年壬戌仲夏，为扬州张瑞曾重刻所作者。经之大义，流通之源委，已略说之。</p><p class="p-trans">从“佛与众生之心体”，（到）“以期共知所以耳”（与《增广文钞》卷三，《药师如来本愿功德经重刻序》，完全相同）。这前面的一段文，是民国十一年壬戌（1922年）五月，为扬州张瑞曾重刻《药师经》所写的序。《药师经》的大义，流通的原由曲衷，已经大略说明了。</p></div>
+<div class="para-pair"><p class="p-orig">兹有陕西弟子马昆山，与兰州弟子无名，发心流通此经。昆山自捐并友人所助共七百圆。无名自捐并友人所助共三百圆。以此千圆汇苏，祈光代办。</p><p class="p-trans">现今有陕西弟子马昆山，与兰州弟子无名氏，发心流通这部经。马昆山自己捐印，及友人所助，一共七百圆。无名氏自己捐印，及友人所助，一共三百圆。将这一千圆汇到苏州，请我代办刻印《药师如来本愿功德经》。</p></div>
+<div class="para-pair"><p class="p-orig">昆山业西烟于兰州多年，人极诚笃，不知佛法。四年前由陕西同业李仙涛之劝导，遂归依三宝，吃素念佛。前年秋兰州火药局爆炸，其日烟业同行，于明水楼敬神唱戏。仙涛厂中百余人通去，唯副经理之子一人在厂。</p><p class="p-trans">马昆山在兰州经营西洋烟多年，为人极其诚实厚道，但不知道佛法。四年前（1933年），由于陕西同行李仙涛的劝导，于是归依三宝，吃素念佛。前年（1935年）秋天，兰州火药局爆炸，这一天，烟业的同行，在明水楼敬神唱戏。李仙涛工厂中的一百多个人，通通去听戏了，只有副经理的儿子一人在厂中。</p></div>
+<div class="para-pair"><p class="p-orig">昆山厂中百余人去尽，此亦不自知其所以然者。去后不久，靠城之火药局爆炸。城外几道街房屋，通皆震塌，伤人无数。仙涛厂中，唯副经理之子所住房未倒。昆山厂中，唯供佛一座房，巍然独存，玻璃亦未破裂。余皆倒尽。由此因缘，兰州人士渐生信心。昆山信心益加增长。</p><p class="p-trans">马昆山的厂中，一百多人全都去了，他们也不知道为什么会这样（不知不觉中避开了灾难）。去后不久，靠城的火药局爆炸。城外几条街道的房屋，全都被震塌，伤人无数。李仙涛的工厂中，只有副经理儿子所住的房子没有倒。马昆山的工厂中，只有供佛的一座房屋，巍然独存，玻璃也没有破裂。其余全都震倒了。由此因缘，兰州人士渐渐生起信心。马昆山的信心更加增长。</p></div>
+<div class="para-pair"><p class="p-orig">去年变兵，迭相骚扰。人民困苦，莫可言宣。因兹发心流通此经。所愿读此经者，必须主敬存诚，净手洁案。正身端坐，毋稍怠忽。如对圣容，亲聆圆音。又须敦伦尽分，惩忿窒欲。诸恶莫作，众善奉行。则其利益，莫能名焉。</p><p class="p-trans">去年（1936年）的乱兵，相继骚扰。人民的困苦，不能用语言表达。因此发心流通这部经。祈愿读这部经的人，必须恪守诚敬，洗净双手、洁净书案。正身端坐，不要稍有懈怠轻忽。如同面对圣人尊容，亲耳聆听佛陀圆音。又必须敦伦尽分（敦笃伦常、恪尽己分），惩忿窒欲（克制愤怒、抑制私欲）。诸恶莫作，众善奉行。那么这个利益，就不能用语言表达了。</p></div>
+<div class="para-pair"><p class="p-orig">设不至诚，及不尽分，则感应微小。非佛慈不普，由自心与佛不相应故。感应之道，如撞钟然。叩之大者则大鸣，叩之小者则小鸣。世每有小感而大应者，乃宿生修持之功德所致也。赞曰</p><p class="p-trans">假如不至诚恭敬，及不竭尽本分，那么感应就非常微小。并非佛陀的慈光不普照，而是由于自心与佛不相应的缘故。感应的道理，如同撞击大钟一样。叩击的力量大，那么钟声就大；叩击的力量小，那么钟声就小。世间常有小感而大应的情形，这是宿生修持的功德所导致的啊！赞曰：</p></div>
+<div class="para-pair"><p class="p-orig">药师如来琉璃光，誓愿洪深不可量。</p><p class="p-trans">药师如来琉璃光，誓愿洪深不可量。</p></div>
+<div class="para-pair"><p class="p-orig">显令生善集福庆，密使灭恶消祸殃。</p><p class="p-trans">显令生善集福庆，密使灭恶消祸殃。</p></div>
+<div class="para-pair"><p class="p-orig">拔苦必期二死尽，与乐直教万德彰。</p><p class="p-trans">拔苦必期二死尽，与乐直教万德彰。</p></div>
+<div class="para-pair"><p class="p-orig">法界圣凡同归命，蒙恩速得证真常。（民国廿六年丁丑季春）</p><p class="p-trans">法界圣凡同归命，蒙恩速得证真常。（民国二十六年&lt;1937&gt;丁丑季春&lt;三月&gt;）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【仲夏】</span>夏季的第二个月，即农历五月。因处夏季之中，故称。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【变兵】</span>发动变乱的士兵；乱兵。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

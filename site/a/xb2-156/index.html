@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>郃阳东乡赵家村观音寺募修葺殿宇圣像疏（民二十四年） · 印光法师文钞</title>
+<meta name="description" content="观音大士，誓愿弘深，法界众生，等蒙摄受。善根未种未熟未脱者，令其即种即熟即脱。应以何身得度者，即现何身而为说法。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-156/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="郃阳东乡赵家村观音寺募修葺殿宇圣像疏（民二十四年） · 印光法师文钞">
+<meta property="og:description" content="观音大士，誓愿弘深，法界众生，等蒙摄受。善根未种未熟未脱者，令其即种即熟即脱。应以何身得度者，即现何身而为说法。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-156/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">郃阳东乡赵家村观音寺募修葺殿宇圣像疏（民二十四年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观音大士，誓愿弘深，法界众生，等蒙摄受。善根未种未熟未脱者，令其即种即熟即脱。应以何身得度者，即现何身而为说法。</p><p class="p-trans">观音大士，誓愿弘深，法界众生，平等承蒙菩萨摄受。善根没有种下、没有成熟、没有解脱的人，就让他立即种下、立即成熟、立即解脱。应当以什么身得度的人，就现什么身来为他说法。</p></div>
+<div class="para-pair"><p class="p-orig">良由大士无心，以众生之心为心。大士无境，以众生之境为境。故遇迷昧自心者，为说法语巽言令开悟。遇遭诸险难者，为现桥梁人士令脱离。</p><p class="p-trans">这的确是因为，大士无心，以众生的心为心；大士无境，以众生的境界为境。所以遇到迷昧自心的人，就给他说法语、巽言从而使他开悟；遇到遭逢各种险难的人，就给他示现桥梁、人士从而使他脱离险境。</p></div>
+<div class="para-pair"><p class="p-orig">以大士久成佛道，悲愿无尽，故致如皓月之印千江，犹阳春之育万卉，有不期然而然者。由兹咸感佑护之洪恩，故处处各为立庙而供奉焉。</p><p class="p-trans">因为观音大士久成佛道，悲愿无尽，所以就如皓月影印千江、就像阳春化育万卉，常有不期然而然的情况。由于这个原因，人们都感激大士佑护的洪恩，所以处处都为大士立庙来供奉。</p></div>
+<div class="para-pair"><p class="p-orig">邑东赵家村观音寺，原名观音院，见明天启二年，邑生员卢祥兴碑记。后人于前增建佛殿，改为儒东寺，然此二字，于法道既未表深意，于见闻又难令种善根。况当此灾祸频遭之时，若不揭出观音圣号，令人民称名脱苦，不但孤负大士洪慈，亦深孤负当日立观音院者之深心，以故改为观音寺焉。</p><p class="p-trans">郃阳县东赵家村观音寺，原名观音院，这个名字可以从明朝天启二年，郃阳县秀才卢祥兴的碑记中见到。后人在观音院前面增建佛殿，改为儒东寺。但是，“儒东”这二字，从法道上既没有表达出深意，从见闻上又难以令人种下善根。更何况正当这个灾祸频遭的时代，如果不揭示出观世音菩萨圣号，使人民称名脱苦，不但辜负了大士的洪慈，也深深辜负了当时建立观音院那些人们的深心，所以就又改叫观音寺了。</p></div>
+<div class="para-pair"><p class="p-orig">寺之建筑，三门一座，内供二金刚。佛殿一座，供释迦，药师，弥陀三佛，傍侍迦叶，阿难。佛殿后韦驮殿一座，两边配殿二座，东关帝，西伽蓝。正中观音殿一座，中供观音，傍侍善财，龙女，两边十八罗汉。按此形势，足知佛殿在后添修也。</p><p class="p-trans">寺院的建筑，三门一座，内供两尊金刚。佛殿一座，供奉释迦牟尼佛、药师佛、阿弥陀佛三尊佛像，旁侍迦叶、阿难二位尊者。佛殿后有韦驮殿一座，两边配殿两座，东边关帝殿，西边伽蓝殿。正中一座观音殿，里面供奉观世音菩萨，旁侍善财、龙女，两边十八罗汉。从这个布局形势来看，完全可以知道，佛殿是在后来增修的。</p></div>
+<div class="para-pair"><p class="p-orig">吾邑自乾嘉后，佛学绝响，外道亦无。近来饥馑荐臻，兵匪屡扰，人民苦极，思乐不得。各种外道，乘机而来，门庭虽各不同，总以炼精气神，求成仙，为天帝之臣佐而已。</p><p class="p-trans">我故乡的这座郃阳城，自从乾隆、嘉庆以后，佛学就绝响了，外道也没有。近来接二连三地遭受饥馑，兵匪也屡次袭扰，人民痛苦至极，想安乐却得不到。各种外道，乘机而来，门庭虽然各不相同，但是总不出通过炼精、气、神，求成仙，做天帝的臣佐而已。</p></div>
+<div class="para-pair"><p class="p-orig">初李仙涛商上海，闻法归依。及归，请若干经书，以馈郃，澄，朝有学识之知交。于是方知净土法门，为佛法中之特别法门。下手易而成功高，用力少而得效速。仗佛慈力，即生便可了生脱死，较彼仗自力以了生死者，其难易奚啻天渊悬殊也。</p><p class="p-trans">当初李仙涛去上海经商，闻法归依。等回到家乡时，请了若干经书，来馈赠给郃阳、澄城、朝邑等县有学识的知交。于是大家才了解到，净土法门是佛法中的特别法门。下手易而成功高，用力少而得效速。仗佛慈力，这一生就可以了生脱死，比起那些依仗自力来了生脱死的法门，难易程度何止是天渊般悬殊啊。</p></div>
+<div class="para-pair"><p class="p-orig">今夏由甘回里，于四月八日，诣观音寺礼佛。见其殿宇凋敝，圣像残剥，欲稍事修葺，以力不能胜为憾。</p><p class="p-trans">今年夏天李仙涛由甘肃返回乡里，在四月八日，前往观音寺礼佛。见到寺院殿宇凋敝，圣像残缺剥落，想要稍加修复，但是因为财力不能胜任而感到遗憾。</p></div>
+<div class="para-pair"><p class="p-orig">至苏祈光作疏，以呼将伯之助。光谓当此灾祸频兴，人民困苦之时，恐无几肯施舍者。且持予疏，令一切人看，即一文不出，亦可令彼种即生了脱之善根。</p><p class="p-trans">于是到苏州祈请我作疏，来呼吁请求长者们的帮助。我说，正当这个灾祸频兴、人民困苦的时代，恐怕没有几个肯施舍的人。暂时先拿着我写的这篇疏，让家乡的一切人看，即使一文不出，也能让他们种下当生了脱的善根。</p></div>
+<div class="para-pair"><p class="p-orig">况念大士恩，当必有随分随力以助者。所募之款，多则大修，少则小修。即一圆亦无，予疏亦不徒作，汝募仍有大功。</p><p class="p-trans">更何况一想到大士的恩德，就一定会有随分随力来捐助的人。所募捐的款项，多则大修，少则小修。即使一圆也没有募捐到，我的这篇疏也不白作，你募捐仍然有大功德。</p></div>
+<div class="para-pair"><p class="p-orig">何也，以由阅此疏，知观音度众生之洪恩，念佛了生死之大法。将见后之相继而起者，多难胜数也。又何必执一时一处以为报恩宏法云哉。</p><p class="p-trans">为什么呢？因为通过阅读这篇疏，能使人懂得观世音菩萨度化众生的洪恩，念佛了生脱死的大法。可以预见到，将来相继而起，念佛往生的人，会多得难以胜数。又何必执着一时、一处有所成就，才认为是报恩、宏法呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【巽言】</span>语本《论语·子罕》：“巽与之言，能无说乎？绎之为贵。”后因以“巽言”谓恭顺委婉的言词。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【生员】</span>唐国学及州、县学规定学生员额，因称生员。明、清指经本少各级考试入府、州、县学者，通名生员，习称秀才，亦称诸生。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【饥馑荐臻】</span>饥馑：饥荒；荐臻：接连到来。连年灾荒不断。《诗经·大雅·云汉》：“何辜今之人，天降丧乱，饥馑荐臻。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【将伯之助】</span>将：请求；伯：长者。请求长者帮助。指别人对自己的帮助。《诗经·小雅·正月》：“载输尔载，将伯助予。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复丁福保居士论臂香书 · 印光法师文钞</title>
+<meta name="description" content="臂香者，于臂上然香也。灵峰老人，日持楞严梵网二经，故于然香一事，颇为频数。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-041/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复丁福保居士论臂香书 · 印光法师文钞">
+<meta property="og:description" content="臂香者，于臂上然香也。灵峰老人，日持楞严梵网二经，故于然香一事，颇为频数。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-041/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复丁福保居士论臂香书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">臂香者，于臂上然香也。灵峰老人，日持楞严梵网二经，故于然香一事，颇为频数。</p><p class="p-trans">臂香，是指在手臂上燃香。蕅益大师每天修持《楞严经》、《梵网经》这二部经，所以对于燃香这件事，常有行持。</p></div>
+<div class="para-pair"><p class="p-orig">良以一切众生，无不爱惜自身，保重自身。于他则杀其身，食其肉，心更欢乐。于己则蚊噆芒刺，便难忍受矣。</p><p class="p-trans">实在是因为一切众生，无不爱惜自己的色身，保重自己的色身。对于其它的众生则杀害它们的身体，吃它们的肉，心里更加欢乐。对于自己的身体，哪怕只是蚊子咬一下，稻草刺一下，便难以忍受了。</p></div>
+<div class="para-pair"><p class="p-orig">如来于法华，楞严，梵网等大乘经中，称赞苦行。令其然身臂指，供养诸佛。对治贪心及爱惜保重自身之心。此法于六度中仍属布施度摄。</p><p class="p-trans">如来在《法华经》、《楞严经》、《梵网经》等大乘经中，称赞苦行。令我们燃身、臂、指，来供养诸佛。对治贪心，以及爱惜保重自己身体的心。这个法门在六度当中，仍属于布施度所摄。</p></div>
+<div class="para-pair"><p class="p-orig">以布施有内外不同。外则国城妻子，内则头目髓脑。然香然身，皆所谓舍。必须至心恳切，仰祈三宝加被。唯欲自他业消慧朗，罪灭福增（言自他者，虽实为己，又须以此功德，回向法界众生，故云自他）。绝无一毫为求名闻及求世间人天福乐之心，唯为上求佛道下化众生而行。则功德无量无边，不可思议。</p><p class="p-trans">因为布施有内施、外施的不同。外施指国城妻子，内施指头目髓脑。燃香燃身都是所谓的施舍。必须至心恳切，仰祈三宝加被。只想要自己和他人都业消慧朗，罪灭福增（说“自他”，虽然实际上是为自己，又必须以此功德，回向法界众生，所以说“自他”）。绝对没有一丝毫为求名闻，及求世间人天福乐的心，只为上求佛道，下化众生而这样做。那么就功德无量无边，不可思议。</p></div>
+<div class="para-pair"><p class="p-orig">所谓三轮体空，四弘普摄。功德由心愿而广大，果报由心愿而速获。其或心慕虚名，徒以执著之心，效法除著之行。且莫说燃臂香，即将全身通燃，亦是无益苦行。以以执著心，求名誉念。既无三轮体空之解，又无四弘普摄之心。以如来破除身见之法，转增坚固身见。罪福由心而分，果报由心而异。</p><p class="p-trans">所谓三轮体空，四弘誓愿普摄。功德由心愿而广大，果报由心愿而速获。有人或心慕虚名，徒然以执著的心，效法除去执著的苦行。且不要说燃臂香，就是将全身通燃，也只是无益的苦行。因为是以执著心，贪求名誉的念头。既没有三轮体空的见解，又没有四弘誓愿普摄的悲心。以如来破除身见的方法，辗转增长坚固的身见。得罪得福由起心动念而有分别，所得果报由发心大小而有差异。</p></div>
+<div class="para-pair"><p class="p-orig">故华严谓牛饮水成乳，蛇饮水成毒，智学证涅槃，愚学增生死者，此也。</p><p class="p-trans">所以《华严经》中说：牛饮水成乳，蛇饮水成毒，智慧的人学了佛法证得涅槃，愚痴的人学了增长生死之业，就是这个意思啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【噆】</span>咬，叮。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【芒】</span>草的末端；稻麦子实外壳上长的细刺。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【三轮体空】</span>指布施时之应有态度。又称三事皆空、三轮清净。指布施时住于空观，不执著能施、所施及施物三轮。就布施言，施者、受者和所施之物，谓之三轮，行施后，此三轮相，不存于心，名“三轮体空”。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【牛饮水成乳】</span>《大方广佛华严经》卷第十二：“牛饮水成乳。蛇饮水成毒。智学成菩提。愚学为生死。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

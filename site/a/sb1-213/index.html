@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周伯遒居士书十 · 印光法师文钞</title>
+<meta name="description" content="新生机撷要，亦可为止杀之渐。旧生活的批评，何得录此。彼只知旧的坏，新的男女自由恋爱，打倒伦常，打倒廉耻，子弑其父，尚得奖誉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-213/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周伯遒居士书十 · 印光法师文钞">
+<meta property="og:description" content="新生机撷要，亦可为止杀之渐。旧生活的批评，何得录此。彼只知旧的坏，新的男女自由恋爱，打倒伦常，打倒廉耻，子弑其父，尚得奖誉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-213/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复周伯遒居士书十</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">新生机撷要，亦可为止杀之渐。旧生活的批评，何得录此。彼只知旧的坏，新的男女自由恋爱，打倒伦常，打倒廉耻，子弑其父，尚得奖誉。</p><p class="p-trans">《新生机撷要》，也可以用来逐渐止息杀劫。对旧生活的批评，怎么可以摘录在这里面。他们只知道旧的制度坏，新的男女自由恋爱，打倒伦理纲常，打倒廉操羞耻，儿子弑杀父亲，还得到奖励赞誉。</p></div>
+<div class="para-pair"><p class="p-orig">美术学校，使数女人裸体，数十男学生在周围，以所见之何方面，各各描画，当作一种功课，此无廉耻之女人，尚属教员之职，月得薪若干。新的又何尝有益于世道人心。</p><p class="p-trans">美术学校，让几个女人裸体，几十个男学生在周围，将所见到的各个方面，各自描画，当作一种功课，这种没有廉耻的女人，还属于教员的职务，每个月得到若干薪水。新的制度又何尝有利益于世道人心。</p></div>
+<div class="para-pair"><p class="p-orig">欲挽回世道人心，何可登此种言论，自己宗旨，也不顾了。以后凡这些瞎捣乱之魔话，切不可登，免被明眼人见诮。</p><p class="p-trans">想要挽回世道人心，怎么可以刊登这种言论，自己的宗旨，也不顾了。以后凡是这些瞎捣乱的魔话，千万不可刊登，免得被明眼人看见了嘲笑。</p></div>
+<div class="para-pair"><p class="p-orig">净业社记，不洞事务，乱说道理。作拱手状，云和南。坐而未加趺，云立于座前。光最不喜人记录文字，以记录者多半皆不如法。</p><p class="p-trans">无畏庵主的《佛教净业社闻法记》，不懂事务，乱说道理。我作拱手的样子，她说我“和南”。我坐下没有跏趺坐，她说我站立在座前。我最不喜欢他人记录文字，因为记录的人多半都不如法。</p></div>
+<div class="para-pair"><p class="p-orig">前日之函未到，亦不须再寄，光事极冗烦，无暇看。文钞令寄五包，寿康宝鉴令寄三包。钉好当即寄来。</p><p class="p-trans">前天的信没有收到，也不须再寄，我的事很繁杂烦琐，没有空看。《文钞》令人寄五包，《寿康宝鉴》令人寄三包。钉好就会寄来。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

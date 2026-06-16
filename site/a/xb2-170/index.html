@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>募印观世音菩萨本迹感应颂说明（民十四年 办法从略） · 印光法师文钞</title>
+<meta name="description" content="观世音菩萨，于过去无量劫前，久成佛道，号正法明。但以慈悲心切，救苦情殷，不离寂光，垂形九界，于十方无量世界，随类现身，度脱众生。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-170/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="募印观世音菩萨本迹感应颂说明（民十四年 办法从略） · 印光法师文钞">
+<meta property="og:description" content="观世音菩萨，于过去无量劫前，久成佛道，号正法明。但以慈悲心切，救苦情殷，不离寂光，垂形九界，于十方无量世界，随类现身，度脱众生。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-170/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">募印观世音菩萨本迹感应颂说明（民十四年 办法从略）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观世音菩萨，于过去无量劫前，久成佛道，号正法明。但以慈悲心切，救苦情殷，不离寂光，垂形九界，于十方无量世界，随类现身，度脱众生。</p><p class="p-trans">观世音菩萨，在过去无量劫前，早已经成就佛道，佛号正法明如来。只是因为慈悲心深切，救苦之情恳切深厚，所以才不离常寂光净土，垂形示现于九法界，在十方无量世界，随类现身，度脱众生。</p></div>
+<div class="para-pair"><p class="p-orig">普门品所谓，应以何身得度者，即现何身而为说法。虽则十方世界，无刹不现，而于娑婆世界，因缘甚深。</p><p class="p-trans">正是《普门品》所说的，“应以何身得度者，即现何身而为说法”。虽然在十方世界，无刹不现身，但是却与娑婆世界的因缘最深。</p></div>
+<div class="para-pair"><p class="p-orig">虽则十法界身，无身不现，而世人皆以菩萨称之。虽则应化之处，遍满寰宇，而浙江普陀，最为显著。</p><p class="p-trans">虽然十法界的身形，无身不现，但是世间人却都用“菩萨”来称呼他。虽然应化的处所，遍满寰宇，但是浙江普陀却最为显著。</p></div>
+<div class="para-pair"><p class="p-orig">印光受恩实巨，负恩甚深。初则出家于陕西南五台山，为观音现身降伏毒龙之道场。继则寄居南海普陀，为善财南参观音之圣地。</p><p class="p-trans">我蒙受菩萨的恩德实在太大，辜负菩萨的恩德却实在太深。最初在陕西南五台山出家，那里是观世音菩萨现身降伏毒龙的道场。接下来就寄居在南海普陀山，这里是善财童子向南参访观世音菩萨的圣地。</p></div>
+<div class="para-pair"><p class="p-orig">每念世人不知菩萨之深慈大悲，欲搜辑大藏，及与群书，凡菩萨本地之行愿，及此方感应之事迹，述为颂文，加以详注。</p><p class="p-trans">我常常考虑世人不知道菩萨的深慈大悲，所以想要搜辑《大藏经》，以及群书，凡是菩萨本地的行愿，以及在我们这个世间的感应事迹，把这些内容编述成颂文，再加上详细的注解。</p></div>
+<div class="para-pair"><p class="p-orig">俾世之同伦，同知观音之大慈悲心，与夫随类逐形，寻声救苦之实理实事。庶可同持圣号，同消业障，同增福慧，生为身心清净之人，殁入莲池海众之会。用此以正人心而挽劫运，以期天下太平，人民安乐也。</p><p class="p-trans">使世间的所有人，都能知道观世音菩萨的大慈悲心，和菩萨随类逐形、寻声救苦的实理实事。才有可能使大家同持圣号，同消业障，同增福慧。在世时，成为身心清净的人；临终时，进入莲池海众菩萨的胜会。以此来匡正人心、挽回劫运，以期天下太平，人民安乐。</p></div>
+<div class="para-pair"><p class="p-orig">然此心虽发，但以学识浅陋，笔墨拙朴，未能即时举行。适江西大文学许止净居士来山见访，一见即成莫逆，因以其事见托，彼即欣然允许。</p><p class="p-trans">然而这个心虽然发了，但是因为我学识浅陋，文笔拙朴，未能马上做这件事。正好江西大文学家许止净居士来普陀山访问我，一见面就成了莫逆之交，于是就将这件事委托给他，他立即就欣然应允了。</p></div>
+<div class="para-pair"><p class="p-orig">遂潜心撰述，时经二年，述成颂文二万余言。每句事迹，悉注于每段之后，俾阅者一目了然，共成三卷。</p><p class="p-trans">于是他潜心撰述，经过两年时间，写成颂文二万多字。每句事迹，都注解在每段之后，使读者一目了然，共有三卷。</p></div>
+<div class="para-pair"><p class="p-orig">又录经中要义，名为经证一卷，附于颂文之后。又金刚经功德颂一卷，亦附于后。俾诵经念佛人，同知向方。以期即凡心以见佛心，克遂如来度生之愿。</p><p class="p-trans">又节录经中的要义，取名叫《经证》一卷，附在颂文之后。又把《金刚经功德颂》一卷，也附在了后面。使诵经念佛的人，都知道遵循正确的方向。希望可以即凡心而见佛心，从而使如来度脱众生的心愿能够实现。</p></div>
+<div class="para-pair"><p class="p-orig">现今天灾人祸，相继降作，世道人心，陷溺已极，特借此以作挽狂澜，扶世道，同登圣域，共证菩提之向导。</p><p class="p-trans">现在天灾人祸，相继降作，世道人心，已经沉溺到了极点，所以特地凭借这个《感应颂》来作为挽救狂澜、扶持世道，同登极乐，共证菩提大道的向导。</p></div>
+<div class="para-pair"><p class="p-orig">今即付排发刊，愿有力善信，共出净资，俾举世同人，各沐观音菩萨之慈恩，以迄同得亲证本具佛性，圆满无上觉道。区区之心，如是而已。（下略）</p><p class="p-trans">如今即将交付排版、印发刊行，希望有财力的善信，共同出净资，使世间一切人，都沐浴观世音菩萨的慈恩，以至能亲证本来具有的佛性，圆满无上觉道。小小心愿，如此而已。（下略）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【向方】</span>1.归向正道。2.谓遵循正确方向。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【区区之心】</span>区区；微小。微不足道的一点看法或观点。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

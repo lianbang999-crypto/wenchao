@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复丁福保居士书十八 · 印光法师文钞</title>
+<meta name="description" content="兹十五日接到佛学撮要一包，静坐法精义一本，随即一阅。知阁下于三教静坐等法，各得其宗绪。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-070/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复丁福保居士书十八 · 印光法师文钞">
+<meta property="og:description" content="兹十五日接到佛学撮要一包，静坐法精义一本，随即一阅。知阁下于三教静坐等法，各得其宗绪。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-070/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复丁福保居士书十八</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">兹十五日接到佛学撮要一包，静坐法精义一本，随即一阅。知阁下于三教静坐等法，各得其宗绪。</p><p class="p-trans">十五日，接到《佛学撮要》一包，《静坐法精义》一本，随即看阅。知道你对于儒释道三教的静坐等法，各得其中的要义。</p></div>
+<div class="para-pair"><p class="p-orig">但宏扬佛法，不宜以道家炼丹运气之事与之并存。恐彼邪见种性，援正作邪。则欲令受益，而反为受损也。</p><p class="p-trans">但是宏扬佛法，不适合以道家炼丹运气之事与佛法并存。恐怕那些邪见种性的人，把正法作为邪法。那么想要令大众受到利益，却反而成为损害了。</p></div>
+<div class="para-pair"><p class="p-orig">儒家论坐论参究本体，全体取禅家参究之法而变其名目。且又绝不言及佛法。虽则造诣高深，于己于人皆有利益。然以袭人之善以为己有，其于诚意正心之道，致成罅漏，不禁令人慨叹。</p><p class="p-trans">儒家论静坐，论参究本体，全部都是采取禅宗参究的方法，而（只是）变换了其中的名称。而且又绝对不言及佛法。虽然他们造诣高深，对于自己，对于他人都有利益。然而窃取他人的善法，作为自己所有，这种行为使得诚意正心的儒道，出现裂缝和漏疏，不禁令人感慨长叹。</p></div>
+<div class="para-pair"><p class="p-orig">十五页八行佛遗教经，制心一处，无事不办。此一处即念念在道，心与道合，心与佛合之谓。</p><p class="p-trans">第十五页第八行的《佛遗教经》，“制心一处，无事不办”。这“一处”就是念念在道，心与道合，心与佛合的意思。</p></div>
+<div class="para-pair"><p class="p-orig">下文阁下所释，过于著迹。十一行，缘中，乃指心之所缘之境中。故下即云，若眉间，若额上，若鼻端，此是所缘之境，非缘中亦是境之名目。若缘中亦是境之名目，下当云及，不当用若字。</p><p class="p-trans">下文阁下的注释，过于执著行迹。十一行，“缘中”，是指心之所缘的境中。所以下面就说：“若眉间，若额上，若鼻端”，这是所缘的境，不是说“缘中”也是境的名目。如果“缘中”也是境的名目，下面应当说“及”，不应当用三个“若”字。</p></div>
+<div class="para-pair"><p class="p-orig">道家剽窃佛典，不解其意。妄安缘中之位，而又欲与佛各异，名为黄中。其可笑一至于此。以阁下之博览，尚袭道家谬解，而直以为所缘之境。足见宏法参杂，有误人处。</p><p class="p-trans">道家剽窃佛典，不明白其中的意思。错妄安立缘中的位置，而又想要与佛法不同，就名为黄中。其可笑到了如此地步。以阁下的博览多闻，尚且沿袭道家的错解，而将“缘中”作为所缘的境界。足见宏扬佛法，参杂其他教法，有误导他人的地方。</p></div>
+<div class="para-pair"><p class="p-orig">至于十二行止心丹田，此属治病之法。故下云经久则多有所治。非不因治病，亦以丹田为所缘之境也。</p><p class="p-trans">至于十二行，“止心丹田”，这是属于治病的方法。所以下面说：“经过的时间久了，就大多会治好病症。”不是说，不因治病，也要以丹田作为所缘之境。</p></div>
+<div class="para-pair"><p class="p-orig">十五六行尔时当系念鼻端，令心住在缘中，无分散意。可知系念鼻端，即是心住缘中。若谓缘中是境，则一心系念两境。岂不心境分张，何由成定。</p><p class="p-trans">十五六行，“尔时当系念鼻端，令心住在缘中，无分散意”。可以知道系念在鼻端，就是心住缘中。如果认为缘中是境，那么一心就系念两境。岂不是心境分散，哪有办法得定。</p></div>
+<div class="para-pair"><p class="p-orig">前十一行初学系心缘中，若眉间，若额上，若鼻端，虽说三境，毕竟止缘其一。故一一皆用若字。</p><p class="p-trans">前面十一行，“初学系心缘中，若眉间，若额上，若鼻端”，虽然说了三境，毕竟止缘其中一个境。所以一一境，都用了一个“若”字。</p></div>
+<div class="para-pair"><p class="p-orig">阁下随道家妄说所转，何不一体贴文意，以为本旨乎。道家剽窃佛典，类多如是，当置之不论可也。若滥引之，又不别其是非，则便为邪见人之护身符矣。</p><p class="p-trans">阁下随道家的妄说所转，为什么不体会一下经文中的意思，来作为本旨呢？道家剽窃佛典，大多都是这样，应当放在一边，不去讨论就可以了。如果混滥引用，又不辨别其中的是非对错，就成为邪见人的护身符了。</p></div>
+<div class="para-pair"><p class="p-orig">炼丹家每以治病等法为稀奇，作炼丹运气之证。而阁下不知其用处，又与系心之缘同论。则彼异道，遂谓佛法亦运气炼丹矣。</p><p class="p-trans">炼丹家常常以治病等方法为稀奇，作为炼丹运气的证明。而阁下不知道其用处，又与系心之缘，共同来讨论。那么那些外道，于是认为佛法也是运气炼丹了。</p></div>
+<div class="para-pair"><p class="p-orig">宝志公系法身大士，普现色身，何得与弄精魂之出神并论。此处一混，则门臼姑娘，直可与纯阳吕祖觌体无二矣。礼云拟人必于其伦，阁下失言，光不能为阁下讳也。</p><p class="p-trans">宝志公是法身大士，普现色身，怎么能与弄精魂的元神出窍，相提并论。这个地方一旦混滥不清，那么民间的门臼姑娘，就可以与道教的祖师吕洞宾，当体无二了。《礼记》中说：“必须拿同类的人或事物相比”，阁下失言，我不能为阁下隐讳。</p></div>
+<div class="para-pair"><p class="p-orig">十九页九行，言主一，说得甚好。阁下何不取此义，以释制心一处之义。</p><p class="p-trans">十九页九行，解说“主一”，说得很好。阁下为何不取这个意义，来解释制心一处的意义。</p></div>
+<div class="para-pair"><p class="p-orig">十六七行说回光，亦道家著迹，而不知本体之说。廿一行所说法身之义，亦非本有法身。九页卅行以下，抱朴子微旨篇，系节取感应篇中之文，不当云感应篇之祖本。</p><p class="p-trans">十六七行，说“回光”，也是道家执着行迹，而不知道本体的解说。二十一行，所说的法身之义，也不是本有的法身。九页，三十行以下，《抱朴子·内篇·微旨》，是节取《太上感应篇》中的文，不应当说是《感应篇》的祖本。</p></div>
+<div class="para-pair"><p class="p-orig">按佛祖统纪卷五十四，汉灵帝光和二年，老君降天台山，以感应篇授仙人葛玄。可知微旨，是摘录其大纲而已。</p><p class="p-trans">按《佛祖统纪》卷五十四，汉灵帝光和二年，老君降天台山，将《感应篇》授给仙人葛玄。可知《抱朴子·内篇·微旨》，是摘录其中的大纲而已。</p></div>
+<div class="para-pair"><p class="p-orig">卅一页十五行，谓印光严净毗尼，精通十二部经，不禁惭惶杀人。佛法不可作人情，阁下竟以佛法作人情。虽属厚意，然令识破光之底蕴者，不免谓阁下之言为失实也。</p><p class="p-trans">三十一页十五行，说印光“严净毗尼，精通十二部经”，不禁惭愧惶恐死人。佛法不可以当作人情，阁下竟以佛法作人情。虽然属于深情厚意，然而令识破我底蕴的人，不免认为阁下的话是失实的。</p></div>
+<div class="para-pair"><p class="p-orig">佛学撮要，寄于山西省城，令友人分施有信心人，兼为诸人致谢。现今人情世道，无可救药。除如来三世因果之道，纵有四无碍辩，对彼说法，亦属徒然。</p><p class="p-trans">《佛学撮要》，寄到山西省城，令友人分别施送给有信心的人，同时为诸人致谢。现今的人情世道，无可救药。除了如来三世因果的大道，纵然有四无碍辩才，对他说法，也属于徒然。</p></div>
+<div class="para-pair"><p class="p-orig">唯知有因果报应轮回生死之事，则其心惕惕然，唯恐其有恶因而罹恶果耳。遂于举心动念所作所为，不敢肆无忌惮，任意所为。虽在暗室，如临帝天。</p><p class="p-trans">唯有知道有因果报应、轮回生死的事理，那么他的心中警戒畏惧，唯恐他有恶因而遭受到恶果。于是在举心动念，所作所为中，不敢肆无忌惮，任意妄为。虽然在暗室无人之处，也如同面对玉帝上天。</p></div>
+<div class="para-pair"><p class="p-orig">使如来不开因果之法，则后世之人欲生于天地之间，而能克善厥终者，盖亦鲜矣。而狂者畏其拘束，愚者恐妨己事。从兹不谓之为著相，便谓之为渺茫。</p><p class="p-trans">假使如来不开启因果之法，那么后世之人想要生在天地之间，且能够善终好死的，大概会很少有了。而狂放的人害怕因果的拘束，愚痴的人恐怕因果妨碍自己的事情。从此，不认为因果是著相，就认为因果是渺茫。</p></div>
+<div class="para-pair"><p class="p-orig">阁下遍搜群籍，辑以成书。虽于本分似未诣极，然于人心未死，天理欲复者，大有所益也。（民八六月十九）</p><p class="p-trans">阁下周遍搜辑诸多典籍，编辑成书。虽然于自性本分上，似乎还未到极处，然而对于人心未死，想要恢复天理的人，大有利益。（民国八年六月十九日）</p></div>
+<div class="para-pair"><p class="p-orig">温州周群铮读了凡四训，谓其文理精挚，拟令商务印书馆排印结缘，令光作序，兼以香期之中，每有人来，致稽迟数日，歉甚歉甚。</p><p class="p-trans">温州的周群铮，读《了凡四训》，认为其中的文理精美诚挚，准备令商务印书馆排印结缘，让我作序，加上在香期之中，常有人来，致使回信推迟了几天，非常抱歉。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【缘中】</span>指藉境系念时，心所缘之境中。初学者为令心住于缘中而无分散，则系心于鼻端，或眉间，或额上。所缘之境虽多，但只缘于一处。缘中亦非等于境，否则一心系念两境，心境分张，而不成定。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【门臼姑娘】</span>门臼：托住门扇转轴的墩子。用木头或石头做成。这个仙就是门臼里的仙叫“门臼姑娘”，据说多数是死去的年幼姑娘而成的仙。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【祖本】</span>书籍或碑帖最早的刻本或拓本，为以后各本所从出者。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【卅】</span>数词。三十。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【惕惕】</span>戒惧。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

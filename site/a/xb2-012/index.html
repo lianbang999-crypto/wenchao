@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>净土辑要序（民十七年） · 印光法师文钞</title>
+<meta name="description" content="药无贵贱，愈病者良。法无浅深，合机者妙。时当末法，人根陋劣，匪仗如来宏誓愿力，其谁能断烦惑以出生死，见本性而证无生乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-012/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="净土辑要序（民十七年） · 印光法师文钞">
+<meta property="og:description" content="药无贵贱，愈病者良。法无浅深，合机者妙。时当末法，人根陋劣，匪仗如来宏誓愿力，其谁能断烦惑以出生死，见本性而证无生乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-012/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">净土辑要序（民十七年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">药无贵贱，愈病者良。法无浅深，合机者妙。时当末法，人根陋劣，匪仗如来宏誓愿力，其谁能断烦惑以出生死，见本性而证无生乎。</p><p class="p-trans">药无贵贱之分，能治好病的就是最好的药。法无深浅的区别，适合根机的就是最妙的法。现今正值末法时代，人的根机陋劣，若不依仗如来的宏誓愿力，有谁能够断尽烦惑而出离生死，见到本性而证得无生呢？</p></div>
+<div class="para-pair"><p class="p-orig">譬如病入膏肓，虽和缓亦无从措手。然肯服此阿伽陀万病总持之药，则所谓断烦惑以出生死，见本性而证无生者，固人人皆可亲得，而了无所难焉。何也，以其以真信切愿，持佛名号，求生西方，决于临终蒙佛接引，即获往生也。</p><p class="p-trans">譬如病入膏肓，即使是秦国的“和”、“缓”两位名医也无从下手医治。然而只要肯服这个阿伽陀万病总治的法药，那么所谓断烦惑以出生死，见本性而证无生的情形，人人都可以亲得，而没有一点困难。为什么呢？因为人们只要以真信切愿，持佛名号，求生西方，就一定会在临命终时，蒙佛接引，立即获得往生。</p></div>
+<div class="para-pair"><p class="p-orig">既往生已，长时亲炙弥陀，参随海众，尚当圆满菩提，彻证究竟涅槃，况所谓断烦惑以出生死，见本性而证无生乎。是知当此时节，唯此一法，最为合机。</p><p class="p-trans">往生后，长时间亲近接受阿弥陀佛的教诲，随清净大海众菩萨参学，还能进一步圆满菩提，彻证究竟涅槃，何况所谓的断烦惑以出生死，见本性而证无生呢？由此可知，正当这个时节，唯有这个法门，最适合众生根机。</p></div>
+<div class="para-pair"><p class="p-orig">若舍此仗佛力之法门，而修仗自力之法门，勿道中下根人，莫由冀望，纵令上根，亦断难以一生成办，多皆但种来因，难得实益。以故古今知识，极力宏扬此法，以期上报佛恩，下度同伦也。</p><p class="p-trans">如果舍弃这个依仗佛力的法门，而去修全仗自力的法门，不要说中下根人，无法期望得到解脱，纵然是上根人，也断然很难在这一生成办道业，大多都是只种未来得度之因，很难得到真实利益。所以，古往今来的善知识，都极力宏扬净土法门，以期上报佛恩，下度同伦啊！</p></div>
+<div class="para-pair"><p class="p-orig">浏阳潘子慧纯，邵子慧圆，笃信佛法，鉴时机宜，因辑古今提倡净土法门诸要义，以为一书，分为三篇。</p><p class="p-trans">湖南浏阳的潘慧纯、邵慧圆先生，深信佛法，鉴察时节机宜，因此辑录了古今善知识提倡净土法门的各种要义，成为一本书，分为三篇。</p></div>
+<div class="para-pair"><p class="p-orig">上篇辑录增订广长舌，稍加芟正，以为初机入门之阶。中篇则辑录龙舒居士，觉明妙行菩萨，以及善导，永明，优昙，天如，莲池，憨山，蕅益，截流，省庵，彻悟诸大师，及最近彭二林诸居士，最切要，最圆顿诸开示，以期由浅入深，领略净土法门之旨趣。</p><p class="p-trans">上篇辑录增订《广长舌》，稍加删削订正，作为初机入门的阶梯。中篇辑录王龙舒居士，觉明妙行菩萨，以及善导、永明、优昙、天如、莲池、憨山、蕅益、截流、省庵、彻悟诸位大师，以及最近的彭二林等各位居士，最确切扼要、最圆顿的各种开示，希望能使读者由浅入深，领略净土法门的宗旨。</p></div>
+<div class="para-pair"><p class="p-orig">下篇辑录念佛仪式，净土日课经咒，及回向诸文，以为朝暮课诵之仪轨。末后附录觉明妙行菩萨，及哆哆婆娑诃菩萨，应化因缘，以明净土法门之深契时机。</p><p class="p-trans">下篇辑录念佛仪式，净土日课经咒，以及各种回向文，来作为朝暮课诵的仪轨。末尾还附录了觉明妙行菩萨，以及哆哆婆娑诃菩萨，应化的因缘，来显明净土法门深契时机。</p></div>
+<div class="para-pair"><p class="p-orig">拟排印流通，以供遍界诸同志之阅览。爰为题之为净土辑要，并略述净土法门之所以。以期见者闻者，同生正信，同修净业，庶可同生净土，同证无生，以迄同成正觉也。</p><p class="p-trans">打算排印流通，供给佛学界的一切净土同修阅览。我于是为这本书题名为《净土辑要》，并大略叙述净土法门的所以然。以期见者闻者，同生正信，同修净业，将来才能同生净土，同证无生，最终同成正觉啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【广长舌】</span>《广长舌》（增订四版）一卷，苦行居士编，民国十四年（1925）北京感化院铅印本。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【芟正】</span>删削订正。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【普度】</span>（？-1330）元代僧。丹阳（江苏镇江）人，俗姓蒋。弱冠即于庐山东林寺出家，曾历叩诸方，后住丹阳妙果寺、东林寺善法堂，专修念佛三昧。时有称莲宗却大行邪法之辈续出，师深以为忧，遂于大德九年（1305）撰莲宗宝鉴十卷，以阐明慈照子元之正宗。武宗至大元年（1308）五月，下诏禁断莲宗，师乃决计复兴，十月，至京师法王寺与灌顶国师商议，遂持所撰莲宗宝鉴奉进。仁宗即位，复上书乞请再兴。皇庆元年（1312）正月，仁宗敕令颁行莲宗宝鉴于天下，以师为莲宗之教主，赐号“虎溪尊者”。至顺元年示寂，世寿不详。世称“优昙宗主”，一时号称莲宗中兴之祖。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【惟则】</span>（？-1354）元代临济宗禅僧。又称维则。吉安永村（江西吉安）人，俗姓谭。号天如。幼于禾山剃发，后游天目山，得法于中峰明本禅师，为其法嗣。……至正十四年示寂，世寿不详。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

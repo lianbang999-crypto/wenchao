@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复（吴慧诒，罗慧澍）居士书（民国二十年） · 印光法师文钞</title>
+<meta name="description" content="净土法门，注重在信愿。有不知者，或求人天福报，或求来生为僧，宏扬佛法，度脱众生。此种心念，要丢得干干净净，若有一丝毫，便不能往生矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-066/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复（吴慧诒，罗慧澍）居士书（民国二十年） · 印光法师文钞">
+<meta property="og:description" content="净土法门，注重在信愿。有不知者，或求人天福报，或求来生为僧，宏扬佛法，度脱众生。此种心念，要丢得干干净净，若有一丝毫，便不能往生矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-066/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复（吴慧诒，罗慧澍）居士书（民国二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，注重在信愿。有不知者，或求人天福报，或求来生为僧，宏扬佛法，度脱众生。此种心念，要丢得干干净净，若有一丝毫，便不能往生矣。</p><p class="p-trans">净土法门，注重在“信愿”。有不知道的人，或者求人天福报，或者求来生做僧人，宏扬佛法，度脱众生。这种心念，要丢得干干净净，如果还有一丝一毫，就不能往生了。</p></div>
+<div class="para-pair"><p class="p-orig">往生，则超凡入圣，了生脱死。不往生，纵一生二生不迷，决难永远不迷。迷，则由有修持之福，而所造之业，为可惧耳。恶业既造，恶报自临，求出三途，恐无其日。</p><p class="p-trans">往生后，就超凡入圣，了生脱死。不往生，纵然一生二生不迷惑，决定很难永远不迷惑。迷惑了，那么由于有修持善业，因而享有福报，而他享福时所造的恶业，就太可怕了。既然造作了恶业，恶报自然会来临，想求出离三途恶道，恐怕就没有这一天了。</p></div>
+<div class="para-pair"><p class="p-orig">又念佛之人，必须劝家中眷属，同生信心，同常念佛。以备彼等于父母，及诸眷属之有命终者，为之助念。否则，不但不助其正念，反令起瞋恨爱恋等念（预为洗澡换衣，则失正念。若搬动致疼痛，则生瞋恨。瞋恨，则或致堕于毒虫之类。若对之哭泣，则生爱恋。均属失正念，而永无往生之望矣，哀哉）。</p><p class="p-trans">还有，念佛的人，必须劝家中眷属，共同生起信心，共同常常念佛。来让大家有所准备，一旦父母以及诸位眷属中有人命终时，能够为他们助念。否则，不但不会帮助临终之人的正念，反而会让其生起瞋恨、爱恋等念头（预先为他洗澡换衣，他就会失去正念；如果搬动导致他疼痛，他就会生起瞋恨。瞋恨，则或会导致他堕入毒虫之类；如果对他哭泣，他就会生起爱恋。这都是属于失去正念，而永远没有往生的希望了，悲哀啊！）。</p></div>
+<div class="para-pair"><p class="p-orig">不念佛者，尚不至大有所损。念佛者，一经破坏，正念全失，将欲往生，竟莫能得。从此长劫轮回六道，皆此等眷属之所致也。彼等如不发心，当以时局危险，至诚念佛，定可逢凶化吉为劝。</p><p class="p-trans">不念佛的人，还不至于有大的损害。念佛的人，一经眷属破坏，正念完全失去，想要往生，竟最终不能实现。从此长劫轮回六道，都是这些不懂临终注意事项的眷属所导致的啊！他们如果不发心（念佛），应当以“时局危险，至诚念佛，定可逢凶化吉”来加以劝导。</p></div>
+<div class="para-pair"><p class="p-orig">若是女人，倘肯念佛，必无生产之痛苦。若平日不知念佛之女人，临产极苦，倘肯志诚念南无观世音菩萨，决定立刻安然而生。此事灵感之极，当与一切亲朋，及诸相识说之，俾彼各各得生嘉儿，而且令母子同得安乐，同种善根。</p><p class="p-trans">如果是女人，倘若肯念佛，必定没有生孩子的痛苦。如果平日不知念佛的女人，临产时极为痛苦，倘若肯志诚念“南无观世音菩萨”，决定立刻安然生下婴儿。这件事灵感极了，应当对一切亲戚朋友，以及诸多认识的人说，使得他们各各能生下好儿郎，而且让母子同得安乐，同种善根。</p></div>
+<div class="para-pair"><p class="p-orig">有小知见者，谓临产裸露不净，念之获罪。不知此系性命相关，不得以平日无事时之仪式为论。譬如儿女堕于水火之中，一呼父母，父母即时便往救援。决定不以衣冠不整齐，身体不洁净，而不救也。若因此不救，亦不得名为佛菩萨矣。若在平日，固当竭诚尽敬，不得以临产之事，引以为例。</p><p class="p-trans">有小知小见的人，认为临产裸露不净，念了获罪。他们不懂这是性命攸关的时刻，不得以平日无事时候的仪式来论。譬如儿女堕在水火之中，儿女一呼叫父母，父母立刻就前往救援。决定不会因为儿女衣冠不整齐，身体不洁净，而不来救援。如果因此不救，也不得名为佛菩萨了。如果在平时，本当竭诚尽敬，不得以临产裸露不净念观音的事，引以为例。</p></div>
+<div class="para-pair"><p class="p-orig">人无不爱儿女者，倘令儿女自小即念佛，念观音，则不知不觉，消除恶业，增长善根。况自己临终，常念佛者，必能不加扰动。更以念佛相助，便可决定往生西方。</p><p class="p-trans">人没有不疼爱自己儿女的，倘若令儿女从小就念佛、念观音，那么在不知不觉中，就会消除恶业，增长善根。何况自己临终，常念佛的人，必定能不来扰动。而且更会用念佛来相助，自己便可决定往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">现生念佛念观音，逢凶化吉，是定规的。光老矣，精神不给，但详阅文钞，依之而修，即可得益。不须常来信，以自扰扰人也。</p><p class="p-trans">现生念佛、念观音，逢凶化吉，这是一定的。我老了，精神不足，只要详细阅读《文钞》，依照《文钞》去修持，就可以得到利益。不须常常来信，以免扰乱自己也打扰他人啊！</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

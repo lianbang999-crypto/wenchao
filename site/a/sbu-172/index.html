@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>寿康宝鉴回向颂 · 印光法师文钞</title>
+<meta name="description" content="普为印施寿康宝鉴及展转流通赞扬劝阅诸善士回向颂曰">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-172/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="寿康宝鉴回向颂 · 印光法师文钞">
+<meta property="og:description" content="普为印施寿康宝鉴及展转流通赞扬劝阅诸善士回向颂曰">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-172/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 偈颂愿文对联</div>
+      <h1 class="art-title">寿康宝鉴回向颂</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<p class="p-orig">普为印施寿康宝鉴及展转流通赞扬劝阅诸善士回向颂曰</p>
+<p class="p-orig">普为印施《寿康宝鉴》以及辗转流通、赞扬、劝阅诸位善士，回向颂曰：</p>
+<div class="para-pair"><p class="p-orig">一切事业，以身为本。身若受亏，事俱消陨。</p><p class="p-trans">伤身之事，种种不一。最酷烈者，莫过淫欲。</p></div>
+<div class="para-pair"><p class="p-orig">一切事业，以身体为根本。身体如果受到亏损，一切事业全都消失陨灭。</p><p class="p-trans">伤害身体的事情，种种不一。最残暴猛烈的，没有超过淫欲的伤害。</p></div>
+<div class="para-pair"><p class="p-orig">是以君子，持身如玉。闲邪存诚，夙夜兢惕。</p><p class="p-trans">所以君子，持身如无瑕的美玉。闲邪存诚（防止邪念、心怀诚敬），日夜战战兢兢，警惕戒惧。</p></div>
+<div class="para-pair"><p class="p-orig">如是制心，欲念不起。何况邪淫，蔑伦越理。</p><p class="p-trans">如此制伏内心，不起淫欲之念。何况淫欲之事，违背伦理道德。</p></div>
+<div class="para-pair"><p class="p-orig">世有愚夫，不知此义。每致纵欲，不遵礼制。</p><p class="p-trans">世间有愚痴的人，不知道这个道理。常常导致纵欲无度，不遵守礼仪规范。</p></div>
+<div class="para-pair"><p class="p-orig">贪暂时乐，受长劫苦。减算折福，尚其小耳。</p><p class="p-trans">贪图暂时的享乐，遭受长劫的痛苦。减寿折福，还是其中的小报。</p></div>
+<div class="para-pair"><p class="p-orig">以故前贤，敬辑此编。冀诸同伦，共乐性天。</p><p class="p-trans">所以前人贤者，恭敬编辑了这本书。希望诸位同人，共乐自性天命。</p></div>
+<div class="para-pair"><p class="p-orig">不慧有感，增订流传。高悬殷鉴，以拯青年。</p><p class="p-trans">我有所感，因此增订流传。高高悬挂前车之鉴，来拯救青年人。</p></div>
+<div class="para-pair"><p class="p-orig">德广居士，捐洋千六。印送各界，期登寿域。</p><p class="p-trans">又有善士，随缘附印。欲令此编，遍布远近。</p></div>
+<div class="para-pair"><p class="p-orig">德广居士，捐助一千六百洋元。印送各界，期望全都能尽享天年。</p><p class="p-trans">又有善士，随缘助印。想令这本书，遍布远近。</p></div>
+<div class="para-pair"><p class="p-orig">愿诸阅者，扩充此心。展转流布，普令见闻。</p><p class="p-trans">祈愿诸位读者，扩充发扬此心。辗转流布这本书，普令大众见到听到。</p></div>
+<div class="para-pair"><p class="p-orig">庶可同人，悉获寿康。子嗣贤善，长发其祥。</p><p class="p-trans">使得众人，全都获得长寿健康。子孙贤善，吉祥常临（注1）。</p></div>
+<div class="para-pair"><p class="p-orig">凡出资者，及赞助人。灾障消灭，福寿孔殷。</p><p class="p-trans">凡是出资的人，以及赞助的人。灾障消灭，增福添寿（注2）。</p></div>
+<div class="para-pair"><p class="p-orig">先亡祖祢，超生净土。后嗣子孙，吉庆无已。</p><p class="p-trans">先亡祖宗，超生净土。后嗣子孙，吉庆无穷。</p></div>
+<div class="para-pair"><p class="p-orig">世运日隆，风俗日美。先贤懿范，人各继武。</p><p class="p-trans">爰书俚语，用表芹忱。祈发大慈，自利利人。</p></div>
+<div class="para-pair"><p class="p-orig">世运日隆，风俗日美。先贤的美德懿范，人人各自继承发扬（注3）。</p><p class="p-trans">写下这几句通俗的话语，用来表示乡人献上野芹的一点诚心。祈望诸位发起大慈之心，自利利人。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【长发其祥】</span>经常有吉祥发达的事情降临。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【孔殷】</span>众多；繁多。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【继武】</span>谓足迹相接。武，足迹。比喻继续前人的事业；亦比喻事物相继而至。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

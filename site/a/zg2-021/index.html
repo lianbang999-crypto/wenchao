@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拣魔辨异录石印序（代企觉居士赵希伊作） · 印光法师文钞</title>
+<meta name="description" content="自佛法入中国，历代皇帝，无不崇奉。其唯结缘种，与有所悟证者，种种不一。求其深入经藏，直达禅源。证涅槃之妙心，具金刚之正眼。于修齐治平之暇，阐拈华直指之宗者，其唯清世宗皇帝为第一也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-021/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拣魔辨异录石印序（代企觉居士赵希伊作） · 印光法师文钞">
+<meta property="og:description" content="自佛法入中国，历代皇帝，无不崇奉。其唯结缘种，与有所悟证者，种种不一。求其深入经藏，直达禅源。证涅槃之妙心，具金刚之正眼。于修齐治平之暇，阐拈华直指之宗者，其唯清世宗皇帝为第一也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-021/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">拣魔辨异录石印序（代企觉居士赵希伊作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">自佛法入中国，历代皇帝，无不崇奉。其唯结缘种，与有所悟证者，种种不一。求其深入经藏，直达禅源。证涅槃之妙心，具金刚之正眼。于修齐治平之暇，阐拈华直指之宗者，其唯清世宗皇帝为第一也。</p><p class="p-trans">自从佛法传入中国，历代皇帝，没有不崇敬信奉的。有的只是结下因缘种子，有的则有所悟证，各不相同。要论历代皇帝当中，深入经藏，直达禅源，证涅槃之妙心，具金刚之正眼；并且在修身、齐家、治国、平天下的闲暇时间，阐说拈花直指之禅宗的，唯有清世宗雍正皇帝最为第一。</p></div>
+<div class="para-pair"><p class="p-orig">若非法身大士，乘愿再来。握权实不二之道柄，度轮回无依之众生者。其能如是也耶。其所著述，藏内有圆明居士语录三卷（圆明居士世宗道号）。其他序跋传记，散见于经论语录中。悉皆妙契佛心，冥符祖意。言言见谛，语语归宗。如走盘珠，似摩尼宝。凡具眼者，无不佩服。</p><p class="p-trans">如果不是法身大士乘愿再来，握持权实不二之道柄，度脱轮回中无依无靠的众生，哪能有这样的境界呢。他的著述，乾隆藏中有《圆明居士语录》三卷（圆明居士是清世宗的道号）。其他的序、跋、传、记，分散在经、论、语录中。全都妙契佛心，暗合祖意。字字见真谛，句句归宗源。如走盘珠，像摩尼宝。凡是具有正眼的人，没有不佩服的。</p></div>
+<div class="para-pair"><p class="p-orig">当明季时，密云悟会下，有法藏字汉月者。天姿聪敏，我慢根深。大悟之后，欲为千古独一无侣之高人。从兹妄立主见，著五宗原，拟己超迈一切。不知如来心印，如清凉月。慢云一起，便掩月光。真如妙性，犹太虚空。慢尘既飏，即污空体。</p><p class="p-trans">明朝末年，密云圆悟大师门下，有一位名法藏，字汉月的弟子。天姿聪敏，然而我慢习气根深蒂固。大悟之后，想要成为千古以来独一无二的高人。从此妄自竖立主见，写了《五宗原》一书，想让自己超迈一切。殊不知如来心印，如同清凉明月，我慢的乌云一生起，就遮掩了月光；真如妙性，如太虚空，我慢的尘土一扬起，就染污了虚空的体性。</p></div>
+<div class="para-pair"><p class="p-orig">种种涂饰，翻形狂悖。求升反坠，弄巧成拙。密云则辟而又辟，彼与其徒弘忍，执迷不返，则救而又救。反欲陵驾密云，谓己无师自悟，密云强以源流恳付之。</p><p class="p-trans">种种的涂抹修饰装扮，反倒显露出他的狂妄悖逆。寻求上升反而坠落，耍弄机巧却成笨拙。密云大师（对他的邪说）一再辟驳，但法藏与他的徒弟弘忍，执迷不返，一再维护（自己的谬论）。反而想要陵驾在密云大师之上，说自己是无师自悟，说密云大师恳求他硬要将法脉源流传付给他。</p></div>
+<div class="para-pair"><p class="p-orig">所有言说，类多妄造，少有实情。当时知识，虽知其非，以其师尚不奈何，兼彼门庭甚盛，士大夫多为外护。恐其一经辟驳，难免招祸，故皆不敢置论。</p><p class="p-trans">五宗原中所有的言说，大多是虚构妄造，很少有实情。当时的善知识，虽然知道法藏的错谬，可是他的师父尚且拿他没有办法，再加上法藏的门庭很兴盛，士大夫大多是他的外护。所以担心如果对法藏进行辟驳，难免招来祸事，从而都不敢加以评论。</p></div>
+<div class="para-pair"><p class="p-orig">至雍正十一年，世宗遍阅密云，法藏，弘忍等录。见彼知见纰谬，录其臆见邪说数十条，逐一辨正。通计十万余言，名曰御制拣魔辨异录。即刊书册殿板，又令续入大藏。企其除邪说以正人心，振宗风而明祖道耳。</p><p class="p-trans">到雍正十一年，清世宗雍正皇帝通读了密云大师、法藏、弘忍等人的语录。见到藏、忍二人的知见纰漏错谬，就摘录了几十条他们随意编造的邪说，一条条加以辨正，共有十万多字，名为《御制拣魔辨异录》。随后刊刻了书册殿板，又下令将这本书续入大藏经。希望能够去除邪说，匡正人心，振兴宗风，阐明祖道。</p></div>
+<div class="para-pair"><p class="p-orig">至十三年，开工刊藏，而龙驭旋即宾天。高宗继立，以日亲万几，不暇提倡，遂致竟未入藏。而书册殿板，存于大内，不易流通。故今之博学多闻缁素大家，皆不知其名。</p><p class="p-trans">到雍正十三年，大藏经开工刊刻，而雍正皇帝就驾崩了。清高宗乾隆皇帝继位，因为日理万机，没有闲暇提倡，所以导致这本书最终没能续入藏经。而书册殿板，保存在大内宫中，不容易流通。所以现今博学多闻的僧俗大家们，都不知道这本书。</p></div>
+<div class="para-pair"><p class="p-orig">吾友子任，光绪甲辰，于京师书肆中得二部。以一送谛闲法师，企彼倡募流通。以一托杨仁山寄东洋，入于弘教书院新印藏中。今春余欲朝海至沪上，遇楚青狄居士。</p><p class="p-trans">光绪甲辰年（1904），我的朋友子任在京师的书店中得到了两部（《拣魔辨异录》）。一部送给谛闲法师，希望他倡募善款来流通。另外一本委托杨仁山寄到日本，续入弘教书院新印的藏经中。今年春天我准备朝拜普陀山，在上海遇见狄楚青居士。</p></div>
+<div class="para-pair"><p class="p-orig">余曰，公好流通古迹，何不取弘教藏中拣魔辨异录，刊板印行。此世宗以灵山泗水之心法，为儒释两教，作开金刚正眼之大光明藏也。</p><p class="p-trans">我说：“您喜好流通古大德的遗迹，为什么不将日本弘教藏中的《拣魔辨异录》这本书，刊板印行呢？”这是清世宗用儒佛二家的心法，为儒佛两教开启金刚正眼的大光明藏啊！</p></div>
+<div class="para-pair"><p class="p-orig">若得流通，不但参禅者直下知归。即宗孔孟而探诚明之极赜者，亦如乘轮遇顺风，速得到彼岸也。</p><p class="p-trans">如果能够流通，那么不但参禅的人当下就知道归处；就连宗主于孔孟之道，探究“诚明”之奥旨的人，也会如乘船遇到顺风，快速到达彼岸。</p></div>
+<div class="para-pair"><p class="p-orig">居士曰，余昔于京师烂货摊得一部，藏书笥有年矣。不因子说，几致错过。即付印刷所，俾照式石印一千部。命余作序。余喜极，遂忘其固陋，为序其隐显机缘如此。</p><p class="p-trans">狄楚青居士说：我当年在京师的烂货摊上得到一部，藏在书箱里有些年了。如果不是您说起，几乎要错过了。于是就交付给印刷所，让按照原来的版式石印一千部，又让我写一篇序。我欢喜之极，于是忘了自己的浅陋，写下这篇序言，来说明这本书自隐而现的机缘。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【石印】</span>平版印刷的一种。即利用多孔石质平版，经处理后，做印版进行印刷。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【崇奉】</span>尊崇，信仰。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【道柄】</span>犹道统。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【走盘珠】</span>珍珠的形态以正圆形为最好，古时候人们把天然正圆形的珍珠称为走盘珠。能在平滑瓷盘中滴溜溜旋转。此为禅林用语。[护国此庵元禅师二首《嘉泰普灯录》]佛祖权衡真妙绝。一句通明万机彻。纵横端似走盘珠。念念圆融大休歇。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【摩尼】</span>意译作珠、宝珠。为珠玉之总称。一般传说摩尼有消除灾难、疾病，及澄清浊水、改变水色之德。又意译如意宝、如意珠，又作如意摩尼、摩尼宝珠、末尼宝、无价宝珠；凡意有所求，此珠皆能出之，故称如意宝珠。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【涂饰】</span>谓着意修饰装扮。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【臆见】</span>个人的私见；主观的看法。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【殿板】</span>清代宫廷刻书处，一般专指武英殿修书处（修书处编刊的书籍就是我们平常所说的武英殿本、殿本、殿版），但其外延，还包括了中央六部以及诗局等隶属内务府管辖的刻书机构。这是一个宫廷刊刻书籍的系统，所编刊的书籍，称为清代内府刻书。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【狄楚青】</span>（1873-1941）江苏溧阳人。早年中举人，后留学日本，为康有为唯一的江南弟子。他工诗能文，信仰佛学，在《清议报》、《新民丛报》发表诗词多首。光绪三十年（1904年）夏，由康有为、梁启超集资，在沪创办《时报》，还办过有正书局，出版《小说时报》、《妇女时报》和《佛学丛报》。著作有《平等阁诗话》、《平等阁笔记》等。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【灵山】</span>全称灵鹫山，为释尊说法华经之会处。即谓灵鹫山为释尊报身常住之净土。据法华经卷五如来寿量品载，释尊为度化众生，故方便示现涅槃，而实无灭度，常住灵鹫山说法。代指佛教。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【泗水】</span>古水名。源于今山东省泗水县东，四源并发，故名。春秋时，孔子在泗水北岸地域讲学授徒。代指儒学。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【诚明】</span>至诚之心和完美的德性。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【赜】</span>幽深奥妙</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【书笥】</span>书箱。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

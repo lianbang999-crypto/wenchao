@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>净土篇序（民二十年） · 印光法师文钞</title>
+<meta name="description" content="净土法门，普被三根。于在家人，更为要紧。以在家人，各有职业，不易参研宗教等法。唯此念佛一法，最为契理契机。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-026/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="净土篇序（民二十年） · 印光法师文钞">
+<meta property="og:description" content="净土法门，普被三根。于在家人，更为要紧。以在家人，各有职业，不易参研宗教等法。唯此念佛一法，最为契理契机。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-026/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">净土篇序（民二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，普被三根。于在家人，更为要紧。以在家人，各有职业，不易参研宗教等法。唯此念佛一法，最为契理契机。</p><p class="p-trans">净土法门，普被上中下三种根机。对于在家人，更为要紧。因为在家人，各有职业，不容易参研宗门、教下等诸多法门。唯有此念佛法门，最为契理契机。</p></div>
+<div class="para-pair"><p class="p-orig">老实头颛蒙念佛，念到业尽情空时，父母未生前本来面目，如来藏妙真如性，悉皆觌体全彰。待至临终，定登上品。</p><p class="p-trans">老实人老实念佛，念到业尽情空时，父母未生前的本来面目，如来藏妙真如性，自然就会当体全都显现。等到临终，一定会高登上品莲台。</p></div>
+<div class="para-pair"><p class="p-orig">其或根机陋劣，未能业尽情空。然以真信切愿，持佛名号，求生西方之诚，必能与佛感应道交，亲蒙接引，即得带业往生。净土之妙，妙在于此。</p><p class="p-trans">可能有根机陋劣的人，没能做到业尽情空。可是以真信切愿，持佛名号，求生西方的诚心，必定能够与佛感应道交，亲蒙接引，立即得以带业往生。净土法门，妙就妙在这里。</p></div>
+<div class="para-pair"><p class="p-orig">不识此义，纵令参禅得髓，看教明心。倘有丝毫惑业未尽，仍然生死轮回不得出离。且莫自恃，致令愚夫愚妇念佛求生西方，遂得带业往生者所怜悯。</p><p class="p-trans">不懂得这个道理，纵然是参禅得髓，看教理明心。若有一丝毫惑业没有断尽，仍然在生死轮回之中，不能出离。千万不要自恃聪明，而被念佛求生西方、得以带业往生的愚夫愚妇所怜悯。</p></div>
+<div class="para-pair"><p class="p-orig">呜呼，真利益多被极庸愚人得。大聪明人，每每不能望其肩背者，多缘自恃聪明，纵有佛力不肯倚仗，卒致长劫轮转，了无出期，可不哀哉。</p><p class="p-trans">唉！真实的利益大多被极平庸的愚人所得。大聪明人，常常不能望其肩背的原因，大多是因为自恃聪明，纵然有佛力却不肯倚仗，导致长劫轮转，没有出离之期，能不令人悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">从上古德，本佛悲心，提倡净土，所有著述，多难胜数。但多系文言，不利平人。李圆净居士，本净土四经，及古德著述之意，述为语体，用阐净宗。虽科列十门，文近万言。而一字一义皆本佛经祖语，绝无自立意见，以自炫耀，致有误人坏法之咎。</p><p class="p-trans">从前古德，依据佛的悲心，提倡净土法门，所有著述，多的难以胜数。但大多是文言文，不利于一般人阅读。李圆净居士，依据《净土四经》，以及古德著述的义理，叙述成白话文，用来阐扬净土宗。虽然列举了十门，将近一万字。但是每一个字，每一个义理都是依据佛经祖语，绝对没有自立己见，来自我炫耀，导致误人坏法的过失。</p></div>
+<div class="para-pair"><p class="p-orig">佛学书局，以其有益初机，故特列于小丛书中，以期广传。今又另排三号大字，以期老年目力衰弱者，均不难看。又祈为序引，以启正信。其余要义，书中自具，何须多赘。</p><p class="p-trans">佛学书局，因为这本书有益初机学人，所以特别列在小丛书中，期望广泛流传。现在又另外排成三号大字，期望年老视力衰弱的人，都不难阅读。还请我写篇序文，希望启发读者的正信。其余的重要义理，在书中自然都有，何须多说。</p></div>
+<div class="para-pair"><p class="p-orig">须知净土法门，为一切诸法汇归之法海。若能如是信者，其人现生即可高登九品，将来决定圆满三觉。有谓此语有过者，余谓此过非我所敢承任，自有本师释迦牟尼佛，及阿弥陀佛承任也。</p><p class="p-trans">必须懂得，净土法门，是一切诸法汇聚归向的法海。如果有能够如此相信的人，这个人今生就可以高登九品，将来决定圆满三觉(自觉、觉他、觉行圆满)。如果有人认为，这些话说过了头，我说：这个过头，不是我所敢承担的，自然有本师释迦牟尼佛，以及阿弥陀佛来承担啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【颛蒙】</span>愚昧。老实谨慎貌。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【望其肩背】</span>形容赶得上或达得到。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

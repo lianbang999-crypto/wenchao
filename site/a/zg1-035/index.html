@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复永嘉某居士书六 · 印光法师文钞</title>
+<meta name="description" content="光既无学问，又无色力。若说话过多，目即发赤，而难观字矣，何可讲经。况现有刻书一事，万不能假手于人。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-035/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复永嘉某居士书六 · 印光法师文钞">
+<meta property="og:description" content="光既无学问，又无色力。若说话过多，目即发赤，而难观字矣，何可讲经。况现有刻书一事，万不能假手于人。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-035/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复永嘉某居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光既无学问，又无色力。若说话过多，目即发赤，而难观字矣，何可讲经。况现有刻书一事，万不能假手于人。</p><p class="p-trans">我既没有学问，也没有气力。如果说话太多，眼睛就发红，便很难看清字了，怎么可以讲经。何况现在有刻书这件事，绝对不能委托别人来做。</p></div>
+<div class="para-pair"><p class="p-orig">即无一事，亦不能应此事。汝所说之语，乃是为土木形骸装金，听得甚好。倘令人识破，则不值半文矣。已后不可如此说话，免令光生惭愧，而人见讥诮也。</p><p class="p-trans">就是没有什么事，也不能答应（讲经）这件事。你所说的话，是为土塑木雕的形体装金，听是很好听。倘若让人看破，就不值半文钱了。以后不可以这样说话，免得令我生惭愧，而被他人讥讽。</p></div>
+<div class="para-pair"><p class="p-orig">学道之人，道念重一分，则凡情轻一分，此必然之势也。然未断惑之人，常须努力。若一放纵，旧病定至复发。见思惑断尽者，才好任运腾骧，无须制束摄持也。</p><p class="p-trans">修学佛道的人，心中道念重一分，那么凡情就轻一分，这是必然的趋势。然而没有断惑的人必须常常努力。如果一放纵，旧病（指凡夫的习气毛病）就一定会复发。见思惑断尽的圣者才可以任运随缘地发挥，不一定要克制约束收摄自心来修持。</p></div>
+<div class="para-pair"><p class="p-orig">人家欲兴，必由家规严整始。人家欲败，必由家规颓废始。欲子弟成人，须从自己所作所为，有法有则，能为子弟作榜样始。此一定之理。</p><p class="p-trans">一个家庭要想兴旺，必定从严整家规开始。一个家庭将要败落，必定从家规颓废开始。想让子弟成人，必须让自己的所作所为遵守一定的法规原则，能为子弟作榜样开始，这是必然的道理。</p></div>
+<div class="para-pair"><p class="p-orig">今欲从省事省力处起手，当以因果报应为先入之言。使其习以成性，庶后来不至大有走作。此淑世善民，齐家教子之第一妙法也。</p><p class="p-trans">现在如果想从省事省力的地方着手教育，应当以因果报应的道理作为他们的启蒙教育，使他们习惯而成自然的性情，但愿他们将来为人处事不至于有大的偏差。这确实是挽救世道人心，救化导民众、齐家教子第一等的妙法。</p></div>
+<div class="para-pair"><p class="p-orig">智者大师世称释迦化身。其所证者，谁得而知。然佛为众生现身作则，故即以凡夫自居。其曰我不领众，必净六根者，以己诫人，乃现身说法也。以大师最初志期断惑证真，直登地等（地，十地。等，等觉）。以弘法利生，荒旷自己禅定工夫，故止证得圆五品观行位而已。故曰，损己利人，但登五品。五品者，即随喜，读诵，讲说，兼行六度，正行六度五种耳。</p><p class="p-trans">智者大师，世传是释迦牟尼佛化身，他修行所证到的境界，谁能知道呢？然而佛为众生现身作则，所以自居凡夫位。他说“我不领众，必净六根”这句话，是用自己的证量来警诫后人（修行不易，切勿自满而骄），乃是现身说法啊。因为大师发心之初，就立志希望断惑证真，直登地、等（地，十地；等，等觉）的果位。因为自己弘法利生，荒废了自己的禅定工夫，所以只证得圆五品观行位而已。所以他说：“损己利人，但登五品。”五品，即随喜、读诵、讲说、兼行六度、正行六度五种。</p></div>
+<div class="para-pair"><p class="p-orig">圆五品位，圆悟藏性（藏性即实相妙理，在缠名如来藏，出缠名法身。缠即无明，未断，故名在缠）。与佛所悟，了无有二。圆伏见思尘沙无明烦恼，而见惑尚未能断。若断见惑，即证初信。及至七信，则思惑断尽，得六根任运不染六尘之实证，故名六根清净位。又于一一根中，俱能具六根功德，作六根佛事，故亦名六根互用。如法华经法师功德品所说。</p><p class="p-trans">圆五品位，圆悟藏性（藏性，即实相妙理。在缠名如来藏，出缠名净法身。缠，即无明。未断，故名在缠）。与佛所悟，一模一样。圆伏见思、尘沙、无明烦恼，而见惑尚未能断。若断见惑，即证初信。等到证得七信，那么思惑烦恼断尽，得六根任运不染六尘的实证，所以名六根清净位。又于一一根之中，都具有其他六根的功德，作六根佛事，也叫六根互用，如《法华经·法师功德品》中所说。</p></div>
+<div class="para-pair"><p class="p-orig">南岳即示居此位。此位之人，不但有大智慧，而且有大神通。其神通又非小乘阿罗汉所能比。故南岳生前殁后，皆有不可思议之事，令人若见若闻，发起信心。</p><p class="p-trans">南岳禅师即示居此位。此等位次的人，不但有大智慧，而且有大神通。其神通不是小乘阿罗汉所能比的。所以南岳禅师生前死后，都有不可思议的事情发生，让看到的人或听到的人，都发起对佛法的信心。</p></div>
+<div class="para-pair"><p class="p-orig">南岳智者，皆法身大士。其实证地位，谁能测其高深。此不过欲勉后世专精学道，而作此曲折耳。岂真止证十信相似位，五品观行位而已耶。</p><p class="p-trans">南岳禅师、智者大师，都是法身大士，他们所真实证得的地位，谁能猜测到有多深呢？这不过是想勉励后人专精学道，而曲折引领啊。哪里是说他们真是只证到十信相似位、五品观行位啊？</p></div>
+<div class="para-pair"><p class="p-orig">我等博地凡夫，那堪拟彼。我等只好粗持重戒，一心念佛，兼修世善，以为助行。依永明莲池之法行之，则无往不利矣。自己改恶修善，一心念佛。凡一切亲故并有缘之人，亦当以此教之。其反对之人，当作怜悯想，不可强制令行。按牛头吃草，万万做不得。</p><p class="p-trans">我们这些博地凡夫，哪能和他们相比。我们只好粗略地守持重戒（杀盗淫妄酒等主要的戒律），一心念佛，兼带修习世间善法，来作为助行。依永明大师、莲池大师的方法去实行，那就无往不利了。自己改恶修善，一心念佛。凡遇一切亲戚故友以及有缘的人，也应当以此净土法门劝教他们。那些反对的人，应当作怜悯想，不可强制令他们去做。按牛头吃草，万万做不得。</p></div>
+<div class="para-pair"><p class="p-orig">若曰我一心念佛，诸事不理，不唯与世法有碍，亦不与佛法相合。素位而行，方为得之。</p><p class="p-trans">如果说我一心念佛，什么事都不理，不单与世间法有障碍，也与佛法不相吻合。按自己所处的身分地位待人处事，才是对的。</p></div>
+<div class="para-pair"><p class="p-orig">劝人念佛修行，固为第一功德。然下而妻子兄弟，上而父母祖妣，皆当劝之。倘不能于家庭委曲方便，令吾亲属，同得不思议即生了脱之益。便为舍本逐末，利疏而不计利亲。其可乎哉。</p><p class="p-trans">劝人念佛修行，固然是第一功德。然而向下对妻子、儿子、兄弟，向上对父母、祖父母，都应当劝导。倘若不能够在家里面委曲方便，令我们的亲属，共同得到不思议即生了脱的利益。就是舍本逐末，利益疏远的人而不考虑利益身边的亲人。这样做怎么可以呢？</p></div>
+<div class="para-pair"><p class="p-orig">劝人念佛之功，净土书中说者甚多，恐费笔墨，故不详书。汝与师寿既修净业，只可在家念佛。普陀不可常来。即其余名山，纵然朝谒，亦不过看看山景而已。岂若在家修持，不废钱财时日。不劳身心奔驰之为愈也。</p><p class="p-trans">劝人念佛的功德，净土的书籍中说的很多，恐怕浪费笔墨，所以不再详说。你与师寿既然修习净业，只可在家念佛。普陀山不可常来。即使是其余的名山，纵然去朝拜，也不过是看看山景而已。不如在家修持，不浪费钱财时间。不疲劳身心奔驰为好。</p></div>
+<div class="para-pair"><p class="p-orig">又无知愚人，以耳为目。一人传虚，万人传实。妄谓地藏菩萨，是暹罗国太子。其肉身塔遇闰大七月，彼国之王，亲来开塔。此等无稽之谈，切不可当做真实，待至其时便去。以致人多地少，或致推挤跌扑，备受痛苦。</p><p class="p-trans">又者，无知的愚人，以耳听为眼见。一个人说的虚假话，一万个人传就当成了真的。妄说地藏菩萨，是泰国太子。他的肉身塔恰遇30天的闰七月（农历有闰月，且农历月份有大小之分，大月有30天，小月有29天），泰国国王，亲自来开塔。这些无稽之谈，千万不要当做真实，若等到了那个时间去九华山，因为人多地方小，或许会导致推挤跌倒，备受痛苦。</p></div>
+<div class="para-pair"><p class="p-orig">此系新罗国王族出家，姓金名乔觉，于唐玄宗时来九华，居数十年。后坐脱，肉身不坏，遂以全身入塔。绝无开塔之说。当唐之时，高丽有三国。一高句丽，二新罗，三百济。后高句丽吞灭二国，而但名高丽耳。近时愚人，不知新罗，遂讹作暹罗。唐时亦无暹罗之名。彼系两国，一暹国，一罗斛国。后并为一，遂名暹罗。</p><p class="p-trans">应该是新罗国王族出家，姓金名乔觉，在唐玄宗时来到九华山，居住了几十年。后来坐化，肉身不坏，于是将全身入塔。绝对没开塔之说。在唐朝的时候，高丽有三个国家。一是高句丽，二是新罗，三是百济。后来高句丽吞灭了另外两国，就只名高丽国了。近来的愚人，不知是新罗国，于是误作暹罗国。唐朝的时候也没有暹罗国的名字。这是两个国家，一是暹国，一是罗斛国。后来合为一个国家，于是名为暹罗国。</p></div>
+<div class="para-pair"><p class="p-orig">此僧事迹，俱载九华志，宋高僧传。若欲一礼法颜，当于闲空时节。九华香期，香客之多，多于普陀百倍。况今年有此谣言，其朝山之人，不知比常时会期，更多几倍。况塔在高处，前面若有二三百人，即有推挤跌扑之事。若不洞事带妇女去，其因挤而丧身失命者，或亦难保。何可不依法言，而专信谣话，以自讨烦恼也。</p><p class="p-trans">这位圣僧的事迹，都记载在《九华山志》，宋《高僧传》中。如果想要去礼拜他的肉身，应当在空闲的时候去。九华山的香期，香客很多，多过普陀山百倍。何况今年又有这个谣言，那些朝山的人，不知道比平常的香会之期，多了几倍。又何况肉身塔在高处，前面如果有二三百人，就可能会有推挤跌倒的事发生。如果不懂事带上妇女同去，难保不出因为拥挤而丧身失命的事情。怎可不依法言，而专门相信谣言，来自讨烦恼。</p></div>
+<div class="para-pair"><p class="p-orig">光以二尊人年高，恐汝等不知利害，以为尽孝，故不禁络索言之。统祈洞察，幸甚。</p><p class="p-trans">我因为你父母年事已高，恐怕你们不知道利害，认为这是尽孝，所以不禁啰嗦说了这些。祈望洞察，幸甚！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【土木】</span>谦辞，用作自称。语本《论语·公冶长》：“宰予昼寝。子曰：‘朽木不可雕也，粪土之墙不可杇也，于予与何诛？’”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【形骸】</span>1.人的躯体。2.指外貌；容貌。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【腾骧】</span>1.飞腾；奔腾。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【子弟】</span>1.子与弟。对父兄而言。亦泛指子侄辈。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【走作】</span>生事，起衅。引申为出岔子、出纰漏。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【淑世】</span>犹济世。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【素位】</span>谓现在所处之地位。语出《礼记·中庸》：“君子素其位而行，不愿乎其外。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【暹罗】</span>泰国的旧名。旧分暹与罗斛两国，十四世纪中叶两国合并，称暹罗。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【金乔觉】</span>（695-794），新罗国（今韩国）王子金宪英近族子弟。少年抛弃王族生活，削发为僧。通晓汉文。唐开元初年，航海来华，卓锡九华山，苦行修心，广收僧徒，传经布道。贞元十年（794）夏历七月三十日，趺跏圆寂，寿年九十九年。僧徒将其肉身跌坐石函中，越三年“颜状如生，兜罗手软，骨节有声，如撼金锁”。《藏经》曰：“菩萨金锁百骨鸣，知其为圣人降世也。”众僧徒视为地藏菩萨现身，遂建石塔将肉身移于塔中，被尊称为“金地藏”，后建肉身殿，以护石塔。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【尊人】</span>对他人或自己父母的敬称。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【幸甚】</span>1.表示非常庆幸或幸运。2.书信中习用语。有表示殷切希望之意。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>西方公据重刻序 · 印光法师文钞</title>
+<meta name="description" content="净土法门，乃如来普度众生之特别法门也。如来愍念众生，示成正觉。俯顺群机，循循善诱。大根则令其悟一心之具造，断惑证真，以直趣菩提。小器则令其明三世之因果，趋吉避凶，为入道方便。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-054/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="西方公据重刻序 · 印光法师文钞">
+<meta property="og:description" content="净土法门，乃如来普度众生之特别法门也。如来愍念众生，示成正觉。俯顺群机，循循善诱。大根则令其悟一心之具造，断惑证真，以直趣菩提。小器则令其明三世之因果，趋吉避凶，为入道方便。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-054/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">西方公据重刻序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，乃如来普度众生之特别法门也。如来愍念众生，示成正觉。俯顺群机，循循善诱。大根则令其悟一心之具造，断惑证真，以直趣菩提。小器则令其明三世之因果，趋吉避凶，为入道方便。</p><p class="p-trans">净土法门，是如来普度众生的特别法门。如来怜悯众生，在世间示现成佛。委曲随顺众生的根机，循循善诱。对于大根机的众生，就令他们觉悟自心之所本具，自心之所造就，断除烦惑，证得真常，直下趣入菩提。对于小根机的众生，就令他们明了三世因果，趋吉避凶，作为入道的方便。</p></div>
+<div class="para-pair"><p class="p-orig">虽则大小不同，权实各异。皆须断尽见思二惑，方可出离分段生死。倘惑业未尽，道果未成。纵有修持，不能自主。久经生死，进少退多。以道不胜习，业能缚心。譬如坯器未烧，经雨则化。虽有前功，了无所益。</p><p class="p-trans">虽然根机有大、小的不同，教法有权、实的差异。但都必须断尽见、思两种惑业，才可以出离分段生死。如果惑业没有断尽，道果没有成就。纵然有一定的修持，生死也不能自己作主。长久经历生死轮回，增进的情况少，退堕的情况多。因为道力胜不过习气，业力就会系缚住凡心。譬如泥质的坯器如果没有经过烧结，遇到雨水就会融化。虽然前面修行有一些功夫，但却不能得到什么利益。</p></div>
+<div class="para-pair"><p class="p-orig">以是之故，特开一信愿念佛，求生净土法门。俾若凡若圣，或智或愚，同以深信切愿，持佛名号，求生西方极乐世界。此则以己信愿，感佛慈悲。感应道交，必蒙摄受。迨至临欲命终，即得随佛往生也。</p><p class="p-trans">因此，如来特别开示了一个信愿念佛，求生净土的法门。使得不论凡夫圣人，智慧愚痴，共同以深信切愿，持念阿弥陀佛的名号，求生西方极乐世界。这是以自己的信愿，感得佛陀的慈悲。感应道交，必定蒙阿弥陀佛摄受。等到临命终时，就能随佛往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">既往生已，则已断惑者，速证无生。具业缚者，亦登不退。从兹亲炙弥陀，参随海众。熏陶化育，染如来之妙香。障尽智圆，复本具之佛性。俯提劣机，曲护初心，唯此法门，最为第一。如来之恩，广大周至。虽天地父母，莫能喻其万一也。</p><p class="p-trans">往生西方之后，那么已经断除惑业的圣人，可以快速证得无生法忍。被业力系缚的凡夫，也可登入不退转位。从此亲近阿弥陀佛，追随清净海众菩萨。熏陶化育，浸染如来妙香。业障灭尽，智慧圆满，恢复本具的佛性。提携劣机众生，庇护初发心人，唯有这个法门，最为第一。如来的恩德，广大周遍，即使天地父母的恩德，也不能比喻其万分之一啊。</p></div>
+<div class="para-pair"><p class="p-orig">昔人欲令同人，各修净业。因辑经咒文说，及诸应验，以为一书，名之为西方公据。公据者，即把柄，与左券之谓也。果能受持阿弥陀经，则知极乐世界，无有众苦，但受诸乐。依正庄严，种种功德。阿弥陀佛，现在说法。光寿无量，誓愿洪深。诸上善人，俱会一处。皆以修此信愿念佛之多善根福德因缘妙行而生。其有不真为生死，发菩提心，以深信愿，持佛名号。以期近则登不退地，远则圆成佛道者乎。</p><p class="p-trans">古人想让大家，各各都能修习净业。因此辑录经文咒语，以及诸多的应验事迹，编为一本书，名为《西方公据》。公据，就是把柄、凭证的意思。果真能够受持《阿弥陀经》，就知道极乐世界，无有众苦，但受诸乐，依正庄严，种种功德。以及阿弥陀佛，现在说法，光寿无量，誓愿洪深。而“俱会一处”的“诸上善人”都是因为修持信愿念佛这一多善根福德的因缘妙行而往生到了西方。（明了这些之后），哪能不真为生死，发菩提心，以深信愿，持佛名号，以期近则往生西方登不退地，远则圆成佛道呢？</p></div>
+<div class="para-pair"><p class="p-orig">而况六方诸佛，普利众生。释迦本师，得无上道。无不资始乎此，而归极乎此。良以一切众生，皆具佛性。是心作佛，是心是佛。由其以果地觉，为因地心。故得因该果海，果彻因源。法门之妙，妙无以加。乃华严末后归宗之一著，实如来大畅本怀之圆诠也。</p><p class="p-trans">更何况六方诸佛，普遍利益众生；释迦本师，得成无上佛道，无不是凭借净土法门开始，而最终回归到极乐净土的。实在是因为一切众生，都有佛性，是心作佛，是心是佛。由于净土法门是以阿弥陀佛果地的觉证，作为众生因地的发心，所以能够因行该摄果海，果觉通彻因源。净土法门妙到了极点，是《华严经》最后归宗结顶的一著，是如来大畅本怀的圆满诠解啊。</p></div>
+<div class="para-pair"><p class="p-orig">有缘遇者，即是多善根因缘。为防疑退，更辑诸图说应验。徐子肇珩，宿具灵根。痛二亲之早逝，冀九莲以同登。因发心重刻，广为流布。以期现生父母，历劫怨亲。普及法界众生，共入弥陀愿海。</p><p class="p-trans">有缘遇到这个法门，这就是多善根因缘（见《阿弥陀经》：不可以少善根因缘得生彼国）。为了防止修学的人犹疑和退转，书中又辑录了诸多图画和应验事迹。徐肇珩居士，宿具慧根。因为悲痛自己双亲早逝，希望他们共同登上九品莲台。因此发心重刻这本书，广泛流布。以期现生父母，历劫以来的怨亲债主，以及遍法界一切众生，都共入弥陀愿海。</p></div>
+<div class="para-pair"><p class="p-orig">余嘉彼孝思，叙其大致。倘阅者果不以余言为非，当必有亲证此无上甚深大事因缘之一日在。翘冀何极。</p><p class="p-trans">我嘉许他的一片孝心，在此简略叙述净土法门的大概。如果读者不把我的话当成错谬，那么当必有亲证这无上甚深大事因缘的一天。我殷切盼望着。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【亲炙】</span>谓亲受教育熏陶。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【左券】</span>古代契约分为左右两片，左片称左券，由债权人收执，用为索偿的凭证。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【资始】</span>1.借以发生、开始。2.指事物起始所凭借者。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

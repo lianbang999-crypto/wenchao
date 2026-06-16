@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普陀山伴山庵募修大殿疏（代撰） · 印光法师文钞</title>
+<meta name="description" content="圆通大士，示迹普陀，誓愿无疆，慈悲莫测。绝攀缘而赴众感，如一月普印于千江。住真际而应群机，犹一雨遍润乎万卉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-196/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普陀山伴山庵募修大殿疏（代撰） · 印光法师文钞">
+<meta property="og:description" content="圆通大士，示迹普陀，誓愿无疆，慈悲莫测。绝攀缘而赴众感，如一月普印于千江。住真际而应群机，犹一雨遍润乎万卉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-196/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">普陀山伴山庵募修大殿疏（代撰）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">圆通大士，示迹普陀，誓愿无疆，慈悲莫测。绝攀缘而赴众感，如一月普印于千江。住真际而应群机，犹一雨遍润乎万卉。</p><p class="p-trans">观世音菩萨，示迹在普陀山，誓愿没有疆界，慈悲无法通过凡情测度。断绝向外驰求的攀缘心却能因众生念力所感而现前，如同一轮明月普遍照印在千条江水之中，菩萨安住于常寂光的真际，而能普遍应摄化导所有众生，犹如一场春雨，万千花卉皆受滋润。</p></div>
+<div class="para-pair"><p class="p-orig">伴山庵者，法雨之分蓝，大士之别院也。暮鼓晨钟，接普济之清韵，拈华竖拂，承法雨之家风。辅弼两寺，宏阐一乘，因是之故，名曰伴山。</p><p class="p-trans">伴山庵，是法雨寺的支分伽蓝（即“下院”），为观音大士的另一个道场。暮鼓晨钟，能远接普济寺的清幽韵律，拈华竖拂，能继承法雨寺的佛子家风。辅助前后两寺，宏扬一乘佛法，因此被称作“伴山”。</p></div>
+<div class="para-pair"><p class="p-orig">第以创建以来，历年久远，革故鼎新，代有其人。迄今雨淋日炙，雾浸云蒸，复将倾颓，急宜修葺。</p><p class="p-trans">自创建以来，历经的年代非常久远，每个时期都有大德在原址上进行翻建，到现在雨淋日晒，湿雾浸润，云气蒸腾，殿舍又将要倾颓，马上就应该进行修复。</p></div>
+<div class="para-pair"><p class="p-orig">衲披剃本院，遍参诸方，一朝踏破草鞋，致令脚跟点地。由是倦飞知还，忘缘乐道，得故乡之风月，持别庵之门庭。睹兹形势，触目惊心，常恐金容掩色，不镜三千之光，普门扃户，难由廿五之路。</p><p class="p-trans">我在伴山禅院剃度，曾到处参访诸方善知识，一朝踏破草鞋，致令脚跟点地（用力参究，而得开悟）。从此，像倦鸟知还一般，忘断攀缘而乐住道法，得到故乡的风月（开悟），住持伴山庵的门庭（住持道场）。现在看到这种情形，触目惊心，常恐佛陀的金容失去往日的神采，不能映射出普照三千大千世界的光芒，普度众生的方便之门由此闭塞，难以再令后学修习《楞严经》中二十五圣的圆通之路。</p></div>
+<div class="para-pair"><p class="p-orig">欲彻底以掀翻，复本来之面目。奈工大费巨，钵罄囊空，爰述鄙诚，遍募檀越。恳祈发菩提心，行方便事，舍本有之家珍，培不朽之功德，量力随缘，施金输粟。</p><p class="p-trans">我心里想要彻底地把庵堂改造一番，以恢复原貌。可是工程浩大，花费颇多，钵中无食，囊中羞涩，于是述说三宝弟子的赤诚之心，普遍募请诸方檀越善信。恳请大家发菩提心，行菩萨道作方便利益众生的事，施舍自己家中的财物，培植历劫不坏的功德，量力而行、随顺机缘，布施钱米给常住。</p></div>
+<div class="para-pair"><p class="p-orig">庶含空宝殿，指日可成，满月金容，经劫常住。使南参缁素，东请僧俗，登门归命，睹相发心。了知相相离相，亲证实相之妙相，门门普门，直入无门之法门。展劫外之玄风，翼寰中之郅治。其功德利益，岂语言文字所能形容者哉。</p><p class="p-trans">使得宏伟广阔的宝殿，克期而可以建成，佛陀犹如满月的金容，经长久劫而常住世间。使得南参的缁素，向东请法的僧俗，登佛殿而归命，睹圣相而发菩提大心。了知一切相而离于名相，从而亲证诸法实相的殊妙境界，一切门全体是普门，进而直接进入无门的不二法门。宏扬万古不朽之深妙佛法，以助全世界达到太平盛世。捐修佛殿的功德利益，哪里是语言文字所能描述的呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【拈花示众】</span>大梵天王问佛决疑经说，梵王至灵山，以金色波罗花献佛，请佛说法，世尊拈花示众，并不说法，一时百万人天，皆不解其意，独迦叶尊者，破颜微笑，佛因传以涅槃妙心，为禅宗的起源。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【竖拂】</span>本谓高僧谈禅说理时竖起拂尘，用以难倒对方。常被用作机锋转语。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【脚跟点地】</span>（术语）前后际断，彻见本来面目，一切功夫，皆有着落之谓也。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【廿】</span>数词。二十的合体。二十五圆通：谓诸菩萨、声闻证悟之二十五种方法。圆通，圆满周遍，融通无碍之义。盖众生之机缘万差，故得圆通之法亦各不同。二十五，谓六尘、六根、六识及七大。即：(一)音声，即憍陈那等之声尘圆通。(二)色因，即优波尼沙陀比丘之色尘圆通。(三)香因，即香严童子之香尘圆通。(四)味因，即药王、药上二法王子之味尘圆通。(五)触因，即跋陀婆罗等之触尘圆通。(六)法因，即摩诃迦叶等之法尘圆通。(七)见元，即阿那律陀之眼根圆通。(八)息空，即周利槃特迦之鼻根圆通。(九)味知，即憍梵钵提之舌根圆通。(十)身觉，即毕陵伽婆蹉之身根圆通。(十一)法空，即须菩提之意根圆通。(十二)心见，即舍利弗之眼识圆通。(十三)心闻，即普贤菩萨之耳识圆通。(十四)鼻息，即孙陀罗难陀之鼻识圆通。(十五)法音，即富楼那之舌识圆通。(十六)身戒，即优波离之身识圆通。(十七)心达，即大目犍连之意识圆通。(十八)火性，即乌刍瑟摩之火大圆通。(十九)地性，即持地菩萨之地大圆通。(廿)水性，即月光童子之水大圆通。(廿一)风性，即琉璃光法王子之风大圆通。(廿二)空性，即虚空藏菩萨之空大圆通。(廿三)识性，即弥勒菩萨之识大圆通。(廿四)净念，大势至菩萨等之根大圆通。(廿五)耳根，即观音菩萨之耳根圆通。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【郅治】</span>大治。清王韬《制战舰》：“然中国向以文德致郅治之隆，武功非其所尚。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复某某居士书 · 印光法师文钞</title>
+<meta name="description" content="所言异疾，殆宿世之怨业（怨，世每误作冤。冤，屈也。怨，仇也）。怨业病，勿道（道，音到，言也）世医莫能施功，即神仙亦无从拯救。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-087/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复某某居士书 · 印光法师文钞">
+<meta property="og:description" content="所言异疾，殆宿世之怨业（怨，世每误作冤。冤，屈也。怨，仇也）。怨业病，勿道（道，音到，言也）世医莫能施功，即神仙亦无从拯救。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-087/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复某某居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">所言异疾，殆宿世之怨业（怨，世每误作冤。冤，屈也。怨，仇也）。怨业病，勿道（道，音到，言也）世医莫能施功，即神仙亦无从拯救。</p><p class="p-trans">所说的怪病，大概是宿世的怨业（怨，世人常常误作“冤”字。冤，是冤屈的意思。怨，是仇的意思）。怨业病，不要说（道，音到，说的意思）世间的医生不能救治，即使是神仙也无法拯救。</p></div>
+<div class="para-pair"><p class="p-orig">汝果能生大惭愧，改往修来。以志诚恳切心，称念南无阿弥陀佛圣号。彼宿世怨业，初则由佛号而即速远避，继则仗佛力以脱苦超生，决定不至仍旧缠绵。</p><p class="p-trans">你果真能够心生大惭愧，改掉以往的错误、修持来日的善行。以志诚恳切的心，称念“南无阿弥陀佛”圣号。那些宿世怨业，最初就会由佛号而赶紧远远地避开，接着就会依仗佛力来脱苦超生，决定不至于仍旧缠绵不去。</p></div>
+<div class="para-pair"><p class="p-orig">然若心不至诚，及不生改往修来，诸恶莫作，众善奉行之心。则自己之心，与鬼相邻，与佛相反。纵稍念佛，亦难感格。乃己心不诚不正，非佛法之不灵不验也。</p><p class="p-trans">然而如果心不至诚，以及不生改往修来，诸恶莫作，众善奉行的心。那么自己的心，与鬼相近，与佛相反。即使稍有念佛，也很难有感应。这是自己的心不至诚、不端正，并不是佛法不灵验啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝既发四弘誓愿，修学六度，须先在自身及家庭做起。自身则非礼勿视，非礼勿听，非礼勿言，非礼勿动。惩忿窒欲，克己复礼。见贤思齐，见不贤而内自省。家庭则尽义尽分，如孝父母，敬兄友弟。</p><p class="p-trans">你既已发四弘誓愿，修学六度，必须先从自身及家庭做起。自身方面就是非礼勿视，非礼勿听，非礼勿言，非礼勿动。惩忿窒欲（克制愤怒、抑制私欲），克己复礼（战胜己私、还归真理）。见到贤人应该向他们看齐，见到不贤的人应该向内自我反省；家庭方面就是要尽义务、尽本分，如孝顺父母、尊敬兄长、友爱弟弟。</p></div>
+<div class="para-pair"><p class="p-orig">凡内而家人，外而乡党，皆以真诚相交。断不可怀欺诈陵侮之念。又须悯世人之愚痴，多方劝谕。令勿杀害生命，以免未来互杀之苦。又令常念佛号，求生西方。则不至又生此苦娑婆世界，轮回六道，了无出头之日也。</p><p class="p-trans">凡是内部的家人，外部的乡亲，都用真诚来相交。千万不可怀有欺诈陵侮的念头。另外，必须怜悯世人的愚痴，多方面加以劝导。令他们不要杀害生命，以免将来有互相杀害的痛苦。还要令他们常念佛号，求生西方。就不至于又生到这个痛苦的娑婆世界，轮回六道，完全没有出头之日啊！</p></div>
+<div class="para-pair"><p class="p-orig">今为汝寄文钞一包三部。自存一部，余送有信心，能恭敬，通文理之人。其修持法则，其内自详。若欲易了，先看与徐女士书。次看与高邵麟书，陈锡周书。然后再看与永嘉某居士二十余书，自可备知。</p><p class="p-trans">现在为你寄《文钞》一包三部。自己存留一部，其余的送给有信心、能恭敬、通文理的人。其中修持的法则，在书中说得很详细。如果想容易明了，先看《与徐福贤女士书》。其次看《与高邵麟书》、《与陈锡周书》。然后再看二十多封《与永嘉某居士书》，自然就能全都明白了。</p></div>
+<div class="para-pair"><p class="p-orig">文虽鄙拙，意实本佛祖经论。而以显浅之语言发挥之，绝无杜撰之语。倘能依之修持，则当身心清净，业障消除。待至临终，往生净土，超凡入圣，了生脱死。</p><p class="p-trans">文词虽然鄙陋拙劣，文意实际是依据佛陀祖师的经论。并用显浅的语言加以发挥，绝对没有杜撰的话语。倘若能够依照修持，那么一定会身心清净，业障消除。等到临终，往生净土，超凡入圣，了生脱死。</p></div>
+<div class="para-pair"><p class="p-orig">则此宿怨，实为汝出苦海之大导师。彼亦当承汝修持之力，离苦得乐。所谓即病为药，以怨成恩也。若不发真实心，则怨报恐尚不止此也。</p><p class="p-trans">那么这些宿世怨业，实际就是你出离苦海的大导师。他们也一定会承蒙你修持之力，离苦得乐。这就是所谓的“以病苦作为良药，因怨业而成为恩人”。如果不发真实心，那么怨报恐怕还不止这些啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【噵】</span>古同“道”，说，解释。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【惩忿窒欲】</span>惩：警戒，制止；忿：愤怒；窒：阻塞堵死，抑止；欲：嗜欲。克制愤怒，抑制嗜欲。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【见贤思齐】</span>贤：德才兼备的人；齐：相等。见到德才兼备的人就想要向他看齐。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>挽回世道人心标本同治录序 · 印光法师文钞</title>
+<meta name="description" content="（民国己卯冬作 时年七十九）">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-001/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="挽回世道人心标本同治录序 · 印光法师文钞">
+<meta property="og:description" content="（民国己卯冬作 时年七十九）">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-001/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">挽回世道人心标本同治录序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">（民国己卯冬作 时年七十九）</p><p class="p-trans">（民国己卯年&lt;1939年&gt;冬季作 当时年纪七十九岁）</p></div>
+<div class="para-pair"><p class="p-orig">世出世间之理，不外心性二字。世出世间之事，不外因果二字。心性之理微，虽圣人犹有所不知。因果之事显，纵愚夫亦可以略晓。</p><p class="p-trans">世间、出世间的道理，不超出“心性”二字；世间、出世间的事情，不超出“因果”二字。心性的道理微妙，即使是圣人也还有不了解的地方。因果的事情明显，即使是愚夫愚妇，也可以大略懂得一些。</p></div>
+<div class="para-pair"><p class="p-orig">圣人欲天下永太平，人民常安乐，特作大学，以示其法。开章即曰，大学之道，在明明德。然明德，乃人各自具。由无克念省察之功，则明德被幻妄私欲所蔽，不能显现而得受用。</p><p class="p-trans">圣人想要让天下永保太平、人民常享安乐，特地撰写《大学》，来开示实现的方法。开章就说：“大学的宗旨，在明明德。”然而这个明德（儒教的明德即佛教讲的性德），是每个人都具有的。但由于没有克制妄念、自我省察的功夫，这个明德就被幻妄的私欲所蒙蔽，不能显现而亲得受用。</p></div>
+<div class="para-pair"><p class="p-orig">其明之之法，在于克念。克念之工夫次第，在于修身，正心，诚意，致知，格物。物者何，即随境所生，不合天理，不顺人情之幻妄私欲，非外物也。</p><p class="p-trans">使明德（性德）彰显的方法，在于克制妄念。克制妄念的工夫次第，在于修身、正心、诚意、致知、格物。“物”是什么呢？就是随境所生，不合天理，不顺人情的幻妄私欲，并不是外在的事物啊！</p></div>
+<div class="para-pair"><p class="p-orig">由此私欲固结于心，则所有知见，皆随私欲而成偏邪。如贪名贪利者，只知有利，不知有害，竭力营为，或至身败名裂。</p><p class="p-trans">由于这个私欲固结在心中，因此所有的知见，就都随着私欲而成为偏邪。比如贪图名利的人，只知道有利，不知道有害，竭力经营造作，甚至到了身败名裂的地步。</p></div>
+<div class="para-pair"><p class="p-orig">爱妻爱子者，只知妻子之好，不知妻子之恶，养成祸胎，或至荡产灭门者，皆由贪与爱之私欲所致也。</p><p class="p-trans">爱妻子、爱儿女的人，只知道妻子、儿女好的方面，不知道妻子、儿女坏的方面，渐渐养成了祸胎，甚至到了荡产灭门的地步，都是由于贪与爱的私欲所导致的啊！</p></div>
+<div class="para-pair"><p class="p-orig">若将此不合情理之私欲，格除净尽，则妻子之是是非非自知，名利之得之以道，不须夤缘妄求矣。</p><p class="p-trans">如果将这些不合情理的私欲，格除净尽，那么妻子、孩子的是是非非，心中自然就会明了；名利要通过正道获得，不须要攀附权贵、拉拢关系来妄求啊！</p></div>
+<div class="para-pair"><p class="p-orig">此物字，先要识得是幻妄不合情理之私欲，则其格除，乃易易事。否则尽平生力，不奈彼何。纵读尽世间书，也只成得一个依草附木，随波逐浪汉。甚矣，私欲之物之祸大也。</p><p class="p-trans">这个“物”字，首先要认识到，是幻妄不合情理的私欲，那么格除这个“物”，就是非常容易的事了。否则，竭尽平生的力量，也拿它没有办法；即使读尽世间的书，也只能成为一个无法自立，随波逐流的人。太厉害了，这个私欲之物的祸害是多么的可怕啊！</p></div>
+<div class="para-pair"><p class="p-orig">若知此物是吾人生死怨家，决不令彼暂存吾心，则即心本具之正知自显。正知显，而意诚，心正，身修，顺流而导，势如破竹，有不期然而然者。</p><p class="p-trans">如果知道这个“物”是我们的生死怨家，就绝对一刻也不会让它留存在我们的心中，那么即心本具的正知就会自然显现。正知显现（即致知），那么意诚、心正、身修就会顺流而导，势如破竹，有不期望这样而自然如此的结果。</p></div>
+<div class="para-pair"><p class="p-orig">人皆可以为尧舜，人皆可以作佛。以一切人民，各具明德。一切众生，皆有佛性。其不能为尧舜，不能作佛者，皆由私欲锢蔽，不奋克念之功，遂致从劫至劫，随私欲转，轮回六道，了无出期，可不哀哉。然专以格致为训，不以因果相辅而导者，或难奋发大心，励志修持也。</p><p class="p-trans">人人都可以成为尧舜那样的圣人，人人都可以作佛。因为一切人民，各个都具有明德；一切众生，全都具有佛性。但是，人民不能成为尧舜，众生不能作佛的原因，都是由于私欲的锢塞蒙蔽，又没有奋发、努力练就克制妄念的功夫，于是导致从劫至劫，随私欲而转，轮回六道，没有出离的日期，能不悲哀吗？然而，如果只用格物、致知来训导，却不用因果的道理作为辅助来引导的话，那么就有可能难以使人奋发出大心，励志修持啊！</p></div>
+<div class="para-pair"><p class="p-orig">吾常曰，因果者，圣人治天下，佛度众生之大权也。约佛法论，从凡夫地，乃至佛果，所有诸法，皆不出因果之外。约世法论，何独不然。故孔子之赞周易也，最初即曰，积善之家，必有余庆。积不善之家，必有余殃。</p><p class="p-trans">我常说：因果，是圣人治理天下，佛陀度化众生的大权巧方便。就佛法来说，从凡夫地，乃至证得佛果，所有一切法，都不超出因果之外；就世间法来说，又何尝不是如此呢？所以孔子赞扬《周易》，开篇就说：“积善之家，必有余庆。积不善之家，必有余殃”。</p></div>
+<div class="para-pair"><p class="p-orig">夫积善，积不善，因也。余庆，余殃，则果矣。又既有余庆余殃，岂无本庆本殃。本庆本殃，乃积善积不善之人来生后世所得之果，当大于余庆余殃之得诸子孙者百千万倍。凡夫不得而见，何可认之为无乎。</p><p class="p-trans">“积善”、“积不善”，这是因。“余庆”、“余殃”，则是果啊！再者，既然有余庆、余殃，哪里又会没有本庆、本殃呢？本庆、本殃，是积累善行、积累不善行的人，来生后世所得的果报，要大过后代子孙所得到的余庆、余殃百千万倍。凡夫不能见到，怎么能认为本庆、本殃就没有呢？</p></div>
+<div class="para-pair"><p class="p-orig">喻如黑夜不见一切物，不得谓一切物悉皆消灭矣。箕子之陈洪范也，末后方说，向用五福，威用六极。五福，六极，乃示前生之因，为今生之果。向，顺也。用，以也，得也。</p><p class="p-trans">譬如在黑夜中，看不见一切东西，不能就说所有的东西全都消灭了啊！箕子陈述《洪范》，最后才说：“向用五福，威用六极”。“五福”、“六极”，是显示前生造作的因，结为今生的果。“向”是顺的意思。“用”是以、得的意思。</p></div>
+<div class="para-pair"><p class="p-orig">（一）寿，（二）富，（三）康宁，（五）考终命，乃前生修道修德所感之果。（四）攸好德，乃前生修道修德之习性也。极，穷厄也。威，义当作违，悖逆也。谓前生所作所为，悖逆道德，致今生得。（一）横死之凶，与夭寿之短折（凶与短折，合为第一），（二）及身不康之疾，（三）心不宁之忧，（四）用不足之贫，（五）貌丑之恶，（六）身无能力之弱也。</p><p class="p-trans">（一）长寿，（二）富贵，（三）健康安宁，（五）享尽天年而善终，这是前生修道、修德所感的果。（四）喜好德行，是前生修道、修德的习性。“极”是穷厄的意思。“威”，意义当作“违”字讲，悖逆的意思。是说前生的所作所为，悖逆道德，导致今生遭受（一）横死的凶祸，与折寿的短命（凶与短折，合为第一件恶事），（二）以及使身体不健康的疾病，（三）使内心不安宁的忧虑，（四）用度不足的贫困，（五）相貌丑陋的厌恶，（六）身体没有能力的虚弱。</p></div>
+<div class="para-pair"><p class="p-orig">儒者昧于前因后果，一一归于王政，不几灭天理而诬王政乎。小儿生于富贵家则享福，生于贫贱家则受苦，岂王政分别令生乎。</p><p class="p-trans">儒学人不明白前因后果，将这些不好的果报，全都归于王政的过错，这难道不是灭绝天理而诬蔑王政吗？小孩儿生到富贵之家就享福，生到贫贱之家就受苦，这难道也是王政分别让他们生到不同家庭的吗？</p></div>
+<div class="para-pair"><p class="p-orig">故经云，欲知前世因，今生受者是。欲知来世果，今生作者是。洪范，乃大禹所著，箕子以陈于武王者。末后五福六极之说，发明三世因果之义，极其确切。</p><p class="p-trans">所以佛经中说：“欲知前世因，今生受者是。欲知来世果，今生作者是。”《洪范》，是大禹所写的，箕子以此陈述给周武王。末后的“五福六极”的说法，充分阐发显明了三世因果的义理，极为确切。</p></div>
+<div class="para-pair"><p class="p-orig">宋儒谓，佛说三世因果，六道轮回，乃为骗愚夫愚妇奉彼教之据，实无其事。断以人死之后，形既朽灭，神亦飘散，纵有锉斫舂磨，将何所施。神已散矣，令谁受生。</p><p class="p-trans">宋儒说：佛说的三世因果，六道轮回，是为了欺骗愚夫愚妇信奉佛教的依据，实际没有这回事。还断言，人死之后，形体既已腐朽毁灭，神识也就飘散了。纵然有地狱的剉斫舂磨，又能施加到何人身上呢？神识已经飘散了，又能让谁来受生呢？</p></div>
+<div class="para-pair"><p class="p-orig">在彼断其必无因果，而春秋传，史，汉中，每有冤杀者作祟，蒙恩者报德，种种事实，悉是前贤为佛教预为骗人之据乎。</p><p class="p-trans">在他们看来，断定其中必定没有因果。但是，《春秋》、《左传》、《史记》、《汉书》中，常常有被冤杀的人作祟，蒙受恩惠的人报德，种种的事实记载，这些难道也都是前贤为佛教编造的、预先来骗人的根据吗？</p></div>
+<div class="para-pair"><p class="p-orig">既无因果，无有后世，则尧桀同归于尽，谁肯孜孜修持，以求身后之虚名乎。以实我已无，虚名何用。</p><p class="p-trans">既然没有因果，没有后世，那么尧圣与暴桀都同归于尽，谁还肯孜孜不倦，努力修持，来求得身后的虚名呢？因为真实的我已经没有了，虚名又有什么用呢？</p></div>
+<div class="para-pair"><p class="p-orig">由兹善无以劝，恶无以惩。又加以特唱高调，令人为善，须无所为，以有所为而为善即是恶，此种邪说，误陷国家社会不浅。</p><p class="p-trans">从此，就没有依据来劝善、惩恶了。又加上他们特别能唱高调，让人行善，必须要心无所求，因为心有所求来行善就是恶，这种邪说，误导、坑害国家和社会实在不浅。</p></div>
+<div class="para-pair"><p class="p-orig">无知之人，钦其高明，绝无一念欲为善矣。有智之人，痛裂心肝，以完全将圣人循循善诱之道废之，以圣人之资格期人。</p><p class="p-trans">无知的人，钦佩他们的高明，因此就绝对没有一念想要行善的心了；有智慧的人，心肝痛裂，因为他们完全将圣人循循善诱的大道废除了，以圣人的资格来要求一般人。</p></div>
+<div class="para-pair"><p class="p-orig">然圣人亦非无所为而为善者。孔子行年七十，尚欲天假或五或十之数年，以期学易而免大过。一部易经，无非示人趋吉避凶，战兢惕厉，克念修持之道。若如彼说，则伏羲，文王，周公，孔子，皆成错误教人为恶之罪魁祸本也，有是理乎。</p><p class="p-trans">然而圣人也不是心无所求而来行善的。孔子到了七十岁，还想要上天给他五年或者十年的寿命，以期学习《周易》而免除大过。一部《易经》，无非是开示人们趋向吉祥、避开凶险，战战兢兢、警惕畏惧，克制妄念、邪念、恶念的修持之道。如果像他们所说，那么伏羲、周文王、周公、孔子，都成了错误教人为恶的罪魁祸首了，有这样的道理吗？</p></div>
+<div class="para-pair"><p class="p-orig">人情如水，因果如堤。宋儒极力辟驳因果，以为是如来骗人奉教之据。而儒经中所说因果，何得又是实有乎。彼欲辟佛以卫儒，卒致废经废伦，实行兽化，此种恶剧，皆由彼所唱之高调演出，俾人道或几乎熄。</p><p class="p-trans">人的私欲如洪水，因果事理如堤坝。宋儒极力辟驳因果，认为这是如来骗人信奉佛教的依据。而儒经中所说的因果，为什么又真实的存在呢？他们想要借辟佛来捍卫儒教，最终导致废儒经、废伦理，实行兽化，这种恶剧，都是由于他们所唱的高调所演出的，使得做人的道理几乎要熄灭了。</p></div>
+<div class="para-pair"><p class="p-orig">费子智俨，昔曾深受程朱之毒。及其年老而阅历深，世乱而知祸本。于是皈依三宝，遍阅群书，于三世因果，六道轮回之事迹，略录大概，冀阅者弃断灭之邪见，遵儒佛之洪规。</p><p class="p-trans">费智俨居士，过去曾经深受二程（程颢、程颐）、朱熹辟佛学说的毒害。等到他年老而阅历深了，经历了世间祸乱而知道了招祸的根本。于是皈依三宝，遍阅群书，对于三世因果，六道轮回的事迹，大略录出大概，希望读者能抛弃断灭的邪见，遵从儒教、佛教的洪规。</p></div>
+<div class="para-pair"><p class="p-orig">果能人各依行，则世返唐虞，人敦礼教，以互相残杀之毅力，作互相维持之大业，故名其书曰，挽回世道人心标本同治录。</p><p class="p-trans">果真能够每个人都依照奉行，那么世道就会重返唐尧、虞舜那样的太平盛世，人人崇尚礼教，以互相残杀的毅力，转为互相维持的大业，所以命名这本书为《挽回世道人心标本同治录》。</p></div>
+<div class="para-pair"><p class="p-orig">以医家治病，急则治标，缓则治本。如其人咽喉肿胀，二便不通，不先用消肿通便之剂，则其人即死，虽有治本之法，绝无可用之地，故先治标。其余各标病，但将脏腑调理好，标病不治自无矣。</p><p class="p-trans">医生治病，病急就先治标，病缓就治本。如同一个人，咽喉肿胀，大小便不通，如果不先用消肿、通便的药剂，那么这个人就会立刻死亡，虽然有治本的良方，却绝没有可以用到的地方，所以要先治标。等到急病治好后，其余的各种标病，只要将五脏六腑调理好，标病不治也会自然消失了。</p></div>
+<div class="para-pair"><p class="p-orig">格物，致知，慎独，克念，三世因果，六道轮回之事理，从凡夫地，乃至成圣作佛，均不可离。</p><p class="p-trans">格除私欲，获得正知，谨慎独处，克制妄念，三世因果，六道轮回的事理，从凡夫地，乃至到成圣作佛，都不能脱离。</p></div>
+<div class="para-pair"><p class="p-orig">孔子以德不修，学不讲，闻义不能徙，不善不能改为忧。如来所说四谛，十二因缘，六度万行，一一皆是因果。若无因果，则人与禽兽无异矣，可妄说乎。</p><p class="p-trans">孔子把“品德不去修持，学问不去讲习，听到了道义却不能去做，对缺点、错误不能改正”作为忧虑。如来所说的四谛、十二因缘、六度万行，一一都是因果。如果没有因果，那么人与禽兽就没有什么两样了，能随便乱说没有因果吗？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【依草附木】</span>附：借，依靠。原指鬼神有所依凭，擅作威福。后比喻凭借他人势力，为非作歹。也比喻不能自立，依靠别人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【洪范】</span>《尚书》篇名。旧传为箕子向周武王陈述的“天地之大法”。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【五福】</span>五种幸福。《书·洪范》：“五福：一曰寿，二曰富，三曰康宁，四曰攸好德，五曰考终命。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【六极】</span>谓六种极凶恶之事。《书·洪范》：“六极：一曰凶短折，二曰疾，三曰忧，四曰贫，五曰恶，六曰弱。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【惕厉】</span>警惕，戒惧。“君子终日干干，夕惕若厉。”——《易·乾》</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【洪规】</span>大法。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【唐虞】</span>唐尧与虞舜的并称。亦指尧与舜的时代，古人以为太平盛世。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【标本】</span>中医称疾病的外在表现及其根本性质。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

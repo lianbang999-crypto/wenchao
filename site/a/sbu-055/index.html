@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复赵智云居士书三 · 印光法师文钞</title>
+<meta name="description" content="所寄各书俱收到，慰甚。人当知足，凡事不可过分计虑。汝谓欲修三圣堂，以为自行化他之根本地。不知吾乡之民，十室九空，教谁出功德成就此事乎。汝一不知时局艰难，二不知光为何如人。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-055/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复赵智云居士书三 · 印光法师文钞">
+<meta property="og:description" content="所寄各书俱收到，慰甚。人当知足，凡事不可过分计虑。汝谓欲修三圣堂，以为自行化他之根本地。不知吾乡之民，十室九空，教谁出功德成就此事乎。汝一不知时局艰难，二不知光为何如人。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-055/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复赵智云居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">所寄各书俱收到，慰甚。人当知足，凡事不可过分计虑。汝谓欲修三圣堂，以为自行化他之根本地。不知吾乡之民，十室九空，教谁出功德成就此事乎。汝一不知时局艰难，二不知光为何如人。</p><p class="p-trans">所寄的各种书籍都收到了，非常欣慰。人应当知足，凡事不可过分谋划考虑。你说想修建三圣堂，作为自行化他的根本场所。然而却不知道我家乡的人民，十间屋子九间空，你叫谁出功德来成就这件事呢？你一不知道时局的艰难，二不知道我是什么样的人。</p></div>
+<div class="para-pair"><p class="p-orig">在汝意欲光为之募缘，不知光从来不开募缘之口。以故不住寺庙，不收徒弟。即有信心者供施之款，或印书，或赈灾，决不积蓄。以期死时除所常用衣被之外无长物，不愿令用所积之财物者，骂贪心鬼子。</p><p class="p-trans">在你的意思是想让我为这件事募缘，你不知道我从来不开募缘的口。因此不住持寺庙，不收徒弟。即使是有信心的人供养布施的钱，有的用来印书，有的用来赈灾，决不自己积蓄。以期死的时候，除了日常所用的衣被之外，没有其他多余的东西，不愿意让将来用我所积财物的人，骂我是贪心鬼。</p></div>
+<div class="para-pair"><p class="p-orig">向知吾乡吾家之人，不知佛法及僧是何等行为，故不敢通信。恐不知世情，远道而来，则将何以处。来去须数十元，即给彼来去川资，彼已吃大亏，我亦无此力。光一贫僧，何可开此一端，则是自害害他矣。</p><p class="p-trans">我素知我家乡、我家族的人，不知道佛法以及僧人是怎么样的行为，所以不敢通信。恐怕他们不知道世态人情，远道而来，要如何来对待。来去路费须要几十元，即使给他们来去的路费，他们已经吃了大亏，而我也没有这个能力。我乃一介贫僧，怎么能开这个头，否则就是自害害他啊！</p></div>
+<div class="para-pair"><p class="p-orig">去岁由张智甲言及，已开念佛社，故为寄书，俾知佛法之真益，不至以外道混佛法。此寄书事，或可相续为寄。其余任何事项，均不能为助款赞襄也。</p><p class="p-trans">去年，因张智甲说到，已经开办了念佛社，所以为你们寄书，使大家知道佛法的真实利益，不至于将外道混同佛法。这个寄书的事，或许可以相续不断地为你们邮寄。其他任何事情，都不能赞助钱款。</p></div>
+<div class="para-pair"><p class="p-orig">僧不知法者，每每以十方施主之资财，养俗家，此系光头俗汉，地狱种子之所为。若以此望光，则太将光看得不值半文钱矣。</p><p class="p-trans">有不知道佛法的僧人，常常用十方施主的资财，养活俗家人，这是光头俗汉，地狱种子的所作所为。如果以此来指望我，那就太将我看得不值半文钱了。</p></div>
+<div class="para-pair"><p class="p-orig">念佛堂，乃提倡之所。平常念佛，当在各人家中。不但不奔驰，且不废事。即无相当地点，东门外关帝庙，村中城隍庙，或本分祠堂，或别分祠堂，每月或一次，或二次，略为宣说提倡。此外则各在自己家中念佛，多好。</p><p class="p-trans">念佛堂，是提倡（念佛）的地方。平常念佛，应当在各人自己的家中。不但不用往返奔驰，而且还不耽误事。即使没有合适的地点，东门外的关帝庙，村中的城隍庙，或者本分祠堂，或者别分祠堂，每月或者一次，或者二次，略微为大众宣说提倡。此外，就各自在自己家中念佛，多好。</p></div>
+<div class="para-pair"><p class="p-orig">必欲建造堂庙，方好修行，则是不知修行之实，徒取张罗之名者之所为也。况现在都是紧迫，功德钱一到手，私事为难，不能不用。用则无法可还，便成莫大罪过。</p><p class="p-trans">一定想要建造堂庙，才好修行，这样就是不知道修行的实质，徒然获取张罗虚名之人的所作所为。何况现在生活都很紧迫，功德钱一到手，私人的事为难，不能不用。用了又没办法偿还，便成了莫大的罪过。</p></div>
+<div class="para-pair"><p class="p-orig">闻老人云，吾族有某人者，此系道咸太平时，向朝邑富处募缘，修玉局观若干殿堂，又有魁星楼。玉局观只一小庙，魁星楼即戏台东边墙头上几条砖之魁星堂。其款通归己用。后全家灭绝。十方钱财，唯有道德之人可掌，否则难免舞弊招祸。</p><p class="p-trans">听老人说，我家族中有一个人，这是道光、咸丰太平时候，到朝邑县有钱的地方募缘，修建玉局观若干殿堂，还有魁星楼。玉局观只是一个小庙，魁星楼就是戏台东边墙头上几条砖的魁星堂。剩余的钱款通通归他自己用了。后来他全家灭绝。十方的钱财，唯有有道德的人可以掌管，否则难免舞弊招祸。</p></div>
+<div class="para-pair"><p class="p-orig">吾东社观音堂，被回回所烧，后几年，大家提倡重修。风水家云，高则与东方不利，与西方利。请吾父与稍西一老人董其事。彼闻风水之言，极力要高。不出一年，其人三子死其一，又一家媳妇跳井死。与西利而西反遭祸，与东不利而东竟无虞。是知凡事皆当秉公，不可以私意夹杂之。夹杂私意，难得好结果。</p><p class="p-trans">我们东社的观音堂，被回族人所烧，以后几年，大家提倡重修。风水家说：修高了就对东边不利，对西边有利。请我父亲与稍微靠西的一位老人主持这件事。他听了风水家的话，极力要修高。不到一年，这个人的三个儿子，死了一个，又有一家的媳妇跳井死了。对西边有利，而西边反而遭祸。对东边不利，而东边竟然无事。因此知道，凡事都应当秉公处理，不可夹杂私意。夹杂了私意，很难得到好结果。</p></div>
+<div class="para-pair"><p class="p-orig">光绪二三年，遭大年饥，郃阳凡是读书人经理赈务者，无一无弊。年饥过后，告发者有四十多处。吾村亦然（大家起哄未告）。唯西村不要读书人经理，请一仵姓老商人，久在家闲住，绝无一丝一毫之弊，凡赈粮米，即时分发，绝不一留。朝邑亦然，无有读书人无弊者。一生意人，也与西村仵公同。</p><p class="p-trans">光绪二三年（1876、1877），遭遇大年饥（年成荒歉），郃阳县凡是读书人经理赈灾事务的，没有一个不作弊。年饥过后，告发的有四十多处。我们村也是如此（大家起哄没有告）。唯有西村不要读书人经理，请了一位姓仵的老商人，长久在家闲住，绝对没有一丝一毫的舞弊，凡是赈灾的粮米，即刻分发，绝不留一点。朝邑县也是如此，没有读书人不作弊的。有一位做生意的人，也与西村的仵公一样。</p></div>
+<div class="para-pair"><p class="p-orig">可知人情稍有势，则仗势欺人。此二无弊者，非真明因果，知罪福，以无势不敢作，一作则人必攻击，故得其令名耳。以汝年富力强，后来或有此种事相委，故预为说其利害耳。</p><p class="p-trans">可知人性如此，稍微有点势力，就会仗势欺人。这两个不作弊的人，并不是真正明白因果，知道罪福，而是因为没有势力不敢去作，一作弊，他人必定会攻击，所以得了这个美名罢了。因为你年富力强，将来或许有这种事委托你办，故此预先为你讲说其中的利害。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【令名】</span>美好的声誉。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

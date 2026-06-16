@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复苏致祥居士书 · 印光法师文钞</title>
+<meta name="description" content="昨接古农及汝之书，备悉贵地外道兴盛。汝能舍外道，冀修佛法中净土之特别法门，亦可谓宿有善根。然其自高自大之处，绝不自知。故知虽读佛经，也只是皮毛而已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-089/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复苏致祥居士书 · 印光法师文钞">
+<meta property="og:description" content="昨接古农及汝之书，备悉贵地外道兴盛。汝能舍外道，冀修佛法中净土之特别法门，亦可谓宿有善根。然其自高自大之处，绝不自知。故知虽读佛经，也只是皮毛而已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-089/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复苏致祥居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接古农及汝之书，备悉贵地外道兴盛。汝能舍外道，冀修佛法中净土之特别法门，亦可谓宿有善根。然其自高自大之处，绝不自知。故知虽读佛经，也只是皮毛而已。</p><p class="p-trans">昨天接到范古农以及你的信，详尽地知道了贵地外道兴盛的情况。你能舍弃外道，希望修持佛法中的净土这一特别法门，也可以说是宿世植有善根。然而你自高自大的地方，自己却绝对不知道。所以知道你虽然读佛经，但也只是皮毛而已。</p></div>
+<div class="para-pair"><p class="p-orig">古农系朋友，凡来信，均称弟子某和南（和南，即稽首，顶礼也）。汝十五人求古农介绍书，并无致光之字，称名处，只云苏致祥合十上。汝入外道时，当不止合十而已。</p><p class="p-trans">范古农是朋友身份，凡来信，都称“弟子某某和南”（和南，就是稽首，顶礼的意思）。你们十五个人求范古农的介绍信，并没有给我的一字半句，称名的地方，只写：“苏致祥合十上”。你入外道的时候，应当不只是“合十”而已。</p></div>
+<div class="para-pair"><p class="p-orig">光文钞中，有清世祖章皇帝，与玉琳国师法徒茆溪森禅师书，署名处尚称法弟行痴和南。使汝为皇帝，则又不知作何种轻人自大耶。</p><p class="p-trans">《印光法师文钞》中，有说到清世祖顺治皇帝，给玉林国师的法徒茆溪森禅师写信，署名的地方，尚且称“法弟行痴和南”。假设你是皇帝的话，那么又不知道你会如何轻慢他人自高自大了。</p></div>
+<div class="para-pair"><p class="p-orig">今将古农之信附函寄来。又祈查文钞卷一六十七页复尤惜阴书自知。兹不详说。汝既知光目力衰，何得写此种小字。八行信纸，作十六行书，何得惜纸而不怕光看时吃力乎。</p><p class="p-trans">现今将范古农的信附在信中寄来。另外，请你查《文钞》卷一，六十七页《复尤惜阴书》自然知道，此处不详说。你既然知道我视力衰弱，怎么能写这种小字？八行的信纸，写十六行的字，怎么能爱惜纸张而不怕我看信的时候吃力呢？</p></div>
+<div class="para-pair"><p class="p-orig">光宿于目上，大造恶业，故生才六月，遂即病目。一百八十日，目未一开。后还能见天，已属大幸。今七十九岁，虽径寸之大字，不戴镜尚看不清。凡来往信札，必手眼二镜双用，方仿佛能见能复。汝将谓此书与古农，非与光乎。古农尚能为汝钞呈，有是理乎。</p><p class="p-trans">我宿世在眼睛上面，大造恶业，所以生下来才六个月，就生了眼病。一百八十天，眼睛没有睁开过一次。后来还能看见天日，已经属于大幸。今年七十九岁，即使是一寸的大字，不戴眼镜尚且看不清楚。凡是来往的信件，必须手、眼二个镜子双用，才仿佛能看见，能回信。你难道认为这封信是写给范古农看，不是写给我的吗？范古农还能为你再抄一份给我，有这样的道理吗？</p></div>
+<div class="para-pair"><p class="p-orig">师者，人之模范也。此种处若不训示，则是自轻佛法僧，亦令人轻三宝也。且莫说光好求人恭敬，此正光恭敬人处。否则于三宝尚不肯说一屈字，况实行礼敬乎。</p><p class="p-trans">老师，就是人们的模范。在这个地方如果不训导开示，就是自轻佛、法、僧，也令他人轻慢三宝。千万不要说我喜欢求别人的恭敬，这正是我恭敬众人之处。否则，对于三宝尚且不肯说一个委屈的字眼，何况真实行持礼敬呢？</p></div>
+<div class="para-pair"><p class="p-orig">如此学佛，决无大益可得。欲超凡入圣，须待驴年，或可梦见。若马牛羊等年，断无此因果不相符之事矣。故曰光实恭敬人也。余详一函遍复，不赘。</p><p class="p-trans">如此学佛，决定没有大的利益可得。想要超凡入圣，须等到驴年，或许可以梦见。像马、牛、羊等年，断然没有这种因果不相符的事情。所以说我实际上是恭敬众人。其余详看《一函遍复》，不再多说。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

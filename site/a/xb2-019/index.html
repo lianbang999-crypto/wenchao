@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>净土圣贤录序（民二十二年） · 印光法师文钞</title>
+<meta name="description" content="净土法门，广大如法界，究竟如虚空。一切法门，无不从此法界流。一切行门，无不还归此法界。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-019/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="净土圣贤录序（民二十二年） · 印光法师文钞">
+<meta property="og:description" content="净土法门，广大如法界，究竟如虚空。一切法门，无不从此法界流。一切行门，无不还归此法界。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-019/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">净土圣贤录序（民二十二年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，广大如法界，究竟如虚空。一切法门，无不从此法界流。一切行门，无不还归此法界。</p><p class="p-trans">净土法门，广大如法界，究竟如虚空。一切法门，无不从此法界流出。一切行门，无不还归此法界。</p></div>
+<div class="para-pair"><p class="p-orig">天姿聪明者，每以事简易而理庸常，遂致不加详审。不但自不修习，且复发为议论，阻止破斥他人之修持，以显己之高明。此正所谓遍观六合而不见䀹毛，尽知诸法而不识自己之世智辩聪，自视为宗教皆通，佛称为可怜悯者。</p><p class="p-trans">天姿聪明的人，常常因为念佛法门，表面看起来，修行简易、道理平常，于是导致不加仔细思量。不但自己不修习，而且还发表议论，阻止破斥他人的修持，来显示自己的高明。这正是所谓的：遍观天下而不能看见自己的眼睫毛，尽知一切法却不认识自己只是世智辩聪，自己认为宗门教下全都通达，却被佛陀称为可怜悯者。</p></div>
+<div class="para-pair"><p class="p-orig">不思华严归宗，在于求生净土。文殊普贤，通皆发愿往生。此其人为何如人，此其事为何如事。吾侪纵稍明教义，而烦惑未断，生死未了，一经再生之变，能不迷失乎哉。</p><p class="p-trans">不想想《华严经》归宗，在于求生净土。文殊、普贤菩萨，全都发愿往生。这些大菩萨是什么身份的人，这些大菩萨弘扬的又是什么样的事业。我辈纵然稍微明白一些教义，然而烦惑未断，生死未了，一经投胎转世，能不迷失吗？</p></div>
+<div class="para-pair"><p class="p-orig">坯器未烧，经雨则化，此如来特开净土法门，俾上圣下凡，同于现生直出生死之所以也。况彼二大士，久已成佛，示居等觉，以身率物，发愿求生。我何人斯，敢与彼抗。</p><p class="p-trans">用泥土做成的坯器没有经过烧制，一经雨淋就被融化，这是如来特别开启净土法门，使得上圣下凡，同在现生直出生死轮回的原因。何况文殊、普贤二位大士，久已成佛，倒驾慈航示现居于等觉菩萨位，以身作则，率领大众，发愿求生极乐世界。我们是什么人，怎敢与菩萨相抗衡呢？</p></div>
+<div class="para-pair"><p class="p-orig">如是详审，定必幡然改图，遵如来普度圣凡之教，随文殊，普贤，马鸣，龙树，远公，智者，善导，永明等诸大菩萨祖师之班，一致进行，以十大愿王，回向往生西方极乐世界，以期圆满佛果，作究竟大丈夫。谁肯以此大利益，甘让他人，而自己安住三界火宅，常受焦灼也哉。</p><p class="p-trans">如是详细审察，必定幡然悔悟，改旧图新，遵从如来普度圣凡的教法，追随文殊、普贤、马鸣、龙树、慧远、智者、善导、永明等诸大菩萨、祖师的班次，一致进行，以十大愿王，回向往生西方极乐世界，以期圆满佛果，作究竟的大丈夫。谁肯将这个大利益，甘心让给他人，而自己却安住在三界火宅，常受痛苦的焦灼呢？</p></div>
+<div class="para-pair"><p class="p-orig">自大法东来，亲证三昧，现生得道而往生者，与具足烦惑，仗佛慈力，得以带业往生者，何可胜数。</p><p class="p-trans">自从大法东来，亲证三昧，现生得道而往生的人，与具足烦惑，仗佛慈力，得以带业往生的人，哪里数得清呢。</p></div>
+<div class="para-pair"><p class="p-orig">清乾隆间，彭际清居士，饬其侄希涑，辑录往生净土诸传。首弥陀，以示立此法门之教主。次观音，势至，文殊，普贤等，以示阐此法门之圣众。次往生比丘僧，尼，王臣，士庶，女人，物类，以示往生净土之四众。共五百余人，名曰净土圣贤录，是为初编。</p><p class="p-trans">清朝乾隆年间，彭际清居士，命他的侄子彭希涑，辑录往生净土各位圣贤的传记。居于首位的是阿弥陀佛，显示建立这个法门的教主。其次是观世音、大势至、文殊、普贤等诸大菩萨，以显示阐扬这个法门的圣众。再次，是往生的比丘僧、比丘尼、国王大臣、士人庶民、女人、动物，以显示往生净土的四众弟子。一共五百多人，名为《净土圣贤录》，这就是初编。</p></div>
+<div class="para-pair"><p class="p-orig">其间若圣若凡，若智若愚，同入如来大誓愿海，以渐证夫常寂光乐。观此，知净土法门，犹如大海，普纳众流，亦如太虚，遍含万象。尽法界众生，无一人不摄其中，尽法界诸法，皆由此得其实际。以其为如来一代时教之特别法门，三世诸佛之总持要道故也。</p><p class="p-trans">这些人中，不论是圣是凡、是智是愚，同入如来大誓愿海，来渐渐证得常寂光土的法乐。看了这部书，就知道净土法门，犹如大海，普纳一切河流，也如太虚，包含所有万象。尽法界众生，没有一个人不收摄在其中；尽法界一切法，都经过净土法门才能得到实际。因为这是如来一代时教的特别法门，三世诸佛的总持要道的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">至道光末，莲归居士胡珽，辑乾隆后之往生者，得百数十人，名为净土圣贤录续编。咸同之际，兵劫弥漫，提倡者少，稍形寂寥。</p><p class="p-trans">到了道光末年，莲归居士胡珽，辑录乾隆之后往生的人，有一百几十人，名为《净土圣贤录续编》。咸丰、同治年间，兵劫战火弥漫，由于提倡净土法门的人少，所以往生的圣贤也有所减少而稍显寂寥。</p></div>
+<div class="para-pair"><p class="p-orig">近来世道人心，愈趋愈下。凡具通方眼，存救世心者，莫不提倡因果报应，信愿念佛之法。具正知见者，无不靡然风从。故数十年来，又辑二百余人，名为净土圣贤录三编。此稿乃德森师所辑，今已排竣，故为叙其缘起。</p><p class="p-trans">近来世道人心，愈趋愈下。凡是具备为政眼光、存有救世悲心的人，无不提倡因果报应，信愿念佛的方法。具有正知正见的人，无不如草随风倒一般地跟从。所以几十年来，又辑录了二百多人，名为《净土圣贤录三编》。这部书稿是由德森法师所编辑，现今已经排版完毕，所以我才为这部书叙述了缘起。</p></div>
+<div class="para-pair"><p class="p-orig">在昔无轮船，火车，邮局，报馆，虽地邻疆址，每各不相知。故古之法道大兴，而所记往生者，千数百年，只数百人耳。</p><p class="p-trans">在过去，没有轮船、火车、邮局、报馆，即使是周围的邻县，也往往是各不相知。所以古时候，虽然法道大为兴盛，然而记录下来往生的人，一千多年来，也就只有几百人而已。</p></div>
+<div class="para-pair"><p class="p-orig">一以记录缺乏，一以古书散佚。若如今之各事便利，虽数十万，亦不为多。阅者切不可以古论今，谓为未必皆实。亦不得以今论古，谓为法未大兴。</p><p class="p-trans">一方面，是因为记录的缺乏；一方面，是因为古书的散失。像现今，各种事务都很便利，即使有几十万，也不算多。读者千万不能用古代的（少）来评论现今的（多），认为现今所说，未必都是事实。也不得以今天的（多）评论古代的（少），认为佛法没有大为兴盛过。</p></div>
+<div class="para-pair"><p class="p-orig">试思善导在长安，少康在新定，念佛之声，盈于道路，其往生者，当不止百千万亿。今则千里之遥，朝发夕至，加以邮电报纸，故虽数千里外，悉可即知。然犹多有未记者，使一一记之，真不胜其多也。</p><p class="p-trans">试想，善导大师在长安，少康大师在新定，念佛之声，盈满不绝于道路，其中往生的圣贤，应当不止百千万亿。现今则是千里之外，早上出发，晚上就到了，加上邮电报纸，所以虽然在几千里之外，也全都能立刻知道。但是，即使这样便利，也仍然有许多没有记录下来的往生圣贤，假使一一都记录下来，就真是太多了。</p></div>
+<div class="para-pair"><p class="p-orig">愿举世之人，各以敦伦尽分，闲邪存诚，诸恶莫作，众善奉行为基址。真为生死，发菩提心，信愿念佛，求生西方为修持。则生为圣贤徒侣，没入如来封疆。其为利益，非佛莫知。普愿见闻，各各勉旃。</p><p class="p-trans">祈愿全世界的人，各个都以敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行作为根本。以真为生死，发菩提心，信愿念佛，求生西方作为修持。那么活着就是圣贤的弟子、同伴，临终就会进入阿弥陀佛的极乐国土。这样做的巨大利益，只有佛才能知道。普愿见者闻者，各自勉励。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【六合】</span>1.天地四方；整个宇宙的巨大空间。2.天下；人世间。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【睒】</span>1.窥视。2.迅速地看。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【靡然】</span>草木顺风而倒貌。喻望风响应，闻风而动。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>江苏水灾义赈会驻扬办赈经历报告书序（民二十年） · 印光法师文钞</title>
+<meta name="description" content="乾为大父，坤为大母，民吾同胞，物吾与也。故禹稷以天下之溺饥，为己之溺饥。伊尹以一夫不被其泽，若己推而纳之沟中。佛视一切众生，犹如一子，说种种法而度脱之。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-038/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="江苏水灾义赈会驻扬办赈经历报告书序（民二十年） · 印光法师文钞">
+<meta property="og:description" content="乾为大父，坤为大母，民吾同胞，物吾与也。故禹稷以天下之溺饥，为己之溺饥。伊尹以一夫不被其泽，若己推而纳之沟中。佛视一切众生，犹如一子，说种种法而度脱之。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-038/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">江苏水灾义赈会驻扬办赈经历报告书序（民二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">乾为大父，坤为大母，民吾同胞，物吾与也。故禹稷以天下之溺饥，为己之溺饥。伊尹以一夫不被其泽，若己推而纳之沟中。佛视一切众生，犹如一子，说种种法而度脱之。</p><p class="p-trans">天为大父，地为大母，人民是我们的同胞，万物是我们的同类。所以大禹、后稷将天下人遭受水淹、忍饥挨饿，当作自己遭受了水淹、忍饥挨饿一般。伊尹说：只要还有一个人没有受到尧舜之道的恩泽，就好像是自己把他们推入了沟壑中似的。佛看待一切众生，犹如一子，说种种法而来度脱。</p></div>
+<div class="para-pair"><p class="p-orig">后之人虽无禹，稷，伊尹之权，与佛之道，不妨随己力所能而行之，以自尽其心焉尔。故曹崧乔，多年来专办周济地方贫民之义举，又筹陕赈十余万圆。</p><p class="p-trans">后来的人虽然没有大禹、后稷、伊尹的权位，也没有佛的道力，不妨随自己力所能及的去做，以尽自己的心愿。所以曹崧乔，多年来专门办理周济地方贫民的义举，又筹集了陕西赈灾款十多万圆。</p></div>
+<div class="para-pair"><p class="p-orig">昔其父曾任豫藩，遗爱在民，今崧乔又广其遗爱于陕。更不辞劳瘁，为江北百万生灵，筹安全之策。可谓能世其德，有加无已者矣。</p><p class="p-trans">过去，他的父亲曾经担任河南藩台，遗留下仁爱在河南的人民之中，现今曹崧乔又扩展了其父的遗爱到了陕西。更加地不辞辛劳以致身体衰弱，为江北的百万生灵，筹谋安全的办法。可说是能够继承父德，有增无止啊！</p></div>
+<div class="para-pair"><p class="p-orig">袁孝谷，丹徒人，其尊翁亦名太史。本人宦苏多年，奉公守法，于地方人民，感情甚深。而且侨寓苏垣，赋闲净修。</p><p class="p-trans">袁孝谷，江苏丹徒人，他的父亲，也是一名翰林。他本人在苏州当官多年，奉公守法，对于地方人民，感情非常深厚。而且寄居苏州，闲居在家净修。</p></div>
+<div class="para-pair"><p class="p-orig">秋间江北水灾，振古未有。江苏水灾义赈会，于八月二十八日，急电曹袁前往办赈，刻不容缓。随即起行至扬，先会官绅，次设赈局，然后分头调查各处灾状。</p><p class="p-trans">秋天江北发生水灾，从古未有。江苏水灾义赈会，在八月二十八日，急电令曹崧乔、袁孝谷前往办理赈灾，刻不容缓。他们随即起行到了扬州，先拜会官吏乡绅，其次建立赈灾局，然后分头调查各处的灾情。</p></div>
+<div class="para-pair"><p class="p-orig">随即函电向苏州，及各方慈善家呼吁，为灾民请命，陆续得洋十五万左右。其单夹棉衣鞋袜等，或新或旧，共有十余万件。棉被千余条。锅巴药品，为数甚多。别处之款，得十程之四。大数之款，及诸衣物，均系苏州所捐。</p><p class="p-trans">随即写信发电报给苏州，以及各地的慈善家并呼吁，为灾民请命，陆续募得洋圆十五万左右。其中，单层夹层的棉衣鞋袜等，或新或旧，共有十多万件。棉被一千多条。锅巴药品，数量非常多。外地的钱款，筹得占十分之四。大部分的钱款，以及诸多衣物，均为苏州所捐。</p></div>
+<div class="para-pair"><p class="p-orig">一以曹袁二人，向为地方人士所敬信。一以苏州为维卫，迦叶二佛所住之地，而唐宋之陆元方，范文正之流风善政犹存。故其人民，多皆慈善仁爱，视人犹己，得有此大批之赈款也。</p><p class="p-trans">一是因为曹崧乔、袁孝谷二人，一向为地方人士所尊敬信任。一是因为苏州是维卫佛、迦叶佛二尊佛所住之地，而唐朝的陆元方，宋朝范仲淹，他们流行的良好风气和仁惠的政教措施犹存。所以这个地方的人民，大多都慈善仁爱，看待他人犹如自己，筹得了这些大批的赈灾款。</p></div>
+<div class="para-pair"><p class="p-orig">其办法各节，均一一开明情形，共十七条，一览可以悉知。其款之支出者，在第四救济各地灾民为大宗。</p><p class="p-trans">赈灾款的管理办法和各要节，都一一做了开列和说明，一共十七条，一看就可以全都明了。赈灾款支出的规定，在第四条：救济各地灾民为最大的支出。</p></div>
+<div class="para-pair"><p class="p-orig">第七办理急振。第八保护耕牛。第九举办工振，兴修圩堤桥梁。第十贷给麦种。十一保养灾婴。十二筹设粥厂。十三分赈隐贫。十四维持因利局。十五维持扶元柴米局等。</p><p class="p-trans">第七条：办理紧急赈灾。第八条：保护耕牛。第九条：举办做工赈灾，兴修圩堤桥梁。第十条：贷给农民麦种。十一条：保养灾后的婴儿。十二条：筹设粥厂。十三条：分赈给隐贫会。十四条：维持因利局。十五条：维持扶元柴米局等。</p></div>
+<div class="para-pair"><p class="p-orig">其缘由办法，备详此册。而第十七之冬赈，为日甚长，须款甚多。尚望各界大慈善家，愍念灾民之苦，又复特捐巨款以救灾民，以舒国运，以祈天眷而免杀劫。</p><p class="p-trans">关于以上各款项用途的理由和使用办法，周备详细写在这本册子中。而且，第十七条的冬季赈济，日期很长，所须的钱款也非常多。还祈望各界的大慈善家，愍念灾民之苦，还要再特地捐出巨款来救济灾民，以此舒通国运，祈求上天眷顾而免除杀劫。</p></div>
+<div class="para-pair"><p class="p-orig">将见佛天云护，吉庆骈臻。富寿康宁，现生获箕畴之五福。贤良爵禄，后裔纳伊训之百祥。</p><p class="p-trans">那么将可见到佛菩萨和诸天善神如云庇护，吉祥福庆一并到来。富贵、长寿、健康、安宁，现生获得箕子在《洪范·九畴》中说的五福。贤德、良才、官爵、禄位，后代子孙纳受《尚书·伊训》所说的各种吉祥。</p></div>
+<div class="para-pair"><p class="p-orig">经云，菩萨畏因，众生畏果。畏因，则不作恶因，何有恶果。畏果，则恶因已熟，恶果难免，纵生怖畏，了无所益。何若改过迁善，以消往业而种来福，为免恶果之究竟根本办法乎。</p><p class="p-trans">佛经有云：菩萨畏因，众生畏果。畏因，就不造作恶因，哪会有恶果。畏果，那么恶因已经成熟，恶果难以免除，纵然生起怖畏，也没有一点利益。不如改过向善，以消除过去的业障而种下未来的福因，这是免除恶果究竟根本的办法。</p></div>
+<div class="para-pair"><p class="p-orig">又施有三种。一财施，即以钱财，及衣食住，给济贫穷困苦者。</p><p class="p-trans">另外，布施有三种。一：财施，就是以钱财，以及衣服、饮食、住所，救济贫穷困苦的人。</p></div>
+<div class="para-pair"><p class="p-orig">二法施，其人不知善恶邪正，及三世因果，六道轮回，并了生脱死切要法门，方便善巧而为宣说。或以佛菩萨祖师善知识，所说契理契机之书，印送流通。俾见闻者生正信心，渐次深入，以至了生脱死，超凡入圣者，皆名法施。</p><p class="p-trans">二：法施，人们不知道善恶邪正，以及三世因果，六道轮回，了生脱死的重要法门，就方便善巧地而为他们宣说。或者以佛、菩萨、祖师、善知识，所说契理契机的书，印送流通。使得见者闻者，生起正信心，渐渐次第深入，以至了生脱死，超凡入圣的，都名为法施。</p></div>
+<div class="para-pair"><p class="p-orig">三无畏施，一切众生，好生恶死，普劝同人，戒杀护生。并人有怖畏，或弭其祸，或启其衷，是小无畏施。一切众生，终难免死，死而复生，生而复死，永劫长怀此之怖畏。令彼信愿念佛，求生西方，渐次进修，至成佛道，是名大无畏施。</p><p class="p-trans">三：无畏施，一切众生，好生恶死，普劝大众，戒杀护生。当人有了怖畏，或者消除他的灾祸，或者启发他的心怀，这是小的无畏施。一切众生，终究难免一死，死而复生、生而复死，永劫长怀这样的怖畏。让他们信愿念佛，求生西方，渐次进修，直至圆成佛道，这叫大无畏施。</p></div>
+<div class="para-pair"><p class="p-orig">此三种施，财施只在现生，后二直尽未来。凡欲利人以期圆成自己福慧者，宜随己力而实行之。则人民幸甚，国家幸甚。</p><p class="p-trans">这三种施，财施只在现生，后面二种施，直至尽未来际。凡是想要利益他人，以期圆满成就自己福慧的人，应该根据自己的力量，来实行这三种布施。那么人民就太值得庆幸了，国家也太值得庆幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【禹】</span>姒姓夏后氏，名文命，号禹，后世尊称大禹，夏后氏首领，传说为帝颛顼的曾孙，黄帝轩辕氏第六代玄孙。他的父亲名鲧，母亲为有莘氏女修己。相传禹治黄河水患有功，受舜禅让继帝位。禹是夏朝的第一位天子，因此后人也称他为夏禹。他是我国传说时代与尧、舜齐名的贤圣帝王，他最卓著的功绩，就是历来被传颂的治理滔天洪水，又划定中国国土为九州岛。后人称他为大禹，也就是伟大的禹的意思。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【稷】</span>古代周族的始祖。传说有邰氏之女姜原踏巨人脚迹，怀孕而生，因一度被弃，故又名弃。善于种植各种粮食作物，曾在尧舜时代当农官，教民耕种，被认为是开始种稷和麦的人。后稷第一个建立粮食储备库和畎亩法，放粮救饥，赐百姓种子，被认为是禹最倚重的三公之一。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【溺饥】</span>把别人挨饿看作自己挨饿，把别人被淹没看作自己被淹没。比喻设身处地，急他人所急，替他人着想。溺，淹没在水里，这里指处于危难的境地。原指见人饥饿或溺水，如同身受。后喻关怀百姓疾苦，或于他人之苦深表同情，以消除之为己任，常用此语。《战国·孟子·离娄下·第二十九章》：“禹思天下有溺者，由己溺之也；稷思天下有饥者，由己饥之也，是以如是其急也。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【推沟】</span>推入沟壑之中。语本《孟子·万章上》：“伊尹曰：‘何事非君，何使非民。’治亦进，乱亦进，曰：‘天之生斯民也，使先知觉后知，使先觉觉后觉。予，天民之先觉者也，予将以此道觉此民也。’思天下之民匹夫匹妇有不被尧舜之泽者，若己推而内之沟中。”后以“推沟”为悯民之典。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【劳瘁】</span>因辛劳过度而致身体衰弱。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【有加无已】</span>已：停止。不停地增加或事态发展越来越厉害。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【太史】</span>官名。西周、春秋时太史掌记载史事、编写史书、起草文书，兼管国家典籍和天文历法等。秦汉曰太史令，汉属太常，掌天时星历。魏晋以后，修史之职归著作郎，太史专掌历法。隋改称太史监，唐改为太史局，宋有太史局、司天监、天文院等名称。元改称太史院。明清称钦天监；修史之职归之翰林院，故俗称翰林为太史。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【维卫佛】</span>是过去七佛的第一佛，也称毗婆尸佛。汉语意思为胜观佛。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【迦叶佛】</span>即过去七佛的第六位。骑一头狮子，是释迦牟尼佛前世之师。汉语意思为饮光佛。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【二佛所住之地】</span>晋建兴二年，苏州东南二百六十里有沪渎，渔人夜见海上光明，照水彻天。次日，见二石神像浮水上。众曰是水神。于是用三牲祈祷迎接。像背身泛流而去。当时苏州郡有信士朱应及东陵寺尼，率众香花钟磬，入海迎接，载入郡城。像至通玄寺前，诸寺竞争，数十人牵拽不动，众论曰，像应居此寺。言毕，数人一试，像乃轻举。便登宝殿，神验屡彰，光明七日七夜不绝。有迦叶佛、维卫佛，梵字，刻于像背。梁简文帝制《石佛碑》，唐东宫长史陆东之书碑。通玄寺，为吴大帝孙权吴夫人舍宅置。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【侨寓】</span>侨居；寄居。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【振古】</span>远古；往昔。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【陆元方】</span>字希仲，苏州吴人。陈给事黄门侍郎琛之曾孙。伯父柬之，善书名家，官太子司议郎。任武则天时宰相。儿子陆象先，为唐玄宗时宰相。著名的故事有《陆元方卖宅》。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【范文正】</span>即范仲淹，宋苏州吴县人。真宗大中祥符八年进士。历秘阁校理、陕西经略安抚副使兼知延州等，官终户部侍郎、知青州。卒谥文正。景佑元年（1034）任苏州知州。曾兴修太湖水利。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【大宗】</span>犹大批；大数目。表示财物等数量大。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【隐贫会】</span>1921年，曹崧乔与胞弟曹惕寅秉承乃父遗训，联合苏州士绅吴荫培、杨廷栋、陆鼎奎、潘廷枞等人创设苏城隐贫会，救济失业民众。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【因利局】</span>贷款给贫民维持生计，免受高利贷盘剥。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【扶元柴米局】</span>售廉价柴米给贫民。</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【骈臻】</span>并至，一并到来。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

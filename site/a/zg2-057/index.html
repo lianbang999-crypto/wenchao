@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>十三经读本序 · 印光法师文钞</title>
+<meta name="description" content="天地以阴阳二气，化生万物。圣人以诚明一致，教育群萌。其为道也，横布万邦，竖传万世，有识皆遵，无思不服。虽有圣人复生，不能另立一法。亦不过发挥诚明之道，令其彻底圆彰，和盘托出而已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-057/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="十三经读本序 · 印光法师文钞">
+<meta property="og:description" content="天地以阴阳二气，化生万物。圣人以诚明一致，教育群萌。其为道也，横布万邦，竖传万世，有识皆遵，无思不服。虽有圣人复生，不能另立一法。亦不过发挥诚明之道，令其彻底圆彰，和盘托出而已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-057/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">十三经读本序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">天地以阴阳二气，化生万物。圣人以诚明一致，教育群萌。其为道也，横布万邦，竖传万世，有识皆遵，无思不服。虽有圣人复生，不能另立一法。亦不过发挥诚明之道，令其彻底圆彰，和盘托出而已。</p><p class="p-trans">天地以阴阳二气，化生万物。圣人以“诚明”一致（修德有功，性德方显），教育人民。圣人之道，横布万邦，竖传万代，有见识的人全都遵守，没有人不服从。虽然又有圣人出生，却也不能另外建立一个教法，只不过是发挥阐明“诚明”之道，使它彻底圆彰，和盘托出而已。</p></div>
+<div class="para-pair"><p class="p-orig">十三经者，二帝三王周公孔孟，继天立极，教化万世，格致诚正修齐治平之大经大法也。悉本天地无私之至理，吾人本具之良知。初非有奇特玄妙，不可企及者。虽夫妇之愚，可以与知与能。</p><p class="p-trans">《十三经》，是尧舜二帝，夏商周三朝君王，周公、孔子、孟子，秉承天道，建立准则，教化万世，格物、致知、诚意、正心、修身、齐家、治国、平天下的大经大法。全都是本着天地无私的至理，以及我们每个人本具的良知。起初并没有什么奇特玄妙、不可企及的地方。即使是愚夫愚妇，也可以明了并实行。</p></div>
+<div class="para-pair"><p class="p-orig">以人同此心，心同此理。尧舜与人同，而人皆可以为尧舜耳。若能遵而行之，则人入圣域，世复大同矣。</p><p class="p-trans">因为人人同具此心，心心同具此理的缘故。尧舜与平常人一样，而每个人也都可以成为尧舜。如果大家都能够遵照实行，那么就人人进入圣人领域，世间恢复大同了。</p></div>
+<div class="para-pair"><p class="p-orig">其世道陵夷，人心浇漓者，由于儒者不知道在躬行，一向逐末。举凡克己复礼，闲邪存诚之义，置之不论。唯以记诵词章，拟为进取应世之资。是殆以圣人参赞化育之道，作为博取名利之艺。其诬蔑圣人，悖逆天地也，至矣。</p><p class="p-trans">之所以世道衰落，人心浇薄，是由于儒家的学者们不明白圣道在于亲身实践，反而一向舍本逐末的缘故。凡是克己复礼（战胜己私、还归真理），闲邪存诚（防止邪念、心怀诚敬）的义理，都搁置在一边。却只把记诵词句文章，作为求取功名，为人处世的资本。这是把圣人辅佐天地教化培育的大道，当成了博取名利的技能。这真是诬蔑圣人，悖逆天地到了极点。</p></div>
+<div class="para-pair"><p class="p-orig">由是读书之人，心不知书义，而身不行书道。其作文也，则发挥孝弟忠信礼义廉耻之道，直使一丝不漏。而考其居心行事，则绝无此等气分。直同优人演剧，苦乐悲欢，做得逼真，实则毫与自己不相干涉也。</p><p class="p-trans">由此，读书人心中不知道书中的真义，自身不实践书中所说的道理。他们所写的文章当中，发挥孝、悌、忠、信、礼、义、廉、耻的道理，简直到了一丝不漏的地步。然而考察他们的存心和行事，绝对没有这样的气分。简直就是演员表演戏剧，戏里的苦乐悲欢，演得很逼真，实际上和自己毫不相干。</p></div>
+<div class="para-pair"><p class="p-orig">此弊一肇，渐至变本加厉。于是有天姿者，习为狂妄，耻循尧舜周孔之迹，而欲驾而上之。竟至废弃圣经，竞作新书。</p><p class="p-trans">这个弊端一开，渐渐变本加厉。于是一些有天姿的人，渐渐狂妄起来，把遵循尧、舜、周公、孔子的行迹当作是耻辱，而想要凌驾于圣人之上。竟然废弃圣人经典，争着创作新书。</p></div>
+<div class="para-pair"><p class="p-orig">邪说一起，群相附和。遂致一班恶劣小人，欲逞自己劫掠奸淫之心，汲汲然提倡废经废伦，而欲实行之。唯恐斯民之不与禽兽相同，而纲常伦理之有碍于己也。致令天灾人祸，相继降作。国运危岌，民不聊生。譬如夜行废烛，海行废舟，欲不陨越沉溺，其可得乎。</p><p class="p-trans">邪说一生起，众人都来附和。所以使得一班恶劣小人，因为想要满足自己劫掠奸淫的恶心，从而急切地提倡废弃经典，废除伦常，急着要加以实践。唯恐百姓不与禽兽相同，唯恐纲常伦理对自己有妨碍。从而导致天灾人祸，相继到来。国运危急，民不聊生。比如走夜路废除了灯烛，航海废除了舟船，想要不堕坑沉海，可能吗？</p></div>
+<div class="para-pair"><p class="p-orig">施子肇曾，惧斯道之灭没也。乃与二三同志，特立国学专修馆。聚有志斯道者，俾其专精研究，身体力行，冀其有得，而广传焉。</p><p class="p-trans">施肇曾先生，担心圣道灭没。因此与二三位志向相同的人，建立了国学专修馆。聚集一些有志于圣道的人，专精研究，身体力行，希望有所收获，而广泛传播。</p></div>
+<div class="para-pair"><p class="p-orig">唐子文治，十余年来，殚精斯道。搜集十三经善本，择其注之简当者，汇而集之。而复一一抉其微言，标其大义，附于诸经之后，其用心可谓诚且挚矣。</p><p class="p-trans">唐文治先生，十多年来，对于儒学圣道殚精竭虑。搜集十三经的善本，挑选其中注解简要允当的，汇集成册。而又一一标示其中的微言大义，附在诸经之后，这番用心可谓诚挚啊。</p></div>
+<div class="para-pair"><p class="p-orig">施子遂即刻之，以期布之学宫，俾各读诵而修习焉。刻既成，己与唐子各为序，述其所以。又令予序。予惟十三经之在世，如日月之丽天，有目皆睹。何待粥饭庸僧，特为标指乎哉。</p><p class="p-trans">施肇曾于是将这部书刻印出来，希望流布到学校，让大家都来读诵修习。刻印完成后，他和唐文治各自写了序文，叙述其中缘由。又让我写篇序。我想，十三经在世间，如同日月在天空，有目共睹。何必特地让我这个只会吃饭的平庸僧人，来标举指明呢。</p></div>
+<div class="para-pair"><p class="p-orig">虽然，道固无二，仁智见殊。不妨以己之所见，为诸仁智者告。亦未必非穷经希圣之一助也。窃谓十三经所发明之道，乃格致诚正修齐治平之道。</p><p class="p-trans">虽然如此，大道固然是唯一的，而仁者见仁，智者见智，各有不同。所以不妨根据自己的见解，来告知诸位仁者、智者。也未必不是穷究经典，效法圣人的一点点辅助。我认为，十三经所阐发显明的道理，是格物、致知、诚意、正心、修身、齐家、治国、平天下的道理。</p></div>
+<div class="para-pair"><p class="p-orig">阐发格致诚正修齐治平之要，唯大学则次第言之，而曲尽其致。中庸，论语，孟子，俱皆发挥此义，但不次第循序而说耳。是知四书者，乃易，书，诗，周礼，仪礼，礼记之注疏，而俾其道大明。</p><p class="p-trans">格物、致知、诚意、正心、修身、齐家、治国、平天下的要旨，唯有《大学》中依照次第进行了阐发，并委曲婉转说得透彻。《中庸》、《论语》、《孟子》，全都是发挥这个义旨，只是没有依照次第来阐说而已。所以就知道，《四书》是《周易》、《尚书》、《诗经》、《周礼》、《仪礼》、《礼记》的注疏，使得这六经的道理大大彰明。</p></div>
+<div class="para-pair"><p class="p-orig">孝经，乃推其实行之效。春秋三传，乃示其遵违得失之证验也。由是而吾人之本心，群圣之薪传，俱得大明，以之继往圣而开来学。其为功也，与天覆地载之功相等。</p><p class="p-trans">《孝经》，是推究这些义理的实践效果。《春秋三传》，是遵守圣道而有得，违背圣道而有失的验证。由此，我们的本心，诸位圣人的学说薪传，都大大地彰明了。依据这些经典而继承往圣开启来学，这个功德，与天覆群生、地载万物的功德相等。</p></div>
+<div class="para-pair"><p class="p-orig">彼废经者，是何异欲废天地覆载而自立乎。其不知事务也，甚矣。循是而求之，举凡希圣希贤，治国亲民之道，无不一一若指诸掌。不欲希圣希贤则已，若欲希圣希贤，则圣贤之道，自备具于吾心与吾身矣。</p><p class="p-trans">那些要废除经典的人，就如同想要废弃天地的覆载而自立于世间，实在是太不知事务了。遵循这些经典而求索下去，凡是效法圣贤，治理国家，爱抚民众的道理，无不了如指掌。如果不想效法追随圣贤也就罢了，如果想要效法追随圣贤，那么圣贤之道，自然具备在自己的心与身中了。</p></div>
+<div class="para-pair"><p class="p-orig">尔雅之所训释，乃诸经之总注，俾若文若义，悉得解了也。是则尔雅为解义之初步，而四书乃成始成终之总持法门也。</p><p class="p-trans">《尔雅》所训释的内容，是诸经的总注释，使得文字义理全都明了。所以《尔雅》是求解义理的初步，而《四书》是从始至终的总持法门。</p></div>
+<div class="para-pair"><p class="p-orig">再进而谈其要义，则明德为本。而明其明德，又为从凡至圣，以人合天之关键。能明其明德，则内圣外王之道备矣。然欲明其明德，必须格去人欲之物，令净尽无余。庶即心本具之真知，彻底圆彰。</p><p class="p-trans">再进一步谈论其中的要义，那么明德是根本。而彰明我们的明德，又是从凡夫到圣人，以人事顺合天道的关键。能够彰明明德，那么内圣外王之道就具备了。然而想要使明德彰明，必须将人的物欲格除干净。使得即心本具的真知，彻底圆满彰显。</p></div>
+<div class="para-pair"><p class="p-orig">而读书之能事，只在此几希间了耳。何等直捷，何等痛快。方知人皆可以为尧舜，夫妇之愚可以与知与能，乃真语实语。以人同此心，心同此理故也。</p><p class="p-trans">而读书所能达到的成就，就是在这细微之处了（格除私欲，显明良知，彰明性德）。（格除私欲恢复本有的良知）是何等直捷，何等痛快。这就知道“人人都可以成为尧舜，愚夫愚妇也可以明白并实行”，是真话实话。因为人同此心（人人都本来具有良知，但却被私欲所蒙蔽而不得显现受用），心同此理（格除私欲，显明良知，即得受用）的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">欲世道人心，转乱为治，反浇为淳，舍此则无术矣。不知施子，唐子，以予言为然也否乎。然此且就世间法论，切勿谬谓并出世间法论也。至嘱至嘱。</p><p class="p-trans">想使世道人心转危乱为大治，反浇薄为淳厚，如果舍弃这圣人之道，就没有其他办法了。不知道施先生和唐先生，同不同意我所说的。然而这只是就世间法而言，千万不要误以为是包括出世间法一起谈论的。千万千万要注意。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【十三经】</span>儒家的十三部经书，即《易》、《书》、《诗》、《周礼》、《仪礼》、《礼记》、《春秋左传》、《春秋公羊传》、《春秋谷梁传》、《论语》、《孝经》、《尔雅》、《孟子》。其形成过程为：汉立《诗》《书》《易》《礼》《春秋》于学官，为五经；唐加《周礼》《仪礼》《公羊》《谷梁》为九经；至开成间刻石国子学，又加《孝经》《论语》《尔雅》为十二经；宋复增《孟子》，因有十三经之称。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【诚明】</span>至诚之心和完美的德性。语出《礼记·中庸》：“自诚明谓之性，自明诚谓之教，诚则明矣，明则诚矣。”郑玄注：“由至诚而有明德，是圣人之性者也。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【二帝】</span>指唐尧与虞舜。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【三王】</span>指夏、商、周三代之君。夏禹、商汤、周武王（文王）。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【继天】</span>秉承天意。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【立极】</span>1.树立最高准则。2.登帝位；秉国政。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【虽夫妇之愚，可以与知与能】</span>《中庸》：“君子之道费而隐。夫妇之愚，可以与知焉，及其至也，虽圣人亦有所不知焉。夫妇之不肖，可以能行焉，及其至也，虽圣人亦有所不能焉。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【陵夷】</span>由盛到衰。衰颓，衰落。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【浇漓】</span>浮薄不厚。多用于指社会风气。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【陨越】</span>犹颠坠，丧失。死的婉称。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【殚精】</span>竭尽精思；精心。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【曲尽其妙】</span>曲折深入地将其奥妙处都表达出来。形容表达的技巧很高明。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【几希】</span>相差甚微；极少。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【至嘱】</span>谓极恳切的嘱咐。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

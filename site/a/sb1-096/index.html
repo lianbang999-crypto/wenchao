@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复蔡锡鼎居士书二 · 印光法师文钞</title>
+<meta name="description" content="薛某之妻与子，乃宿世有大怨者，故必以快心为事。然三日工夫，产妇尚无恙，岂非念大士名之感应乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-096/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复蔡锡鼎居士书二 · 印光法师文钞">
+<meta property="og:description" content="薛某之妻与子，乃宿世有大怨者，故必以快心为事。然三日工夫，产妇尚无恙，岂非念大士名之感应乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-096/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复蔡锡鼎居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">薛某之妻与子，乃宿世有大怨者，故必以快心为事。然三日工夫，产妇尚无恙，岂非念大士名之感应乎。</p><p class="p-trans">薛某的妻子与儿子，是宿世有大怨的人，所以必定要以称心畅快为事。然而三天的工夫，产妇还安然无恙，这难道不是念观音大士之名的感应吗？</p></div>
+<div class="para-pair"><p class="p-orig">凡夫不知前因后果，一有不效，便退信心。岂知宿怨之深者，累生累劫，皆图报复。纵承念大士之洪名，尚不见效。使不念大士洪名，便可产妇犹能无恙乎。</p><p class="p-trans">凡夫不知道前因后果，一旦没有效果，就退失信心。哪知宿怨太深的，累生累劫，都图谋报复。纵然承念观音大士的洪名，还不见效。假使不念观音大士洪名，就可以使产妇比现在更安然无恙吗？</p></div>
+<div class="para-pair"><p class="p-orig">临产念观音即见效验者，有百千万。何可以一事不灵，便退信心乎。当具无畏之心，为人说之，令一切人皆得安乐。又当以勿结怨业为劝。怨业若重，佛力亦难救度。此正可作劝人知因识果之一助。</p><p class="p-trans">临产念观世音菩萨，立即见到效验的，有百千万之多。怎么可以因为一事不灵，就退失信心呢？应当具有无畏之心，为人讲说，令一切人都得到安乐。又应当以不要结怨业来劝导。怨业如果重，佛力也很难救度。这正可以作为劝人知因识果的一个帮助。</p></div>
+<div class="para-pair"><p class="p-orig">汝自不明理，故于此便无可决断矣。彼薛某者，当由此愈生信心。而反退信心，则恐后来或又有宿怨所致之大祸发现也。</p><p class="p-trans">你自己不明事理，所以在这个时候，就无法决断了。而薛某，本应当由此更加生起信心。却反而退失了信心，那么恐怕后来或许又有宿怨所致的大祸发起现行了。</p></div>
+<div class="para-pair"><p class="p-orig">临终可用助念法，临产不必用助念法。但令家人及产室照应人，并本产妇念之即已。以后不必领众助念也。</p><p class="p-trans">临终可用助念法，临产不必用助念法。只要令家人以及产室的照应人，以及产妇本人念，就可以了。以后不必领众助念。</p></div>
+<div class="para-pair"><p class="p-orig">念观音名号，大则大应，小则小应，绝无不应之理。只管放开大胆对人说，彼不见感应者，亦未尝无感应也。（十二月十六）</p><p class="p-trans">念观世音菩萨的名号，大诚心则有大感应，小诚心则有小感应，绝无没有感应的道理。只管放开大胆对人去说，那些没有见到感应的人，也并非没有感应啊！（十二月十六日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【快心】</span>犹称心。谓感到满足或畅快。亦指使感到满足或畅快。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

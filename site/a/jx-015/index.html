@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>15、复永嘉某居士昆季书 · 印光法师文钞</title>
+<meta name="description" content="开示善导专修法门、念佛与持咒关系、普劝念佛">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-015/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="15、复永嘉某居士昆季书 · 印光法师文钞">
+<meta property="og:description" content="开示善导专修法门、念佛与持咒关系、普劝念佛">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-015/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第一部分·书信 · 如诚法师、圆涛法师译</div>
+      <h1 class="art-title">15、复永嘉某居士昆季书</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>开示善导专修法门、念佛与持咒关系、普劝念佛</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">仲春一别，忽值夏令，光阴迅速，殊堪惊人。每忆二位信心真切，法眼未明，致令舍高明而取卑暗。何异弃家里之活佛，供野外之土偶。不特自失正见，贻诮大方。即光亦进退咸乖，殊深惭赧耳。</p><p class="p-trans">农历二月一别后，转眼又到了夏天，光阴迅速，实在惊人，每每忆念你们二位的信心真切，但择法眼未明，导致舍弃高明而取学于卑暗。如同抛弃家里的活佛，供奉野外的泥土神像。不仅自己失去正见，而且会让见识广博的内行人笑话。就是我这个做师父的也进退两难，实在深感惭愧脸红啊！</p></div>
+<div class="para-pair"><p class="p-orig">来书谓后有所著，随时见贶。光目昏体衰，无事不亲翰墨。纵因事有作，亦同集字聚叶，有何可观。然恐孤负所期，今将以前残羹馊饭，略盛一二。倘不嫌酸臭，亦可作反尝尝自性之前茅。</p><p class="p-trans">来信中说，以后有著作的话，随时见赐。我眼睛昏花，身体衰颓，没有事情不会拿起笔墨。纵然因为有事情所写，也如同收集一个个的字，堆聚一片片的树叶，有什么值得看的呢？然而恐怕辜负你们的期望，现在将以前这些陈腐老调的话语，略微的盛上一点点。倘若不嫌弃酸臭，也可以作为反尝尝自性的前鉴（译者按：印祖所说因果伦理等，皆是性德的表现。所以说尝过印祖的文字，可以反尝自性之德）。</p></div>
+<div class="para-pair"><p class="p-orig">净土决疑论，系民国三年狄楚青居士以端甫回籍，十三期报料不足，令作一二篇以助热闹耳。后竟以主持无人，遂停版不出。此论文虽鄙菲，而于断疑生信，不无少补。</p><p class="p-trans">《净土决疑论》是民国三年狄楚青居士因为黎端甫回老家，致使《佛学丛报》十三期的内容不足，于是令我写一二篇来凑热闹罢了。后来因为没有人主编，于是就停版不出了。这篇论文虽然鄙陋低劣，但对于断疑生信，不是没有一点利益的。</p></div>
+<div class="para-pair"><p class="p-orig">至于永明料简训释处，须仔细参详。若不如是信向，便成虚文。此不慧数十年痛心疾首者，于此以发挥之。万不可以今人所说为的，致孤负永明大慈悲心也。</p><p class="p-trans">至于永明大师四料简解释的地方，必须仔细参究详明。如果不这样生起信心归向，就成了虚设之文。这是我几十年来所痛心疾首的，所以要对于四料简加以发挥。万万不可以现在人解说的，认为正确，导致辜负了永明大师的大慈悲心啊！</p></div>
+<div class="para-pair"><p class="p-orig">持经利益随心论，以今人受持经典，了无敬畏而发。欲得佛法实益，须向敬畏中求，能竭诚致敬，纵究竟果德，尚能即得，况其下焉者哉。余皆随事而书，所谓他山之石，可以攻玉。但取其益，勿校其迹，自有裨益。倘以古德著作绳之，则将焚毁之不暇，何可令其一经于目哉。</p><p class="p-trans">《持经利益随心论》，因为现在的人受持经典，一点都没有恭敬畏惧心，所以有感而发。想要得佛法实际利益，必须向敬畏当中来求，能够竭诚致敬，即使是究竟的果德，尚且能够马上得到，何况是果德之下的利益呢？其余的都是随事情而写，所谓的“他山之石，可以攻玉”。只取其中的利益，不要校仿其中的事迹，自然会有益处。倘若以古德的著作来衡量，那么我的著作将它们焚毁都来不及，怎么可以去过目呢？</p></div>
+<div class="para-pair"><p class="p-orig">拣魔辨异录文理高深，禅教融贯。系雍正十一年夏初始著，至十三年方毕。未及刊板，龙驭宾天，迨后刊时，以草书替字，钞者不察，便许多直作本字，而错讹便不胜其多。</p><p class="p-trans">《拣魔辨异录》文字义理高深，禅宗教下融会贯通。是雍正十一年（1733）夏初开始写作，至十三年（1735）方才写完。没来得及刊板印行，雍正皇帝就往生了，等到后来刊印时，有用草写体所替代的字，誊写的人不觉察，便将许多替代的字直接当作这个替代字本身了，这样错误的地方非常多。</p></div>
+<div class="para-pair"><p class="p-orig">使世宗在世，断断不至如此耳。今春细校两次，俾还本来面目。倘后因缘果就，当不负世宗一番至意矣。</p><p class="p-trans">假使雍正皇帝在世，断断不至于如此。今年春天仔细校对两次，使得这本书还回本来面目。倘若以后因缘成就，应当不辜负世宗皇帝的一番至诚好意了。</p></div>
+<div class="para-pair"><p class="p-orig">善导和尚系弥陀化身，有大神通，有大智慧。其宏阐净土，不尚玄妙，唯在真切平实处，教人修持。至于所示专杂二修，其利无穷。专修谓身业专礼（凡围绕及一切处身不放逸皆是），口业专称（凡诵经咒，能志心回向，亦可名专称），意业专念。如是则往生西方，万不漏一。</p><p class="p-trans">善导和尚是阿弥陀佛的化身，有大神通，有大智慧。他阐扬净土，不崇尚高深玄妙，只在真实亲切，平常实在的地方教人修持。至于他所指示的专修、杂修利益无穷。专修：就是身业专门礼拜（凡是围绕以及一切处，身体不放逸都是），口业专门称诵（凡是诵经诵咒，能够志心回向，也可以名为专称），意业专门忆念。如此修行，往生西方，一万个人不会漏掉一个。</p></div>
+<div class="para-pair"><p class="p-orig">杂修谓兼修种种法门，回向往生。以心不纯一，故难得益，则百中希得一二，千中希得三四往生者。此金口诚言，千古不易之铁案也。二位当以此自利，又当以此普利一切。</p><p class="p-trans">杂修：就是兼修种种法门，回向往生。因为心不纯一，所以很难得到利益，那么一百个当中，很少能有一二个，一千个当中很少能有三四个往生的。这是金口诚言，千古不变的定论啊！你们二位应当以此专修自利，又当以此专修普利一切众生。</p></div>
+<div class="para-pair"><p class="p-orig">至于持咒一法，但可作助行。不可以念佛为兼带，以持咒作正行。夫持咒法门，虽亦不可思议。而凡夫往生，全在信愿真切，与弥陀宏誓大愿，感应道交而蒙接引耳。若不知此意，则法法头头，皆不思议，随修何法，皆无不可，便成无禅无净土，铁床并铜柱，万劫与千生，没个人依怙矣。</p><p class="p-trans">至于持咒这个法门，只可作为助行。不可将念佛作为兼带，以持咒作为正行。持咒法门，虽然也不可思议。而凡夫往生，全凭信愿真切，与阿弥陀佛的宏誓大愿，感应道交而蒙阿弥陀佛接引。如果不知道这个意思，那么法法头头，都是不可思议，随修任何一法，都没什么不可以，就成了“无禅无净土，铁床并铜柱，万劫与千生，没个人依怙”了。</p></div>
+<div class="para-pair"><p class="p-orig">若知自是具缚凡夫，通身业力，匪仗如来宏誓愿力，决难即生定出轮回。方知净土一法，一代时教，皆不能比其力用耳。</p><p class="p-trans">如果知道自己是具缚凡夫，通身都是业力，不仗如来的宏誓愿力，决定难以在这一生出离轮回。方才知道佛陀的一代时教当中，其他法门的力用没有可以比得上净土法门的！</p></div>
+<div class="para-pair"><p class="p-orig">持咒诵经，以之植福慧，消罪业，则可矣。若妄意欲求神通，则所谓舍本逐末，不善用心。倘此心固结，又复理路不清，戒力不坚，菩提心不生，而人我心偏炽，则著魔发狂，尚有日在。</p><p class="p-trans">持咒诵经，来培植福慧资粮，消除罪业是可以的。如果妄想要求得神通，就是舍本逐末，不善加用心。倘若有了这个牢固的心结，又加上对于教理不明，路头不清，持戒力量不坚固，菩提心不生起，而人我是非的心偏重炽燃，那么著魔发狂就指日可待了。</p></div>
+<div class="para-pair"><p class="p-orig">夫欲得神通，须先得道，得道则神通自具。若不致力于道，而唯求乎通。且无论通不能得，即得则或反障道。故诸佛诸祖，皆严禁之而不许人修学焉。以世每有此种见解人，故因覙缕及之。</p><p class="p-trans">想要得到神通，必须先得证得道果，得道则神通自然具足。如果不致力于证道，而唯求得神通。暂且不要说神通能不能得到，就是得到神通，或许反而障道。所以诸佛诸位祖师，都严禁神通，而不许他人修学。因为世间每每有这种见解的人，所以要详细说明。</p></div>
+<div class="para-pair"><p class="p-orig">二位令亲在堂，宜以净土法门，感应事迹，常时解说，令其发欢喜心，信受奉行。若不以此为孝，则纵能尽世之所谓孝者，究竟于亲有何利益。</p><p class="p-trans">你们兄弟二人，父母双亲健在，应该以净土法门，感应事迹等，时常为他们解说，令他们发欢喜心，信受奉行。如果不以此为孝，那么纵然能够尽世间所谓的孝，究竟对于父母有什么真正的利益呢？</p></div>
+<div class="para-pair"><p class="p-orig">大禹，大圣人也，不救于鲧之神化为黄能（音乃平声，即三足鳖），入于羽渊。观此，可不惕然惊，憬然悟，以求导亲之神，高预海会，亲炙弥陀，以证夫即心本具之无量光寿乎。</p><p class="p-trans">大禹，是大圣人，不能救他的父亲鲧，鲧的神识化为黄能（音乃平声，就是三足鳖），入于羽山下的深渊。看这个例子，怎可不惶恐，惊醒觉悟，以求引导亲人的神识，高预莲池海会，亲受阿弥陀佛的教诲，来证得即心本具的无量光寿呢？</p></div>
+<div class="para-pair"><p class="p-orig">志莲居士苦行虽好，恐净土宗旨，有所不知。或求转女身，及生人天乐处之心，不能彻底放下。致无边利益，随世间小乐而失之。亦宜常为讲说，令其志向决定耳。夫劝一人生净土，即成就一众生作佛。凡成佛必度无量众生，而其功由我始，其功德利益，何可思议也哉。</p><p class="p-trans">志莲居士的苦行虽然好，恐怕对于净土宗的宗旨，有所不知。或者求转女身，以及生到人天乐处的心，不能够彻底放下。导致无边的利益，随世间的小乐而失掉了。也应该时常为她讲说，令她的志向决定。劝一个人生净土，就是成就一个众生作佛。凡是成佛，必定化度无量的众生，而这个功劳由我开始，这个功德利益，如何能够思议呢？</p></div>
+<div class="para-pair"><p class="p-orig">又自既修净土，尚须以此法门普告一切，况妻妾子女，岂可不劝令发心，而失此巨益乎。倘天性相近，则何善如之。如稍相远，亦须渐磨渐染，俾即远而成近耳。此所谓深爱，所谓宏慈，舍此而为慈爱，皆名有而实无耳。</p><p class="p-trans">又者，自己既已修学净土，还必须将这个法门普告一切人，何况是自己的妻妾子女，怎可不劝导他们发心，而失去这个巨大的利益呢？倘若天性与净土法门相近，这当然再好不过了。如果天性与净土法门稍微距离大些，也必须渐渐的磨合，渐渐的习染，使得相异而成为相近。这才是所说的深爱，所说的宏慈，舍弃这些而说慈爱，都是有名无实。</p></div>
+<div class="para-pair"><p class="p-orig">吾言不足为轻重，略录一二，以见其概。当详阅净土十要，净土圣贤录，乐邦文类等，则取法有地，怀疑无由矣。法苑珠林一书，详谈因果，理事并进。可治近世排因拨果，肆无忌惮等膏肓痼疾。凡有信心读书人，皆当令阅此书。岂但有益于身心性命，实于格物致知，文章学问，大有裨益也。</p><p class="p-trans">我的话不足以为人看重取法，大略录出一二本古书，来看其中的大概。应当详细阅读《净土十要》、《净土圣贤录》、《乐邦文类》等，那么取法就有出处，没有理由怀疑了。《法苑珠林》这本书，详谈因果，理事并进。可以对治近来拨无因果，肆无忌惮等等极度难治的顽疾弊病。凡是有信心的读书人，都应当让他们阅读这本书。哪里只是有益于身心性命，实在对于格物致知（格除私欲、显现良知），文章学问，大有益处。</p></div>
+<div class="para-pair"><p class="p-orig">安士全书，亦与此同其气类耳，文人皆不可不知。娑婆之苦，说不能尽。纵时属升平，仍然日在苦恼中。以众生久习相安，遂不知耳。</p><p class="p-trans">《安士全书》，也是气质同类的书，凡是文人不可以不知道。娑婆世界的苦，说不能尽。纵然生于太平盛世，仍然每天在苦恼当中。因为众生长久习惯了就相处平安，于是就不知道苦了。</p></div>
+<div class="para-pair"><p class="p-orig">近来中国屡经兵燹，已是苦不堪言。而外洋各国三年大战，人死近千万，为开辟第一兵劫，而战势尚盛，不知何所底极。静言思之，诚堪畏惧。而彼方力求其所以剿灭他国之道。其众生往昔恶业所招之恶报，亦何至于此极哉。</p><p class="p-trans">近来中国屡经战火焚毁，已经是苦不堪言。而世界各国三年大战，人死了将近千万，是盘古开天辟地第一大的兵劫，而且战势还在升级，不知道何处是终极。静言仔细思考，实在是畏惧啊！那些敌对的国家，力求剿灭对方国家的种种办法，那个地方的众生往昔恶业所招感的恶报，为何如此酷烈到极点啊！</p></div>
+<div class="para-pair"><p class="p-orig">今闻此说，当愤发大心，以速求往生。然后回入娑婆，普度一切。经云，菩萨畏因，众生畏果。菩萨恐招恶果，故断恶因。恶因断而恶果无从而生。</p><p class="p-trans">现在听闻到这些，应当愤发大心，来速求往生。然后回入娑婆，普度一切。经书中说：菩萨畏因，众生畏果。菩萨唯恐招感恶果，所以断除恶因。恶因断除，恶果就无从生起。</p></div>
+<div class="para-pair"><p class="p-orig">众生竞作恶因，至受恶果。受恶果时，不知自忏往业，又复更造恶法以为对治，则怨怨相报，经劫不息。可不哀哉，可不畏哉。知是而不求生西方者，非夫也。</p><p class="p-trans">众生争作恶因，导致承受恶果。受恶果的时候，不知道自己忏悔过去的罪业，又更加造作恶法来加以对治，那么怨怨相报，经长久劫不能止息。能不悲哀，能不畏惧吗？知道这些道理而不求生西方的人，不是大丈夫啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【仲春】</span>春季的第二个月，即农历二月。因处春季之中，故称。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【夏令】</span>泛指夏季。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【土偶】</span>泥塑的神像。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【贻诮大方】</span>贻诮：见笑。大方：谓识见广博或有专长的人。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【赧】</span>因羞愧而脸红；惭愧。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【贶】</span>赐给；赐与。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【翰墨】</span>笔墨。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【可观】</span>可以看；值得看。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【前茅】</span>古代行军时的前哨斥候。遇敌情则举旌向后军示警。引申为先头部队、先行者。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【狄楚青】</span>（1873-1939）中国报业家。原名葆贤，字楚青。江苏溧阳人。早年中举。1904年得到康有为的支持和资助，在上海创办《时报》。自称出版此报“非为革新舆论，乃欲革新代表舆论之报纸”。后与康有为、梁启超等保皇党人发生意见分歧，关系逐渐疏远。1911年辛亥革命后，独资经营《时报》。1921年转让给黄伯惠。除《时报》外，还创设有正书局，出版《民报》（不足2年即停刊）、《小说时报》、《妇女时报》和《佛学丛报》等。晚年笃信佛学。1939年在上海逝世。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【菲陋】</span>谓低劣。常用作谦词。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【他山之石】</span>《诗·小雅·鹤鸣》：“它山之石，可以为错。”毛传：“错，石也，可以琢玉。举贤用滞，则可以治国。”郑玄笺：“它山喻异国。”又：“它山之石，可以攻玉。”毛传：“攻，错也。”本谓别国的贤才也可用为本国的辅佐，正如别的山上的石头也可为砺石，用来琢磨玉器。后因以“他山之石”喻指能帮助自己改正错误缺点或提供借鉴的外力。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【裨益】</span>补益；益处。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【龙驭】</span>婉词。谓帝王去世。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【宾天】</span>委婉语。谓帝王之死，亦泛指尊者之死。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【覙缕】</span>犹言弯弯曲曲。谓详述。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【在堂】</span>谓母亲健在。</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【鲧之神化为黄能入于羽渊】</span>《左传》（昭公七年）记载：“昔尧殛鲧于羽山，其神化为黄能，以入于羽渊。”能：三足鳖。元刘埙《隐居通议·鬼神》：“得一物似鼋，大如车轮，介而三足，盖所谓能也。”按，《尔雅·释鱼》：“鳖三足，能。”</p>
+<p class="note-item"><span class="note-n">[19]</span><span class="note-term">【惕然】</span>1.惶恐貌。2.忧虑貌。3.警觉省悟貌。</p>
+<p class="note-item"><span class="note-n">[20]</span><span class="note-term">【憬然】</span>觉悟貌。</p>
+<p class="note-item"><span class="note-n">[21]</span><span class="note-term">【乐邦文类】</span>凡五卷。南宋宗晓（1151-1214）编。庆元六年（1200）完成。收于大正藏第四十七册。乐邦乃安乐国，即极乐净土之意。本书内容乃编集有关净土宗诸经论之要文，以及诸师之著述、诗偈、传记等，分为十四门，计有二百二十余篇。后宗晓复作续编乐邦遗稿二卷。</p>
+<p class="note-item"><span class="note-n">[22]</span><span class="note-term">【膏肓】</span>古代医学以心尖脂肪为膏，心脏与膈膜之间为肓。《左传·成公十年》：“疾不可为也，在肓之上，膏之下，攻之不可，达之不及，药不至焉，不可为也。”杜预注：“肓，鬲也。心下为膏。”后遂用以称病之难治者。</p>
+<p class="note-item"><span class="note-n">[23]</span><span class="note-term">【格物致知】</span>格物：推究事物之理。《礼记·大学》：“致知在格物，物格而后知至。”致知：儒家哲学用语。语出《礼记·大学》：“致知在格物。”历代儒家学者对此有不同解释。汉郑玄认为“致知”是使人“知善恶吉凶之所终始”；宋朱熹认为“致，推极也；知，犹识也。推极吾之知识，欲其所知无不尽也”。明王阳明则认为“致知”即“致吾心之良知”。印祖《复念佛居士书》中解释格物致知为：“格除幻妄私欲物，致显中庸秉彝知。”“以欲诚其意，先致其知，致知在格物。此极省力，极简便，举念即得之法。弃之不讲，令人推极吾之知识，穷尽天下事物之理，以期诚意正心者，则举世难得其人矣。由宋儒误认物为外物，故后儒只云诚正，而不提格致。此理极明显，以自命得圣人心传者错解之。致圣人教人修己治心之道，晦塞不彰。可不哀哉。”</p>
+<p class="note-item"><span class="note-n">[24]</span><span class="note-term">【相安】</span>谓相处平安，没有矛盾。</p>
+<p class="note-item"><span class="note-n">[25]</span><span class="note-term">【兵燹】</span>因战乱而造成的焚烧破坏等灾害。</p>
+<p class="note-item"><span class="note-n">[26]</span><span class="note-term">【开辟】</span>指宇宙的开始。古代神话，谓盘古氏开天辟地。</p>
+<p class="note-item"><span class="note-n">[27]</span><span class="note-term">【静言】</span>1.安静地；仔细地。2.沉静地思考。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

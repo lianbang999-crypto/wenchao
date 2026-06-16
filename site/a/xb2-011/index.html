@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>弥陀圣典序（民二十年） · 印光法师文钞</title>
+<meta name="description" content="念佛一法，乃佛教之总持法门。但有专念自佛，专念他佛，兼念自他佛之不同。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-011/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="弥陀圣典序（民二十年） · 印光法师文钞">
+<meta property="og:description" content="念佛一法，乃佛教之总持法门。但有专念自佛，专念他佛，兼念自他佛之不同。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-011/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">弥陀圣典序（民二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">念佛一法，乃佛教之总持法门。但有专念自佛，专念他佛，兼念自他佛之不同。</p><p class="p-trans">念佛法门，是佛教的总持法门。但是，却有专念自佛、专念他佛、兼念自他佛的不同。</p></div>
+<div class="para-pair"><p class="p-orig">专念自佛者，如诸经中，深穷实相，以期悟证，乃于五阴，六入，十二处，十八界，七大等诸法中，以般若智照，了达此一切法，当体全空，亲见本具妙真如性。及禅宗看念佛的是谁，并各种话头，以期亲见父母未生前本来面目者是。此于四种念佛中，名为实相念佛焉。</p><p class="p-trans">专念自佛是指，如诸多佛经中所说，深入通达实相之理，以期悟证自心，在五阴、六入、十二处、十八界、七大等诸法中，以般若智观照，了达这一切法，当体全空，亲见本具的妙真如性。以及禅宗看“念佛的是谁”，和各种话头，以期亲见父母未生前的本来面目，这些都是专念自佛。这在四种念佛中，称为实相念佛。</p></div>
+<div class="para-pair"><p class="p-orig">专念他佛，有三种念法。一观想，谓依十六观经作观，或专观白毫，或但观丈六八尺之佛身，或观广大法身，及具观十六种观。二观像，谓对佛形像，想佛相好光明等。三持名，谓一心称念阿弥陀佛圣号。此三种念佛，法虽不同，皆需具有真信切愿，方可与佛感应道交，方可决定现生出此娑婆，生彼极乐。</p><p class="p-trans">专念他佛，有三种念法。第一观想，就是依照十六观经（即《观无量寿佛经》）来作观，或者专观白毫相，或者只观丈六八尺的佛身，或者观想广大法身，以及一齐观想十六种观。第二观像，就是对着佛的形像，想佛的相好光明等等。第三持名，就是一心称念阿弥陀佛圣号。这三种念佛，方法虽然不同，但都需要具有真信切愿，才能与佛感应道交，才能决定现生出离娑婆世界，往生极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">此四种念佛，唯实相念佛，谛理最深，然颇不易修。以唯仗自己戒定慧，及参究照察之力，别无他力补助。若非宿根成熟，则悟尚不易，何况实证。</p><p class="p-trans">这四种念佛方法中，唯有实相念佛，谛理最深，但是却非常不容易修。因为只依仗自己的戒定慧，以及参究照察之力，别无他力来补充帮助。如果不是宿根成熟，那么开悟尚且还不容易，更何况实证呢。</p></div>
+<div class="para-pair"><p class="p-orig">唯持名念佛，下手最易，成功最速。倘能都摄六根，净念相继，必于现生亲证念佛三昧，临终决定往生上品。纵根机陋劣，未证三昧，但以信愿持佛名号，如子忆母，常时无间，迨至临终，感应道交，仗佛慈力，带业往生，末世众生，唯此是赖。否则但种来因，难得实益。</p><p class="p-trans">唯有持名念佛，下手最容易，成功最快速。倘若能够都摄六根、净念相继，必定能在现生亲证念佛三昧，临终决定往生上品。即使根机陋劣，没有证得三昧，但因为信愿持佛名号，如子忆母，常时间，无间断，等到临命终时，也能够感应道交，仗佛慈力，带业往生，末世众生，只有依赖这个法门了。否则，就只是种下未来得度之因，很难得到真实的利益。</p></div>
+<div class="para-pair"><p class="p-orig">果能志心持念，念到全心是佛，全佛是心，心外无佛，佛外无心，无念而念，念而无念，心佛两彰，而复双泯时，则实相妙理，觌体显露，西方依正，彻底圆彰。即持名而深达实相，不作观而亲见西方。摄机最普，得益最深，最利末法钝根之士，大畅如来出世之怀。以故从上知识，多皆注重于持名一门，此念他佛之大致也。</p><p class="p-trans">果真能够专心持念佛号，念到全心是佛，全佛是心，心外无佛，佛外无心，无念而念，念而无念，心佛两彰，而又双泯的时候，那么实相妙理，当体显露，西方极乐的依报、正报庄严，彻底圆彰。就是不离持名念佛而深达实相谛理，不作般若观照而亲见西方净土。这个法门收摄的根机最为普遍，得到的利益最为深广，最利于末法时代的钝根之人，大畅如来出世的本怀。所以古往今来的善知识，大多都注重在持名念佛这一法门，这是专念他佛的大致情形。</p></div>
+<div class="para-pair"><p class="p-orig">至于自他俱念，即所谓禅净双修者。有以专看念佛的是谁，以期明心见性，不以信愿求生为事者，虽似禅净双修，实为有禅无净。既无信愿，莫由仗佛力以带业往生。倘未到业尽情空地位，又不能仗自力以了生脱死。是知禅净双修，唯具深信愿者方能得益，否则固不如专致力于持佛名号一门也。</p><p class="p-trans">至于自他佛俱念，就是所谓的禅净双修。有的人以专门看“念佛的是谁”，以期达到明心见性，但却不以信愿求生为本，虽然看似禅净双修，实际上是有禅无净土。既然没有信愿，就没办法仗佛慈力带业往生。倘若没有达到业尽情空的地步，也不能仗自力来了生脱死。所以要知道禅净双修，唯有具足深信切愿的人，才能够得到真实利益，否则，就不如专心致力于持佛名号这一法门。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，实为如来一代时教契理契机之特别法门。以故往圣前贤，人人趣向，千经万论，处处指归。</p><p class="p-trans">净土法门，实在是如来一代时教，契理契机的特别法门。因此，往圣前贤，人人趣向，千经万论，处处指归。</p></div>
+<div class="para-pair"><p class="p-orig">东瀛某某，节录诸经论，阐扬念佛诸义，为弥陀说林。章分十门，理畅一行，可为修净业者之一助。</p><p class="p-trans">日本僧人善性，节录诸多经论，阐扬念佛的各种义理，编成《弥陀说林》这本书。全书分成十章，畅达“诸经所赞多在弥陀”一理，可以作为修习净业者的一个帮助。</p></div>
+<div class="para-pair"><p class="p-orig">范古农居士，特为校勘，改为阿弥陀佛圣典，用示尊崇之义。然其所录，绝未叙明源委，待有暇时，居士必当依经详别。令一切人，知念佛求生西方一法，为一切上圣下凡共修之道。庶不致生自诩上根，不肯修习，并自委下根，不堪修习等过。</p><p class="p-trans">范古农居士，还特地给这部书做了校勘，改名为《阿弥陀佛圣典》，用来表示尊崇之义。不过，书中节录的内容，绝对没有说明源委，等到有空的时候，范居士必定会依照经典，详细分门别类。让一切人，知道念佛求生西方这一法门，是一切上圣下凡，共修之道。才不致产生自夸是上根人，不肯修习，或者自屈为下根人，不堪修习等等过失。</p></div>
+<div class="para-pair"><p class="p-orig">排工将竣，令光作序，遂约所知，以为表白。须知念佛一法，乃十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门。如不见信，请质之普贤菩萨。</p><p class="p-trans">排版将要完成，请我作序，于是就以我所知道的，作为说明。要知道，念佛法门，是十方三世一切诸佛，上成佛道，下化众生，从初始到最终的总持法门。如果不相信，就请去质问普贤菩萨。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【弥陀说林】</span>凡七卷。日僧善性继成编于明和七年（1770）。系摘录大藏中有关阿弥陀佛及其净土之经论等二百余部而成。其所引经论书目，密教部占大部分，论部十余部，华严、方等、法华、涅槃部等亦颇多，约达七十部。本书旨在辑录诸经有关弥陀、极乐之说，以证“诸经所赞多在弥陀”之典据。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复温光熹居士书八 · 印光法师文钞</title>
+<meta name="description" content="汝妄想纷飞，尚欲急得一心不乱，此心即是著魔之本。故光谓净土法门，重在信愿。信愿若真切，虽未得一心，亦可往生。若无信愿，纵得一心，亦不能仗自力以了生脱死。故不令汝汲汲于求一心也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-032/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复温光熹居士书八 · 印光法师文钞">
+<meta property="og:description" content="汝妄想纷飞，尚欲急得一心不乱，此心即是著魔之本。故光谓净土法门，重在信愿。信愿若真切，虽未得一心，亦可往生。若无信愿，纵得一心，亦不能仗自力以了生脱死。故不令汝汲汲于求一心也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-032/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复温光熹居士书八</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝妄想纷飞，尚欲急得一心不乱，此心即是著魔之本。故光谓净土法门，重在信愿。信愿若真切，虽未得一心，亦可往生。若无信愿，纵得一心，亦不能仗自力以了生脱死。故不令汝汲汲于求一心也。</p><p class="p-trans">你妄想纷飞，还想急于得到一心不乱，这种心就是著魔的根本。所以我说净土法门，重在信愿。信愿如果真切，即使未得一心，也能往生。如果没有信愿，纵然得到一心，也不能仗自力来了生脱死。所以不让你急于求一心啊。</p></div>
+<div class="para-pair"><p class="p-orig">以汝之妄想纷飞，一求一心，定规著魔。汝不察光意，遂谓一任随便。眼前随便者，决非信愿真切之人。使信愿真切，决不至泛泛然随便，而均不得往生也。理本无障，因汝以无理为理，而自生障碍，又复尤谁。</p><p class="p-trans">因为你妄想纷飞，一求一心，必定著魔。你不体察我的意思，就说一任随便。眼前随便的人，绝对不是信愿真切的人。假使信愿真切，绝对不至于泛泛然随随便便，因而都不得往生啊。道理本来没有障碍，因为你以没有道理为理，而自生障碍，这又要怪谁呢？</p></div>
+<div class="para-pair"><p class="p-orig">观音大士，乃过去古佛。考证家以如豆之眼光，乱说道理。汝何不一读法华第七卷普门品，楞严第六卷观音圆通章乎。读此二经，则各家考证者，俱可付之一笑。</p><p class="p-trans">观音大士，是过去的古佛。考证家用如豆子那样小的眼光，乱说道理。你为什么不读一读《法华经》第七卷《普门品》，《楞严经》第六卷《观音圆通章》呢。读这两部经，那么各家考证的，都可付之一笑。</p></div>
+<div class="para-pair"><p class="p-orig">本迹颂，非不详言。特汝心粗气浮，绝未将前后文意语气理清，故茫无所从也。</p><p class="p-trans">《本迹颂》，并不是没有详细说明。是因为你太心粗气浮，绝对没有将前后的文意、语气理解清楚，所以茫然无所适从。</p></div>
+<div class="para-pair"><p class="p-orig">妙庄王三女，系讹传，不可依从。高王经是伪经，诵之仍复功德不少，以佛名号甚多故。此经于六朝时已流布，真通佛法人不提倡。然欲俗人种善根，亦不力为阻止也。</p><p class="p-trans">妙庄王的三女儿，这是谣传，不可以依从。《高王经》是部伪经，念诵的话也有不少功德，因为经里佛号很多。这部经在六朝的时候就已经流布，真懂佛法的人不提倡。然而想让俗人种善根，也不会刻意去阻止。</p></div>
+<div class="para-pair"><p class="p-orig">汝真可谓第一狂人，世荣心，如海波汹涌。而又欲立刻风平浪静，澄湛不动。其急欲求不动之心，正是群动之本。又如釜沸，极力加火，以求不沸，其可得乎。</p><p class="p-trans">你真可以说是第一狂人，世荣心，好像海浪般汹涌。而又想立刻风平浪静，澄静不动。这种急于求不动的心，正是群动的根本。又比如釜已沸腾，却拼命加火，来求不沸腾，这可能吗。</p></div>
+<div class="para-pair"><p class="p-orig">光与汝所说者，乃息风抽薪之事。汝不详察，尚谓是扬波益沸。岂不大可哀哉。</p><p class="p-trans">我和你所说的，是息风抽薪的事。你不详察，还说是扬波益沸。岂不是很可悲吗。</p></div>
+<div class="para-pair"><p class="p-orig">汝且详阅文钞嘉言录，当不至有负于汝。否则勿以我为师，另拜高明，光亦不汝是问也。</p><p class="p-trans">你且去详细阅读《文钞》、《嘉言录》，当不至于有负于你。否则不要以我为师，请另拜高明，我也不会再过问你什么。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【目光如豆】</span>眼光像豆子那样小。比喻眼光窄小，见识短浅。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【六朝】</span>1.三国吴、东晋和南朝的宋、齐、梁、陈，相继建都建康（吴名建业今南京市），史称为六朝。2.指魏、晋、后魏、北齐、北周和隋。这些朝代皆建都北方，称为北朝六朝。三国至隋统一前后三百余年的历史时期亦统称为“六朝”，如：六朝建筑、六朝书法，皆兼举南北六朝而言。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

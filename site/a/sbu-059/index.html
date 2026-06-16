@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>示马士弘书 · 印光法师文钞</title>
+<meta name="description" content="人生世间，当各尽其分。其分即父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠之分。此分一人或全，或有多半者。凡在己分之内，必须务尽己之分。世人不讲尽分之道，故天灾人祸，相继而作。若各各尽谊尽分，则天下太平矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-059/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="示马士弘书 · 印光法师文钞">
+<meta property="og:description" content="人生世间，当各尽其分。其分即父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠之分。此分一人或全，或有多半者。凡在己分之内，必须务尽己之分。世人不讲尽分之道，故天灾人祸，相继而作。若各各尽谊尽分，则天下太平矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-059/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">示马士弘书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人生世间，当各尽其分。其分即父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠之分。此分一人或全，或有多半者。凡在己分之内，必须务尽己之分。世人不讲尽分之道，故天灾人祸，相继而作。若各各尽谊尽分，则天下太平矣。</p><p class="p-trans">人生世间，应当各尽自己的本分。这个本分就是父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠的本分。这个本分，一个人有的全部具有，有的具有一多半。凡是在自己的本分之内，必须要竭尽自己的本分。世间人不讲竭尽本分的道义，故此天灾人祸，相继发生。如果各各尽道谊、尽本分，那么天下就太平了。</p></div>
+<div class="para-pair"><p class="p-orig">诸分都好尽，惟父母之分，人多不识，故致有今日之乱象。使为父母者，于儿女始开知识时，即教以孝弟忠信，礼义廉耻之道，及因果报应，生死轮回之理，则其儿女决定可成贤人善人。</p><p class="p-trans">其他本分都好尽，惟有父母的本分，一般人大多不明白，所以导致有今天如此坏乱的现象。假使为人父母的人，在儿女开始接受知识的时候，就教导他们孝弟忠信礼义廉耻的八德，以及因果报应，生死轮回的义理，那么他们的儿女决定能够成为贤人善人。</p></div>
+<div class="para-pair"><p class="p-orig">凡瞎捣乱之凶徒，与强盗土匪之恶类，从何而有哉。瞎捣乱者，强盗土匪，虽其人之罪，实由其父母不知为父母之道，故将能为贤善之姿质，令其为匪盗也。</p><p class="p-trans">凡是瞎捣乱的凶徒，与强盗土匪等恶类，是从哪里来的呢？瞎捣乱的人，强盗土匪，虽然是他本人的罪咎，但实际是由于他的父母不知道做父母的道理和方法，所以将那些能够成为贤人善人的姿质，反而让他们做了土匪强盗。</p></div>
+<div class="para-pair"><p class="p-orig">人孰无父母，人孰无儿女。勿止以娇惯为慈。教之以道，方为慈。今世乱已极，汝为医士，相识必多。宜以善教儿女可致太平为常谈，则功德大矣。汝果能善教儿女，汝家之家声，决定可以克振。</p><p class="p-trans">人谁没有父母，人谁没有儿女。不要一味地娇生惯养，认为这样是慈爱。教导儿女做人的道理，才是慈爱。现今世道坏乱到极点，你是医生，认识的人一定很多。应该将好好教导儿女，可以使天下太平的道理作为平常的言论，那么功德就大了。你果真能够教导好儿女，你家的家族声誉，决定能够大振。</p></div>
+<div class="para-pair"><p class="p-orig">一须敦伦尽分，闲邪存诚。诸恶莫作，众善奉行。余尚易知。唯为父母一事，人多不知。故先详言之。汝其勉之，方可为佛弟子。</p><p class="p-trans">必须敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬）。诸恶莫作，众善奉行。其余的都还容易知道。唯有为人父母这件事，人们大多不知道。所以先详细说明。你要努力去做，方可成为佛弟子。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝取法名为德弘，谓以自利利人为心，凡力所能为者则为之。力不能为者，须令此善心发生增长。但发善心，亦有功德。必须以世药医人身病，以佛之法药医人心病，及医不能治之怨业病。遇怨业病，当令彼改恶迁善，戒杀放生，吃素念佛。业力消，则病自好，此佥试佥验之法也。</p><p class="p-trans">现今为你取法名为德弘，就是以自利利人为心，凡是力量所能做的，就努力去做。力量不能做到的，必须让这个善心发生增长。只发善心，也有功德。必须用世间药方医治世人的身病，用佛陀的法药医治世人的心病，以及医生不能医治的怨业病。遇到怨业病，应当让他们改恶向善，戒杀放生，吃素念佛。业力消除，病就自然好了，这是众人试行，全都灵验的方法。</p></div>
+<div class="para-pair"><p class="p-orig">医士不在钱财上著手，自可积德。有种地狱种子，专门想钱，小病必使其大，则可以勒索求利。此种医生，来生决定无人身可得。</p><p class="p-trans">医士不在钱财上计较，自然可以积德。有一种地狱种子，专门想钱，小病必定使病变大，就可以勒索求利。这种医生，来生决定得不到人身。</p></div>
+<div class="para-pair"><p class="p-orig">又西医凡遇重病吃素者，必令开荤。及开荤，而更加重，尚不改方针。此种恶人，来生必作悦人口腹之物类。汝既行医，当思由此以培德，何可由此造业乎。其余修持法则，祈详阅文钞，嘉言录。此不具书。</p><p class="p-trans">另外，西医凡是遇到重病吃素的人，必定让他们开荤。等到开了荤，病情反而更加严重，且还不肯改变方针。这种恶人，来生必作人喜欢吃的动物之类。你既然行医，应当想着由医病来培植福德，怎么能由医病来造作罪业呢？其余的修持法则，请详细阅读《文钞》、《嘉言录》。此处不再详说。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

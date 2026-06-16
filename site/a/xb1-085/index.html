@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>致铭光居士书 · 印光法师文钞</title>
+<meta name="description" content="净土法门，为佛法中最平常，最高深之法门，若非宿具慧根，实难深生正信。勿道儒者不易生信，即通宗通教之知识，亦每每以宗教之义论判之。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-085/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="致铭光居士书 · 印光法师文钞">
+<meta property="og:description" content="净土法门，为佛法中最平常，最高深之法门，若非宿具慧根，实难深生正信。勿道儒者不易生信，即通宗通教之知识，亦每每以宗教之义论判之。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-085/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">致铭光居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，为佛法中最平常，最高深之法门，若非宿具慧根，实难深生正信。勿道儒者不易生信，即通宗通教之知识，亦每每以宗教之义论判之。</p><p class="p-trans">净土法门，是佛法中最平常、最高深的法门，如果不是宿世具有慧根，实在很难深深地生起正信。不要说儒家学人不容易生信，即使是通达宗门教下的善知识，也常常用宗门教下的义理来评判净土法门。</p></div>
+<div class="para-pair"><p class="p-orig">致于此令博地凡夫，未断烦惑，即于现生了生脱死，超凡入圣之不思议法，不但不肯自修，而且不肯教人修。以不知此法，乃佛法中之特别法门，彼以宗教之义为准，故致有此过咎也。使彼最初即知此义，则其利大矣。</p><p class="p-trans">致使这个能让博地凡夫，未断尽烦恼惑业，就可以在现生了生脱死，超凡入圣的不可思议法门，不但不肯自己修持，而且不肯教他人修习。因为不知道这个法门，乃是佛法中的特别法门，他们以宗门教下的义理为标准，因此导致有这种过咎。假使他们最初就知道净土法门的义理，那么利益就很大了。</p></div>
+<div class="para-pair"><p class="p-orig">聪明人，多以明理悟心为志事，而不知念佛乃明理悟心之捷径。念念若能相应，自可明理悟心。即未做到，而仗佛慈力，往生西方，较彼明理悟心，未断烦惑，仍复轮回生死，了无出期者，已天地不足以喻其否泰。</p><p class="p-trans">聪明人，大多以明理悟心作为志向事业，却不知道念佛就是明理悟心的捷径。念念如果能够相应，自然可以明理悟心。即使没有做到（明理悟心），若能仗佛慈力，往生西方，与那些明理悟心，未断尽烦恼惑业，仍又轮回生死，了无出期的人相比，二者好、坏的差别，已经无法用天壤之别来形容了。</p></div>
+<div class="para-pair"><p class="p-orig">况既往生已，亲炙弥陀圣众，当即亲证无生法忍，岂止明理悟心而已哉。净土法门，唯上上根人，与愚夫愚妇，能得实益。而通宗通教之聪明人，多以志大言大，不肯仗佛慈力，而以仗己道力为志事，甘让愚夫愚妇早预圣流也。贵邑或有此种见解之人，故为稍说其所以耳。</p><p class="p-trans">何况得以往生之后，亲受阿弥陀佛、海会圣众的教导熏陶，当下就能亲证无生法忍，哪里只是明理悟心而已呢？净土法门，唯有上上根人，与愚夫愚妇，能够得到真实的利益。而通达宗门教下的聪明人，大多因为志向大，口气大，不肯仗佛慈力，而把依仗自己的道力开悟作为志向事业，甘心让愚夫愚妇早早地加入到圣人的行列。贵县或许有这种见解的人，所以为你稍微说明一下其中的所以然。</p></div>
+<div class="para-pair"><p class="p-orig">既欲皈依，今为取法名为契光。梵语阿弥陀，此云无量寿，亦云无量光。果能一心念佛，即是以果地觉，为因地心。若能心心相应，则因该果海，果彻因源。极平常，极玄妙，若能信受，可谓超格大丈夫。</p><p class="p-trans">既然想要皈依，现在为你取法名为契光。梵语阿弥陀，此译为无量寿，也称无量光。果真能够一心念佛，就是以果地觉海，作为因地行心。如果能够心心相应，那么因行该摄果海，果觉通彻因源。极平常，极玄妙，如果能够相信接受，就可称得上是超越平常格局的大丈夫了。</p></div>
+<div class="para-pair"><p class="p-orig">光以宿业，生即病目，幸犹见天七十多年。今则目极衰昏，拒绝一切笔墨应酬。恐汝或为他宗倡导所摇夺，故特略说特别，通途二义，庶不至弄巧成拙，求升反坠耳。</p><p class="p-trans">我因为宿世业障，生下来眼睛就有病，庆幸还能见到天日七十多年。现在的视力极度衰弱昏花，因此拒绝一切笔墨应酬。担心你或许被其它宗派倡导的修行方法所动摇，因此特意为你大略说明特别法门、通途法门两种义理，就不至于弄巧成拙，求上升反而坠落了。</p></div>
+<div class="para-pair"><p class="p-orig">当常看净土五经，则知净土法门，为十方三世一切诸佛，上成佛道，下化众生之总持法门。其有所未喻者，当常看净土十要，则群疑冰释，一心月朗矣。</p><p class="p-trans">应当常看净土五经，就知道净土法门，是十方三世一切诸佛，上成佛道，下化众生的总持法门。其中有不明白的地方，应当常看《净土十要》，那么一切疑惑全都会消除，一心如明月朗照了。</p></div>
+<div class="para-pair"><p class="p-orig">文钞，语虽拙朴，于禅净之所以然，与日用伦常之互相益，稍有发明，亦可以作自利利他之一助。</p><p class="p-trans">《文钞》，言语虽然拙朴，但是对于禅宗净土的所以然，以及和日用伦常之间互相的利益关系，也稍有阐明，也可以作为自利利他的一种帮助。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【否泰】</span>指世道盛衰，人世通塞或运气好坏。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【冰释】</span>指象冰融化一样，比喻疑点或隔阂完全消除。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

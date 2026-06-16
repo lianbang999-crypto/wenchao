@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>物犹如此序（民二十五年） · 印光法师文钞</title>
+<meta name="description" content="一切众生，皆有佛性，皆当作佛。佛视一切众生皆是佛，故梵网经云，我是已成佛，汝是未成佛，若能如是信，戒品已具足。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-065/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="物犹如此序（民二十五年） · 印光法师文钞">
+<meta property="og:description" content="一切众生，皆有佛性，皆当作佛。佛视一切众生皆是佛，故梵网经云，我是已成佛，汝是未成佛，若能如是信，戒品已具足。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-065/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">物犹如此序（民二十五年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">一切众生，皆有佛性，皆当作佛。佛视一切众生皆是佛，故梵网经云，我是已成佛，汝是未成佛，若能如是信，戒品已具足。</p><p class="p-trans">一切众生，皆有佛性，皆当作佛。佛视一切众生都是佛，所以在《梵网经》中说：“我是已成佛，汝是未成佛，若能如是信，戒品已具足。”</p></div>
+<div class="para-pair"><p class="p-orig">以能信自己是未成之佛，必定要改恶修善，发自利利他之大菩提心，以期断尽烦惑，亲证即心本具之真如佛性。</p><p class="p-trans">因为能相信自己是未成之佛，必定要改恶修善，发起自利利他的大菩提心，以期断尽烦惑，亲证即心本具的真如佛性。</p></div>
+<div class="para-pair"><p class="p-orig">能信一切六道众生是未成之佛，必定要极力劝导，互相维持于同类，决无相争相杀之恶作。必定要戒杀护生，大设方便于异类，决无食彼益我之惨心。</p><p class="p-trans">能相信一切六道众生都是未成之佛，必定要极力劝导，互相维持同类和谐，就绝没有相互争斗杀害的恶事；必定要戒杀护生，为异类大设方便，就绝没有吃其他动物来补益自己的惨毒之心。</p></div>
+<div class="para-pair"><p class="p-orig">人由不知自己，与一切众生，皆是未成之佛，故不惜杀人盈城盈野以相争，与杀彼之身，以期悦我之口腹也。</p><p class="p-trans">人由于不知道自己与一切众生，都是未成之佛，所以不惜满城遍野地杀人来互相争斗，以及杀害动物的身命，以期取悦自己的口腹。</p></div>
+<div class="para-pair"><p class="p-orig">世人杀生，习以为常，大小事体，皆须行杀。祭神祀祖，养亲待客，无肉则不能为礼。以极苦极惨之事加诸物，用表我之诚恳孝敬。在迷情边论，则尚有可取。在实际上论，则大为可怜也。</p><p class="p-trans">世间人杀生，已经习以为常了，无论大事小事，都必须杀生。祭神祀祖，奉养双亲、招待宾客，没有肉就不成礼。把极痛苦、极悲惨的事施加到动物身上，用来表示自己的诚恳孝敬。在迷惑的凡情这一边来论，那么还似乎有可取之处。但在实际（因果）上来论，就非常可怜了。</p></div>
+<div class="para-pair"><p class="p-orig">以一切众生，从无始来，轮回六道，互为父母，兄弟，妻子，眷属，互生。互为怨家对头，循环报复，互杀。</p><p class="p-trans">因为一切众生，从无始劫以来，轮回六道，互为父母、兄弟、妻子、眷属，相互生育；互为怨家对头，循环报复，互相杀害。</p></div>
+<div class="para-pair"><p class="p-orig">佛于诸大乘经中，屡为劝诫，而见闻者少。即得见闻，而信受奉行者更少。于是佛以大悲，现诸异类，供人杀食。</p><p class="p-trans">佛在诸多大乘经中，多次劝导告诫，而见到、听到的人却很少。即使能见到、听到，而信受奉行的人更少。于是佛以大悲心，示现成诸多异类，供人来杀掉食用。</p></div>
+<div class="para-pair"><p class="p-orig">既杀之后，现诸异相，俾一切人，知是佛现，冀弭杀劫，以安众生。如蛤蜊，蚌壳，牛腰，羊蹄，猪齿，鳖腹，皆有佛栖。惊人耳目，息世杀机，载籍所记，何能备述。</p><p class="p-trans">被杀死之后，示现出诸多的奇异之相，使得一切人，知道这是佛陀所示现的，希望消弭杀劫，来使众生安定。如蛤蜊、蚌壳、牛腰、羊蹄、猪齿、鳖腹，都有佛陀在那里栖止。震惊人们的耳目，止息世间的杀机，记载在书籍中的，哪里能说得尽呢？</p></div>
+<div class="para-pair"><p class="p-orig">未杀之前，均谓是畜，既杀之后，方知是佛。是知杀生，不异杀佛，即非佛现，亦未来佛。杀而食之，罪逾海岳，急宜痛戒，庶可解脱。</p><p class="p-trans">未杀之前，大家都认为那是畜生，杀死之后，才知道是佛示现。所以要知道杀生，不异于杀佛，即使不是佛陀的示现，那也是未来佛。屠杀后食用的罪过，比山高、比海深，应该赶快彻底戒除，这样才可以解脱。</p></div>
+<div class="para-pair"><p class="p-orig">须知人物虽异，灵蠢互形，蠢人识暗，灵物智明。五伦八德，固不让人，其诚挚处，比人更深。敢以我强，杀食其肉，致令未来，常受人食。</p><p class="p-trans">要知道人与动物虽然身形有异，但是却都一样能表现出聪明和愚蠢。愚蠢的人心识暗昧，而有灵性的动物却智慧明朗。五伦八德，肯定不逊于人类，它们的诚挚之处，比人更深。怎敢以我们的强大，来杀死它们并吃掉它们的肉，致使未来果报成熟时，常受他人（杀死）食用呢。</p></div>
+<div class="para-pair"><p class="p-orig">历观史籍，自古及今，凡利人利物者，子孙必定贤善发达。凡害人害物者，子孙必定庸劣灭绝。故孔子之赞周易曰，积善之家，必有余庆。积不善之家，必有余殃。</p><p class="p-trans">历观史书典籍，从古至今，凡是利益他人、利益其他生灵的人，他们的子孙必定贤善发达；凡是祸害他人、残害其他生灵的人，他们的子孙必定庸劣灭绝。所以孔子赞《周易》说：“行善积德的人家，必定会有余庆，让子孙后代蒙福；作恶多端的人家，必定会有余殃，让子孙后代遭殃。”</p></div>
+<div class="para-pair"><p class="p-orig">余庆余殃者，正庆正殃之盈余也。正庆正殃，乃积善积不善之本人，受于来生后世，比余庆余殃，当超过百千万亿倍焉。人若知此，断不肯以一时之小快愉，致永受大祸害于无穷也。</p><p class="p-trans">余庆余殃，就是正庆正殃的盈余啊！正庆正殃，这是积善、积不善的本人，受报于来生后世，比起余庆余殃，应当超过百千万亿倍。一个人如果知道这个道理，断然不肯以一时的小快愉，导致永劫遭受无穷无尽的大祸害啊！</p></div>
+<div class="para-pair"><p class="p-orig">清嘉道间，江西广丰，徐太史谦，字白舫，隐居著书，以期觉世牖民。志切戒杀，博览群书，凡物类之懿德懿行，辑为一书。</p><p class="p-trans">清朝嘉庆、道光年间，江西广丰的太史徐谦，字白舫，隐居著书，以期觉悟世间、化导民众。立志要彻底戒除杀生，博览群书，凡是各种动物的懿德、懿行，都收录下来，编辑为一本书。</p></div>
+<div class="para-pair"><p class="p-orig">分孝友，忠义，贞烈，慈爱，恤孤，眷旧，践信，守廉，翼善，救难，酬德，雪冤，知几，通慧，十四鉴，而名其书为物犹如此。</p><p class="p-trans">分为：孝友、忠义、贞烈、慈爱、恤孤、眷旧、践信、守廉、翼善、救难、酬德、雪冤、知几、通慧，共十四鉴，并给这本书取名为《物犹如此》。</p></div>
+<div class="para-pair"><p class="p-orig">盖欲见者闻者，咸皆发起敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。体天地好生之德，不戕异类。推吾儒胞与之怀，普庇群生。</p><p class="p-trans">他大概是想让见到、听到的人，全都提倡敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。体察天地的好生之德，不杀害异类。推广我们儒家民为同胞、物为朋友的心怀，普遍庇护一切众生。</p></div>
+<div class="para-pair"><p class="p-orig">念彼物类，尚有如此种种懿行，而吾人以六尺之身，与天地并立为三，称为三才，又复受圣贤之经书教诲。若不以继往开来，赞天地之化育，仁民爱物，慰天地之慈心。则不但有负于天地圣贤教育之深恩，且大有愧于飞走潜泳之异类也。</p><p class="p-trans">想到那些动物，还有如此种种的美好行为，而我们以六尺的身躯，与天地并立为三，称为三才，又受到圣贤经书的教诲。如果不以继往圣、开来学，辅助天地的化育，对同胞仁慈、对万物爱护，来慰藉天地的慈心。那么，不但有负于天地、圣贤教育的深恩，而且大大有愧于飞走潜泳的异类啊！</p></div>
+<div class="para-pair"><p class="p-orig">兴言及此，宜如何孝亲，敬兄，忠主，尽义，以敦五伦而行八德也。宜如何博爱普济，以实行一视同仁之大道也。宜如何克己修持，以期无忝所生，不为天地鬼神所怜悯，不为天地鬼神所鄙弃，不为一切物类所轻藐也。</p><p class="p-trans">说到这里，应如何孝敬双亲，尊敬兄长，忠于主人，竭尽道义，来敦笃五伦而实行八德呢？应如何博爱万物、普济众生，来实行一视同仁的大道呢？应如何约束自我、修持自身，以期不羞辱生养自己的父母，不被天地鬼神所怜悯，不被天地鬼神所鄙弃，不被一切物类所轻视呢？</p></div>
+<div class="para-pair"><p class="p-orig">徐公人品极淳，学问极博。惜宿世善根种得不清，现生亦未亲近明眼善知识，致于佛法外道，邪正真伪，不能分别。</p><p class="p-trans">徐谦先生的人品极为淳厚，学问极为渊博。可惜宿世善根种得不清，现生也没有亲近明眼的善知识，导致对于佛法外道，邪正、真伪，不能辨别。</p></div>
+<div class="para-pair"><p class="p-orig">故所著海南一勺中，以外道伪造之心经中卷下卷，下卷有二种，此三种伪造之经，与真正佛说之心经，并收同列，一体同尊，无所轩轾。此种处，有令不知佛法之人，以邪为正，以伪为真。令诸外道，以正为邪，以真为伪之弊。</p><p class="p-trans">所以在他所著的《海南一勺》中，把外道伪造的《心经》中卷下卷，下卷有两种，这三种伪造的经，与佛陀真正宣说的《心经》，一并收录同列，一样看待、同等尊重，没有高低轻重之分。这些有问题的地方，会产生使不懂佛法的人，以邪法为正法，以伪经为真经；令一切外道，以正法为邪法，以真经为伪经的弊病。</p></div>
+<div class="para-pair"><p class="p-orig">此书前十三鉴，唯论伦常，故无不当。第十四通慧鉴中之批，难免有邪正不分之失，阅者幸详察焉。</p><p class="p-trans">这本书前面的十三鉴，只是讨论伦理纲常，所以没有什么不当之处。第十四通慧鉴中的批语，难免有邪正不分的过失，希望读者详察。</p></div>
+<div class="para-pair"><p class="p-orig">福建永春李俊承，法名慧觉，多年经商南洋星洲。以次子宜宗之病，汇洋一千六百圆，祈光印送挽回劫运，纠正世道人心，戒杀护生等经书。</p><p class="p-trans">福建永春的李俊承居士，法名慧觉，多年在南洋新加坡经商。因为他的二儿子李宜宗生病，汇来一千六百大洋，请我印送挽回劫运、纠正世道人心、戒杀护生等方面的经书。</p></div>
+<div class="para-pair"><p class="p-orig">光以世道人心，愈趋愈下者，由于宋儒破斥因果轮回，谓为佛以此骗愚夫妇奉彼教耳，实无其事。由是善无以劝，恶无以惩，以驯至于废经废伦，争城争地，互相残杀，莫之能止。</p><p class="p-trans">我认为世道人心，愈趋愈下的原因，是由于宋儒破斥因果轮回，认为是佛陀以此来欺骗愚夫愚妇信奉佛教罢了，实际上没有这回事。因此，无法劝人行善，无法惩人作恶，以至于逐渐发展到了废儒经、废伦理，争城争地，互相残杀，不能停止的地步。</p></div>
+<div class="para-pair"><p class="p-orig">欲挽杀劫，宜从戒杀生起。戒杀之书甚多，其感人心而息杀机者，此书可推第一。以物类尚能有此各种懿行，有人心者，何敢恣意杀食乎。</p><p class="p-trans">想要挽回杀劫，应该从戒除杀生开始。戒杀的书很多，其中感动人心而止息杀机的，这本书可以推选为第一。因为物类尚且能够有这些美好的行为，有人心的人，怎么敢恣意杀死并食用它们呢？</p></div>
+<div class="para-pair"><p class="p-orig">序中又为发明吾与物类，皆是未成之佛。佛欲弭世杀劫，不惜现身异类，亦受人杀，既杀而知为佛现。知好歹者，当不敢仍旧恣意杀食，以自贻伊戚也。</p><p class="p-trans">序中又阐明了我们与物类，都是未成之佛。佛陀想要消弭世间的杀劫，不惜现身异类之中，也受他人杀害，被杀之后才知道这是佛陀所示现的。知道好歹的人，应当不敢仍旧恣意杀死食用，来自招祸患啊！</p></div>
+<div class="para-pair"><p class="p-orig">此书虽不言戒杀，实为戒杀之冠。以其振聋发瞆，令人观感兴起。各自思曰，物犹如此，人何让彼，极力敦行，期无愧耻。</p><p class="p-trans">这本书虽然没有说到戒杀，但实在是戒杀书中最好的。因为书中所说的振聋发瞆，令人看了感动奋起。每个人都会想到：动物尚且如此，人怎能不如它们，要尽力敦行，以期没有惭愧羞耻。</p></div>
+<div class="para-pair"><p class="p-orig">自兹勉尽天职，生不为行肉走尸。力修净行，死则直往极乐世界。将见礼让兴而兵戈息，天下太平。正智开而邪执消，佛化广布。</p><p class="p-trans">从此勉力竭尽自己的天职，在生，不成为行肉走尸。努力修习净土法门；报尽命终之后，就直接往生西方极乐世界。如此一来，将会见到守礼谦让之风兴起而战争永息，天下太平。正智开启而邪执消除，佛法的化育广泛流布。</p></div>
+<div class="para-pair"><p class="p-orig">因令重排，尽彼之款以印送之，俾见闻者，悉得作人作佛之轨范焉。</p><p class="p-trans">因此令人重新排印这本书，尽慧觉居士（李俊承）所捐的钱款来印书赠送，使得见到、听到的人，全都得到作人作佛的轨范。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【太史】</span>官名。三代为史官与历官之家，朝廷大臣。后职位渐低，秦称太史令，汉属太常，掌天文历法。魏晋以后太史仅掌管推算历法。至明清两朝，修史之事由翰林院负责，又称翰林为太史。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【五伦】</span>旧指君臣、父子、兄弟、夫妻、朋友之间五种伦理关系。也称五常。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【八德】</span>孝、悌、忠、信、礼、义、廉、耻八种德行。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【鉴】</span>1.古器名。形似大盆，有耳。青铜制，盛行于东周。或盛水，大的可作浴盆；或盛冰，用来冷藏食物。有时借为照影之用。2.镜子。多为青铜制成。有的刻有铭文，用以自戒。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【轩轾】</span>车前高后低为“轩”，车前低后高为“轾”，喻指高低轻重。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【自贻伊戚】</span>贻：遗留；伊：此；戚：忧愁，悲哀。比喻自寻烦恼，自招忧患。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【振聋发瞆】</span>使耳聋人能够听到，使失明者可以看见。比喻某种言论或行动具有使人警醒的力量。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

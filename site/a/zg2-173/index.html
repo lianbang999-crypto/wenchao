@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>上海佛学编辑社缘起 · 印光法师文钞</title>
+<meta name="description" content="心性者，十法界一切圣凡，堕狱生天，证真成佛之根本也。因果者，世出世一切圣贤，平治天下，度脱众生之大权也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-173/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="上海佛学编辑社缘起 · 印光法师文钞">
+<meta property="og:description" content="心性者，十法界一切圣凡，堕狱生天，证真成佛之根本也。因果者，世出世一切圣贤，平治天下，度脱众生之大权也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-173/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">上海佛学编辑社缘起</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">心性者，十法界一切圣凡，堕狱生天，证真成佛之根本也。因果者，世出世一切圣贤，平治天下，度脱众生之大权也。</p><p class="p-trans">心性，是十法界一切圣者凡夫，堕落地狱、生到天上，彻证真常、成就佛道的根本。因果，是世间、出世间一切圣贤，平治天下、度脱众生的大权巧法。</p></div>
+<div class="para-pair"><p class="p-orig">然此心性，人各自具。真常寂照，妙莫能名。只因迷而未悟，不但不得受用，反承此心性之力，起惑造业，由业堕苦。展转沉迷，轮回六道。尽未来际，了无出期。</p><p class="p-trans">然而这心性，人人都具足，真常寂照，妙不可言。只因迷惑而没有觉悟，不但得不到受用，反而承着这心性的力量，起惑造作，由造业堕入苦处。辗转沉迷，轮回六道，穷尽未来，没有出期。</p></div>
+<div class="para-pair"><p class="p-orig">致我释迦牟尼世尊，特垂哀愍，兴无缘慈，运同体悲。不离寂光，示生世间。精修梵行，成等正觉。</p><p class="p-trans">致使我们的本师释迦牟尼世尊，特别垂慈哀愍，兴无缘大慈，运同体大悲。不离常寂光土，示生在这世间。精修梵行，成等正觉。</p></div>
+<div class="para-pair"><p class="p-orig">于是叹曰，奇哉奇哉，一切众生，皆具如来智慧德相，但因妄想执著，而不证得。若离妄想，则一切智，自然智，无碍智，即得现前。</p><p class="p-trans">于是感叹说：“奇哉奇哉，一切众生，皆具如来智慧德相，但因妄想执著，而不证得。若离妄想，则一切智，自然智，无碍智，即得现前。”</p></div>
+<div class="para-pair"><p class="p-orig">由是随机说法，令得度脱。但由机器差别，故致法无定相。或渐或顿，或权或实，或显或密，或性或相。必期于彻悟此在凡不减，在圣不增，终日随缘，终日不变之妙真如性，悉得彻证而后已。</p><p class="p-trans">由此随顺根机说法，令众生得到度脱。只因为众生根机存在差别，所以致使所说的法没有定相。或者渐次，或者圆顿，或者权教，或者实教，或者显说，或者密说，或说法性，或说法相。必定期望众生彻悟这在凡不减、在圣不增、终日随缘、终日不变的妙真如性，都能彻底证得而后已。</p></div>
+<div class="para-pair"><p class="p-orig">以此心性，体虽不变，用常随缘。随迷染缘，由厚薄不同，而成六凡法界。随悟净缘，因浅深各异，而成四圣法界。</p><p class="p-trans">因为这心性，本体虽然不变，受用常随外缘。随顺迷惑染污之缘，由于迷染厚薄的不同，而成为六凡法界；随顺觉悟清净之缘，因为觉悟浅深的差异，而成为四圣法界。</p></div>
+<div class="para-pair"><p class="p-orig">既知体常不变，由迷逆悟顺，相用天殊。其谁不欲舍迷染缘，随悟净缘，复还本有之天真，圆成无上之觉道乎。十法界，一一不出因果之外，欲离苦得乐，超凡入圣者，固宜慎所择也。</p><p class="p-trans">既然知道本体恒常不变，只由于迷悟、顺逆的不同，而相用就天差地别了。有谁不想舍弃迷惑染污之缘，随顺觉悟清净之缘，恢复本有的天真佛性，圆成无上的菩提觉道呢？十法界，全都不出于因果之外。想要离苦得乐、超凡入圣的人，自然应当谨慎地加以选择啊。</p></div>
+<div class="para-pair"><p class="p-orig">又虑众生业重障深，纵种善根，得生人天。既未断惑，必致造业。一堕恶道，苦无了期。于是以大悲心，特开净土法门。俾具缚凡夫，于现生中，即得出此娑婆，生彼极乐。与住行向地，及等觉菩萨，如观音势至，文殊普贤等，俱会一处，亲炙弥陀，以渐证夫道果耳。</p><p class="p-trans">世尊又担心众生的业障深重，纵然种了善根，得以生到人、天善道。而烦惑既然没有断除，必然会造作恶业。一旦堕入恶道，痛苦就没有尽头了。于是大慈大悲，特别开示净土法门。使得具缚凡夫，在现生之中，就能出离这娑婆世界，往生到极乐世界。与十住、十行、十回向、十地，以及等觉位的菩萨，如观世音菩萨、大势至菩萨，文殊菩萨、普贤菩萨等，共聚在一处，亲受阿弥陀佛的教化，渐渐证得道果。</p></div>
+<div class="para-pair"><p class="p-orig">噫，世尊之恩，可谓极矣。虽天地覆载，亦难喻其少分焉。迨至众生机尽，如来应息。而大悲利生，终无有尽。由是诸大弟子，分布舍利，结集经藏。俾遍界以流通，冀普沾乎法润。</p><p class="p-trans">噫！世尊的恩德，可以说是到了极点。即使是天地覆载的恩德，也不及世尊恩德的丝毫。等到众生机缘已尽，如来的应化就停息了。然而佛陀大悲利益众生的事业，终究没有穷尽。从此世尊的诸大弟子，分布舍利，结集经藏。使经藏遍法界流通，希望众生普遍受到佛法的润泽。</p></div>
+<div class="para-pair"><p class="p-orig">及至东汉，大教始来。但由风气未开，故唯在北方流通。至孙吴赤乌四年，康僧会尊者，特开化建业。蒙如来舍利降临，致孙权极生信仰。遂修寺建塔，以宏法化。此法被南方之始也。</p><p class="p-trans">到东汉时期，佛教才传到中国。因为国内的风气还没有打开，所以起初只在北方流通。到了吴国孙权赤乌四年（241年），康僧会尊者特地到南京开拓化导，感得如来舍利降临，致使孙权极大地生起信仰。于是修寺建塔，来宏扬法化。这是佛法泽被南方的开端。</p></div>
+<div class="para-pair"><p class="p-orig">至晋而遍布高丽，日本，缅甸，安南，□□，蒙古诸国。自兹以后，蒸蒸日上。至唐而诸宗悉备，可谓极盛。天台，贤首，慈恩，以宏教。临济，曹洞，沩仰，云门，法眼，以宏宗。南山，则严净毗尼。莲宗，则修专净土。</p><p class="p-trans">到了晋朝，佛法遍布到朝韩、日本、缅甸、越南、□□、蒙古等国家。从此以后，蒸蒸日上。到了唐朝，各宗派都齐备了，可以说极为兴盛。天台宗、贤首宗、慈恩宗，宏扬教下；临济宗、曹洞宗、沩仰宗、云门宗、法眼宗，宏扬禅宗；南山宗，则严净毗尼，是为律宗；莲宗，则专修净土。</p></div>
+<div class="para-pair"><p class="p-orig">如各部之分司其职，犹六根之互相为用。良以教为佛语，宗为佛心，律为佛行。心语行三，决难分属。约其专主，且立此名。</p><p class="p-trans">如同不同的部门，各司其职；如同（眼耳鼻舌身意）六根之间，互相作用。实在因为教下是佛语，禅宗是佛心，律宗是佛行。心、语、行三者，决定难以分隔。只是根据各宗所侧重的方面，权且设立了这些名称。</p></div>
+<div class="para-pair"><p class="p-orig">唯净土一法，始则为凡夫入道之方便，实则是诸宗究竟之归宿。以故将堕阿鼻者，得预末品。证齐诸佛者，尚期往生。</p><p class="p-trans">只有净土这一法门，起初是凡夫入道的方便，实际是各宗究竟的归宿。所以，将要堕入阿鼻地狱的众生，也能够往生下下品；证悟等齐诸佛的等觉菩萨，尚且期望往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">如来在世，千机并育，万派朝宗。佛灭度后，宏法大士，各宏一法。以期一门深入，诸法咸通耳。譬如帝网千珠，珠珠各不相混。而一珠遍入千珠，千珠悉摄一珠。参而不杂，离而不分。</p><p class="p-trans">如来在世时，种种根机一并化育，种种流派齐归本源。如来灭度之后，宏扬佛法的大菩萨，各自宏扬一个法门。以期一门深入进行修持，最终诸法全都通达。譬如帝释宫殿所悬挂的宝网千珠，珠珠独立，各不相混。然而每一珠都周遍映摄在千珠当中，千珠又全都映摄到每一珠之中。参合而不混杂，疏离而不分开。</p></div>
+<div class="para-pair"><p class="p-orig">泥迹者谓一切法，法法各别。善会者则一切法，法法圆通。如城四门，随近者入。门虽不同，入则无异。</p><p class="p-trans">拘泥形迹的人看待一切法，认为法法各不相同；善于领会的人看待一切法，认为法法圆融通达。比如一座城的四个门，人们各自选择就近的城门进入。城门虽然有所不同，然而进城之后就没有区别了。</p></div>
+<div class="para-pair"><p class="p-orig">若知此意，岂但诸佛诸祖所说甚深谛理，为归真达本明心见性之法。即尽世间所有一切阴入处界大等，一一皆是归真达本，明心见性之法。又复一一皆即是真是本，是心是性也。</p><p class="p-trans">如果知道这个道理，不但诸佛、祖师所说的甚深真谛妙理，是归真达本、明心见性之法。就连尽世间五阴、六入、十二处、十八界、七大等一切法，也全都是归真达本，明心见性之法，而且又全都是真、是本，是心、是性。</p></div>
+<div class="para-pair"><p class="p-orig">以故楞严以五阴六入十二处十八界七大，皆为如来藏妙真如性也。由是言之，无一法非佛法，亦无一人非佛也。</p><p class="p-trans">所以《楞严经》中把五阴、六入、十二处、十八界、七大，都作为如来藏妙真如性。由此说来，没有一法不是佛法，也没有一人不是佛。</p></div>
+<div class="para-pair"><p class="p-orig">无奈众生，珠在衣里，了不觉知。怀宝循乞，枉受穷困。以如来心，作众生业。以解脱法，受轮回苦。可不哀哉。</p><p class="p-trans">无奈众生，宝珠藏在自己衣服里，却丝毫也不觉知。怀揣着珍宝却到处乞讨，冤枉地遭受贫穷困苦。用如来真心，造众生罪业，用解脱妙法，受轮回苦楚。能不悲哀吗。</p></div>
+<div class="para-pair"><p class="p-orig">以故宏法大士，不惮艰辛，种种方便，而为开导。令其谛了十法界因果事理，彻悟即心自性，以迄究竟圆证也。</p><p class="p-trans">所以宏扬佛法的大菩萨们，不畏艰辛，用种种方便来开导众生。令众生深谛明了十法界的因果事理，彻悟即心本具的自性，以至究竟圆满证得。</p></div>
+<div class="para-pair"><p class="p-orig">由唐而宋而元而明而清，足一千年，声教弗替。虽不及唐时之盛，犹可称伯仲之伦。自咸同来，兵火联绵，饥馑荐臻。高人日希，庸人日多。国家不暇提倡，僧侣无力振兴。</p><p class="p-trans">从唐朝到宋朝、元朝、明朝、清朝，足足一千年中，佛教没有衰败。虽然不及唐朝时兴盛，还算相差不远。自从咸丰、同治以来，兵火联绵，饥荒不断。高人一天天稀少，庸人一天天增多。国家没有闲暇提倡，僧人没有能力振兴。</p></div>
+<div class="para-pair"><p class="p-orig">由是在家高人，以未尝研究故，谬袭韩欧故套，遂致一败涂地。至清末之时，大开学界。天姿高者，遂皆翻阅佛经，始知道本在是，遂皆息心以研究焉。</p><p class="p-trans">因此一些在家的高明人，因为没有研究过佛法，所以错误地沿袭韩愈、欧阳修的老套（辟佛）言论，从而使得佛法一败涂地。到了清朝末年，学术之门大开。天姿高的人，于是都来翻阅佛经，方才明白大道的本源在这中间，于是都静下心来加以研究了。</p></div>
+<div class="para-pair"><p class="p-orig">及至民国启运，法制维新。奉教自由，载于宪法。十余年来，风气大开。举凡政军学商各界伟人，多皆研究佛法，吃素念佛。</p><p class="p-trans">民国建立后，法律制度焕然一新。宪法中明确记载着，信教自由。十多年来，风气大开。凡是政府、军队、教育、商业等各界伟人，大多都研究佛法，吃素念佛。</p></div>
+<div class="para-pair"><p class="p-orig">顾联承，赵云韶等诸居士，欲令同人，悉沾法利。拟于上海北京路长康里，设一佛学编辑社。凡属发明心性之论，彰显因果之说。戒杀放生之利益，念佛往生之感通。与夫深经奥论之解释，高人懿士之修持。取便编辑，月出一册，以饷当世。</p><p class="p-trans">顾联承、赵云韶等诸位居士，想让大家全都受到佛法的利益。打算在上海北京路长康里，设立一个佛学编辑社。凡是阐明心性的言论、彰显因果的言说、戒杀放生的利益、念佛往生的感通，以及深奥经论的解释、高人大德的修持，都根据情况加以编辑，每月出一册，以饷世人。</p></div>
+<div class="para-pair"><p class="p-orig">庶不知佛法者，因兹而知。稍知佛法者，展转入胜。果能依佛言教，诸恶莫作，众善奉行。主敬存诚，洗心涤虑。不但天灾人祸，从兹消灭。俗美风淳，永享太平。</p><p class="p-trans">想必那些不知佛法的人，会因此而知晓；稍稍知晓佛法的人，辗转进入胜妙的境界。如果能够依照佛陀的言教，诸恶莫作，众善奉行，恭敬至诚，洗心涤虑。那么不但天灾人祸从此消灭，风俗淳美，永享太平。</p></div>
+<div class="para-pair"><p class="p-orig">将见彻悟唯心，亲见佛性。离三界之苦因苦果，证一乘之乐因乐果。庶不负此即心本具之真如妙性也已。</p><p class="p-trans">而且将会彻悟自心，亲见佛性，脱离三界的苦因苦果，证得一乘之乐因乐果。想必就不辜负这即心本具的真如妙性了啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【亲炙】</span>谓亲受教育熏陶。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【帝网天珠】</span>帝释悬宝珠网以装饰宫殿，这些宝珠的光明互相辉映，一珠现一切珠影，一切珠尽现一珠之中，各各如是，重重影现。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【声教】</span>教法由音声而宣说，故称声教。佛有六尘说法，此即为声尘说法。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【荐臻】</span>接连到来；屡次降临。《诗·大雅·云汉》：“天降丧乱，饥馑荐臻。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【取便】</span>取其方便。汉刘向 《杖铭》：“杖必取便，不必用味；士必任贤，何必取贵。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【主敬存诚】</span>指恪守诚敬</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【洗心涤虑】</span>比喻彻底改变过去不好的思想和念头。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复常逢春居士书六 · 印光法师文钞</title>
+<meta name="description" content="光老矣，无目力精神应酬，已于前月登新申二报声明，以后无论何人，不许再来信，亦不许再介绍皈依。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-284/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复常逢春居士书六 · 印光法师文钞">
+<meta property="og:description" content="光老矣，无目力精神应酬，已于前月登新申二报声明，以后无论何人，不许再来信，亦不许再介绍皈依。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-284/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复常逢春居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光老矣，无目力精神应酬，已于前月登新申二报声明，以后无论何人，不许再来信，亦不许再介绍皈依。</p><p class="p-trans">我老了，没有视力精神应酬，已经在上个月登《新闻报》、《申报》二份报纸声明：以后无论什么人，不许再来信，也不许再介绍人皈依。</p></div>
+<div class="para-pair"><p class="p-orig">有信心者，不妨如儒者拜门生例，拜汝等为师，然不得名为皈依师也。以皈依佛法僧三宝，居士何可僭称。但汝处无真知佛法之僧，且作求学之例，以期人各沾惠。</p><p class="p-trans">有信心的人，不妨如儒者收学生的例子，拜你们为师，但不能名为皈依师。因为皈依佛法僧三宝，居士怎么可以僭称。但因为你那里没有真懂佛法的僧人，暂且当作求学的形式，以期人人各自都能沾到佛法的恩惠。</p></div>
+<div class="para-pair"><p class="p-orig">若谓我为某人皈依师，某为我皈依弟子，则成八佾舞庭，雍诗彻祭，直是佛门罪人，不名宏法利生矣。</p><p class="p-trans">如果认为我是某人的皈依师，某人是我的皈依弟子，就成了八佾舞庭（注1）、雍诗彻祭（注2），这种人简直就是佛门的罪人，不名为宏法利生了。</p></div>
+<div class="para-pair"><p class="p-orig">五人法名，另纸书之。如欲阅各经书，当直与弘化社接洽，亦不许顺便附与光函，附亦不复。</p><p class="p-trans">五个人的法名，在另外的纸上写好。如果想要阅读各种经书，应当直接与弘化社接洽，另外不许顺便附带信件给我，附信来也不回信。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，为佛法中最易修易成之法门。当依文钞嘉言录及净土诸著述所说而修，决定可以仗佛慈力，了生脱死。若不以此是务，而欲仗自力了生死，恐经尘沙劫又尘沙劫，仍在六道轮回中，可不哀哉。（十二月十九日）</p><p class="p-trans">净土法门，是佛法中最容易修、最容易成就的法门。应当依照《文钞》、《嘉言录》以及净土的诸多著述中所说的来修，决定可以仗佛慈力，了生脱死。如果不以此为事务，而想要依仗自力了生死，恐怕经过尘沙劫又尘沙劫，仍然在六道轮回中，能不悲哀吗？（十二月十九日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【八佾舞庭】</span>语出《论语·八佾篇第三》，原文：孔子谓季氏，“八佾舞于庭，是可忍也，孰不可忍也？”译文：孔子谈到季氏，说：“他用六十四人在庭院中奏乐舞蹈，这都可以狠心做出来，什么事不可以狠心做出来呢？”八佾——佾音逸，yì。古代舞蹈奏乐，八个人为一行，这一行叫一佾。八佾是八行，八八六十四人，只有天子才能用。诸侯用六佾，即六行，四十八人。大夫用四佾，三十二人。四佾才是季氏所应该用的。（摘录自《论语译注》，杨伯峻译注）</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【雍诗彻祭】</span>语出《论语·八佾篇第三》，原文：三家者以《雍》彻。子曰：“‘相维辟公，天子穆穆’，奚取于三家之堂？”译文：仲孙、叔孙、季孙三家，当他们祭祀祖先时候，[也用天子的礼，]唱着《雍》这篇诗来撤除祭品。孔子说：“[《雍》诗上有这样的话：] ‘助祭的是诸侯，天子严肃静穆地在那儿主祭。’这两句话，用在三家祭祖的大厅上在意义上取它哪一点呢？”《雍》——也写作“雝”，《诗经·周颂》的一篇。（摘录自《论语译注》，杨伯峻译注）</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

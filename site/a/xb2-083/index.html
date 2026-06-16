@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>南京三汊河创建法云寺缘起碑记（民二十二年） · 印光法师文钞</title>
+<meta name="description" content="如来为一大事因缘故，出现于世。所谓大事者，欲令一切众生，悉皆开示悟入佛之知见，各得成佛而已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-083/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="南京三汊河创建法云寺缘起碑记（民二十二年） · 印光法师文钞">
+<meta property="og:description" content="如来为一大事因缘故，出现于世。所谓大事者，欲令一切众生，悉皆开示悟入佛之知见，各得成佛而已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-083/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">南京三汊河创建法云寺缘起碑记（民二十二年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来为一大事因缘故，出现于世。所谓大事者，欲令一切众生，悉皆开示悟入佛之知见，各得成佛而已。</p><p class="p-trans">如来为了一大事因缘，所以出现于世间。所谓大事因缘，就是欲令一切众生，全都开、示、悟、入佛之知见，直到每个人都成佛为止。</p></div>
+<div class="para-pair"><p class="p-orig">以众生根性，大小不一，致如来法门，权实不同。由兹如来普度众生之心，不能大畅。故特开一信愿念佛，求生西方一法，俾若凡若圣，同于现生，出此苦域，生彼乐邦。</p><p class="p-trans">但是，因为众生的根性，大小不一，致使如来所说的法门，有权教实教的不同。因此，如来普度众生的心，不能够大大顺畅。所以特别开启一个信愿念佛，求生西方的法门，使得凡夫圣者，同在这一生，出离这个苦难的娑婆世界，往生到那极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">上根则顿证法身，中下亦同登不退。令众生同出生死，畅如来出世本怀。其为利益，莫能名焉。</p><p class="p-trans">往生后，上根人就会立刻证得法身，中下根人也能共同登上不退转菩萨位。使众生同出生死轮回，畅达如来出世的本怀。这个法门的巨大利益，无法用语言来表达啊！</p></div>
+<div class="para-pair"><p class="p-orig">故得九界同归，十方共赞，千经俱阐，万论均宣。以其为十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门故也。</p><p class="p-trans">所以，得到九法界的共同归依，十方诸佛的共同赞扬，千部经都阐扬，万部论都宣讲。因为净土法门，是十方三世一切诸佛，上成佛道，下化众生，成始成终的总持法门的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">法云寺者，效法云栖，所立之念佛放生道场也。其原由民国十年八月，光往扬州刻书，王幼农办赈南京，赴约往访。次日访刘圆照，魏梅荪亦来见，谓己颇信佛法，曾阅师文钞，近亦念佛。但恨业习浓厚，不能吃素耳。</p><p class="p-trans">法云寺，是效法云栖莲池大师，所建立的念佛放生道场。建寺的原由，是民国十年八月，我前往扬州刻书，王幼农在南京办理赈灾，赴约前往拜访。第二天，又拜访了刘圆照，魏梅荪也来相见，说他自己很信佛法，曾经阅读过师父的《文钞》，近来也在念佛。但遗憾自己业障习气很浓厚，不能吃素。</p></div>
+<div class="para-pair"><p class="p-orig">光曰，此病易治，祈将光南浔放生池疏熟读，保汝即能吃素矣。彼于十月，即吃长素。痛念杀劫弥漫，皆由杀生食肉所感。因汲汲提倡念佛放生，冀民物各遂其生，同得往生西方也。</p><p class="p-trans">我说：“这个病容易治，请熟读我《文钞》中的《南浔放生池疏》，保证你就能吃素了。”他果然在十月份，就吃长素了。痛切想到杀劫弥漫世界，都是由于杀生吃肉所招感的。因此急切地提倡念佛放生，希望人民和物类，都能各尽天年，共同得以往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">次年，与幼农，庞性存，妙莲，心净等，商买方峻生三汊河地若干亩，以实行其事。峻生，乃世德之裔，不胜欢喜，特作廉价，而祈其将彼祖先父母牌位，永供念佛堂，以期仗佛慈力，接引往生，用报亲恩也。</p><p class="p-trans">第二年，与王幼农、庞性存、妙莲、心净等人，商议买下方峻生在三汊河的土地若干亩，来实行这件事。方峻生，是世代积德行善人家的后代，非常欢喜，特别给以廉价，并祈望将他祖先和父母的牌位，永远供奉在念佛堂，以期仗佛慈力，接引往生，用这个行动来报答父母的养育之恩。</p></div>
+<div class="para-pair"><p class="p-orig">遂于腊月开工，掘池垫基，次年盖莲舍，及用屋十余间。掘池九面，得以分类而放，免致鱼贼害鱼。</p><p class="p-trans">于是就在腊月开工，挖掘放生池，打垫地基，第二年盖建莲舍，以及使用的房屋十多间。挖掘了九个放生池，使物类能够分类放生，免得鱼贼害鱼。</p></div>
+<div class="para-pair"><p class="p-orig">其年又发起慈幼院，教养孤儿，俾读书学艺，能自成立，不至流为饿殍与匪类也。因先办慈幼，建寺遂作缓图。由连年时局不靖，稽迟至今。</p><p class="p-trans">这一年又发心兴办慈幼院，教养孤儿，使得他们读书、学艺，能够自己独立，不至于流浪饿死，以及成为土匪之类的人。因为先办起慈幼院，建寺就暂缓考虑了。由于几年来，时局不宁，所以推迟到今天。</p></div>
+<div class="para-pair"><p class="p-orig">邓璞君，与梅荪，同师冯梦华，而又同归依光。祈冯与光，题四十八愿册，以募建筑法云之款。凡他人募者，亦归此册中，每愿千圆，有四五万圆，即可建造。题至五十余愿，已交二万二千七百七十圆，以未开工，故不催出。</p><p class="p-trans">邓璞君和魏梅荪，都是冯梦华的学生，他们又都共同归依了我。就请冯梦华和我，题写四十八愿的册子，来募集筹建法云寺的钱款。凡是他人募来的款项，也归在这本册子中，每一愿一千圆，募集到四、五万圆，就可以建造寺院了。题写到五十多愿时，已经募交二万二千七百七十圆，因为还没有开工，所以不急着催促大家出资。</p></div>
+<div class="para-pair"><p class="p-orig">十九年，璞君西逝，其册二本，其子翰芬交出初本。次本遗失，其捐款人名，不得而知，兼有去世移徙者，故虽册中有名，亦难尽收。</p><p class="p-trans">民国十九年，邓璞君西归，他所写的二本募捐册，由他的儿子邓翰芬交出了第一本。第二本遗失了，上面的捐款人名，已经不得而知，又加上还有去世，移居他方的人，所以虽然册中有捐钱人的名字，也很难全部收齐捐款。</p></div>
+<div class="para-pair"><p class="p-orig">数年来，慈幼院经费不给时，辄用此款之息，故致了无增益。去年，梅荪西逝，幼农以光与彼，皆非世之久客，若不急图，后来或致湮没。</p><p class="p-trans">几年来，慈幼院的经费不够的时候，就动用这笔钱款的利息，所以导致这笔钱款，完全没有增益。去年，魏梅荪西逝，王幼农认为我与他，都已不是世间的久客，如果不想办法赶紧办理这件事，将来也许会导致这件事情埋没掉。</p></div>
+<div class="para-pair"><p class="p-orig">遂规定办法，令筑地工，备材料，今春当来督造。适政府命彼为陕西省政府委员，兼陕西民政厅长，督造之任，通归住持心净矣。又以此事，由光发起，令撰碑记，以告来哲。</p><p class="p-trans">于是就规定了办法，下令建筑地基工程，准备材料，今年春天王幼农来监督建造。刚好政府命令他为陕西省政府委员，兼陕西民政厅长，所以监督建造的任务，就全部由住持心净法师承担了。又因为这件事，是由我发起，所以让我撰写碑记，把建寺的缘起告知未来有智之人。</p></div>
+<div class="para-pair"><p class="p-orig">当民十一年，买地之时，议定章程，为专修净业道场。长年念佛，其每日功课，与普通打佛七同。概不讲经，传戒，传法，收徒，应酬经忏。</p><p class="p-trans">在民国十一年，刚购买土地的时候，议定的章程是建专修净业的道场。长年念佛，道场每天的功课，与普通打佛七相同。一概不讲经、不传戒、不传法、不收徒、不应酬经忏。</p></div>
+<div class="para-pair"><p class="p-orig">其住持无论台，贤，济，洞，若戒行精严，教理明白，深信净土，志期利人者，皆可请任。若余均优胜，唯于净土，不甚注意，则决不可请。</p><p class="p-trans">道场的住持，无论他是天台宗、贤首宗、临济宗、曹洞宗，只要戒行精严，教理明白，深信净土，一心利益他人的，都可以请来担任。如果他其他的方面都很优胜，唯独对于净土，不是很注意，那么就绝对不能请。</p></div>
+<div class="para-pair"><p class="p-orig">住持论次数，不论代数，以传贤，非师资相承之例。念佛堂中，每日或住持，或班首，说净土，及戒律，开示一次，俾诸师发起增上胜心。</p><p class="p-trans">住持只论次数，不论代数，因为是传贤能之人，不是师父弟子相承的惯例。念佛堂中，每天由住持，或者班首，宣说净土，以及戒律，开示一次，使得诸位师父发起增上胜心。</p></div>
+<div class="para-pair"><p class="p-orig">有信士慕此间道风，祈打念佛七，以期延椿萱之寿算，超祖宗之灵魂，消己躬之罪愆，培子孙之福祉者，仍照常念佛，加三次回向而已。</p><p class="p-trans">如果有信士仰慕这里的道风，请求打念佛七，以期延长父母的寿命，超拔祖宗的灵魂，消灭自己的罪愆，培植子孙的福祉等，大家仍旧还是照常念佛，只是加三次回向而已。</p></div>
+<div class="para-pair"><p class="p-orig">焰口亦决不放，以杜住应赴僧，伏破坏道场之机也。凡祈打七者，只可来一二人，以行礼敬，即日便回。若广集亲友，及少年女眷，住此待圆满方归者，决不应许。</p><p class="p-trans">焰口也绝对不放，以杜绝住下赶经忏的应赴僧，伏下破坏道场的危机。凡是祈请打七的人，只能来一、二人，行礼致敬，当天就回去。如果广集亲朋好友，以及少年、女眷，住在寺中，等待佛七圆满，方才回去，这种情况绝对不允许。</p></div>
+<div class="para-pair"><p class="p-orig">此道场，乃特别法门，故不循成例而行。其章程，即于地买妥时订之。而苏州灵岩，于民十五年，真达和尚，即以己寺改作十方，已按此规先行矣。</p><p class="p-trans">这个道场，修行的是特别法门，所以不遵循惯例来做。这个章程，就是在当初土地买妥时订下的。而且苏州的灵岩寺，在民国十五年，真达和尚，就把自己的寺院改作十方丛林，已经按这个规约先实行了。</p></div>
+<div class="para-pair"><p class="p-orig">现以款项有限，加以时局艰难，不易募化，只好缩小范围，以免棘手。大殿，盖五间高楼，上供新印之宋藏，并作阅经之所。下作大殿，念佛亦在此中。两边各盖十余间，以作客堂，库房，厨房，关房。三门，即弥勒韦驮殿。范围虽小，体裁略备。</p><p class="p-trans">现在因为款项有限，再加上时局艰难，不容易募捐，只好缩小了建筑范围，以免棘手。大殿，盖五间二层高楼，上层供新印的《宋藏》，并作为阅经的场所。下层作大殿，念佛也在这个殿中进行。两边各盖了十多间房，来作为客堂、库房、厨房、关房。三门，就作为弥勒、韦驮殿。范围虽然小，但寺院体裁大略具备。</p></div>
+<div class="para-pair"><p class="p-orig">拟先安真心办道僧十余位，认真修持，以期国运昌隆，灾祸消灭，雨旸时若，天下太平耳。</p><p class="p-trans">打算先安置真心办道的僧人十多位，认真修持，以期国运昌隆，灾祸消灭，雨旸时若，天下太平。</p></div>
+<div class="para-pair"><p class="p-orig">所有打七，或荐亡，或延生，牌位供于佛龛之后，则长年之经声佛号，资益于神识也大矣。</p><p class="p-trans">所有的打七，无论是超荐亡人，还是延长寿命，牌位都供在佛龛之后，那么长年的经声、佛号，对神识的帮助、增益作用就太大了。</p></div>
+<div class="para-pair"><p class="p-orig">此次建筑，功德芳名，另碑刻之。倘有大功德主，所住人数，再为扩充。所愿住此寺者，同发自利利他，同生西方之心，庶可不孤佛化，不负己灵，四恩总报，三有齐资矣。</p><p class="p-trans">这次建筑寺院的功德芳名，用另外一碑来镌刻。如果再有大功德主，所住的人数，就再来扩充。我衷心希望，住在这个寺院的僧众，共同发起自利利他、同生西方的心，这才能不辜负佛的教化，不辜负自己的佛性，父母恩、众生恩、国家恩、三宝恩全都来回报，使欲界、色界、无色界的一切众生都能获得利益啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【雨旸时若】</span>语本《书·洪范》：“曰肃，时雨若；曰乂，时旸若。”后用“雨旸时若”谓晴雨适时，气候调和。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【三有】</span>谓三界之生死。一、欲有，欲界之生死；二、色有，色界之生死；三、无色有，无色界之生死。佛教认为三界之生死境界有因有果，故谓之有。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

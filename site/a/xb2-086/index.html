@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>五台山碧山寺由广济茅篷接法成就永为十方常住碑记（民十八年） · 印光法师文钞</title>
+<meta name="description" content="窃以具缚凡夫，以迷染为受生之本。法身大士，以悲智为应化之源。故我文殊师利菩萨，道证两足，德超十地，久成正觉，安住寂光。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-086/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="五台山碧山寺由广济茅篷接法成就永为十方常住碑记（民十八年） · 印光法师文钞">
+<meta property="og:description" content="窃以具缚凡夫，以迷染为受生之本。法身大士，以悲智为应化之源。故我文殊师利菩萨，道证两足，德超十地，久成正觉，安住寂光。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-086/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">五台山碧山寺由广济茅篷接法成就永为十方常住碑记（民十八年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">窃以具缚凡夫，以迷染为受生之本。法身大士，以悲智为应化之源。故我文殊师利菩萨，道证两足，德超十地，久成正觉，安住寂光。</p><p class="p-trans">我认为，具缚凡夫，以迷惑杂染为受生的根本；法身大士，以慈悲智慧为应化的根源。所以我们的文殊师利菩萨，道证福慧两足，德超十地菩萨，久远劫前已经成就正等正觉，安住在常寂光净土。</p></div>
+<div class="para-pair"><p class="p-orig">由悲愿宏深，故不动真际，现身尘刹，于此世界，示作菩萨，以大智力，辅弼释迦。其应化之迹，在清凉山，华严经中，预为宣说，以故大法东来，随即开山。</p><p class="p-trans">但是由于悲愿宏深，所以不动真际，现身尘刹，在此娑婆世界，示现作菩萨，以大智慧力，辅助本师释迦牟尼佛。菩萨应化的胜迹，在清凉山（即五台山），《华严经》中，也预先宣说过，所以佛法流传到东土之后，随即就开五台山为文殊师利菩萨应化的道场。</p></div>
+<div class="para-pair"><p class="p-orig">自兹厥后，代有高人，宏扬法化，利益群萌，由汉迄今，相续不绝。至明成化间，有孤月净澄禅师者，禅净各臻其极，道声因之大振。</p><p class="p-trans">从此以后，历代都有高僧大德，宏扬法化，利益群萌，从汉朝到现在，相续不绝。到了明朝成化年间，有孤月净澄禅师，禅定与念佛的功夫，都登峰造极，五台山的道风德声因此大振。</p></div>
+<div class="para-pair"><p class="p-orig">代王成炼，事以师礼，建寺于华严谷，以供奉焉。请敕赐额曰碧山普济禅寺，法道大兴，宗风丕振。</p><p class="p-trans">代惠王朱成炼，以师礼相待，在华严谷建寺，来供奉大师。请明宪宗敕赐寺额为“碧山普济禅寺”，法道大兴，宗风大振。</p></div>
+<div class="para-pair"><p class="p-orig">清初，蕴证如壁禅师，住持此寺，久为王臣所尊敬，于康熙初，改寺额为护国焉。降及清季，哲人云亡，颇形凋敝。</p><p class="p-trans">清朝初年，蕴证如壁禅师，住持此寺，一直被君王大臣所尊敬，在康熙初年，改寺额为“护国寺”。到了清末，才智卓越的人都去世了，寺院的建筑非常凋敝。</p></div>
+<div class="para-pair"><p class="p-orig">于光绪三十二年，乘参，恒修二师，来山朝台，见各台顶，只有石室，绝无僧居。凡朝台者，渴不得饮，饥不得食，倦无歇处。遂发大心，于北台顶，修一茅篷，名为广济，专为朝台者，作一歇息饮食之所，随力结缘，以利一切中外缁素。</p><p class="p-trans">在光绪三十二年（1906年），乘参、恒修二位法师，来五台山朝台，见各个台顶，只有石室，完全没有僧人居住。凡是朝台的人，渴了不能饮水，饿了不能吃饭，累了没有休息的地方。于是发下大心，在北台顶，修建了一座茅篷，名为“广济”，专门为朝台的人，作为一处歇息饮食的地方，随分随力地与大众结缘，来利益一切中外的僧人居士。</p></div>
+<div class="para-pair"><p class="p-orig">民国纪元之后，碧山寺僧，无可支持，田产典质殆尽。乘参，恒修，果定，入碧山寺籍，称为东房。乘参更名昌乘，恒修更名昌恒，果定更名隆果，所谓接法成就也。</p><p class="p-trans">民国纪元之后，碧山寺的僧人，没有施主的支持，于是把田产典当、抵押殆尽了。乘参、恒修、果定，入了碧山寺籍，称为东房。乘参更名为昌乘，恒修更名为昌恒，果定更名为隆果，这就是所谓的接法成就。</p></div>
+<div class="para-pair"><p class="p-orig">由是尽力募化，维持道场，建设茅篷，接待十方僧众，竭力供养。从是以来，春则打念佛七，夏则讲经，秋冬则坐香打静七，以尽己分，而祝国民。</p><p class="p-trans">因此，他们尽力募化，来维持道场，建设广济茅篷，接待十方僧众，竭力供养。从此以后，春季就打念佛七，夏季就讲经，秋冬二季就坐香打静七，来尽自己的职责本分，祝祷国家太平、人民安乐。</p></div>
+<div class="para-pair"><p class="p-orig">添修禅堂寮舍，拟恢复旧制，永续祖灯。七年，募资赎回东西两院屋地。九年，赎回光明寺村莜麦租四十石，以供僧众道粮。九，十两年，乘参，恒修二师，相继圆寂。</p><p class="p-trans">添加修建了禅堂寮舍，打算恢复寺院的旧制，永续祖师的慧灯。民国七年（1918年），募化资金赎回了东西两院的房屋土地。民国九年（1920年），赎回了光明寺村莜麦租四十石，来作为供养僧众的道粮。民国九、十两年，乘参、恒修二位法师，相继圆寂。</p></div>
+<div class="para-pair"><p class="p-orig">嗣法门人果定，遵遗命，勉力维持。蒙诸大护法，诸山长老，赞襄之力，添修寮舍三十余间。印补藏经，栽种树木。修筑水渠，由光明寺村，直灌碧山寺内。</p><p class="p-trans">接法门人果定，遵从师父的遗命，努力维持。承蒙诸大护法，诸山长老，赞助之力，添加修建寮舍三十多间。印补《大藏经》，栽种树木。修筑水渠，从光明寺村，一直灌到碧山寺内。</p></div>
+<div class="para-pair"><p class="p-orig">修河道石坝，以防冲湮而坏禾稼。南北诸山，诸大居士，以碧山寺既为十方常住，理应大家赞成，呈文政府，出示立案，以期永久无替。公推马冀平，汪大燮为代表。谛闲法师，并上海佛教维持会程雪楼等，函祈山西阎督办维持。</p><p class="p-trans">修理河道石坝，来防止洪水冲淹而损坏庄稼。南北诸山，诸大居士，都认为碧山寺既然成为十方常住，理应得到大家的赞成，呈文给政府，公示备案，以期永久不会改变。于是大家推选马冀平、汪大燮为代表。谛闲法师，以及上海佛教维持会的程雪楼等人，写信请求山西督办阎锡山维持。</p></div>
+<div class="para-pair"><p class="p-orig">于是总参议长赵君戴文，委山西佛教会会长力宏和尚，同会员等，于十六年五月来山。邀本山僧正副会长，区长，商会会长，十大诸山，僧俗名流。</p><p class="p-trans">于是总参议长赵戴文，委托山西佛教会会长力宏和尚，同会员等人，在民国十六年（1927年）五月来五台山。邀请本山僧众的正副会长、区长、商会会长，十大诸山，僧俗名流。</p></div>
+<div class="para-pair"><p class="p-orig">公议碧山寺负债甚巨，后起无人，由东房广济茅篷，代还债洋一万七千七百余圆。碧山所有殿房田地，永远成立十方常住。不许再收徒弟，以免丧祖德而辱佛门。</p><p class="p-trans">共同协商议定：碧山寺负债累累，后起无人，由东房的广济茅篷，代还债务一万七千七百多圆。碧山寺所有的殿房田地，永远归属十方常住。不许再收徒弟，以免丧失祖德而侮辱佛门。</p></div>
+<div class="para-pair"><p class="p-orig">于十七年七月二十九日，当同大众，还清隆福所欠外债洋一万七千七百余圆。隆福前所押出红契约据，一并收回守存。</p><p class="p-trans">在民国十七年（1928年）七月二十九日，应当同大众，还清隆福所欠的外债银洋一万七千七百多圆。隆福以前所抵押出的红契约据，一并收回保存。</p></div>
+<div class="para-pair"><p class="p-orig">山西省佛教会，代为呈请省政府，县政府，备案出示，俾众周知碧山寺永为十方常住，从兹专心办道，修持净业。将见狮子窟中，了无异兽，栴檀林里，永绝伊兰。</p><p class="p-trans">山西省佛教会，代为呈请省政府、县政府，备案公示，使得大众全都知道碧山寺，永远成为十方常住，从此专心办道，修持净业。我们将会见到狮子窟中，没有其他的野兽；栴檀林里，永绝恶臭的伊兰。</p></div>
+<div class="para-pair"><p class="p-orig">勉继孤月禅师之道，用慰文殊大士之心。则一切缁素赞襄成全之一番苦心，不为虚设矣。凡住此者，各宜勉旃。</p><p class="p-trans">努力继承孤月禅师的法道，用来慰藉文殊大士的悲心。那么一切僧俗赞助成全的一番苦心，就不白费了。凡是住在此寺的僧人，每个人都应该努力修行。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【红契】</span>官府收税后办理过户过税手续，然后在“白契”上粘贴由官方排版统一印刷的文书（即“契尾”），最后在粘贴处加盖州县官印（骑缝章），这样的地契叫做“官契”，也叫“红契”。红契受法律保护。红契是政府或法律认可的产权凭证。当事人双方订立契约，完税后由政府在契尾加盖政府印章，相当于官府颁发的财产所有权证。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【伊兰】</span>《观佛三昧经》云，“末利山中有伊兰树臭若胖尸。熏闻四十由旬。其华红色甚可爱乐。若有食者发狂而死。牛头栴檀发生伊兰丛中……卒从地生。成栴檀树。众人皆闻栴檀妙香。永无伊兰臭恶之气。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【后期发生的碧山寺事件】</span>按照佛教的规定，“十方院”是专为招待游方僧人设立的寺院。“十方丛林，不准剃度”，任何人也不得把它攫为私家寺院。1935年，长期住在碧山寺的隆福师徒等人，自恃住寺日久，人多势众，企图改变碧山寺“十方禅寺”的性质，把这座颇负盛名的十方丛林变成他的子孙庙。为此，以广慧和尚为代表的住院十方僧与之展开了激烈的斗争。最后，全国佛教界的代表和政府的代表在台怀镇专门开会解决碧山寺十方僧与子孙僧的纠纷。参加会议的有：当时的国民党中央政府蒙藏委员会副委员长赵丕廉的代表田乃登、太原绥靖公署总参议赵戴文的代表力宏（山西省佛教会常委委员）、太原绥靖公署最高参谋台林逸、国民政府委员黄复生、五台山区长杜能宽、中国佛教会监事胡子笏、南京佛学会职员刘根尘、四川重庆佛学社常务董事米叔、五台山僧会长寂富、碧山寺东房主任广慧、西房主任隆福。经过会议研究，与会者一致批评隆福的错误行为，出于对同道者的友情，与会者凑了一些钱给隆福师徒，让他们离开碧山寺去另建道场。碧山寺的事情竟然引起全国佛教界和有关方面的如此关注，由此可以知道碧山寺在全国的影响和地位。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

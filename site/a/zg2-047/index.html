@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>厦门流通佛经缘起序 · 印光法师文钞</title>
+<meta name="description" content="如来说法，各随机宜。大根则直示真如妙性，令其了知妙性圆明，离诸名相，本来无有世界众生。常寂常照，不生不灭。五蕴空而六根清净，四相亡而一心昭彰。从兹称性起修，由修证性。云布慈门，波腾行海。虽慈悲行愿，弥纶法界。而复三轮体空，了无自他能所之相。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-047/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="厦门流通佛经缘起序 · 印光法师文钞">
+<meta property="og:description" content="如来说法，各随机宜。大根则直示真如妙性，令其了知妙性圆明，离诸名相，本来无有世界众生。常寂常照，不生不灭。五蕴空而六根清净，四相亡而一心昭彰。从兹称性起修，由修证性。云布慈门，波腾行海。虽慈悲行愿，弥纶法界。而复三轮体空，了无自他能所之相。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-047/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">厦门流通佛经缘起序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">如来说法，各随机宜。大根则直示真如妙性，令其了知妙性圆明，离诸名相，本来无有世界众生。常寂常照，不生不灭。五蕴空而六根清净，四相亡而一心昭彰。从兹称性起修，由修证性。云布慈门，波腾行海。虽慈悲行愿，弥纶法界。而复三轮体空，了无自他能所之相。</p><p class="p-trans">如来说法，各随众生机宜。对于大根机众生，就直接开示真如妙性，令他们了知，妙性圆明，离诸名相，本来没有世界众生；常寂常照，不生不灭。五蕴皆空而六根清净，四相俱亡而一心昭显。从此安住真如妙性而生起修持，由修持而证得真如妙性。如彩云布满慈悲之门，波浪奔腾万行大海。虽则慈悲行愿，遍布法界。而又三轮体空，丝毫没有自他、能所之相。</p></div>
+<div class="para-pair"><p class="p-orig">小根则示以三归，作反邪归正之本。示以五戒十善，作得生人天之因。遇父言慈，遇子言孝，兄友弟恭，夫倡妇随。恪守伦常，各尽其分。兼以戒杀放生，吃素念佛。诸恶莫作，众善奉行。根器稍胜者，则示之以四谛十二因缘，令其断惑证真，了生脱死。</p><p class="p-trans">对于小根机众生，就开示三归依，作为反邪归正的根本；开示五戒十善，作为得生人天之因。遇到父亲就讲慈爱，遇到儿子就讲孝顺，遇兄长讲友爱，遇弟弟讲恭敬，夫倡妇随。严守伦理纲常，各尽自己本分，并且戒杀放生，吃素念佛，诸恶莫作，众善奉行。对于根器稍利一些的众生，就开示四谛、十二因缘，让他们断惑证真，了脱生死轮回。</p></div>
+<div class="para-pair"><p class="p-orig">又以一切众生，由身口意，起贪瞋痴。由贪瞋痴，造杀盗淫。以是因缘，轮回六道，相生相杀，尽未来际，了无止息。虽则示以人天声闻缘觉菩萨等乘，而自力断惑，实非易易。况复末世众生，根机陋劣，不仗佛力，决难解脱。</p><p class="p-trans">又因为一切众生，由身口意三业，起贪瞋痴三毒。由贪瞋痴三毒，造杀盗淫三罪。由此因缘，轮回在六道中，彼此互生，互相杀害，穷尽未来，无法止息。虽然开示了人、天、声闻、缘觉、菩萨等乘，然而靠自力来断除烦惑，实在太不容易。何况末世众生根机陋劣，如果不依仗佛力，决定难以解脱。</p></div>
+<div class="para-pair"><p class="p-orig">于是特开一仗佛慈力，横超三界之净土法门。俾已证圣者，速圆佛果。未断惑者，带业往生。但具真信切愿，恳切至诚持佛名号。能如是者，万不漏一。如人堕海，乘救船力，速得到岸。末世众生，舍此一法，欲出生死，万无一得。</p><p class="p-trans">于是特别开示一个仗佛慈力，横超三界的净土法门。使得已证果位的圣者，快速圆满佛果；没有断惑的众生，带业往生。只要具足真信切愿，恳切至诚持佛名号。能够这样的话，万人当中也不会漏掉一人。如同堕入大海当中的人，乘着救生船的力量，快速到岸。末世众生，舍此净土一法，想要出离生死轮回，万人之中也没有一人成功。</p></div>
+<div class="para-pair"><p class="p-orig">是知如来大法，抚育群萌。如天普盖，似地均擎。森罗万象，无一能出其外，不在其中者。如日月丽天，普照万国。虽生盲不见光相，亦蒙其照。如时雨普润万卉，大根大茎，小枝小叶，悉皆向荣。纵焦芽败种，亦复平等沐泽。</p><p class="p-trans">所以知道，如来大法，抚育一切众生。如同天空和大地，普遍地覆盖和承载一切万物。森罗万象，没有一样能超出其外，没有一样不在其中。如同日月普照万国，虽然生来就眼盲的人看不见光，也会蒙受日月的照耀。如同雨露普润万种卉木，大根大茎，小枝小叶，全都欣欣向荣。纵然是焦芽败种，也都平等地蒙受润泽。</p></div>
+<div class="para-pair"><p class="p-orig">如大海普纳百川，大江大河亦入，小沟小渠，乃至一勺一滴亦入。既入大海，则与大海同一咸味，同一深广。失彼故名，得此海号。</p><p class="p-trans">如同大海普纳百川。大江大河，流入海中；小沟小渠，乃至一勺水、一滴水，也流入海中。流入海中之后，就与大海是同样的咸味，同样的深广。从而失去它们原来的名称，得到大海的名号。</p></div>
+<div class="para-pair"><p class="p-orig">故知佛法钧陶化育，了无弃物。为诸法之本源，作众生之恃怙。世出世间一切诸法，无不从此法界流，无不还归此法界。</p><p class="p-trans">所以知道，佛法造就化育一切众生，丝毫也不会遗弃。是诸法的本源，是众生的依靠。世出世间一切诸法，无不从此法界流，无不还归此法界。</p></div>
+<div class="para-pair"><p class="p-orig">拘墟者不知佛法，乃十法界公共之法。唯见其舍俗出家之一端，谓为废弃伦理，沉空滞寂，与世教相乖戾。岂知佛法如太虚之无不包容，如阳春之无不化育。圣以之而为圣，贤以之而为贤。</p><p class="p-trans">偏执浅见的人，不知道佛法乃是十法界公共之法。只看见其中舍俗出家这一件事，就说（佛法）废弃了纲常伦理，沉于空洞，滞于寂灭，与世间教法相违背。他哪里知道，佛法如同太虚一般无所不包，如同阳春一样无不化育。圣人凭借它而成为圣人，贤人凭借它而成为贤人。</p></div>
+<div class="para-pair"><p class="p-orig">故古之建大功，立大业，勋名动天地，精诚贯日月者，皆自学佛得力而发。即宋之周，程，张，朱，发明圣人心法，亦由学佛而得。</p><p class="p-trans">所以过去那些建大功、立大业，功名震天动地，精诚贯彻日月的人，都是由学佛得力而发起。即使是宋朝的周敦颐、二程（程颢、程颐）、张载、朱熹，他们阐发显明儒家圣人心法，也是由学佛而得。</p></div>
+<div class="para-pair"><p class="p-orig">以其器量狭小，门庭见重。不惟不肯表扬，反从而辟驳之，欲以关闭后之学者，悉皆不入佛法。故作此掩耳盗铃之计。得人之善，认为己功，反谓人不我若。其于正心诚意，致起罅隙，不能究竟圆满，可不哀哉。</p><p class="p-trans">因为他们器量狭小，门派意识太重。不仅不肯对佛法加以表扬，反倒进行辟驳。特意采用了这个掩耳盗铃的策略，想要关闭后学者的门径，让他们全都不能进入佛法。得到别人的善助，认作是自己的功劳，反倒说人家不如自己——从而使得他们在正心诚意这一点上，也有了瑕疵，不能究竟圆满。能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">佛法传入中国，将二千年。其间由西竺所译之经律论，并此土禅，教，律，密，净等诸宗古德之著述，浩如烟海。随机所近，随人所乐，以为研穷。或遍研各宗，或专主一门。如城四门，就近而入。所入之门虽异，所入之城则同。如大海之一滴，味具百川。如帝网之一珠，影现千粒。一门深入，诸法悉通。以迄无明净尽，寂照圆融，三际坐断，十界平沉，复还本有之天真，以证无上之觉道，固属上上根人。</p><p class="p-trans">佛法传入中国，将近二千年。这期间，由天竺所翻译的经律论三藏，以及中国禅、教、律、密、净等诸宗古德的著述，浩如烟海。能够随自己的根机和偏好而穷尽地钻研。或者普遍研究各个宗派，或者专主一门深入研究。如同城有四个门，就近而入。所入的门虽然不同，所入的城则是相同的。如同大海中的一滴水，具足了百川之水的味道；如同帝释网中的一粒珠，影现出千粒宝珠。一门深入，进而一切法全都通达，以至于彻底破除无明，寂照圆融，三际坐断，十界平沉，恢复本有的天真，证得无上的觉道。（这样的人）自然属于上上根人。</p></div>
+<div class="para-pair"><p class="p-orig">其次则息贪瞋痴，断杀盗淫。诸恶莫作，众善奉行。渐积功德，增长福慧。敦伦尽谊，爱众亲仁。戒杀放生，习成慈善。物尚慈悯，何况乎人。推此风化，以遍世界。尚有互相戕害，竞谋杀戮，各欲灭彼种族，以惬己心乎哉。</p><p class="p-trans">其次，则要息灭贪瞋痴三毒，断除杀盗淫三业。诸恶莫作，众善奉行。渐渐积累功德，增长福慧。敦笃伦常，恪尽道义本分，慈爱大众，亲近仁者。戒杀放生，熏习而成慈善。动物尚且要慈悯，何况是人呢？推行这样的风俗，周遍整个世界。还会有互相残害，争相谋杀，各各想要把对方灭族，来让自己开心的事吗？</p></div>
+<div class="para-pair"><p class="p-orig">厦门蔡吉堂，林鸿猷，陈得禄，愍劫运之惨凄，欲为挽救。冀同人之开悟，流通佛经。乃按本及缴用以出售，绝不求利。欲启人耳目，祈予为序。予嘉其诚，用述颠末。</p><p class="p-trans">厦门蔡吉堂，林鸿猷，陈得禄三位居士，悲愍杀劫厄运惨凄，想要加以挽救；希望同人都能开悟，所以流通佛经。按照成本以及所应上缴的费用来出售，绝不谋利。想要开启人们的耳目，祈求我写一篇序文。我嘉许他们的诚意，从而叙述前后本末如上。</p></div>
+<div class="para-pair"><p class="p-orig">须知佛法，以因果报应为下学上达，原始要终之道。今之上无道揆，下无法守，彼此相戕，以杀为乐。只图自己快意，不顾国之灭亡，民之涂炭者，皆由不知因果报应之所酿成也。</p><p class="p-trans">必须知道，因果报应，是贯穿佛法下学上达，从始至终的要道。现如今，掌权的人没有道义准则，平民百姓没有法守，彼此残害，以杀为乐；只图自己痛快，却不顾国家灭亡、人民困苦。这些都是由于不知因果报应而酿成的。</p></div>
+<div class="para-pair"><p class="p-orig">予常曰，因果者，世出世间圣人平治天下，度脱众生之大权也。当今之世，若不提倡因果报应，生死轮回之事理。欲令天下太平，人民安乐，虽佛祖圣贤齐出，亦末如之何也已矣。</p><p class="p-trans">我常常说：因果，是世出世间圣人治理天下，度脱众生的大权。当今之世，如果不提倡因果报应、生死轮回的事理，而想要让天下太平，人民安乐，即使佛祖和诸位圣贤一齐出世，也无可奈何啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【四相】</span>我相、人相、众生相、寿者相。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【昭彰】</span>昭著；显著。亦谓使彰明。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【弥纶】</span>统摄；笼盖。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【三轮体空】</span>就布施言，施者、受者和所施之物，谓之三轮，行施后，此三轮相，不存于心，名三轮体空。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【能所】</span>即“能”与“所”之并称。某一动作之主体，称为能。其动作之客体（对象），称为所。例如能见物之“眼”，称为能见；为眼所见之“物”，称为所见。又被依靠者，称所依；依靠他人者，称能依。修行者，称能行；所行之内容，称所行。而归依者，称能归；为其所归依者，称所归。教化人者，称能化；被教化者，称所化。认识之主体，称为能缘；其被认识之客体，称为所缘。以语句、文章、教法等表示意义者，称能诠；为其所表示之意义、内容者，称所诠。总之，能与所具有相即不离与体用因果之关系，故称能所一体。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【钧陶】</span>用钧制造陶器。比喻造就。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【罅隙】</span>瑕疵；缺憾。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【寂照】</span>（术语）真理之体云寂，真智之用云照。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【三际】</span>指过去、现在、未来三时。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【坐断】</span>禅林用语。坐，平坐之意。坐断，原意谓“彻底的坐”，引申为拼命做之意。又作坐破。即由坐禅之力以断迷，用以形容坐破差别相，彻底达于平等一如之境地。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【平沉】</span>沉没；隐没。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【颠末】</span>本末；前后经过情形。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【下学】</span>谓学习人情事理的基本常识。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【上达】</span>1.古谓士君子修养德性，务求通达于仁义。2.谓上知天命。</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【原始要终】</span>探究事物发展的始末。《易·系辞下》：“《易》之为书也，原始要终以为质也。”</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【道揆】</span>准则；法度。</p>
+<p class="note-item"><span class="note-n">[17]</span><span class="note-term">【涂炭】</span>陷入泥沼，坠入炭火。比喻极其艰难困苦</p>
+<p class="note-item"><span class="note-n">[18]</span><span class="note-term">【末如之何】</span>犹言无法对付，莫可奈何。《论语·子罕》：“子曰：‘法语之言，能无从乎？改之为贵。巽与之言，能无说乎？绎之为贵。说而不绎，从而不改，吾末如之何也已矣。’”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

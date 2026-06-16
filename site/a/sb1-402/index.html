@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复蔡契诚居士书一 · 印光法师文钞</title>
+<meta name="description" content="先后天衰弱，当以善于保养为事。若欲靠食物滋养，食素人宜多吃麦。食麦之力大于米力不止数倍。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-402/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复蔡契诚居士书一 · 印光法师文钞">
+<meta property="og:description" content="先后天衰弱，当以善于保养为事。若欲靠食物滋养，食素人宜多吃麦。食麦之力大于米力不止数倍。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-402/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复蔡契诚居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">先后天衰弱，当以善于保养为事。若欲靠食物滋养，食素人宜多吃麦。食麦之力大于米力不止数倍。</p><p class="p-trans">先天、后天身体衰弱，应当以好好调养作为事务。如果想靠食物来滋养，吃素的人应该多吃麦类食物。吃麦类食物的效力大过吃米的效力不止数倍。</p></div>
+<div class="para-pair"><p class="p-orig">光吃了面食，则精神健壮，气力充足，音声高大。米则只可饱腹，无此效力。麦比参力尚高数倍。有钱人服参，乃是钱无处用，故作此消耗耳。非真能补人也。</p><p class="p-trans">我吃了面食，就精神健壮，气力充足，音声高大。吃米饭只能填饱肚子，没有这样的效力。麦的效力比人参的效力还要高数倍。有钱的人吃人参，乃是有钱没地方用了，所以要这样来消耗罢了。并不是人参真能滋补人。</p></div>
+<div class="para-pair"><p class="p-orig">又大磨麻油，亦补人。小磨麻油，以炒焦枯了，力道退半。人但知香，实则是焦味耳。</p><p class="p-trans">另外，大磨麻油也滋补人。小磨麻油，因为炒焦枯了，效力减退一半。平常人只知道小磨麻油很香，实际上那是焦味罢了。</p></div>
+<div class="para-pair"><p class="p-orig">莲子，桂圆，红枣，芡实，薏米，皆可滋补。岂必须血肉，方能滋补乎。总之皆不如麦之力大。如不能吃，则兼带著吃。久则自知，亦自好吃矣。</p><p class="p-trans">莲子、桂圆、红枣、芡实、薏米，都可以用来滋补。哪里必须要吃众生的血肉，才能滋补呢？总之，都不如麦食的效力大。如果不习惯吃面食，那么先兼带着吃。时间长了，就自然知道（麦的效力大），也自然好吃了。</p></div>
+<div class="para-pair"><p class="p-orig">吃鸡卵之偈，乃妄人伪造，不可依从。保养之法，第一是寡欲。若不知好歹，任意嫖荡，则死期将至，仙丹亦不灵矣。</p><p class="p-trans">吃鸡蛋的偈颂，是无知妄为的人伪造的，不可依从。保养身体的方法，第一是寡欲。如果不知好歹，任意嫖荡，这样死期就会将至，仙丹也不灵了。</p></div>
+<div class="para-pair"><p class="p-orig">即不嫖荡，自己室人，亦须相与说其保身之由，暂断房事一二年。否则或半年一相亲，或一季一相亲。倘日日行房事，则精髓枯竭，不死何能。</p><p class="p-trans">即使不嫖荡，自己的妻子，也必须对她说明保身节欲的缘由，暂时断绝房事一二年。否则，或者半年一相亲，或者一季一相亲。倘若天天行房事，就会精髓枯竭，怎能不死呢？</p></div>
+<div class="para-pair"><p class="p-orig">节欲之人，所生子女，体壮少病，易于成人。多欲之人，或不能生，以精薄故，不能受孕。纵或生子，或即夭亡。即不夭亡，亦残弱无所成就。</p><p class="p-trans">节欲之人，所生的子女，身体健壮少病，容易长大成人；多欲之人，或者不能生育，因为精薄的缘故，不能受孕。即使或有生子，或许立刻夭亡。即使不夭亡，也是身体残弱，没有什么成就。</p></div>
+<div class="para-pair"><p class="p-orig">汝不知已娶妻乎。若未娶，且缓娶。若已娶，决须暂勿同房，以期身体复元耳。此光切实为汝之言。汝能善体光意，自可福寿绵长，子孙发达矣。（民十二元月初六）</p><p class="p-trans">不知你已娶妻了没有？如果没娶，暂且缓缓再娶；如果已经娶了，一定暂时不要同房，以期身体复元。这是我实实在在为你所说的话。你若能好好体察我的用意，自然能够福寿绵长，子孙发达啊！（民国十二年&lt;1923年&gt;元月初六）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【妄人】</span>无知妄为的人。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

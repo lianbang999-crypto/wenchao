@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>答崔树萍居士问 · 印光法师文钞</title>
+<meta name="description" content="问，地藏王菩萨，为奉行佛法之人，在阴曹职司幽冥教主，系入六道度众生者。然常人每误为神祇，或灵鬼者，诸如此类，不一而足。然则奉行佛法的菩萨，与天仙鬼神，将何由判别耶。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-346/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="答崔树萍居士问 · 印光法师文钞">
+<meta property="og:description" content="问，地藏王菩萨，为奉行佛法之人，在阴曹职司幽冥教主，系入六道度众生者。然常人每误为神祇，或灵鬼者，诸如此类，不一而足。然则奉行佛法的菩萨，与天仙鬼神，将何由判别耶。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-346/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">答崔树萍居士问</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">问，地藏王菩萨，为奉行佛法之人，在阴曹职司幽冥教主，系入六道度众生者。然常人每误为神祇，或灵鬼者，诸如此类，不一而足。然则奉行佛法的菩萨，与天仙鬼神，将何由判别耶。</p><p class="p-trans">问：地藏王菩萨，是奉行佛法的人，在阴曹地府中担任幽冥教主的职位，是入于六道度脱众生的大菩萨。然而平常人常常误将菩萨当作神祇，或者灵鬼，诸如此类，不一而足。那么奉行佛法的菩萨，与天仙鬼神，将怎样来判别呢？</p></div>
+<div class="para-pair"><p class="p-orig">答，神祇乃业报所感，可云职司。地藏菩萨，以弘誓大愿，在幽冥度脱众生，何可云职司乎。世人不识凡圣，一概视作神鬼，亦无怪其然。譬如小儿，只识其家之人，余一切人，彼皆完全不知，当谓一切人，皆不如彼父母之尊贵矣。</p><p class="p-trans">答：神祇是业报所感，可以说是担任职务。地藏菩萨，以弘誓大愿，在幽冥界度脱众生，怎么能说是担任职务呢？世人分别不清凡夫、圣者，一概看作神鬼，这样也不奇怪。譬如小孩子，只见过他家里的人，其余一切人，他都完全不知道，当然会认为一切人，都不如他父母尊贵了。</p></div>
+<div class="para-pair"><p class="p-orig">既知断惑证真，了生脱死者，方为小乘圣人。破无明，证法性者，方可谓之大乘菩萨。而未断烦恼，仗宿福力，得为神祇，尚与天人地位相去悬远。况已证法身之大菩萨乎。不知佛法，纵判也不能了知。已知佛法，用不著判。</p><p class="p-trans">既然知道断惑证真，了生脱死，才是小乘圣人。破无明惑，证得法性，才可称为大乘菩萨。而未断烦恼，依靠宿世的福力，得以成为神祇，尚且与天人的地位相去甚远。何况是已经证得法身的大菩萨呢？不明白佛法，即使判别，也不能明了知道。如果已经明白佛法，就用不著判别了。</p></div>
+<div class="para-pair"><p class="p-orig">问，感应篇，谁人著作。对于他教典籍，以何法辨别之。</p><p class="p-trans">问：《感应篇》，是谁写的。对于其他宗教的典籍，用什么办法来辨别呢？</p></div>
+<div class="para-pair"><p class="p-orig">答，感应篇通行本，有太上二字，谓为老子所作。亦有谓本抱朴子而广之。然不必究其为何人所作，只取其书所说之益。所谓不以人废言也。圣人立法，固不必定取圣人所说为法，只取其益世道人心为事。</p><p class="p-trans">答：《感应篇》的通行本，有“太上”二字，一般认为是老子所写。也有人认为，原本出自葛洪的《抱朴子》，后来广泛流传。然而不必要追究这本书是什么人所写，只取这本书中所说的道理能够利益人的地方。所谓：不以人废言也。圣人建立法则，原本就不必一定要取圣人所说为法，只取其利益世道人心为事。</p></div>
+<div class="para-pair"><p class="p-orig">虫文鸟书，大开文字之端，敢以虫鸟不足重，而不用其文字乎。举此一事，可以息彼妄论是非者之无益繁词。此种繁词，尚不如春禽昼啼，秋虫夜鸣之有天然风味也。</p><p class="p-trans">虫书篆书，大开文字之端，怎敢因为虫子飞鸟，不值得注重，就不用这种文字呢？举出这件事，就可以止息那些妄论是非者的毫无利益的繁琐言辞。这些（轻视文字的）无益言辞，还不如春天的鸟儿在白天婉转啼鸣，秋天的虫子在夜晚静静鸣叫，而有天然风味啊！</p></div>
+<div class="para-pair"><p class="p-orig">问，何谓五部六册。</p><p class="p-trans">问：什么叫五部六册？</p></div>
+<div class="para-pair"><p class="p-orig">答，此外道妄著之书，分五部类，而有六册。故名五部六册。此种书，何须问之。问此，如不以五经四书为是，而欲研究里巷赤子所唱俚曲。枉费心神，了无所益。</p><p class="p-trans">答：这是外道瞎写的书，分为五个部类，而分有六册。所以名为五部六册。这种书，用不着问。问这些，如同不以《五经》《四书》为是，而想要研究街巷百姓所唱的通俗歌曲。枉费心神，毫无利益。</p></div>
+<div class="para-pair"><p class="p-orig">问，萍任律师处文牍，职司撰稿。固随时注意，免种恶因，然为人申抑白冤，每遇有犯罪证据充分，委提刑诉时，虽出诸委托者之意旨，然因我作稿而坐罪，于心究有未安。而今之操律务者，就沪上言，已八百余人。少存良心者，固不乏人，然多有不仅无此不安之心，甚至卑鄙不堪，直接间接蒙其祸害者，不胜屈指。敢乞开示，斯亦挽救人心之一端耳。</p><p class="p-trans">问：弟子任职于律师处的文秘，担任撰稿的职务。故此随时注意，免种恶因，然而为他人申明冤理、表白冤情，常常遇到有犯罪证据充分，委托提起刑事诉讼时，虽然是出自诸位委托人的意思，但因为是我写的文稿而治罪，于内心究竟还是不安。而现今做律师的，在上海来说，已有八百多人。稍存良心的人，固然也有不少，然而有很多人，不仅没有这样不安的心，甚至卑鄙不堪，直接或间接蒙受他们祸害的人，非常多。敢请大师开示，这也是挽救人心的一个方面。</p></div>
+<div class="para-pair"><p class="p-orig">答，此种事，要常常存天地鬼神佛菩萨悉知悉见吾人之心，自可不造恶业。否则本为排难解纷立此法，实为敲诈良善，奖励奸宄之据，可畏之至。倘有别种生计，固当脱离此范围，为最上一著也。</p><p class="p-trans">答：这种事，要常常存有天地鬼神、佛菩萨，完全洞悉知道看见我们的心，自然就能不造恶业。否则，本来是为调解纠纷，建立的法律，实际成为敲诈良善，奖励奸诈的依据，可怕之极。倘若能找到别的工作，固然应当脱离这个圈子为上策。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【感应篇】</span>《太上感应篇》是南宋至明清以来，广传于我国民间的劝善书，并非佛典。略称《感应篇》。凡十章。收录于宋·李昌龄所撰《乐善录》中。本书在我国民间流传甚广，可说是我国民间的精神支柱之一。其思想系源自晋葛洪所撰的《抱朴子》一书。若将《抱朴子》二十卷中的卷三〈对俗篇〉及卷六〈微旨篇〉出现的词句作适当的安排，几乎就可形成《感应篇》全文。
+上述两书在思想上虽有密切的连贯，但在《抱朴子》一书中，却从未出现过《感应篇》这个书名。一般人知道《感应篇》这个名称，是在《宋史·艺文志》内的《李昌龄感应篇一卷》出现之后。根据该文所述，似将《感应篇》的作者，视为李昌龄其人。而李昌龄所撰的《乐善录》中，亦确曾收录《感应篇》一文。然《感应篇》系自《抱朴子》中摘录而编成者，其作者究竟是否为李昌龄，实难遽下定论。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【不以人废言】</span>废：废弃。不因为这个人有不足的地方而不采纳他的正确意见。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【虫文】</span>即虫书。古文字书体的一种。虫书：秦八体书之一。王莽变八体为六体。又名鸟虫书。《汉书·艺文志》：“六体者：古文、奇字、篆书、隶书、缪篆、虫书。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【鸟篆】</span>篆体古文字。形如鸟的爪迹，故称。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【五部六册】</span>是明朝嘉靖时兴起的一个新兴教派--罗教所奉持的经典。由教主罗清所撰写。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【赤子】</span>比喻百姓，人民。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【排难解纷】</span>原指为人排除危难，解决纠纷。今指调停双方争执。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【奸宄】</span>奸诈不法。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

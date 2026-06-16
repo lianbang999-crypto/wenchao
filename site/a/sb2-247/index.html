@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>李凤岐先生夫妇寿序 · 印光法师文钞</title>
+<meta name="description" content="人生世间，寿夭穷通，皆有一定，皆无一定。其一定者，儒者谓之命，谓之天所赋者。夫天，乃大公无私，何以所赋者高下悬殊，万有不齐乎。岂天亦有厚薄轻重之偏私乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-247/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="李凤岐先生夫妇寿序 · 印光法师文钞">
+<meta property="og:description" content="人生世间，寿夭穷通，皆有一定，皆无一定。其一定者，儒者谓之命，谓之天所赋者。夫天，乃大公无私，何以所赋者高下悬殊，万有不齐乎。岂天亦有厚薄轻重之偏私乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-247/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">李凤岐先生夫妇寿序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人生世间，寿夭穷通，皆有一定，皆无一定。其一定者，儒者谓之命，谓之天所赋者。夫天，乃大公无私，何以所赋者高下悬殊，万有不齐乎。岂天亦有厚薄轻重之偏私乎。</p><p class="p-trans">人生在世，长寿、夭折，穷困、通达，都有一定，也都没有一定。那些一定的，儒者称为命，认为是上天所赋予的。天，是大公无私的，为什么所赋予每个人的，高低悬殊，万事万物，都不一样呢？难道天也有厚薄、轻重的偏心、私心吗？</p></div>
+<div class="para-pair"><p class="p-orig">儒家不言三世，故以前因为天所命。而不知所谓天命者，即佛所谓果报也。佛以此身为报身。报前生所作善恶之因，故感今生所得寿夭穷通之果也。此其有定者。</p><p class="p-trans">儒家不讲三世，所以将前世的因，认为是天所赋予的。却不知道所谓的天命，就是佛教所说的果报啊！佛法将这一身当作报身。酬报前生所作的善恶之因，所以招感今生所得的长寿、夭折，穷困、通达的果报。这是有定的。</p></div>
+<div class="para-pair"><p class="p-orig">其不定者，或励志修持，积德累功，希圣希贤。与任意放纵，荡检逾闲，自暴自弃者。乃由今生所作善恶力强，转前生之业报，或增胜与增劣耳。即所谓天定者胜人，而人定亦能胜天也。</p><p class="p-trans">那些不定的，就是或者励志修持，积功累德，效法圣贤。与任意放纵，放荡越礼，自暴自弃的情形。这是由今生所作的善恶力量强大，转变前生的业报，或者增胜与转劣罢了。就是所谓的：天命注定的（吉凶祸福）胜人，而人定的（行善积德）也能胜天啊！</p></div>
+<div class="para-pair"><p class="p-orig">诗曰，永言配命，自求多福。书曰，作善降之百祥，作不善降之百殃。易曰，积善之家，必有余庆，积不善之家，必有余殃。礼曰，故大德必得其禄，必得其位，必得其名，必得其寿，皆约现生修持所感而言也。</p><p class="p-trans">《诗经》中说：“常常思虑自己的行为是否合乎天理，来自求多福。”《尚书》中说：“行善，上天降下百种吉祥；行不善，上天降下百种祸殃。”《周易》中说：“修积善行的家族，必定留有余庆；积累不善行的家族，必定留有余殃。”《礼记》中说：“所以有高尚品德的人必定会得到他应该得到的俸禄，必定会得到他应该得到的地位，必定会得到他应该得到的声誉，必定会得到他应该得到的长寿。”这都是就现生修持所感来说的。</p></div>
+<div class="para-pair"><p class="p-orig">以是知命自我主，福自我求。寿富康宁之权，操之在我。天不过因我之修持，而鉴临嘉许之，初非有厚薄轻重于其间也。</p><p class="p-trans">因此知道，命运是自我主宰的，福泽是自我求来的。长寿、富贵、健康、安宁的权柄，操纵在我手中。天不过是因为我的修持，而审察给予赞许，在这当中，原本没有厚薄、轻重之分。</p></div>
+<div class="para-pair"><p class="p-orig">凤岐先生有志于此，故以笃志为学之时，以家道贫寒，人丁繁盛，恐高堂或有忧思，乃业商于申，冀遂养志之念。岂知司理失人，未三年折阅过半。乃奋志时敏，专司其事。</p><p class="p-trans">李凤岐先生有志于行善积德、改变天命，所以在立志求学的时候，因为家道贫寒，家中人口太多，恐怕父母有所忧虑，于是到上海经商，希望实现奉养父母、顺从其意志的心愿。哪知管事的人用人失当，不到三年，就亏损了一半。于是奋发志向、时刻策励自己，专门来打理这些事。</p></div>
+<div class="para-pair"><p class="p-orig">甫及一年，即获厚利。由是商业发达，日见兴盛。乃得以奉父母，睦兄弟，济贫困，开学校。大立承先启后之本，宏摅民胞物与之怀。而其德配黄夫人，赋性贤淑，温恭庄慎。故得翁姑妯娌侧庶等之欢心。家庭雍睦，人无间言。</p><p class="p-trans">刚刚一年，就获得丰厚利润。从此，生意发达，日见兴盛。于是得以奉养父母，和睦兄弟，救济贫困，建立学校。大立承继先贤、开启后学的根本，广泛抒发人民是我同胞、万物是我同类的胸怀。而他的妻子黄夫人，天性贤淑，温和谦恭、庄重谨慎。所以得到公公、婆婆、妯娌、小妾等人的欢心。家庭和睦，他人没有闲言碎语。</p></div>
+<div class="para-pair"><p class="p-orig">至于抚育儿女，则严慈并用，宽猛相济。虽非己出，有逾亲生。其懿德洵足为闺阃母仪，女流师范。故感令嗣咸有树立。辽祥则诚信无伪，丕承商业。荣祥则安居乐道，宏扬佛法。孙男女辈，悉皆性质淳厚。将来之成德达才，固可预知。凡此皆由先生与夫人厚德深仁之所培植而得来者。</p><p class="p-trans">至于抚育儿女，则是严格、慈祥并用，宽容、严厉相辅。虽然不是自己亲生的孩子，（而对他们的疼爱，）却超过了亲生。她的美德实在足以成为闺门母仪，女流师范。所以感得他们的儿子，都有所建树。李辽祥诚信无伪，很好地继承家族的生意。李荣祥（即李圆净，编辑《印光法师嘉言录》）安居乐道，宏扬佛法。孙子孙女辈，全都性质淳厚。将来成就品德、通达成才，原本就可以预知。凡是这一切，都是由于李先生与黄夫人的深厚仁德所培植而得来的。</p></div>
+<div class="para-pair"><p class="p-orig">噫，洪范五福，无一不备。当此古稀双寿，若不进而祝之，则自屈屈人矣。乌乎可。光佛弟子也。佛以欲令一切众生，皆得成佛为心。以一切众生皆有佛性，皆堪作佛故也。</p><p class="p-trans">噫！《尚书·洪范》“九畴”中所说的五福，没有一福不具备。在这七十古稀双寿之时，如果不前来祝福，就自己理亏而委屈他人了。怎能如此呢？我是佛弟子。佛陀以“欲令一切众生，全都成佛”为心。因为“一切众生皆有佛性，皆堪作佛”的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">佛寿无量，等彼十虚。众生既具佛性，则其寿何以各异。但以众生迷而未悟，背觉合尘，情生智隔，想变体殊。致有三界六道，种种苦乐现象。而人间寿命，高者不过百年。纵非非想天，寿八万四千大劫，及至于尽，仍复下堕。究与蜉蝣朝生暮死者，有何可异。</p><p class="p-trans">佛的寿命无量，等同十方虚空。众生既然具有佛性，那么众生的寿命，为什么各自不同呢？只是因为众生迷惑而没有觉悟，背离觉性、合于尘境，凡情生起而隔离真智，妄想不同而形体有异。导致有了三界六道，种种苦乐的现象。而人间的寿命，高寿的不过一百年。纵然是非非想天，寿命有八万四千大劫，等到命尽，仍旧向下堕落。与蜉蝣朝生暮死，究竟又有什么不同呢？</p></div>
+<div class="para-pair"><p class="p-orig">而阿弥陀佛普度众生，但具信愿，持佛名号。决定临终蒙佛接引，往生西方。既往生已，则超凡入圣，了生脱死。亲炙弥陀，参随海众。忍证无生，位登不退。即此一生，圆成佛道。其为利益，穷劫难宣。较彼自命通家，买椟还珠，弃金担麻之拘墟汉，岂不天渊悬殊乎哉。</p><p class="p-trans">而阿弥陀佛普度众生，只要具足真信切愿，持佛名号。决定临命终时蒙佛接引，往生西方。既已往生，就超凡入圣，了生脱死。亲受阿弥陀佛的教诲，随清净海众参学。证无生法忍，登不退位。就在这一生，圆成佛道。这个利益，穷尽劫数也难以宣说。比起那些自命为大通家，买走木盒、归还宝珠，丢弃金子、担起麻的偏执浅见人，难道不是天渊悬殊吗？</p></div>
+<div class="para-pair"><p class="p-orig">此为佛法中最易修持，最易成就之法。其利益又超出一切诸法之上。以其以果地觉，为因地心，故得因该果海，果彻因源也。先生夫人果能不以人而废言，则西方七宝池中，立见又生两朵紫金莲花矣。愿深思之，愿深思之。</p><p class="p-trans">这是佛法中最容易修持，最容易成就的法门。这个利益又超出一切诸法之上。因为这是以果地觉，为因地心，所以能够因行该摄果地海，果德通彻因地源。李先生、黄夫人果真能够不因为说话人的浅陋而废弃他所说的正确道理，那么西方七宝池中，立即见到又生出两朵紫金莲花了。愿深深思察，愿深深思察。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【天定】</span>宿命论者谓人间的吉凶、祸福、贵贱等皆由天命所定，谓之“天定”。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【荡检踰闲】</span>逾、荡：超越；闲、检：指规矩、法度。形容行为放荡，不守礼法。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【鉴临】</span>审察，监视。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【养志】</span>保摄志气。指培养、保持不慕荣利的志向。多指隐居。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【司理】</span>管事；董事。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【折阅】</span>1.谓商品减价销售。2.谓买主杀价。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【民胞物与】</span>民为同胞，物为同类。泛指爱人和一切物类。宋·张载《西铭》:“民吾同胞，物吾与也。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【侧庶】</span>嫡妻外的偏房。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【宽猛相济】</span>宽：宽容；猛：严厉，猛烈；济：相辅而行。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【丕承】</span>很好地继承。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【洪范五福】</span>“箕子之陈洪范也，末后方说，向用五福，威用六极。五福，六极，乃示前生之因，为今生之果。向，顺也。用，以也，得也。（一）寿，（二）富，（三）康宁，（五）考终命，乃前生修道修德所感之果。（四）攸好德，乃前生修道修德之习性也。极，穷厄也。威，义当作违，悖逆也。谓前生所作所为，悖逆道德，致今生得（一）横死之凶，与夭寿之短折（凶与短折，合为第一），（二）及身不康之疾，（三）心不宁之忧 ，（四）用不足之贫，（五）貌丑之恶，（六）身无能力之弱也。”（《印光法师文钞续编卷下·挽回世道人心标本同治录序（民国己卯冬作 时年七十九）》）</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【情生智隔，想变体殊】</span>“有情之本。依智海以为源。含识之流。总法身而为体。只为情生智隔。于日用而不知。想变体殊。趣业缘而莫返茫茫今古。谁了本因。役役爱憎。情源虚妄。”  《黄龙慧南禅师语录》。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【以人言废】</span>以：因为；废：废弃。因为说话人的地位的低下或犯有错误就不采纳他所说的正确的意见。《论语·卫灵公》：“君子不以言举人，不以人废言。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

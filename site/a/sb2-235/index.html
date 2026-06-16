@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>敬书华严大经以尽孝思序 · 印光法师文钞</title>
+<meta name="description" content="大方广佛华严经者，乃如来初成正觉，称法界性，与一切破无明证法性之四十一位法身大士，说如来自己所证，及一切众生性本自具之菩提觉道也。以故华严一经，王于三藏。而一切诸经，皆从此经流出。彼凡夫二乘，虽同在菩提场中，毕竟不见不闻，以非彼境界故也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-235/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="敬书华严大经以尽孝思序 · 印光法师文钞">
+<meta property="og:description" content="大方广佛华严经者，乃如来初成正觉，称法界性，与一切破无明证法性之四十一位法身大士，说如来自己所证，及一切众生性本自具之菩提觉道也。以故华严一经，王于三藏。而一切诸经，皆从此经流出。彼凡夫二乘，虽同在菩提场中，毕竟不见不闻，以非彼境界故也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-235/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">敬书华严大经以尽孝思序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大方广佛华严经者，乃如来初成正觉，称法界性，与一切破无明证法性之四十一位法身大士，说如来自己所证，及一切众生性本自具之菩提觉道也。以故华严一经，王于三藏。而一切诸经，皆从此经流出。彼凡夫二乘，虽同在菩提场中，毕竟不见不闻，以非彼境界故也。</p><p class="p-trans">《大方广佛华严经》，是如来初成正觉，称法界性，对一切破无明、证法性的四十一个阶位的法身大士，宣说如来自己所证，以及一切众生，佛性本自具足的菩提觉道。所以这部《华严经》，是三藏经王。而一切诸经，都是从这部经典中流出。那些凡夫、二乘圣者，虽然同在如来的菩提道场中，却完全看不见、听不到，因为这不是他们的境界的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">虽则凡夫二乘不见不闻，实为普度人天六道众生之根本法轮。何以故，一切法门，皆仗自力断惑证真，方了生死。念佛法门，但具信愿，持佛名号，即可仗佛慈力，带业往生。断惑证真，末世众生，颇不易到。舍此念佛一门，则芸芸众生，出苦无期矣。</p><p class="p-trans">虽然凡夫、二乘圣者看不见、听不到如来宣讲《华严经》，而这部经，实在是如来普度人天六道众生的根本法轮。为什么呢？因为一切法门，都是依仗自力断惑证真，才能了生死。念佛法门，只要具足信愿，持佛名号，就可以仗佛慈力，带业往生。断惑证真，末法时代的众生，很不容易做到。舍弃这个念佛法门，那么芸芸众生，就出苦无期了。</p></div>
+<div class="para-pair"><p class="p-orig">此经于入法界品，善财以十信满心，受文殊教，遍参知识。最初于德云座下，即闻念佛法门。及至末后至普贤所，普贤以威神加被，俾善财所证，与普贤等，与诸佛等，是名等觉菩萨。</p><p class="p-trans">这部经在《入法界品》中，善财童子以十信满心位（十信位的最后阶段，再破一品无明，即进入初住位而成为法身大士），受文殊菩萨的教导，周遍参访善知识。最初在德云比丘的座下，就听到念佛法门。等到了最后，参访至普贤菩萨所，普贤菩萨以威神加被，使善财童子所证的境界，与普贤菩萨相等，与诸佛齐等，这名为等觉菩萨。</p></div>
+<div class="para-pair"><p class="p-orig">普贤乃为称赞如来胜妙功德，令生欣乐。随即令其发十大愿王，回向往生西方极乐世界，以期圆满佛果。并劝华严海众一切法身大士。夫华藏海众，皆十住，十行，十回向，十地，等觉等诸大菩萨，尚须回向往生西方，方可以亲证即心本具之菩提觉道。况其下焉者乎。</p><p class="p-trans">普贤菩萨于是为他称赞如来胜妙功德，令他生起欣乐之心。随即令他发十大愿王，回向往生西方极乐世界，以期圆满佛果。并以此劝导华严海众，一切法身大士。华藏海众菩萨，都是证得十住、十行、十回向、十地、等觉位的诸大菩萨，还必须回向往生西方，才可以亲证即心本具的菩提觉道。何况在这之下的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">而观经下品下生五逆十恶，临终地狱相现，有善知识教以念佛，或念十声，或止数声，亦可往生西方，得预末品。若非华严所说一生成佛之法，末后归宗，归于往生西方。彼世之禅教诸知识，能不以念佛法门为权小方便非究竟道乎。</p><p class="p-trans">而《观经》中的下品下生，犯了五逆十恶的罪人，临终地狱相现前，若有善知识教他念佛，或者念十声，或者只念数声，也可往生西方，得以预入最下一品。如果不是《华严经》所说一生成佛的法门，最后归宗，归结到往生西方极乐世界。那世间的禅宗、教下的诸位知识，能不将念佛法门认为是权巧、小乘、方便，不究竟的道路吗？</p></div>
+<div class="para-pair"><p class="p-orig">而一切众生，皆具如来智慧。但以妄想执著，不能证得。若离妄想，则一切智，无师智，即得现前。由闻此义故，一切凡夫，当不至高推圣境，自处凡愚也。</p><p class="p-trans">而一切众生，皆具如来智慧。只是因为妄想执著，不能证得。如果离开妄想，那么一切智，无师智，即得现前。由于听闻到这个义理的缘故，一切凡夫，应当就不至于认为圣境高不可攀而自己甘处凡夫愚昧的地位啊！</p></div>
+<div class="para-pair"><p class="p-orig">是知此经，乃十方三世一切诸佛，上成佛道，下化众生，成始成终之究竟法门。无论何种根性，皆当依之修习。而其最切要者，唯在念佛一门。良由全性成修，故上上根不能逾其阃。全事即理，故下下根亦可臻其域。此经乃一大藏教之本源，一切法门之归宿也。</p><p class="p-trans">所以知道这部经，是十方三世一切诸佛，上成佛道，下化众生，成始成终的究竟法门。无论何种根性，都应当依照来修习。而其中最切要的，唯在念佛一门。实在是由于全体性德成为修德，所以上上根的圣者，不能超出念佛法门之外。全体事相就是理体，所以下下根的罪人，也可以到达净土的领域。这部经是一大藏教的本源，一切法门的归宿啊！</p></div>
+<div class="para-pair"><p class="p-orig">苏州尤养和居士，虽出富贵之家，绝无纨绔习气。而且笃信佛法，恪尽孝道。其母唯恐或为习俗所移，故于弥留之际，嘱其敬书华严，以期熏染成种，永为道本。兼以上报四恩，下资三有，其母可谓善用其慈者。彼遂于丧期中，日为缮写，以冀增高慈母之莲品，消除自己之恶业。设非宿有善根，何能如是也耶。</p><p class="p-trans">苏州尤养和居士，虽然出身于富贵之家，但绝对没有纨袴子弟的习气。而且深信佛法，恪尽孝道。他母亲唯恐他或许被习俗所转，所以在弥留之际，嘱咐他要恭敬书写《华严经》，以期望他熏染八识，成为种子，永为道本。同时以此上报四恩，下资三有，他的母亲可以说是，非常善于运用她的慈悲啊！他于是在母丧期间，每天抄写《华严经》，来希望增高慈母的莲品，消除自己的恶业。如果不是宿有善根，如何能够如此呢？</p></div>
+<div class="para-pair"><p class="p-orig">今则经已告竣，爰托方外友文涛大师，祈光发挥经义。以冀后之览者，咸生正信。窃以华严经义，虽用大海为墨，尽未来际，宣扬一句一字之义，尚不能尽。况光之肤浅无知，何能赞扬一二乎哉。然亦不宜孤彼来意。且就其纲要，与其利益，略书大意以遗之。倘能依之而修，则究竟成佛，尚可必得。况其他文义乎。（民国十七年戊辰六月朔旦）</p><p class="p-trans">现今，这部手写《华严经》已经完成，委托他的方外友人文涛大师，请我发挥经文之义。希望后来览阅这部经的人，全都生起正信。我认为《华严经》的义理，即使用大海为墨水，尽未来际，宣扬其中一句、一字的义理，尚且不能穷尽。何况我肤浅无知，如何能够赞扬其中的一二呢？然而也不应辜负他的来意。姑且就这部经的纲要，与这部经的利益，略微写出大意来回赠给他。倘若能够依照而修持，那么最终成佛，也一定能实现。何况其他的文字义理呢？（民国十七年戊辰&lt;1928年&gt;六月初一）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【信满成佛】</span>华严宗用语。谓于十信位最后的满位成佛。根据华严宗之圆融教义，十信虽为修行过程之初阶，然亦可具现佛之究极境地。旧译《华严经》卷八：“初发心时便成正觉，知一切法真实之性。具足慧身，不由他悟。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【一切智】</span>指了知内外一切法相之智。系三智之一。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【无师智】</span>&lt;一&gt;指非藉他力，不待他人教而自然成就之智慧。与“自然智”为同义语。&lt;二&gt;指无师独悟之智慧。如佛所证得之智慧，非由师教或外力而得；又如缘觉（独觉）圣者，观诸法因缘生灭，不待师教而证成觉智。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【缮写】</span>照底稿抄写。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【朔旦】</span>旧历每月初一。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

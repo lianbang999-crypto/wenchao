@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复寒世子函 · 印光法师文钞</title>
+<meta name="description" content="物犹如此，已交习勤所排印。光为广布起见，改作一卷，统一页数。前光作一序，凡前所有之序，均续之于后，目录亦归一处。其中之文，概未改动，以光目力不给，不能看。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-069/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复寒世子函 · 印光法师文钞">
+<meta property="og:description" content="物犹如此，已交习勤所排印。光为广布起见，改作一卷，统一页数。前光作一序，凡前所有之序，均续之于后，目录亦归一处。其中之文，概未改动，以光目力不给，不能看。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-069/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 书信</div>
+      <h1 class="art-title">复寒世子函</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">物犹如此，已交习勤所排印。光为广布起见，改作一卷，统一页数。前光作一序，凡前所有之序，均续之于后，目录亦归一处。其中之文，概未改动，以光目力不给，不能看。</p><p class="p-trans">《物犹如此》（注1），已经交给上海习勤所（注2）排印。我为了广泛流布起见，改作一卷，统一页数。以前我写序，凡是前面所有的序，全都是接在原书序的后面，目录也归在一起。其中的文字，一概没有改动，因为我视力不足，不能细看。</p></div>
+<div class="para-pair"><p class="p-orig">徐公学识颇富，惜于佛法尚甚隔膜。此书乃世间法，固无不当。唯通慧鉴第一章评语中，引外道心经注，不无小疵。此君之最小门生，在普陀山出家，曾与光详说其师之事。寿九十六岁，临终天乐鸣空，盖生天尔耳。</p><p class="p-trans">徐谦先生学识颇为丰富，可惜他对于佛法尚不是很通晓。这本书是世间法，固然没有什么不妥当的。唯有其中《通慧鉴》第一章的评语中，引外道的《心经注》，有点小瑕疵。徐谦最小的门生，在普陀山出家，曾经与我详细说过他老师的事。他活到九十六岁，临终时天乐鸣空，大概是生天去了。</p></div>
+<div class="para-pair"><p class="p-orig">物犹如此，作三号字排。大本子，每面十二行，每行卅二字。亦拟印三万。此纸型贵社要用，亦可令送一付。然此原纸型，仍可刷印。非歧路指归修改文言者比。如欲用者，祈为示知，以便令其多打一付。歧路指归纸型，送北平中央刻经院一付，自存三付。物犹如此，亦欲作此办法。现在世道人心无法可救，以此之故，或可有感发之益。</p><p class="p-trans">《物犹如此》，作三号字排印。大本子，每面十二行，每行三十二个字。也打算印三万册。这个纸型贵社如果要用，也可以让人送一付。然而这个原来的纸型，仍然可以印刷。并非《歧路指归》修改文词言句，重新排印可比的。如果想要用的话，请来信告知，以便让他们多打一付纸板。《歧路指归》的纸型，送给北平中央刻经院一付，自己留存了三付。《物犹如此》，也想这样来办理。现在的世道人心没办法可以挽救，因此这本书的流通，或许能让人获得感动而发起的利益。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【物犹如此】</span>《物犹如此》为清代翰林徐谦所著，书中将散见于各种典籍中关于动物的种种有趣的见闻辑录成编，并将这些动物们互助友爱、聪明机警的诸多感人事例，按孝友、忠义、贞烈、慈爱、恤孤、眷旧、践信、守廉、翼善、救难、酬德、雪冤、知几、通慧的类别分为十四篇，加以点评、诗赞，娓娓道来，如数家珍，引人入胜。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【习勤所】</span>上海游民习勤所是民国时期上海规模最大、最正规的民间游民教养和习艺组织，由上海地方士绅发起创办，以收容教化游民和乞丐为宗旨，集工厂、学校、监狱功能为一体。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复唐瑞岩居士书三 · 印光法师文钞</title>
+<meta name="description" content="庄子云，夏虫不可以语于冰者，笃于时也。井蛙不可以语于海者，拘于墟也。曲士不可以语于道者，束于教也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-453/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复唐瑞岩居士书三 · 印光法师文钞">
+<meta property="og:description" content="庄子云，夏虫不可以语于冰者，笃于时也。井蛙不可以语于海者，拘于墟也。曲士不可以语于道者，束于教也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-453/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复唐瑞岩居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">庄子云，夏虫不可以语于冰者，笃于时也。井蛙不可以语于海者，拘于墟也。曲士不可以语于道者，束于教也。</p><p class="p-trans">庄子说，对于一生只有一个夏季的昆虫不可与它谈论冰雪的事情，（这是因为它）被时节所限制的原因。对于井中的蛙类不可与它谈论海的事情，（这是因为它）被居住的地方所限制的原因。对见识浅陋的人不可与他谈论关于大道的问题，（这是因为他）所受的教育所限制的原因。</p></div>
+<div class="para-pair"><p class="p-orig">儒道耶回，皆世间人天乘教。唯佛包摄各教，而为出世间了生脱死，识心达本，究竟成佛之大教。</p><p class="p-trans">儒教、道教、基督教、伊斯兰教，都是世间的人天乘教。只有佛教包摄各种教派，而成为出世间，了生脱死，识心达本，究竟成佛的大教。</p></div>
+<div class="para-pair"><p class="p-orig">儒教最易化，故佛法入中国二千年来，通人达士依佛法修持者，不知凡几。而道教则每每偷窃佛经之文，改头换面，伪造道经，且多毁谤佛法。</p><p class="p-trans">儒教人最容易教化，所以佛法进入中国二千年来，学识渊博通达之士，依照佛法修持的人，不知有多少。而道教则常常偷窃佛经之文，改头换面，伪造道经，而且大多毁谤佛法。</p></div>
+<div class="para-pair"><p class="p-orig">耶回二教徒之团结力甚大，不易转化。然今则西洋各国，亦大有人研究佛学，建立佛教庙宇矣。</p><p class="p-trans">基督教、伊斯兰教二教的教徒团结力量很大，不容易转化。然而现今西洋各国，也有很多人研究佛学，建立佛教寺庙了。</p></div>
+<div class="para-pair"><p class="p-orig">回教绝少信奉者，十余年前，湖南马舜卿好送佛书。初以彼所印书寄光，乃多属乩坛文字。光以前印安士全书文钞与彼，彼已深信，遂息心研究。夫妻二人并五儿女，皆皈依。</p><p class="p-trans">伊斯兰教中很少有信奉佛教的，十多年前，湖南的马舜卿喜欢送佛书。最初将他所印的书寄给我，大多是乩坛的文字。我以前面所印的《安士全书》、《文钞》寄给他，他已深信，于是息心研究。夫妻二人及五个儿女，全都皈依了。</p></div>
+<div class="para-pair"><p class="p-orig">民十八年秋来函云，其妻生五儿女，初二尚好。三则血崩，四更甚，五更甚。今不久又要生，若再血崩，恐无命矣。祈垂救，并为未生儿起法名。</p><p class="p-trans">民国十八年秋，来信说，他妻子生了五个儿女，第一胎、二胎还好。第三胎开始出现血崩，第四胎更厉害，第五胎更加严重。如今不久，又要生了，如果再次发生血崩，恐怕就没命了。祈请垂救，并为没有出生的孩子取法名。</p></div>
+<div class="para-pair"><p class="p-orig">光令念观音圣号，临产仍念，必无危险。先日信到即念，次日即生，甚安乐。</p><p class="p-trans">我令他念观世音菩萨圣号，临产时也依旧念，必定没有危险。前一天信寄到，开始念，第二天就生了，很安乐。</p></div>
+<div class="para-pair"><p class="p-orig">文钞中马舜卿几封信，乃十五年彼知中华书局另排文钞，寄书附入者。光一向信不留稿。</p><p class="p-trans">《文钞》中写给马舜卿的几封信，是民国十五年，他知道中华书局再次排印《文钞》，寄信附入的。我一向写信不留底稿。</p></div>
+<div class="para-pair"><p class="p-orig">现在世道危险，无人不愿安乐。汝父母亦不能于危险不动心。若语以念佛，则必谓为叛教。</p><p class="p-trans">现在世道危险，没人不想安乐。你父母也不能面临危险不动心。如果告诉他们要念佛，那么他们必定认为你叛教。</p></div>
+<div class="para-pair"><p class="p-orig">若闻念佛，生则可以消灾增福，逢凶化吉。没则可以超出三界，由是渐修以至成佛。果有小事之验，即可渐生正信。</p><p class="p-trans">如果耳朵听到念佛，在生就可以消灾增福，逢凶化吉。死后就可以超出三界，由此渐渐修习，以至成佛。如果有小事灵验，就可渐渐生起正信。</p></div>
+<div class="para-pair"><p class="p-orig">若不婉为设法，是弃亲也。能以言化，甚好。否则向佛及观音菩萨前，代亲忏悔罪业。汝果至诚，必能回心向道。（八月廿九）</p><p class="p-trans">如果不想方设法，婉转地劝他们学佛，就是遗弃亲人。能够用语言感化，很好。否则，就向佛以及观世音菩萨像前，代双亲忏悔罪业。你果真至诚的话，必定能使父母回心向道。（八月二十九日）</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

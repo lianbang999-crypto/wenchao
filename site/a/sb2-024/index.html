@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复马宗道居士书三 · 印光法师文钞</title>
+<meta name="description" content="两接手书，知生一嘉儿，而且了无他患。是知佛菩萨之慈悲加被，有不可得而思议者。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-024/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复马宗道居士书三 · 印光法师文钞">
+<meta property="og:description" content="两接手书，知生一嘉儿，而且了无他患。是知佛菩萨之慈悲加被，有不可得而思议者。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-024/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复马宗道居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">两接手书，知生一嘉儿，而且了无他患。是知佛菩萨之慈悲加被，有不可得而思议者。</p><p class="p-trans">两次收到你的来信，知道生了一个好儿子，而且没有病患。由此知道佛菩萨的慈悲加被，是不可思议的。</p></div>
+<div class="para-pair"><p class="p-orig">所最宜注意者，当善为教训。俾彼诸儿女，通皆为贤人善人。则于汝家庭于国家，均有莫大利益矣。</p><p class="p-trans">最应该注意的，是要好好教导养育儿女。使儿女们，全都成为贤人善人。这样对于你的家庭对于国家，都有莫大的利益。</p></div>
+<div class="para-pair"><p class="p-orig">光常谓教子为治国平天下之根本，而教女为尤要者。以人之成器与否，多半在于其母钧陶化育于初开知识，以至成人之时故也。</p><p class="p-trans">我常说教育孩子是治国平天下的根本，而教育女儿更为重要。因为人的成器与否，多半在于母亲在他们刚懂事时的熏陶化育，以至于成人之时的缘故。</p></div>
+<div class="para-pair"><p class="p-orig">道义德行，为为人之根本。自幼时即令彼步趋法效，则大时自无悖逆忤犯，及种种恶劣行为矣。</p><p class="p-trans">道义德行，是做人的根本。自年幼时就让他们亦步亦趋地效法，那么长大时自然就不会有悖逆忤犯，以及种种恶劣行为。</p></div>
+<div class="para-pair"><p class="p-orig">宗德之梦，系菩萨默示，令知贼来之兆。否则所失大矣。所梦之菩萨要慈梅子，系他人要。此语颇有深意，殊难思索。今且以臆见测之，虽非菩萨之本意，亦不至与菩萨之本意相反。</p><p class="p-trans">宗德的梦，是菩萨在默示，令她知道贼来的征兆。否则所损失就大了。她所梦到的菩萨要慈梅子，是他人要。这句话很有深意，其真意很难猜到。现在暂且以个人的臆见来猜测，虽然并非菩萨的本意，但也不至于与菩萨的本意相反。</p></div>
+<div class="para-pair"><p class="p-orig">此殆菩萨悯念汝教中人，不识大道，欲汝与宗德随机训诲，令于佛法生信心种善根耳。梅字一半从木，一半从每。每为诲之一半，木为根之一半。</p><p class="p-trans">这可能是菩萨怜悯你教中的人，不识大道，想要你和宗德随机训导他们，使他们对佛法生出信心并种善根。梅字一半是木，一半是每。每是诲字的一半，木是根的一半。</p></div>
+<div class="para-pair"><p class="p-orig">汝等一家既沐佛化，尚有此种感应。以理以事，均可自信。何可默而不宣，不令有缘者，同沐此莫大之利益乎。</p><p class="p-trans">你们一家人是沐浴佛的教化之后，才有这种感应。在理在事都可自信。怎么能闭口不讲，不让有缘的人，共同蒙受这莫大的利益呢？</p></div>
+<div class="para-pair"><p class="p-orig">凡事最初，均由一二人而为发起，以后渐至扩充。既多人集汝家，令求现相。足知幽显感应，决难形容。</p><p class="p-trans">凡事最初，都是由一二个人发起，以后渐渐扩充。既然有多人集聚在你家，请求示现瑞相，足以得知暗中、显明的感应，绝对难以形容。</p></div>
+<div class="para-pair"><p class="p-orig">汝夫妇果能发菩提心，为彼拘墟者指示无量无边之天，彼自可出彼之墟，以得见天日，及与大海也。</p><p class="p-trans">你们夫妇如果能发菩提心，为那些坐井观天的人指示无量无边的天地，他们自然能走出被拘之井，到达大海了。</p></div>
+<div class="para-pair"><p class="p-orig">汝但一心念佛，何问光之生辰。知光之生辰，究有何益。当以此种利益，先婉劝于汝母。次婉劝于亲朋之明理者。明理而知感应之事，则便可生信矣。</p><p class="p-trans">你们只要一心念佛，何必问我的生日。知道我的生日，又有什么益处。你应当以这种利益，先婉转劝导你的母亲，再来劝导你的亲戚朋友中明理的人。由明理而了知感应的事理，那么他们便能生信了。</p></div>
+<div class="para-pair"><p class="p-orig">又汝已儿女有五个，而宗德已生八胎，气血两虚，宜从此断欲，专修净业，庶不至累得宗德更加虚损。</p><p class="p-trans">另外，你们已经有五个儿女了，而且宗德也生了八胎，气血两虚，应该从此断掉淫欲，专心修净土，才不至于使宗德累得更加虚损。</p></div>
+<div class="para-pair"><p class="p-orig">男女居室，原为上继祖宗父母之香烟。已有几个儿女，便可不致有后嗣之虑。若犹不肯息淫欲，则便为不自爱，并不爱其妻之忍人矣。</p><p class="p-trans">男女房事，原只是为上继祖宗父母的香火。已经有几个儿女了，便可不至于有后嗣的担忧。如果还不肯息除淫欲，那么便是不自爱，而且是不爱惜妻子的硬心肠人。</p></div>
+<div class="para-pair"><p class="p-orig">况汝与宗德皆欲修净业，生西方。若男女情欲不能断，则净念便被欲念夹杂，不易得益矣。</p><p class="p-trans">况且你和宗德都要修净业，生西方极乐。如果男女情欲不能断，那么净念便会被欲念夹杂，不容易得益。</p></div>
+<div class="para-pair"><p class="p-orig">汝且勿谓光为僧人，尚论人夫妇房室事。须知世间有作为人，皆须节欲，况学佛之人乎。况宗德生已损伤，不堪再生之人乎。</p><p class="p-trans">你千万不要说我是僧人，还谈论人家夫妇的房事。要知道世间有作为的人，都必须节欲，何况是学佛的人呢。何况宗德生产时已受了损伤，是不能承受再生育的人了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【钧陶】</span>用钧制造陶器。比喻造就。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【步趋】</span>步步紧跟。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【法效】</span>效法。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【悖逆】</span>违背正道。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【忤犯】</span>犹触犯。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【幽显】</span>犹阴阳。亦指阴间与阳间。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【拘墟】</span>比喻孤处一隅，见闻狭隘。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【香烟】</span>烧香祭祀祖宗，因称传宗接代为继承香烟，也称继承香火。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【忍人】</span>1.残忍的人；硬心肠的人。2.谓对别人忍心。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

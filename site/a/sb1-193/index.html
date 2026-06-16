@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复罗铿端居士书二 · 印光法师文钞</title>
+<meta name="description" content="受戒一事，当以至诚忏悔为主。佛前自受，光代为证明。然其要，在于起心动念处省察。能如是省察，自可诸恶莫作，众善奉行。倘不在此处省察，则虽受戒而仍是常犯戒者。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-193/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复罗铿端居士书二 · 印光法师文钞">
+<meta property="og:description" content="受戒一事，当以至诚忏悔为主。佛前自受，光代为证明。然其要，在于起心动念处省察。能如是省察，自可诸恶莫作，众善奉行。倘不在此处省察，则虽受戒而仍是常犯戒者。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-193/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复罗铿端居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">受戒一事，当以至诚忏悔为主。佛前自受，光代为证明。然其要，在于起心动念处省察。能如是省察，自可诸恶莫作，众善奉行。倘不在此处省察，则虽受戒而仍是常犯戒者。</p><p class="p-trans">受戒这件事，应当以至诚忏悔为主。可以在佛前自誓受戒，我代为证明。然而其要点，在于起心动念处省察。能够这样省察，自然可以诸恶莫作，众善奉行。倘若不在此处省察，那么虽然受了戒，却仍然是常常犯戒的人。</p></div>
+<div class="para-pair"><p class="p-orig">八月间各书，当可逐渐寄来。现今世道人心，陷溺已极。非认真提倡因果报应，及家庭教育，决无实益。家庭教育，尤须注重因果报应。此圣贤佛菩萨平治天下度脱众生之大权也。</p><p class="p-trans">八月份各种书籍，应当可以逐渐寄来。当今的世道人心，陷溺到了极点。若非认真提倡因果报应，以及家庭教育，绝对不会有真实利益。家庭教育，尤其要注重因果报应。这是圣贤佛菩萨平治天下、度脱众生的大方便之法。</p></div>
+<div class="para-pair"><p class="p-orig">当今修持，唯净业最为第一。切勿闻禅之奥妙，教之渊深，密之奇特，而为之转移。令如来普度众生之道，因此见异思迁而失之。</p><p class="p-trans">当今的修持，唯以修持净业最为第一。千万不要听说禅宗的奥妙，教下的渊深，密宗的奇特，而被其转移。否则会使如来普度众生的大道，因为见异思迁而遗失。</p></div>
+<div class="para-pair"><p class="p-orig">致自己仍然在此娑婆世界，作生死轮回中人，可悲可痛。必专修净行，即生了办，庶可不虚此生此遇矣。</p><p class="p-trans">致使自己仍然在这个娑婆世界中，作生死轮回中的人，可悲可痛。必须专修净行，当生了办生死大事，才可不虚度此生，不白白浪费此际遇啊！</p></div>
+<div class="para-pair"><p class="p-orig">打七一事，宜依禅门日诵之章程，节其繁文，专注念佛，则利益大矣。八关斋，以过中不食为体。</p><p class="p-trans">打七这件事，应该依《禅门日诵》的章程，删减其中的繁文，专门注重念佛，那么利益就很大了。八关斋，以过午不食为体。</p></div>
+<div class="para-pair"><p class="p-orig">今人体弱多病，而且打七念佛，乃精进行道，非息心坐禅者可比，似不必执著。否则或恐受病。</p><p class="p-trans">现在的人体弱多病，而且打七念佛，是精进行道，不是静心坐禅的人可以相比的，似乎不必执著这些。否则，恐怕因此受病。</p></div>
+<div class="para-pair"><p class="p-orig">又南方打七，吃点心度数过多。不但不能心归一致，且令食不易消。当以多食为戒，两粥两饭斯可矣。</p><p class="p-trans">另外，南方打七，吃点心的次数太多。不但不能心归一致，而且让吃的饮食不容易消化。应当以多吃为戒，两顿粥、两顿饭就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">所言先日持八关斋，亦非确论。先日持，岂七中不宜持乎。须知念佛一法，事理甚深。吾人量力而为，不须强人以难，致人无奋发之思，则为得之。</p><p class="p-trans">所说的，先一天持八关斋，也不是准确的说法。先一天持八关斋戒，难道打七中，就不应该持八关斋戒吗？要知道念佛这个法门，事理很深。我们要量力而行，不要强人所难，致使人没有奋发的心思。这样做就对了。</p></div>
+<div class="para-pair"><p class="p-orig">天下事，理有定而法随机，目可更而纲不改，乃可望其有成焉。墨守成规，妄立新章，皆难收效。祈善裁度之，庶可亲获三昧矣。</p><p class="p-trans">天下的事，理有一定而说法随机缘，条目可以更新而纲领不可改动，这样才能指望有所成就。墨守成规，妄立新章，都很难收到成效。请好好的裁度，才可以亲获念佛三昧啊！</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

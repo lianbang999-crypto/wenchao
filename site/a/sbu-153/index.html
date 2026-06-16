@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>龙寿庵捐资置田永供道粮功德碑记 · 印光法师文钞</title>
+<meta name="description" content="普陀为观音大士应化道场，龙寿乃四众祈福常住兰若。溯我大士于无量劫前，早成佛道。以慈悲誓愿，了无穷尽，故于十方无尽世界海中，普现色身。或现佛身，或三乘身，或六道身，或山川桥梁，池井屋宇等无情身种种，度脱众生。法华所谓，应以何身得度者，即现何身而为说法。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-153/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="龙寿庵捐资置田永供道粮功德碑记 · 印光法师文钞">
+<meta property="og:description" content="普陀为观音大士应化道场，龙寿乃四众祈福常住兰若。溯我大士于无量劫前，早成佛道。以慈悲誓愿，了无穷尽，故于十方无尽世界海中，普现色身。或现佛身，或三乘身，或六道身，或山川桥梁，池井屋宇等无情身种种，度脱众生。法华所谓，应以何身得度者，即现何身而为说法。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-153/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 论文</div>
+      <h1 class="art-title">龙寿庵捐资置田永供道粮功德碑记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">普陀为观音大士应化道场，龙寿乃四众祈福常住兰若。溯我大士于无量劫前，早成佛道。以慈悲誓愿，了无穷尽，故于十方无尽世界海中，普现色身。或现佛身，或三乘身，或六道身，或山川桥梁，池井屋宇等无情身种种，度脱众生。法华所谓，应以何身得度者，即现何身而为说法。</p><p class="p-trans">普陀山是观音大士的应化道场，龙寿寺是四众祈福的常住兰若（注1）。追溯我观音大士在无量劫前，早已成就佛道。因为慈悲誓愿，了无穷尽，所以在十方无尽世界海中，普现色身。或现佛身，或三乘身，或六道身，或山川、桥梁，池井、屋宇等种种无情身，来度脱众生。诚如《法华经》中所说：“应以何身得度者，即现何身而为说法。”</p></div>
+<div class="para-pair"><p class="p-orig">以大士无心无身，故能俯应群机之心为之现身。一月普印千江，一雨遍育万卉。又如龙之隐显莫测，遍布慈云，普澍法雨，尽未来际，无有已时，故以龙寿名庵。</p><p class="p-trans">因为观音大士无心无身，所以能够俯应众生的心而为之现身。一月普印千江，一雨遍育万卉。又如神龙般隐显莫测，遍布慈云，普降法雨，尽未来际，没有停止的时候，所以用“龙寿”作为庵名。</p></div>
+<div class="para-pair"><p class="p-orig">创建于明，数百年来，革故鼎新，已非一二。兹由宣统二年冬，圆通庵住持莲禅命其徒侄化能接该庵，而谋兴复。十余年来，殿宇寮室，功悉完备。但以无有恒产，则后来之道粮无出，将何以为专志笃修净业，回报十方施主及四恩三有之据。</p><p class="p-trans">龙寿庵创建于明朝，几百年来，革故鼎新，已经不是一二次了。现由宣统二年（1910年）冬，圆通庵住持莲禅法师，命他的徒侄化能法师接住该庵，而想办法恢复。十多年来，殿宇、寮室，全都完备。但因为寺庵没有固定的资产，那么以后的道粮没有出处，将用什么来作为专心笃修净业，回报十方施主以及四恩三有的依据呢？</p></div>
+<div class="para-pair"><p class="p-orig">黄金荣居士，笃信佛法，向为庵中护法，乃慨然施银，作买田费，按时价买上等田□□亩，以其租谷，永充道粮，其意深而利益广远。化能欲令后世子孙，食彼租粮，笃修道业。</p><p class="p-trans">黄金荣居士，深信佛法，一向都是庵中的护法，于是慨然布施银洋，作为买田的费用，按时价买上等田□□亩，以这些田地的租谷（注2），永远作为道粮，其意义深而利益广远。化能法师想令后世子孙，吃那些田中的租粮，认真修持道业。</p></div>
+<div class="para-pair"><p class="p-orig">令殿宇田产各施主，悉蒙大士慈悲之力，与夫庵众修持之功，俾彼一一施主，各得现生福深寿永膺千祥，临终业尽情空登九品。祈予作记，用勒贞珉。</p><p class="p-trans">让殿宇田产的各位施主，全都蒙大士慈悲之力，和庵众修持之功，使得每一位施主，各自都能现生福深寿长，享千种吉祥；临终业尽情空，登上九品莲台。请我撰写记文，用来刻成石碑（注3）。</p></div>
+<p class="p-orig">护法信士黄金荣助洋贰千元，杜月笙助洋壹千元。护法信女朱化引，林化因各助洋壹千元。田址洞岙庄，芦花庄，共计二十九亩。</p>
+<p class="p-orig">护法信士黄金荣捐助贰千洋元，杜月笙捐助壹千洋元。护法信女朱化引、林化因各捐助壹千洋元。田址在：洞岙庄，芦花庄，共计二十九亩。</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【兰若】</span>指寺院。梵语“阿兰若”的省称。意为寂净无苦恼烦乱之处。“阿兰若”梵语的音译。意译为寂静处或空闲处。原为比丘洁身修行之处，后亦用以称一般佛寺。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【租谷】</span>又称租米、租粮，旧时农民作为地租缴纳的米。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【贞珉】</span>石刻碑铭的美称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

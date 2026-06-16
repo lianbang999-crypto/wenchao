@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>杭州弥陀寺启建莲社缘起疏 · 印光法师文钞</title>
+<meta name="description" content="一切众生，一念心性，与佛全同。而其居心行事，与佛全异者，其故何也。良以迷本具之性德，逐妄合尘。以性具无著之戒定慧，反作逐境染污之贪瞋痴，遂造随事争执之杀盗淫。由是之故，轮回六道，受诸极苦。久经长劫，莫之能出。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-190/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杭州弥陀寺启建莲社缘起疏 · 印光法师文钞">
+<meta property="og:description" content="一切众生，一念心性，与佛全同。而其居心行事，与佛全异者，其故何也。良以迷本具之性德，逐妄合尘。以性具无著之戒定慧，反作逐境染污之贪瞋痴，遂造随事争执之杀盗淫。由是之故，轮回六道，受诸极苦。久经长劫，莫之能出。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-190/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">杭州弥陀寺启建莲社缘起疏</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">一切众生，一念心性，与佛全同。而其居心行事，与佛全异者，其故何也。良以迷本具之性德，逐妄合尘。以性具无著之戒定慧，反作逐境染污之贪瞋痴，遂造随事争执之杀盗淫。由是之故，轮回六道，受诸极苦。久经长劫，莫之能出。</p><p class="p-trans">一切众生，一念心性，与佛是完全相同的。然而众生的存心和行为，却与佛完全不同，这是什么缘故呢？这实在是因为众生迷惑了本来具有的性德，追逐妄相，合于六尘。把自性本来具有的无所执著的戒定慧三种性德，反而变成了追逐外境沾染外污的贪瞋痴三毒，于是造作随事争执的杀盗淫三业。因此，轮回六道，饱受极度痛苦。经过长久劫，仍不能出离。</p></div>
+<div class="para-pair"><p class="p-orig">大觉世尊愍之，兴无缘慈，运同体悲。示生世间，成等正觉。说法四十九年，谈经三百余会。其间教随机异，法以缘殊。大小偏圆，权实顿渐，各就机宜，令得利益。</p><p class="p-trans">大觉世尊怜悯无知造业的众生，兴起无缘大慈，普运同体大悲。示现化生来到世间，并证得无上正等正觉。说法四十九年，讲经三百多次。在此期间，世尊根据众生不同的根机和因缘而采用相应的教法。大乘、小乘、偏教、圆教、权教、实教、顿教、渐教，各自就着众生的根机和情况，使他们都得到利益。</p></div>
+<div class="para-pair"><p class="p-orig">于中求其三根普被，利钝全收。下手易而成功高，用力少而得效速。不断惑业，得预海会。即此一生，定出轮回者。无如信愿念佛，求生西方之殊胜超绝也。</p><p class="p-trans">在这众多法门当中，如果要找到一种上中下三种根机，普遍加被，利钝二根，全部收摄；下手容易而成功高妙，用力较少而得效迅速。不断烦恼惑业，就可参预莲池海会；就在这一生，决定超出轮回的法门。没有一个能够超过信愿念佛，求生西方这一法门的殊胜超绝啊！</p></div>
+<div class="para-pair"><p class="p-orig">以故华严，法华等诸大乘经，文殊，普贤等诸大菩萨，马鸣，龙树等诸大祖师。悉皆极力赞扬，普劝往生。</p><p class="p-trans">所以《华严》、《法华》等诸大乘经典，文殊、普贤等诸大菩萨，马鸣、龙树等诸大祖师。全都极力赞扬净土法门，普劝往生极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">迨至大教东流，远公大师，隐居庐山。创开莲社，宏通此法。最初结社之时，高僧巨儒之预会者，凡百二十三人。若终公之世，三十余年之内，其入莲社而念佛名，蒙接引而得往生者，则多难胜数也。</p><p class="p-trans">等到佛法东来，慧远大师，隐居在九江庐山东林寺。开创念佛莲社，宏通此净土法门。最初慧远大师结莲社之时，高僧大儒参预莲社的，共有一百二十三人。如果终其慧远大师在世之时，三十多年之内，加入莲社念佛名号，蒙阿弥陀佛接引而得往生的人，多得难以胜数啊！</p></div>
+<div class="para-pair"><p class="p-orig">自兹厥后，代有高人。宏扬莲宗，导利含识。宋初永明大师，住持净慈（净慈初名永明）。圆修万善，偏赞净土。恐学者不知自力佛力之所以然，作四料拣，以为指南。俾上中下根，若凡若圣，皆有遵循。若非弥陀化身，何克臻此。</p><p class="p-trans">从此之后，每个朝代都有高僧大德，宏扬净土宗，化导利益众生。宋朝初年，永明大师，住持净慈寺（净慈寺最初名为永明寺）。圆满修行种种法门，却特别推崇提倡净土法门。恐怕学习的人不知道自力佛力的所以然，作了一个四料简，作为修学的指南针。使得上中下三种根机，或凡夫、或圣人，都有一个遵循的轨则。如果不是阿弥陀佛的化身，怎么能达到这种境界呢？</p></div>
+<div class="para-pair"><p class="p-orig">后有省常法师，当太宗真宗之际，住持昭庆。慕庐山之遗风，结净行之莲社。而王文正公旦，首先归依，为之倡导。凡宰辅伯牧，学士大夫，称弟子而入社者，有百二十余人。其沙门则有数千。而士庶则不胜记焉。</p><p class="p-trans">后来又有省常法师，在宋太宗、真宗之时，住持昭庆寺。仰慕远公在庐山倡导念佛法门的遗风，结起修学净行的莲社。而当时的宰相文正公王旦，首先来归依，为之倡导。凡宰相州官，学者贵族，称弟子而加入莲社的，有一百二十多人。其中出家沙门则有几千人。而普通百姓就不计其数了。</p></div>
+<div class="para-pair"><p class="p-orig">明季莲池大师，参禅大悟之后，力修净业，重兴云栖。以契理契机，莫过净土。遂著弥陀经疏钞，发其甚深旨趣。净土宗风，为之丕振。而一生悲敬双修，事理不二。以故戒杀放生，济孤利冥之懿范，数百年来，中外景仰。</p><p class="p-trans">明朝的莲池大师，参禅大悟之后，着力修习净业，重新振兴云栖寺。认为上契佛理，下契众机的法门，没有超过净土法门的。于是写下了《弥陀经疏钞》，阐发其中甚深的旨趣。净土宗风，为之大振。而莲池大师一生悲敬双修，事理不二。所以他提倡的戒杀放生，救济孤儿，利益冥界的美好轨范，几百年来，令中外景仰。</p></div>
+<div class="para-pair"><p class="p-orig">清雍正间，省庵法师，住持梵天。宏阐净土，不遗余力。其劝发菩提心文，堪与日月争光，虚空等寿。由此诸祖心光所映，杭州人士多皆信向。又以山水佳胜，高人蔚生。而人以类聚，故法门知识，亦多莅止。因兹法化之盛，较各处为优。地灵人杰，法以缘兴，信非虚语。</p><p class="p-trans">清朝雍正年间，省庵法师，住持梵天讲寺。不遗余力地宏扬净土法门。他写的《劝发菩提心文》，堪与日月争光，虚空等寿。由于有诸位祖师的愿力心光所映照，杭州地方的人士，大多都信仰趋向净土法门。又因为杭州这个地方，山清水秀，高人如林。且人以类聚，所以很多法门善知识，常常莅临此地。因此佛法教化的盛况，比起其它地方更为优胜。常言道，山水灵秀、人才俊美，佛法可因此而兴，看来的确如此。</p></div>
+<div class="para-pair"><p class="p-orig">迨光绪初年，玉峰法师，创建弥陀寺，为净土道场。凿山镌经，宏扬净土。虽其道德不敢与永明诸祖相比。而其誓愿宏深，语言痛切，不愧为净土向导，法门知识。继往开来，厥功实非浅鲜。</p><p class="p-trans">到了光绪初年。玉峰法师，创建弥陀寺，作为净土道场。开凿山石，镌刻经典，宏扬净土。虽然他的道德不敢与永明等诸位祖师相比。但是他的誓愿宏深，语言痛切，不愧是净土法门的向导，法门的善知识。继承往圣，开示来学，这个功德实在不小。</p></div>
+<div class="para-pair"><p class="p-orig">自后国家多故，住持非人，遂致一败涂地。近数年来，各界眼界大开。凡有志于学圣贤者，无不研究佛学，修持净业。某某等诸居士，不忍令此道场长时湮没。公推智慧法师为住持。以期提倡莲宗，普利一切。</p><p class="p-trans">此后国家多患难，住持的人不称职，因此导致佛法一败涂地。近些年来，社会各界眼界大开。凡是有志于学习圣贤的人，没有不研究佛学，修持净业的。某某等诸位居士，不忍这个道场被长时埋没。公开推举智慧法师为住持。以期提倡净土宗，并普利一切众生。</p></div>
+<div class="para-pair"><p class="p-orig">智师以己立立人，自利利他为心，仰效前修，特开莲社。每月六斋日，举行一次。有信心者，同来念佛。念毕少顷，恭请智师，或余知识，或通法居士，升座讲演净土法门中切要理事。俾诸人克治习气，增长信心，诚盛举也。</p><p class="p-trans">智慧法师以自己成就，成就他人，自利利他为志向，仰慕效法前辈修行人，特别开办莲社。每个月的六斋日，举行一次念佛法会。有信心的人，同来念佛。念佛后的一点时间，恭请智慧法师，或者其余的善知识，或者通达佛法的居士，升座讲演净土法门中切要的义理事相。使得人人都能克治不良习气，增长净土信心，这实在是一个盛举啊！</p></div>
+<div class="para-pair"><p class="p-orig">光与智师，志同道合，乃委其叙述缘起，以为一切大众劝。宋时长芦赜禅师，景仰庐山莲社，启莲华胜会，而普贤普慧二菩萨，梦中祈其书名。故知此会，是名最胜法施之会。凡入会者，各宜勉旃。</p><p class="p-trans">我与智慧法师，志同道合，于是详细叙述缘起，作为一切大众的劝导。宋朝长芦寺的宗赜禅师，景仰庐山莲社，启建莲华胜会，感得普贤、普慧二位菩萨，在梦中祈望禅师写下他们的名字。所以知道这个莲华胜会，名为最殊胜的弘扬布施佛法之会。凡是入会的人，各自应该勉励自己。</p></div>
+<div class="para-pair"><p class="p-orig">又近世之人，多务虚名，不修实行。口虽念佛，心与佛违。譬如药忌并服，何能愈病。必须念念克治自己习气，心心忆念弥陀洪名。凡有与佛不合之念头起，则自责曰，汝念佛求生西方之人，何可起此念乎。</p><p class="p-trans">又者，近来的人，大多贪图虚名，不修实行。口里虽然念佛，心里却与佛相违。譬如药物与忌食的东西一起服用，怎能治好病呢？必须在念念之间克治自己的习气。心心忆念阿弥陀佛的洪名。凡有与佛不合的念头生起，就责备自己说：你是念佛求生西方的人，怎么可以起这种念头呢？</p></div>
+<div class="para-pair"><p class="p-orig">正念一起，邪念自消，决不许其稍住顷刻。必使心中净无瑕秽，如净琉璃，内含宝月。诸恶莫作，众善奉行。信愿持名，决定求生。方为真正修净土人。若有一念求来生人天福报之心，即修持精纯，亦名违背佛教。虽种善根，而了生脱死，当在驴年。可不哀哉。</p><p class="p-trans">正念一提起，邪念自然消灭，决不允许邪念稍稍有一刻的住著。必定使得心中清净没有瑕秽，如同清净的琉璃，内含宝月。诸恶莫作，众善奉行。信愿持名，决定求生西方。这才是真正修行净土的人。如果还有一念求来生人天福报的心，即使修持精纯，也名为违背佛教。虽然种了善根，而想要了生脱死，当在驴年了。这不是很悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">此段虽于缘起无涉，实为修持要义，故拉杂书之。</p><p class="p-trans">这一段虽然与启建莲社的缘起无关，但的确是修持的重要义理，所以我不避杂乱地多写了一段。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【宰辅】</span>辅政的大臣。一般指宰相。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【伯牧】</span>古代地方长官的泛称。语出《礼记·王制》“州有伯”郑玄注：“殷之州长曰伯，虞夏及周皆曰牧。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【学士】</span>1.古代在国学读书的学生。2.泛指普通读书人。3.犹学者。4.官名。5.学位的一种。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【大夫】</span>1.古职官名。2.爵位名。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【士庶】</span>1.士人和普通百姓。亦泛指人民、百姓。2.士族和庶族。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【多故】</span>多变乱，多患难。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【非人】</span>1.恶人；坏人。2.谓不够格、不称职的人。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【拉杂】</span>混杂；杂乱。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

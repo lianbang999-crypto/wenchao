@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书二十四 · 印光法师文钞</title>
+<meta name="description" content="两次航信，以人事冗繁，未能即复。所立功课，无有不可。女校训词，已于二次航函来之次日，并汝之信，一并寄云台矣，勿念。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-251/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书二十四 · 印光法师文钞">
+<meta property="og:description" content="两次航信，以人事冗繁，未能即复。所立功课，无有不可。女校训词，已于二次航函来之次日，并汝之信，一并寄云台矣，勿念。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-251/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书二十四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">两次航信，以人事冗繁，未能即复。所立功课，无有不可。女校训词，已于二次航函来之次日，并汝之信，一并寄云台矣，勿念。</p><p class="p-trans">两次航空信件，因为人事繁杂，未能立刻回复。所立的功课，没有什么不可以的。女校的训词，已经在接到第二封航空信件的次日，连你的信，一并寄给聂云台了，不要挂念。</p></div>
+<div class="para-pair"><p class="p-orig">密宗道理，不可思议。而今之传密宗，学密宗者，各以神通为事，未免失其本旨。传者尚无真神通，学者谁得真神通。</p><p class="p-trans">密宗的道理，不可思议。然而现今传密宗，学密宗的人，各以神通为事，未免失去了密宗的本来宗旨。传的人尚且没有真神通，学的人又有谁能得到真神通。</p></div>
+<div class="para-pair"><p class="p-orig">诺那来上海太平寺，言及密宗，亦以往生西方为事。而阿弥陀长寿陀罗尼，持之开囟门，即能随意长寿，或即往生，此语何可一概。勿道尔我不能，即诺那也不能随意往生。</p><p class="p-trans">诺那上师来到上海太平寺，说到密宗，也是以往生西方为事。而且受持《阿弥陀长寿陀罗尼》开囟门，就能随意长寿，或者立刻往生，这种话怎么能一概而论。不要说你我不能，即使诺那上师也不能随意往生。</p></div>
+<div class="para-pair"><p class="p-orig">诺那言，被达赖闭之土窖，日从上钓下点稀饭以度命，以手摸其窖土，六年得穿，逃之中国。云窖中一无所有，并筷子也无一根，手摸窖穿，其苦何可胜言。况闭之窖中，则屎尿狼籍，臭秽不堪，何不于此时往生西方乎。</p><p class="p-trans">诺那上师说，他被达赖喇嘛囚禁在土窖之中，每日从上面钓下点稀饭得以活命，他用手来摸窖土，摸了六年才摸穿，随后逃亡中国。他说窖中一无所有，连一根筷子也没有，用手将窖摸穿，那种苦苦不堪言。何况被囚禁在窖中，屎尿狼藉，臭秽不堪，诺那上师为何不在这时往生西方呢？</p></div>
+<div class="para-pair"><p class="p-orig">光初闻彼言，以为其人完全不知佛法，否则当志诚持咒，祈其自出，何用手摸乎。后又闻其能为人治病，颇有效，因兹景仰者众。一弟子以此事问光，光复之曰，此事理，实为的确有之，但不可谓人之均能。</p><p class="p-trans">我最初听他所说，认为他完全不知道佛法，否则应当志诚持咒，祈求自行出来，何苦用手摸呢？后来又听说他能给人治病，很有效果，因此景仰者甚众。一弟子向我询问此事，我回答说，实际上的确有这样的事理，但不能说人人都能做到。</p></div>
+<div class="para-pair"><p class="p-orig">显荫已得密宗真传（谛闲法师之徒），回国看其师，以其师言，汝声名甚大，当闭关，真实用三年功方可。彼学得一肚皮佛法，闻其师之言，如刀刺心，即得病，次日即往上海居士林将养，年余而死。死时不清楚，咒也不念，佛也不念，一班居士为彼念佛。显荫显密俱通之大灌顶阿阇黎，尚如此。</p><p class="p-trans">显荫法师已经得到了密宗的真传（谛闲法师的徒弟），回国来看谛闲法师，但因为谛闲法师说：“你的名声很大，应当闭关，真实地用三年功才好。”他学得一肚子的佛法，闻听师父所言，如刀刺心，就得了病，次日就前往上海居士林休养，一年多就死了。死的时候神智不清楚，咒也不念，佛也不念，一班居士为他念佛。显荫法师，显密均通的大灌顶阿阇黎，尚且如此。</p></div>
+<div class="para-pair"><p class="p-orig">大愚在上海宏密宗，向之者趋之若鹜，令人一百日成佛。三层楼洋房租六七座（在金神父路，此地空房甚多），可知其人之多。十七年下半年来，至十八年夏，北京有欲藉此以获利者，以一千多元作川费，接之北京，举国若狂，直同活佛出世。</p><p class="p-trans">大愚法师在上海弘扬密宗，来学的人趋之若鹜，能让人一百日成佛。三层楼的洋房租了六七座（在金神父路，此地空房很多），可知来学的人数之多。民国十七年（1928年）下半年来，至民国十八年夏，北京有想借此发财的人，以一千元作为路费，将他接到北京，举国若狂，简直如同活佛出世。</p></div>
+<div class="para-pair"><p class="p-orig">四十八日即可成佛。至下半年，已有嫌疑，声名渐减。后因欲发财者，欲得胜者，向之皆言可得，通皆失败。其人恨之切骨。从此北京天津无人理，此时正好以长寿法往生，乃回家做俗人去。足见密宗所说现身成佛等义，皆非普通人可希望之事。</p><p class="p-trans">四十八日就可成佛。到了下半年，已有人开始怀疑，他的名声开始逐渐减小。后来因为有想发财的，想打仗得胜的人，来学都说可以实现，但都失败了。那些人恨之入骨。从此北京天津没人再理他，此时正好以长寿法往生，于是就回家做俗人去了。可以看出密宗所说现身成佛等义理，都不是普通人能够希望的事。</p></div>
+<div class="para-pair"><p class="p-orig">彼徒皆侈谈神通。数年前白喇嘛在南京，做金光明法会，时天旱，又求设坛求雨，至圆满，一滴未下。</p><p class="p-trans">密宗学人全都侈谈神通。数年前，白喇嘛在南京，做金光明法会，当时天旱，又祈求他设坛求雨，到作法圆满时，一滴雨也没下。</p></div>
+<div class="para-pair"><p class="p-orig">今夏班禅在杭，作时轮法会，杭比别处旱灾更大。后到上海，一伙信者，求彼祈雨亦一滴未下，且将中国之钱，买枪炮，拟运西藏，也有被强盗抢去者，也有买者作弊，得钱而逃者。彼若有真神通，何于此种事皆未能知。</p><p class="p-trans">今年夏天，班禅在杭州，作时轮法会，杭州比其他地方旱灾更大。后来到上海，一伙信者，求他祈雨也一滴未下，而且他将中国的钱，买枪炮，打算运回西藏，也有被强盗抢走的，也有购买枪炮的人作弊，得了钱而逃走的。他若有真神通，为何对于这些事都不能预先知道呢？</p></div>
+<div class="para-pair"><p class="p-orig">须知密宗要旨，在三业相应，果三业相应已久，便可从心所欲。未到心空而妄欲得者，或至著魔，此密宗一大关系也。（九月廿八）</p><p class="p-trans">必须知道密宗的要旨，在三业（身口意）相应，果真能三业相应且久了，便可从心所欲。未到心空却妄想得到的人，或许会至着魔。这是密宗的一大关键。（九月二十八日）</p></div>
+<div class="para-pair"><p class="p-orig">此信不可发表，以免暗祸，今大勇之徒，悉归而宏密矣，不可不慎。</p><p class="p-trans">此信不可发表，以免招暗祸，现今的大勇之徒，全都归依且弘扬密宗，不可不慎。</p></div>
+<div class="para-pair"><p class="p-orig">【附：】</p><p class="p-trans">1、祈专志净宗，勿被密宗现身成佛之语所动。现身成佛，乃理性，非事实。若认做事实，则西藏东洋之佛，不胜其多。且勿说平民，即班禅之心行作为，佛气尚无，况说成佛乎。以彼于民不聊生之时，犹然不惜百姓脂膏，任其铺排耗费，而钱到己手，便当命宝贵，毫无慈悲喜舍之念故。（《增广印光法师文钞·卷一·复黄智海居士书》）（注：西藏的密宗称藏密，由印度直接传入,俗称喇嘛教；日本的密宗称东密，唐朝时由我国传入。唐玄宗开元年间，三位印度僧人善无畏、金刚智和不空&lt;不空为金刚智的付法弟子&gt;，他们来到中国传教，并创立中国佛教密宗&lt;唐密&gt;,经发展成为中国大乘佛教八大宗派之一，佛教史上称这三位僧人为“开元三大士”。后唐密经过唐武宗灭佛&lt;会昌法难&gt;和五代战乱后逐渐失传。善无畏所传的密法，由不空传惠果，再传日本空海，和金刚智所传的密法相并传习，直到今日仍流传于日本。）</p></div>
+<p class="p-trans">2、密宗现身成佛，或云即生成佛，此与禅宗见性成佛之话相同，皆称其工夫湛深之谓，不可认做真能现身成佛。须知现身成佛，唯释迦牟尼佛一人也。此外即古佛示现，亦无现身成佛之事。（《印光法师文钞三编·卷一·复周志诚居士书一》）</p>
+<p class="p-trans">3、密宗以三密加持，能令凡夫现生证圣，其功德力用，不可以心思，不可以言议，故云不思议力用。虽然，此就密宗之本旨说，然须是其人方可。其人谓谁，如金刚智，善无畏等，苟非其人，道不虚行。今之学密宗者，皆得其皮毛。全无金刚戒力，菩提道心。不去持咒以断惑证真，多效现字现象，以问吉凶祸福，前因后果，则与灵鬼作用相同。是之谓败坏密宗，吾恐避罪不暇，说甚即凡成圣也。（《印光法师文钞三编·卷三·复丁福保居士书十》）</p>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

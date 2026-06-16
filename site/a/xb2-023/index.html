@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>重修峨眉山志序（民二十三年） · 印光法师文钞</title>
+<meta name="description" content="普贤菩萨，道证一真，德圆两足。住寂光而兴慈运悲，辅善逝而带果行因。具遮那之全体，示居补处。结华严之大义，指归西方。虽尽十方法界，无非所住真境。而此大光明山，实为应化道场。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-023/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重修峨眉山志序（民二十三年） · 印光法师文钞">
+<meta property="og:description" content="普贤菩萨，道证一真，德圆两足。住寂光而兴慈运悲，辅善逝而带果行因。具遮那之全体，示居补处。结华严之大义，指归西方。虽尽十方法界，无非所住真境。而此大光明山，实为应化道场。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-023/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">重修峨眉山志序（民二十三年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">普贤菩萨，道证一真，德圆两足。住寂光而兴慈运悲，辅善逝而带果行因。具遮那之全体，示居补处。结华严之大义，指归西方。虽尽十方法界，无非所住真境。而此大光明山，实为应化道场。</p><p class="p-trans">普贤菩萨，彻证诸法实相，功德圆满福慧两足。住常寂光净土而兴无缘大慈、运同体大悲；辅佐世尊以证佛果的身份来行因地事。具足毗卢遮那法身的全体功德，却示居一生补处（即等觉菩萨）。结《华严经》的大义，（以十大愿王）指归西方极乐世界。虽然说，尽十方法界，没有一处不是菩萨所住的真境。而这座大光明山，实在是普贤菩萨的应化道场。</p></div>
+<div class="para-pair"><p class="p-orig">溯其立名之意，盖以佛光昼现，圣灯夜来，亘古今而无或隐灭，尽来际以启牖群生。由是之故，致此峨眉宝山，亦称大光明焉。一以形势立名，一以圣迹取号，固无别种因缘也。</p><p class="p-trans">追溯以“大光明”来立名此山的意义，是因为佛光在白天显现，圣灯在夜晚来临，从古到今而不会隐灭，尽未来际来启发诱导众生。因为这个原因，致使这座峨眉宝山，也称为大光明山。一是以山的形势而立名，二是以普贤菩萨的圣迹而取名号，肯定没有其他的因缘了。</p></div>
+<div class="para-pair"><p class="p-orig">而一班不知菩萨德相者，欲借经言以见重，谬引华严经菩萨住处品云，西南方有处，名光明山，从昔以来，诸菩萨众，于中止住。现有菩萨，名曰贤胜，与其眷属诸菩萨众三千人俱，常在其中，而演说法。</p><p class="p-trans">然而有一些不知道菩萨德相的人，想要借助经典中所说的，来引起他人的重视，错误地引用《华严经·菩萨住处品》所说的经文：“西南方有处，名光明山，从昔以来，诸菩萨众，于中止住。现有菩萨，名曰贤胜，与其眷属诸菩萨众三千人俱，常在其中，而演说法。”</p></div>
+<div class="para-pair"><p class="p-orig">夫如来在天竺之中，摩竭提国，成等正觉，说华严经，凡历七处，而有九会。初会，即在菩提场说，二会，七会，八会，皆在普光明殿说，此殿亦在菩提场中。</p><p class="p-trans">如来在古印度，摩竭提国，成等正觉，宣说《华严经》，一共经历七处，而有次九法会。初会，就是在菩提场宣说的，第二会、七会、八会，都在普光明殿宣说的，这个宝殿也在菩提场中。</p></div>
+<div class="para-pair"><p class="p-orig">菩萨住处品，乃第七会所说之一品。先说东，南，西，北之四方，次说东北，东南，西南，西北之四维，方位次第，井然不乱。</p><p class="p-trans">《菩萨住处品》，是第七会所说的一品。先说东、南、西、北这四方，其次说东北、东南、西南、西北这四维，方位次第，井然不乱。</p></div>
+<div class="para-pair"><p class="p-orig">彼见有光明山三字，遂谓此西南方，指震旦国之峨眉，在中国之西南。于现有菩萨，名曰贤胜，妄加注曰，即普贤也。普贤亦名遍吉，未见又名贤胜也。</p><p class="p-trans">他们看到经中有“光明山”三个字，于是认为经中所说的西南方，就是指中国的峨眉山，在中国的西南。在经文“现有菩萨，名曰贤胜”后，妄加注解说：“这就是普贤菩萨”。“普贤”也名为“遍吉”，但是却没有见过又名为“贤胜”的。</p></div>
+<div class="para-pair"><p class="p-orig">援经而深悖于经，是欲令人生信，而反致人起疑也。不知普贤之德相，以如来智慧，穷劫莫宣。</p><p class="p-trans">援引经文却深深违悖经文，这是想要令人生信，而反过来招致他人生起疑惑啊！他们不知道普贤菩萨的德相，即使用如来的智慧，穷尽劫数也无法宣扬。</p></div>
+<div class="para-pair"><p class="p-orig">华严经八十一卷，其发挥普贤菩萨神通智慧，道德功业者，有十余卷经。若稍加研究，则何肯谬引。譬如轮王驻处，即是王都，光明到处，了无黑暗。</p><p class="p-trans">《华严经》共八十一卷，其中发挥普贤菩萨神通智慧，道德功业的内容，有十多卷经。如果稍加研究，则怎么肯错谬地援引呢。就如同转轮圣王驻留的地方，就是王都，光明所到之处，没有一点黑暗。</p></div>
+<div class="para-pair"><p class="p-orig">由是今志，特立菩萨圣迹一门，于中分为六章。</p><p class="p-trans">因此现在重新修订的《山志》，特别立了菩萨圣迹一门，其中又分为六章。</p></div>
+<div class="para-pair"><p class="p-orig">一释名，略释普贤名义。</p><p class="p-trans">一、释名，大略解释“普贤”的名义。</p></div>
+<div class="para-pair"><p class="p-orig">二修证，节录悲华，楞严二经，以明菩萨因地修证工夫。然据如来不思议境界经，则菩萨久已成佛，其本地非佛莫知也。</p><p class="p-trans">二、修证，节录《悲华经》、《楞严经》两部经，来阐明普贤菩萨因地修证的工夫。然而根据《如来不思议境界经》，那么普贤菩萨在过去久远劫前就已成佛，他的本地风光，只有佛才能够知道。</p></div>
+<div class="para-pair"><p class="p-orig">三德相，略引华严经，称赞菩萨不可思议神通道力。</p><p class="p-trans">三、德相，大略引用《华严经》，称赞普贤菩萨不可思议的神通道力。</p></div>
+<div class="para-pair"><p class="p-orig">四法要，略明菩萨所说法要。而普贤行愿品，以十大愿王，导归极乐，普劝善财，及华藏海众，一致进行，回向往生西方极乐世界，以期圆满佛果，而为华严一经之归宿。</p><p class="p-trans">四、法要，大略阐明普贤菩萨所说的法要。而《普贤行愿品》，以十大愿王，导归极乐，普劝善财，以及华藏海众，一致进行，回向往生西方极乐世界，以期圆满佛果，而作为《华严经》的归宿。</p></div>
+<div class="para-pair"><p class="p-orig">是知此一卷经，大开净土法门，实为十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门。三根普被，圣凡齐摄，末世行人，皆当依止。故录其全文，以期同登莲邦焉。</p><p class="p-trans">所以要知道这一卷经（《普贤行愿品》），大开净土法门，实在是十方三世一切诸佛，上成佛道，下化众生，成始成终的总持法门。普遍泽被上中下三种根机的众生，齐等收摄圣者凡夫，末世的修行人，都应当依止这个法门。所以录出《普贤行愿品》的全文，以期同登莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">五利行，节录法华经，观普贤菩萨行法经，略明菩萨卫护行人之事。</p><p class="p-trans">五、利行，节录《法华经》、《观普贤菩萨行法经》，大略说明菩萨卫护修行人的事迹。</p></div>
+<div class="para-pair"><p class="p-orig">六应化，明菩萨证穷法界，故于十方法界，随类现身，应以何身得度者，即现何身而为说法。故十方法界，皆可作菩萨道场。然欲众生投诚有地，故特于峨眉山，示应化焉。</p><p class="p-trans">六、应化，阐明普贤菩萨证穷法界，所以在十方法界，随类现身，应以何身得度者，即现何身而为说法。所以十方法界，都能作为普贤菩萨的道场。然而普贤菩萨想要让众生有一个皈命投诚的地方，所以才特地在峨眉山，示现应化。</p></div>
+<div class="para-pair"><p class="p-orig">须知菩萨应化，有普有专。普则大众咸得亲见，专则唯己自心明了。例如云端现相，众目同观。圆光摄身，纵齐肩并立，有许多人，而人人各见己身，不见他身。于此二者，可知菩萨神应无方，非凡夫二乘所能测度。具此不思议义，又何必谬引经文以自诬，而贻人笑柄耶。</p><p class="p-trans">要知道菩萨的应化，有普现和专现。普现，就是大众全都得以亲见；专现，就是只有自己自心明了。例如菩萨在云端现出瑞相，众人一同看见；菩萨圆光摄身，即使有许多人齐肩并立，而每个人也只是各自见到自己的身形，却见不到他人的身形。通过这两种现象，就可以知道普贤菩萨的神应无边，不是凡夫二乘（声闻、缘觉）所能测度的。具有这些不可思议的妙义，又何必错谬地援引经文来自欺欺人，而给别人留下笑柄呢？</p></div>
+<div class="para-pair"><p class="p-orig">旧志所载，殊多讹谬。如千岁宝掌，于卷二诸经发明云，汉永平癸亥之前，已住此山，蒲公见鹿迹如莲华，径投宝掌问之。</p><p class="p-trans">旧《山志》中所记载的内容，讹谬实在很多。例如说到千岁宝掌和尚，在《卷二·诸经发明》中说，东汉明帝永平癸亥年（63年）之前，宝掌和尚已经住在这座山上了，有一位蒲公看见鹿的足迹如同莲华，就直接去请问宝掌和尚。</p></div>
+<div class="para-pair"><p class="p-orig">掌令往洛阳，问摩腾，法兰二师。蒲公于甲子，往洛阳，谒二师。不知甲子，即明帝七年，始遣蔡愔，秦景，王遵等，往西域，寻佛法。</p><p class="p-trans">宝掌和尚令他前往洛阳，问迦叶摩腾、竺法兰二位法师。蒲公在甲子年（64年），前往洛阳，拜见二位法师。辑录旧《山志》的人不知道甲子年，就是东汉明帝永平七年，在这年汉明帝才开始派遣蔡愔、秦景、王遵等人，前往西域，寻求佛法。</p></div>
+<div class="para-pair"><p class="p-orig">至十年丁卯，二师随诸人始来洛阳。按传灯录宝掌传，东汉献帝建安二十四年来中国，魏晋间，入蜀礼普贤，留大慈。</p><p class="p-trans">到了东汉明帝永平十年丁卯年（67年），二位法师随着各位使者，才来到洛阳。根据《传灯录·宝掌传》记载，宝掌和尚是在东汉献帝建安二十四年（219年）来到中国的，魏晋年间，入四川礼普贤菩萨，留住大慈寺。</p></div>
+<div class="para-pair"><p class="p-orig">旧志本传，只略东汉献帝等一句。何不以此证前之讹，而竟两存之，亦不说其孰是孰非耶。</p><p class="p-trans">《旧志》中的宝掌和尚传，只省略了“东汉献帝等等”一句。为什么不以《传灯录》中所说的，来证明前面的错误，而竟然将两种说法都存录下来，也不说明谁是谁非呢？</p></div>
+<div class="para-pair"><p class="p-orig">于一生不至西蜀之智者大师，亦为立传。且日与茂真尊者，孙真人，弈棋于呼应峰下之棋盘石上。又建呼应庵以居，均以相呼相应以弈棋，为峰名庵名。</p><p class="p-trans">对于一生没有到过四川的天台智者大师，也在《山志》中为他立传。而且说他每天与茂真尊者、孙真人，在呼应峰下的棋盘石上下棋。还建造了呼应庵来居住，都以相呼相应来下棋，并且以“呼应”作为山峰之名、寺庵之名。</p></div>
+<div class="para-pair"><p class="p-orig">作此说者，不但不知智者，且绝不知佛法。智者一生，以身为法，作后学模范。何得日与闲僧旷道，常行犯佛禁戒，玩物丧志之事乎。</p><p class="p-trans">这样说的人，不但不了解智者大师，而且绝对不懂佛法。智者大师一生，以身为法，作为后学的模范。怎么会每天与无事的僧人、道士，常常做违犯佛戒、玩物丧志的事呢？</p></div>
+<div class="para-pair"><p class="p-orig">玄奘生于隋文帝仁寿四年甲子，其兄长捷法师，令其出家，居洛阳净土寺。十五岁，因隋室丧乱，至长安。时唐室初立，尚事翦削，无暇弘法，遂与其兄往成都求学，未几，声闻远著。</p><p class="p-trans">玄奘大师生于隋文帝仁寿四年甲子年（604年），他的哥哥长捷法师，令他出家，大师居住在洛阳净土寺。十五岁时，因为隋末战乱，就到了长安。当时唐朝刚刚建立，还在清剿平定隋朝的残余势力，无暇弘扬佛法，大师于是与他的哥哥长捷法师，前往成都求学，不久，大师的声名就远播了。</p></div>
+<div class="para-pair"><p class="p-orig">武德五年，于成都受具，思欲入京，以期闻所未闻。为兄所留，遂私遁，由三峡，达汉阳，至相州，沿途求学弘法。后至长安，欲追法显，智严之迹，结侣上表，往游西域，求所无经。</p><p class="p-trans">唐高祖武德五年（622年），大师在成都受具足戒，想要入京城长安，去求学闻所未闻的法要。却被哥哥留住，于是大师私自出走，从三峡，到达汉阳，到了相州（现河南安阳市一带和河北省临漳县），沿途求学弘法。后来到了长安，想要追随法显大师、智严大师西行求法的足迹，结聚法侣，上表朝廷，前往西域游学，求取东土所没有的佛经。</p></div>
+<div class="para-pair"><p class="p-orig">斯时世始太平，中外尚未交通，故诏不允许。众咸退心，师独不屈，乃于贞观三年八月私去，历一十七年，始回中国。及至于阗，即遣使上表太宗，太宗优诏答之，且令沿途有司，各为护卫迎送。</p><p class="p-trans">当时，世道刚刚太平，中外还没有来往，所以朝廷下诏不允许西行。众僧都退心了，唯独大师不屈服，于是在贞观三年（629年）八月私自西行，经历了十七年，才回到中国。等到了于阗（在今新疆和田一带），就派遣使者上表唐太宗，唐太宗以褒美嘉奖的诏书答复他，而且命令沿途的官吏，各地都要护卫迎送。</p></div>
+<div class="para-pair"><p class="p-orig">师闻帝欲问罪辽滨，恐稽迟不遇，遂兼程而进。由流沙，至沙州，是由甘肃而来者。帝敕有司，备仪仗相迎，忽至京城之西漕，有司莫知所措（以按程备仪，师兼程而进，故致有失）。</p><p class="p-trans">大师听闻皇帝想要攻打辽滨（辽东半岛），担心延误了，不能遇到皇帝，于是兼程赶路。从流沙，到沙州（今甘肃敦煌），大师是从甘肃赶来长安的。皇帝命令官吏，准备好仪仗迎接，大师忽然就到了京城的西漕，使官吏们不知所措（因为官府按正常行程准备迎接仪式，大师却兼程赶路，所以导致有误）。</p></div>
+<div class="para-pair"><p class="p-orig">此后，日事翻译，未及卒业而寂。何得有履西域，至峨眉九老洞，值圣真说偈授经之事乎。但以世远人亡，屡经沧桑，志乘轶失，无所依据。遂致以讹传讹，无由考正，故致然也。</p><p class="p-trans">此后，大师每天从事翻译佛经的事业，还没来得及完成就圆寂了。哪里会有玄奘大师游历西域，到峨眉山九老洞，正赶上（道教的）“圣真说偈授经”的事呢？但因为世代久远、前人已逝，屡经沧桑，志书遗失，没有什么可以作为依据的了。于是导致以讹传讹，无从考证，所以才会有这些情况的发生。</p></div>
+<div class="para-pair"><p class="p-orig">当明季时，胡世安公，好游山而信佛，未息心以研究，故其博采艺文，辑译峨籁，实为清蒋虎臣山志之权舆。虎臣自谓于译峨籁，一字不遗。然其所录，总以叙述山峰之耸峻，岩壑之幽秀，风云之变态，寺宇之兴废而已。</p><p class="p-trans">在明朝末年，胡世安先生，喜好游山而且信佛，但没有专心研究过佛法，所以他广泛地引用各种典籍，编辑了《译峨籁》，这本书实际上是清朝蒋虎臣所辑《峨眉山志》的底本。蒋虎臣自己说，全部收录了《译峨籁》，一个字都没有遗漏。然而他所辑录的，全都是叙述山峰的高耸峻峭，岩壑的幽深秀美，风云的变幻形态，寺宇的兴盛荒废而已。</p></div>
+<div class="para-pair"><p class="p-orig">至于普贤兴慈运悲，四众竭诚尽敬之所以然，尚不能稍为形容。况菩萨之本地风光，四众之心契觉海者，又何能一为形容耶。</p><p class="p-trans">至于普贤菩萨兴无缘大慈、运同体大悲，四众弟子竭诚尽敬的所以然，尚且还不能稍加形容表达。更何况菩萨的本地风光，四众弟子以因地心契果地觉海的情形，又怎么能一一形容表达得出来呢？</p></div>
+<div class="para-pair"><p class="p-orig">又此山昔有道教，自大法昌明后，渐次归真。明果灭妖，乾明作中峰之寺。羽流感德，黄冠作缁衣之僧。自后一致进行，归依三宝，道教绝响，已千余年。</p><p class="p-trans">另外，峨眉山过去有道教，自从佛法昌明之后，渐渐都归依了佛法。明果和尚灭除蛇妖后，乾明观改作了中峰寺。道士们感戴明果大师的恩德，都脱去黄冠换上缁衣做了出家僧人。从此以后，一致进行，归依三宝，道教在峨眉绝迹，已经有一千多年了。</p></div>
+<div class="para-pair"><p class="p-orig">旧志于普贤，及古高僧，有经传可考证者，尚多错讹。况于绝响已久之道教事实，能无讹谬乎。</p><p class="p-trans">《旧志》对于普贤菩萨，以及古代高僧，有经传可以考证的，尚且还有很多错误。更何况对于绝迹已久的道教事实，能没有差错谬误吗？</p></div>
+<div class="para-pair"><p class="p-orig">黄帝往空同山，问道于广成子，载于庄子在宥篇。何得又往峨眉，复问道于天皇真人乎。天皇真人，即广成子，黄帝系有天下之责任者，非闲僧旷道，随意云游者比。</p><p class="p-trans">黄帝前往崆峒山，向广成子问道，记载于《庄子·在宥篇》。怎么又会前往峨眉山，再向天皇真人问道呢？天皇真人，就是广成子。黄帝是有天下责任的首领，不是无事的僧人、道士，随意云游的人可以相比的。</p></div>
+<div class="para-pair"><p class="p-orig">空同已去两次，而有所悟，即广成子移居峨眉，黄帝何得又往峨眉。况蜀道之难，今尚兴叹，当黄帝时，不比今更难百千倍乎。</p><p class="p-trans">黄帝已经去了两次崆峒山，而且有所领悟，即使广成子移居到峨眉山，黄帝怎么又会前往峨眉山呢？何况蜀道之难，现今尚且还令人望而兴叹，在黄帝那个时代，不是要比现在更难上百千倍吗？</p></div>
+<div class="para-pair"><p class="p-orig">故知此诸记载，悉属虚设。即的确之极，亦无关紧要，以此所说之法，乃佛法中人乘天乘两间之法。峨眉道教，久已绝响，又何犹立此法，以致后世惑于两歧，莫知去向乎。故将此种记载，多为删去，揭佛日以普被三根，亦天皇真人之所赞许者。</p><p class="p-trans">所以知道这些记载，全都是虚设的。即使确实是真的，也无关紧要，因为道教所说的法，是佛法中人乘、天乘两者之间的法。峨眉山的道教，很久以前就已绝迹了，又何必再立这个法，以致后世的人迷惑在两条道路间，不知去向呢？所以我在修订时将这种记载，大多删去。揭示佛法慧日来普被三根的道理，也是天皇真人所赞许的。</p></div>
+<div class="para-pair"><p class="p-orig">印光一介庸僧，何敢妄称通家，修辑四大名山之山志。但以挂搭普陀三十余年，民十一年，定海知事陶在东公，倡修普陀山志，请邑儒王雅三先生主其事。</p><p class="p-trans">我是一个平庸的粥饭僧，哪敢妄称大通家，来修订编辑四大名山的《山志》。但因为挂单在普陀山三十多年，民国十一年（1922），浙江定海县知事陶在东先生，提倡修订《普陀山志》，请乡邑儒者王雅三先生主持这件事。</p></div>
+<div class="para-pair"><p class="p-orig">王君于儒可称博洽，于佛未涉门径。志成，而山中耆宿，命光重修。光以近来刻排各书，了无有暇。至十九年，掩关苏垣，始得出书。</p><p class="p-trans">王先生对于儒学，可以称得上学识广博，但对于佛法，却没有任何涉猎。《山志》修订完成后，普陀山中德高望重的大德尊宿，就命我重新修订。我因为近来刻排各种书籍，没有一点空暇。到了民国十九年（1930），到苏州报国寺闭关，才得以出书。</p></div>
+<div class="para-pair"><p class="p-orig">一弟子李圆净，热心公益，谓普陀，清凉，峨眉，九华，为中国四大名山。师既将普陀志修妥印行，清凉，峨眉，九华三山志，亦不得置之不理。于是特祈前著观音菩萨本迹感应颂，及历史感应统纪，佛学救劫编之江西彭泽皈依弟子许止净居士，标示纲要。</p><p class="p-trans">一位弟子李圆净，热心公益，认为普陀山、清凉山（即五台山）、峨眉山、九华山，是中国的四大佛教名山。师父既然将《普陀山志》修缮妥当并印行了，清凉、峨眉、九华三部《山志》，也不能置之不理。我于是特地邀请以前编辑过《观世音菩萨本迹感应颂》，以及《历史感应统纪》、《佛学救劫编》的江西彭泽皈依弟子许止净居士，标示出纲要。</p></div>
+<div class="para-pair"><p class="p-orig">光但任其割贴安顿与印行。校对则归于现遥领赣州寿量寺住持德森法师，与陈无我居士。清凉志，去年已出书，峨眉志，不久亦可付印，九华志，或于明年春夏间可出。</p><p class="p-trans">我只是担任其中删节、增补的安排与《山志》的印行。校对，则由现在遥领江西赣州寿量寺的住持德森法师，与陈无我居士担任。《清凉山志》，去年已经出书；《峨眉山志》，不久也将付印；《九华山志》，或许在明年春夏间就可以出书。</p></div>
+<div class="para-pair"><p class="p-orig">四山旧志，唯清凉最嘉，普陀次之，峨眉又次之，九华最居其下。良以三山志，皆属不通佛学之儒士所修，故致买椟还珠，敬卒隶而慢主人。</p><p class="p-trans">四山的《旧志》，唯有《清凉山志》最好，《普陀山志》次之，《峨眉山志》又次之，《九华山志》排在最后。实在是因为后面这三部《山志》，都是由不通佛学的儒士所修的，所以导致如同买椟还珠（比喻舍本逐末）一样，恭敬仆人而轻慢主人。</p></div>
+<div class="para-pair"><p class="p-orig">只在山之形势变幻处致力，不在菩萨兴慈运悲，拔苦与乐处形容。志山而不志佛，颠倒行事，虽有其志，不能令见者闻者增长善根，种菩提因。此今志之所深致意者，故为略示其意。</p><p class="p-trans">只在山的形势变幻处致力，不在菩萨兴无缘大慈、运同体大悲，拔苦与乐处来形容阐明。记录山景而不记录佛事，这是颠倒行事，虽然有所记录，但是不能让看到或听到其中事理的人，增长善根，种菩提因。这是现今的《山志》，所应该深刻注意的地方，所以大略显示其中的义理。</p></div>
+<div class="para-pair"><p class="p-orig">然以未曾亲历其境之人，不能详加询访，故只按旧志，及诸经传，而为证订。至于近来名德，及新建筑，概不加入，以免逸轶名德之咎，挂一漏万之讥。具眼知识，当能谅之。</p><p class="p-trans">然而因为没有亲临并游历过那些地方的人，不能详细地加以询问和探访，所以只能按《旧志》，以及诸多经传，来加以考证、修订。至于近来的有名望德行的人，以及新的建筑，一概不加入，以免有遗漏名德的过失，与挂一漏万的讥议。具正法眼的善知识们，应当能够体谅吧！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【峨眉山志】</span>凡八卷。清代蒋超撰。民国印光大师重修。收在中国佛寺史志汇刊第一辑。峨眉山位于四川峨眉县西南，由麓至顶有大小七十余寺，以报国寺、伏虎寺、湘子洞、金顶寺为其最著者。山为普贤菩萨之道场，全山各寺皆奉普贤菩萨。所有宫观殿刹、古迹胜境，皆俱足天然雅趣。世人尊之为中国佛教四大名山之一。清康熙十一年（1672）蒋超据井研胡阁“译峨籁”，编“峨眉山志”，民国十九年（1930）印光大师重修蒋超之志，厘为八卷，分为十一门：星野图说、菩萨圣迹、金山形胜、寺庵胜概、感应灵异、历代高僧、王臣外护、仙隐流寓、古今艺文、动植物产、蒋编志余。为峨眉山之全史。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【启牖】</span>1.打开窗户。2.启发诱导。牖，通“诱”。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【见重】</span>受到重视。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【宝掌】</span>（？-657）中印度人。世称宝掌千岁和尚、千岁宝掌。因出生时，左手握拳，至七岁剃发始展掌，故取名宝掌。据传魏晋间东游中土，入蜀地参礼普贤。师具大慈，常不食，日诵般若等经千余卷。一日向大众道（卍续一三八·四一上）：“吾有愿住世千岁，今年六百二十有六。”故有千岁之称。
+其后，参访五台、庐山等地，未久适逢达摩来华，师即向之请益，而得开悟。贞观十五年（641）后，居止浦江之宝严寺。与朗禅师交游甚笃，每遣白犬通问，朗禅师则遣青猿回复，故有“白犬衔书至，青猿洗钵回”之语。师于显庆二年示寂，传言世寿达千余岁。
+此外，或谓师系于隋代开皇十七年（597）来华，并创建天宁永祚寺，亦有谓师于贞观十五年创立永祚寺。
+千岁宝掌和尚：西竺中印度人也。生而拳左手。七岁祝发乃展。因名宝掌。东汉献帝建安二十四年来至此土。魏晋间东逝。西入蜀礼普贤。留大慈日诵般若等经。《释氏稽古略》录自《传灯录》。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【法显】</span>中国晋朝时的高僧，隆安中，自长安西度流沙，历三十余国，持经南归，至京师，译出百余万言。平阳武阳人，俗姓龚。公元五七六年生，六五二年圆寂。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【智严】</span>（350-427）东晋译经僧。西凉州（今甘肃）人。弱冠出家，以精勤着称。后欲博访名师，普求佛典，西行至罽宾，入摩天陀罗精舍，从佛陀先咨受禅法。后请禅师佛陀跋陀罗一同东归，历经数载，至后秦都长安，住大寺。后佛陀跋陀罗为鸠摩罗什之徒所排挤，离长安南下，师亦退出关中，居于山东精舍，坐禅诵经，精勤不懈。东晋义熙十三年（417），刘裕西伐长安，师应邀至建康，住始兴寺，后住枳园寺。
+刘宋元嘉四年（427），师与沙门宝云共译自西域所得之梵本，计译出普曜经、广博严净经、四天王经等十四部，三十六卷。师尝就自得之戒律怀有疑虑，且积年修禅观而不能自了，遂重至天竺；偶遇罗汉比丘而问其事，然亦未得判解。师即自入禅定，升兜率宫咨于弥勒，获得戒之印可。归途中寂于罽宾，世寿七十八。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【优诏】</span>褒美嘉奖的诏书。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【志乘】</span>记事之书。后指记载地方的疆域沿革、典章、山川古迹、人物、物产、风俗等的书。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【胡世安】</span>（1593-1663），字处静，别号菊潭，四川省井研县人，清顺治年间武英殿大学士，曾四任礼部尚书。有《易史》、《寒友编》、《异鱼图赞笺》等集行世。嘉庆《井研县志》卷八有传。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【蒋超】</span>（1624-1673）字虎臣，号绥庵、华阳山人，江苏金坛朱林镇人。官至顺天提督学政，后出家为僧。著有《绥庵诗稿》、《绥庵集》、《池此偶祭》、《蒋境》二卷。《峨嵋山志》十八卷。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【权舆】</span>本谓草木萌芽的状态，引申为起始、初时。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【中峰寺】</span>为峨眉山古刹之一。晋时为道教寺庙，称干明观。北魏时明果和尚降伏蟒蛇有功，庙中道士承师学佛，遂改观为寺。因地处白岩中峰之下，故名中峰寺。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【崆峒山】</span>位于甘肃省平凉市城西12公里处，东瞰西安，西接兰州，南邻宝鸡，北抵银川，是古丝绸之路西出关中之要塞。被中华民族尊为人文始祖的轩辕黄帝亲自登临崆峒山，向智者广成子请教治国之道和养生之术，黄帝问道这一千古盛事在《庄子·在宥》和《史记》等典籍中均有记载。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【买椟还珠】</span>椟：木匣；珠：珍珠。买下木匣，退还了珍珠。比喻没有眼力，取舍不当。《韩非子·外储说左上》：“楚人有卖其珠于郑者，为木兰之柜，熏以桂椒，缀以珠玉，饰以玫瑰，辑以羽翠。郑人买其椟而还其珠。”</p>
+<p class="note-item"><span class="note-n">[15]</span><span class="note-term">【卒隶】</span>指服兵役、劳役的人。</p>
+<p class="note-item"><span class="note-n">[16]</span><span class="note-term">【佛日】</span>系大乘佛教诸经典中所常用之譬喻。因佛陀之睿智、德行、慈悲，可破众生之迷妄，如日轮破夜之闇，故喻佛陀如日。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

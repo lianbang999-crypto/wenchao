@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>灵岩山笃修净土道场启建大殿记（民二十四年） · 印光法师文钞</title>
+<meta name="description" content="华严妙典，理事圆融。理由事显，事由理成。理事各臻其极，圆证毗卢法身。以故如来初成正觉，与十住，十行，十回向，十地，等觉，四十一位法身大士，说如来自证法门诸因果法。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-076/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="灵岩山笃修净土道场启建大殿记（民二十四年） · 印光法师文钞">
+<meta property="og:description" content="华严妙典，理事圆融。理由事显，事由理成。理事各臻其极，圆证毗卢法身。以故如来初成正觉，与十住，十行，十回向，十地，等觉，四十一位法身大士，说如来自证法门诸因果法。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-076/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">灵岩山笃修净土道场启建大殿记（民二十四年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">华严妙典，理事圆融。理由事显，事由理成。理事各臻其极，圆证毗卢法身。以故如来初成正觉，与十住，十行，十回向，十地，等觉，四十一位法身大士，说如来自证法门诸因果法。</p><p class="p-trans">《华严经》这部微妙的大乘经典，理事圆融。理由事显，事由理成。理事两方面都达到了极致，圆证毗卢遮那清净法身。因此如来刚一成就正等正觉，就给十住、十行、十回向、十地、等觉，四十一个阶位的法身大士，宣说如来自证法门的各种因果法。</p></div>
+<div class="para-pair"><p class="p-orig">因果，即事。如来自证之法，即一真法界，寂照圆融，不生不灭，非有非空之真如佛性也。此之佛性，在凡不减，在圣不增。佛以究竟证故，常享常乐我净之法乐。</p><p class="p-trans">因果，就是事。如来自证之法，就是一真法界，就是寂照圆融、不生不灭、非有非空的真如佛性！这个佛性，在凡夫位不减，在圣者位不增。佛陀因为究竟证得的缘故，常享常、乐、我、净的法乐。</p></div>
+<div class="para-pair"><p class="p-orig">众生以彻底迷故，恒受生死轮回之妄苦。譬如大圆宝镜，经劫蒙尘，虽有照天照地之光，莫由发现而得受用。</p><p class="p-trans">众生因为彻底迷惑的缘故，恒常遭受生死轮回的妄苦。譬如大圆宝镜，经历多劫蒙上尘垢，虽然有照天照地的光明，但是并没有办法显露出来而得到受用。</p></div>
+<div class="para-pair"><p class="p-orig">故借诸菩萨互相酬倡，为说十信，十住，十行，十回向，十地，等觉各法门。又复以十大愿王，导归极乐，以期圆满佛果。此如来以自证之因果，普示一切众生，令其各各亲证之一大轨范也。</p><p class="p-trans">所以，佛借着与诸菩萨互相酬倡的时机，为他们宣说十信、十住、十行、十回向、十地、等觉的各种法门。而且又以十大愿王，导归极乐，以期圆满佛果。这是如来以自证的因果法，普遍开示一切众生，令众生各各亲证的一大轨范啊！</p></div>
+<div class="para-pair"><p class="p-orig">华严独被大机，二乘凡夫，莫由禀受。故于方等会上，特说净土三经，俾彼若凡若圣，同事修持，以期现生出此五浊，登彼九莲也。</p><p class="p-trans">《华严经》唯独利益大根机的人，二乘和凡夫就没有办法禀承受持了。所以佛在方等时的法会上，又特地宣说了净土三经，使得无论是凡夫还是圣者，都共同来修持，以期现生就出离这个五浊恶世，登上极乐世界的九品莲台。</p></div>
+<div class="para-pair"><p class="p-orig">佛在摩竭提国，灵鹫山中，说阿弥陀佛最初因地，弃国出家，发四十八愿。又复久经长劫，依愿修行。迨至福慧圆满，得成佛道。所感之世界庄严，妙莫能名。十方诸佛咸赞叹。十方菩萨，与回小向大之二乘，具足惑业之凡夫，咸得往生，等蒙摄受。是为无量寿经。</p><p class="p-trans">佛在摩竭提国，灵鹫山中，宣说阿弥陀佛的最初因地，放弃王位出家，发四十八愿。又再经过长久劫，依四十八愿修行。等到福慧圆满，得成佛道。所感的世界庄严，微妙得无法用语言来形容。十方诸佛全都赞叹。十方菩萨，与回小向大的二乘声闻缘觉圣者、具足惑业的凡夫，全都得以往生，平等承蒙阿弥陀佛的摄受。这就是《无量寿经》。</p></div>
+<div class="para-pair"><p class="p-orig">于摩竭提国王宫中，说净业三福，十六妙观。俾一切众生，悉知是心作佛，是心是佛，诸佛正遍知海，从心想生。则是心作众生，是心是众生，众生烦恼业海，从心想生之义，已著于言外。果能深明此义，谁肯枉受轮回。末明九品生因，以期各修上品。是为观无量寿佛经。</p><p class="p-trans">佛在摩竭提国王宫中，宣说净业三福，十六妙观。使得一切众生，全都懂得“是心作佛，是心是佛，诸佛正遍知海，从心想生”这个妙理。那么，是心作众生，是心是众生，众生烦恼业海，从心想生的含义，也已经显明在言外了。人们果真能够深明这个义理，谁又肯枉受轮回呢？最后说明九品往生的因缘，以期人人都能修习上品往生之因。这就是《观无量寿佛经》。</p></div>
+<div class="para-pair"><p class="p-orig">于舍卫国给孤独园，说净土依正妙果令生信。劝闻者应求往生以发愿。令行者执持名号以立行。信愿行三，为净土法门之纲宗。具此三法，或毕生执持，已得一心。或临终方闻，止称十念。均得蒙佛接引，往生西方。是为阿弥陀经。</p><p class="p-trans">佛在舍卫国给孤独园，宣说净土的依正庄严妙果，来使众生生信。劝进听闻到这个法门的人，应当发愿来求往生。让修行此法门的人执持名号来立行。信、愿、行三资粮，是净土法门的纲要、宗旨。只要具足这三法，不管是一生执持名号，已经得到一心不乱；还是在临终时方才闻法，只是十念称名，都能承蒙阿弥陀佛的接引，往生西方。这就是《阿弥陀经》。</p></div>
+<div class="para-pair"><p class="p-orig">此三，乃专说净土之经。而阿弥陀经，言简义丰，摄机尤普。以故禅教律诸宗，皆奉为日课焉。</p><p class="p-trans">这三部经，是专门宣说净土法门的经典。而且《阿弥陀经》，言辞简略、义理丰瞻，收摄的根机尤其普遍。所以禅宗、教下、律宗诸多宗派，都将《阿弥陀经》尊奉为日课。</p></div>
+<div class="para-pair"><p class="p-orig">诸大乘经，带说净土者，多难胜数。而楞严经大势至念佛圆通章，实为念佛最妙开示。果能如子忆母，都摄六根，净念相继而念，岂有不现前当来，必定见佛，近证圆通，远成佛道乎哉。</p><p class="p-trans">各大乘经中，兼带宣说净土的，多的难以胜数。而其中《楞严经·大势至念佛圆通章》，的确是念佛的最微妙开示。修行人果真能够“如子忆母”，“都摄六根，净念相继”地念佛，哪里有不能“现前当来，必定见佛”，近证圆通，远成佛道的呢？</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，乃如来一代时教中之特别法门。虽具足惑业之博地凡夫，但能信愿念佛，即可仗佛慈力，往生西方。纵已证等觉之高位菩萨，犹须回向往生，方可圆满佛果。</p><p class="p-trans">净土法门，是如来一代时教中的特别法门。即使是具足惑业的博地凡夫，只要能够信愿念佛，就可以依仗佛的慈力，往生西方。即使是已经证得等觉的高位菩萨，也仍然必须回向往生极乐世界，才可以圆满佛果。</p></div>
+<div class="para-pair"><p class="p-orig">是知净土法门，其大无外，三根普被，利钝全收。九界众生，舍此则上无以圆成佛道。十方诸佛，离此则下无以普度群萌。一切法门，无不从此法界流。一切行门，无不还归此法界。</p><p class="p-trans">由此可知，净土法门，非常深广，包含一切法门，三根普被，利钝全收。九法界众生，如果舍弃净土法门，就无法向上圆成佛道；十方诸佛，如果舍离这个法门，就无法向下普度一切有情众生。一切法门，无不从此法界流出；一切行门，无不还归此法界。</p></div>
+<div class="para-pair"><p class="p-orig">以其为十方三世一切诸佛，上成佛道，下化众生，成始成终之总持法门。故得九界同归，十方共赞。千经俱阐，万论均宣也。</p><p class="p-trans">因为净土法门，是十方三世一切诸佛，上成佛道，下化众生，成始成终的总持法门。所以得到九法界众生共同归依，十方诸佛共同赞扬。千部经中都阐扬，万部论中都宣讲啊！</p></div>
+<div class="para-pair"><p class="p-orig">然此法门，两土世尊之所建立。释迦在娑婆，详示净土，遣其归去。弥陀在极乐，待彼临终，接其归来。盖欲众生，即于现生出生死苦，证真常乐。其哀怜保护之心，穷劫难宣。</p><p class="p-trans">而且这个法门，是极乐、娑婆两土的世尊所建立的。释迦牟尼佛在娑婆世界，详细开示净土法门，派遣众生回到极乐故乡去；阿弥陀佛在极乐世界，等到众生临终时，接他们回到故乡来。原因是想要众生，在现生就出离生死苦海，证得真常法乐。两土世尊哀怜保护众生的深广慈心，穷尽劫数，也难以宣说完。</p></div>
+<div class="para-pair"><p class="p-orig">有谓既为释迦弟子，当念释迦牟尼佛，求生此土之华藏世界。不知释迦之教念阿弥陀佛者，为令博地凡夫，仗佛慈力，往生西方，以超凡入圣也。</p><p class="p-trans">有人说：“我们既然是释迦牟尼佛的弟子，就应当念释迦牟尼佛，求生此土的华藏世界。”他们哪里懂得，释迦牟尼佛之所以教导众生念阿弥陀佛，是为了让博地凡夫，仗佛慈力，往生西方，从而超凡入圣。</p></div>
+<div class="para-pair"><p class="p-orig">此土之华藏世界，唯破无明证法身之大士能见。凡夫则只见秽土，不见实报庄严，何可滥拟。</p><p class="p-trans">此土的华藏世界，只有破除无明，证得法身的大士才能够见到。凡夫却只能见到秽土，不能见到实报庄严土，怎么能胡乱比拟呢？</p></div>
+<div class="para-pair"><p class="p-orig">况西方亦在华藏世界之内。而华严会上，尽华藏世界海诸菩萨，皆以十大愿王，回向往生西方，以期圆满佛果。汝何人斯，敢与彼抗。</p><p class="p-trans">更何况西方极乐世界也在华藏世界之内。而且华严会上，全部都是华藏世界海的诸菩萨，都以十大愿王，回向往生西方，以期圆满佛果。你是何等人，竟敢与他们对抗？</p></div>
+<div class="para-pair"><p class="p-orig">溯自大教东来，远公首开莲社，一倡百和，无不率从。畅佛之本怀，唯此法为最。自兹厥后，代有高人，续焰传灯，光腾中外，迄至于今，宗风不坠。</p><p class="p-trans">向上追溯，自从佛教传来东方后，慧远大师首开莲社，一倡百和，无不相率跟从。能够大畅佛的本怀，只有这个法门最为第一。从此以后，历代都有高人，延续法焰，传持慧灯，光明腾耀中外，一直到现代，净土法门的宗风也没有衰落。</p></div>
+<div class="para-pair"><p class="p-orig">而天台宗之智者大师，贤首宗之清凉国师，慈恩宗之窥基法师，禅宗之百丈禅师，律宗之大智律师，莫不释经著论，普劝修持。其事迹具载于净土圣贤录。</p><p class="p-trans">而天台宗的智者大师，贤首宗的清凉国师，慈恩宗的窥基法师，禅宗的百丈禅师，律宗的大智律师，无不注释经典，写下论著，普劝大家修持净土法门。他们的事迹都记载在《净土圣贤录》中。</p></div>
+<div class="para-pair"><p class="p-orig">是知禅教律诸知识，悉随华藏海会之班，一致进行，求生极乐。况末法根机浅薄者乎。</p><p class="p-trans">由此可知，禅、教、律宗的各位大善知识，都跟随华藏海会众菩萨的班次，一致进行，求生极乐。更何况我们这些末法时代根机浅薄的人呢？</p></div>
+<div class="para-pair"><p class="p-orig">灵岩创建净土道场，其因缘具载前建念佛堂碑。今修大殿，特将净土法门所以然表彰之，俾后之来哲，有所依归。其建筑所费，并捐款芳名，另碑记载，此不备述。</p><p class="p-trans">灵岩创建净土道场的因缘，全都记载在以前建造念佛堂时所树的碑中。现在又修建了大殿，所以特地把净土法门的由来说明一下，使以后的来哲，有所依归。建筑大殿所用的费用，以及捐款人的芳名，在另外的碑文中记载，这里就不一一叙述了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

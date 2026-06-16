@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复高鹤年居士书三 · 印光法师文钞</title>
+<meta name="description" content="去冬一别，不觉又周寒暑，光阴迅速，诚可畏惧。自今春正月接手书后，概未知的实消息。至七月，因往扬州刻经，至沪上书局询之，言已往泰山修茅篷去。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-040/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复高鹤年居士书三 · 印光法师文钞">
+<meta property="og:description" content="去冬一别，不觉又周寒暑，光阴迅速，诚可畏惧。自今春正月接手书后，概未知的实消息。至七月，因往扬州刻经，至沪上书局询之，言已往泰山修茅篷去。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-040/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复高鹤年居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">去冬一别，不觉又周寒暑，光阴迅速，诚可畏惧。自今春正月接手书后，概未知的实消息。至七月，因往扬州刻经，至沪上书局询之，言已往泰山修茅篷去。</p><p class="p-trans">去年冬天一别，不觉又是一个寒暑，光阴迅速，实在可畏。自从今年春天正月，接到你的信后，一概不知你确实的消息。到了七月，因为前往扬州刻经，到上海书局询问，说你已经前往泰山修茅篷去了。</p></div>
+<div class="para-pair"><p class="p-orig">光意秦地撩乱，不能安生，致令阁下舍之而去。秦川之人，从兹以后，无人引导沐佛法润矣，心甚恻然。</p><p class="p-trans">我以为是陕西地方纷乱，不能安定生活，致使阁下舍陕西而去。陕西的人民，从此以后，没有人引导沐浴佛法的润泽了，心中很是悲伤。</p></div>
+<div class="para-pair"><p class="p-orig">今接手书，知在华山。尚企平静之后，复返终南，不禁预为秦人快愉而庆幸焉。光无状，道不加长，目日加昏。</p><p class="p-trans">现今接到你的信，知道你在华山。还希望平静之后，再返回终南山，不禁预先为陕西人民快慰欢愉而庆幸啊！我没有什么好的善行，道行没有增长，眼睛一天天昏暗。</p></div>
+<div class="para-pair"><p class="p-orig">前年劝应季中出资刻辨异录，由不太平，迟至今秋方至藏经院，委托该院主人代理，先刻拣魔辨异录（共二百六十余纸），次刻三十二祖传（约六十纸），二书皆世宗遗著，皆应季中出资刻。</p><p class="p-trans">前年劝应季中出资刻印《拣魔辨异录》，由于时世不太平，延迟到今年秋天，方才到扬州藏经院，委托该院主人代理，先刻《拣魔辨异录》（共二百六十多页纸），次刻《三十二祖传》（约六十页纸），这二部书都是清世宗雍正皇帝的遗著，都是应季中出资刻印。</p></div>
+<div class="para-pair"><p class="p-orig">次刻安士全书（约六百六七十纸，内有新附数十纸），此书乃朝邑刘门村刘芹浦避难来申，发心出资。</p><p class="p-trans">再其次刻《安士全书》（约六百六七十页纸，内有新附的几十页纸），这部书是陕西朝邑县刘门村刘芹浦避难来到上海，发心出资刻印。</p></div>
+<div class="para-pair"><p class="p-orig">其人颇笃厚诚实，惜佛法缘疏，于九月十九日捐躯而去。倘多过几年，则净土善根，便能发生滋长矣。然仗此刻书功德，纵不能往生，其来报当不至劣于今生矣。</p><p class="p-trans">这个人比较笃厚诚实，可惜佛法的缘份比较疏远，于九月十九日去世。倘若再多过几年，那么他的净土善根，便能发生滋长了。然而仗着这个刻书的功德，纵然不能往生，未来的果报应当不至于比今生差。</p></div>
+<div class="para-pair"><p class="p-orig">待至明年四月，当复往扬州，料理其已刻成者印送，未刻成者校对。明年毕竟要了此二宗书事。</p><p class="p-trans">等到明年四月，应当再次前往扬州，料理其中已经刻好的印刷施送工作，未刻成的校对工作。明年要完全了结这二件印书的事。</p></div>
+<div class="para-pair"><p class="p-orig">光见类管窥，学等面墙，由阁下多事，惹起徐蔚如，周孟由，张云雷等，播扬丑迹，殊深惭愧。去秋乡人王幼农来山，见其芜稿，遂欲出资刻板。光以芜秽不堪传世固辞。</p><p class="p-trans">我的见解如同以管窥天，所学如同面对墙壁，无所知见，由于阁下多事，将文稿登在《佛学丛报》上，惹起徐蔚如，周孟由，张云雷等人，播扬我的丑迹，实在深感惭愧。去年秋天，家乡人王幼农来普陀山，见到文稿，于是想要出资刻板。我以文稿芜秽杂乱，不堪传世来推辞。</p></div>
+<div class="para-pair"><p class="p-orig">今春蔚如排印五百本，于三月下旬来山，又持其余芜稿，在京编排，刻木版，大约明年夏季，或可完工。幼农虽知蔚如已刻，仍欲为刻，当于二书告竣之后刻之。</p><p class="p-trans">今年春天，徐蔚如排印五百本，在三月下旬来普陀山，又持其余的文稿，在北京编排，刻成木版，大约明年夏季，或许可以完工。王幼农虽然知道徐蔚如已经刻印，仍然想要再刻，应当在二部书宣告完工之后再刻。</p></div>
+<div class="para-pair"><p class="p-orig">今夏五月，蔚如所印芜钞，有人持至安徽迎江寺，监院竺庵师，驰书言欲刻板，并要其余底稿。光令迟至明年京板刻好，印出当即寄上。</p><p class="p-trans">今年夏季五月，徐蔚如所印的文钞，有人拿到安徽迎江寺，监院竺庵法师，写信来说想要刻板，并索要其余的底稿。我让他推迟到明年，北京的板刻好，印出后当会立即寄给他。</p></div>
+<div class="para-pair"><p class="p-orig">光数十年来，印光二字，不敢露出。因阁下多事之故，致令贱名劣作，遍刺雅人耳目，愧何如之。去岁妄企亲证念佛三昧，而念佛三昧，仍是全体业力。</p><p class="p-trans">我几十年来，印光二个字，不敢露出。因为阁下多事的缘故，使我卑劣的名字和作品，刺遍了高雅之人的耳目，实在惭愧。去年妄想亲证念佛三昧，而念佛三昧，仍然是全体业力。</p></div>
+<div class="para-pair"><p class="p-orig">今年自知惭愧，于九月半起七，至明春二月底止。念佛三昧，不敢高期。但企忏悔宿业，令其净尽耳。谁知宿业，竟与真如法性，同一不生不灭。</p><p class="p-trans">今年自知惭愧，于九月十五起七，到明年春二月底为止，念佛三昧，不敢过高期望能够证得。只企望忏悔宿业，令其净除究尽罢了。谁知宿业，竟然与真如法性，同一不生不灭。</p></div>
+<div class="para-pair"><p class="p-orig">佛光普照法界，我以业障不能亲炙，苦哉苦哉，奈何奈何。书此愚怀，以期知己者代我分忧而已。（民国八年十二月初四日）</p><p class="p-trans">佛光普照法界，我因为宿业所障，不能亲受佛光熏陶，苦啊苦啊，无可奈何。写下我的一点愚昧心思，以期知己者代我分忧而已。（民国八年十二月初四日）</p></div>
+<div class="para-pair"><p class="p-orig">谨按云栖遗稿有偈云，二十年前事可疑，三千里外遇何奇，焚香掷戟浑如梦，魔佛空争是与非。憨山大师说，此是云栖老人悟道偈。今大师亲见宿业与真如法性同一不生不灭，窃谓即此偈意欤。</p><p class="p-trans">谨按：《云栖遗稿》中有偈云：“二十年前事可疑，三千里外遇何奇，焚香掷戟浑如梦，魔佛空争是与非。”憨山大师说，这是云栖老人悟道的偈颂。今印光大师亲见宿业与真如法性，同一不生不灭，个人认为，就是这个偈颂的意思吧！</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

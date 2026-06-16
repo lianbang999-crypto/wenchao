@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复宋德中居士问焚经功过书 （民国二十年　附原书） · 印光法师文钞</title>
+<meta name="description" content="【原信】">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-128/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复宋德中居士问焚经功过书 （民国二十年　附原书） · 印光法师文钞">
+<meta property="og:description" content="【原信】">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-128/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复宋德中居士问焚经功过书 （民国二十年　附原书）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<p class="p-orig">【原信】</p>
+<div class="para-pair"><p class="p-orig">上海功德林，佛经流通处之图书目录，其第八十三页，有焚化朱书金刚经之功用八种。德中以此项举动，有违佛旨，功少罪多，特请大师解释。</p><p class="p-trans">【原信】上海功德林佛经流通处的图书目录，在第八十三页，有焚化丹朱所写《金刚经》的功用八种。德中我认为功德林这项举动，有违佛陀的本意，功德少罪过多，特请大师解释。</p></div>
+<p class="p-orig">【印祖回信】</p>
+<div class="para-pair"><p class="p-orig">佛经重在受持，未闻令其焚化。即谓焚之有益孤魂，及所荐亡人，尚属功过不相掩，况无益乎。</p><p class="p-trans">【印祖回信】佛经注重在个人的受持，没有听说过是让人用来焚化的。即使有所谓的焚化经书有益于孤魂，有益于所超荐的亡人，这还都属于功过不相抵，更何况没有什么利益的焚化呢？</p></div>
+<div class="para-pair"><p class="p-orig">何以言之。凡焚经者，多多皆焚于焚锡箔之器中，其灰仍同锡箔灰卖之。彼收买之人，将纸灰飏去，唯留锡灰，则经灰能不归于垃圾中乎。有谁肯费事，特设一器，下以锡箔垫底，中置其经，上又加诸锡箔。</p><p class="p-trans">为什么这么说呢？凡是焚经的人，大多都是焚化在焚烧锡箔的器物中，经灰仍同锡箔灰一起卖掉。那些收买锡箔灰的人，将纸灰扬掉，只留下锡箔灰，那么经灰能不被归到垃圾中吗？有谁肯特别费事，特地设置一个容器，下面用锡箔垫底，中间放置经书，上面再加上一层锡箔。</p></div>
+<div class="para-pair"><p class="p-orig">焚锡箔，而经随以焚，其上有锡箔，经灰不至飞飏于外。待其化尽冷透，将此灰，用新布袋装之，内加净沙，或净石，缝其袋口。</p><p class="p-trans">焚化锡箔，而经书也就随着焚化，上面有锡箔，经灰不至于飞扬到外面。等到焚化完毕冷透，将这些灰，用新的布袋装好，里面加上干净的沙子，或干净的石块，缝上袋口。</p></div>
+<div class="para-pair"><p class="p-orig">若有亲友极可靠人过海，或过大江，至极深处沉之，则无亵经之过。若照平常烧锡箔中，又卖其纸灰，吾恐其过有无量，功无几何。</p><p class="p-trans">如果有亲友等极可靠的人过海，或者过大江，到很深的地方，将布袋沉到水底，就没有亵渎佛经的罪过。如果依照平常人做法焚烧在锡箔中，又卖掉这个纸灰，恐怕这个罪过无量，而功德却没有多少。</p></div>
+<div class="para-pair"><p class="p-orig">凡诸佛事，均以诚敬，方有感通。彼焚经者，只知焚耳，何尝虑及乎此。诸大乘经，皆悉称赞书写，受持，读诵之功德，未闻称赞焚化之有功德也。</p><p class="p-trans">凡是做一切佛事，都是因为诚敬，才有感通。那些焚经的人，只知道焚经而已，哪里会考虑到这些呢？一切大乘经，全都称赞书写、受持、读诵的功德，没有听说称赞焚化经书有功德的。</p></div>
+<div class="para-pair"><p class="p-orig">使真有功德，此风犹不可长。以无知之人，或至误会，则以焚经为事，不复注重受持也。金刚经既可焚，何大乘经不可以焚。</p><p class="p-trans">即使真的有功德，这个风气还是不可助长。因为无知的人，或许产生误会，就会以焚经为本，不再注重受持经书了。《金刚经》既然都可以焚化，还有什么大乘经不可以焚化的呢？</p></div>
+<div class="para-pair"><p class="p-orig">无知之富人，必至造焚经之业于无穷也。此事不慧完全不赞成，虽闻人言有大感应，亦不出一语以赞扬，恐其流弊无穷也。</p><p class="p-trans">无知的富人，必然造作无穷无尽的焚经罪业。这件事我完全不赞成，虽然听人说有很大的感应，但是也不会说一句赞扬的话，我担心这个流弊会无穷啊！</p></div>
+<div class="para-pair"><p class="p-orig">世每以往生咒写作圆形，刻而印之，名之曰往生钱，多有焚之以济孤魂者。光绪十六年，光在北京龙泉寺，于清晨至三门外，见其夜间放焰口，所烧之纸，及锡箔灰中，有二寸厚一叠往生钱，只烧了半边。倘非我见，则用人打扫，恐一同扫于垃圾中矣。是知烧此种咒之过，无处不有也。</p><p class="p-trans">世人常常将往生咒写成圆形，刻成模子，印在纸上，名为往生钱，有很多人焚化这些往生钱来救济孤魂。光绪十六年，我在北京龙泉寺，一天清晨到三门外，看见夜晚放焰口，所烧的纸，以及锡箔灰中，有二寸厚一叠的往生钱，只烧了半边。倘若不是我看见，那么工人一打扫，恐怕一同都扫到垃圾中去了。所以知道烧这种往生咒的罪过，无处不有啊！</p></div>
+<div class="para-pair"><p class="p-orig">有僧放蒙山，用黄表纸，及钱纸，内夹一往生钱，折作一头大一头小形，待出生时燃之。至近手，则丢于地，其中每每有字未烧完者。即烧完，而其灰则完全落于地下，岂能无过。</p><p class="p-trans">有僧人放蒙山，用黄表纸，以及钱纸，里面夹着一张往生钱，折作一头大一头小的形状，等到出食的时候来烧。火烧到靠近手指时，就丢到地上，其中常常有字没有烧完的。即使烧完了，而那个灰就完全落在地下，怎能没有罪过。</p></div>
+<div class="para-pair"><p class="p-orig">此系不慧亲眼见者。故知一法才立，百弊丛生，乃真语实语也。凡事均以虑及久后无弊为妥善。焚经纵有功德，恐无细心之人料理，则功德事反成罪过事，况未必真有功德乎。</p><p class="p-trans">这是我亲眼所见。所以知道一法才立，百弊丛生，是真语实语啊！凡事都应该考虑到以后将来没有弊病才妥当。焚经纵然有功德，恐怕没有细心的人处理，那么功德的事，反而成为罪过的事，更何况未必真的有功德呢？</p></div>
+<div class="para-pair"><p class="p-orig">此不慧之知见也。至于大通家一切无碍，法法圆通，则非不慧之劣知小见所能及。不慧所说，但约不慧之分量而为准耳。</p><p class="p-trans">这是我的知见。至于大通家一切无碍，法法圆通，就不是我的劣知小见所能达到的了。我所说的，只是以我的知见水平为依据而已。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【三门】</span>佛教堂塔之建筑物，称三门。其形状如阙，有三个门，故称三门。三门含有智慧、慈悲、方便三解脱的意思，或象征信、解、行三者之义。但并非必有三个门才称“三门”，只有一个门，也称“三门”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【出生】</span>（饮食）生饭之异名。出众生食之略。自我饭中出他众生食之义也。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

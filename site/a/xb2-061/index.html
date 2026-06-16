@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>影印宋碛砂版大藏经序（民二十五年） · 印光法师文钞</title>
+<meta name="description" content="大藏经者，如来之慧命，人天之眼目。无明长夜之智炬，生死苦海之慈航。觉先觉后之法源，世出世间之道本也。若非宿植善根，历劫莫闻名字，况亲承供养，受持读诵，依之修习，以迄圆证乎哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-061/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="影印宋碛砂版大藏经序（民二十五年） · 印光法师文钞">
+<meta property="og:description" content="大藏经者，如来之慧命，人天之眼目。无明长夜之智炬，生死苦海之慈航。觉先觉后之法源，世出世间之道本也。若非宿植善根，历劫莫闻名字，况亲承供养，受持读诵，依之修习，以迄圆证乎哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-061/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">影印宋碛砂版大藏经序（民二十五年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大藏经者，如来之慧命，人天之眼目。无明长夜之智炬，生死苦海之慈航。觉先觉后之法源，世出世间之道本也。若非宿植善根，历劫莫闻名字，况亲承供养，受持读诵，依之修习，以迄圆证乎哉。</p><p class="p-trans">大藏经，是如来的慧命，人天的眼目。无明长夜中的智炬（破除迷暗的智慧），生死苦海中的慈航。是以先觉来觉后觉的各种法门的源泉，世间、出世间的大道根本。如果不是宿世培植了善根，恐怕历劫连大藏经的名字都不能听闻到，更何况亲承供养，受持读诵，依之修习，以至圆证佛果呢？</p></div>
+<div class="para-pair"><p class="p-orig">此一大藏所说之法，乃十法界，生佛凡圣，即心所具之法。在佛不增，在生不减。佛以究竟证故，常享常乐我净之法乐。</p><p class="p-trans">这一部大藏经所说的法，是十法界，众生、佛陀、凡夫、圣者，即心所具之法。即使成佛也不会增加，即使是众生也不会减少。佛陀因为究竟证得的缘故，常享常、乐、我、净的法乐。</p></div>
+<div class="para-pair"><p class="p-orig">众生以从未悟故，反承此妙心之力，背觉合尘，迷真逐妄，起贪瞋痴，造杀盗淫，永沦三途六道之中，了无出期。三乘圣人，虽有悟证，未至究竟，故亦未能全得受用也。</p><p class="p-trans">众生因为从来没有觉悟的缘故，反而承着这个妙心之力，背离觉性合于尘境，迷真逐妄，起贪瞋痴三毒，造杀盗淫三业，以致永远沉沦在三途六道之中，没有出离的日期。三乘（声闻、缘觉、菩萨）圣人，虽然有所悟证，但未到究竟，因此也未能完全得到受用。</p></div>
+<div class="para-pair"><p class="p-orig">大觉世尊，愍而哀之，示生世间，成等正觉，随机施教，对症发药，俾其就路还家，并不另起炉灶。</p><p class="p-trans">大觉世尊，怜愍哀痛众生，示生于世间，成等正觉，随众生根机，施设教法，对症发药，使得众生就路还家，并不另起炉灶。</p></div>
+<div class="para-pair"><p class="p-orig">大根则直说一乘大法，令其顿证无生。小根则先依权渐修持，以培入大之基，终令领受家业，绍隆佛种。</p><p class="p-trans">对大根器的众生，就直接宣说一乘大法，令他们顿证无生法忍。对小根器的众生，就先依权教，渐渐修持，以培植进入大乘的根基，最终令他们领受如来家业，绍隆佛种，续佛慧命。</p></div>
+<div class="para-pair"><p class="p-orig">一代所说，分为五时。一，华严时，唯说界外圆顿大法。人天二乘，均非其器。</p><p class="p-trans">世尊一代时教所说，分为五时。一，华严时，唯说三界之外的圆顿大法。人天二乘，均非此种根器。</p></div>
+<div class="para-pair"><p class="p-orig">二，阿含时，说谛，缘，权，渐之法，令入化城。</p><p class="p-trans">二，阿含时，宣说四谛、十二因缘、权教、渐教之法，令众生进入化城。</p></div>
+<div class="para-pair"><p class="p-orig">三，方等时，四教并谈，三根普被。</p><p class="p-trans">三，方等时，藏、通、别、圆四教一并谈说，上中下三种根机普被。</p></div>
+<div class="para-pair"><p class="p-orig">四，般若时，以般若妙智，荡除圣凡情见。</p><p class="p-trans">四，般若时，以般若空性妙智，荡除圣者凡夫的情见。</p></div>
+<div class="para-pair"><p class="p-orig">五，法华，涅槃时。法华则开权显实，开迹显本，普授三根之记，共领本有家珍。涅槃则扶律谈常，作最后训。俾身口意三业，与佛同净，戒定慧三学，与佛同圆。</p><p class="p-trans">五，法华、涅槃时。《法华经》中则开权显实，开迹显本，普授上中下三根成佛之记，共领本有的自家珍宝。《涅槃经》中，则扶持戒律，谈常住佛性，作为最后的训诫。使得身口意三业，与佛同样清净；戒定慧三学，与佛同样圆满。</p></div>
+<div class="para-pair"><p class="p-orig">综其所说，厥有五宗，曰律，曰教，曰禅，曰密，曰净。五者名目虽异，理体是一。可专主于一门，不可偏废于余法。如由四门而入一城，如以四时而成一岁。其互相维持，互相辅助之功，非深悉法源者莫能知。</p><p class="p-trans">综合其中所说，共有五宗：律、教、禅、密、净。五宗虽然名目不同，但理体却是一。可以专门主修一门，不可偏废其余的法门。如同由四个城门，均可进入到同一城中；也如同以四季来组成一年的岁月。其互相维持，互相辅助的功用，非深明法源的人不能了知。</p></div>
+<div class="para-pair"><p class="p-orig">就中律，为入道之初基，虽至圆满菩提，仍复依止。净，为普度之法门，纵令已证等觉，犹当归心。末世众生，非此莫度，各宗智士，急宜服膺。否则所有修持，但作未来成佛之善因，欲即生一超直入如来地，恐不易易也。</p><p class="p-trans">其中，戒律，是入道的初基，即使证到圆满菩提的佛果，也仍要依止戒律。净土，是普度众生的法门，即使是已经证得等觉位的菩萨，也仍然要归心净土。末世众生，非依这个法门，不能得度，各个宗派的有智之士，应该急切地信奉。否则，所有的修持，只能作未来成佛的善因，想要在现生就一次超越三界，直入如来果地，恐怕就非常不容易了。</p></div>
+<div class="para-pair"><p class="p-orig">此诸经外，所有大小乘律，仍归五时所摄，故不另叙。经律之外，尚有诸菩萨，尊者，所造之释经宗经诸论，显理破惑，降魔制外，俾佛化得以普被中外者，赖有此耳。是为佛国译来之经律论三藏也。</p><p class="p-trans">诸经藏之外，所有大小乘的戒律，仍然归于五时所摄，所以不再另外叙述。经律二藏之外，还有诸菩萨、尊者，所造的释经、宗经的诸多论典，显正理、破迷惑，降邪魔、制外道，使得佛陀的教化得以普被中外，依靠的正是这些论典。以上这些就是印度佛国翻译来的经、律、论三藏。</p></div>
+<div class="para-pair"><p class="p-orig">及大教东来，法匠蔚起，各宗之著述，美不胜收，其入藏者，乃百千之十一耳。当唐以前，经书均由抄写而得。五代冯道，创兴刻板，至宋，则儒书佛经，俱用板印矣。</p><p class="p-trans">等到佛教东来，佛法巨匠蔚然兴起，各个宗派的著述，美不胜收，其中录入大藏经的，只不过是百千中的一分十分罢了。在唐朝以前，经书都是由抄写来获得。五代时的冯道，创兴刻板印书，到了宋朝，则儒书佛经，就都用刻板印书了。</p></div>
+<div class="para-pair"><p class="p-orig">宋大藏板，有十余付，而碛砂延圣院尼弘道，断臂提倡，刻此藏板，可谓女中丈夫，令人钦佩。</p><p class="p-trans">宋朝的大藏经板，有十多付，而碛砂延圣院的弘道尼师，以自断手臂来呼吁提倡，刻印这个藏经板，可说是女中大丈夫，令人钦佩。</p></div>
+<div class="para-pair"><p class="p-orig">自宋至今，七百余年，所印之经，以屡遭世乱，多分湮没。陕西卧龙，开元两寺，幸有存者。朱子桥居士，往陕办赈见之，与沪各大居士商订影印，其间勤劳，殆难说尽。</p><p class="p-trans">从宋朝到如今，七百多年，所印的经书，因为多次遭遇世间的战乱，大多都湮没了。陕西卧龙、开元两座寺院，很幸运还有保存。朱子桥居士，前往陕西办理赈灾时见到了，与上海的各大居士商订影印，其间的勤劳，很难说尽。</p></div>
+<div class="para-pair"><p class="p-orig">今将出初期，命光作序。光乃无所知识之粥饭僧，何能发挥大藏之要，姑以平日所习闻者，拉杂书之，以塞其责。</p><p class="p-trans">现今将要出版第一期，令我作序。我是一个无知无识的粥饭僧，如何能发挥大藏经的要义呢？姑且就把平时学习见闻到的，东拼西凑写了一些，来搪塞这个差事。</p></div>
+<div class="para-pair"><p class="p-orig">全藏妙义，阅者自知。即未能遍阅，但于现前根尘识大诸法中，回光返照，便可亲证圆通，又何必多凑散字，以刺雅目也。</p><p class="p-trans">全部藏经的妙义，阅读后的人自会知道。即使未能遍阅大藏经，只要在现前的六根、六尘、六识、七大诸法中，回光返照，便可亲证圆通，又何必多凑一些散字，来刺人雅目呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【碛砂版大藏经】</span>《碛砂版大藏经》是南宋时代私刻大藏最后的一种。刻版地点在平江府陈湖中碛砂洲延圣院（现在江苏省吴县境内），后来改名碛砂禅寺（见清代康熙《苏州府志》卷三十九），因而通称这部藏经为《碛砂版》或《碛砂藏》。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【化城喻】</span>法华七喻之一。化城，指变化之城邑，比喻二乘之涅槃。法华经卷三化城喻品载，有众人将过五百由旬险难恶道以达宝处，疲极欲返，其导师为振奋众人，以方便力，于道中过三百由旬处化作一城，令彼等得苏息，终能向宝处前进。即藉化城比喻二乘所得之涅槃非为真实，乃佛为使彼等达大乘至极佛果之方便假说。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【开权显实】</span>开除权教之执著，显示真实之义。“开”含开除、开发、开拓等义；开除乃除却权执，开发乃由内机缘纯熟而脱权执，开拓乃权即实而广其体之义。即开除三乘之权便，显示一乘真实之义。此系天台宗对于法华经所作判释之语。谓法华经以前之诸经乃应未熟之机根而设，为权便之法，实欲引众生入真实之教；以权便之法显真实之义，故称开权显实。然权实本不异，若开除此执著，则权实不二，趣归一佛乘之真义。以上系就法华经前半部迹门之化仪而说。而后半部本门化仪之“开迹显本”亦称开权显实，即破除迹权之执著，显示本门之实义。若就法华经全经而言，前十四品为开三显一，后十四品为开近显远之说，即前半部开除三乘教之方便，显示一乘教之真实；后半部开除垂迹之近佛，显示本地之实佛，而此二十八品总归于开权显实。又开三显一系就“人”、“机”而论，相对于此，开权显实乃针对“理”、“教”加以阐释。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【开迹显本】</span>又作发迹显本。此系天台宗对于法华经所作判释之语。天台大师智顗说明法华经旨趣之时，谓法华经有“本迹二门”之开显，其本门之开显，就佛身而言，乃开迹显本。即开除以释尊为伽耶近成垂迹示现之权佛之情执，以显示久远实成之本地本佛。法华经玄义卷七下（大三三·七七三上）：“开迹中佛界十如，显出本中佛界十如。”谓于迹门开“下九界”之权，以显“佛界”之实。故于本门显示佛界之本有久远，令了知迹门所说，而明诸佛之本地。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【偏废】</span>因过于重视几件事情中的某一件而忽视、荒废其它。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【服膺】</span>铭记在心；衷心信奉。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【冯道】</span>(882-954年)，是中国大规模官刻儒家经籍的创始人。字可道，自号“长乐老”。五代瀛州景城（今中国中部河北交河东北）人。后唐（公元923年-公元934年）、后晋（公元936年-公元940年）时任宰相。契丹灭后晋，到契丹任太傅。后汉（公元947年-公元948年）时任太师。后周（公元951年-公元959年）时任太师、中书令。曾著《长乐老自叙》。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【法珍】</span>元代比丘尼。蜀中人，俗姓崔，名法珍。出家为尼，法名弘道。居成都，鉴于元末经籍散落，流通失畅，于是发心募刻碛砂藏，遂断臂募化，不舍寒暑，其徒亦能灸顶穿颊以佐之。四方信士大为感动，纷起解囊，乃至有倾家荡产卖儿集资以响应者。募化工作共历三十年，方始圆满。然据道安之中国大藏经雕刻史话载，法珍尼师“断臂募刻”之藏经并非碛砂藏，而系金刻大藏经。谓大定十八年（1178），山西潞州之崔法珍将新雕之印本大藏经一藏，进献金廷，在燕京圣安寺登坛受戒为比丘尼。二十三年，敕赐紫衣及“宏教大师”之尊号。
+另根据元一统志顺天府志卷一、望月信亨佛教大辞典第八册所载，崔法珍与弘道尼实为不同之二人，两人皆有“断臂募化”之事迹，崔法珍所募化者为金藏，弘道尼所募化者为碛砂藏，而一般人往往将此二人混同之原因，乃因崔法珍原在燕京圣安寺受戒，圣安寺于金熙宗皇统（1141-1148）初年受赐“大延圣寺”之名，此一新寺名与碛砂延圣院同名，且因两人事迹类似，遂被视为同一人。
+又据日人随天所撰之“缘山三大藏经缘起”载，于明朝南北二藏经完成之后，北藏深藏宫中，民间请印甚难，南藏虽可请印，然耗费重大，以致流通不易，遂有法珍尼师者，起而募刻方册藏本，自断其臂以示决心，历三十年始成其功，即为方册藏经之第一部。（金史纪事本末卷三十、明刻方册大藏陆光祖序、冯梦祯序、王世贞序、法珍尼师断臂刻藏考（念生））</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

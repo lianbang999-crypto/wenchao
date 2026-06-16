@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wenchao.foyue.org/sitemap.xml

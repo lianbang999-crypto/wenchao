@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>释迦如来玉像来仪峨嵋山万年寺毗卢殿记（代撰） · 印光法师文钞</title>
+<meta name="description" content="窃以诸佛出世，各有时节因缘。像教流通，遍周十方三世。溯我释迦世尊，尘点劫前，早成正觉。住寂光清净之土，证法报圆融之身。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-112/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="释迦如来玉像来仪峨嵋山万年寺毗卢殿记（代撰） · 印光法师文钞">
+<meta property="og:description" content="窃以诸佛出世，各有时节因缘。像教流通，遍周十方三世。溯我释迦世尊，尘点劫前，早成正觉。住寂光清净之土，证法报圆融之身。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-112/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">释迦如来玉像来仪峨嵋山万年寺毗卢殿记（代撰）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">窃以诸佛出世，各有时节因缘。像教流通，遍周十方三世。溯我释迦世尊，尘点劫前，早成正觉。住寂光清净之土，证法报圆融之身。</p><p class="p-trans">诸佛出世，各有时节因缘。像教流通，遍满十方三世。溯我释迦世尊，在尘点劫前，早已成佛。安住寂光清净之土，证得法报圆融之身。</p></div>
+<div class="para-pair"><p class="p-orig">又以愍念众生，悲心莫置。方便施化，应迹无穷。孺慕深而慈亲至，本不生而数数示生。机薪尽而应火亡，原无灭而频频现灭。如是垂迹，竖穷三际，横遍十方。惟本高而迹广，类源远而流长。</p><p class="p-trans">又因为愍念众生，悲心不尽。所以方便施设教化，应化事迹，没有穷尽。孺子仰慕慈亲之情至深，慈亲就到来了。原本不生，而一次次示现受生；众生机缘的薪柴穷尽，佛陀应化的火光就会熄灭。原本无灭，而一次次示现灭度。像这样垂化的形迹，穷尽三际，遍满十方。本地高远而行迹广布，源头深远而支流绵长。</p></div>
+<div class="para-pair"><p class="p-orig">且据此番成道，时当周穆二年。造像功德经云，如来欲示孝道，升忉利天三月安居，为母说法。优陀延王渴仰于佛，以紫旃檀雕佛形像，承事供养，如佛无异。</p><p class="p-trans">且就释迦世尊这一次成道而论，时间在周穆王二年。《造像功德经》中说：“如来想要显示孝亲之道，所以升到忉利天，安居三个月，为母亲说法。优陀延王因为渴仰想念佛陀，所以用紫旃檀木雕刻佛的形像，当作真佛一样来承事供养。”</p></div>
+<div class="para-pair"><p class="p-orig">及至九旬已满，佛降人间。乃谓王曰，汝初为轨则，造佛形像。令诸众生，得大利益。汝之功德，无能及者。若人以金，银，铜，铁等物，雕铸塑画佛像，乃至极小如一指大。此人现生灭无量罪，获无量福。</p><p class="p-trans">三月期满，佛陀回到人间，就对优陀延王说：“你率先制定轨则，塑造佛的形像，让众生得大利益。你的功德，无人能及。如果有人用金、银、铜、铁等材质，雕刻、铸造、塑画佛像，乃至于小到只有手指那么大。这个人现生当中灭除无量罪业，获得无量福报。”</p></div>
+<div class="para-pair"><p class="p-orig">后世尊贵豪富，信乐正法，展转修习，至成佛道。由是各国王臣，俱造佛像。至阿育王所造最多。</p><p class="p-trans">后世当中的尊贵豪富，欢喜信受正法，辗转加以修习，乃至成就佛道。因此，各国的国王大臣，都纷纷塑造佛像。阿育王统治的时期，造像最多。</p></div>
+<div class="para-pair"><p class="p-orig">迨夫大教东流，每有金石佛像，浮江漂海而来，涌地裂山而出者，载诸传记，多难具陈。</p><p class="p-trans">佛教传到中国之后，每每有金、石雕刻的佛像，或者浮江漂海而来，或者从地中涌出，或者山裂而出现。这些事情记载在诸多传记当中，多得难以尽述。</p></div>
+<div class="para-pair"><p class="p-orig">懿哉世尊，慈隆即世，悲臻末劫。绝攀缘而赴众感，如一月普印于千江。住真际而应群机，犹一雨遍润乎万卉。</p><p class="p-trans">伟大啊，世尊！慈怀隆盛于当世，悲心延绵至末劫。绝离攀缘的妄心，而响应众生的感念，如同一月普印于千江；常住于真如实际，而普遍响应种种的根机，犹如一场春雨普遍滋润万千卉木。</p></div>
+<div class="para-pair"><p class="p-orig">善根未种，未熟，未脱者，令其即种，即熟，即脱。应以像身得度者，即现像身而为说法。天覆地载，莫喻斯恩。粉骨碎身，罔酬此德。</p><p class="p-trans">善根未种下、未成熟、未解脱的众生，令他们即种、即熟、即脱。应当通过佛像而得到救度的众生，就现出佛像之身而为他说法。这样的恩德，天覆地载也不能相比，粉骨碎身也不能报答。</p></div>
+<div class="para-pair"><p class="p-orig">清福大师宿植德本，笃修净业。往游印度，巡礼圣迹。回至缅甸，谨选美玉，雕佛三尊，请回中国。法体莹净，妙相庄严。岂良工之能琢，疑古佛以再来。</p><p class="p-trans">清福大师，宿植德本，笃修净业。游历印度，巡礼佛陀圣迹。返回途中经过缅甸，谨慎地挑选美玉，雕刻了三尊佛像，迎请回中国。玉佛法体莹净，妙相庄严，哪里是良工巧匠所能琢刻出的，难免怀疑这就是古佛再来。</p></div>
+<div class="para-pair"><p class="p-orig">以本寺乃普贤菩萨圣道场地，历朝敕建，四众归崇。佛殿与峰峦齐峙，皇文共日月争光。本殿又为十方常住，僧众云集。一志精修道品，无时不启度门。</p><p class="p-trans">因为本寺是普贤菩萨的圣道场地，历代朝廷敕命兴建，四众弟子崇敬归依。佛殿与峰峦一齐耸峙，御笔与日月争夺光辉。毗卢殿又属于十方常住，僧众云集。大家同一志向，精进修行，无时无刻不开启度门。</p></div>
+<div class="para-pair"><p class="p-orig">因送一尊，供大殿内，普令缁素，恭敬供养。当知此像，即佛真身。非玉非石，即色即空。直须一心归命，毕世投诚。朝斯夕斯，念兹在兹。若能一念冥符，方知相相离相。其或六根解脱，自可心心印心。</p><p class="p-trans">因此就奉送一尊玉佛，供在大殿内，让所有的僧俗，恭敬供养。应当知道，这座佛像就是佛的真身。非玉非石，即色即空。必须一心归命，一生投诚。从早到晚，念念不忘。如果能够一念暗合，方才知道相相离相；如果能够六根解脱，自然可以心心印心。</p></div>
+<div class="para-pair"><p class="p-orig">从此复本归元，尘消觉净。五蕴空而五眼具，三惑断而三德圆。于是波腾行海，云布慈门。四摄齐施，一法不著。尽来际以展转传持，俾慧命以永劫常住。是名真佛弟子，可谓知恩报恩。</p><p class="p-trans">从此复本归元，尘染消除，觉性清净。五蕴空灭而五眼具足，三惑断尽而三德圆彰。于是慈悲万行，如同波涛奔涌。四摄法一齐施设，一法也不住著。尽于未来，辗转传续受持，使得法身慧命永劫常住。这才叫做真佛弟子，这才可以说是知恩报恩。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【像教】</span>汉语词语，意思为像法，亦泛指佛法。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【念兹在兹】</span>念：思念；兹：此，这个。泛指念念不忘某一件事情。《尚书·大禹漠》：“帝念哉！念兹在兹，释兹在兹。名言兹在兹，允出兹在兹，惟帝念功。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【五眼】</span>肉眼、天眼、慧眼、法眼、佛眼。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【四摄法】</span>布施摄、爱语摄、利行摄、同事摄。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>简照南居士祭文 · 印光法师文钞</title>
+<meta name="description" content="五蕴炽然建立时，实体毕竟不可得。际此四大分离后，一照直下度苦厄。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-184/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简照南居士祭文 · 印光法师文钞">
+<meta property="og:description" content="五蕴炽然建立时，实体毕竟不可得。际此四大分离后，一照直下度苦厄。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-184/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 传记记事祭文</div>
+      <h1 class="art-title">简照南居士祭文</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">五蕴炽然建立时，实体毕竟不可得。际此四大分离后，一照直下度苦厄。</p><p class="p-trans">五蕴炽然建立时（身心炽然建立且执著人我的时候），实体毕竟不可得（不知道妄我假合之体本空，看不见自性真我）。际此四大分离后（在这地水火风四大分离之后），一照直下度苦厄（当下返观自性，照见五蕴皆空，度一切苦厄）。</p></div>
+<div class="para-pair"><p class="p-orig">恭维照南简居士，宿根深厚，赋性慈祥。白手成家，无殊当日陶朱。赤心护法，直是今时须达。而且备修世善，恪守戒归。净业仗福力以圆成，故当高超极乐。临终由眷属之悲恋，或恐留滞娑婆。</p><p class="p-trans">恭维简照南（注1）居士，宿根深厚，天性慈祥。白手起家，如古时的范蠡（注2）一样。以赤诚之心护法，简直就是今世的须达多长者。而且遍修世间善法，恪守五戒三归。净业依仗福力而圆满成就，所以应当高升极乐世界。但临终由于眷属的悲伤留恋，或恐仍留滞在娑婆世界。</p></div>
+<div class="para-pair"><p class="p-orig">须知佛无虚愿，己具佛心，但能打破情关，自然真心彻现。尚祈三心圆发，一念单提，直下感应道交，即得顿登九品。咦。一条荡荡西方路，直下归家莫问程。自是不归归便得，故乡风月有谁争。</p><p class="p-trans">要知道佛无虚愿，自己具足佛心，只要能打破情爱这一关，自然真心彻现。还请圆发净土三心（注3），一念单提佛号，当下感应道交，即得顿登九品莲台。咦。一条荡荡西方路，直下归家莫问程。自是不归归便得，故乡风月有谁争。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【简照南】</span>（1870-1923），名耀登，字号照南，中国企业家。1870年（清同治九年），简照南出生在中国广东省广州府南海县澜石黎涌乡（今属佛山市），世代经商。早年丧父，1886年去叔父简铭石在香港开设的巨隆磁器店当学徒。1892年与胞弟简玉阶前往日本神户，开设东盛泰商号，运销广东磁器、布匹。1909年，简照南兄弟获得叔父简铭石的支持，得以重新成立南洋兄弟烟草公司，简照南和简玉阶分任总理和协理。1923年，简照南在上海病逝，年53岁。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【陶朱】</span>即陶朱公。后泛指大富者。陶朱公，春秋时越国大夫范蠡的别称。蠡既佐越王勾践灭吴，以越王不可共安乐，弃官远去，居于陶，称朱公。以经商致巨富。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【三心】</span>观无量寿经说：“一者至诚心，二者深心，三者回向发愿心。具三心者，必生彼国。”</p>
+<p class="note-item"><span class="note-n">[4]</span>参考《三编补·与高鹤年居士书八》：“简照南居士于九月十九日去世矣。临去时尚有江味农，赵云韶，欧阳石芝念佛。至断气时，其子一叫而昏，遂致乱其正念。惜哉。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

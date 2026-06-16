@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复永嘉某居士书五 · 印光法师文钞</title>
+<meta name="description" content="蔚如所说，颇有道理。但尔我乃无知无识自了汉，其教人亦以自了汉之法则。彼乃欲人大通佛法，方期由兹深信净土。故致表面似不相合，而内情实各有所主，各有所长。及其弊也，则各有所失。若能取其益，不致成弊，则法门之大幸也。然而难矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-050/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复永嘉某居士书五 · 印光法师文钞">
+<meta property="og:description" content="蔚如所说，颇有道理。但尔我乃无知无识自了汉，其教人亦以自了汉之法则。彼乃欲人大通佛法，方期由兹深信净土。故致表面似不相合，而内情实各有所主，各有所长。及其弊也，则各有所失。若能取其益，不致成弊，则法门之大幸也。然而难矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-050/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复永嘉某居士书五</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">蔚如所说，颇有道理。但尔我乃无知无识自了汉，其教人亦以自了汉之法则。彼乃欲人大通佛法，方期由兹深信净土。故致表面似不相合，而内情实各有所主，各有所长。及其弊也，则各有所失。若能取其益，不致成弊，则法门之大幸也。然而难矣。</p><p class="p-trans">徐蔚如所说的，颇有道理。但你和我都是无知无识的自了汉，教导他人也是自了汉的方法原则。他是想要令人先贯通佛法，然后由此而深信净土。所以致使表面看似不相契合，而内情实际上各有所主，各有所长。说到弊端，也是各有所失。如果能够只取其中的益处，就不致于成弊，则是法门的大幸。然而这很难啊！</p></div>
+<div class="para-pair"><p class="p-orig">如来诸祖所立之法，后人尚依之成弊，况吾侪乎。但各守一法，以期自利兼以利于有缘者，则可耳。无缘者佛尚不能度，吾侪纵设种种法，亦将曰奈何奈何而已。</p><p class="p-trans">诸佛如来，诸位祖师，所建立的法轨，后人尚且有依照行持而出现弊病的，何况是我辈之人呢？只要各自守持一个法门，以期自利兼带利益于有缘的人，就可以了。无缘的人，佛陀尚且不能度，我们纵然施设种种的办法，也还是没办法，没办法罢了。</p></div>
+<div class="para-pair"><p class="p-orig">蔚如两书，过誉不慧，令人惭惶无地。此之派头，断不可学。学之则是令人疑藐古人，反致彼此受损矣。汝书说得亦甚有理。但光事体甚多，无暇详述。彼请问者，合则告之，违则令其别参高人。</p><p class="p-trans">徐蔚如的两封书信，过份地赞誉我，令人惭愧惶恐，无地自容。这个派头，断然不可以学。学的话，就是令人怀疑藐视古人，反而导致彼此都受到损害。你的信中所说也很有道理。但我的事情很多，没有空详细叙述。那些请教问题的人，与自己所学相合的就回答他，不合自己所学的，就让他另外参问高人。</p></div>
+<div class="para-pair"><p class="p-orig">如市间店铺，各有专售之货。或一种货，亦可通商裕国，兴家立业。或多种货，亦不过通裕兴立而已。吾人既不竖大法幢，检得大富长者门首所弃之残羹馊饭以自资养。有不嫌酸臭者，不妨展转相施。否则任伊取龙肝凤髓以自资补。岂曰尽人皆贻，尽人皆受我此残羹馊饭，方惬吾心哉。</p><p class="p-trans">如集市的店铺，各自有专门售卖的货物。或者只卖一种货，也可以通商贸易，使国家富裕，兴家立业。就算卖多种货物，也只不过是通商裕国，兴家立业而已。我们既然不是大竖法幢，捡得大富长者门前所丢弃的残羹馊饭，来资养我们的色身。有不嫌弃酸臭的人，不妨辗转相施。否则，任凭他人取龙肝凤髓来自我资补。哪里能说，要所有的人全都要给予，所有的人都要接受我的这个残羹馊饭，方才满足我的心呢？</p></div>
+<div class="para-pair"><p class="p-orig">市间专售一货者往往起家，俱售众货者或亦折本。弘法利生，何独不然。千机并育，乃如来出世事。如来降迹为善知识，亦不以此为准。吾法法不通，但肯念佛，亦可仗之以了生死。吾之不通，亦何愧哉。所愧者言行不相应，有名而无实耳。</p><p class="p-trans">集市中专门售卖一种货物的，往往兴家立业，什么货物都出售的，或许也会亏本。弘法利生，何尝不是如此呢？千种根机一并化育，这是如来出世的事业。佛陀来化身为善知识，也不以千机并育为标准。我法法不通，只要肯念佛，也可以仗之以了生死。我的不通，又有什么惭愧的呢？所应惭愧的，是言行不相应，有名而无实罢了！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【龙肝凤髓】</span>喻指珍奇的佳肴。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复龚宗元居士书三 · 印光法师文钞</title>
+<meta name="description" content="接手书，知为蔡宇青皈依事。前月下旬，已有信来，此信未曾收到。观蔡君之境遇，可谓苦荼之极。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-432/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复龚宗元居士书三 · 印光法师文钞">
+<meta property="og:description" content="接手书，知为蔡宇青皈依事。前月下旬，已有信来，此信未曾收到。观蔡君之境遇，可谓苦荼之极。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-432/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复龚宗元居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知为蔡宇青皈依事。前月下旬，已有信来，此信未曾收到。观蔡君之境遇，可谓苦荼之极。</p><p class="p-trans">接到信，知道你是为了蔡宇青皈依的事。上个月下旬，已经有信寄来，这封信未曾收到。看蔡君的境遇，可以说是哀苦到了极点。</p></div>
+<div class="para-pair"><p class="p-orig">然苦乐祸福，本无一定。善用心者，即可以苦为乐，以祸为福。不善用心者，固多由乐得苦，由福得祸。</p><p class="p-trans">然而苦乐祸福，原本没有一定。善于用心的人，就能以苦为乐，转祸为福；不善于用心的人，大多由乐得苦，由福得祸。</p></div>
+<div class="para-pair"><p class="p-orig">宇青既知世相无常，急欲皈依三宝，以修持净业，而求仗佛慈力了生脱死。则此之所云苦者，乃玉成彼了脱生死之大善根也。否则子孙满堂，家室雍睦，只知眼前愉乐，谁计身后归趣。</p><p class="p-trans">蔡宇青既然知道世相无常，急着想要皈依三宝，来修持净业，因而祈求仗佛慈力，了生脱死。那么现在所说的痛苦，就成全了他了脱生死的大善根啊！否则，子孙满堂，家庭和睦，只知道眼前的欢愉快乐，谁还考虑身后的归宿趣向。</p></div>
+<div class="para-pair"><p class="p-orig">彼既发心皈依，今为彼取法名为宗净。谓专主于一心念佛，求生西方也。然须放开心怀，不可常存临老得此子亡孙死之憾，加以常生怨天尤人之心。</p><p class="p-trans">他既然发心皈依，现今为他取法名为宗净。就是专主于一心念佛，求生西方。然而必须放开心怀，不可常存年老却有儿亡孙死的缺憾，并因此而常生怨天尤人的心。</p></div>
+<div class="para-pair"><p class="p-orig">只可自怨自艾宿世少栽培，致今生得此结果。又须常生欢喜，我若不因彼等死亡，决难发出世之心。</p><p class="p-trans">只能悔恨自责宿世少有栽培，致使今生落得这样的结果。另外，必须常生欢喜心，我如果不因为他们的死亡，绝对很难发起出世的心。</p></div>
+<div class="para-pair"><p class="p-orig">此心不发，纵令死后仍生人中，决难永远不造恶业。既造恶业，当堕三恶道，长劫在畜生饿鬼地狱中受诸苦楚。</p><p class="p-trans">如果这个心不发起，即使是死后仍然生到人中，绝对很难永远不造恶业。既然造了恶业，必会堕三恶道，长劫在畜生、饿鬼、地狱中，遭受各种苦痛。</p></div>
+<div class="para-pair"><p class="p-orig">今因彼等之死，令我发出世之心。是天以彼等之死，以玉成我出世之善果，乃我宿世之善根发现处。</p><p class="p-trans">现今因为他们的死，令我发起出世之心。这是上天用他们的死，来成全我出世的善果，这是我宿世善根的发现处。</p></div>
+<div class="para-pair"><p class="p-orig">安守本分，不生怨尤。与寡媳孙女同修净业，以期同生西方。果能如是，不但己与媳孙女得生西方，而已亡之妻，与二子二孙一媳，当亦蒙此法益，亦得仗佛慈力，往生西方。</p><p class="p-trans">安守本分，不生怨恨责怪。与守寡的媳妇、孙女同修净业，以期同生西方。果真能够如此，不但自己与媳妇、孙女得以往生西方，而且已经亡故的妻子，与二个儿子、二个孙辈、一个媳妇，必定也会蒙受这个净土法门的利益，也得以仗佛慈力，往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">切不可作愚痴无知之知见，常怀愁叹。以致虽念佛而此心反作障碍。致不能与佛相应，而误己大事也。</p><p class="p-trans">千万不可作愚痴无知的知见，心中常怀忧愁感叹。以致虽然在念佛，然而这个忧愁感叹之心反过来却成了障碍。致使不能与佛相应，从而耽误了自己了生死的大事啊！</p></div>
+<div class="para-pair"><p class="p-orig">今为附一函遍复二张，祈依此自行，复以此化他。人必以己知识高明，修持精进，而乐从也。其功德大矣。</p><p class="p-trans">现今为你附上《一函遍复》二张，请依照文中所说的，自己行持，再以此化导他人。他人必定因你的知识高明，修持精进，而乐于跟从啊！这个功德就大了。</p></div>
+<div class="para-pair"><p class="p-orig">所有修持方法，恐有未谙，今寄嘉言录一本，祈息心详阅。则西方之胜妙，修持之法则，临终之助念，家庭之教育，悉可知其方向矣。</p><p class="p-trans">所有的修持方法，恐怕有不明白的地方，现今寄上《嘉言录》一本，请静心详细阅读。那么西方极乐世界的胜妙、修持的法则、临终助念、家庭教育，全都能知道方向了。</p></div>
+<div class="para-pair"><p class="p-orig">孙女尚幼，当认真教训。培植一贤慧良善之资格，俾后来为女流师范。其光荣也，比儿孙作大官，发大财，尚超胜多多矣。</p><p class="p-trans">他的孙女还年幼，应当认真教育训导。培养成贤惠良善的资质品格，使她以后成为女界的师范榜样。这样的光荣，比起儿孙作大官、发大财，还要超过太多太多了。</p></div>
+<div class="para-pair"><p class="p-orig">何以故，以贤女必为人贤妻贤母，使夫与子孙皆成贤人故也。祈以此令彼阅而依行之，则幸甚。</p><p class="p-trans">为什么呢？因为贤女（将来）必定会成为他人的贤妻、贤母，使得丈夫与子孙都成为贤人的缘故。请将这封信给他看，依照而行，那么就非常庆幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【玉成】</span>语出宋张载《西铭》：“富贵福泽，将厚吾之生也；贫贱忧戚，庸玉女于成也。”意谓助之使成。后为成全之意。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

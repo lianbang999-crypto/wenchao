@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普陀山普济寺浚莲华池募缘疏（民二十年代作） · 印光法师文钞</title>
+<meta name="description" content="普陀名山，乃大士示迹之胜地。普济禅寺，实国民祈福之道场。由是历朝钦敬，举世尊崇。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-154/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普陀山普济寺浚莲华池募缘疏（民二十年代作） · 印光法师文钞">
+<meta property="og:description" content="普陀名山，乃大士示迹之胜地。普济禅寺，实国民祈福之道场。由是历朝钦敬，举世尊崇。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-154/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">普陀山普济寺浚莲华池募缘疏（民二十年代作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">普陀名山，乃大士示迹之胜地。普济禅寺，实国民祈福之道场。由是历朝钦敬，举世尊崇。</p><p class="p-trans">普陀山，是观音大士示现化迹的胜地。普济禅寺，实乃国民祈福的道场。因此历朝王臣钦敬，举世人民尊崇。</p></div>
+<div class="para-pair"><p class="p-orig">佛殿经楼，杰出于云霄之外。皇文御碑，辉煌乎瀛渤之中。善信之沐恩报德者，不惮梯山航海之劳。中外之冀觉希真者，各申竭诚尽敬之悃。</p><p class="p-trans">佛殿经楼，高出于云霄之外。皇文御碑，辉煌在沧海之中。沐浴菩萨深恩、报答菩萨厚德的善男信女，不畏登山航海的劳苦。希望觉悟、追求真理的中外修行人，人人都表达竭诚尽敬的诚心。</p></div>
+<div class="para-pair"><p class="p-orig">但以殿宇广大，寺产淡薄。岁修之需用实繁，僧众之道粮甚巨。向以专维持乎此，故置莲池于不暇顾。</p><p class="p-trans">但因为寺院的殿宇广大，寺产淡薄。每年维修费用和僧众的道粮费用又非常大，寺产收入一向都是专门用来维持这两项开支的，所以无暇顾及寺院前莲池的维护。</p></div>
+<div class="para-pair"><p class="p-orig">中池尚满池生莲，然泥深水浅，亦非久长之计。西池已作菜园，已经复掘作池。东池最大，约有十亩，淤泥充满，直成草滩。</p><p class="p-trans">中间的莲池还能满池生长莲藕，然而淤泥深，池水浅，也不是长久之计。西池已前被改作菜园，现在又再挖掘作为莲池。东池最大，约有十亩，淤泥已经充满，简直成了草滩。</p></div>
+<div class="para-pair"><p class="p-orig">不慧承乏住持，愧无才德。窃思前人开此，岂直为美观乎，盖欲表示西方之景象，令暂来常住诸人，经行于莲华池畔，神游于极乐国中。果能净念相继，决定临终往生。实为助道之胜缘，洵属宏法之急务。</p><p class="p-trans">我继任住持，惭愧自己没有才能德行。想到前人开凿这些莲池，哪里只是为了美观呢？正是想要表示西方莲池的景象，好让暂时来往的客人、常住的僧人，经行在莲华池畔，神游于极乐国中。果真能够净念相继，就一定会临终往生极乐。确实是助道的胜缘，也确实是宏法的急务。</p></div>
+<div class="para-pair"><p class="p-orig">拟将中东二池，通皆浚掘。东池之岸，用石砌墈，上立水泥栏杆，用示防护嘉致。则十亩方塘，一鉴洪开，得源头之活水，现云影与天光。使南参上士，东请高人，经行于四边阶道，契悟乎一念净心，其所关系，岂浅鲜哉。</p><p class="p-trans">打算将中间、东边两个池塘，全都进行疏浚挖掘。东池的岸边，用石头砌起来，上面立水泥栏杆，用来体现防护的用心。那么十亩的池塘，就会像一面巨大的镜子被打开一样，得到源头的活水，现出云影与天光。使得南海参学的上士，东来请法的高人，经行在莲池四边的阶道上，契悟一念清净之心，其中的关系，岂是浅显、微小的呢？</p></div>
+<div class="para-pair"><p class="p-orig">然钵如悬磬，斧柯在人。恳祈诸大护法，同发成美之深心，各捐无尽之嘉宝，则即财施以成法施，事一举而益两得矣。其为功德，何能名焉。</p><p class="p-trans">但是怎奈钵里空如悬磬，而募集资财来疏浚的权柄只能由大家掌握。恳祈诸位大护法，共同发起成人之美的深心，人人捐出无尽的嘉宝，那么就会通过财布施而成就法布施，做一件事而得到两种利益啊！这样做的巨大功德，怎么能用语言表达得清呢？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【悃】</span>诚恳，至诚。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【承乏】</span>承继空缺的职位。后多用作任官的谦词。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【嘉致】</span>优美的景致。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【钵如悬磬】</span>参考室如悬磬，悬：挂；磬：乐器，中空。屋里就象挂着石磬一样。形容穷得什么也没有。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【斧柯】</span>1、斧子柄。2、比喻权力。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

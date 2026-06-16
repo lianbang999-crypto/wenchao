@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复湘阴黄颂平居士书 · 印光法师文钞</title>
+<meta name="description" content="光粥饭僧耳，一向率真，绝不肯虚誉人，亦绝不愿人虚誉己。阁下第一页之文，颇不愿闻，以非我身分，则成莫大之辱矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-104/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复湘阴黄颂平居士书 · 印光法师文钞">
+<meta property="og:description" content="光粥饭僧耳，一向率真，绝不肯虚誉人，亦绝不愿人虚誉己。阁下第一页之文，颇不愿闻，以非我身分，则成莫大之辱矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-104/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复湘阴黄颂平居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">光粥饭僧耳，一向率真，绝不肯虚誉人，亦绝不愿人虚誉己。阁下第一页之文，颇不愿闻，以非我身分，则成莫大之辱矣。</p><p class="p-trans">我是个只会吃饭的僧人罢了，一向率真，绝不肯虚妄的赞誉他人，也绝不愿他人虚妄地赞誉自己。阁下第一页的文字，很不愿见到，因为那些话不符合我的身分，所以就成了莫大的耻辱啊！</p></div>
+<div class="para-pair"><p class="p-orig">病由身生，身由业生，当痛加忏悔，以消宿业。又须力戒房事，以免复增。无论何病，不戒房事，决难即愈。</p><p class="p-trans">疾病由身体而生，身体由业力而生，应当痛加忏悔，来消除宿业。还必须努力戒除房事，以免加重病情。无论什么病，不戒除房事，绝对很难快速痊愈。</p></div>
+<div class="para-pair"><p class="p-orig">孔子所谓，父母唯其疾之忧者，以房事为一切病之根本故也。当疾病在身，何须往居士林随众念佛。但在家中，息心静念，最为第一。</p><p class="p-trans">孔子所说的：父母特别担忧孩子的疾病，因为房事是一切疾病的根本的缘故。疾病缠身之时，何必一定要前往居士林随众念佛呢？只管在家中，专心静念，就是最好的方法。</p></div>
+<div class="para-pair"><p class="p-orig">至谓与善知识研究佛理，当身婴重病，只可认真修持。如至诚念佛，并念观音。此时用不著研究，一经研究，反成纷驰。譬如有病，得一灵丹，即以服食为事。不得以先去研究此灵丹系何药所制，何药走何经，治何病，必期于一一了然，方肯服食耶。</p><p class="p-trans">至于你所说的“与善知识研究佛理”，当身有重病之时，只可认真修持。例如至诚念佛，以及念观世音菩萨圣号。这个时候用不著研究，一经研究，反而造成你妄念纷纷、心神外驰。譬如有病，得到一颗灵丹，就应当抓紧服下。不能先去研究这颗灵丹是什么药制造的，什么药走什么经络，治什么病，一定要等到一一明白了以后，方肯服药啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝绝未知学解学行之所以然，故不得真实利益。外道名目，累百成千，然其用功，总不外炼丹运气。即彼令人看经念佛，皆是门庭场面，彼固不以此为道。</p><p class="p-trans">你绝对还不知道学习解义、行持的所以然，所以得不到真实的利益。外道的名目，成百上千，然而他们所用的功夫，总不外乎炼丹运气。即使他们让人看经、念佛，也都是装点门庭场面，他们肯定不会以此为道。</p></div>
+<div class="para-pair"><p class="p-orig">欲得彼之道，必须恳切至极，夜间独入其室，关闭门窗，外派巡者，只许一人入室。须先发极恶极惨之咒，若违彼教，定受此种惨报。</p><p class="p-trans">想要得到他们的道，必须恳切到极点，夜间独自进入他门的房间，关闭好门窗，外面派巡逻的人，只许一个人进入室内。还必须先发极恶毒、极悲惨的毒誓，如果违背他们的教门，必定受到这种惨报。</p></div>
+<div class="para-pair"><p class="p-orig">发咒已，为其点窍指穴，或在头面，或在身中。身中之穴，必须脱去大衣，靠身之衣，撩起而指。此种做作，实皆迷惑人之圈套。</p><p class="p-trans">发完毒誓以后，他们就会为其点窍指穴，或者在头面，或者在身上。身上的穴位，就必须脱去大衣，贴身的内衣，撩起来用手来指。这种做作，实际都是迷惑人的圈套。</p></div>
+<div class="para-pair"><p class="p-orig">而一切外道，最初以一经传过道，不修即可成。使去秘密而明示于人，不发咒而任人进退，则外道便无立地之根据矣。</p><p class="p-trans">而一切外道，最初都宣称：一旦经过传道，不修就可以成就。假使去除这些秘密而明白告示于人们，不发毒誓而随任他人的加入、退出，那么外道就没有立足的根据了。</p></div>
+<div class="para-pair"><p class="p-orig">佛法无秘密私相授受之事，亦不令人发咒，信则依之而修，不信任彼退出。汝既念佛，尚虑入于外道，是汝完全不知佛法与外道之邪正，但依人而生信心，实未真信。使生真信，但当致力于修持，何得虑外道之多，而或陷入耶。</p><p class="p-trans">佛法没有秘密私自互相授受的事情，也不让人发毒誓，相信就依照而修，不相信随任你退出。你已经念佛了，还是担心陷入外道，这是因为你完全不知道佛法与外道的邪正，而只是依人而生起信心，实际上没有真信。假使你生起真信，必当努力地修持，哪里需要担心外道太多，而或许会陷入其中呢？</p></div>
+<div class="para-pair"><p class="p-orig">既有宿业婴恶疾，当吃素念佛，为宿世怨家作超度事。所言超度，亦不必请僧做佛事，但自己认真恳切至诚念佛，及念观音耳。且勿谓只念一佛一菩萨，便可愈病乎。</p><p class="p-trans">既然有宿世业障，患了恶疾，就应当吃素念佛，为宿世的怨家作超度法事。所说的超度，也不必请僧人做佛事，只要自己认真恳切，至诚念佛，以及念观世音菩萨就好。你不要有疑问：只念一佛一菩萨，就可以治好病吗？</p></div>
+<div class="para-pair"><p class="p-orig">须知念佛，为佛法中最圆顿直捷之法，其利益超过一切法门。但以心之诚不诚为差等，非法有或灵或不灵也。</p><p class="p-trans">必须知道念佛，是佛法中最圆顿、最直捷的法门，这个法门的利益超过了一切法门。只是因为心的真诚、或不真诚，才有感应和不感应的差别，而不是念佛法门时而灵验，时而不灵验啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【湘阴】</span>湘阴县位于湖南省东北部，南洞庭湖滨，湘资两水尾闾。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【解行】</span>即智解与修行之并称。指由见闻学习而知解教理，进而实践躬行所知解之教理。了解佛道之真理（智解）与观心修行之实践行，乃是相因相资，称为解行相应、解行具足、开解立行等。解与行，譬若鸟之双翼、车之两轮，具有缺一不可之关系；亦即依解而起行，依行而实解。解与行皆为学道之法，故又分别称为解学、行学。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

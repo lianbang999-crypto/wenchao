@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复屈文六居士书二 · 印光法师文钞</title>
+<meta name="description" content="前日信写好时，令德森师看，彼云，当祈居士以不会客，不受赠馈食物钱财，登新申报新闻栏，俾大家悉知，光以为招摇。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-073/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复屈文六居士书二 · 印光法师文钞">
+<meta property="og:description" content="前日信写好时，令德森师看，彼云，当祈居士以不会客，不受赠馈食物钱财，登新申报新闻栏，俾大家悉知，光以为招摇。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-073/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复屈文六居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前日信写好时，令德森师看，彼云，当祈居士以不会客，不受赠馈食物钱财，登新申报新闻栏，俾大家悉知，光以为招摇。</p><p class="p-trans">前天信写好的时候，给德森法师看，他说,应当请求居士把不会客，不受赠馈食物、钱财的消息，登在新报、申报的新闻栏，使大家全都知道，我认为太过招摇。</p></div>
+<div class="para-pair"><p class="p-orig">昨日彼以报示光，谓已登报矣，是宜将此事登报。今早又接昨信前日信，谓居士以自己之汽车接，不令会中出汽油费。</p><p class="p-trans">昨天，他将报纸拿给我看，说已经登报了，是应该将这件事登报。今天早上，又接到昨天、前天的信，说居士您用自己的汽车来接我，不令法会中（即上海护国息灾法会）出汽油费。</p></div>
+<div class="para-pair"><p class="p-orig">承居士厚爱，不胜感愧。但光一向不喜人恭维，又须往各处。若叫黄包车，随我所宜。若有汽车，反如有所禁系，不得自在。千祈勿克己，以便各适其适。</p><p class="p-trans">承蒙居士厚爱，非常感激惭愧。但是我一向不喜欢他人恭维，又要前往各处。如果叫黄包车，可以随我的方便；如果有汽车，反而如同有所约束，不得自在。千万请不要约束自己，以便各适其适。</p></div>
+<div class="para-pair"><p class="p-orig">又光之说法，与一切法师不同。诸大法师多注重在谈玄说妙，光不会说玄妙，多注重在教人敦伦尽分。</p><p class="p-trans">再者，我的说法，与一切法师不同。诸大法师大多注重在谈玄说妙上，我不会谈说玄妙，大多注重在教人敦伦尽分（敦笃伦常、恪尽己分）上。</p></div>
+<div class="para-pair"><p class="p-orig">民十几年（忘其年）光到宁波，黄涵之请到道尹衙外念佛社说开示。一某大老官坐轿来，时光已演说。后说到敦伦尽分，父慈子孝等处，其人乘轿而去。</p><p class="p-trans">民国十几年（忘了是哪一年），我到宁波，黄涵之请我到道尹衙门外的念佛社说开示。某一位大老官坐轿子来，当时我已经开始演说。后来说到敦伦尽分，父慈子孝等地方，那个人就乘轿而去了。</p></div>
+<div class="para-pair"><p class="p-orig">然光素抱此志，不以人不喜闻而改方针。况此次是护国息灾，念诵尚是枝末，敦尽乃属根本。无论人愿听不愿听，我仍以是为宗旨。</p><p class="p-trans">然而我向来抱着这个志向，不因为他人不喜欢听而改变方针。况且此次是护国息灾，念诵还是枝末，敦伦尽分才是根本。无论他人愿听不愿听，我仍然以此为宗旨。</p></div>
+<div class="para-pair"><p class="p-orig">至于皈依一事，非光所宜。以佛教会会长乃主人，光是客人，彼皈依者，当皈依会长，此决定不可移易之至理。</p><p class="p-trans">至于皈依这件事，不是我适宜做的。因为佛教会会长（圆瑛法师）是主人，我是客人，那些皈依的人，应当皈依会长，这是决定不可改动的至理。</p></div>
+<div class="para-pair"><p class="p-orig">又光目已盲矣。看书用手眼二镜，也只仿佛，何可升座，为人说三皈五戒。又人既多矣，法名亦不能为题，此事决不承认，以免令人见诮。</p><p class="p-trans">另外，我的眼睛已经差不多瞎了。看书用手、眼二个镜子，也只能看个仿佛，怎么可以升座，为人说三皈五戒。再有，人既然很多，法名也不能为他们题写，皈依这件事绝对不能承诺，以免令人嘲笑。</p></div>
+<div class="para-pair"><p class="p-orig">此次来申，专为护国，念诵虽不能随众，然仍与随众同一规矩。以免分心而有名无实耳。若用平常恭维法师之办法，则彼此俱错，故光预为陈白。（民廿五九月二十）</p><p class="p-trans">这次来上海，专门为了护国息灾，念诵时虽然不能随众，然而仍旧与随众同一个规矩。以免分心而有名无实。如果用平常恭维法师的办法，那么彼此就都错了，所以我预先为你陈述明白。（民国二十五年&lt;1936年&gt;九月二十日）</p></div>
+<div class="para-pair"><p class="p-orig">光一向所说，悉随便而无有定章。此次是护国息灾念诵佛事。初日先略说护国息灾之意，即说念佛法门功德利益。次日再详说根本护国之道，以期挽回世道人心。</p><p class="p-trans">我一向所说的，都是随便而没有定章。这次是护国息灾念诵佛事。第一天，先略说护国息灾的意义，随即说念佛法门的功德利益；第二天，再详说根本护国之道，以期挽回世道人心。</p></div>
+<div class="para-pair"><p class="p-orig">光初出家至一居士家，其家俱信佛，其婆媳二人儿女三四个各供一佛，供佛之桌，系一长桌，媳烧香供水掸灰，只在己佛前，婆之佛桌灰也不掸，光见之心痛。以为此种人，未闻善知识教训，致以身谤法。此光注重于敦伦尽分之来由也。</p><p class="p-trans">我最初出家到一位居士家，她家里人都信佛。她婆媳二人、儿女三四个，各自供奉一尊佛，供佛的桌子，是一张长桌。媳妇烧香、供水、掸灰，只在自己供奉的佛前。婆婆的佛桌，有香灰也不掸，我看了心痛。因为这种人，没有听闻善知识的教训，导致以身谤法。这是我注重于敦伦尽分（敦笃伦常、恪尽己分）的来由啊！</p></div>
+<div class="para-pair"><p class="p-orig">又见多有收许多徒弟，皆不是真修行人，故发愿不收徒弟。见僧人向人化缘之卑鄙，故不愿做住持，做法会。</p><p class="p-trans">又见到有很多人，收许多徒弟，都不是真正的修行人，所以发愿不收徒弟；看见僧人向人化缘的卑鄙，所以不愿意做住持、做法会。</p></div>
+<div class="para-pair"><p class="p-orig">今老矣，尚不至有负初心，而甘守讨饭本分。庶已生西方之友人，不在莲台中诮我也。</p><p class="p-trans">如今老了，还不至于有负初心，而甘心守持讨饭的本分。使得已经往生到西方的友人，不在莲台中嘲笑我。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【诮】</span>1.责备。2.嘲笑，讥刺。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【棹】</span>1.木名。2.同“桌”。桌子。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>南通余东袁家庙佛教净业社缘起 · 印光法师文钞</title>
+<meta name="description" content="佛法者，长夜之慧日，饥世之稻粮，险道之导师，苦海之慈航。近世人心陷溺，竞兴异计。凡古圣人所立纲常伦理，各欲推翻，竟成一无法无天之世道。大张旗帜，实行兽化。以其邪说灌输于无知无识者之耳，肆意妄为，无所拘忌。而不知其自绝于人类，以永劫常堕恶道也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-264/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="南通余东袁家庙佛教净业社缘起 · 印光法师文钞">
+<meta property="og:description" content="佛法者，长夜之慧日，饥世之稻粮，险道之导师，苦海之慈航。近世人心陷溺，竞兴异计。凡古圣人所立纲常伦理，各欲推翻，竟成一无法无天之世道。大张旗帜，实行兽化。以其邪说灌输于无知无识者之耳，肆意妄为，无所拘忌。而不知其自绝于人类，以永劫常堕恶道也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-264/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">南通余东袁家庙佛教净业社缘起</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛法者，长夜之慧日，饥世之稻粮，险道之导师，苦海之慈航。近世人心陷溺，竞兴异计。凡古圣人所立纲常伦理，各欲推翻，竟成一无法无天之世道。大张旗帜，实行兽化。以其邪说灌输于无知无识者之耳，肆意妄为，无所拘忌。而不知其自绝于人类，以永劫常堕恶道也。</p><p class="p-trans">佛法，是漫漫长夜的慧日，饥荒世道的稻粮，险道的导师，苦海的慈航。近世人心陷溺，争相兴起不轨的图谋。所有古圣人所建立的纲常伦理，全都想要推翻，竟然成了一个无法无天的世道。大张旗帜，实行野兽般的教化。将他们的邪说灌输给无知无识人的耳中，肆意妄为，无所拘束顾忌。却不知这是自绝于人类，以致永劫常堕恶道啊！</p></div>
+<div class="para-pair"><p class="p-orig">人情如此，若不设法挽救，则此后之现象，何可设想。故有智之士，群起而提倡佛学。以期人人知三世因果，六道轮回之事理。而勉力为善，不敢作恶，生为圣贤之徒。又令修信愿念佛，求生西方法门。则仗佛慈力，出此浊恶，得预莲池海会。</p><p class="p-trans">人心世道成了现在这样，如果不想办法挽救，那么此后的景象，如何能够设想？所以有智之士，群起而来提倡佛学。以期人人都知道三世因果，六道轮回的事理。而努力行善，不敢作恶，在生成为圣贤之徒。又令他们修习信愿念佛，求生西方的法门。那么仗佛慈力，出离这个五浊恶世，得以预入莲池海会。</p></div>
+<div class="para-pair"><p class="p-orig">故余东盛忠甫，江景春等诸善士，与本庙住持慈辉大师，组织余东净业社，以为提倡。俾一切人咸知佛法，不徒阐明惟心自性之妙理，因果轮回之深义。即纲常伦理，较儒教尚为亲切。故遇父言慈，遇子言孝，兄友弟恭，夫和妇顺，主仁仆忠，各各令其尽自己之天职。</p><p class="p-trans">所以南通余东的盛忠甫、江景春等诸位善士，与本庙的住持慈辉大师，组织余东净业社，以之作为提倡。使得一切人全都知道佛法，不只是阐明惟心自性的妙理，因果轮回的深义。即使是纲常伦理，与儒教相比原本就更为亲切。所以遇到父亲说慈爱，遇到儿子说孝道，兄长友爱弟弟、弟弟恭敬兄长，丈夫和气、妻子顺从，主人仁厚、仆人忠诚，各各令他们竭尽自己的天职。</p></div>
+<div class="para-pair"><p class="p-orig">又辅之以因果报应，生死轮回之说。则纵极顽劣，亦当稍戢狂心，遵行正道。以冀不招恶果，得受善报。况其断惑证真之法乎。</p><p class="p-trans">再辅之以因果报应，生死轮回的事理。那么纵然是极为顽劣的人，也当会稍微收敛狂心，遵行正道。以希望不招来恶果，得以受到善报。何况那些断惑证真的方法呢？</p></div>
+<div class="para-pair"><p class="p-orig">须知佛法法门无量，修之及极，皆可以了生脱死。而于现生决定可以了生死者，唯有净土一门。其余则多生多劫，尚未可决定即了也。良以一切法门，皆仗自力。念佛法门，全仗佛力。亦兼自力。由仗佛力故，易于仗自力者奚啻百千恒河沙倍也。</p><p class="p-trans">必须知道佛法法门无量，修到终极，都可以了生脱死。而在现生，决定可以了生死的，只有净土法门。其余的法门，多生多劫，仍旧不能决定了脱生死。实在是因为一切（通途）法门，都是依仗自力。念佛（特别）法门，全仗佛力，也兼仗自力。由于依仗佛力的缘故，比依仗自力的法门，容易何止百千恒河沙倍啊！</p></div>
+<div class="para-pair"><p class="p-orig">又须知念佛法门，实为十方三世一切诸佛上成佛道，下化众生，成始成终之总持法门。以故九界众生离此法，上不能圆成佛道。十方诸佛舍此法，下不能普度群生。若非宿种善根，何能得闻此法。闻而不修，与修而不力，则可痛惜哉。</p><p class="p-trans">另外，必须知道念佛法门，实在是十方三世一切诸佛，上成佛道，下化众生，成始成终的总持法门。所以，九法界的众生离开这个法门，向上不能圆成佛道；十方诸佛舍离这个法门，向下不能普度群生。如果不是宿世曾种下善根，如何能够听闻到这个法门。听闻了却不修持，与修持却不努力，实在是令人痛惜啊！</p></div>
+<div class="para-pair"><p class="p-orig">既修持矣，又当力敦伦常，恪尽己分。诸恶莫作，众善奉行。戒杀护生，恤贫济困。躬行实践，以身率物。存好心，说好话，行好事。则生有令名，没登佛国。渐次进修，以至成佛。方可不负自己即心本具之佛性，如来说法度生之婆心。</p><p class="p-trans">既已修持，还应当努力敦笃伦理纲常，恪守竭尽自己的本分。诸恶莫作，众善奉行。戒杀护生，恤贫济困。亲身实践，以身作则。存好心，说好话，行好事。那么活着时获得美名，临终时直登佛国。渐次进修，以至成佛。才能不辜负自己即心本具的佛性，如来说法度生的婆心。</p></div>
+<div class="para-pair"><p class="p-orig">果能人人如是，则何有尔诈我虞，相争相戕恶风。行看礼让兴行，干戈寝息。人祸既无，天眷常临。则世返唐虞，人乐太平矣。纵世人不能尽如是行，而一人行之，其即可亲得其益。而由一传百，至千至万，至无量无边，亦唯在人之提倡劝励之勤怠何如耳。</p><p class="p-trans">果真能够人人如此，哪里会有尔诈我虞，相争相害的恶风。且看守礼谦让（之风）兴盛流行，战火干戈停息。人为的祸患已经消失，上天的眷顾经常降临。那么世道就能返回到唐虞盛世，人人乐享太平了。纵然世人不能全都如此而行，然而只要有一个这样做，他就能亲得其中的利益。而由一人传百人，至千人，至万人，以至无量无边，也只是在人的提倡、劝导、勉励的精勤懈怠如何而已。</p></div>
+<div class="para-pair"><p class="p-orig">世道坏时，由一二人而发起，以至坏得不可救药。今欲令好，岂可不知此意，而推置度外乎。故曰因地而倒，因地而起。离地求起，决无是理。愿入会诸人，与见闻者，同知此义，则何幸如之。</p><p class="p-trans">世道坏乱的时候，是由一两个人发起的，以至于坏得不可救药。如今想要使世道变好，怎能不知道这个道理，而推辞不行、置之度外呢？所以说：在哪个地方倒下，就在哪个地方爬起来。离开倒下的地方，想站起来，决定没有这个道理。愿加入净业社的诸位善人，与见到、听到的人，共同知道这个义理，那么还有比这更庆幸的吗？</p></div>
+<div class="para-pair"><p class="p-orig">至于净土法门之修持法则，自有净宗各经论著述在。此中固莫由详说，特为标其纲要而已。</p><p class="p-trans">至于净土法门的修持法则，自有净土宗的各种经论著述在。这里原本就用不着详说，特地标示其中的纲要而已。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【异计】</span>不轨的图谋。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【戢】</span>收敛；止息。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【令名】</span>美好的声誉。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【行看】</span>且看。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【礼让】</span>守礼谦让。兴行：盛行；使之盛行。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【寝息】</span>停息；搁置。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【天眷】</span>上天的眷顾。语出《书·大禹谟》：“皇天眷命，奄有四海，为天下君。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【唐虞】</span>唐尧与虞舜的并称。亦指尧与舜的时代，古人以为太平盛世。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

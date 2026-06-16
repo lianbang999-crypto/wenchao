@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复邵慧圆居士书三 · 印光法师文钞</title>
+<meta name="description" content="小学韵语，乃依据小学而作。小儿读之，可知儒礼之大要。其得益，较不如感应篇直讲之宽广深远也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-415/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复邵慧圆居士书三 · 印光法师文钞">
+<meta property="og:description" content="小学韵语，乃依据小学而作。小儿读之，可知儒礼之大要。其得益，较不如感应篇直讲之宽广深远也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-415/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复邵慧圆居士书三</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">小学韵语，乃依据小学而作。小儿读之，可知儒礼之大要。其得益，较不如感应篇直讲之宽广深远也。</p><p class="p-trans">《小学韵语》，是依据《小学》而写。小孩子读了，可以知道儒礼的大要。这样得到的利益，不如《感应篇直讲》宽广深远。</p></div>
+<div class="para-pair"><p class="p-orig">此书十八年为校其字句，标其节段。毁佛之处，尚未改，因生病置之。次年到苏，即另排统纪增修本，普陀山志及各书，遂忘其事。</p><p class="p-trans">在民国十八年，我为这本书校对过其中的字句，标出节段。毁谤佛法的地方，尚未改正，因为生病，便搁置起来。第二年到了苏州，就另排《历史感应统纪》的增修本，《普陀山志》以及各种书籍，就忘记了这件事。</p></div>
+<div class="para-pair"><p class="p-orig">祈以感应篇教子孙，终身诵之，胜于小学韵语多矣。巧谈昨晚方寄来，于世道人心颇有益。</p><p class="p-trans">请用《太上感应篇》教导子孙，终身读诵，胜过《小学韵语》太多了。《巧谈》昨晚方才寄来，对于世道人心，也颇有利益。</p></div>
+<div class="para-pair"><p class="p-orig">但光所印各书，需款甚巨（光一向不募缘，有信心者送来则收，其余皆光之香敬耳），无力兼顾。</p><p class="p-trans">但是我所印的各种书籍，所需的钱款很大（我一向不募缘，有信心的人送来，就收下，其余都是我私人的香敬），没有能力兼顾其它。</p></div>
+<div class="para-pair"><p class="p-orig">此书雅俗同观，愁无人助印。现忙极，直是无常要来，迫不及待。此序待稍暇，当勉为作。以后无论何人何事，概不许介绍笔墨事。以三山志，迫不及待故也。</p><p class="p-trans">这本书雅俗同观，只愁无人助印。现在忙得很，简直就是无常要到来，迫不及待。这篇序文，等到稍有空暇，应当勉力写之。以后无论什么人，什么事，一概不许介绍笔墨之事。因为清凉、峨嵋、九华三部山志，不能再拖延的缘故。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【《小学韵语》】</span>《小学韵语》是清代后期童蒙读物，清罗泽南著。本书阐述了启蒙教育的意义与任务；胎教与早期教育的要求；小学教育的要求；大学的任务；对儿童的训诫；对古圣贤的推崇。作者曾于道光年间做过短时期的蒙师。认为当时流行的朱熹、刘子澄编《小学》一书极有价值，但其语句或长或短，参差不齐，不易记诵，不便蒙童学习，因撮其大要，编为韵语，所以定名为《小学韵语》，并在后来的戎马倥偬之余一再修订，企望以此“正天下之学术”，达到“正人心”，“削平祸乱”的最终目的。   罗泽南（1808-1856），湖南湘乡人。字仲岳，号罗山。贡生出身。他学宗程朱理学，并曾讲道乡里，网罗门生，其徒多为湘军悍将，著有《小学韵语》、《西铭讲义》、《周易附说》、《人极衍义》、《姚江学辨》、《读孟子札记》、《皇舆要览》及诗文集等。后人编其著作集为《罗忠节公遗集》。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【《巧谈》】</span>民国江苏海门陈镜伊著。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

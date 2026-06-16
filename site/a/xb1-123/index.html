@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复江易园居士书（四）（民国二十五年） · 印光法师文钞</title>
+<meta name="description" content="（民国二十五年。此时尚未迷信扶乩。请阅其四，足知江之佛法程度。老人如此晓谕，伊仍不能领略，益可显见。录者识。）">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-123/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复江易园居士书（四）（民国二十五年） · 印光法师文钞">
+<meta property="og:description" content="（民国二十五年。此时尚未迷信扶乩。请阅其四，足知江之佛法程度。老人如此晓谕，伊仍不能领略，益可显见。录者识。）">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-123/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复江易园居士书（四）（民国二十五年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">（民国二十五年。此时尚未迷信扶乩。请阅其四，足知江之佛法程度。老人如此晓谕，伊仍不能领略，益可显见。录者识。）</p><p class="p-trans">（民国二十五年&lt;1936&gt;。此时江易园还没有迷信扶乩。请阅读第四封信，就足以了解江易园的佛法程度。老人如此明白地劝导，他仍然不能领会，更能显而易见其佛法程度。辑录者记。）</p></div>
+<div class="para-pair"><p class="p-orig">来书所说，诚为切要，然尚有始终所应注意者，为因果轮回，及家庭教育。家庭教育者，母教尤重。若于儿女初开知识时，其母即以因果报应，及做人之理事为训，则大时便知好歹，不被恶党邪说所惑，而为贤人善人。</p><p class="p-trans">来信中所说的，确实很切要，然而还有从始至终都应该注意的方面，那就是：因果轮回教育，以及家庭教育。家庭教育中，母亲的教育尤其重要。如果在儿女最初开始接受知识的时候，做母亲的就用因果报应，以及做人的道理事迹对他们加以训导，那么儿女长大的时候，就知道好歹，不会被恶党邪说所迷惑，而成为贤人善人。</p></div>
+<div class="para-pair"><p class="p-orig">若小时任性娇惯，大则无主宰，便随邪说而靡，欲其反正，百难得一矣。当今之时，若不以因果报应，为救国救民之专剂，则纵有作为，无大功效。以彼不以实行为事，但以空谈敷衍了事。</p><p class="p-trans">如果小时候任性骄惯，长大了就会没有主见，便会随邪说而倒，到那时再想让他们反回正路上来，一百个人中也难有一个了。当今这个时代，如果不以因果报应教育，作为救国救民的专门良药，那么纵然有所作为，也不会有大的功效。因为他们不以实行为目的，只是空谈、敷衍了事。</p></div>
+<div class="para-pair"><p class="p-orig">因果，乃标本同治之法。凡夫初发心，如来成正觉，皆不出因果之外。狂人以因果为小乘而轻藐之，乃为自便于肆无忌惮之恶作，与空口快活之大话耳。</p><p class="p-trans">因果教育，是标本同治的方法。从凡夫初发心，到如来成正觉，都超不出因果之外。狂妄的人将因果道理视为小乘而轻视，正是为了方便自己肆无忌惮地做恶事，以及说嘴上快活的大话罢了。</p></div>
+<div class="para-pair"><p class="p-orig">●（其二）各处讲演录，闻已排矣。光目力益衰，即此来复二信，用手眼二镜，始仿佛看见。故于讲录，不能干预。</p><p class="p-trans">●（第二封信）你在各处的《讲演录》，听说已经排版了。我的视力更加衰弱了，即使是你的来信，我的回信这两封信，都要用手镜、眼镜两个镜子，才能依稀仿佛看见。所以对于你的《讲演录》，我无法给出意见。</p></div>
+<div class="para-pair"><p class="p-orig">张师祠之佛光社社长，只能挂一空名。至于讲演题跋，则力不能为矣。张节妇，以大藏经，为佛光社镇社利生之法宝，其功德，当令自己莲品高增，其孙慎修痰病即愈。</p><p class="p-trans">张师祠那里的佛光社社长一职，我只能挂一个空名。至于给你的《讲演录》写题跋，我就无能为力了。张节妇，将大藏经，作为佛光社镇社利生的法宝，这个功德，当会令自己的莲品高增，并使她孙子张慎修的痰病立即痊愈。</p></div>
+<div class="para-pair"><p class="p-orig">今为慎修，与令爱有贞，各寄大悲香灰一包。此灰加持三月多久。每日少则诵五十遍，多则七十五遍。系大饼干桶贮之，一桶约十余斤，约计诵持大悲咒有六七千遍。</p><p class="p-trans">现今为张慎修，与你的女儿江有贞，各寄大悲香灰一包。这包香灰加持了三个多月。每天最少诵五十遍大悲咒，最多时诵七十五遍。是用大饼干桶贮存的，一桶大约有十多斤，共计诵持大悲咒约有六七千遍。</p></div>
+<div class="para-pair"><p class="p-orig">此一包灰，可作二三百次冲服。初冲时，当取二十分之一，放于大碗中，用开水冲之，搅搅，候灰质沉下，将水灌于壶中，瓶中，日三服之。宜吃素，常念南无观世音圣号，必有神效。</p><p class="p-trans">这一包香灰，可以作二、三百次冲服。初次冲服的时候，应当取二十分之一，放在大碗中，用开水冲开，搅一搅，等到灰质沉下后，将水灌到壶中、瓶中，一天服用三次。应吃素，并常念南无观世音菩萨圣号，必有神奇的疗效。</p></div>
+<div class="para-pair"><p class="p-orig">病大好后，当少冲，不必照前取二十分之一也。若不信，不志诚，则无效。富贵人多病，一则一事不肯操作，血脉便不周流。二则多食血肉诸品，若遇一有毒者，则其祸不小，或致殒命。</p><p class="p-trans">病情大有好转后，应当少冲一些，不必如前面取出二十分之一。如果不相信，不志诚，就没有疗效了。富贵人多病，一是因为他一件事也不肯亲自劳作，血脉就不会周遍流通；二是多吃血肉这些荤腥，如果遇到一种有毒的肉食，那么灾祸就不小了，甚至可能导致丧命。</p></div>
+<div class="para-pair"><p class="p-orig">即无毒之物，由杀时恨心所结，故带毒性。虽不能即时药杀人，然其毒积久，必发而为疮为病。</p><p class="p-trans">即使是无毒的肉食，由于在被杀的时候恨心所结，所以也会带有毒性。虽然不能立刻毒死人，然而这个毒素积累得久了，必定爆发出来而变成疮、变成病。</p></div>
+<div class="para-pair"><p class="p-orig">张沈氏，肯令慎修戒杀吃素，其痰病当可即愈矣。所余之灰，当供于佛龛之下一边，或挂于高洁之处，以待不时之需，及随便救济危险之症，不可亵渎。</p><p class="p-trans">张沈氏，肯让张慎修戒杀吃素，他的痰病应当可以很快痊愈了。剩余的香灰，应当供在佛龛的下边，或者挂在高洁的地方，以待不时之需，以及随时救济危险之症，不可亵渎。</p></div>
+<div class="para-pair"><p class="p-orig">所冲过之灰质，宜加水泼于屋上，以示敬重。此即干大悲水，可以寄远方，可以留岁月。当地非极危险之症，不肯与也。</p><p class="p-trans">冲后余下的灰质，应该加上净水泼在屋顶上，以表示敬重。这样的香灰就是干的大悲水，可以寄到远方，也可以长时间保存。当地如果不是发生了极度危险的病症，就不要轻易给他们。</p></div>
+<div class="para-pair"><p class="p-orig">仆婢多不知好歹，在大家人家做事，不知爱惜米谷什物，其折福折寿事，日不知有几多次。</p><p class="p-trans">仆人、女佣大多不知道好歹，在大户人家做事，不知道爱惜米谷器物。折福折寿的事，他们每天不知道要干多少次。</p></div>
+<div class="para-pair"><p class="p-orig">近闻曹崧乔云，一仙人附人体看病，一大家之老妈，稍似半身不遂，亦去求看。未至前，仙人云，汝勿来，汝遭残主人米饭食物太多，不久当全身疯瘫而死。此话当与汝贞，昭娥二女子说，令其爱惜主人东西，培植自己福寿，亦可以此功德，回向往生。</p><p class="p-trans">最近听曹崧乔说：有一位仙人附在人身上为人看病，一个大户人家的老妈子，稍微有点半身不遂，也前去求医看病。还没到仙人面前，仙人就说：你不要来，你遭践主人的米饭等食物太多，不久必当全身疯瘫而死。这些话应当告诉汝贞、昭娥二位女子，令她们爱惜主人的东西，培植自己的福寿，也可以此功德，回向往生西方极乐世界。</p></div>
+<div class="para-pair"><p class="p-orig">前数日，费范九来，言孝若，与其女粲武，死之毒惨。易园居士，劝其家为作超荐功德，因出四百圆。以二百圆交光，为彼印书施送，以二百圆于灵岩打佛七。</p><p class="p-trans">前几天，费范九来了，说张孝若（大实业家张謇之子）与女儿张粲武死得非常悲惨（张孝若遭仆人杀害，张粲武早夭）。江易园居士，就劝他们家里为亡人作超荐的功德，因此就出了四百圆。将二百圆交给我，为亡人印书布施赠送，将另外的二百圆用于灵岩山寺打佛七。</p></div>
+<div class="para-pair"><p class="p-orig">当时即与弘化社陈曙亭说，当与易园书，云光令尽此二百圆，寄书于江，令彼随机施送。宜多寄何种，少寄何种，待江居士信来即寄。</p><p class="p-trans">当时我就对弘化社的陈曙亭说，应当给江易园写信，说我让他们用这二百圆，寄书给江易园，令他随机缘布施赠送。应该多寄哪些书，少寄哪些书，等到江居士的信来了就寄给他。</p></div>
+<div class="para-pair"><p class="p-orig">以张家之钱财，利张家之乡人，极为允妥，不知已来书也未。至晚，光意为孝若，粲武各作一牌位，二共一百圆，以一百圆打佛七，拟次晨彼上山时说耳。次早饭后问之，云已去矣，不一二日可回，只好随他去了。</p><p class="p-trans">用张家的钱财，利益张家的乡里人，非常的妥当，不知道你有没有收到这封信？到了晚上，我想为张孝若、张粲武各作一个牌位，两个共一百圆，将另外的一百圆打佛七，打算第二天早晨，费范九上山的时候告诉他。第二天早饭后一问，说他已经走了，过一、二天才能回来，也只好随他去了。</p></div>
+<div class="para-pair"><p class="p-orig">灵岩牌位，在念佛堂内，成年佛号冥熏，比他处供于冷屋中，大相悬殊。所有各人供养之三十五圆，不须寄来，以作佛光社之用。光负一社长之空名，亦不可不以他人之功德，转为他人作功德也。</p><p class="p-trans">灵岩山寺的牌位，在念佛堂内，成年有佛号冥熏，与其他地方供在清冷屋中相比，大有不同。所有各人供养的三十五圆，不必寄来，可以作为佛光社的费用。我既然承担一个社长的空名，也不能不用他人的功德，转而为他人作功德啊！</p></div>
+<div class="para-pair"><p class="p-orig">●（其三）上次之信，及一小包书，当已收到。三十五圆，本拟归佛光社用。昨接手书，及银行提单，方知两相错过。</p><p class="p-trans">●（第三封信）上次的信，以及一小包书，应当已经收到了。三十五圆钱，本来打算归佛光社用。昨天接到信，以及银行的提款单，才知道两方都错过了。</p></div>
+<div class="para-pair"><p class="p-orig">至晚，成翊青来，言江苏水灾之大，为全国第一。其人系冯梦华，王幼农门生，多年办赈，颇有声誉。光遂以此三十五圆，又加五圆，成四十圆，交成。彼问收据写何人名。光谓，汝我何用收据。云，须交会报帐。光谓，随便写易园，印光皆可。</p><p class="p-trans">到了晚上，成翊青来了，说江苏水灾受灾之大，为全国第一。这个人是冯梦华、王幼农的学生，多年办理赈灾事务，很有声誉。我于是将这三十五圆，又加五圆，共四十圆，交给了他。他问收据写什么人的名字。我说：你我何必要用收据？他说：必须交给赈灾会报帐。我说：随便写江易园或印光都可以。</p></div>
+<div class="para-pair"><p class="p-orig">前信言费范九上灵岩去，未见光，过三日回，宿一夜，次早问之，云已去矣。凡事各有因缘，不可勉强。一切任缘，无可容心于其间，容心反成徒劳，固不若任缘之为解脱也。</p><p class="p-trans">上封信说到费范九到灵岩山寺去，没有见到我，三天后回来了，住宿了一晚，第二天早上一问，说他已经离开了。凡事各有因缘，不可勉强。一切随缘，任何事情都不要放在心间，放在心间反而会徒劳无益，肯定不如随缘来得自在解脱啊！</p></div>
+<div class="para-pair"><p class="p-orig">●（其四）大学颂，释观，释止，不甚恰当。德森师云，居士于三谛之俗谛，与三观之假观，似未深明，因将前印之演讲录首页见示。其所说虽有道理，亦可引人入胜。然于空，假实义，全未贴合。</p><p class="p-trans">●（第四封信）《大学颂》中，解释“观”，解释“止”的内容，不是很恰当。德森法师说：居士你对于“三谛”中的俗谛（即假谛），与“三观”中的假观，似乎还没有深入明了，因为我将之前所印的《演讲录》的首页给他看过。你在书中所说的，虽然有些道理，也可以引人入胜。然而对于“空”、“假”的真实含义，完全不贴切、不契合。</p></div>
+<div class="para-pair"><p class="p-orig">夫三谛，三观，乃佛法中之纲要。约理性说，则名为谛，谛，即理。约修持说，则名为观，观，即修也。真谛，一法不立。俗谛，万法圆备。</p><p class="p-trans">“三谛”、“三观”，是佛法中的纲要。从理性上说，就名为“谛”，“谛”，就是理；从修持上说，就名为“观”，“观”，就是修。真谛，一法不立。俗谛，万法圆备。</p></div>
+<div class="para-pair"><p class="p-orig">观真谛之理，名为空观。观俗谛之理，名为假观。空观，乃观其一法不立之真如法性，此并空，有，两空之空，此即心经诸法空相之空相。不但色空，空空，并菩提，涅槃，亦空。若有一法不空，不名真空。此三观空观之空，何可以万事不管不做当之。</p><p class="p-trans">观真谛之理，名为空观。观俗谛（即假谛）之理，名为假观。空观，是观其一法不立的真如法性，包括“空”空、“有”空，两空之空，这就是《心经》中“诸法空相”的“空相”。不但“色”空，“空”空，连“菩提”、“涅槃”，也是空。如果有一法不空，就不名为真空。这是“三观”中空观的“空”，怎么能当成是万事都不管、不做呢？</p></div>
+<div class="para-pair"><p class="p-orig">俗谛之俗，非鄙俗，雅俗之俗，乃以建立施设，名之为俗。假，亦非真假之假，亦建立施设之假。观俗谛之理之观，名为假观者，以真谛一法不立之性体，圆具六度万行诸法圆备之功德。此即心经诸法空相之诸法，何可以凡夫当之乎。</p><p class="p-trans">俗谛（即假谛）的“俗”，不是鄙俗、雅俗的“俗”，而是指建立施设，名之为“俗”。“假”，也不是真假的“假”，而是建立施设的“假”。观俗谛之理的“观”，名为假观，因为真谛是一法不立的性体，圆满具足六度万行诸法圆满具备的功德。这就是《心经》中“诸法空相”的“诸法”，怎么能当成是凡夫的意思呢？</p></div>
+<div class="para-pair"><p class="p-orig">凡夫，乃苦，集二谛所摄。此空，假，乃圆教圆妙道理，二乘尚非其分，况凡夫乎。又三十页，言仗自力，用自力修道，由人而生天，以至无色界天，是谓竖出三界，此语亦未圆备。</p><p class="p-trans">凡夫，是苦、集二谛所摄的。这个“空”、“假”，是圆教中的圆妙道理，二乘人（声闻、缘觉）还不能领悟，何况是凡夫呢？另外，在第三十页中，说到仗自力，是用自己的力量修道，由人道而生天，以至生到无色界天，这是竖出三界，这个话说得也不圆满究竟。</p></div>
+<div class="para-pair"><p class="p-orig">仗自力，须断尽三界内见思烦恼。利根，即生可断。钝根，须先断欲界烦恼，则生色界。次断色界烦恼，则生无色界。直至无色界烦恼断尽，则证真谛涅槃，而了生脱死，超凡入圣矣。</p><p class="p-trans">仗自力，必须断尽三界（欲界、色界、无色界）内的见思烦恼。利根的人，当生就可以断除见思烦恼；钝根的人，必须先断欲界的烦恼，则生到色界天。其次断色界的烦恼，则生到无色界天。直到无色界的烦恼断尽，就能证真谛涅槃，而了生脱死，超凡入圣了（证得四果阿罗汉及以上果位者，才能了生脱死）。</p></div>
+<div class="para-pair"><p class="p-orig">三界诸天，除兜率内院之大菩萨（生内院者，皆法身大士），及无烦，无热，善见，善现，色究竟之五不还天之三果圣人外，余皆六道轮回中人。不可以生至无色界天，便出三界也。</p><p class="p-trans">三界中的一切诸天，除了兜率内院的大菩萨（生到内院的人，都是法身大士），以及无烦天、无热天、善见天、善现天、色究竟天这五不还天的三果圣人之外，其余的都是六道轮回中的人。不可以认为，生到无色界天，就出离三界了（因必须将无色界的烦恼断尽，才能出离三界）。</p></div>
+<div class="para-pair"><p class="p-orig">郁头蓝弗，习非非想定于山间，群鸟相噪，不能得。移于海边，海中大鱼斗，不能得。因生忿恨，有杀尽鱼鸟之念。后定成，生非非想天，寿八万大劫。天福尽后，堕为飞狸，入林食鸟，入水食鱼。</p><p class="p-trans">郁头蓝弗，在山中修习非非想定，群鸟喧噪，不能得定。后来移到海边修定，海中的大鱼相斗，也不能得定。因此生起了忿恨心，有了杀尽这些鱼鸟的念头。后来修定成功，生到非非想天，寿命八万大劫。天福享尽之后，堕落为飞狸，进入山林吃鸟，潜入水中吃鱼。</p></div>
+<div class="para-pair"><p class="p-orig">故宜分别依佛法修持，断惑证真之生天，与修世福及世间禅定之生天不同，庶阅者不至误会。（其演讲录，全由陈曙亭校对料理流通。）</p><p class="p-trans">所以应该分辨清楚，依佛法修持、断惑证真的生天，与修世间福报以及世间禅定（但未断尽见思烦惑、未证得真谛涅槃）的生天，二者的不同之处，才能使读者不至于误会。（江易园的《演讲录》，全部由陈曙亭校对整理流通。）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【晓喻】</span>明白劝导，告知。多用于上对下。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【费范九】</span>（1887-1967）名师洪，字知生，笃信佛教，承高僧印光大师开示，皈依后法名慧茂。南通平潮人。父费启丰（鉴清）以治家教子、收宗族、倡公益著于乡。费范九自幼聪颖，州试名列榜首。后入江宁法政学堂，毕业后参与办理两淮盐务。民初回通任张赛秘书协助督办水利保坍工程，主编《南通报》。1928年应上海商务印书馆之聘，就任编辑，悉心研究古籍，整理出版了许多学术著作。曾应朱庆们、叶恭绰之请主持影印破砂宋版藏经；搜集南通历代金石书画，筹资影印《南通县金石志》、《南通名画册》、《南通书画大观》等专集。热心保护中华文化遗产，早年协助张春保存并印行《历朝名画观音宝相》，修复古迹曹公亭。晚年退休故里，馆号“劳养庐”。著有《淡远楼诗集》、《淡远楼联语》、《庸余杂墨》、《延旭轩俪语》等，费氏生前与张謇关系密切，书法酷肖张謇，小楷尤精，据云张謇有时墨债过多难以应付，即由费氏代笔，晚年将所藏书籍字画捐献给南通博物苑等收藏。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【张孝若】</span>（1898-1935）张怡祖，字孝若，又字潜庐，张謇之子。8岁就学南通师范学校附属小学，先后就学于青岛东方大学、上海震旦学院。20岁留学美国，就读于哈佛商学院（一说哥伦比亚大学），获商学士学位后即卒业归国，襄助其父办理各项事业，先后任大生纱厂董事长、大达轮船公司总经理、淮南盐垦公司常务董事长。1922年为北洋政府（当时总统为黎元洪）任命为考察各国（美国、英国、法国、德国、荷兰、比利时、意大利、瑞士、日本）实业专使，周游欧美。1925年任扬子江水道委员会会长等职。1926年，张謇谢世后，主持南通各项事业，1926年至1928年，继张謇后任南通女子师范学校校长，1930年至1935年任南通师范学校校长。1935年10月18日突遭仆人暗杀，惨死于上海寓所，时年38岁。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【张粲武】</span>张孝若之女。背景：“家运不佳，一波未平一波又起，父亲刚去世不久，家人都处在极度的悲痛中。粲妹也收到一位男同学的慰问信。融弟竟持之当众对她嘲弄，粲妹就读于南通中学，数理成绩很好，但性格内向，自尊心极强，当时因受不了这般委屈，悲痛之极，当晚即找到家中备用作治头痛、腹病的鸦片烟渣吞服了，直至第二天清晨才为家人发现，因发现太迟，难以回生。母亲伤夫的眼泪未干又雪上加霜，痛失爱女，结果大病一场。我在杭州学校，未能见到粲妹的最后一面，真没想到，父亲尸骨未寒，融弟竟如此狂妄不检，不知彼时祖母对她一直宠爱的孙子的无理行为，有未加以反思。”……张柔武《往事琐记》</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【陈曙亭】</span>近现代南通的一位远近闻名的书画家。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【容心】</span>犹言留心，在意。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【三谛】</span>1.空谛：又云真谛、无谛。诸法本空众生不解，执之为实而生妄见。若以空观对治之，则执情自忘，情忘即能离诸相，了悟真空之理。2.假谛：又云俗谛、有谛。诸法本虽即空，然因缘和合，则历历宛然！于空中立一切法，故称假谛。3.中谛：又云中道第一义谛。以中观观之，诸法本来不离二边、不即二边、非真非俗、即真即俗，清净洞彻，圆融无碍。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【三观】</span>指天台宗三观，即空观、假观、中观。空观是观诸法缘生无性，当体即空；假观是观诸法虽同幻化，但有假相和作用；中观是观诸法非空亦非假，亦空亦假之中道实理。修此三观，能破三惑，证三智，成三德。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【苦、集二谛】</span>苦谛，是说明人生痛苦的道理，人生有三苦、八苦、无量诸苦。苦是现实人生的真相。集谛的“集”，是集起的意思。集谛是说明人生的痛苦是怎样来的真理，人生的痛苦是由于凡夫贪欲、瞋恚、愚痴等烦恼引起，而去造作种种的不善业，结果才会招集种种的痛苦。苦集二谛乃世间的因果，集是因，苦是果，是迷界的因果。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【初果，二果，三果，四果】</span>印祖语：声闻初果，已断见惑，尚有思惑未断。故须七生天上，七返人间，方断思惑，而证四果。二果，则一生天上，一返人间，乃证四果。三果，以欲界思惑已尽，尚须在色界五不还天，经历多劫，方可断尽思惑，而证四果。四果，则见思二惑净尽，三界内了无生缘。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

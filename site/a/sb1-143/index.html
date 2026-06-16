@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复宁德晋居士书二 · 印光法师文钞</title>
+<meta name="description" content="手书并二包书，均接到，以后不必寄书来南。南方善信所印之书甚多，不于无处送，而寄于有处，则为倒置。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-143/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复宁德晋居士书二 · 印光法师文钞">
+<meta property="og:description" content="手书并二包书，均接到，以后不必寄书来南。南方善信所印之书甚多，不于无处送，而寄于有处，则为倒置。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-143/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复宁德晋居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书并二包书，均接到，以后不必寄书来南。南方善信所印之书甚多，不于无处送，而寄于有处，则为倒置。</p><p class="p-trans">你的信以及二包书，都接到了，以后不必寄书到南方来。南方善信所印的书很多，（你）不给没有书的地方送，却寄给有书的地方，就是颠倒。</p></div>
+<div class="para-pair"><p class="p-orig">麻疹秘方，前年所印之达生福幼合编中，当有其方。以我关中均无其书，故亦不愿要来一查。</p><p class="p-trans">痳疹秘方，前年所印的《达生福幼合编》中，应当有这个药方。因为我陕西关中都没有这本书，所以也不愿意要来查一查。</p></div>
+<div class="para-pair"><p class="p-orig">汝既宿有信心，欲皈依，当认真敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，方为真佛弟子。</p><p class="p-trans">你既然宿世有信心，想要皈依，应当认真敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，才是真佛弟子。</p></div>
+<div class="para-pair"><p class="p-orig">每见学佛者亦有伪为，其实则居心行事，仍然是利欲是务，依旧是瞒因昧果，欺佛欺人。此种假善人，实为佛门之贼，当深以为戒。</p><p class="p-trans">常见到学佛的人，也有作假的，其实他的存心行事，仍然是为了利益欲望，依旧是瞒因昧果，欺骗佛、欺骗他人。这种假善人，实在是佛门之贼，应当深深引以为戒。</p></div>
+<div class="para-pair"><p class="p-orig">勿道大者不可自欺欺人，即起心动念，亦当以诚为事。果能真诚不欺，久而久之，必为人所信向。</p><p class="p-trans">不要说大的事情，不可自欺欺人，即使是起心动念，也应当以真诚为事。果真能够真诚不欺，久而久之，必定为他人所信赖。</p></div>
+<div class="para-pair"><p class="p-orig">人既信向，则天地鬼神当常护佑，令其常得吉祥也。况佛菩萨大慈大悲，有不垂慈加被者乎。</p><p class="p-trans">他人既然信任归向，那么天地鬼神应当常常护佑，令他常得吉祥。何况佛菩萨大慈大悲，有不垂慈加被的吗？</p></div>
+<div class="para-pair"><p class="p-orig">秦地旱路，彼此来往不便，殊难与同志者会晤。当尚友古人，及常阅文钞，嘉言录，安士书等，以为师保。</p><p class="p-trans">秦地旱路，彼此来往不便，很难与志同道合的人会面。应当上与古人为友，以及经常阅读《文钞》、《嘉言录》、《安士全书》等，作为老师。</p></div>
+<div class="para-pair"><p class="p-orig">日受教训，自可进德。若假善人，或修外道炼丹运气法者，则宜勿与相交，以免受彼传染。</p><p class="p-trans">每天接受教训，自然可以增进德业。如果是假善人，或者修习外道炼丹运气法的人，则应不与他们相交往，以免受他们的传染。</p></div>
+<div class="para-pair"><p class="p-orig">汝既发心皈依，今为汝取法名为德晋。晋者，进也。若能依佛法以修持，即可现身入圣贤之域，临终登极乐之邦，是之谓德晋。然须发菩提心，随机劝导，则于自修大有裨益。</p><p class="p-trans">你既然发心皈依，现在为你取法名为德晋。晋，进的意思。如果能够依照佛法来修持，即可现身进入圣贤的领域，临终登入极乐莲邦，这样就称为德晋。然而必须发菩提心，随机劝导，则对于自己的修持会有很大的裨益。</p></div>
+<div class="para-pair"><p class="p-orig">汝伯母，当常以净土法门之利益修法告之。令勿学外道之法，及以念佛求来生福报。俾彼得以往生，实为大孝。</p><p class="p-trans">你伯母，应当经常将净土法门的利益、修法告诉她。不要让她学外道法，以及以念佛求来生福报。使她得以往生，这才是大孝。</p></div>
+<div class="para-pair"><p class="p-orig">须知了生死一事，非同小可。大禹大圣人也，尚不能令其父不为黄熊（音乃，平声，三足鳖也。亦有作能字者，然皆读乃，平声）。缅想及此，吾人真有莫大之幸。</p><p class="p-trans">必须知道了生死这件事，非同小可。大禹是大圣人，尚且不能使他的父亲不成为黄熊（音乃，平声，三足鳖。也有作“能”字的，然而都读乃，平声）。想到这里，我们真是有莫大的幸运。</p></div>
+<div class="para-pair"><p class="p-orig">汝之三弟，亦当随分随机而为开导。以后但熟阅文钞等，不得辄来信，以光无力支持。文钞，嘉言录，即是普为一切专修净土之总信。若泛学各宗，则非当机之论。</p><p class="p-trans">你的三弟，也应当随分随机而为他开导。以后只要熟阅《文钞》等书（即可），不得总是来信，因为我没有目力精力支持。《文钞》、《嘉言录》，就是普为一切人专修净土的总信。如果广泛学习各个宗派，就不是当机的论说。</p></div>
+<div class="para-pair"><p class="p-orig">今人若不专修净土，纵能深通经藏，彻悟自心。生死到来，还用不著。何以故，若不念佛求生西方，必须断尽烦恼惑业，方有了生死分。</p><p class="p-trans">现在的人如果不专修净土，纵然能够深通经藏，彻悟自心。生死到来的时候，还是用不着。为什么呢？如果不念佛求生西方，必须断尽烦恼惑业，才有了生死的分。</p></div>
+<div class="para-pair"><p class="p-orig">但能通达经论，悟明心性，而烦惑未断，依旧轮回。况未能深明经藏自心者乎。念佛了生死，全仗佛力。由自己真信切愿念佛之力，感佛垂慈接引，故能带业往生也。汝其志之。</p><p class="p-trans">只能通达经论，悟明心性，而烦惑未断，依旧轮回。何况没能深明经藏、彻悟自心的人呢？念佛了生死，全仗佛力。由自己真信切愿念佛的力量，感通阿弥陀佛垂慈接引，所以能够带业往生。你好好记住。</p></div>
+<div class="para-pair"><p class="p-orig">又今日有一弟子，言其母其妻，去年同发疟疾二三月，因思此病颇厉害，今将治疟绝妙之方开来，祈为印送广传，实为利人之一端。（二月廿四日灯下）</p><p class="p-trans">另外，今天有一位弟子，说他的母亲、妻子，去年同发疟疾二三个月，因为想到这种病比较厉害，现在将治疟绝妙的药方开来，请为之印送、广泛流传，实在是利益他人的一件好事。（二月二十四日灯下）</p></div>
+<p class="p-orig">治疟疾神方</p>
+<div class="para-pair"><p class="p-orig">乌梅（两个）　红枣（两个）　胡豆（一岁一颗，其人十岁，即写十颗，十一岁，即写十一颗。余可类推）</p><p class="p-trans">乌梅（两个）　红枣（两个）　胡豆（一岁写一颗，那个人十岁，就写十颗，十一岁，就写十一颗。其余可以类推。）</p></div>
+<div class="para-pair"><p class="p-orig">用白纸一条，写此三种，折而叠之，于疟将发之一点钟前，即半个时辰，乡下无钟，故须说半个时辰，捆于臂干之中，即手之上，肘之下，即不发矣。</p><p class="p-trans">用一条白纸，写上这三种药，折叠好，在疟疾将要发作的前一个钟头，就是半个时辰，乡下没有钟，所以必须说半个时辰，捆在臂干之中，就是手腕以上，肘以下，就不发病了。</p></div>
+<div class="para-pair"><p class="p-orig">并不要买药，但写此三种捆于臂间即已。须分男左女右。捆时不须与别人说。此方妙极。</p><p class="p-trans">并不须要买药，只是写上这三种药，捆在臂间就可以了。必须分别男左女右。捆的时候，不必对别人说。这个药方很神妙。</p></div>
+<div class="para-pair"><p class="p-orig">安士全书后载之，以字过小，恐人不介意，故不得实益也。</p><p class="p-trans">《安士全书》后面有记载，因为字太小，恐怕他人没有注意，所以得不到实益。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【尚友】</span>1.上与古人为友。《孟子·万章下》：“以友天下之善士为未足，又尚论古之人；颂其诗，读其书，不知其人，可乎？是以论其世也，是尚友也。”2.指与高于己者交游。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【师保】</span>1.古时任辅弼帝王和教导王室子弟的官，有师有保，统称“师保”。 2.泛指老师。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【黄能】</span>即黄熊，黄能是一种已经绝迹的动物，类似于熊，但是有三只脚，在山海经中有记载。《国语·晋语八》：“昔者鲧违帝命，殛之于羽山，化为黄能，以入于羽渊。”南朝梁任昉《述异记》卷上：“尧使鲧治洪水，不胜其任，遂诛鲧于羽山，化为黄能，入于羽泉，今会稽祭禹庙不用熊，曰黄能，即黄熊也。陆居曰熊，水居曰能。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

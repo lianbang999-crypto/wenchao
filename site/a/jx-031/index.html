@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>31、复永嘉某居士书六 · 印光法师文钞</title>
+<meta name="description" content="谈性德、修德和随心造业随心转业">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-031/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="31、复永嘉某居士书六 · 印光法师文钞">
+<meta property="og:description" content="谈性德、修德和随心造业随心转业">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-031/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第一部分·书信 · 圆涛法师、如诚法师译</div>
+      <h1 class="art-title">31、复永嘉某居士书六</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>谈性德、修德和随心造业随心转业</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">嘉梦奇特，必有嗣书香而绳祖武，出类拔萃之嘉男，赐自佛天也。不胜欣慰，贺贺。</p><p class="p-trans">好梦奇特，必定有继承书香世家而追随祖先功业，出类拔萃的好男儿，此乃由佛陀上天恩赐啊！非常欣慰，恭贺恭贺。</p></div>
+<div class="para-pair"><p class="p-orig">华严经云，一切众生皆具如来智慧德相，但因妄想执著，不能证得。是知智慧德相，乃生佛所同。即性德也。有妄想执著，离妄想执著，则生佛迥异。即修德也。</p><p class="p-trans">《华严经》说:“一切众生皆具如来智慧德相，但因妄想执著，不能证得。”由此可知，智慧德相，是众生和佛所共有的，即“性德”。有妄想执著的便是众生，离妄想执著的便是佛，众生与佛迥然不同，原因在于修德。</p></div>
+<div class="para-pair"><p class="p-orig">修德有顺有逆。顺性而修，愈修愈近。修极而彻证，证而了无所得。逆性而修，愈修愈远。修极而永堕恶道，堕而了无所失。</p><p class="p-trans">修德有顺有逆。顺性德而修持，愈修愈近，修到极点而彻底证得，虽证得却了无所得。逆性德而修，愈修愈远，修到极点而永堕恶道，虽堕落而“性德”也没有一点损失。</p></div>
+<div class="para-pair"><p class="p-orig">了此则愚者可贤，贤者可愚，寿者可夭，夭者可寿。富贵贫贱，及与子孙之蕃衍灭绝，一一皆可自作主宰。则有凭据者亦可无凭据，无凭据者亦可有凭据。如山之高不可登，人不能由，不妨凿岩设砌，则绝顶亦可直到矣。</p><p class="p-trans">明白这一点，愚人就可以转变成贤人，贤人可以变为愚人;长寿的可以夭折，夭折的可以长寿，富贵贫贱，以及子孙的繁衍灭绝，一一都可以自作主宰。则有凭据的人也可变得没有凭据，没有凭据的人也可以变得有凭据。（有凭据，指凭据前世所造之因，理应感今世所得之果。但因心能造业，亦能转业，使得本应受之果报，发生转变。）譬如山高不可登，人由此停步，不妨凿开岩石，辅设修砌山路，就算高山绝顶也可以直接登上。</p></div>
+<div class="para-pair"><p class="p-orig">古今人不知随心造业随心转业之义。多少大聪明大学问人，弄得前功尽弃，尚且遗害累劫。若不修德，即亲身做到富有天下，贵为天子，与夫位极人臣，声势赫奕之宰辅地位，有不即世而身戮门灭者哉。是亲得者皆无凭也。</p><p class="p-trans">古今之人不知“随心造业，随心转业”的道理，多少大聪明、大学问人弄得前功尽弃，而且还累劫祸害后世。若不修德，即使亲身做到富甲天下，贵为天子，或者是位及人臣，声势显赫的宰相地位，也有在有生之年就被杀戮，惨遭灭门的人啊！是这些人虽然亲身得到善果，却（因没有“修德”），使得善果没有依凭。</p></div>
+<div class="para-pair"><p class="p-orig">袁了凡颇会此义。故一切所享者，皆非前因所定也。前因俗所谓天。天定者胜人，谓前因之难转也。人定者亦可胜天，谓兢业修持，则前因不足恃。是以现因为因而消灭前因也。若恣意妄为则反是。</p><p class="p-trans">袁了凡就很懂得“随心造业，随心转业”的道理，改变了命运。因此所享受的一切，都不是前因所决定的。前因世俗称为“天”，天定则胜人，指前世种下的因很难扭转。人定者亦可胜天，指（命运不是一成不变），通过兢兢业业、勤勤恳恳地修持，前因也是可以改变的。这是以现在的善因，消灭了前面的恶因。但如果恣意妄为，结果就会相反。</p></div>
+<div class="para-pair"><p class="p-orig">了此则欲愚者贤，庸平者超拔，皆在自己之存心修德与随时善教而已。可不以努力栽培，以祈嘉梦有据也已。</p><p class="p-trans">懂得了这个道理，愚蠢的人变得贤良，平庸者能够超拔卓绝，这全在自己是否存心修德，以及是否随时随地善于言传身教而已。能不努力栽培，以祈望好梦有所凭据吗？</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【书香】</span>读书风气；（世代）读书的习尚。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【绳武】</span>《诗·大雅·下武》：“昭兹来许，绳其祖武。”朱熹集传：“绳，继；武，迹。言武王之道，昭明如此，来世能继其迹。”后因称继承祖先业迹为“绳武”。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【蕃衍】</span>1.繁盛众多。2.滋生繁殖。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【凭据】</span>1.占据。2.依据，根据。3.凭证，证据。4.依恃；倚仗。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

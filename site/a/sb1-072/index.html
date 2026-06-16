@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复屈文六居士书一 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。此次法会，是护国息灾。凡是国民，当尽心从事。光旦夕课诵，亦各为祝。今蒙会长及诸公之命，固当尽我愚诚。切不可用近时虚克己派，以致不成护国体裁。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-072/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复屈文六居士书一 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。此次法会，是护国息灾。凡是国民，当尽心从事。光旦夕课诵，亦各为祝。今蒙会长及诸公之命，固当尽我愚诚。切不可用近时虚克己派，以致不成护国体裁。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-072/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复屈文六居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。此次法会，是护国息灾。凡是国民，当尽心从事。光旦夕课诵，亦各为祝。今蒙会长及诸公之命，固当尽我愚诚。切不可用近时虚克己派，以致不成护国体裁。</p><p class="p-trans">你的信都看过了。这次法会，是为了护国息灾。凡是国家公民，都应当尽心来做。我在早晚课诵的时候，也各为祝祷。现今承蒙会长以及诸位先生的命令，本应竭尽我的愚诚。千万不可以用近来虚己克己的做派，以致不成护国的体裁。</p></div>
+<div class="para-pair"><p class="p-orig">光一生不入人社会，独行其志。在普陀时，初常住普请吃斋亦去。一顿斋，吃二三点钟，觉甚讨厌，遂不去吃斋二十多年。</p><p class="p-trans">我一生不加入任何社会团体，独自实行自己的志向。在普陀山的时候，最初常住普请吃斋，也去。一顿斋饭，吃上二三个钟头，觉得很讨厌，于是不再去吃斋，已经二十多年了。</p></div>
+<div class="para-pair"><p class="p-orig">此次乃个人尽心之事。若作平常请法师讲经之派，则完全失宜。打七办法，虽不能随众。仍须守打七之规矩，无论何人概不会。以若会一人，则非累死不可。</p><p class="p-trans">这次是个人尽心的事。若作平常请法师讲经的做派，则完全失当。打七的办法，我虽然不能随众。仍旧必须遵守打七的规矩，无论什么人，一概不会见。因为如果会见一个人，就非得累死不可。</p></div>
+<div class="para-pair"><p class="p-orig">光民十到杭州常寂光，彼照应事者绝无章程，来者屡续而来，两日口内通烂。此次已成行家，固不得不先声明。</p><p class="p-trans">我民国十年（1921年）到杭州常寂光寺，那些照应事务的人，绝对没有章程，来的人屡屡不断而来，两天（时间）嘴里全都烂了。这次已经成了行家，所以不得不事先声明。</p></div>
+<div class="para-pair"><p class="p-orig">光来时当带一茶头，凡饮食诸事，归彼料理。早午晚三餐，在房间独食。早粥或馒头或饼，只用一个。午一碗菜，四个馒头。晚一大碗面，茶房会说。</p><p class="p-trans">我来的时候，会带一个茶头，凡是饮食的一切事务，都归他料理。我早中晚三餐，在房内单独吃。早上,粥或者馒头，或者大饼，只要一个；中午,一碗菜，四个馒头；晚上,一大碗面，茶房会说的。</p></div>
+<div class="para-pair"><p class="p-orig">光数十年吃饭不剩菜。故只要一碗菜，吃完以馒头将碗之油汁揩净。切不可谓菜吃完为菜少。此外所有络络索索的点心，通不用。</p><p class="p-trans">我几十年来，吃饭不剩菜。所以只要一碗菜，吃完以后，用馒头将碗里的油汁揩干净。千万不可认为菜吃完了，是因为菜太少。此外，所有络络索索的点心，通通不用。</p></div>
+<div class="para-pair"><p class="p-orig">七圆满，亦不吃斋。即会中办斋，光亦不同吃，无精神相陪故。圆满之次日，即回苏，亦不许送。送至门外即止。若又送则成市气，不成护国息灾之章程矣。（民廿五九月十七）</p><p class="p-trans">打七圆满，也不吃斋。即使法会中办斋，我也不同吃，没有精神相陪的缘故。打七圆满的第二天，就回苏州，也不许相送。送到门外就可以了。如果再送，就成市俗之气，不成护国息灾的章程了。（民国二十五年&lt;1936年&gt;九月十七日）</p></div>
+<div class="para-pair"><p class="p-orig">又光不会客之话，说与招待诸君。即或有所馈送，均令彼持回。如不肯持回，即归会中。食物如是，钱财亦然。作彼供养会中，不作彼送光。</p><p class="p-trans">再者，法会期间我不会客的话，说给招待的诸位同人。即便有人来馈送东西，都令他们带回去。如果不肯带回去，就归入法会中。食物是这样，钱财也是这样。当作他们供养法会中，不当作他们送给我。</p></div>
+<div class="para-pair"><p class="p-orig">又光与茶头来去之川资，皆归光。会中不得私犒劳茶头，以彼亦国民应分之事，不得特为厚道，反致不合法体。光是一特立独行僧，恐或不悉，故为再陈。</p><p class="p-trans">再者，我与茶头来去的路费，都归我出。会中不得私自犒劳茶头，因为那也是他身为国民分内的事，不得特地因为他的厚道（而犒劳），反而导致不合法体。我是一个特立独行的僧人，恐怕你不知道，所以为你再次陈述。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【屈文六】</span>屈映光，字文六。1883年生，浙江临海人。浙江赤城公学毕业。曾任赤城公学、安徽陆军测缓学堂教习。1909年在上海创办《风雨报》。辛亥革命时，任浙江驻上海兵站司令。民国成立后，任浙江教督府民政司、内务司司长，浙江民政长、巡按使。1916年4月浙江独立后，任浙江都督。1919年后，任山东省省长、临时参政院参政。1926年任北洋政府内务总长。1928年后，任国民党政府赈济委员会副委员长、总统府国策顾问。信佛教，曾集资修订大藏经。后去台湾。1973年去世。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【此次法会，是护国息灾】</span>见《上海护国息灾法会法语（邓慧载记录）》（《印光法师文钞三编·卷四》），及《由上海回至灵岩开示法语（民国二十五年十月十七晚说）》（《印光法师文钞三编·卷四》）。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【特立独行】</span>谓志行高洁，不随波逐流。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

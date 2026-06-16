@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复尤弘如居士书 · 印光法师文钞</title>
+<meta name="description" content="阁下宿根深厚，慕道心切。又与弘一大师向为挚友。今又欲扳光为莲池会中法契，不胜欣忭。但以晒经因缘，不暇即复，歉甚。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-066/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复尤弘如居士书 · 印光法师文钞">
+<meta property="og:description" content="阁下宿根深厚，慕道心切。又与弘一大师向为挚友。今又欲扳光为莲池会中法契，不胜欣忭。但以晒经因缘，不暇即复，歉甚。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-066/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复尤弘如居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">阁下宿根深厚，慕道心切。又与弘一大师向为挚友。今又欲扳光为莲池会中法契，不胜欣忭。但以晒经因缘，不暇即复，歉甚。</p><p class="p-trans">阁下宿根深厚，慕道心切。又与弘一大师一向为挚友。现在又想要挽我为莲池会中的法友，不胜喜悦。但因为晒经的因缘，无暇立即回信，非常抱歉。</p></div>
+<div class="para-pair"><p class="p-orig">光少失问学，老无所知。近三二年，每有谬听人言，有所问讯者，然只以己之所知所能者告之。至于佛法之精义，禅定之实证，则非光所知。亦不敢以不知为知，而妄为谈叙也。</p><p class="p-trans">我小时候失于求学，到老一无所知。最近二三年，经常有错听人言，来向我问讯请教的人，我也只是将自己所知所能的来告诉他。至于佛法的精微玄义，禅定的实修证悟，就不是我所知道的了。也不敢以不知为知，而妄加谈论。</p></div>
+<div class="para-pair"><p class="p-orig">弘一师博学多闻，以光虽固陋，而其居心颇真实，其修行颇依固陋者之本分，故相与周旋，实未一觌其面。今发心掩关，拒绝一切，当必亲证念佛三昧，以之饷一切有缘也。不胜盼望之至。</p><p class="p-trans">弘一法师博学多闻，认为我虽然闭塞浅陋，但存心颇为真实，修行也颇依闭塞浅陋之人的本分，所以互相有所交往，实际并未见过面。现在他发心闭关，拒绝一切外缘，当必定亲证念佛三昧，来馈赠一切有缘人。非常的盼望！</p></div>
+<div class="para-pair"><p class="p-orig">今人研究佛法，多多皆欲作一通家。拟于一切大众前，清谈高论，令人悦服。少有为了生死特学佛法者。</p><p class="p-trans">现在的人研究佛法，大多都是想要作一个大通家。准备在一切大众人前，清谈高论，令人悦服。很少有为了生死，而特别学习佛法的。</p></div>
+<div class="para-pair"><p class="p-orig">阁下若欲作第一等人，则光之知见，了无裨益。当请益于当世缁素中之大通家，则可不孤所期。若欲即俗修真，以有限光阴，兼营世事，又期即生定了生死者。则光不妨以闻于古人者，转以告阁下也。</p><p class="p-trans">阁下如果想作大通家这第一等人，那么我的知见，对你并没有益处。应当去请问于当今世上，僧俗之中的大通家，那么可以不辜负你的期望。如果想要即俗修真，以有限的光阴，兼营世间事务，又期望在这一生必定了生死的话。那么我不妨将我从古人那儿听来的，转告给阁下你。</p></div>
+<div class="para-pair"><p class="p-orig">梦东云，真为生死，发菩提心，以深信愿，持佛名号。此十六字为念佛法门一大纲宗。此一段开示，精切之极，当熟读之。</p><p class="p-trans">梦东祖师（彻悟大师）说：“真为生死，发菩提心，以深信愿，持佛名号”。这十六字，是念佛法门的一大纲宗。这一段的开示，精微真切到了极点，应当要熟读。</p></div>
+<div class="para-pair"><p class="p-orig">而梦东语录，通皆词理周到，的为净宗指南。再进而求之，则蕅益老人弥陀要解，实为千古绝无而仅有之良导。倘能于此二书，死心依从。则即无暇研究一切经论，但常阅净土三经，及十要等。</p><p class="p-trans">而《梦东语录》，都是词理周到，的确是净土宗的指南。再进而求之，那么蕅益老人的《弥陀要解》，实在是千古绝无仅有的良导。倘若能够对这二部书，死心踏地依从修持。那么即使没有空研究一切经论，只要常常阅读净土三经，以及《净土十要》等书。</p></div>
+<div class="para-pair"><p class="p-orig">仰信佛祖诚言，的生真信，发切愿。以至诚恭敬，持佛名号。虽在暗室屋漏，如对佛天。克己复礼，慎独存诚。不效近世通人，了无拘束，肆无忌惮之派。</p><p class="p-trans">仰信佛祖的诚言，真实生起真正的信心，发起迫切的愿心。以至诚恭敬，持佛名号。即使在暗室无人之处，也如同面对佛陀上天。克己复礼，慎独存诚。不效仿现在世间的一般人，了无拘束，肆无忌惮的派头。</p></div>
+<div class="para-pair"><p class="p-orig">光虽生死凡夫，敢为阁下保任即生便可俯谢娑婆，高预海会。亲为弥陀弟子，大士良朋矣。</p><p class="p-trans">我虽然是生死凡夫，敢为阁下你保任在这一生就可以俯谢娑婆，高预海会。亲为阿弥陀佛的弟子，清净海众菩萨的良朋啊！</p></div>
+<div class="para-pair"><p class="p-orig">如于净土一法，不能死尽偷心，决志修持。于主敬存诚，克己复礼等，犹欲以不执著，为疏散放逸作遮护之巧符。则其所得之利益，固非光劣知劣见所得而知也。</p><p class="p-trans">如果对于净土一法，不能够死尽偷心，决心修持。对于主敬存诚，克己复礼等伦理道德，还想要以不执著，为自己的疏散放逸，作遮盖掩护的借口和护身符。那么你所得的利益，就不是我劣知劣见所能知道的了。</p></div>
+<div class="para-pair"><p class="p-orig">余则光芜钞中已备言之，故不多渎。看经一事，惟恭敬方能得益。若不恭敬，纵得，亦不过依文解义之益。而其业消智朗，彻悟自心，断断无此侥幸。况亵慢之过，有不可胜言者乎。此举世通病，可为痛哭流涕长太息者。</p><p class="p-trans">其余的在我的《文钞》中已经详备地说过了，所以不再多说。看经这一事，唯有恭敬方才能够得到利益。如果不恭敬，纵然有所得，也只不过是依文解义的利益。而想要业消智朗，彻悟自心，断然没有这样侥幸的。何况亵渎轻慢的罪过，是不可说尽的呢？这是举世之人的通病，真是让人为之痛哭流涕长叹息啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【欣忭】</span>喜悦。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【问学】</span>求知；求学。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【屋漏】</span>古代室内西北隅施设小帐，安藏神主，为人所不见的地方称作“屋漏”。《诗·大雅·抑》：“相在尔室，尚不愧于屋漏。”毛传：“西北隅谓之屋漏。”郑玄笺：“屋，小帐也；漏，隐也。”后即用以泛指屋之深暗处。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【慎独】</span>在独处中谨慎不苟。语出《礼记·大学》：“此谓诚于中，形于外，故君子必慎其独也。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【存诚】</span>谓心怀坦诚。语本《易·干》：“庸言之信，庸行之谨，闲邪存其诚。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【渎】</span>滥；过度；烦琐。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

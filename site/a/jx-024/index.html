@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>24、与某居士书（代了余师作） · 印光法师文钞</title>
+<meta name="description" content="谈唯求临终往生净土，则与佛誓愿相契相合">
+<link rel="canonical" href="https://wenchao.foyue.org/a/jx-024/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="24、与某居士书（代了余师作） · 印光法师文钞">
+<meta property="og:description" content="谈唯求临终往生净土，则与佛誓愿相契相合">
+<meta property="og:url" content="https://wenchao.foyue.org/a/jx-024/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">白话精选读本 · 第一部分·书信 · 如诚法师、圆涛法师译</div>
+      <h1 class="art-title">24、与某居士书（代了余师作）</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="art-summary"><b>提 要</b>谈唯求临终往生净土，则与佛誓愿相契相合</div>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">仲春来山，瞬息半载。纵寿百年，弹指即过。一息尚存，当求出路。毋使临终，悔之无及。</p><p class="p-trans">你二月份来普陀山，一转眼半年过去了。纵然有一百年的寿命，也是一弹指就会过去。这一口气还在，就应当寻求将来的出路。不要等到临终之时，后悔也来不及了。</p></div>
+<div class="para-pair"><p class="p-orig">每忆经云，人身难得，中国难生，佛法难遇，信心难生。四者幸备，尤当努力。如登宝山，要得摩尼。</p><p class="p-trans">每每想到《四十二章经》中说：人身难得，中国难生，佛法难遇，信心难生。很庆幸这四者全都具备，就应当加倍努力。如同登上宝山，一定要得到摩尼宝珠。</p></div>
+<div class="para-pair"><p class="p-orig">良以在凡夫地，未断惑业，生死不了，难免堕落。所以如来极劝众生，发真信心，及切愿心，持佛名号，求生净土。</p><p class="p-trans">实在因为在凡夫地没有断除惑业，生死不了，难免堕落。所以如来极力劝导众生发真实信心，以及迫切愿心，持佛名号，求生净土。</p></div>
+<div class="para-pair"><p class="p-orig">当以供养三宝，守戒一生，一切所作，种种功德，不求来生人天福报，不求现世长寿康宁，唯求临终往生净土。则与佛誓愿相契相合，感应道交，定满所愿。</p><p class="p-trans">应当以供养三宝，一生守戒，一切所作的种种功德，不求来生的人天福报，不求现世的长寿康宁，唯求临终往生净土。这样就与佛的誓愿相契入相附合，感应道交，一定满你所愿。</p></div>
+<div class="para-pair"><p class="p-orig">如人堕海，有船来救，若肯上船，即登彼岸。求人天福，不求往生，如不上船，难免沉溺。佛欲令汝超凡入圣，汝却愿得有漏之福。福报一尽，永堕三途。如摩尼珠，用弹黄雀。所得者少，所失者多。可不惜哉，宜警省焉。</p><p class="p-trans">如人堕入大海，有船来救，如果肯上船，就即刻登上彼岸。求人天福，不求往生，就象是不肯上船，难免沉溺生死大海。佛陀想要使你超凡入圣，你却愿意得到有漏的福报。福报一尽永堕三途。就象用无价的摩尼宝珠，用来弹射黄雀。所得的少，所失掉的多。真是太可惜了！应该警觉反省啊！</p></div>
+<div class="para-pair"><p class="p-orig">当知念佛往生一法，乃一切众生速出生死之第一要道，实一切诸佛疾成正觉之最上法门。不可以简便易行，视作等闲。必须以勤恳志心，方能成办。</p><p class="p-trans">应当知道念佛往生这一法，是一切众生速出生死的第一要道，实在是一切诸佛，速成正觉的最上法门。不可以因为简单方便容易行持，就等闲视之。必须以勤恳志心，才能成办。</p></div>
+<div class="para-pair"><p class="p-orig">至于修持法则，龙舒文中具载。又有安士全书，具载念佛往生法则并随事积德，居尘学道，齐家教子，淑世善民，种种法则，悉臻奥妙。可谓通儒释于不二，冠古今而无双。一切缁素男女，皆堪永为龟鉴者也。</p><p class="p-trans">至于修持的方法轨则，《龙舒净土文》中有具体记载。又有《安士全书》，具体记载了念佛往生的法则，以及随事修持，积累功德，居于尘俗，学修法道，管理家庭，教育子女，济世善民，种种法则，都达到了奥妙的极点。可以说是，贯通儒释于不二之门，冠居古今而无双。一切出家在家的男女，都堪能永远作为借鉴学习啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【仲春】</span>春季的第二个月，即农历二月。因处春季之中，故称。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【人身难得，中国难生，佛法难遇，信心难生】</span>出自《佛说四十二章经》，经文：“佛言。人离恶道。得为人难。既得为人。去女即男难。既得为男。六根完具难。六根既具。生中国难。既生中国。值佛世难。既值佛世。遇道者难。既得遇道。兴信心难。既兴信心。发菩提心难。既发菩提心。无修无证难。”</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【龟鉴】</span>比喻可供人对照学习的榜样或引以为戒的教训。鉴，镜子。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复王悟尘居士书一 · 印光法师文钞</title>
+<meta name="description" content="接手书，知阁下与妻妾二女全家念佛，信愿行三字，铭诸肺腑。何得又叹年逾半百，膝下犹虚，不孝之罪，永劫莫赎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-463/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复王悟尘居士书一 · 印光法师文钞">
+<meta property="og:description" content="接手书，知阁下与妻妾二女全家念佛，信愿行三字，铭诸肺腑。何得又叹年逾半百，膝下犹虚，不孝之罪，永劫莫赎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-463/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复王悟尘居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知阁下与妻妾二女全家念佛，信愿行三字，铭诸肺腑。何得又叹年逾半百，膝下犹虚，不孝之罪，永劫莫赎。</p><p class="p-trans">收到你的来信，知道你与妻妾、两个女儿，全家念佛。将信愿行三字，时刻铭记在心中。怎会又感叹年过半百，膝下无子，不孝之罪，永劫莫赎呢。</p></div>
+<div class="para-pair"><p class="p-orig">夫子之有无，乃属于命。有妻有妾，非如不娶，以致无后者比。何引为恨，谓为不孝。</p><p class="p-trans">儿子的有无，是属于命。你有妻有妾，不与不娶妻，以致无后的人等同。怎能引以为恨，说是不孝呢？</p></div>
+<div class="para-pair"><p class="p-orig">夫不孝者，不能居仁由义，以辱乎亲之谓也。及有儿女不教训，以致或成庸愚，或成顽鄙。纵有多子，其不孝也更甚。</p><p class="p-trans">不孝，是指不能内心存仁、行事循义，以致使双亲受到侮辱的意思。以及有儿女却不教育训诫，以致使他们或者成为庸愚之人，或者成为顽鄙之人。纵然有很多儿子，这样的不孝也更加厉害。</p></div>
+<div class="para-pair"><p class="p-orig">既有二女，当善教之，俾知妇德妇言妇容（容者，容止。乃指举动庄重而言。近世俗儒不识字义，遂作容貌美好说，可叹）妇红。</p><p class="p-trans">既然已经有了两个女儿，应当好好教导她们，使她们知道妇德、妇言、妇容（容，容止的意思。是指举动庄重而言。近代的俗儒不懂字义，便当作容貌美好来解说，可叹）、妇红。</p></div>
+<div class="para-pair"><p class="p-orig">具此四德，而后再加以知因识果，信愿念佛。则将来出嫁后，必能仪型闺阃，师范女流。相夫教子，俱成贤善。若此女者，岂不为祖宗之光。</p><p class="p-trans">具备这四德，而后再加上懂得因果，信愿念佛。那么将来出嫁后，必定能成为女界的楷模，作为女流的榜样。相夫教子，使他们都能成为贤善的人。像这样的女儿，难道不是祖宗的光荣吗。</p></div>
+<div class="para-pair"><p class="p-orig">今之世道，乱至极点，皆因举世不知教女之所致也。以人之性情及与习染，资于母者最深。幼时若有贤母，长时再有贤妻，其人有不为贤人乎。</p><p class="p-trans">现今的世道，乱到极点，都因举世不知道教导女儿所致。因为人的性情和习气的侵染，与母亲关系最深。小时候若有贤母教导，成人时再有贤妻相助，这样的人，有不成为贤人的吗？</p></div>
+<div class="para-pair"><p class="p-orig">是知教女乃治国平天下之根本法轮也。而世人梦梦，专以㤭养艳妆为事。以故多半妇女，皆相成夫恶，教子以机械变诈。俾有天资者，尽成狂妄。无天资者，悉作顽民。可不哀哉。</p><p class="p-trans">所以应知道教育女儿是治国平天下的根本法轮啊！但世人昏乱，专以娇生惯养女儿，使之装扮艳美为事。所以多半的妇女，都相夫成恶，教育孩子机巧欺诈。使得有天资的孩子，都变成狂妄自大之人；无天资的孩子，都成为顽鄙之人。能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">汝读书人，此义不知，只望生子。近闻有杀父奸母者，其为父也，当是孝乎。当非孝乎。</p><p class="p-trans">你是读书人，这个道理不明白，却只期望生儿子。近来听说有杀父奸母的，作为这种儿子的父亲，应当说是孝呢？还是不孝呢？</p></div>
+<div class="para-pair"><p class="p-orig">即宗祧一事，侄也可继。即无侄，侄女也可继。况念佛人，固宜断娑婆之业种。以期永世不至有污辱祖宗之裔，何幸如之。发什么痛叹。汝既如此，岂是真实念佛之人。</p><p class="p-trans">至于家族嗣续一事，侄子也可以继承。即使没有侄子，侄女也可以继承。何况念佛人，本就应该断除娑婆的业种，以期永远不再有污辱祖宗的后代，还有比这更幸运的事吗？还发什么悲伤叹息？像你这样，哪里是真实念佛的人呢。</p></div>
+<div class="para-pair"><p class="p-orig">妻妾二女，法名俱好。顾名思义，克实修行，即是菩提眷属。现在入圣贤之域，将来生极乐之邦。其为孝也，慈也，大矣。</p><p class="p-trans">妻妾和两个女儿，法名都好。由法名想到它的意义，克实地修行，就是菩提眷属。现在进入圣贤的领域，将来往生极乐世界。这样的孝慈，太大了。</p></div>
+<div class="para-pair"><p class="p-orig">汝何不书姓名，了缘亦不知为谁。安士全书，现已送完。明春邮路若通，当寄文钞，寿康宝鉴，弥陀白话解，嘉言录等。</p><p class="p-trans">你为何不写上姓名，也不知道了缘是谁。《安士全书》，现在已经送完了。明年春天邮路如果通了，必会为你寄《文钞》、《寿康宝鉴》、《弥陀白话解》、《嘉言录》等。</p></div>
+<div class="para-pair"><p class="p-orig">然二三年来，陕西颇不易寄经书。愿阁下极力提倡因果报应，提倡家庭教育。而家庭教育，尤须注重因果报应。并及敦伦尽分，修持净业。俾一方之民，相观而善。其为功德，莫能名焉。</p><p class="p-trans">然而这两三年来，很难向陕西邮寄经书。希望你极力提倡因果报应，提倡家庭教育。而家庭教育，尤其须要注重因果报应，以及敦伦尽分（敦笃伦常，恪尽己分），修持净土法门。使一方的民众，相互观察而行善。这样的功德，无法言说。</p></div>
+<div class="para-pair"><p class="p-orig">光，秦人也。然二三年来，秦地实未寄多书。近虽开单令寄，究不知能到与否。不能到，便失之，殊属可惜。</p><p class="p-trans">我，是陕西人。然而这二三年来，实在没有给陕西寄过多少书。最近虽然开单令寄，但终究不知道能否寄到。如果不能寄到，便遗失了，很是可惜。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【居仁由义】</span>内心存仁，行事循义。内怀仁爱之心，行事遵循义理。《孟子·尽心上》：“居仁由义，大人之事备矣。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

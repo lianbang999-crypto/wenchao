@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复邵慧圆居士书 · 印光法师文钞</title>
+<meta name="description" content="昨接来函，言令乡亲有潘仲青者，在张家口来函欲皈依，其人性质诚朴，学问亦有研究。彼既发心，光只好随缘。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-120/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复邵慧圆居士书 · 印光法师文钞">
+<meta property="og:description" content="昨接来函，言令乡亲有潘仲青者，在张家口来函欲皈依，其人性质诚朴，学问亦有研究。彼既发心，光只好随缘。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-120/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复邵慧圆居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">昨接来函，言令乡亲有潘仲青者，在张家口来函欲皈依，其人性质诚朴，学问亦有研究。彼既发心，光只好随缘。</p><p class="p-trans">昨天接到来信，说邻乡亲友叫潘仲青的人，家住在张家口，来信求皈依佛门。你说他这个人真诚朴实，在学问上也有成就。他既然发心皈依佛门，我也只有随缘为他皈依。</p></div>
+<div class="para-pair"><p class="p-orig">今为彼取法名为慧纯。以一切众生，皆具佛性，即皆有佛慧。但以贪瞋痴等杂糅其中，则佛慧便成众生知见矣。今既知佛慧本具，务于居心动念行事处检点，不令贪瞋痴等知见发生。</p><p class="p-trans">现在为他取法名为慧纯。从佛的角度来看，一切众生都有佛性。即然有佛性，就都具有佛的智慧，但心中存有贪、嗔、痴等恶念，混杂在清净佛性中，致使本具的佛慧便转变成众生的浅近的偏见。现在既然知道佛慧是一切众生本来就具足。就务必在发心，起心动念和一切言行造作的地方加以检点，不让心中贪、嗔、痴的知见产生。</p></div>
+<div class="para-pair"><p class="p-orig">又须以深信愿，持佛名号，戒杀护生，爱惜物命，诸恶莫作，众善奉行，自行化他，同修净业，则其慧当渐渐而纯。若能守此勿失，往生西方，则其纯也更易矣。迨至烦惑净尽，福智圆满，则其慧纯至其极，而圆成佛道矣。</p><p class="p-trans">还必须更进一步以深信切愿，持阿弥陀佛名号，力行戒杀护生，爱惜物命（不但爱护有情，而且以同样之心爱护一切无情之物，及至自然万物），不以善小而不为，不以恶小而为之，自己努力实践，同时也感化和影响周围的人，一起发心修习净土念佛法门。如此这般，则此人的智慧便渐渐精纯。如果能够一直如此实践下去，命终往生到西方极乐世界，心就更容易清净纯善，等到烦恼惑业断除干净，福德智慧圆满，则其智慧便精纯到了极点，便可以圆满成就佛的果位。</p></div>
+<div class="para-pair"><p class="p-orig">世人每每妄谓自己有智慧，不知其为智慧，乃矿中之金，了无受用。必须烹炼，使其矿璞全消，方有利益耳。大意如此，祈为转致。</p><p class="p-trans">世间人常常妄说大话，称自己有大智慧。其实是不知道他的智慧如同金矿中的金子，根本派不上纯金的用途。必须加以冶炼，使矿石中的杂质全部消除，才能得到纯金的大用。佛心如金，众生心如金矿。只有除去了凡夫心中的贪嗔痴等杂念，才能佛心自显，受用无穷。大致是这个意思，希望你能够转述给亲戚中发心学佛的人。</p></div>
+<div class="para-pair"><p class="p-orig">学佛之人，务在躬行。今人多图口头畅快，是说食嘉美，无益枵腹，可哀也。</p><p class="p-trans">学佛之人，最重要的是亲身实践。现在的人大多贪图口头说得玄妙畅快，却不落实在行动中，就如同说食嘉美却不能饱腹一样，真是让人悲哀啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【矿璞】</span>未经炼制的铜铁矿石。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【枵腹】</span>空腹。谓饥饿。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

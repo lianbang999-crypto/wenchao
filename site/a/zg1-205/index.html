@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>法雨寺建如意寮募缘疏（代撰） · 印光法师文钞</title>
+<meta name="description" content="生老病死，人各具有，如来说法，首先陈之。盖欲令众生悟出苦之要道，证本具之佛性。由兹永离幻苦，常享真乐也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-205/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="法雨寺建如意寮募缘疏（代撰） · 印光法师文钞">
+<meta property="og:description" content="生老病死，人各具有，如来说法，首先陈之。盖欲令众生悟出苦之要道，证本具之佛性。由兹永离幻苦，常享真乐也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-205/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">法雨寺建如意寮募缘疏（代撰）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">生老病死，人各具有，如来说法，首先陈之。盖欲令众生悟出苦之要道，证本具之佛性。由兹永离幻苦，常享真乐也。</p><p class="p-trans">生、老、病、死，这是每个人都有的，如来说法，首先宣说这个道理。这是想要令众生觉悟到出离痛苦的要道，证得本自具足的佛性。由此永离虚幻的痛苦，恒常享受真实的法乐啊！</p></div>
+<div class="para-pair"><p class="p-orig">然四苦之中，病死为最，在俗则备有眷属，照应调护，出家则孑然一身，无所依倚。故从上古德，仰体佛慈，为之寮舍，择人奉侍，饮食医药，悉令如意，较之在俗，无多让焉，此如意寮之所由始也。</p><p class="p-trans">然而这四种痛苦当中，病苦、死苦是最苦的。在世俗人，则有很多的眷属，来互相照应，调养护理，而出家人，则孤身一人，无所依靠。所以随从古来大德，仰察体会佛陀的慈悲，为病僧建一个寮舍，选择适当的人，奉侍病人的饮食医药，全都让病人如意，比起在家人的安养照料，也不逊色了，这是如意寮的所以由来。</p></div>
+<div class="para-pair"><p class="p-orig">普陀为天下第一名山，本寺又介乎山之三大丛林，故十方衲僧，往来不绝，久居不去者，恒数百人。惟如意寮狭隘褊窄，兼之常住产业微薄，既不足以适病者之身心，又无力以供病者之药饵，寮名如意，其义奚存。</p><p class="p-trans">普陀山是天下的第一名山，本寺又是普陀山的三大丛林，所以十方的出家人，往来不绝，常住不走的，有几百人。惟有如意寮狭隘褊窄，加上常住的产业微薄，既不能让病人身心舒泰，又没有力量来供给病人的药品饮食，寮舍名称为如意，这个如意的意义哪里还存在呢？</p></div>
+<div class="para-pair"><p class="p-orig">衲接住之初，即以是为急务，拟欲另建精舍七楹，中间前供如来圣像，后供亡僧牌位，使病者礼诵有地，观感易兴。两边隔作十有二间，除香灯寮外，皆为养病之所。</p><p class="p-trans">我接任住持之初，就将这件事当作急务，打算另外建立七间精舍，中间前面供奉如来圣像，后面供亡僧牌位，使病人时时观察人命无常而能保持信愿。两边隔作十二间房，除香灯寮之外，都作养病的处所。</p></div>
+<div class="para-pair"><p class="p-orig">少则人各一寮，多则二人共之，彼此相隔，庶无传染之患，身心适悦，易获勿药之征。愈则任彼行藏，没则相宜殡葬。使来者生有依止，死有归宿。更置田百亩，则以后之棺龛药饵，置办有资，勒碑一通，俾将来之住持职司，废替无敢。</p><p class="p-trans">人少就一人一个寮房，人多就二人共一个寮房，这样大家住得分散，就没传染疾病的隐患。身心适悦，容易获得不药而愈的征兆。病好了，则随任他离开或常住。死亡了，则宜给予殡葬。使前来的僧人，活着有所依止，死了有个归宿。更置办田地一百亩，那么以后棺龛的后事开销，病人的医药饮食，就有财力置办。刻立一块石碑，使得将来的住持接任这个职务，不敢废弃。</p></div>
+<div class="para-pair"><p class="p-orig">恳祈诸大护法，恺分鹤俸，喜舍蚨囊，俾此举速得圆成，庶福报永无央既。将见佛天云护，吉庆骈臻，五福萃于厥躬，余庆覃及后裔矣。</p><p class="p-trans">恳祈诸位大护法，诚心分出自己的官俸，欢喜施舍袋中钱财，使得这件事情，快速得以圆满成就，而福报永无边际。将见佛天如祥云庇护，吉祥福庆一起来到，五福集聚于自身，更有无尽的福泽延及后世子孙啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【孑然一身】</span>孤零零一个人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【无多让焉】</span>无多：没有多少。让：逊色；不及。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【观感】</span>1.看到事物以后所产生的印象和感想。语出《易·咸》：“观其所感，而天地万物之情可见矣。2.观看而引起感动。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【勿药】</span>1.不服药。《易·无妄》：“无妄之疾，勿药有喜。”孔颖达疏：“疾当自损，勿须药疗而有喜也。”2.指病愈。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【行藏】</span>指出处或行止。语本《论语·述而》：“用之则行，舍之则藏。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【恺】</span>诚恳。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【鹤俸】</span>指鹤料。鹤料：唐代称幕府的官俸。后亦泛指官俸。清袁枚《随园诗话补遗》卷一：“春衣典尽还赊酒，鹤俸分来又买花。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【蚨】</span>蚨钱：指钱币。宋杨备《梦中作》诗：“月俸蚨钱数甚微，不知从宦几时归。”</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【萃】</span>聚集；汇集。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【覃】</span>蔓延；延及。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

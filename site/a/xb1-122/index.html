@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复战德克居士书（二）（民国二十六年） · 印光法师文钞</title>
+<meta name="description" content="十九人皈依法名，另纸书之。所汇之款，无论香敬，捐印，通作捐印歧路指归之费。现已排完，尚有末后所寄，须待修过，方打纸型。先印三万册，以送遐迩之信心人。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-122/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复战德克居士书（二）（民国二十六年） · 印光法师文钞">
+<meta property="og:description" content="十九人皈依法名，另纸书之。所汇之款，无论香敬，捐印，通作捐印歧路指归之费。现已排完，尚有末后所寄，须待修过，方打纸型。先印三万册，以送遐迩之信心人。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-122/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">复战德克居士书（二）（民国二十六年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">十九人皈依法名，另纸书之。所汇之款，无论香敬，捐印，通作捐印歧路指归之费。现已排完，尚有末后所寄，须待修过，方打纸型。先印三万册，以送遐迩之信心人。</p><p class="p-trans">十九个人皈依的法名，写在另外的纸上。所汇的钱款，无论是供养我的，还是捐助印书的，全都作为捐印《歧路指归》的费用。现在这本书已经排印完毕，还有末后所寄的稿子，必须等待修定以后，才能打出纸型。先印三万册，赠送给远近有信心的人。</p></div>
+<div class="para-pair"><p class="p-orig">拟尽此次之二百三十余圆，为汝处寄二百三十余圆之书。彼捐印者，各给若干，余随机分送。</p><p class="p-trans">打算用这次全部的二百三十多圆，给你那里寄二百三十多圆的书。那些捐印的人，每人赠给若干本，其余的就随缘分送。</p></div>
+<div class="para-pair"><p class="p-orig">扶乩一事，多是灵鬼假冒仙佛之名。若本扶乩人有学问，则长篇大文，说世间道理，尚能通泰。若说佛法，则非彼所知。</p><p class="p-trans">扶乩这件事，大多是灵鬼假冒神仙、佛菩萨的名号。如果这个扶乩的人有学问，那么这个灵鬼就长篇大文，说些世间的道理，还能比较透彻清楚。如果说佛法，就不是他们所能知道的了。</p></div>
+<div class="para-pair"><p class="p-orig">或以炼丹运气为佛法，或剽窃金刚经之义，而囫囵说之，无能为人指出了生死路。又或妄造谣言，以七颠八倒之乱话，令无知之人，谓为秘诀，岂不大可哀哉。</p><p class="p-trans">或者将炼丹、运气当作佛法，或者剽窃《金刚经》的义理，而囫囵笼统地说，不能为人指出了生死的道路。又或者妄造谣言，用七颠八倒的乱话，令无知的人，认为是秘诀，岂不是太让人悲哀了吗？</p></div>
+<div class="para-pair"><p class="p-orig">扶乩一事，于作善举劝捐，则有益。于问修持说佛法，则有损。以灵鬼多不洞佛法，则瞎造谣言，坏乱佛法，疑误众生。</p><p class="p-trans">扶乩这件事，用于作善事、劝化募捐，还有些利益。用于询问修持方法和宣说佛法，就有损害了。因为灵鬼大多不通晓佛法，所以就会瞎造谣言，从而坏乱佛法，疑误众生。</p></div>
+<div class="para-pair"><p class="p-orig">奉化孙锵，字玉仙（年在八十上下），其人迷于扶乩。七年前，言玉帝逊位，关帝为新玉帝，已经开科。状元，乃金华朱某。榜眼，乃无锡杨章甫。探花，乃彭泽许止净。</p><p class="p-trans">浙江奉化的孙锵，字玉仙（年纪在八十岁上下），这个人痴迷于扶乩。七年前，说玉皇大帝让位，关帝成为新的玉皇大帝，已经开考科举。状元，是浙江金华的朱某。榜眼，是江苏无锡的杨章甫。探花，是江西彭泽的许止净。</p></div>
+<div class="para-pair"><p class="p-orig">致书于朱，朱喜极，以八十高年，特来上海开会。杨亦极信扶乩，不知如何答复。致书于许止净，许绝不回一字。屡寄乩语，总不回信。</p><p class="p-trans">孙写信给朱某，朱某极其欢喜，以八十岁的高龄，特地到上海来开会。杨章甫也非常相信扶乩，不知道是如何答复的。孙写信给许止净，许止净绝不回一个字。他多次将扶乩的乩语寄给许，许也总是不回信。</p></div>
+<div class="para-pair"><p class="p-orig">后无法可设，又致书云，我屡次寄书，总不回信，想是听印光法师话，不信扶乩。我曾问过吕祖，吕祖云，是海底铁耳，君何信彼之话乎。许亦不回信。海底铁者，永沉苦海，无出头之日也。孙乃进士，亦系好善之人，其知见之下，盖有不可以理喻者。</p><p class="p-trans">后来孙锵没有办法了，又写信给许说：我多次寄信，你总是不回信，想来是听了印光法师的话，不相信扶乩。我曾经问过吕洞宾祖师，吕祖说：他（印祖）是海底的一块铁，你为什么相信他（印祖）的话呢？许止净也不回信。海底铁的意思是永沉苦海，没有出头之日。孙玉仙是一名进士，也是一个好行善事的人，但是他知见的低下，简直到了不可理喻的地步。</p></div>
+<div class="para-pair"><p class="p-orig">来信，何必特用黄纸，但不宜用雪白纸，以免耀眼即已。今将皈依及捐款二单，作信纸，书于背，寄回。以期歧路指归寄来时，好按款，按彼之意，而为分送。</p><p class="p-trans">你的来信，何必特意用黄纸呢？只要不用雪白的纸，以免耀眼就可以了。现在将皈依以及捐款的两张单子，当作信纸，写在背面，寄给你。以期在《歧路指归》寄来的时候，你好按照钱款，按照他们的心意，来加以分送。</p></div>
+<div class="para-pair"><p class="p-orig">现在时局危险，当令一切人，同念佛，及观音圣号，以作预防。果肯志诚常念，必蒙其加被。纵大劫难逃，大家同归于尽，念佛之人，当生西方。或信愿未至真切，亦多生善道。切不可谓不能免劫，便是白念。</p><p class="p-trans">现在时局危险，应当令一切人，共同念佛，以及念观音圣号，作为灾难的预防。果真肯志诚常念，必定承蒙佛菩萨的加被。纵然大劫难逃，大家同归于尽，念佛的人，当会往生西方。就算是有些人的信愿还没有达到真切，也大多能生到善道。千万不可以认为如果不能够免除劫难，就是白念了。</p></div>
+<div class="para-pair"><p class="p-orig">须知今生所受之苦乐，乃前生所作善恶之因所感召。今生所作之因，又为来生所受善恶果报之因。以念佛为因，则生西方，以杀盗淫为因，则堕三途，此必定之理事也。</p><p class="p-trans">要知道今生所受的苦乐，都是前生所作的善恶之因所感召的。今生所作的因，又成为来生所受善恶果报的因。以念佛为因，就生到西方，以杀盗淫为因，就堕落三途恶道，这是一定的道理和事实。</p></div>
+<div class="para-pair"><p class="p-orig">物犹如此，另改章程，已付排，作一卷。十四鉴，相续而排，则省纸多矣。改作大本，三号字，每面十二行，每行三十二字，当印三万。待印出，亦当寄若干包来。</p><p class="p-trans">《物犹如此》，重新改了版面，已经交去排印了，合成一卷。全部的十四鉴，相续排印，这样就能省下很多纸。而且改成了大本，用三号字，每页十二行，每行三十二字，当印三万册。等到书印出来后，也会给你寄去若干包。</p></div>
+<div class="para-pair"><p class="p-orig">此系福建永春一弟子，在新加坡经商，汇洋一千六百圆，拟尽此款印，不足，则稍贴若干。此书不言戒杀，实戒杀之要书。</p><p class="p-trans">这次印刷，是福建永春的一位弟子，在新加坡经商，汇来了一千六百洋圆，这笔款项打算全部用来印书，如果不够，就稍微贴补一些。这本书并不直接说戒杀，但实在是戒杀的重要书籍。</p></div>
+<div class="para-pair"><p class="p-orig">有人心者，见物类之孝友，忠义，贞烈，慈爱等，必为感动，各尽己之天职，以敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，以期不为物类所藐视也。</p><p class="p-trans">有人心的人，见到动物的孝友、忠义、贞烈、慈爱等，必定会被感动，各尽自己的天职，来敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，以期不被动物所藐视啊！</p></div>
+<div class="para-pair"><p class="p-orig">物犹如此，我何让彼，勉力敦行，庶无愧耻。徐白舫，于佛法深理，邪正不分。此书但记物之懿德懿行，于世大有利益。光作一序，若肯详察，则不期然而学圣贤佛祖矣。</p><p class="p-trans">动物尚且能如此，我们人类怎么可以让它们超过呢？要勉励实行，才能没有惭愧、羞耻。书的作者徐白舫，虽然对于佛法的高深道理，邪正不分，但这本书只是记载动物的美德懿行，所以对于世间人大有利益。我写了一个序，如果肯仔细体察，那么就会不期然而然地学习圣贤、佛陀、祖师了。</p></div>
+<div class="para-pair"><p class="p-orig">●（其二）初七之信，昨十六日午后方接到，以战地交通断绝所致。十八人求皈依者，法名另纸书之，祈为分送。必须令彼等各各敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，吃素念佛，求生西方。切不可求人天福报。</p><p class="p-trans">●（第二封信）初七的信，在昨天十六号午后才收到，这是因为战地交通断绝所导致的。求皈依的十八个人，法名用另外的纸写好，请你分送给他们。必须令他们各各敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，吃素念佛，求生西方。千万不可求人天福报。</p></div>
+<div class="para-pair"><p class="p-orig">凡夫有福，必造杀业，既造杀业，难逃杀报。况有福之人，不止造一杀业。然则求福之人，乃为自他求祸也。学佛之人，不可不知此义。</p><p class="p-trans">凡夫有福报，必定造作杀业，既然造作杀业，一定难逃被杀的果报。更何况有福报的人，不止是仅仅造作杀业。所以求世间福报的人，其实是为自他求来灾祸啊！学佛的人，不可不知这个道理。</p></div>
+<div class="para-pair"><p class="p-orig">德明，邀大家念观音，人各十万，放生一百万，以祈消灭杀劫，此亦莫大之功德也。然观音当终身常念，凡入会者，各各戒杀吃素，方是彻底办法。</p><p class="p-trans">李德明（炳南），邀集大家念观音圣号，每个人各念十万圣号，放一百万的生命，以祈求消灭杀劫，这也是莫大的功德。然而，观音圣号应当终身常念，凡是加入念佛会的人，个个都要戒杀吃素，这才是彻底消灭杀劫的办法。</p></div>
+<div class="para-pair"><p class="p-orig">否则，今日出钱买些生放，日日买生自杀，或买于杀而卖者之家，仍是一暴百寒，何能消自他之宿现杀业乎。放生，乃提倡戒杀吃素之法耳。若不注重于戒杀吃素，则所放者有限，所杀者无穷矣。</p><p class="p-trans">否则，今天出钱买些动物来放，每天却买些动物来自己杀，或者向杀生卖肉的商贩去买，仍然是一暴百寒，如何能够消除自己与他人的宿世现生的杀业呢？放生，是提倡戒杀吃素的方法而已。如果不注重在戒杀吃素，那么所放的众生有限，而所杀的众生无穷啊！</p></div>
+<div class="para-pair"><p class="p-orig">光于六月二十八，函知上海新，申报馆，令登普劝全球同胞同念观音圣号广告，各十天。其稿附寄，以战事阻止，报不知看过否。</p><p class="p-trans">我在农历六月二十八，写信告知上海的《上海新报》、《申报》报馆，让他们在报上刊登“普劝全球同胞同念观音圣号”的广告，各登十天。这篇文稿也附寄过去，因为发生战事而被阻止，那些报纸不知看到了没有。</p></div>
+<div class="para-pair"><p class="p-orig">又令漕河泾印七寸见方单张五十万，发给各省佛学机关，战事起，亦难即办。此文不独于战时可用，一切时皆可用也。</p><p class="p-trans">另外，还让上海漕河泾镇印刷所印七寸大小的传单五十万张，发给各省的佛学机关，但战事一起，也很难马上办到了。这篇告文不止在战争的时期可以用，在任何时候都可以用。</p></div>
+<div class="para-pair"><p class="p-orig">汝言发挥战事之起源，与消弭之要道。周安士云，人人知因果，大治之道也。人人不知因果，大乱之道也。盖知因果，则作事循天理，出言顺人心，从何而有战争之事。</p><p class="p-trans">你说要阐发战争产生的根源，与消弭战争的关键方法。周安士说：使每个人都知道因果的道理，这是天下得以大治的方法；使每个人都不知道因果的道理，这是导致天下大乱的方法。因为知道因果，那么作事就会遵循天理道义，说话就会随顺人心，哪里会有战争的事情发生呢。</p></div>
+<div class="para-pair"><p class="p-orig">即轻贱本国各种货物，贵重舶来各种货物，把全国的金钱，通通输送外国，此乃不循天理，不顺人心之大者。使人以我之金钱，制军火以打我。是知好用外货者，皆不能不负召人打我之罪。</p><p class="p-trans">轻贱自己国家的各种货物，看重外国进口的各种货物，把全国的金钱，全都输送到外国，这就是最不遵循天道公理、不随顺人心的事。使得外国人用我们的金钱，制造军火来攻打我们。由此可知喜欢使用外国货的人，都不能不背负召引外国人攻打我国的罪过。</p></div>
+<div class="para-pair"><p class="p-orig">今后痛改前非，学甘地之不用外货，则金钱少输出，而国富强矣。此话似乎迂阔，实为极要。</p><p class="p-trans">今后应该痛改前非，学习印度总理甘地，不用外国货，那么国家的金钱就会减少输出，而国富民强了。这些话看似迂腐，但实际上却极为重要。</p></div>
+<div class="para-pair"><p class="p-orig">须知知因果者，居心行事，唯恐或有过愆，必能敦行孝弟，忠信，礼义，廉耻之八德，研穷格致，诚正，修齐，治平之八事，虽虫蚁也不敢杀。</p><p class="p-trans">要知道，明白因果的人，存心行事，唯恐或有过失，必定能够切实履行孝悌、忠信、礼义、廉耻这八德，深入探求格物、致知、诚意、正心、修身、齐家、治国、平天下这八事，即使是虫蚁也不敢杀。</p></div>
+<div class="para-pair"><p class="p-orig">不知因果者，自杀其父母，尚自夸其功，而极力提倡实行兽化，拟率天下之人，与禽兽了无有异，其心方安乐而畅快矣。</p><p class="p-trans">不知道因果的人，自己杀害自己的父母，还要夸耀自己的功劳，而极力提倡实行兽化，打算把天下的人，引领到与禽兽没有差异的地步，他的心方才安乐畅快啊！</p></div>
+<div class="para-pair"><p class="p-orig">因果者，圣人治天下，佛度众生之大权也。若舍因果，则圣人佛菩萨，亦无法可设矣。</p><p class="p-trans">因果教育，是圣人治理天下，佛陀救度众生的关键。如果舍弃了因果教育，那么圣人、佛、菩萨，也没有办法可想了。</p></div>
+<div class="para-pair"><p class="p-orig">今乱至已极，欲图挽救，务必注重家庭教育，因果报应。于儿女初开知识，始学说话时，即以因果报应等事理，循循善诱而熏陶之。</p><p class="p-trans">现今世道已经乱到极点，想要加以挽救，务必要注重家庭教育，因果报应。在儿女刚刚开始学知识，学说话的时候，就将因果报应等等事理，循循善诱地加以熏陶。</p></div>
+<div class="para-pair"><p class="p-orig">俾其深信因果报应，毫发无爽，此即致治弭灾之根本也。切勿以为宽泛而忽之，则幸甚。</p><p class="p-trans">使得他们深信因果报应，丝毫不会有错，这就是天下大治、消弭战争的根本啊！千万不要认为过于遥远和不着边际而加以忽视，那么就非常庆幸了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【歧路指归】</span>是山东战德克居士在抗战期间所写。当时，反动会道门在山东正疯狂地在活动，使很多人误入歧途受其毒害。战居士悲天悯人，破邪立正，用问答体裁，通俗语言，指出一贯道等所施行的邪法，会引人进入邪魔外道，终身被其陷害，甚至倾家荡产，祸及子孙，并劝导归信佛教正法。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【遐迩】</span>远近。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【开科】</span>原指科举考试时设立各种科目分科取士。后即指科举制的开考。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【物犹如此】</span>印祖序文：“清嘉道间，江西广丰，徐太史谦，字白舫，隐居著书，以期觉世牖民。志切戒杀，博览群书，凡物类之懿德懿行，辑为一书。分孝友，忠义，贞烈，慈爱，恤孤，眷旧，践信，守廉，翼善，救难，酬德，雪冤，知几，通慧，十四鉴，而名其书为物犹如此。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【十四鉴】</span>《物犹如此》分为孝友、通慧共十四章。鉴：镜子。多为青铜制成。有的刻有铭文，用以自戒。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【徐白舫】</span>名谦，别署鹤子，清庶吉土，性耽善籍，生平刊以行世者约六十余种。原书序文：“佛氏有言，蠢动含灵，皆有佛性。编内自〈孝友〉迄〈通慧〉凡十四鉴，以物为鉴，较以古为鉴尤深切。盖物得气之偏，尚知止其所止，可以人而不如乎？。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【其稿附寄，以战事阻止，报不知看过否】</span>背景：1937年7月7日，日军向中国苑平县城驻军发动进攻，发动了蓄谋已久的全面侵华战争，中华民族到了生死存亡的关头。印光大师在苏州报国寺关中以自己的方式来应对这场劫难。---8月4日，大师致函上海新报和申报馆，令登《普劝全球同胞同念观音圣号》广告，各十天。
+---8月13日，日军大举进攻上海，中国军队奋起抵抗。淞沪抗战爆发。登载大师《普劝全球同胞同念观音圣号启》的报纸虽印出，而发送难以遍布。大师此前已经请漕河泾习勤所印七寸见方单张五十万，邮寄各省佛教机关，因为战事爆发而停印。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【天理】</span>1.天道，自然法则。2.宋代理学家把封建伦理看作永恒的客观道德法则，称“天理”。3.泛指道义。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【舶来】</span>1.指外洋船舶载货前来。2.泛指从国外运来；外来。舶：意思是“航海大船”，“舶来品”本意指通过航船从国外进口来的物品。引申为国外的东西，既从外国传入本国的意识、物品、语言等等。可以是一种文化，也可以是本国没有，从外国引进来的东西或技术。比如“沙发”、“浪漫”、“巧克力”等词语。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【迂阔】</span>不切合实际。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

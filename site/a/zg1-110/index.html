@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周群铮居士书五 · 印光法师文钞</title>
+<meta name="description" content="天下事皆有因缘。其事之成与否，皆其因缘所使。虽有令成令坏之人，其实际之权力，乃在我之前因，而不在彼之现缘也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-110/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周群铮居士书五 · 印光法师文钞">
+<meta property="og:description" content="天下事皆有因缘。其事之成与否，皆其因缘所使。虽有令成令坏之人，其实际之权力，乃在我之前因，而不在彼之现缘也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-110/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复周群铮居士书五</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">天下事皆有因缘。其事之成与否，皆其因缘所使。虽有令成令坏之人，其实际之权力，乃在我之前因，而不在彼之现缘也。</p><p class="p-trans">天下的事都有因缘。事情成功与否，都是由因缘决定的。虽然有促使事情成功或失败的人，其实真正的权力，还是在于自己所种的前因，而不在于现前的缘分。</p></div>
+<div class="para-pair"><p class="p-orig">明乎此，则乐天知命，不怨不尤。素位而行，无入而不自得矣。汝独不知身为人子，义当从亲之命。又欲为人徒，犹当从师之命。</p><p class="p-trans">明白了这个道理，就会乐天知命，不怨天不尤人，素位而行（根据自己的本位而行事，安守本分，尽职尽责），无论做什么事，遇到什么样的境况，都能安然自得，有所收获。你偏偏不知道身为人子，理应顺从母亲的意愿；做别人的徒弟，也应当听从师父的教诲。</p></div>
+<div class="para-pair"><p class="p-orig">然父母为子谋者，或有不当，以恩爱重而或有偏处。师则既能视为知识，断不至所谋过于失当。居尘学道，即俗修真。乃达人名士，及愚夫愚妇，皆所能为。</p><p class="p-trans">然而父母为子女所作的计划和考虑，或许会有不恰当的地方，这是因为父母对子女十分疼爱，使得他们的考虑或许有偏颇。至于师父，既然能够被看作是有知识见地的人，那么他考虑事情绝对不至于十分不妥当。在凡尘俗世中学佛，即俗修真（在世俗烦恼中修炼自己的真心），是贤达的人以及愚夫愚妇都能做的事。</p></div>
+<div class="para-pair"><p class="p-orig">勉力修持，以在家种种系累，当作当头棒喝。长时生此厌离之心，庶长时长其欣乐之志。即病为药，即塞成通。上不失高堂之欢，下不失私室之依。而且令一切人同因见闻，增长净信。何乐如之。</p><p class="p-trans">平时努力修持，把在家的种种束缚牵绊当作是当头棒喝，常常怀有厌离娑婆尘世的心念，或许也就会常常增进欣求极乐的志向。将疾病当作良药，把阻塞看成是通畅。在上能让父母享受天伦之乐，在下能让家人有所依靠，而且能让周围的人都因为你而听闻到净土法门，从而增长了求生净土的信心。还有什么比这个更快乐的呢。</p></div>
+<div class="para-pair"><p class="p-orig">但祈上遵母命，并顺光心。随分随缘，自利利人。菩萨舍头目髓脑，以救众生饥饿。在家修行，于亲于汝，皆有大益。何得妄生违拒。如必曰决欲依我心行，光岂能令其不许如是。但祈将师徒之假名字取消，一任汝拜甚么高僧，光概不过问。他日相见，一同路人，不得犹执师弟之礼。</p><p class="p-trans">祈愿你遵从母亲的命令，也随顺我的心意。随着自己的本分和因缘，来利益自己和他人。菩萨为了救济饥饿的众生，头目髓脑都会施舍。你在家修行，对于亲人和自己，都有大的利益，怎么能错妄地违背抗拒呢。你如果说，决定要依着你自己的心意去做，我又怎么能不准许，只祈望你将你我师徒的假名分取消，任由你去拜什么高僧，我一概不会过问。以后再相见，就像陌生人一样，不可以继续行师父弟子的礼节。</p></div>
+<div class="para-pair"><p class="p-orig">若不如是，且请依我所说。代光劝化瓯江士女，同入莲池海会。校与汝强欲为僧，致高堂失其欢心，兄弟妻室各怀忧念，而瓯人妄生诽谤佛法之心与业，其得失实不啻天地悬隔。</p><p class="p-trans">如果不想这样，且请你依照我所说的来做。代我劝化温州的士人女子，共同进入莲池海会。比起你硬要出家为僧，使得母亲心里不快乐，兄弟妻子各怀忧念，还让同乡的人错妄地生出诽谤佛法的心，进而造下口业，两者之间的得失差别实在不亚于天地悬隔。</p></div>
+<div class="para-pair"><p class="p-orig">汝试详审思之。光其为汝耶，害汝耶。光言尽于此矣，过此则一字不肯虚写，任汝自便而已。</p><p class="p-trans">你认真地审查和思考一下，我是为你好呢，还是害你呢。我的话到此为止了，从此以后，不会再空写一个字，任由你自己选择吧。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【乐天知命】</span>旧谓乐从天道的安排，安守命运的分限。《易·系辞上》：“乐天知命，故不忧。”孔颖达疏：“顺天道之常数，知性命之始终，任自然之理，故不忧也。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【瓯】</span>古代地区名。在今浙江省温州一带，后为温州的别称。《山海经·海内南经》：“瓯居海中。”郭璞注：“今临海永宁县，即东瓯，在岐海中也。”袁珂校注：“即今浙江省旧温州府地。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

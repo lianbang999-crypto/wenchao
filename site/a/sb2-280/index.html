@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>南通金沙区佛教居士林成立宣言 · 印光法师文钞</title>
+<meta name="description" content="因果者，世出世间圣人，平治天下，度脱众生之大权也。儒教圣人注重因果，见于经传者，多难胜数。孔子之赞周易也，最初即曰，积善之家，必有余庆，积不善之家，必有余殃。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-280/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="南通金沙区佛教居士林成立宣言 · 印光法师文钞">
+<meta property="og:description" content="因果者，世出世间圣人，平治天下，度脱众生之大权也。儒教圣人注重因果，见于经传者，多难胜数。孔子之赞周易也，最初即曰，积善之家，必有余庆，积不善之家，必有余殃。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-280/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">南通金沙区佛教居士林成立宣言</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">因果者，世出世间圣人，平治天下，度脱众生之大权也。儒教圣人注重因果，见于经传者，多难胜数。孔子之赞周易也，最初即曰，积善之家，必有余庆，积不善之家，必有余殃。</p><p class="p-trans">因果，是世间、出世间圣人，治理天下，度脱众生的大权巧法。儒教圣人注重因果，可在经典以及注书中看到的，多得难以胜数。孔子赞叹《周易》，一开始就说：“积善之家，必有余庆，积不善之家，必有余殃。”</p></div>
+<div class="para-pair"><p class="p-orig">须知既有余庆余殃以及子孙，则本人之庆殃为更大矣。然本人庆殃，固不专在现生论，必并来生后世而论，方得圆满周到。即此语以察圣人之心，其三世因果，六道轮回之事理，已彰明显著于言外矣。</p><p class="p-trans">要知道既然有余庆、余殃留给子孙后代，那么本人的本庆、本殃就更大了。然而本人的本庆、本殃，原本就不能专在现生来论说，必定要一并连着来生后世来论说，方才得以圆满周到。就这些话语来体察圣人的心，其中三世因果，六道轮回的事理，已经彰明显著在言语之外了。</p></div>
+<div class="para-pair"><p class="p-orig">箕子之陈洪范也，末后则曰，向用五福，威用六极。此五福六极之说，深含三世因果之义。乃圣王教民希向五福，畏惧六极，修德立命，趋吉避凶之德政。世儒不察，归之王政之赏罚。不但深诬王政，亦且事理矛盾。</p><p class="p-trans">箕子向周武王陈述《洪范》，最后说，“修德得五种幸福（来引导人行善），悖逆道德得六种困苦（来警戒人为恶）。”这五福六极的说法，深含三世因果的义理。是古代圣王教导人民希求向往五种幸福，畏惧害怕六种灾厄，修德立命，趋吉避凶的德政。世间儒者不察，都归之于君王政府的赏赐处罚。不但深深诬陷君王政府，而且事理矛盾。</p></div>
+<div class="para-pair"><p class="p-orig">宋儒窃取佛经之奥义，以发挥儒教。恐人各学佛，以致儒门冷落，遂以如来所说治己治人治国治天下，普令众生超凡入圣了生脱死之根本法，一刀砍断。令一切人无希向畏惧。</p><p class="p-trans">宋儒窃取佛经的玄奥深义，来发挥儒教。唯恐人们各来学佛，以致儒门冷落，于是将如来所说，修养自己、教化他人、治理国家、统治天下，普令众生超凡入圣、了生脱死的根本方法，一刀砍断。令一切人，没有希求向往（行善）、畏惧害怕（作恶之心）。</p></div>
+<div class="para-pair"><p class="p-orig">谓因果报应，乃佛设此以骗愚夫愚妇，奉彼教耳，实无其事。人死之后，形既朽灭，神亦飘散。纵有锉烧舂磨，将何所施。神已散矣，令谁托生。</p><p class="p-trans">说因果报应，是佛教设立这些来欺骗愚夫愚妇，信奉他们的教法罢了，实际上没有这回事。人死之后，身形既已腐朽灭绝，神识也飘散无有。纵然有地狱的锉烧舂磨，将如何来施用。神识已经飘散了，令谁来托生。</p></div>
+<div class="para-pair"><p class="p-orig">由此之故，儒者于因果轮回，皆不敢出诸口。徒赖正心诚意，以维持世道人心。既无因果轮回，一死即了。则正心诚意有何益。不正心诚意有何损。从兹善无以劝，恶无以惩。以驯至于提倡贪欲，奖励恶行，不以为耻，反以为荣者。皆以破斥因果轮回之语以酿成之。而人道将几乎熄矣。</p><p class="p-trans">由于这个缘故，儒者对于因果轮回，都不敢说出口。徒然依赖正心诚意，来维持世道人心。既然没有因果轮回，一死就全都了断了。那么正心诚意又有什么利益。不正心诚意又有什么损害。从此，无法劝人行善，无法戒人作恶。以至逐渐发展成提倡贪欲，奖励恶行，不以为耻，反以为荣的情形。这是因为破斥因果轮回的话语所酿成的。而为人之道将要几乎熄灭了。</p></div>
+<div class="para-pair"><p class="p-orig">于是有心世道之人，群起而挽救之。居士林，净业社等，各处建立。提倡因果轮回，与超出因果轮回之净土法门，必使因地而倒，仍复因地而起。金沙居士林，已经成立，当于居士之名实事业，一肩担荷。则世返唐虞，人希圣贤，当不久可亲见矣。</p><p class="p-trans">于是有心世道的人，群起而来挽救。居士林，净业社等组织，在各地建立起来。提倡因果轮回，与超出因果轮回的净土法门，必定要使因地而倒，仍旧因地而起。金沙居士林，已经成立，应当对于居士的名称、实质、事业，一肩担荷。那么世道返回唐虞盛世，人人仰慕效法圣贤，应当不久就可以亲见了。</p></div>
+<div class="para-pair"><p class="p-orig">所言居士之名者，居家修道之士也。实者即敦伦尽分，闲邪存诚，诸恶莫作，众善奉行，修行世善，以立其基。真为生死，发菩提心，信愿念佛，求生西方，普愿自他，同了生死。能如是者，方可不负居士之名。</p><p class="p-trans">所说的居士的名称，就是居家修道之士。居士的实质，就是敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行，修行世间善法，来建立基础。真为生死，发菩提心，信愿念佛，求生西方，普愿自他，同了生死。能够如此，才能不辜负居士之名。</p></div>
+<div class="para-pair"><p class="p-orig">事业者，即以身率物，宏扬佛化，唯以自利利他，己立立人为志事。于虚名浮利，略不萦心。于伦理清规，决不违犯。俾凡见者闻者，悉生景仰之心。</p><p class="p-trans">居士的事业，就是以身作则，宏扬佛化，唯以自利利他，自己成就，成就他人作为志向事业。对于虚名浮利，丝毫不挂于心。对于伦理清规，绝不违犯。使得凡是见到听到的人，全都生起景仰之心。</p></div>
+<div class="para-pair"><p class="p-orig">所谓以言教者讼，以身教者从。世出世间，无一事不以身为本者。本若不立，纵有作为，悉是场面上事。既非真修，必招外侮。反令邪见人据此以谤佛法。自他二利既失，生死大事何了。</p><p class="p-trans">所谓以言语教导，他人就会互相争论而无所适从；以自身行为教导，他人就会跟从。世间、出世间，没有一件事不是以自身行为为根本的。根本如果不建立，纵然有所作为，全都是场面上的事。既然不是真实修持，必定招来外面的欺侮。反而令邪见人依据这些来诽谤佛法。自利、利他两种利益既然失去，生死大事如何能了。</p></div>
+<div class="para-pair"><p class="p-orig">若是入林林友，各发金刚坚固之心，誓行自他兼利之事。尽伦学儒，尽性学佛。追踪过去先觉，不肯稍涉退屈。是名真佛弟子，是名真大丈夫。则居士之名实事业，可以光辉即世，垂裕后昆矣。（甲戌孟冬）</p><p class="p-trans">如果加入居士林的林友，各各发起金刚坚固之心，誓愿行自他兼利之事。尽伦学儒，尽性学佛。追随过去的先觉，不肯稍生退缩自屈。这样就名为真正的佛弟子，这样就名为真正的大丈夫。那么居士的名称、实质、事业，可以光辉当世，利益子孙后代了。（甲戌&lt;1934年&gt;孟冬&lt;十月&gt;）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【经传】</span>儒家典籍经与传的统称。传是阐释经文的著作。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【立命】</span>修身养性以奉天命。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【垂裕后昆】</span>裕：富足。后昆：子孙，后代，后嗣。为后世子孙留下功业或财产。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

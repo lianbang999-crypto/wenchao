@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普陀海岸道头创建水泥牌坊重修回澜亭碑记（代了余师作） · 印光法师文钞</title>
+<meta name="description" content="观音大士，誓愿洪深，慈悲广大。于十方无尽世界，普现色身，随机说法。诸大乘经，悉载其事。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-116/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普陀海岸道头创建水泥牌坊重修回澜亭碑记（代了余师作） · 印光法师文钞">
+<meta property="og:description" content="观音大士，誓愿洪深，慈悲广大。于十方无尽世界，普现色身，随机说法。诸大乘经，悉载其事。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-116/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">普陀海岸道头创建水泥牌坊重修回澜亭碑记（代了余师作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观音大士，誓愿洪深，慈悲广大。于十方无尽世界，普现色身，随机说法。诸大乘经，悉载其事。</p><p class="p-trans">观音大士，誓愿洪深，慈悲广大。在十方无尽的世界中，普遍示现种种色身，随顺众生根机说法。各大乘经当中，都记载着这些事迹。</p></div>
+<div class="para-pair"><p class="p-orig">然即就此方应凡夫机，所示之迹，亦复多难胜数，妙不可测。况普应六道，及界外三乘之大机乎。若非圆证法身，何能有此大用。</p><p class="p-trans">而仅仅就此方（娑婆世界）来说，观音大士顺应凡夫根机所示现的形迹，尚且多得难以数清，微妙不可测度。更何况是普遍响应六道众生，以及三界外的声闻、缘觉、种种位次的菩萨这三乘的大根机圣者的事迹呢？如果不是已经圆满证得法身，怎么能有这样的大力大用。</p></div>
+<div class="para-pair"><p class="p-orig">锡周居士陈性良，沐恩甚深，报恩心切。拟欲同人，咸深感想。因建水泥牌坊一座于海岸。盖欲示人以苦海无边，回头是岸。生死海中，唯有大士可为恃怙。因略叙伊沐恩之事，勒之贞珉。</p><p class="p-trans">陈锡周居士（名性良，字锡周），蒙受菩萨的恩泽很深，报答菩萨恩德的心非常恳切。想让大家全都发起对菩萨的感念，因此在海岸边修建一座水泥牌坊。大概是想要启示人们：苦海无边，回头是岸，生死大海，唯有观音大士可以作为依靠。所以我在此简略叙述他蒙受菩萨恩泽的事迹，刻在石碑上。</p></div>
+<div class="para-pair"><p class="p-orig">企后之来哲，同生信心，同蒙覆庇。庶可即妄明真，消人我之幻执。识心达本，证寂照之佛性矣。</p><p class="p-trans">企望后来的智者们，共同对观音大士生起信心，共同蒙受大士的覆庇。想必就可以即幻妄而明真性，消除人我彼此的虚幻执著；识真心而达本原，证得寂照圆融的真如佛性了。</p></div>
+<div class="para-pair"><p class="p-orig">锡周居士，赋性忠厚。初唯讲求儒道之旨，于如来大法，及三世因果之理，尚未深信。夫人胡氏，宿有信心。礼佛诵经，寒暑疾病，修持不懈。</p><p class="p-trans">陈锡周居士，天性忠厚。最初时只研究讲论儒家的义旨，对于如来大法，以及三世因果的道理，还没有深信。他的夫人胡氏，一向对佛法有信心。礼佛诵经，无论寒暑疾病，修持从不松懈。</p></div>
+<div class="para-pair"><p class="p-orig">年三十余，长子不育，行善益力。不久复有娠，将及诞期，乃得大病。二十九日不进饮食，不能言语，不能转侧。身瘦如柴，体热如火。名医束手，殆无生理。</p><p class="p-trans">（胡氏）三十多岁的时候，大儿子夭折了，因此她更加努力地行善。不久又有了身孕，快到预产期时，竟然生了大病。二十九天不吃东西，不能说话，不能翻转身体。骨瘦如柴，身热如火。名医都束手无策，大概已经没有存活的希望了。</p></div>
+<div class="para-pair"><p class="p-orig">一夕夫人梦一老媪，手持数茎莲华。谓曰，汝由宿业，膺此恶疾。幸植善根深，以故我从南海，来安慰汝。随以莲华周身拂拭，曰拂汝业障，好生嘉儿。遂觉身心清凉，爽快莫喻。</p><p class="p-trans">一天晚上，胡氏梦见一位老妇人，手里拿着几枝莲华。对她说：“你因为前世的业障，生了这场恶病。幸好你曾经培植很深的善根，所以我从南海赶来安慰你。随后就用莲华拂拭她的全身，一边说着：“扫除你的业障，生个好儿子”。夫人于是感到身心清凉，爽快无比。</p></div>
+<div class="para-pair"><p class="p-orig">因即苏醒，通身流汗。而热退身安，颜色温和。直与好人，等无有异。次日即生一子，适为三月三日上巳嘉辰。经此烧热饥饿二十九日，而儿体丰满庞厚，与无病者所生无异。</p><p class="p-trans">因此即刻苏醒过来，全身流汗，高烧退去，身体安适，气色温和，简直和健康的人没有两样。第二天就生了一个儿子，恰恰赶上三月初三这个好日子。经过这二十九天的发烧饥饿，而所生的孩子，身体丰满庞厚，与健康人所生的孩子没有区别。</p></div>
+<div class="para-pair"><p class="p-orig">今年此子已十岁矣。噫嘻异哉。居士荷蒙大恩，直同生死肉骨。方知佛经所说菩萨不思议利生之事，真实不虚。</p><p class="p-trans">今年孩子已经十岁了，实在是神异啊！陈锡周居士承蒙菩萨的大恩，简直如同死而复生，白骨长肉一般。才知道佛经中所说菩萨利益众生的不可思议事迹，都是真实不虚的。</p></div>
+<div class="para-pair"><p class="p-orig">惜拘墟之士，以凡夫知见，肆口谤黩。适形其无知无识，坐井观天。徒为大悲主怜悯悲伤，而无从救度耳。哀哉。</p><p class="p-trans">可惜那些偏执浅陋的人，凭着凡夫的知识见解，随口加以毁谤和亵渎。恰恰倒表现出他自己无知无识，坐井观天。让大慈大悲的救主（观世音菩萨）徒劳地怜悯悲伤，而没有办法救度。悲哀啊！</p></div>
+<div class="para-pair"><p class="p-orig">由兹信向之心，十分恳至。去岁来山，拟修牌坊。吾友印光以太子塔将颓，劝令置此修彼。</p><p class="p-trans">由此，陈居士信奉向往观音大士的心，十分的恳切真诚。去年他来普陀山，打算修建牌坊。我的道友印光法师因为看到太子塔将要颓倒，劝他放下修建牌坊的事，先修太子塔。</p></div>
+<div class="para-pair"><p class="p-orig">然伊愿心已发，势难中止。故于今春，两工并兴。兼建塔院，及寺前池畔栏杆，并重修凉亭，需费五万有奇。</p><p class="p-trans">然而陈居士的愿心已经发起，势必难以中止。所以今年春天，两项工程一并兴修，同时还修建了太子塔院，以及普济寺前面莲池旁边的栏杆，又重修了池中的凉亭，所需费用五万多圆。</p></div>
+<div class="para-pair"><p class="p-orig">虽亦广乞名望大老，各出净资，襄成盛举。然塔之崇高，池之庄严，坊亭之壮阔，鸠工选材，役夫无算。</p><p class="p-trans">虽然是广泛地募请有名望的人士各各捐出净资，齐心协力才完成这一盛举。然而崇高的宝塔，庄严的莲池，壮阔的坊亭，再加上雇请工匠，精选材料，还有数不清的劳力。</p></div>
+<div class="para-pair"><p class="p-orig">无一非居士慨输巨款，独力经营，以成就此功德庄严。信心宏愿，吁，可敬矣。捐助善士，悉载塔院碑中。</p><p class="p-trans">这些没有一样不是陈居士慷慨募捐，独自营办，来成就这一庄严殊胜的功德。陈居士的深切信心和宏大愿力，实在是可敬啊！捐助善信的功德芳名，在塔院的石碑中有详细记载。</p></div>
+<div class="para-pair"><p class="p-orig">兹特书此菩萨应化无量百千大海中一滴之相。令诸同人，生正信心，各各恭敬供养，称念名号。岂但常蒙加被，逢凶化吉，遇难成祥已哉。</p><p class="p-trans">在此特别选取观世音菩萨无量百千大海般应化事迹中的一滴，记录下来，让大家生起正信之心，各各恭敬供养，各各称念名号。哪里只是常蒙菩萨加持泽被，逢凶化吉，遇难成祥而已呢？</p></div>
+<div class="para-pair"><p class="p-orig">倘能竭诚至极，何难断惑证真，超凡入圣。将来亦可如菩萨竖穷三际，横遍十方，普现色身，度脱众生也已。</p><p class="p-trans">如果能够竭诚到极点，那么断除惑业、证得真常、超出凡界、预入圣流，又有什么困难的呢。将来也可以像观世音菩萨一样，竖穷三际，横遍十方，普现色身，度脱众生了啊。</p></div>
+<div class="para-pair"><p class="p-orig">又观音大士，乃过去古佛。以大悲心，垂形九界。应以何身得度者，即现何身而为说法。</p><p class="p-trans">再者，观世音菩萨是过去的古佛。因为大慈悲心切，所以垂化形迹在九法界中。众生应当以什么身形得到救度，就现什么身形而为他说法。</p></div>
+<div class="para-pair"><p class="p-orig">但以众生机劣，无由得见本相。凡蒙祐者，多皆见为老媪。盖以随顺劣机，显示婆心。若谓实属女身，则于菩萨上同下合之道，毫未梦见在。</p><p class="p-trans">只因为众生根机陋劣，无法见到大士本地的慈容。凡是蒙受菩萨庇佑的人，所见到的大多是老妇人的形象。这想必是菩萨为了随顺众生的陋劣根机，而特意显示出的婆心之相。如果因此就说菩萨实际上是女人之身，那就是对于菩萨上同诸佛、下合众机的道理，丝毫也没有梦到啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【沐恩】</span>蒙受恩惠。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【贞珉】</span>石刻碑铭的美称。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【赋性】</span>天性；品性。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【讲求】</span>1.修习研究。2.追求；重视。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【不育】</span>犹言夭折。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【上巳】</span>旧时节日名。汉以前以农历三月上旬巳日为“上巳”；魏晋以后，定为三月三日，不必取巳日。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【荷蒙】</span>犹承蒙；承受。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【生死肉骨】</span>使死者复生，白骨长肉。极言恩施的深厚。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【肆口】</span>犹随口。有时含任意或无所忌惮之意。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【谤黩】</span>怨恨毁谤。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【大老】</span>1.德高望重的老人。2.指在某一方面负有盛誉的人。3.称资深望重的大官。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【鸠工】</span>聚集工匠。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【役夫】</span>服役的人。</p>
+<p class="note-item"><span class="note-n">[14]</span><span class="note-term">【无算】</span>不计其数。极言其多。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>答慕西和尚问 · 印光法师文钞</title>
+<meta name="description" content="问，千佛衣，是否绣佛像于祖衣上。龙华衣，是否绣龙绣华。请垂示。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-343/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="答慕西和尚问 · 印光法师文钞">
+<meta property="og:description" content="问，千佛衣，是否绣佛像于祖衣上。龙华衣，是否绣龙绣华。请垂示。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-343/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">答慕西和尚问</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">问，千佛衣，是否绣佛像于祖衣上。龙华衣，是否绣龙绣华。请垂示。</p><p class="p-trans">问：千佛衣，是否将佛像绣在祖衣上。龙华衣，是否要绣龙绣华。请您慈悲开示。</p></div>
+<div class="para-pair"><p class="p-orig">答，千佛衣，即贤劫千佛所制之衣。即吾人所搭之五衣七衣祖衣。无知之人绣佛像于衣上，则罪该万死矣。愚人不知罪过，反以为荣。又复绣龙绣花，以堂堂比丘，而学女人派调。其人之资格，已半文不值。莲池大师正讹集第一条，已说之。</p><p class="p-trans">答：千佛衣，就是贤劫千佛所制之衣。就是我们所搭的五衣、七衣、祖衣。无知之人将佛像绣在袈裟上，这样就罪该万死了。愚痴的人不知道这是罪过，反而以此为荣。又在袈裟上绣龙、绣花，以堂堂的比丘，而学女人的派头格调。这种人的资格，已经半文钱都不值了。莲池大师的《正讹集》中第一条，已经说明过了。</p></div>
+<div class="para-pair"><p class="p-orig">问，养发，养爪，戴银，铜圈，为头陀相耶。</p><p class="p-trans">问：蓄胡须，蓄指甲，戴银或铜做的项圈，这是头陀之相吗？</p></div>
+<div class="para-pair"><p class="p-orig">答，头陀，是行苦行之名。头陀行，有十二种。今人不能行，而妄以魔王外道相充之，可叹孰甚。</p><p class="p-trans">答：头陀，是行苦行的名称。头陀行，有十二种。如今的人不能行持了，而错妄以魔王外道的相来滥充，还有比这更可叹的事吗？</p></div>
+<div class="para-pair"><p class="p-orig">问，闭关人，为人念经念佛，是否邪命。</p><p class="p-trans">问：闭关之人，为他人念经、念佛，是否属于邪命？</p></div>
+<div class="para-pair"><p class="p-orig">答，闭关要有正念，真实念经念佛。若专为施主念，不知自己本所修行之事。虽曰邪命，亦非不可。若只以闭关骗人供养，则成大邪命矣。</p><p class="p-trans">答：闭关要有正念，真实的念经念佛。如果专门为施主念经，不知道自己本来的修行之事。虽称为邪命，也并非不可。如果只是用闭关来骗取他人的供养，那么就成为大邪命了。</p></div>
+<div class="para-pair"><p class="p-orig">问，有人以此关房，为某施主所供养，乃念经酬他，法宝是否可当送礼品。又僧人为人看经，计卷论值，而写一诵经票与之，此等僧人，有何等罪，在俗人有何福。</p><p class="p-trans">问：有人因为这个关房，是某位施主所供养，于是念经酬谢他，法宝是否可以当做送礼品。另外，僧人为他人看经，按卷数论价钱，而写一张诵经的票据交给他，这样的僧人，有什么罪？在俗人这一边，又得到什么福？</p></div>
+<div class="para-pair"><p class="p-orig">答，人以财施，我以法施，亦非不可。若不知佛法，专门为人念经。与为人锄地挣工钱相同，已经下作。倘再不看，只写一经票为凭。比打劫稍体面点，实则同一拐骗耳。</p><p class="p-trans">答：他人以财施我，我以法宝施送，也并非不可。如果不知佛法，专门为他人念经。与为他人锄地挣工钱相同，已经是轻贱。倘若再不看经，只写一张经票作为凭据。这比打劫，稍微体面一点，实际与拐骗相同。</p></div>
+<div class="para-pair"><p class="p-orig">念不念不定，恭敬不恭敬亦不定，何能定他的罪。在家人有正信心，出钱请念。即僧人不念，只用一纸骗去，亦不能谓绝无功德。以后不得再来信，我无此闲功夫，论此闲事。</p><p class="p-trans">念不念不一定，恭敬不恭敬也不一定，如何能定他的罪。在家人有正信心，出钱请人念经。即使僧人不念，只用一张纸骗去，也不能说绝无功德。以后不得再来信，我没有这些闲功夫，来讨论这些闲事。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【祖衣】</span>僧伽梨：即大衣、重衣、杂碎衣、入聚落衣、高胜衣，为上街托钵或奉召入王宫时所穿之衣，由九至二十五条布片缝制而成，又称九条衣。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

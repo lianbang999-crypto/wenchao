@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复郑慧洪居士书四 · 印光法师文钞</title>
+<meta name="description" content="七月之信，以无关紧要，故未即复。学道之人，以理自度。岂须一一问人，方才可行乎。光之长隐，以精神不给。所言开导，仍自有其方。近所排印各书之板，交于世界居士林，令彼流通，斯为久远之计。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-094/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复郑慧洪居士书四 · 印光法师文钞">
+<meta property="og:description" content="七月之信，以无关紧要，故未即复。学道之人，以理自度。岂须一一问人，方才可行乎。光之长隐，以精神不给。所言开导，仍自有其方。近所排印各书之板，交于世界居士林，令彼流通，斯为久远之计。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-094/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复郑慧洪居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">七月之信，以无关紧要，故未即复。学道之人，以理自度。岂须一一问人，方才可行乎。光之长隐，以精神不给。所言开导，仍自有其方。近所排印各书之板，交于世界居士林，令彼流通，斯为久远之计。</p><p class="p-trans">七月份的信，因为无关紧要，所以没有马上回复。学道之人，用理来自我度量。哪里需要一一问人，才能修行呢？我长期隐居，是因为精神不足。所说的开导，仍然自有方法。近来所排印的各种经书的板，交给了世界居士林，令他们流通，这才是长久之计。</p></div>
+<div class="para-pair"><p class="p-orig">慧和之信外道，惜宿业深重，以致邪正不分，金鍮莫辨。宝鱼目为明珠，欲为万世不易之宝，而不知其一文不值也。彼等所得者，偷窃儒释道三教之语，妄造谣言，以为道之本源，吾道得之。可不哀哉。</p><p class="p-trans">慧和信奉外道，可惜他宿业深重，以致邪正不分，黄金黄铜不能分辨。把鱼眼当作宝贵的明珠，想当作万世不变的珍宝，却不知鱼眼一文不值。外道所得到的，是偷窃儒、释、道三教的法语，妄造谣言，认为道的本源，我们的道门得到了。能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">念佛最初之亲切，如贫人乍食美味，不知有多少香美。及食之久久，亦平常无奇。但不以此平淡为非，久之必有进益。固不必以此为歉。</p><p class="p-trans">念佛刚开始时感觉亲切，如同贫人突然吃到美味，不知有多么的香美。等到吃得久了，也就平常无奇了。但是不将这个平淡认为不对，时间久了，必有进步和收获。所以不必因为念佛久了平淡而感到歉憾。</p></div>
+<div class="para-pair"><p class="p-orig">喜怒哀乐未发，不思善，不思恶，似乎一样。而六祖云正恁么时，如何是上座本来面目。汝何不在此处注意。有此一语，则与中庸空说中意，大有分别。彼则只能令人识得道理，此则令人亲见本有。</p><p class="p-trans">《中庸》云：“喜怒哀乐未发”，六祖云：“不思善，不思恶”，这二者似乎是一样的。然而六祖云：“正恁么时，如何是上座本来面目。”你为何不在此处注意。有六祖这句话，就与《中庸》空说“中”的意思，大有分别。《中庸》只能令人懂得道理，六祖这句话则能令人亲见本来面目。</p></div>
+<div class="para-pair"><p class="p-orig">汝切莫在念而不念，不念而念上著脚。此境乃做到极处之境界。若未到极处，必成懈怠。参念佛是谁，亦有利益，亦有弊病。所宜致力者，唯在于诚一纯笃。若夹杂禅机，稍有见处，众生根浅，便视此为最劣，视彼为最胜。</p><p class="p-trans">你千万不要在“念而不念，不念而念”上落脚。这个境界是功夫做到极处的境界。如果功夫没有到极处，必然成为懈怠。参“念佛是谁”，也有利益，也有弊病。所应该致力的，只在诚敬一心、纯朴笃实。如果夹杂禅机，稍有悟见之处，因众生根机浅薄，便将念佛看得最为低劣，将参话头看得最为殊胜。</p></div>
+<div class="para-pair"><p class="p-orig">十三年狄楚青之夫人，即得此弊病。直至今日，楚青尚守其说不肯稍改。江西一弟子龙松生，于禅颇有会悟，光极力破斥，尚不肯听。观面色或有著魔之相。听其所说，则直欲上续诸祖慧命。</p><p class="p-trans">民国十三年（1924年），狄楚青的夫人，就得了这种弊病。直到今天，狄楚青还固守他的说法，不肯稍作改变。江西一位弟子龙松生，对于禅宗很有领悟，我极力破斥，他还是不肯听。看他的面色，有著魔之相。听他所说的，简直是想上续诸位祖师的慧命。</p></div>
+<div class="para-pair"><p class="p-orig">汝于外道充斥之地，若不按实事修，则或致彼魔外亦复借口。汝欲开悟，岂须用参究工夫，但能念到念极情忘时，自可开悟。即不悟亦无所碍。须知有信愿，不悟亦可往生。得悟无信愿，仍是六道轮回中人。汝欲舍坦途而趋险道，是尚得谓之知净土法门乎。</p><p class="p-trans">你在外道充斥的地方，如果不按实事修，那么或许导致那些邪魔外道也有了借口。你想要开悟，哪里必须用参究的功夫，只要能够念佛念到念极情忘的时候，自然能开悟。即使不开悟也没什么妨碍。必须知道有信愿，不开悟也能往生。开悟了却没有信愿，仍旧是六道轮回中的人。你想要舍弃平坦的大道而趋入危险的道路，这还能称得上明白净土法门吗？</p></div>
+<div class="para-pair"><p class="p-orig">光现排许止净所辑之历史感应统纪，待排毕即隐。其书若出，当令明道师代为寄一二包。此书于世道人心，大有关系。当排两付板，一三号字书册本，一四号字报纸本。现书册排成，即印二万部。以后有发心者，可源源而印施及售卖也。</p><p class="p-trans">我现在排印许止净所编辑的《历史感应统纪》，等到排印完就隐居。这本书如果印出，当会让明道师代寄一二包给你。这本书对于世道人心，大有关系。当会排两付印板，一部三号字的书册本，一部四号字的报纸本。现在书册本排成，就印了二万部。以后有发心的人，可以源源不断地印施以及售卖。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【鍮】</span>黄铜矿或自然铜。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【喜怒哀乐未发】</span>《中庸》：“喜怒哀乐未发，谓之中，发而皆中节，谓之和。”意思是：喜怒哀乐没有表现出来的时候，叫做“中”；表现出来以后，符合节度，叫做“和”。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【不思善不思恶】</span>禅宗公案名。谓六祖慧能与蒙山惠明之机缘。明曰：“我来求法，非为衣也，愿行者开示。”祖云：“不思善，不思恶，正与么时，那个是明上座本来面目？”明当下大悟，遍体汗流。六祖说“不思善不思恶”之语，系显发超出是非善恶之念，始可了知真理之意。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【借口】</span>1.借别人的话作为依据。2.多作托辞或假托的理由。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

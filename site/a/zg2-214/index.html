@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>观世音菩萨三十二应发隐 · 印光法师文钞</title>
+<meta name="description" content="观世音菩萨，誓愿宏深，慈悲广大，虽已成等正觉，而复示作菩萨。虽则示作菩萨，而复于十方法界，普现色身，寻声救苦，度脱众生。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-214/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="观世音菩萨三十二应发隐 · 印光法师文钞">
+<meta property="og:description" content="观世音菩萨，誓愿宏深，慈悲广大，虽已成等正觉，而复示作菩萨。虽则示作菩萨，而复于十方法界，普现色身，寻声救苦，度脱众生。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-214/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">观世音菩萨三十二应发隐</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观世音菩萨，誓愿宏深，慈悲广大，虽已成等正觉，而复示作菩萨。虽则示作菩萨，而复于十方法界，普现色身，寻声救苦，度脱众生。</p><p class="p-trans">观世音菩萨，誓愿宏深，慈悲广大。虽然已经成佛，而又示现为菩萨。虽然示现为菩萨，而又于十方法界，普现色身，寻声救苦，度脱众生。</p></div>
+<div class="para-pair"><p class="p-orig">十法界身，无身不现，令彼一切称名致敬之众生，现在离所受之幻苦，将来得成佛之真乐。</p><p class="p-trans">十法界身，无身不现，令那一切称名、致敬的众生，现在脱离所受的虚幻之苦，将来得到成佛的真乐。</p></div>
+<div class="para-pair"><p class="p-orig">于此娑婆世界，因缘最为甚深。故普门品无尽意菩萨，既闻观音得名之因缘，复问游此世界方便说法之事，佛遂略说三十二应身，以明其概。</p><p class="p-trans">观音菩萨和这娑婆世界，因缘最为甚深。所以《妙法莲华经·观世音菩萨普门品》中，无尽意菩萨听说观世音菩萨得名的因缘之后，又请问世尊观音菩萨游历娑婆世界方便说法的事。佛于是简略宣说了观音菩萨的三十二应身，来阐明其大概。</p></div>
+<div class="para-pair"><p class="p-orig">三十二应身者，于十法界之四圣法界中，略举佛，辟支佛（即缘觉），声闻等三法界身（菩萨乃其本位，故不说）。</p><p class="p-trans">三十二应身，在十法界的四圣法界中，简略举出佛、辟支佛（即缘觉）、声闻等三种法界身（菩萨是其本位，因此没有列举）。</p></div>
+<div class="para-pair"><p class="p-orig">于六凡法界中，天则略举梵王，帝释，自在天，大自在天，天大将军，毗沙门等六身而已。</p><p class="p-trans">在六凡法界中，天道则简略列举出梵王、帝释、自在天、大自在天、天大将军、毗沙门等六种身而已。</p></div>
+<div class="para-pair"><p class="p-orig">人则小王，长者，居士，宰官，婆罗门，比丘，比丘尼，优婆塞，优婆夷。长者，居士，宰官，婆罗门妇女，童男，童女，十五身而已。</p><p class="p-trans">人道则列举出小王、长者、居士、宰官、婆罗门、比丘、比丘尼、优婆塞、优婆夷、长者、居士、宰官、婆罗门妇女、童男、童女，十五种身而已。</p></div>
+<div class="para-pair"><p class="p-orig">于八部中，天已前列，此则不计，则有龙，夜叉，乾闼婆，阿修罗，迦楼罗，紧那罗，摩睺罗伽，又有执金刚神。此八种身，修罗一种，系修罗法界，余则或属于天，或属于畜，或属于鬼。六凡法界，唯少地狱一法界耳，但是语略，非菩萨不于此处现身救苦也。</p><p class="p-trans">天龙八部当中，天道已经在前面列举，此处不再说，则有龙、夜叉、乾闼婆、阿修罗、迦楼罗、紧那罗、摩睺罗伽，又有执金刚神。这八种身，阿修罗这一种，是修罗法界，其余的或者属于天道，或者属于畜生道，或者属于饿鬼道。六凡法界中，唯独少了地狱这一法界而已，这只是语言省略，并不是说菩萨不在地狱中现身救苦。</p></div>
+<div class="para-pair"><p class="p-orig">须知三十二应，不过略举大概，以例其余，若详说者，数岂有尽。菩萨兴无缘慈，运同体悲，随机应现，神变无方，能以意会，则妙义全彰。</p><p class="p-trans">必须知道三十二应身，不过是简略举出一个大概，其余的以此类推。如果要详细阐说，数目哪会有穷尽？菩萨兴无缘大慈，运同体大悲，随众生根机而应现，神通变化没有定相，能够意会的话，那么深妙义旨就会全部彰显。</p></div>
+<div class="para-pair"><p class="p-orig">若拘拘然执迹而论，则失菩萨不动真际，现诸威仪，了无计虑，无适不当，如一月普印千江，千江悉现全月，一春普育万卉，万卉各具春光之妙矣。</p><p class="p-trans">如果拘泥于形迹来讨论，那就失去菩萨不动真如实际而示现种种威仪，毫无计算思虑而无不适合恰当，如同一月普映于千条江河，千江全都现出全月，好比一春普育出万种卉木，万卉各各具显春光的化育之妙了。</p></div>
+<div class="para-pair"><p class="p-orig">然菩萨所现，尚不止唯有情身，若夫山河城池，楼台屋宇，桥梁道路，树林禾稼。随彼机缘，亦皆示现。怡山所谓疾疫世而现为药草，饥馑时而化作稻粱，足征菩萨慈悲之心矣。</p><p class="p-trans">然而菩萨所化现的，还不只是有情身。像山河城池、楼台屋宇、桥梁道路、树林禾稼，随顺众生的机缘，也都示现。怡山然禅师《发愿文》中所说的“疾疫世而现为药草，饥馑时而化作稻粱”，足以征示菩萨的慈悲之心了。</p></div>
+<div class="para-pair"><p class="p-orig">广州番禺高塘珠冈寺，宗禅大师，念菩萨恩德，广大周挚，因修一阁，以奉圣像。中供观音本像，两旁供三十二应像。而本愿居士等三十二人，各随己力，出资以助，其功德不可思议。</p><p class="p-trans">广州番禺高塘珠冈寺的宗禅大师，感念菩萨的恩德广大真诚深厚，因此修建了一间阁楼，来供奉菩萨圣像。中间供奉观世音菩萨本像，两旁供奉三十二应身像。而本愿居士等三十二人，各各根据自己的能力，出资相助，其功德不可思议。</p></div>
+<div class="para-pair"><p class="p-orig">窃念过去劫中，一女人修佛塔，三十二人相助令成，后同生三十三天，倡首者为帝释，辅助者作四方八天之天王。</p><p class="p-trans">我想到在过去劫中，一位女人修建佛塔，有三十二个人帮助，令塔得以建成。后来他们共同生到三十三天，带头提倡建塔的人成为帝释，辅助的三十二人，作了四方八天的天王。</p></div>
+<div class="para-pair"><p class="p-orig">宗禅大师，本愿居士等，不求人天福报，但愿倡者，助者，及现在未来之瞻礼供养者，同得现生慧朗福崇，优入圣贤之域，临终情空业尽，直登极乐之邦，见佛闻法，证无生忍，回入娑婆，度脱众生而已。</p><p class="p-trans">宗禅大师、本愿居士等人，不求人天福报，只愿提倡的人、辅助的人，以及现在未来瞻礼供养的人，共同能在现生中智慧明朗、福寿增长，优入圣贤领域，临终时凡情空亡、业障消灭，直登极乐莲邦，见佛闻法，证无生忍，回入娑婆，度脱众生而后已。</p></div>
+<div class="para-pair"><p class="p-orig">又祈雨顺风调，民康物阜，兵戈息而天下太平，礼让兴而风俗淳美。爰为发其隐义云。</p><p class="p-trans">又祈望风调雨顺、人民安康、物产丰盛，兵戈永息而天下太平，礼让兴起而风俗淳美，特此阐发其中的隐含之义，如上。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【真际】</span>即真如实际之略称。断绝相对差别之相，呈现平等一如的真如法性之理体。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【威仪】</span>威严之态度。谓起居动作皆有威德有仪则。即习称之行、住、坐、卧四威仪。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【周挚】</span>至为真诚；至为笃厚。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

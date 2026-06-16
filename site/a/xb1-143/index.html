@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与吴慧德女士书（民国二十八年　附宗绰来书） · 印光法师文钞</title>
+<meta name="description" content="【来信】">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-143/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与吴慧德女士书（民国二十八年　附宗绰来书） · 印光法师文钞">
+<meta property="og:description" content="【来信】">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-143/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">与吴慧德女士书（民国二十八年　附宗绰来书）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<p class="p-orig">【来信】</p>
+<div class="para-pair"><p class="p-orig">师尊慈鉴。南洋苏门答腊亚沙汉埠，吴慧德女士，昔年因遭逢困厄，发心奉佛，已八阅年。（弟子）昔年在荷属苏门答腊棉兰市时，最先发心奉佛五人中之一也。</p><p class="p-trans">【来信】师尊慈鉴。南洋印度尼西亚苏门答腊岛亚沙汉埠，吴慧德女士，过去因为遭遇困苦、艰难，发心奉佛，已经有八年了。（弟子）当年在荷属苏门答腊岛棉兰市时，她是最先发心奉佛的五个人之一。</p></div>
+<div class="para-pair"><p class="p-orig">其母吴陈氏，福建同安县人，同时闻法，未几，亦发心奉佛，法名贤行。近十年来，由苏岛民礼市，移住英属新嘉坡，于本年十一月初三日逝世。</p><p class="p-trans">她的母亲吴陈氏，是福建省同安县人，（与我）同时听闻佛法，不久，也发心奉佛，法名贤行。近十年来，从苏门答腊岛的民礼市，移居到英属新加坡，于今年十一月初三日逝世。</p></div>
+<div class="para-pair"><p class="p-orig">其生卒大概，已详其女慧德记述中，另纸抄附。慧德女士，通常由亚沙汉至新嘉坡省视双亲，每次往返，必来槟榔屿（弟子）寓中叙谈。</p><p class="p-trans">她的生卒年月、生平大概，已详细记录在她女儿吴慧德的记述中，抄附在另外的纸上。吴慧德女士，通常由苏门答腊岛的亚沙汉到新加坡看望双亲，每次往返，必定会到马来西亚槟榔屿（弟子）寓所中叙谈。</p></div>
+<div class="para-pair"><p class="p-orig">（弟子）昔年回国朝山，至苏城报国寺，礼觐师尊时，并有由无锡到苏叩见之男女居士数人。闻训话之次，赞叹灵岩严净道场，望重东南。有人发心追荐先灵，得灵岩寺僧垂慈，成就追荐法事者，受惠之大，难思难议。南归后，亦曾向若干净侣赞扬称述。</p><p class="p-trans">（弟子）当年回国朝山，到苏州报国寺，礼觐师尊的时候，同时有许多从无锡到苏州叩见师父的男女居士。听闻了师尊训话之后，又赞叹灵岩山的庄严清净道场（灵岩山寺），名望重于东南地区。有人发心追荐先灵，得到灵岩山寺僧众的垂慈，成就追荐法事的，先灵受到的恩惠之大，真是难思难议。回到南洋后，也曾向一些清净的僧侣赞扬称述灵岩山寺。</p></div>
+<div class="para-pair"><p class="p-orig">慧德女士，倾心已久。此次其母辞世后，虽由闽侨中亲友主张，在新嘉坡龙山寺闽籍僧众处，举行追荐法事。慧德则屡向其父，及其他家属，称述灵岩寺稀有道场。如能请求为做超荐法事，受福之大，难可言喻。</p><p class="p-trans">吴慧德女士，向往仰慕已经很久了。这次，她母亲过世后，虽然由福建华侨中的亲友主张，在新加坡龙山寺的福建籍僧众处，举行追荐法事。吴慧德却多次向她父亲，以及其他的家属，称扬述说灵岩山寺是稀有的道场。如果能请求灵岩山寺的僧众为母亲做超荐法事，受到的福报之大，将难以用语言来表达。</p></div>
+<div class="para-pair"><p class="p-orig">已得家人同意，即来（弟子）处，交国币二百圆，嘱为具禀师尊前，求为垂慈方便，转请成全其事，不胜铭感之至。（弟子）宗绰敬叩。</p><p class="p-trans">已经得到了家人的同意，就来到（弟子）这里，交给我民国币二百圆，嘱咐我为她将这些情况全都禀告给师尊，求师尊为她垂慈方便，转请灵岩山寺成全这件事，铭记、感恩之至。（弟子）宗绰敬叩。</p></div>
+<p class="p-orig">【回信】</p>
+<div class="para-pair"><p class="p-orig">接宗绰女士介绍汝荐母书，知汝母女已早沐佛化，深信净土。汝母惜物，以人所弃者，作人所贵重之品，其灵心妙手，亦多生培来。</p><p class="p-trans">【印祖回信】接到宗绰女士介绍你超荐母亲的信，知道你们母女二人早已沐浴到了佛法的教化，深信净土。你母亲爱惜器物，将他人所遗弃的东西，做成人人都贵重的物品，她的灵心妙手，也是多生培植而来的。</p></div>
+<div class="para-pair"><p class="p-orig">及至临终，汝能令全家助念，并请净侣助念。故得一切放下，唯佛是念。逝后顶门灼热，面色光润，可为往生之瑞相。今又祈灵岩追荐，则莲品当可增高，汝可谓能报母恩之人。</p><p class="p-trans">到了临终，你能让全家都为母亲助念，并请来清净的僧侣助念。所以你母亲能够一切放下，一心念佛。逝世后，顶门灼热，面色光亮润泽，这是往生的瑞相。现在又请灵岩山寺僧众来追荐她，那么你母亲的莲品一定可以增高，你可以称得上是能报答母亲恩德的人了。</p></div>
+<div class="para-pair"><p class="p-orig">彼以瞎张罗，宰杀生命，宴客聚友为荣者，乃落井下石之大不孝者之所为也，其相殊奚啻天渊哉。</p><p class="p-trans">那些以胡乱张罗、宰杀生命、宴客聚友为荣的人，他们的这些行为是落井下石的大不孝之人的行为啊！这二者的差别，何止是天渊悬殊啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【苏门答腊】</span>是印度尼西亚最西面的一个大岛，也是全球第六大岛屿。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【民礼市】</span>是印度尼西亚北苏门答腊省其中一个省辖市，位于省府棉兰市西边约二十二公里处。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【槟榔屿】</span>是马来西亚西北部一个风光明媚的小岛，因盛产槟榔而得名“槟榔屿”，是马来西亚十三个联邦州之一。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【铭感】</span>铭记在心，感戴不忘。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【顶门】</span>指头顶的前部。因其中央有囟门，故称。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

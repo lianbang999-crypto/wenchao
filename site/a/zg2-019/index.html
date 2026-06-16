@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>赞礼地藏菩萨忏愿仪重刻序 · 印光法师文钞</title>
+<meta name="description" content="心体本净，因根尘而浊念斯兴。佛性常存，由迷背而凡情孔炽。于是承寂照之力，反作昏动之缘。于常住之中，妄受生死之苦。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-019/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="赞礼地藏菩萨忏愿仪重刻序 · 印光法师文钞">
+<meta property="og:description" content="心体本净，因根尘而浊念斯兴。佛性常存，由迷背而凡情孔炽。于是承寂照之力，反作昏动之缘。于常住之中，妄受生死之苦。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-019/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">赞礼地藏菩萨忏愿仪重刻序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">心体本净，因根尘而浊念斯兴。佛性常存，由迷背而凡情孔炽。于是承寂照之力，反作昏动之缘。于常住之中，妄受生死之苦。</p><p class="p-trans">心体本来清净，只因为六根染著于六尘，而兴起污浊的念头；佛性虽然常存，却由于迷惑背离的缘故，而使凡夫情见猛烈炽盛。于是承着寂照之力，反而造作昏动之缘，在常住之中，幻妄承受生死轮回之苦。</p></div>
+<div class="para-pair"><p class="p-orig">执著五阴，不知毕竟皆空。障蔽一心，曷了本不可得。耽染六尘之幻境，坠堕三恶之苦途。纵经微尘劫数，莫出六道轮回。</p><p class="p-trans">执著于五阴为我，而不知毕竟皆空；障蔽了一心，哪里能明白本不可得。耽着迷染于六尘的虚幻外境，堕落于苦难的三途恶道。即使经过微尘那样多的劫数，也不能出离轮回。</p></div>
+<div class="para-pair"><p class="p-orig">故我世尊，特垂哀愍。因地藏菩萨之问，说十力佛法之轮。摧碾烦惑，成就道器。由兹弃舍恶法，断除一切无依行。修持善法，具足一切有依行。</p><p class="p-trans">所以释迦世尊，特地垂慈哀愍，借着地藏菩萨的启问，宣说了十力佛法之轮，摧碾众生的烦恼惑业，使他们成就道器。从此舍弃恶法，断除一切无依行；修持善法，具足一切有依行。</p></div>
+<div class="para-pair"><p class="p-orig">然欲得无生法忍，须忏宿世愆尤。若能不著五阴，自可圆证三身。外承佛力法力菩萨誓愿力，内仗诚力悔力自性功德力。故得弥空罪雾，彻底消灭。本有性天，全体显现。是知十轮本愿占察三经。同由地藏大悲愿力，令末世孤露无依众生，悉皆得大恃怙也。</p><p class="p-trans">而要想证得无生法忍，必须忏悔宿世的罪愆；如果能不执著于五阴为我，自然可以圆满证得法报化三身。在外承蒙佛力、法力、菩萨誓愿力，在内依仗诚力、悔力、自性功德力。所以能将弥满虚空的罪业，彻底消灭；使本有性天，全体显现。由此知道，《大乘大集地藏十轮经》、《地藏菩萨本愿经》、《占察善恶业报经》这三部经，都是借着地藏菩萨的大悲愿力，使末世孤露无依的众生，全都得到如父母般的大依靠。</p></div>
+<div class="para-pair"><p class="p-orig">蕅益大师，已证法身，乘愿再来。初现阐提之迹，后为如来之使。一生行解，事理圆融。毕世著述，性修双备。欲令浊智成净智，依三经而制忏仪。冀使凡心作佛心，即十轮而明赞悔。宝镜既磨，光明自发。摩尼既濯，珍宝斯雨。诚可谓反本还元之妙法，即心作佛之达道也。</p><p class="p-trans">蕅益大师，是法身大士乘愿再来。最初示现为谤法的阐提，后来则成为如来的使者。大师一生的修行和知解，事理圆融无碍；大师一生的著作和论述，理性事修兼备。想要使众生的智识由污浊转为清净，于是依据这三部经而制订了忏悔仪轨；希望使众生的凡心转变为佛心，于是就着十轮经而对礼赞忏悔作了阐明。宝镜磨去尘垢后，自然焕发光明；落入污秽的摩尼珠清洗干净之后，珍宝自然如雨点般落下。（大师所作的忏仪和赞悔）实在是返本还元的妙法，即心作佛的达道啊。</p></div>
+<div class="para-pair"><p class="p-orig">弘一上人，宿钦大师著述。特为刻板，用广流通。俾有志于灭幻妄之惑业，证本有之真心，上续如来之慧命，下作末世之典型者，咸得受持云。</p><p class="p-trans">弘一上人，一向钦敬蕅益大师的著述，所以特地将本书刻板，以便广泛流通。使那些立志要灭除幻妄惑业，证得本有真心，上续如来慧命，下作末世典范的人，都能够受持。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【孔炽】</span>很猖獗，很嚣张。《诗·小雅·六月》：“玁狁孔炽，我是用急。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【十力】</span>指如来所具有的十种力用；一、知觉处非处智力，即能知一切事物的道理和非道理的智力；二、知三世业报智力，即能知一切众生三世因果业报的智力；三、知诸禅解脱三昧智力，即能知各种禅定及解脱三昧等的智力；四、知诸根胜劣智力，即能知众生根性的胜劣与得果大小的智力；五、知种种解智力，即能知一切众生种种知解的智力；六、知种种界智力，即能普知众生种种境界不同的智力；七、知一切至所道智力，即能知一切众生行道因果的智力；八、知天眼无碍智力，即能以天眼见众生生死及善恶业缘而无障碍的智力；九、知宿命无漏智力，即知众生宿命及知无漏涅槃的智力；十、知永断习气智力，于一切妄惑余气，永断不生，能如实知之的智力。
+十轮品。地藏问。云何于五浊世转佛轮。佛答。本愿成十轮。能居此土。即十力也。以轮王为喻。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【无依行】</span>无依行品。天藏大梵请问禅诵营福三业。为出为坠。剎帝轮王。为沈为升。佛答二种十无依行。随有一行。不成三乘。
+“佛言。大梵。有十种无依行法。若修定者随有一行。尚不能成欲界善根。设使先成寻还退失。况当能成色无色定乃至三乘随成一乘。何等为十。一者世有一类。虽欲修定而乏资缘经求扰乱。二者复有一类。虽欲修定而犯尸罗行诸恶行。三者复有一类。虽欲修定而颠倒见妄执吉凶身心刚强。四者复有一类。虽欲修定而心掉动不顺贤圣诸根轻躁。五者复有一类。虽欲修定而离间语破乱彼此。六者复有一类。虽欲修定而麁恶语毁骂贤圣。七者复有一类。虽欲修定而杂秽语及虚诳语。八者复有一类。虽欲修定。而怀贪嫉于他所得利养恭敬心不欢悦。九者复有一类。虽欲修定而怀瞋忿于诸有情心常愤恚。十者复有一类。虽欲修定。而怀邪见拨无因果。大梵当知。是名十种无依行法。若修定者随有一行。尚不能成欲界善根。设使先成寻还退失。况当能成色无色定乃至三乘随成一乘。”
+“复次大梵。又有十种无依行法。若修定者随有一行。终不能成诸三摩地。设使先成寻还退失。何等为十。一者乐着事业。二者乐着谈论。三者乐着睡眠。四者乐着营求。五者乐着艶色。六者乐着妙声。七者乐着芬香。八者乐着美味。九者乐着细触。十者乐着寻伺。大梵当知。是名十种无依行法。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【有依行】</span>有依行品。十有依行。二乘所共。复有十有依行。独觉大乘所共。
+“复次善男子。若有真善剎帝利。真善婆罗门。真善宰官。真善居士。真善长者。真善沙门。真善茷舍。真善戌达罗。若男若女。成就十种有依行轮。于现身中速能种植声闻乘种令不退失。或于现身成声闻乘诸圣法器。非独觉乘大乘圣器。何等为十。一者具足净信。信有一切善恶业果。二者具足惭愧。远离一切恶友恶见。三者安住律仪。远离杀生乃至饮酒。四者安住慈心。远离一切瞋恚忿恼。五者安住悲心。救拔一切羸弱有情。六者安住喜心。远离一切语四恶业。七者安住舍心。远离一切悭贪嫉妬。八者具正归依。远离一切妄执吉凶。终不归依邪神外道。九者具足精进。坚固勇猛修诸善法。十者常乐寂静。思求法义欢悦无倦。善男子。若有真善剎帝利王乃至真善戌达罗等若男若女。成此十种有依行轮。于现身中速能种植声闻乘种令不退失。或于现身证声闻乘所有圣法。成声闻乘诸圣法器。非证独觉大乘圣法。非成独觉大乘圣器应知此中独觉大乘皆如是说。善男子。如是十种有依行轮。一切声闻独觉菩萨诸佛如来皆同共有。”
+“善男子。复有十种有依行轮不共声闻。唯与独觉菩萨如来皆同共有。若有真善剎帝利王乃至真善戌达罗等若男若女。成此十种有依行轮。于现身中速能种植独觉乘种令不退失。或于现身证独觉乘所有圣法。成独觉乘诸圣法器。何等为十。一者修行清净身语意业。二者具足惭愧厌患自身。三者于五取蕴深生怖畏。四者见生死河极为难渡。五者常乐寂静离诸愦闹。六者乐阿练若不讥他失。七者守护诸根心常寂定。八者善观缘起审察因果。九者常乐勤修等持静虑。十者于集起法能善除灭。善男子。若有真善剎帝利王乃至真善戌达罗等若男若女。成此十种有依行轮。于现身中速能种植独觉乘种令不退失。或于现身证独觉乘所有圣法。成独觉乘诸圣法器。善男子。是名一切声闻独觉有依行轮。一切声闻及诸独觉依止此轮。速能超渡三有大海。速能趣入般涅槃城。”</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【十轮】</span>（譬喻）即如来之十力也。地藏十轮经十轮品之说转轮圣王以十种智力劝谕国土人民并惩诫之，使己国土增长安乐，能伏一切怨敌，得种种之福利，是名十王轮。如来亦成十种智力，知第一分别道理非道理，乃至第十永断惑习之法，于一切众生中大转梵轮，故名为十种之佛轮。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【大方广十轮经】</span>凡八卷。译于北凉，译者佚名。本经述说地藏菩萨之功德，并说依十种佛轮及三乘之十种依止轮，可以转十恶业轮等。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【占察善恶业报经】</span>二卷。隋·菩提灯（登）译。系地藏菩萨代佛为坚净信菩萨演说占察善恶业报之法，及大乘实义的典籍。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【行解】</span>修行和知解。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【性修】</span>修治造作之功，称为修；本有不改之体，称为性。性德即众生刹那之一念，本来自尔具足。然众生偏于妄情，迷而不觉，故藉修门以显德，除去妄情，使本具性德，彻照三千之法。一念性德具足三法，性虽本尔；藉智起修，由性发修，由修成性。性修本体不二，如水与波，相虽不同，实为一体。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【摩尼】</span>梵语摩尼，又云末尼，华言离垢，即珠宝也。此宝光净，不为垢秽所染。故圆觉钞又云如意。谓意中所需财宝衣服饮食种种之物，此珠悉能出生，令人皆得如意，故名为宝。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

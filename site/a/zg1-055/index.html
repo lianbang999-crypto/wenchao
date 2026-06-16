@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复永嘉周群铮居士书 · 印光法师文钞</title>
+<meta name="description" content="汝所说颇有道理，慰甚。生死大事，须当预办。若待临行方修，恐被业力所夺。闭方便关，拒绝不急事缘，甚为有益。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-055/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复永嘉周群铮居士书 · 印光法师文钞">
+<meta property="og:description" content="汝所说颇有道理，慰甚。生死大事，须当预办。若待临行方修，恐被业力所夺。闭方便关，拒绝不急事缘，甚为有益。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-055/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复永嘉周群铮居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">汝所说颇有道理，慰甚。生死大事，须当预办。若待临行方修，恐被业力所夺。闭方便关，拒绝不急事缘，甚为有益。</p><p class="p-trans">你所说的颇有道理，很是欣慰。生死大事，必须预先备办。如果等到临终时方才修行，恐怕被业力所夺。闭方便关，拒绝不急的事缘，非常有益。</p></div>
+<div class="para-pair"><p class="p-orig">罗台山之不往生堕福处，在于文字气习重耳。此习既重，则虽曰念佛，实念念在文字里做工夫。念佛工夫，只是支撑门面而已。此文人通病，非台山一人而已也。世智辨聪，佛谓为八难之一者，正为此也。</p><p class="p-trans">罗台山这个人没有往生，而堕落在有福报的地方，原因在于他的文字习气很重。这种习气既重，虽说他也在念佛，而实际上却是念念在文字上做工夫。念佛工夫只是支撑其门面而已。这是文人的通病，并非仅罗台山一人而已。佛说世智辨聪为八难之一，就是这个缘故。</p></div>
+<div class="para-pair"><p class="p-orig">念佛欲得一心，必须发真实心，为了生死，不为得世人谓我真实修行之名。念时必须字字句句从心而发，从口而出，从耳而入。一句如是，百千万句亦如是。能如是，则妄念无由而起，心佛自可相契矣。又须善于用心，勿致过为执著，或致身心不安，或致起诸魔事。都摄六根，净念相继。依此而行，决无歧误。</p><p class="p-trans">念佛想得一心不乱，必须发真实心，为了生死，不要为了博得一个虚名，让世人说我是真实修行的人。念佛时必须字字句句，佛号从心而发，从口而出，从耳而入。一句是这样，百千万句，句句都是这样。能这样念，那么妄念就没有办法起来，心佛自可相契。另外必须善于用心，不要过于执著，或者致使身心不安，或者导致著魔发狂等事。都摄六根，净念相继。依照这个方法而行，决定不会步入歧途而耽误自己。</p></div>
+<div class="para-pair"><p class="p-orig">了凡四训，不知是钞安士书中者，或单有流通之本。光见一流通本，积善篇中，缺十条因果事迹。若欲排印，当以安士书后所载者校之。缺则补之，讹则改之。</p><p class="p-trans">《了凡四训》，不知道是钞录《安士全书》当中的，还是另外有单独流通的本子。我见到一个流通本，在积善篇当中，缺了十条因果事迹。如果想要排印，应当以《安士全书》后面所记载的加以校对。缺漏的加以补足，错误的加以改正。</p></div>
+<div class="para-pair"><p class="p-orig">序文凑千余字，意虽可取，文不舒畅。光本欲发挥四训未畅之旨，而意为词阻，究亦无所发明。但弁之于首，亦可作互相参证之微益耳。</p><p class="p-trans">序文凑了一千多个字，意思虽然可取，文字不太舒畅。我本来想要发挥《了凡四训》中未能畅达的义旨，但思路被文词所阻碍，到底也没能有什么阐发显明。只是这放在开头的序文，也可与正文互相参考印证而有一点利益罢了。</p></div>
+<div class="para-pair"><p class="p-orig">又现在见佛之志，可谓真切。然此事颇不容易。当以都摄六根，净念相继，以期一心不乱，为决定主宰。</p><p class="p-trans">又者，你现在就想见佛的志向，可说是很真切。然而这件事很不容易。应当以都摄六根，净念相继，以期达到一心不乱，为决定的主宰誓愿。</p></div>
+<div class="para-pair"><p class="p-orig">于未得一心前，断断不萌见佛之念。能得一心，则心与道合，心与佛合。欲见即可顿见。不见亦了无所碍。倘急欲见佛，心念纷飞。欲见佛之念，固结胸襟，便成修行大病。</p><p class="p-trans">在未得一心不乱之前，千万不要萌发急于见佛的心。能得一心不乱，则心与道合，心与佛合。想要见佛就可以马上见到。不见也没有什么妨碍。倘若急急想要见佛，心念纷飞。想要见佛的念头，固结在心头，便成为修行的大病。</p></div>
+<div class="para-pair"><p class="p-orig">久之，则多生怨家，乘此躁妄情想，现作佛身，企报宿怨。自己心无正见，全体是魔气分，一见便生欢喜。从兹魔入心腑，著魔发狂。虽有活佛，亦末如之何矣。但能一心，何须预计见佛与否。</p><p class="p-trans">久而久之，则多生怨家，乘着这躁妄情想的机会，现作佛身，期望酬报宿世的怨恨。自己的心没有正见，全体是魔的气分，一见境界便生欢喜。从此魔入心腑，著魔发狂。就算佛陀在世，也无可奈何啊。只要能念佛到一心不乱的境界，何须预先计划见佛与否。</p></div>
+<div class="para-pair"><p class="p-orig">一心之后，自知臧否。不见固能工夫上进，即见更加息心专修。断无误会之咎，唯有胜进之益。世间不明理人，稍有修持，便怀越分期望。譬如磨镜，尘垢若尽，决定光明呈露，照天照地。若不致力于磨，而但望发光。全体垢秽，若有光生，乃属妖光，非镜光也。</p><p class="p-trans">一心不乱之后，自知如何处理。不见佛固能工夫上进，如果见佛将会更加息灭妄心专精修持。断然没有误会的过失，只有更加精进修行的利益。世间不明理的人，稍有修持的功夫，便心怀过分的期望。好比磨镜子，尘垢如果去除净尽，镜子决定光明呈露，照天照地。如果不致力于磨，而只期待它发光，镜子上全部是尘土垢秽，如果能发光，也是妖光，不是镜子本有的光啊。</p></div>
+<div class="para-pair"><p class="p-orig">光恐汝不善用心，或致自失善利，退人信心，是以补书所以耳。永明云，但得见弥陀，何愁不开悟。今例其词曰，但期心不乱，不计见不见。知此当能致力于心与佛合之道矣。</p><p class="p-trans">我是担心你不善用心，或许导致自己失去修行的利益，也使别人退失信心，所以才补充写明这些意思。永明大师说：“但得见弥陀，何愁不开悟。”现在仿照这句话说：“但期心不乱，不计见不见。”明白了这些道理，就应该能致力于心与佛合之道了啊。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【罗台山】</span>江西人，乾隆举人。与彭绍升同时。彭绍升的《一行居集》卷四，有与罗台山书三通，皆有劝其念佛语句。卷七《书罗台山》，记乾隆三十七年至四十二年正月之行迹。卷八有《祭罗台山文》。是乾隆四十四年（1779）七月。据人名辞典：罗台山卒于乾隆四十三年，寿四十六。（见会性法师《读印光法师文钞记》）</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【弁】</span>弁言。书籍或长篇文章的序文、引言。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【胸襟】</span>犹胸怀。指心里头。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【臧否】</span>善恶；得失。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

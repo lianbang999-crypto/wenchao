@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>佛祖心灯禅净双勖合编流通序（民二十年） · 印光法师文钞</title>
+<meta name="description" content="佛祖心灯，亘古常明。禅净理致，充塞法界。人各具足，何用赞扬。为不了者，重下注脚。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-030/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="佛祖心灯禅净双勖合编流通序（民二十年） · 印光法师文钞">
+<meta property="og:description" content="佛祖心灯，亘古常明。禅净理致，充塞法界。人各具足，何用赞扬。为不了者，重下注脚。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-030/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">佛祖心灯禅净双勖合编流通序（民二十年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛祖心灯，亘古常明。禅净理致，充塞法界。人各具足，何用赞扬。为不了者，重下注脚。</p><p class="p-trans">佛陀祖师的心灯，自古以来常明。禅净二宗的义理旨趣，充塞遍满法界。人人各自具足，根本用不着来赞叹称扬。但是为了不清楚明了的人，还是应当重新写下注解。</p></div>
+<div class="para-pair"><p class="p-orig">梵网经云，一切众生，皆有佛性。又云，汝是当成佛，我是已成佛。法华常不轻菩萨，见诸四众，皆悉礼拜曰，我不敢轻于汝等，汝等皆当作佛。华严如来成等正觉，叹曰，奇哉，一切众生，皆具如来智慧德相，但因妄想执著，而不证得。若离妄想，则一切智，自然智，则得现前。</p><p class="p-trans">《梵网经》中说：“一切众生，皆有佛性”。又说：“汝是当成佛，我是已成佛。”《法华经》中的常不轻菩萨，见一切四众（比丘、比丘尼、优婆塞、优婆夷），全都礼拜说：“我不敢轻于汝等，汝等皆当作佛。”《华严经》中，如来成等正觉，感叹说：“奇哉，一切众生，皆具如来智慧德相，但因妄想执著，而不证得。若离妄想，则一切智，自然智，则得现前。”</p></div>
+<div class="para-pair"><p class="p-orig">是知众生当体是佛，但以迷而未悟，及悟而未证，故不免仍作众生耳。其令悟之法，莫过于参禅。即所谓看父母未生以前本来面目者，乃令人向未动念以前，亲见其主人翁耳。</p><p class="p-trans">由此可知，众生当体就是佛，只是因为迷惑而没有开悟，以及开悟了却没有证悟，所以不免仍旧作众生罢了。各种法门中，令众生开悟的方法，没有比参禅更好的了。就是所谓的“看父母未生以前的本来面目”，这是让人向未动念以前，亲见自己的主人翁。</p></div>
+<div class="para-pair"><p class="p-orig">果能彻见，是名为悟。然烦恼未断，依旧莫出轮回。若能断尽世间烦惑，方可高超三界。是知证之一事，大非易易，以故不得不依信愿念佛求生西方，以期仗佛慈力，带业往生也。</p><p class="p-trans">果真能彻底地见到（即明心见性），就叫作“开悟”。但是开悟后，如果烦恼没有断尽，那么依旧不能出离生死轮回。如果能够断尽世间的烦恼惑业，才能高超三界之外。由此可知，证悟这件事，非常不容易，因此不得不依靠信愿念佛、求生西方这一净土法门，以期依仗佛的慈力，带业往生。</p></div>
+<div class="para-pair"><p class="p-orig">谛思此义，知如来特开净土一门，不独为接引普通行人，实为保护于宗于教有所悟证，而未至凡情圣见俱不可得，烦惑净尽，翛然解脱者。</p><p class="p-trans">仔细思考这些义理，便知道如来特别开设净土这一法门，不仅仅是为了接引普通的修行人，实际上也是为了保护在宗门、教下虽然有所悟证，但是还没有做到凡情圣见都不可得，烦恼惑业净尽、翛然解脱的人。</p></div>
+<div class="para-pair"><p class="p-orig">夫已悟已证，未至其极。若无净土法门为之保护摄持，则此诸行人，再经受生，沉没者居多，而进修者甚少矣。感佛恩德，不禁令人哽咽涕零。</p><p class="p-trans">已经开悟、证悟，但还没有到究竟极处的人。如果没有净土法门保护、摄持他们，那么这些修行人，再经过投胎受生，沉没退堕的人居多，而进一步修行的人就太少了。感激佛陀宣说净土法门的恩德，不禁令人哽咽涕零。</p></div>
+<div class="para-pair"><p class="p-orig">了然大师，宿根深厚。从初出家，即志宗乘。苦参力究，得其旨归。以七佛，及西竺东震三十三祖偈，文深义奥，殊难领会。因为贯注，稍增字句，义便彰明，遂名之为佛祖心灯。</p><p class="p-trans">了然大师，宿世善根深厚。从最初出家，就专修禅宗。苦参力究，得悟禅法的宗旨归趣。因为过去七佛（毗婆尸佛、弃尸佛、毗舍浮佛、拘留孙佛、拘那含牟尼佛、迦叶佛、释迦牟尼佛）及古印度和中国禅宗三十三代祖师的《传法偈》，文深义奥，很难领会。因此为《传法偈》依次作注解，稍微增加字句，义理就彰显明白了，于是将这本书取名为《佛祖心灯》。</p></div>
+<div class="para-pair"><p class="p-orig">嗣后云游诸方，研穷经论，始知净土法门，实为诸佛诸祖究竟自利利人之甚深法海。一切诸法，无不从此流出，无不还归此法。遂生真信，而力修持，以期即生往生，克副初衷也。</p><p class="p-trans">这之后，他云游四方，深入研究经论，方才知道净土法门，实际上是诸佛诸祖究竟自利利人的甚深法海。一切诸法，无不从此法界流出，无不还归此法界。于是生起真信，而竭力修持，以期在这一生就能往生净土，能够契合自己（断惑证真、了生脱死）的初衷啊！</p></div>
+<div class="para-pair"><p class="p-orig">间有发挥禅净理致，语语确切，发人深省，乃名之为禅净双勖。虽仍提倡禅宗，实则注重净土。以期已悟证，未悟证者，同得即生了脱也。</p><p class="p-trans">这期间他著有发挥禅净二宗义理旨趣的书，每句话都很确切，发人深省，于是就把这本书取名为《禅净双勖》。虽然此书仍旧提倡禅宗，但实际上却是注重净土。以期已经悟证和还没有悟证的人，共同得以当生了脱生死轮回。</p></div>
+<div class="para-pair"><p class="p-orig">其友德森大师，欲为排印流通，祈余审定，及叙其意致，乃撮举其要而述之。所惜语意较深，普通初机人，未能一阅直下明了耳。</p><p class="p-trans">他的道友德森大师，想要将这本书排印流通，请我来审定，并叙述该书的大意，于是我撮举书中的大要来加以叙述。可惜的是文中的语意较深，普通的初机学人，是不能一经阅读就当下明白的。</p></div>
+<div class="para-pair"><p class="p-orig">然接引初机之书甚多，固未可为歉憾也。而亦可令参禅未得悟证者，得其即生了办之道，其有益于禅者大矣。愿见闻者，同生信焉。</p><p class="p-trans">不过，接引初机学人的书很多，所以未必就因此而感到歉疚和遗憾。而这部书也可以让参禅还没有得到悟证的人，得到在现生就可以了生脱死的方法，那就太有益于参禅的人了。祈愿见者闻者，共同生起信心。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【勖】</span>勉励。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【亘古】</span>1.贯穿古代；整个古代。2.自古以来；从来。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【注脚】</span>1.解释字句的文字。2.泛指解释、说明。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【一切智】</span>一切智，是一切种智的略说。即能以一种智慧觉知一切道法、一切众生之因种，并了达诸法之寂灭相及其行类差别之智。一切种智者，观种种法门，破诸无明。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【自然智】</span>与“无师智”为同义语。指非藉他力，不待他人教而自然成就之智慧。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【翛然】</span>无拘无束貌；超脱貌。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【了然法师】</span>（1889年-1977年），俗姓温，名谦和。江西宁都人。24岁于江西龙凤岩青雨寺出家。1913年偕德森法师同坛稟具于大乘寺。宿根深厚，般若力充，独居七星岩山顶，参禅数年，大悟。1916年住赣州光孝寺，曾住持马场。1921年与德森发足参方。翌年，至普陀山法雨寺亲近印光大师。大师见彼二人笃实，相契甚深，为向佛顶山文质和尚处讨藏经楼单，使安心住楼阅藏。大师至苏州报国寺，了然法师亦与德森法师二人结伴随从，并协助印公抄写、校对、刊印经书各事，后随大师同上灵岩。了然法师遂闭关于佛海泉珍桃圆之西关房，额其关房曰“不退”。境幽缘胜，足不逾阈达数十年之久，念佛乃大进。文革后，由灵岩移居天平山果园养老。1976年春，其弟子迎至苏州城内调理病体。先住钟楼新村，后迁至谢衙前弟子家中。1977年7月9日晨六时，安详往生。临终有瑞相，出声念佛，正念分明。世寿八十九，僧腊六十五。然于披剃前读书不多，出家后用功得力，智慧开朗，文思泉涌，举笔成章。著有《佛祖心灯贯注》、《禅净双勖(xù)》、《圆通章讲义》、《净修道言》、《般若净土中道实相菩提论》、《普劝同伦念佛文》、《入香光室》等，于禅净两门奥旨多有阐发。凡参谒求开示者，唯以念佛求生净土为明训，语多平淡，悲心流露，闻者莫不为感动。其座右铭有云：“人生无常，朝不保暮，须勤念佛，切莫虚度，一堕三途，万劫受苦，趁此健康，求生净土。”（曾琦云注）</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【禅宗三十三祖】</span>禅宗三十三祖：西天禅宗初祖为摩诃迦叶尊者，达摩祖师为第二十八代祖师。南朝梁武帝时，达摩祖师秉受第二十七代祖师般若多罗尊者的法旨，来到我国传授禅法，为东土禅宗初祖。传至六祖慧能大师时，衣钵止而不传。西天东土禅宗祖师，合计为三十三祖。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【研穷】</span>1.详细追查审问。2.深入钻研。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【德森法师】</span>（1883年-1962年），俗姓杨，名隆焜，江西省兴国县人，清光绪九年癸未（1883年）出生，自幼受学塾教育，年逾弱冠，有感于世事无常，而有出世之心，乃于民国元年（1912年）三十岁时，舍俗离乡，投身于福建省长汀县报恩寺，依今彩老和尚剃度出家；民国二年（1913年）春，在江西省宁都县大乘寺受具足戒，同坛受具的，还有以后数十年同参道侣了然法师。圆戒后仍回到长汀县报恩寺，依今彩老和尚修行。民国八年（1919年）今彩老和尚往生，德森为师父料理身后事宜，一切如礼。民国十年（1921年），德森与了然法师结伴参访，遍访江南名山大刹，聆听耆宿大德开示。翌年，至普陀山法雨寺，亲近印光老法师，印老见二人木讷笃实，甚为器重，劝二人息心持名念佛。开示二人曰：“于净土法门，应当生真信，发切愿，至诚恳切，一心念佛，求生净土。若不注重信愿，唯期持至一心，则难令深得一心，亦难了生脱死。”因之为二人向佛顶山文质和尚处讨藏经楼单，使安心住楼阅藏。此后二人随侍印老左右。时聆教诲，日久夙慧开发，参学颇有进益。德森法师在印老身边时，同时为老法师校对所印的经书。一日偶然读到马契西居士为印老撰写的传记，才知道早几年北京政府的大总统徐世昌，曾赠给老法师匾额一方，上书“悟彻圆明”四字，他以这件事叩问印老，老法师板下脸说：“悟尚未能，遑论圆明？瞎造谣言，增我惭愧。”德森也就不敢再问下去。后来他在大殿高处发现了这块匾，原来殿高匾小，平常看不到匾在高处也。民国十年（1921年）前后，印光老法师以印经书之故，常到上海去，没有落脚之处，这时普陀山三圣堂的真达和尚，在上海住持三圣堂下院供养庵。民国十一年（1922年），供养庵拆除重建，取名为太平寺，他在太平寺特辟静室一间，作为印光老法师驻锡之所，此后老法师即常住在上海太平寺。而校对经书之事，仍由德森法师负责如旧。民国十九年（1930年），印光老法师在上海成立弘化社，设于上海净业社所在的觉园，社中业务仍由德森负责。印光老法师印经赠人的工作，早在民国七年（1918年）就已开始，不过没有弘化社的名称而已。弘化社成立未久，印光老法师移锡苏州报国寺闭关，弘化社也迁到苏州报国寺。德森也随侍老法师到了苏州，仍全心经营弘化社的业务。因此，弘化社组织完善，弘化事业日益开展。以后二十余年间，弘化社印出的佛书不下四、五百万部，佛像一百余万帧，德森法师尽力实多。民国二十九年（1940年）冬，印光大师西归，四众弟子组织“印光大师永久纪念会”，共推德师为副会长，总其大成。同时他尚兼司弘化社业务，频年所印出之书刊，也多为德森法师所编校。到民国三十五年（一九四六年），德森老法师年已64岁，感于无常迅速，时不待人，乃辞去弘化社社务，掩关自修，十易寒暑，闭关圆满。唯以此时已年近八旬，健康日衰，于1962年壬寅岁十一月二十六日示寂，世寿八十岁，僧腊五十，戒腊四十九夏。印光法师一生不收剃度徒，但德森、真达、妙真、了然四个人，实是印光法师身边最亲近的弟子。民国二十九年（1940年）十一月初四日印光法师圆寂，印光法师的传记《中兴净宗印光大师行业记》，就是他们四个人联名撰写的。（于凌波著）</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

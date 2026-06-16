@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复谢慧霖居士书十六 · 印光法师文钞</title>
+<meta name="description" content="学说之误人，只在最初几希之间。其后之结果，则无法可收拾矣。宋儒窃取佛教理性道理，而不知理性由事修而为成始成终之据。以故拨无因果报应，及生死轮回，致成今日之灭绝伦理之世道也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-243/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复谢慧霖居士书十六 · 印光法师文钞">
+<meta property="og:description" content="学说之误人，只在最初几希之间。其后之结果，则无法可收拾矣。宋儒窃取佛教理性道理，而不知理性由事修而为成始成终之据。以故拨无因果报应，及生死轮回，致成今日之灭绝伦理之世道也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-243/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复谢慧霖居士书十六</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">学说之误人，只在最初几希之间。其后之结果，则无法可收拾矣。宋儒窃取佛教理性道理，而不知理性由事修而为成始成终之据。以故拨无因果报应，及生死轮回，致成今日之灭绝伦理之世道也。</p><p class="p-trans">思想学说误人，只在最初极为细微之处。可后来的结果，就无法收拾了。宋儒窃取佛教中理性的道理，然而却不知道理性是由事修而为成始成终的依据。所以他们认定没有因果报应和生死轮回，以致形成了今日灭绝伦理的世道。</p></div>
+<div class="para-pair"><p class="p-orig">汝于佛学，颇有见处。对于初机，不先以事修为事，而以第一义谛为训，其错也莫能喻焉。</p><p class="p-trans">你对于佛学，很有见地。对于初学的人，不先以事修作为事务，却以第一义谛作为训导，这样的错误也无法比喻。</p></div>
+<div class="para-pair"><p class="p-orig">百丈错答不落因果一语，按实理亦非有错。以教不投机，致人误会，遂致堕五百生野狐身。所以古人谓宁可著有如须弥，不可著空如芥子也。</p><p class="p-trans">在《五灯会元·马祖一禅师法嗣·百丈怀海禅师》中，老人错答“不落因果”这句话，按照实理也并非有错。但因为教导他人没有投合根机，致使他人误会，于是导致其堕落作五百世的野狐身。所以古人说：“宁可著有如须弥，不可著空如芥子。”</p></div>
+<div class="para-pair"><p class="p-orig">上帝临汝，无二尔心，在帝左右，简在帝心等，当极力为彼等说其事相理致。令彼等均皆严恭寅畏，常凛对越之诚。</p><p class="p-trans">“上帝临汝，无二尔心”，“在帝左右”，“简在帝心”等话，应当极力对他们讲说其中的事相义理。令他们都庄严恭敬、敬畏戒惧，常怀祭祀神灵时的诚心。</p></div>
+<div class="para-pair"><p class="p-orig">若尔即不发明第一义天之深理，而亦决不至于悖谬。若完全不按事说，专按第一义说。俾上焉者虽悟深理，不务实修。下焉者便成肆无忌惮之狂徒矣。可不哀哉。</p><p class="p-trans">这样，即使不阐发显明第一义天的深理，也绝不至于悖谬。如果完全不按照事相来说，专按第一义理来说。使得上根的人，虽然悟得深理，但不从事实修；下根的人，便成为肆无忌惮的狂徒了。能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">汝欲利人，不但宋儒之派不可学。即凤篪先生之派，亦不可学。以彼重在理性，不注重事修故。宜步趋周安士先生，则其为益也大矣。</p><p class="p-trans">你想要利益他人，不但宋儒理学学派不可学。即使是张凤篪先生的学派，也不可学。因为他重在理性，不注重事修的缘故。应该步步紧跟周安士先生，那么这个利益就很大了。</p></div>
+<div class="para-pair"><p class="p-orig">今之人通害执理废事之病。汝又从而导之，其祸宁有底极。然不以光之所说为非，乃汝之大过人处。多有明知自己错谬，尚复极力辩护者，何止一二三四五六七八也。</p><p class="p-trans">现在的人通通都害了执理废事的毛病。你又跟从引导，这样的灾祸难道还有终极吗？然而如果不认为我所说的不对，这就是你的大过人处。有很多明知自己错误，还极力辩护的人，何止一、二、三、四、五、六、七、八人呢？</p></div>
+<div class="para-pair"><p class="p-orig">杨子之学，直不足以挂齿之学。孟子当日，犹以为论，虽属辟彼，实因此抬高彼之声价。使孟子不屑挂齿，后世谁知有杨子其人者乎。</p><p class="p-trans">杨子（即杨朱）的学说，简直是不足挂齿的学说。孟子当时，还拿杨子的学说来讨论，虽然是辟驳他，实际上却因此抬高了杨子的声价。假使孟子不屑挂齿，后世有谁知道有杨子这个人呢？</p></div>
+<div class="para-pair"><p class="p-orig">教人先要识彼来机。否则且注重于事修，则为最稳妥之法则。杨子亦不可以为哲学。哲学用之而善，尚有益于世。</p><p class="p-trans">教导他人，先要识别他的根机。否则，暂且注重于事修，则是最稳妥的法则。杨子的学说也不可以作为哲学。哲学运用得好，还能有益于世间。</p></div>
+<div class="para-pair"><p class="p-orig">杨子之学，似乎自任天真，实则戕贼人道。以人各不相为，则水尚无由而吃，况穿衣吃饭乎。</p><p class="p-trans">杨子的学说，似乎自任天真，实际上损害人道。因为如果每个人都不相互帮助，那么连水都没得喝，何况穿衣吃饭呢？</p></div>
+<div class="para-pair"><p class="p-orig">世之人无一不仗人力，方能为生者。上自皇帝，下至乞丐，莫不皆然。彼拔一毛而利天下不肯为，不知彼穿衣吃饭，完全皆他人之力所得成就者，彼无一毛之利人处，彼亦不应受人一毛之利。此种邪说，尚有以为一家学说者，真是厕蛆与神龙并论矣。</p><p class="p-trans">世间的人，没有一个不是依仗他人之力，才能生存的。上自皇帝，下至乞丐，都是如此。杨子拔一根毛就能利益天下却不肯为，不知道他穿衣吃饭，完全都是他人之力所得以成就的。他没有一毛利益他人的地方，他也不应该接受他人一毛的利益。这种邪说，还有人把它当作一家学派，真是将厕所中的蛆虫与神龙相提并论啊！</p></div>
+<div class="para-pair"><p class="p-orig">聂云台处，切勿再寄信，彼大病年余，今虽稍愈，不能用心及多说话。彼之相命，依子平家皆谓前去二年决难过，幸已过矣，但复原不知在何时也。</p><p class="p-trans">聂云台那里，千万不要再寄信去，他大病了一年多，现在虽然稍好了些，但不能用心劳神和多说话。他相面算命，算命的人都说他绝对很难度过前年、去年这二年，幸好已经过去了，只是不知道何时才能康复。</p></div>
+<div class="para-pair"><p class="p-orig">许止净事颇繁，兼以色力不甚佳，以故不甚应外缘。杨棣棠已托明道师向居士林打探消息矣。</p><p class="p-trans">许止净的事务比较繁忙，加上精力又不是很好，因此不太应酬外缘。杨棣棠，已经托明道师向居士林打探消息了。</p></div>
+<div class="para-pair"><p class="p-orig">历史统纪，令明道师寄十包，每包五部，大约可以足用。开会演说，体裁颇好，而办事之人，实不易得。</p><p class="p-trans">《历史感应统纪》，让明道师寄了十包，每包五部，大约可以够用。开会演说，体裁很好，但办事的人，实在不容易找到。</p></div>
+<div class="para-pair"><p class="p-orig">今之无论何界，一动即立章程，求其能依章程实行者，则便难其人矣。若知其难，当从省心力处办。但期有益，不必定要合大章程。</p><p class="p-trans">现在无论哪一界，一有举动就要建立章程，求其中能够依照章程实行的，就很难有这样的人了。如果知道困难，应当从省心力处来操办。只期望有利益，不必一定要符合大章程。</p></div>
+<div class="para-pair"><p class="p-orig">若必欲合大章程，或致小益亦莫由得，以人情太下作，不乐遵正式范围故也。（六月十七）</p><p class="p-trans">如果一定想要符合大章程，或许导致小利益也没办法得到，因为人情太下作，不乐意遵从正式范围的缘故。（六月十七日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【几希】</span>相差甚微；极少。《孟子·离娄下》：“人之所以异于禽兽者几希。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【五百生野狐身】</span>唐朝百丈怀海禅师，他在上堂说法的时候，有一个老人经常来听法，听完了也就随着大众离开。有一天，这老人听完经却不离开，百丈禅师就问：“站在那儿是什么人呢?”老人就说，他自己过去在迦叶佛的时代，曾经住在这座山，当时有学人问他说：“大修行的人还落因果吗?”他回答说：“不落因果。”要注意哦，“不落因果”就等于说不会落入因果定律当中，这样就是“拨无因果”的大邪见了!结果就因为讲错这一句话，五百世都堕落作野狐狸。
+还好他以前还有善根，所以五百世之后，让他遇到了百丈禅师，有机会再听闻佛法，解决这个问题。当时他请求百丈禅师“代一转语”，“代”就是“代替”的“代”，“转”就是“扭转”的“转”，他请百丈禅师代一转语，就是代为扭转观念，讲出一句正确的法语来。百丈禅师就教他说：“应当是‘不昧因果’。”这老人听了当下恍然大悟。（节录自《不昧因果与不落因果》，道证法师讲）</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【上帝临汝，无二尔心】</span>《诗·大雅·大明》：“上帝临女（汝），无二尔心。”意思是：上天监察你的心，所以你（在上帝面前）不要心怀二意。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【在帝左右】</span>《诗·大雅·文王》：“文王陟降，在帝左右。”意思是：文王神灵升降天庭，在上帝身边多么崇高。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【简在帝心】</span>《论语·尧曰》：“帝臣不蔽，简在帝心。”意思是：您的臣仆（的善恶），我也不敢隐瞒掩盖，（对此）您心里是清楚知道的。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【严恭】</span>庄严恭敬。《书·无逸》：“昔在殷王中宗，严恭寅畏天命。”</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【寅畏】</span>敬畏；恭敬戒惧。《书·无逸》：“严恭寅畏，天命自度。”</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【对越】</span>1.犹对扬。答谢颂扬。2.指帝王祭祀天地神灵。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【扬子之学】</span>《孟子·尽心上》：“杨子取为我，拔一毛而利天下，不为也。”杨朱主张“贵己”、“重生”、“人人不损一毫”的思想。是道家杨朱学派的创始人。在战国时期，有“天下之言不归杨则归墨的现象”，可见其学说影响之大。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【自任】</span>1.自信，自用。2.自觉承担；当作自身的职责。3.犹自禁，自己承受。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【戕贼】</span>伤害；残害。戕，残杀，杀害；贼，残害。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【子平】</span>传说宋有徐子平，精于星命之学，故后世术士宗之。一说，子平，名居易，五季人，尝与麻衣道者陈图南同隐华山。见清翟灏《通俗编·艺术》。因即以“子平”指星命之学。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【下作】</span>卑鄙下流。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

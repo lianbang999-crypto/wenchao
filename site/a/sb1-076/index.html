@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复焦易堂居士书 · 印光法师文钞</title>
+<meta name="description" content="初一接手书，不胜欣慰。既以菩萨心肠，作护法事业，则当今适逢其会。民国肇造共和，奉教自由。以三民主义互相号召，今已十有八年。而于僧人则越格虐待，其意盖欲驱僧夺产，而俾全国了无一僧，方可快意。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-076/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复焦易堂居士书 · 印光法师文钞">
+<meta property="og:description" content="初一接手书，不胜欣慰。既以菩萨心肠，作护法事业，则当今适逢其会。民国肇造共和，奉教自由。以三民主义互相号召，今已十有八年。而于僧人则越格虐待，其意盖欲驱僧夺产，而俾全国了无一僧，方可快意。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-076/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复焦易堂居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">初一接手书，不胜欣慰。既以菩萨心肠，作护法事业，则当今适逢其会。民国肇造共和，奉教自由。以三民主义互相号召，今已十有八年。而于僧人则越格虐待，其意盖欲驱僧夺产，而俾全国了无一僧，方可快意。</p><p class="p-trans">初一接到你的信，非常欢喜欣慰。居士既然以菩萨心肠，作护法的事业，而今恰好遇到护法的机会。中华民国成立共和国，信教自由。以三民主义，互相号召，到今年已有十八年了。但对于僧人，则过份虐待，其用意是想要驱逐僧人、夺取寺产，并使全国都没有一个僧人，方才高兴。</p></div>
+<div class="para-pair"><p class="p-orig">又恐碍于舆论，姑以管理之名，用为驱夺之据。其所立二十一条，如第四，第五，第九，虽冒其管理保护之名，能不令有知识者痛心，挟野心者欢愉乎。</p><p class="p-trans">又恐碍于舆论的压力，姑且以管理的名义，用来作为驱僧夺产的依据。其中所立的二十一条，如第四，第五，第九，虽然冒充管理保护的名义，能不令有识之士痛心，心怀野心的人欢喜吗？</p></div>
+<div class="para-pair"><p class="p-orig">此种立法，尚得谓之为奉教自由乎。尚有民生，民权，民族之实际乎。尚是共和国之开国政令乎。如此主义，乃实行令民死，夺民权，灭民族耳。</p><p class="p-trans">这种立法，还能称为信教自由吗？还有民生，民权，民族的实际吗？还是共和国的开国政令吗？如此的三民主义，是实行令民死，夺民权，灭民族而已。</p></div>
+<div class="para-pair"><p class="p-orig">若曰，此系于僧界为然，非统国民如是也，试问僧非国民乎。若国民通作此等法令，尚有可原。今唯僧为然，非以其微弱无力，遂用此强陵弱众暴寡之手段乎。</p><p class="p-trans">如果说：这只是对僧界如此，并非对全部国民都是如此，试问：僧人不是国民吗？如果国民全都作这样的法令，尚且有情可原。如今唯独对僧人如此，难道不是因为僧人微弱无力，于是采用这样以强陵弱、以众暴寡的手段吗？</p></div>
+<div class="para-pair"><p class="p-orig">日本以蕞尔小国，称雄全球，不以佛法为赘疣。吾国自后汉以来，佛法流通于东西南北各国。</p><p class="p-trans">日本以小小的一个国家，称雄全球，不以佛法为累赘。我国自从后汉以来，佛法流通到东、西、南、北各国。</p></div>
+<div class="para-pair"><p class="p-orig">今欲国界统一，人民安乐，以阴翼郅治，显淑民情之佛法为赘疣，而欲去之。是何异欲树之茂而先截其根，欲流之远而先塞其源。</p><p class="p-trans">如今想要国家统一，人民安乐，却将暗中辅佐国家大治，显扬改善民风民俗的佛法当作多余无用之物，而想要去除掉。这与想使树叶茂盛而先截断树根，想要水流远长而先塞住源头，有什么不同呢。</p></div>
+<div class="para-pair"><p class="p-orig">佛法之益世在精神上，非凡愚可得而见，如树之根，水之源。世之浅知见者，只在条干枝叶上批评，泛滥充溢上议论。于其所以荣枝叶条干，致泛滥充溢处，则莫之能知。岂非所谓北辕而适越，却步以求前乎哉。</p><p class="p-trans">佛法利益世间，是在精神上，不是凡夫愚人可以得见的，如同大树的根，活水的源头。世间那些知见浅陋的人，只在大树的条干枝叶上批评，（水的）泛滥充溢上议论。对于大树之所以繁荣枝叶条干，（那些）致使（水）泛滥充溢之处，就不能知道了。岂不是所谓的：南辕北辙，以后退来求前进吗？</p></div>
+<div class="para-pair"><p class="p-orig">前月二十九日，上海佛教会诸缁素，往京请愿，昨接其来信，召在会各缁素委员同来。光本无门庭，无徒众，无作为之一待死老僧。彼会以光微有虚名，故亦置之于其会员之中。</p><p class="p-trans">上个月二十九日，上海佛教会诸位僧俗，前往南京请愿，昨天接到他们的来信，召集在会的各位僧俗委员同来。我本来是没有门庭，没有徒众，无所作为的一个等死的老僧。佛教会因为我稍微有点虚名，所以也将我放在佛教会员之中。</p></div>
+<div class="para-pair"><p class="p-orig">然光固置此身于度外者，若民国相容，则不妨尽其余年。若不相容，则不妨与河伯海若结为伴侣，免得窒碍民国地界。岂须请愿求容，以期久存永世乎。</p><p class="p-trans">然而我本来就是个置身度外的人，如果民国政府相容，则不妨享尽我的余年。如果不相容，则不妨与河神海神结为伴侣，免得阻碍民国的地界。哪里需要请愿乞求相容，期望久存于世呢？</p></div>
+<div class="para-pair"><p class="p-orig">只因佛法乃人天眼目。当此互相残杀迄无止息之际，而欲兴利除弊，先从事于灭法。则恐蹈魏武，周武，唐武之覆辙，而徒膺报于自己，贻诮于后人，而于国于民有损无益也。以故不避忌讳，直陈利弊。</p><p class="p-trans">只因为佛法是人天的眼目。在这互相残杀，至今没有止息之际，而想要兴利除弊，先从事于灭法。则恐怕会重蹈北魏太武帝，北周武帝，唐武宗的覆辙，并徒然地自己承受恶报，并留下讥笑给后人，且对于国家，对于人民有损无益啊！所以不避忌讳，直接陈述其中的利弊。</p></div>
+<div class="para-pair"><p class="p-orig">冀居士发为国为民之心，极力维持。俾以前所颁之条例，不成事实。则共和奉教自由，三民主义之号召，其有益于国于民也，大矣。岂徒僧界蒙福利哉。（五月初三）</p><p class="p-trans">希望居士发起为国为民之心，极力维持佛教。使得以前所颁布的条例，不能成为事实。那么共和信教自由，三民主义的号召，有益于国家人民的，就太大了。哪里只是僧界蒙受福利而已呢？（五月初三）</p></div>
+<div class="para-pair"><p class="p-orig">今之讲男女平权者，多多皆不知女人之权，大于男子多难称喻。世道之乱，亦由女权不振所致。世道欲治，当急令女子无负天职，各各恪守其权。</p><p class="p-trans">当今宣讲男女平等权力的人，大多都不知道女人的权力，大过男子很多，难以说尽。世道的混乱，也由于女权不振所导致。世道想得到治理，应当赶紧令女子不要辜负天职，各自恪守她的权力。</p></div>
+<div class="para-pair"><p class="p-orig">光尝谓治国平天下之权，女人家操得一大半。以其克尽妇道，相夫教子，于家于国，利在不知不觉中。</p><p class="p-trans">我曾经说：治国平天下的权力，女人家掌握一大半。因为她们克尽妇道，相夫教子，所以对于家庭、国家，其利益是在不知不觉中。</p></div>
+<div class="para-pair"><p class="p-orig">祈详视嘉言录谕在家善信数章，可以悉知。此外求治，则非光之浅见劣识所得而知也。</p><p class="p-trans">请详看《印光法师嘉言录》中教诲在家善信的几章，就可以全部知道。除此之外，求得国治邦安，就不是我的浅见劣识所能够知道的了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【焦易堂】</span>（1879-1950）又名希孟，武功县河大村人，清末秀才，后又入北京中国公学政法科学习。清宣统元年（1909），在陕西自治研究所学习，毕业后加入同盟会。辛亥革命后，焦易堂在陕西都督府供职，任陕西同盟会干事，后被选为陕西省议会议员和国会议员。民国38年（1949）去了台湾，1950年10月20日在台北病逝，终年71岁。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【蕞尔】</span>形容小。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【赘疣】</span>1.指附生于体外的肉瘤。2.喻多余无用之物。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【民情】</span>1.民众的心情、愿望等。2.民众的生活、生产、风尚习俗等情况。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【河伯】</span>传说中的河神。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【海若】</span>传说中的海神。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

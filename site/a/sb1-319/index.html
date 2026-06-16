@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复项智源居士书 · 印光法师文钞</title>
+<meta name="description" content="接手书，知尚能不退信行，慰甚。修持日记册，甚好。无锡陶颂铭，立一百多莲社，人各送一本。一本十二页，备列各日。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-319/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复项智源居士书 · 印光法师文钞">
+<meta property="og:description" content="接手书，知尚能不退信行，慰甚。修持日记册，甚好。无锡陶颂铭，立一百多莲社，人各送一本。一本十二页，备列各日。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-319/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复项智源居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">接手书，知尚能不退信行，慰甚。修持日记册，甚好。无锡陶颂铭，立一百多莲社，人各送一本。一本十二页，备列各日。</p><p class="p-trans">接到信，知道你仍能不退信愿行持，很欣慰。修持日记册，很好。江苏无锡的陶颂铭，建立了一百多个莲社，每个人各送一本。一本有十二页，每页都详细列出日期。</p></div>
+<div class="para-pair"><p class="p-orig">每日下列经咒佛。（女人十有八九，男人十止一二。）此以人多不能详列横表，但于日下作几层书之，亦方便引人精进之法也。</p><p class="p-trans">每个日期下面列出经咒佛号。（女人十有八九，男人只是十有一二。）这是因为人多，不能详列横表，只在每个日期下面分几行书写，这也是方便引导众人精进的办法。</p></div>
+<div class="para-pair"><p class="p-orig">缘起刻之于首，颇为有益。所问入佛问答之觉海，约本而论，一尚不可得，说甚无量乎。约各人所证未证，有不同得受用觉海之实益者，则亦未可以一而不二言也。</p><p class="p-trans">缘起刻在册子的开头，非常有益。你问《入佛问答》一书中“觉海”的意思，就本体来讨论，“一”尚且不可得，还说什么“无量”呢？就每个人的所证、未证来讨论，每个人所得受用“觉海”的真实利益不同，那就不能用“一而不二”来说了。</p></div>
+<div class="para-pair"><p class="p-orig">譬如虚空，本无有二。由以有质碍之物间隔之，则彼此各别处，不胜其多也。若将质碍者去之，则复归于无有彼此矣。</p><p class="p-trans">譬如虚空，本来没有二个。由于有质碍的物体间隔了，那么彼此不同的地方，就非常的多了。如果将质碍的间隔去除，就又归于没有彼此了。</p></div>
+<div class="para-pair"><p class="p-orig">众生与佛，心性无二。由众生迷而未悟，种种执著。故于一觉海中，遂成隔碍而成业海。能将烦恼断尽，如撤去有质碍物，则成无二之空。</p><p class="p-trans">众生与佛，心性无二。由于众生迷惑而没有觉悟，有种种的执著。所以在一觉海中，就成了隔碍而形成业海。能够将烦恼断除究尽，如同撤去有质碍的物体，就成为无二无别的空了。</p></div>
+<div class="para-pair"><p class="p-orig">故华严云，十方诸如来，同共一法身，一心一智慧，力无畏亦然。心佛众生，三无差别。其差别者，乃幻妄相，非本体也。</p><p class="p-trans">所以《华严经》中说：“十方诸如来，同共一法身，一心一智慧，力无畏亦然。”心、佛、众生，三者并无差别。若说他们有差别，那是幻妄之相，不是心性本体。</p></div>
+<div class="para-pair"><p class="p-orig">后世人多以生之者众，非持五戒，种善根者多也。古人云，一人生二人，十世一千丁，何得不多乎。</p><p class="p-trans">后世的人多，是因为生的人多，并不是持五戒，种善根的人多。古人说，一人生二人，经过十世，就有一千个子孙，怎么会不多呢？</p></div>
+<div class="para-pair"><p class="p-orig">佛言人身难得，于一尺中，从于地下乃至天上，其中众生，多于四天下人数。其有由恶道而出，由天界而降者，不知凡几。昔之人少，以生之缘少，今之人多，以生之缘多。</p><p class="p-trans">佛言：人身难得，在一尺的空间中，从地下到天上，其中的众生，多过四天下的人数。其中有从恶道出来的，有从天界降生的，不知有多少。过去的人少，是因为生的因缘少。现今的人多，是因为生的因缘多。</p></div>
+<div class="para-pair"><p class="p-orig">不得谓因人比昔多，便为今持戒者多，故能如此。不知六道中胎卵湿化之微细虫，其多无量。况尚有鬼道中者乎。况地狱道乎。故云佛观一钵水，八万四千虫，汝何得作此种一偏知见乎。</p><p class="p-trans">不能说，因为现在的人数比古时候多，就认为现今持戒的人多，所以能够如此。不知六道中，胎、卵、湿、化的微细虫类，多的无量无边。何况还有鬼道中的众生呢？何况地狱道众生呢？所以说：佛观一钵水，八万四千虫，你怎能作这样一种不正的知见呢？</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，今年春夏间，尚有数种书要印。廿三即下山，往上海，寓太平寺。六月仍回山过夏。七月下山，则不归矣。八九月印书事结束了，即灭踪长隐矣。</p><p class="p-trans">我老了，今年春夏间，还有几种书要印出。二十三日就下山，前往上海，住太平寺。六月份，仍旧回山过夏。七月份下山，就不再回来了。八、九月份，印书的事结束，就灭迹长隐了。</p></div>
+<div class="para-pair"><p class="p-orig">以数年以来，日只忙应酬信札。近来精神日减，应酬日多，若不另行一路，则不至忙死，断无止期。于人无益，于己有损。岂不大可哀哉。</p><p class="p-trans">因为这些年来，每天只是忙着应酬信件。近来精神一天天减弱，应酬一天天增多，如果不另外再走一条路，那么不到忙死，就绝对没有停止的日期。对于他人没有利益，对于自己有损害。岂不是很悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">无事不须来信。此后数月，均在上海陈家浜太平寺。八九月，则无地址可说矣。</p><p class="p-trans">没有事不要来信。之后几个月，均在上海陈家浜太平寺。八、九月，就没有地址可说了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【入佛问答】</span>《入佛问答》，（清）问桥居士述。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

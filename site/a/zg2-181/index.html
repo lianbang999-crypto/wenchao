@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>启建水陆对灵小参 （代友人） · 印光法师文钞</title>
+<meta name="description" content="娑婆原是苦封疆，生死轮回实可伤，拔断爱根归西去，历劫热恼顿清凉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-181/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="启建水陆对灵小参 （代友人） · 印光法师文钞">
+<meta property="og:description" content="娑婆原是苦封疆，生死轮回实可伤，拔断爱根归西去，历劫热恼顿清凉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-181/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">启建水陆对灵小参 （代友人）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">娑婆原是苦封疆，生死轮回实可伤，拔断爱根归西去，历劫热恼顿清凉。</p><p class="p-trans">娑婆此世界，原本是苦地，轮回生死中，着实令人伤。拔断爱欲根，西归极乐国，历劫烦恼热，顿时变清凉。</p></div>
+<div class="para-pair"><p class="p-orig">恭维无遮胜会当斋正荐琴涛邵先生，宿植德本，素著景行。读书明理，垂典型于市廛，学道爱人，助政治于官府。通商裕国，人咸佩两袖之清风。济难扶危，心独揭一轮之明月。兼以笃信佛法，崇重三宝，虽未专修定慧，实能上合慈悲。</p><p class="p-trans">无遮胜会当斋正荐的邵琴涛先生，宿世培植善根，向来行持高尚。读圣贤书而明白事理，成为地方上的典范；修学圣道而仁爱大众，辅助官府的治理。经商富国，人人钦佩他两袖清风；救济危难，心中只高悬一轮明月。同时又深信佛法，敬重三宝。虽然没有专门修习戒定慧，而实际上（他的行持）能够契合如来的慈悲本怀。</p></div>
+<div class="para-pair"><p class="p-orig">寿临知命，便抛幻躯，事堪痛心，故援金臂。兹者孝男某某，并诸眷属，欲崇追荐之仪，大启无遮之会。</p><p class="p-trans">先生将满五十岁时，就抛弃了这虚幻的身躯。英年早逝，令人痛心，所以求阿弥陀佛垂金色手臂（，接引他往生）。兹有孝男某某，以及诸位眷属，想要举行追思超荐的仪式，所以在本寺大启无遮胜会。</p></div>
+<div class="para-pair"><p class="p-orig">须知心佛众生，三无差别，由迷悟之不同，致升沉以硕异。当念昔标清风明月之懿范，原承法身般若之威神。</p><p class="p-trans">必须知道，心、佛、众生，三者并无差别。只由于迷惑、觉悟的不同，而导致了上升、下沉的巨大差别。应当想到，过去所树立的清风明月般的美好风范，原本就是承着法身般若的威神之力。</p></div>
+<div class="para-pair"><p class="p-orig">了此则自能息认影之狂心，起反照之正智。方知头本不失，佛自圆成。不离此念，入圣超凡。</p><p class="p-trans">明了这个道理，自然能够息灭认影为真的狂心，生起回光返照的正智。方才知道，项上之头原本不曾失去，无上佛道自然圆满成就。不离当下这一念，超越凡伦而入于圣流。</p></div>
+<div class="para-pair"><p class="p-orig">永辞虚妄之幻苦，恒享真常之法乐。然理可顿悟，事难即圆。宜发信愿之深心，求生净土，定蒙光寿之慈父，导归莲邦。</p><p class="p-trans">永远告别虚妄幻苦，恒常享受真常法乐。然而道理可以顿悟，事修却难以立即圆满。应该发起真信切愿的深心，求生西方极乐世界，一定能够承蒙光寿无量的弥陀慈父，导引回归极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">从兹神超清泰，业谢尘劳，莲开上品之华，佛授一生之记。然后乘本愿轮，回入娑婆，逆顺隐显，度脱众生。</p><p class="p-trans">从此，神识超升到极乐净土，惑业凋谢于尘劳，莲开上品之花，授记一生成佛。然后乘着本愿宝轮，回入娑婆世界，或逆或顺，或隐或显，度脱众生。</p></div>
+<div class="para-pair"><p class="p-orig">普令法界有情，共证常住佛性。俾此明理爱人之心，清风明月之操，竖穷三际，横遍十方。</p><p class="p-trans">普令法界有情，共同证得常住不灭的佛性。使得这明理爱人的仁心、清风明月的节操，竖穷三际，横遍十方。</p></div>
+<div class="para-pair"><p class="p-orig">庶可谓不孤佛化，不负己灵，超群拔萃，真大丈夫者矣。咦，冰水岂有两种湿，生佛原同一觉心。但能返观观自性，即获本具无价珍。</p><p class="p-trans">想必就可以称得上是，不负佛陀化导、不负自己性灵、出类拔萃的大丈夫了。啊！坚冰与流水，湿性岂有别，众生与诸佛，原同一觉心。只要能回光，返观于自性，本具无价宝，即刻便获得。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【水陆道场】</span>佛教法会的一种。僧尼设坛诵经，礼佛拜忏，遍施饮食，以超度水陆一切亡灵，普济六道四生，故称。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【封疆】</span>1.亦作“封畺”。界域之标记；疆界。2.疆域；疆土。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【无遮胜会】</span>佛教举行的一种广结善缘，不分贵贱、僧俗、智愚、善恶都一律平等对待的大斋会。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【景行】</span>高尚的德行。《诗·小雅·车舝》：“高山仰止，景行行止。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【市廛】</span>指店铺集中的市区。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【迷头认影】</span>这是《楞严经》里所说的宝罗城狂人演若达多的一则故事。演若达多又作延若达多、耶若达多。意译作祠授，因祭祠天而乞得之意。据《大佛顶首楞严经卷四》载，印度室罗城中演若达多，一日于晨朝以镜照面，于镜中得见己头之眉目而喜，想不通过镜子，返观自己的眉目，却看不到，因此生大嗔恨，以为镜中的己头之眉目乃魑魅（chī mèi，鬼怪）所作，遂无状狂走。此系以自己之本头比喻真性，镜中之头比喻妄相。喜见镜中之头有眉目，比喻妄取幻境为真性而坚执不舍；嗔责己头不见眉目，则比喻迷背真性。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【清泰国】</span>即阿弥陀佛所居之国土名。意指清净舒泰之国。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

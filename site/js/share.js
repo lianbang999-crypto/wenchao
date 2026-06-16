@@ -22,7 +22,9 @@
   function clen(s) { return s.replace(/\s/g, '').length; }   // 字数（忽略空白）
 
   function curId() {
-    var m = (location.hash || '').match(/^#\/a\/([\w-]+)/);
+    var m = location.pathname.match(/^\/a\/([\w-]+)\/?$/);
+    if (m) return decodeURIComponent(m[1]);
+    m = (location.hash || '').match(/^#\/a\/([\w-]+)/);
     return m ? m[1] : '';
   }
   function curTitle() {
@@ -30,9 +32,9 @@
     return h ? h.textContent.trim() : '印光法师文钞';
   }
   function shareUrl(id, p) {
-    var base = CFG.shareBase || (location.origin + location.pathname);
+    var base = CFG.shareBase || location.origin;
     base = base.replace(/[#?].*$/, '').replace(/\/+$/, '');
-    return base + '/#/a/' + id + (p != null ? '?p=' + p : '');
+    return base + '/a/' + encodeURIComponent(id) + '/' + (p != null ? '?p=' + p : '');
   }
   // 选区起点所在段落在 .art-body 内的序号（深链定位用，与 app.js scrollToPara 同口径）
   function paraIndexOf(node) {
@@ -69,7 +71,7 @@
   var timer;
   function onSelChange() { clearTimeout(timer); timer = setTimeout(evalSelection, 180); }
   function evalSelection() {
-    if (!/^#\/a\//.test(location.hash || '')) { hideBar(); return; }   // 仅在阅读页
+    if (!curId()) { hideBar(); return; }   // 仅在阅读页
     var sel = window.getSelection();
     if (!sel || sel.isCollapsed || !sel.rangeCount) { hideBar(); return; }
     var text = sel.toString();
@@ -308,6 +310,7 @@
 
   /* ---------- 初始化 ---------- */
   document.addEventListener('selectionchange', onSelChange);
+  window.addEventListener('popstate', function () { hideBar(); closeModal(); });
   window.addEventListener('hashchange', function () { hideBar(); closeModal(); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { closeModal(); hideBar(); }

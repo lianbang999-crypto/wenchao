@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复林赞华居士书七 · 印光法师文钞</title>
+<meta name="description" content="讲经，岂必年讲一经，不可重复乎。然则日日吃饭，何不厌其重复耶。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-064/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复林赞华居士书七 · 印光法师文钞">
+<meta property="og:description" content="讲经，岂必年讲一经，不可重复乎。然则日日吃饭，何不厌其重复耶。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-064/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复林赞华居士书七</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">讲经，岂必年讲一经，不可重复乎。然则日日吃饭，何不厌其重复耶。</p><p class="p-trans">讲经，哪里是一年只能讲一部经，不能重复讲呢？然而每天吃饭，为什么就不厌倦重复呢？</p></div>
+<div class="para-pair"><p class="p-orig">心经义理渊深，初机何由得益。纵有所得，亦只解路。何如净土法门之即闻即可实行乎。即行愿品，亦不必定要讲多日。佛以六百卷大般若之蕴奥，以二百六十字发挥无遗。岂必要钩枝延蔓，只取广多以逞口辩乎。</p><p class="p-trans">《心经》的义理深奥，初学人哪有那么容易受益。即使有所受益，也只是在解释方面而已。哪像净土法门，即刻听闻就能即刻实行呢？即使是《行愿品》，也不必一定要讲很多天。佛将六百卷大般若的深蕴奥义，用二百六十字的《心经》发挥无遗。哪里必定要发枝生蔓，只取广博繁多来逞口舌之辩呢？</p></div>
+<div class="para-pair"><p class="p-orig">道绰禅师乃出格高僧，专弘净土。寿七十余岁，一生讲净土三经近二百遍。即二十岁讲，五十多年，年须二三次方可。</p><p class="p-trans">道绰禅师，是位杰出的高僧，专门弘扬净土法门。世寿七十多岁，一生讲净土三经将近二百遍。即使从二十岁开始讲，五十多年，一年必须要讲二三遍才能做到。</p></div>
+<div class="para-pair"><p class="p-orig">彻悟语录与一居士书云，一夏两终楞严。何畏行愿文长，而非七日所了乎。七日过促，或作十日。讲经岂定规要任讲者尽量东拉西扯，不在肯綮处指点乎。</p><p class="p-trans">《彻悟禅师语录》中给一位居士的信写道：一个夏天，讲完两遍《楞严经》。何必害怕《行愿品》的经文长，而无法七天讲完呢？如果觉得七天太过仓促，或者作十天讲。讲经哪会一定要让讲经的人尽量东拉西扯，而不在重要之处指点呢？</p></div>
+<div class="para-pair"><p class="p-orig">汝之知见，是知涉博而不知守约。欲以博益初机，则是门庭建设中事。共君一夜话，胜读十年书，愈病不在驴驼药，皆守约之古训也。</p><p class="p-trans">你的知见，是只知道要涉及广博而不知道遵守简约。想以广博来利益初学，这是宗派门庭建设中的事。“共君一夜话，胜读十年书”，“愈病不在驴驼药”，都是遵守简约的古训啊。</p></div>
+<div class="para-pair"><p class="p-orig">然现今战事发生，后来之事，不可逆料。当令一切老幼男女，同念阿弥陀佛，并念观世音菩萨。以祈生免灾祸，死归乐邦。</p><p class="p-trans">然而现今战争发生，将来的事，无法预料。应当让一切老幼男女，同念阿弥陀佛，并念观世音菩萨。以祈求活着的时候免于灾祸，死后归于极乐莲邦。</p></div>
+<div class="para-pair"><p class="p-orig">讲经尚非当务之急。所急宜布告一切老幼男女，同念观世音菩萨。至于平定后讲经，尤当以初机净土之正信为先。</p><p class="p-trans">讲经还不是当务之急。所急的应该是告知一切老幼男女，同念观世音菩萨。至于战争平息之后讲经，尤其应当以初学人对净土的正信为先。</p></div>
+<div class="para-pair"><p class="p-orig">倪商勤，施立谦，既知皈依，各为各起法名。倪商勤法名宗勤。念佛求生西方，自行化他，须以勤为本。若懒惰懈怠，则难克有成矣。</p><p class="p-trans">倪商勤，施立谦，既然知道要皈依，现分别为他们起法名。倪商勤法名宗勤。念佛求生西方，自行化他，必须以精勤为本。如果懒惰懈怠，就很难有所成就。</p></div>
+<div class="para-pair"><p class="p-orig">施立谦法名宗谦。谦则不自满足，如海纳百川，空含万象。种种罪业，由谦而消。种种功德，由谦而成。今为汝与彼二人寄净土十要一包，祈为分与。</p><p class="p-trans">施立谦法名宗谦。谦就不会自我满足，如同大海容纳百川，虚空包含万象。种种罪业，由谦卑而消除。种种功德，由谦卑而成就。现在为你和他们二人寄《净土十要》一包，请你分给他们。</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，目力精神均不给，以后不许常来信。但按十要所说而修，又何所欠，而欲常问乎。</p><p class="p-trans">我老了，视力精神都不足，以后不许常来信。只要按《十要》中所说的去修行，还会有什么欠缺，而要常常来问我的呢？</p></div>
+<div class="para-pair"><p class="p-orig">若不以净土专修为事，欲遍通教义，亦非一函二函之所能得其目的也。祈慧察。十要一书，为净宗至要之书。且勿作好高务胜之计画，便可得至高至胜之利益。一函遍复，亦人人当务之急。</p><p class="p-trans">如果不以净土专修为事务，却想要遍通教义，这样也不是一封、二封信所能达到目的的。请智慧思察。《十要》这本书，是净宗最重要的书籍。千万不要作好高务胜的计划，就能得到最高最殊胜的利益。《一函遍复》，也是人人要知道的当务之急。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【肯綮】</span>1.筋骨结合的地方。2.比喻要害或最重要的关键。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【守约】</span>简易可行。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【门庭建设】</span>意谓佛门宗师接引度化初学佛的人，所使用的方便机法。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【驴驼药】</span>大慧普觉禅师的《宗门武库》中说：“瘥病不假驴驼药，若是对病与药，篱根下拾得一茎草，便可疗病，说什么朱砂、附子、人参、白术。”驴驼常与“马载”同用，故“驴驼药”意谓以驴马驼载一大车的药材。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

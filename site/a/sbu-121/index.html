@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>初机学佛摘要序（原名居士学佛纲要） · 印光法师文钞</title>
+<meta name="description" content="净土法门，乃十方三世一切诸佛，上成佛道，下化众生，成始成终之究竟法门。上至等觉菩萨，下至逆恶凡夫，皆为所摄之机。法门之大，无以复加。譬如大海，普纳万川。故古人云，一切法门，无不从此法界流。一切法门，无不还归此法界。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-121/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初机学佛摘要序（原名居士学佛纲要） · 印光法师文钞">
+<meta property="og:description" content="净土法门，乃十方三世一切诸佛，上成佛道，下化众生，成始成终之究竟法门。上至等觉菩萨，下至逆恶凡夫，皆为所摄之机。法门之大，无以复加。譬如大海，普纳万川。故古人云，一切法门，无不从此法界流。一切法门，无不还归此法界。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-121/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 序跋疏</div>
+      <h1 class="art-title">初机学佛摘要序（原名居士学佛纲要）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土法门，乃十方三世一切诸佛，上成佛道，下化众生，成始成终之究竟法门。上至等觉菩萨，下至逆恶凡夫，皆为所摄之机。法门之大，无以复加。譬如大海，普纳万川。故古人云，一切法门，无不从此法界流。一切法门，无不还归此法界。</p><p class="p-trans">净土法门，是十方三世一切诸佛，上成佛道，下化众生，成始成终的究竟法门。上至等觉菩萨，下至五逆十恶的凡夫，都是净土法门所摄的根机。法门广大，没有再超过它的了。譬如大海，容纳万川。所以古人说：一切法门，无不是从此法界流出。一切法门，无不还归此法界。</p></div>
+<div class="para-pair"><p class="p-orig">修此法门，较比修其他法门者，为直捷痛快，易于得益也。由其以果地觉为因地心，故得因该果海，果彻因源。末法众生，根机浅薄，舍此法门，其何能淑。</p><p class="p-trans">修学净土法门，比修学其他法门，更直捷痛快，容易得利益。由于这个法门，是以果地觉海为因地心行，所以能够因行该摄果海，果德通彻因源。末法众生，根机浅薄，舍弃这个法门，如何能了脱生死？（注1）</p></div>
+<div class="para-pair"><p class="p-orig">如皋沈筱荃居士，赋性诚朴，笃信佛法。而于净土，尤为注意。每遇有缘，辄为宣说，唯期遍知。故于古今宏扬净土各书中，摘十余篇，名曰居士学佛纲要，印以施人。</p><p class="p-trans">江苏如皋的沈筱荃居士，天性真诚朴实，笃信佛法。而且对于净土法门，尤其注意。每当遇到有缘人时，就为他宣说，只期望大众全都知道。所以在古今宏扬净土的各种书籍中，摘录了十多篇，名为《居士学佛纲要》，印刷施送有缘人。</p></div>
+<div class="para-pair"><p class="p-orig">李慧实居士，与彼相善，而素不信佛。由筱荃委曲开导，遂大生信心。及筱荃念佛西逝，慧实益生感激，冀报其引导指迷之恩，欲续印此书，以期广传。</p><p class="p-trans">李慧实居士，与他交往深厚，然而一向不信佛。由于沈筱荃居士的方便开导，他终于大生信心。等到沈筱荃居士念佛西逝，李慧实更生感激，希望报答他引导指迷的恩德，想接着印刷这本书，以期望广泛流传。</p></div>
+<div class="para-pair"><p class="p-orig">然净土书多，贫于财者，每苦难购，故以此为接引初机之方便，因改名为初机学佛摘要，并略叙大纲及缘起云。</p><p class="p-trans">然而净土的书籍很多，贫穷无财的人，常常苦于很难请购，故以这本书作为接引初学人的方便，因此改名为《初机学佛摘要》，并大略叙述大纲以及缘起。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【其何能淑】</span>出自《诗经·大雅·桑柔》，“其何能淑，载胥及溺”。意思是：那如何做得好，不过是相率落水罢了。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

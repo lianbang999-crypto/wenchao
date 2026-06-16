@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>往生论注跋 · 印光法师文钞</title>
+<meta name="description" content="生死，吾人第一大事也。净土法门，了生死无上妙法也。一代时教，浩若渊海。其究竟畅佛普度众生之本怀者，唯净土一法而已。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-104/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="往生论注跋 · 印光法师文钞">
+<meta property="og:description" content="生死，吾人第一大事也。净土法门，了生死无上妙法也。一代时教，浩若渊海。其究竟畅佛普度众生之本怀者，唯净土一法而已。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-104/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 跋</div>
+      <h1 class="art-title">往生论注跋</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">生死，吾人第一大事也。净土法门，了生死无上妙法也。一代时教，浩若渊海。其究竟畅佛普度众生之本怀者，唯净土一法而已。</p><p class="p-trans">生死，是我们的第一大事；净土法门，是了脱生死的无上妙法。释迦如来一代时教，浩翰深广如同大海。而其中能够究竟畅达如来普度众生本怀的，唯有净土这一法门而已。</p></div>
+<div class="para-pair"><p class="p-orig">以下凡信愿念佛，即可带业往生。上圣若肯回向，速得圆成觉道。仗佛慈力，与唯仗自力，其难易固日劫相倍。</p><p class="p-trans">因为下劣凡夫只要真信切愿持名念佛，就可以带业往生；上等圣人如果愿意回向往生，就能够快速成佛。仗佛慈力往生西方，与只凭自力了脱生死，难易程度的差别，就像一天与一劫的差别一样。</p></div>
+<div class="para-pair"><p class="p-orig">天亲菩萨广造诸论，宏阐佛乘。复宗无量寿经，作愿生偈论。示五门修法，令毕竟得生。具显礼拜，赞叹，作愿，观察，回向之法。</p><p class="p-trans">天亲菩萨广造诸种论著，来宏扬阐述佛法。又以《无量寿经》为宗，作了《无量寿经优婆提舍愿生偈》，开示五门修法，令众生毕竟得生极乐世界。完备地显示了礼拜、赞叹、作愿、观察、回向之法。</p></div>
+<div class="para-pair"><p class="p-orig">于观察门，详示净土庄严，如来法力，菩萨功德。凡见闻者，悉愿往生。昙鸾法师，撰注详释。直将弥陀誓愿，天亲衷怀，彻底圆彰，和盘托出。</p><p class="p-trans">针对观察这一门，详细显示了西方净土的庄严、阿弥陀佛的法力、莲池海会菩萨的功德。凡是见闻的人，都发愿往生西方。昙鸾法师，撰著了详细的注释。将阿弥陀佛的誓愿，天亲菩萨的本怀，彻底圆彰，和盘托出。</p></div>
+<div class="para-pair"><p class="p-orig">若非深得佛心，具无碍辩，何克臻此。夫净土一法，为一切诸法之所归趣。以故华严证齐诸佛之等觉菩萨，尚须以十大愿王，回向往生。</p><p class="p-trans">如果不是深得佛心，具有无碍辩才，哪里能写出这样的注释呢。净土这一法门，是一切诸法的归趣。所以华严会上那些所证与诸佛齐等的等觉菩萨，尚且要以十大愿王，回向往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">则文殊，普贤，马鸣，龙树，智者，慈恩，清凉，永明等，自行化他，同归净土者有由来矣。</p><p class="p-trans">那么文殊菩萨、普贤菩萨、马鸣菩萨、龙树菩萨、智者大师、慈恩大师、清凉国师、永明大师等诸位菩萨祖师，自行化他，同归净土，都是有来由的啊。</p></div>
+<div class="para-pair"><p class="p-orig">知此，则唯执自力，不仗佛力者，可以怵然惊，憬然悟。以期现生即得出此娑婆，生彼极乐。与观音势至等诸上善人，俱会一处。常时亲炙阿弥陀佛，以冀证无生忍，圆满菩提而后已也。吾言不足信，请质之普贤菩萨，自可无疑矣。</p><p class="p-trans">知道了这些，那么只执著自力、不依仗佛力的人，就会怵然惊恐，幡然醒悟，从而期望现生之中就出离娑婆，往生极乐。与观世音菩萨、大势至菩萨等诸上善人，俱会一处。常时聆听阿弥陀佛的教诲，以期证得无生法忍，圆满菩提而后已。如果认为我的话不足以相信，请向普贤菩萨质询，自然就没有怀疑了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【往生论注】</span>二卷（或作一卷）。北魏释昙鸾（476-542）撰。详称《无量寿经优婆提舍愿生偈注》。《往生论》系公元五世纪时，印度世亲晚年依《无量寿经》作‘愿生偈’二十四偈，并造长行引申述释，具名《无量寿经优婆提舍愿生偈》，亦称《无量寿经论》。北魏普泰元年（531）由菩提留支译成汉文，僧辨笔受（据《历代三宝纪》和《大唐内典录》）。随后昙鸾于梁大通（527-529）年中在洛阳见菩提留支，留支授以《观无量寿经》，昙鸾遂专宗净土而注释此论，并大宏净土念佛法门。
+本书分两大部分︰上卷解释偈颂，为总说分；下卷解释长行，为解义分。
+总说分释五念门，即是往生净土的业因︰(1)礼拜门，(2)赞叹门，(3)作愿门，(4)观察门，(5)回向门。偈颂第一行四句偈含最初三念门，第三行尽二十三行是观察门，末后一行是回向门。全书重点在观察一门。其中初观察器世间清净，有十七种庄严功德成就。其次观众生世间清净，其中观阿弥陀如来有八种庄严功德成就，又观诸菩萨有四种庄严功德成就。弥陀净土具备了上述二十九种庄严功德成就。
+解义分立十科：一、愿偈大意，二、起观生信，三、观行体相，四、净入愿心，五、善巧摄化，六、离菩提障，七、顺菩提门，八、名义摄对，九、愿事成就，十、利行满足。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【窥基】</span>（632-682）唐代僧人。自号大乘基，世称慈恩大师。长安人，为唐代开国功臣尉迟敬德之侄。贞观二十二年（648）奉敕为玄奘弟子，学梵语及佛法，25岁参与玄奘大师译场工作，显庆四年（659），与神昉等共任《成唯识论》译事，先后译《辨中边论》、《二十唯识论》等论著，师任笔受，即据玄奘大师讲述而作述记。师又常专心于著述，著有《瑜伽师地论略纂》、《因明入正理论疏》、《金刚经会释》、《大乘法苑义林章》等。又净土论著有《弥陀经疏》、《阿弥陀经通赞疏》、《西方要诀释疑通规》等3部流传至今。玄奘之学，大体由师阐述发挥，尤于因明及五种姓宗义，有独得之秘。号称“百部疏主”。永淳元年十一月，圆寂于大慈恩寺译经院，世称慈恩大师。综窥基大师之净土要点有：1.弥陀净土有报、化二土；2.极乐之不退为渐得；3.举出弥陀净土十胜、兜率净土十劣，说弥陀净土胜于弥勒净土；4.十念愿行具足，非别时意。故师之著作对净土法门的弘扬，有重大影响，作用甚巨。
+另据《宋高僧传》卷四：“生常勇进，造弥勒像，对其像日诵菩萨戒一遍，愿生兜率，求其志也。”是说他求生的是兜率净土。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

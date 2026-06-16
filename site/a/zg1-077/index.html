@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周智茂居士书 · 印光法师文钞</title>
+<meta name="description" content="周木居士鉴，接手书，知生净信心，欲皈依佛法。然皈依佛法，必须诸恶莫作，众善奉行，力敦伦常，恪尽己分，生信发愿，念佛求生西方。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-077/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周智茂居士书 · 印光法师文钞">
+<meta property="og:description" content="周木居士鉴，接手书，知生净信心，欲皈依佛法。然皈依佛法，必须诸恶莫作，众善奉行，力敦伦常，恪尽己分，生信发愿，念佛求生西方。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-077/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复周智茂居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">周木居士鉴，接手书，知生净信心，欲皈依佛法。然皈依佛法，必须诸恶莫作，众善奉行，力敦伦常，恪尽己分，生信发愿，念佛求生西方。</p><p class="p-trans">周木居士鉴：接到你的信，知道你生起清净的信心，想要皈依佛法。然而皈依佛法，必须诸恶莫作，众善奉行，努力敦睦伦理纲常，恪守竭尽自己本分，生信发愿，念佛求生西方。</p></div>
+<div class="para-pair"><p class="p-orig">并须戒杀护生，吃素，如不能净素，亦当以不贪食为是，更须持六斋，或十斋，否则便与佛相背矣。</p><p class="p-trans">并要戒杀护生，吃素，如果不能完全净素，也应当以不贪吃为准则，更须守持六斋，或十斋，否则就与佛相违背了。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝取法名为智茂，以心性如木，由烦恼障蔽故，心性不能显现，如木枯槁。既有智慧，则烦恼不生，而心性之木自然茂盛也。</p><p class="p-trans">现在为你取法名为智茂，因自心本性如树木，由于烦恼障蔽的缘故，心性不能显现，如同树木枯槁。有了智慧之后，则烦恼不生，而心性之木也就自然茂盛了。</p></div>
+<div class="para-pair"><p class="p-orig">所言五戒，且自考心，如能受而不犯，则向化三问其佛前受之规矩，彼当教汝，光不备书。</p><p class="p-trans">所说的受五戒，暂且自己考问自心，如果能够受戒而不违犯，就向化三居士询问在佛前受五戒的规矩，他会教你，我就不详说了。</p></div>
+<div class="para-pair"><p class="p-orig">既皈依佛法，当熟读文钞，依之而行，自不致受庸人所误，致求来生福报，及外道炼丹运气，以求成仙等。</p><p class="p-trans">既已皈依佛法，应当熟读《文钞》，并依《文钞》而行，自然不至于受庸愚之人的误导，导致求来生福报，以及外道炼丹运气，以求成仙等等。</p></div>
+<div class="para-pair"><p class="p-orig">汝果能领会得文钞义，纵百千外道，亦不能摇动汝心。且勿谓此系光所说，恐不足依据。须知光乃取佛菩萨祖师善知识之意而说，非光自出心裁妄说也。祈慧察，则幸甚。</p><p class="p-trans">你果真能够领会到《文钞》的旨义，纵然百千外道，也不能动摇你的心。你不要说《文钞》是我所说的，从而担心不足以作为依据。必须知道，我是取佛菩萨、祖师、善知识的意思而说，不是我自出心裁的妄说。希望你以智慧思察，则非常庆幸。</p></div>
+<div class="para-pair"><p class="p-orig">汝心高如天，志劣如地，口虽云依光所说，实则全依自己偏见。</p><p class="p-trans">你心高如天，志向却卑劣如地，口里虽然说依我所说，实际上完全是依你自己的偏见。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，唯信为本，信得极，五逆十恶皆能往生。信不及，通宗通教未曾断惑者，皆无其分。</p><p class="p-trans">净土法门，唯以信为根本，信到极点，五逆十恶之人都能往生。信达不到的话，即使通宗通教，而见思惑未曾断尽的人，都没有往生净土的份。</p></div>
+<div class="para-pair"><p class="p-orig">汝既不能通宗通教断惑证真，仗自力以了生死。又不信佛力不可思议，自性功德不可思议，若具真信切愿，念佛求生西方，无一人不得生者。净土法门，乃即生了生死之无上直捷圆顿法门，于此法门方向尚未知，便以好高务胜之狂妄心，去研究起信论。</p><p class="p-trans">你既不能通宗通教，断惑证真，仗自力来了生死。又不相信佛力不可思议，自性功德不可思议，如果具足真信切愿，念佛求生西方，没有一个人不得往生。净土法门，是在这一生，了生死的无上直捷圆顿法门，对于这个法门的方向尚不知晓，就以好高务胜的狂妄心，去研究《大乘起信论》。</p></div>
+<div class="para-pair"><p class="p-orig">起信论实为学佛之纲要，然于劣根，及初机人，亦难得益。即研得起信论通彻无疑，其用功尚须依念佛求生，方为稳当。况法相禅教之精微奥妙高深而不可企及乎哉。</p><p class="p-trans">《大乘起信论》实在是学佛的纲要，然而对于劣根之人，以及初学之人，很难得到利益。即使将《大乘起信论》研究的通透彻底而无疑，用功也还是须要依念佛求生净土，方才稳当。何况法相、禅教的精微奥妙高深莫测，是不可能企望到达的啊。</p></div>
+<div class="para-pair"><p class="p-orig">汝心如此其高，乃不知分量之高。其志又谓根性劣弱，何望生西，但能不堕恶道，此堪自慰。不知不生西方，将来必堕恶道。此系违背佛教，及与光说，何可云始终奉行教诲，一心持念弥陀乎哉。</p><p class="p-trans">你的心如此的高，是不知分量的高。而志气却又很低下，说自己根性低劣怯弱，如何指望生到西方，只要能不堕到恶道，就感到安慰和满足了，殊不知如果不生西方，将来必定要堕恶道。你这是违背佛的教导，以及我所说的话，怎么可以说是“始终奉行教诲，一心持念弥陀”呢？</p></div>
+<div class="para-pair"><p class="p-orig">今以汝之身，膺人之职业，又非上等资格，其所立之心与志，真令人可叹可笑。汝且息彼做大通家之狂妄心，专心研究净土法门中书，文钞与高邵麟徐女士书中备说。</p><p class="p-trans">如今你生而为人，担任着人的职业，又不是上等的天资。你所立的心愿与志向，真是令人可叹可笑。你暂且停息做大通家的狂妄心，专心研究净土法门中的书籍，《文钞》中“与高邵麟、徐福贤女士”的书信中对此有详细说明。</p></div>
+<div class="para-pair"><p class="p-orig">随所开示，依之生信发愿，不以自己根器下劣，高推往生于度外。且常随动随静，将一句弥陀，当做本命元辰。其居心行事，须要与诸恶莫作，众善奉行之宗旨合。</p><p class="p-trans">随所开示的话，依照去做而生信发愿，不要因为自己的根器下劣，从而觉得往生净土这个目标太过高远，因此就放弃求生净土。而且要平常随动随静，将一句阿弥陀佛，当做本命元辰。居心行事，须要与诸恶莫作，众善奉行的宗旨相符合。</p></div>
+<div class="para-pair"><p class="p-orig">倘有余力，诸大乘经，不妨随意受持读诵，当以志心受持为本，且勿急欲洞彻其义理为事也。</p><p class="p-trans">倘若还有余力，诸大乘经，不妨随着自己的意愿来选择受持读诵，应当以专心受持为本，不要急切贪求洞明彻究其中的义理为事。</p></div>
+<div class="para-pair"><p class="p-orig">果能志诚之极，教理自会透彻。若先欲透彻，不从志诚持诵做，即透彻亦无实益，况决难透彻乎。</p><p class="p-trans">果真能够志诚到极点，教理自然会透彻。如果事先就贪求要透彻义理，却不从志诚持诵做起，那么即使透彻了也没有实际利益，更何况这样做是很难透彻的呢。</p></div>
+<div class="para-pair"><p class="p-orig">法相禅教，毕生研究，也难得其旨归。即得，谁能不断惑业，了生脱死。欲断惑业了生死，恐梦也梦不著。</p><p class="p-trans">法相禅教，一生来研究，也很难得到其中的宗旨归趣。即使得到，谁能不断见思惑业，就了生脱死呢？可是想要彻底断除见思惑业，而了脱生死轮回，恐怕连梦也梦不到啊。</p></div>
+<div class="para-pair"><p class="p-orig">汝于光文钞尚未详阅，故其所说，高则冲于霄汉，卑则入乎沧溟。文钞中屡屡说所当看之书，及看经等法则，并法相禅教之难以得益处。</p><p class="p-trans">你对于我的《文钞》尚未详细阅读，所以你所说的话，心高冲于九霄云汉之上，但志向却卑入海底之下。《文钞》当中多次说到，所应当看的书，以及看经的法则，还有法相禅教难以得到实际利益之处。</p></div>
+<div class="para-pair"><p class="p-orig">以净土法门，仗佛慈力，其余法门，皆须己力。一为通途教理，如世之士人，由资格而为官。一为特别教理，如世之王子，一堕地即为一切臣宰所恭敬。二种法门，不可并论，而具足惑业之凡夫，可不慎所择哉。</p><p class="p-trans">因为净土法门，依靠佛的慈力，其余的法门，全须依靠自力。一个是通途教理，如同世间的读书人，只能根据他自己的天资和功绩而得到相应阶位的官职。一个是特别教理，如同世间的王子，一出生就受到一切大臣宰相的恭敬。二种法门，不可相提并论，而具足惑业的凡夫，能不谨慎地选择吗？</p></div>
+<div class="para-pair"><p class="p-orig">流通基金，纵欲增益，何可作募缘办法。有信心有财力者，与之商量，俾其补助，即可矣。</p><p class="p-trans">流通处的基金，纵然想要增加增多，怎么可以采取募缘的方法呢？有信心、有财力的人，与他商量，让他补助，就可以了。</p></div>
+<div class="para-pair"><p class="p-orig">又经典甚多，汝心欲大开门庭，郑州有几个人请。但取普通人能看者，请以备购。有大部普通人不看者，须预订，转为代请，则省资本，亦不至请来售不出，将钱占到不得受用耳。</p><p class="p-trans">另外，佛教经典很多，你心里光想着要大开门庭，却不想想郑州请经典的人有多少。只要取普通人能看的经书，请来预备给他人请购。有大部经典，普通人不看的，必须预订，转为代请，这样就节省了资本，也不至于请来了，而售不出去，将钱占着不能周转使用啊！</p></div>
+<div class="para-pair"><p class="p-orig">汝自谓来日无多，实力有限，光故作如此说。倘不以为然，仍依自己心相而行，则光亦不强汝。</p><p class="p-trans">你自己说，来日无多，精力有限，所以我才会这样说。倘若不以为然，仍然依着自己的心中所著的相行事，那么我也不会勉强你。</p></div>
+<div class="para-pair"><p class="p-orig">能做得一个大通家，亦是佛门之幸。恐汝大通家做不到，净土法门又信不及，则两头落空。</p><p class="p-trans">能做一个大通家，也是佛门之幸。恐怕你大通家做不到，净土法门又信心不够，那么就两头落空了。</p></div>
+<div class="para-pair"><p class="p-orig">今生稍修点功德，来生必定生于富贵家。汝试细思之，富贵人有几个不造业的。</p><p class="p-trans">今生稍微修了一点功德，来生必定生于富贵家。你试着仔细想想，富贵人有几个不造业的。</p></div>
+<div class="para-pair"><p class="p-orig">今日之国运危岌，民不聊生，皆是一班无智慧修行人之来生福报所捣乱而成者。</p><p class="p-trans">如今国运危急，民不聊生，这样的景象都是一班过去世当中没有智慧的修行人，这一世依仗着所修来的福报瞎捣乱而造成的。</p></div>
+<div class="para-pair"><p class="p-orig">汝打甚么穷妄想，欲不堕恶道。不生西方，则一生不堕者或有之，二生不堕者便少也。</p><p class="p-trans">你打什么穷妄想，想要不堕恶道。如果不生西方，那么这一生不堕恶道，或许还有可能，第二生不堕恶道的，就很少了。</p></div>
+<div class="para-pair"><p class="p-orig">佛说经咒甚多，谁能一一遍持。古人择其要者列为日课，早则楞严，大悲，十小咒，心经，念毕，则念佛若干声，回向净土。</p><p class="p-trans">佛所说的经咒很多，谁能一一全都受持。古人选择其中最重要的，列为每天的功课，早上就是楞严咒、大悲咒、十小咒、心经，念完，就念佛若干声，回向净土。</p></div>
+<div class="para-pair"><p class="p-orig">晚则弥陀经，大忏悔，蒙山，念佛回向。今丛林皆图省工夫，早则只念楞严咒，心经，晚则单日念弥陀经，蒙山，双日念大忏悔，蒙山。</p><p class="p-trans">晚上则是《阿弥陀经》，《大忏悔文》，蒙山施食，念佛回向。现在的丛林都想省工夫，早上则只念楞严咒、心经，晚上则单日念《阿弥陀经》，蒙山施食，双日念《大忏悔文》，蒙山施食。</p></div>
+<div class="para-pair"><p class="p-orig">汝言禅门日诵经咒甚夥者，不知乃朝暮课诵外之附录者。</p><p class="p-trans">你说《禅门日诵》中的经咒很多，却不知这是朝暮课诵之外附录的。</p></div>
+<div class="para-pair"><p class="p-orig">在家居士，功课亦可照禅门朝暮功课做，亦可随自意立。如早晚专念弥陀经，往生咒，念佛，或早则专念大悲咒，念佛，晚则念弥陀经，往生咒，念佛。或有持金刚经者亦可。然无论诵何经，持何咒，皆须念佛若干声回向，方合修净业之宗旨。</p><p class="p-trans">在家居士，功课也可以照着禅门朝暮功课来做，也可以随自己的心意来立。如早晚专念《阿弥陀经》、往生咒、念佛，或者早上则专念大悲咒、念佛，晚上则念《阿弥陀经》、往生咒、念佛。或者有诵持《金刚经》的也可以。然而无论诵什么经，持什么咒，都必须要念佛若干声，回向净土，方才符合修习净业的宗旨。</p></div>
+<div class="para-pair"><p class="p-orig">汝之所说，乃见异思迁，虽是好心，实为心无定主，随境所转。何经何咒，不称赞其功德殊胜。依汝知见，则看此经必废彼经，持此咒则废彼咒，以力不能兼顾，势必如此，是尚得名为明理真修之士乎。</p><p class="p-trans">你所说的，是见异思迁，虽然是好心，实际是心无定主，随境所转。什么经，什么咒，不称赞它的功德殊胜呢？依你的知见，那么看这部经，必定废弃那部经，持这个咒，就废弃那个咒，因为力量不能兼顾，势必如此，这还能称为明白道理的真修行人吗？</p></div>
+<div class="para-pair"><p class="p-orig">再推广言之，汝若遇参禅者赞禅而破斥净土，必至随彼参禅。及他天台，贤首，慈恩，秘密各宗，每遇一知识提倡，必至舍此修彼。</p><p class="p-trans">再推广来说，你如果遇到参禅的人称赞禅宗而破斥净土，必定会随他去参禅。以及其它的天台宗，贤首宗，慈恩宗，密宗等各个宗派，每遇到一位善知识提倡，必定要舍弃自己所修的法门，而修他所提倡的法门。</p></div>
+<div class="para-pair"><p class="p-orig">不知汝是甚么根性，要做法法皆通之大通家，但以业深智浅，大通家做不到，并将仗佛慈力带业往生一法置之度外。待到临命终时，不向镬汤炉炭里去，定向驴胎马腹里去。</p><p class="p-trans">不知道你是什么根性，要做法法都通的大通家，但因为业障深而智慧浅，大通家做不到，并将仗佛慈力，带业往生，净土一法，置之度外。等到临命终时，不向镬汤炉炭里去受苦（地狱道），定向驴胎马腹里去投生（畜牲道）。</p></div>
+<div class="para-pair"><p class="p-orig">即幸而不失人身，以今生尚无正智，颇有修行之痴福，以兹享彼痴福，便造恶业，一气不来，直入三途，欲得知天地父母之名尚不能，况得知净土法门乎。</p><p class="p-trans">即使有幸而不失人身，因为今生尚且没有正智，有一点修行的痴福，借着享此痴福，就会造作恶业，一口气上不来，直接堕入三途，到那时即使想要得知天地父母的名字，尚且都不能够了，何况得知净土法门呢？</p></div>
+<div class="para-pair"><p class="p-orig">汝看光文钞，作么生解，须知一句阿弥陀佛，持之及极，成佛尚有余，将谓念弥陀经念佛者，便不能灭定业乎。</p><p class="p-trans">你看我的《文钞》，是怎么理解的，必须知道一句阿弥陀佛，持到极处，成佛尚且有余，难道说念《阿弥陀经》、念佛，就不能灭定业吗？</p></div>
+<div class="para-pair"><p class="p-orig">佛法如钱，在人善用，汝有钱则何事不可为。汝能专修一法，何求不得，岂区区持此咒念此经，得此功德，不得其余功德乎。</p><p class="p-trans">佛法如钱，在于人会不会用，你有钱的话，什么事不可去做呢？你能专修一法，什么愿求得不到呢？怎么会持这个咒，念这个经，才有功德；又怎么会得到了这些功德，就不能得到其余的功德呢？</p></div>
+<div class="para-pair"><p class="p-orig">善体光言，自可一了百了，否则纵说的多，汝仍是心无定见，有何益乎。</p><p class="p-trans">善于体会我的话，自然可以一了百了，否则纵然说的再多，你仍然是心无定见，有什么益处呢？</p></div>
+<div class="para-pair"><p class="p-orig">凡夫在迷，信心不定，故有屡信屡退，屡修屡造之迹。</p><p class="p-trans">凡夫在迷惑当中，信心不坚定，所以有多次相信而又多次退心，常常修行而又常常造业的事情。</p></div>
+<div class="para-pair"><p class="p-orig">亦由最初教者不得其道所致，使最初从浅近因果等起，便不至有此迷惑颠倒也。</p><p class="p-trans">这也是由于最初教导的人，不得教诲之道所导致的，假使最初从浅近的因果道理等教起，就不至于有这样的迷惑颠倒。</p></div>
+<div class="para-pair"><p class="p-orig">然已往之罪，虽极深重，但能志心忏悔，改往修来，以正知见，修习净业，自利利他，而为志事，则罪障雾消，性天开朗。</p><p class="p-trans">然而以往的罪障，虽然极为深重，但只要能够志心忏悔，改正过去的错误，修习正确的，以正知见，修习净业，自利利他，作为志向事业，那么罪障如浓雾消散，自性的天空就开朗了。</p></div>
+<div class="para-pair"><p class="p-orig">故经云，世间有二健儿，一者自不作罪，二者作已能悔。</p><p class="p-trans">所以《涅槃经》中说：世间有二种健儿，一者自己不作罪，二者作了以后能忏悔。</p></div>
+<div class="para-pair"><p class="p-orig">悔之一字，要从心起，心不真悔，说之无益。譬如读方而不服药，决无愈病之望。倘能依方服药，自可病愈身安。所患者立志不坚，一暴十寒，则徒有虚名，毫无实益矣。</p><p class="p-trans">“悔”这个字，要从心生起，心若不真正的忏悔，说说是没有益处的。譬如读读药方而不服药，绝对没有治愈疾病的希望。倘若能够依药方来服药，自然可以病愈而身安。最怕，是立志不坚定，一暴十寒，那么就徒有虚名，而毫无实益了啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【伦常】</span>人与人相处的常道。特指封建社会的伦理道德。即认为这种道德所规范的君臣、父子、夫妇、兄弟、朋友五种关系，即五伦，是不可改变的常道。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【大乘起信论】</span>全一卷。又称起信论。相传为印度马鸣菩萨所造，南朝梁代真谛（499-569）译。收于大正藏第三十二册。本书阐明如来藏缘起之旨，及菩萨、凡夫等发心修行之相，系从理论、实践两方面归结大乘佛教之中心思想，为佛教思想之重要入门书。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【度外】</span>心意计虑之外。置度外，犹言不介意。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【本命元辰】</span>本人出生年称为本命元辰，旧时习俗礼拜本命元辰之星宿神，祈求吉祥如意，名为“顺星”。“将一句弥陀，当做本命元辰”，就是把真信切愿念佛作为往生的根本。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【伙】</span>1.聚集；联合；纠合。2众多；盛多。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【区区】</span>1.小；少。形容微不足道。2.犹方寸。形容人的心。3.愚拙；凡庸。4.自称的谦词。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【一了百了】</span>语本《朱子语类》卷八：“有资质甚高者，一了一切了，即不须节节用工也。”原为对天资高的人的赞誉之辞，后亦以谓主要的事情了结，其它一切也跟着了结。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【一暴十寒】</span>晒一天，冷十天。比喻做事没有恒心。《孟子·告子上》：“虽有天下易生之物也，一日暴之，十日寒之，未有能生者也。”</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

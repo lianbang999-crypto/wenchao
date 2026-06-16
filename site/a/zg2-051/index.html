@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>观无量寿佛经石印流通序 · 印光法师文钞</title>
+<meta name="description" content="法身本体，圆离名相。寂光真境，不属根尘。非有非空，五眼莫之能觑。非心非色，四智从何以宣。寂照虚通，真如净妙。万德具备，一法不形。佛净常住，尚不可称。生秽轮回，岂复能立。此实生佛本具之理体，无上菩提之法源也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-051/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="观无量寿佛经石印流通序 · 印光法师文钞">
+<meta property="og:description" content="法身本体，圆离名相。寂光真境，不属根尘。非有非空，五眼莫之能觑。非心非色，四智从何以宣。寂照虚通，真如净妙。万德具备，一法不形。佛净常住，尚不可称。生秽轮回，岂复能立。此实生佛本具之理体，无上菩提之法源也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-051/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">观无量寿佛经石印流通序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">法身本体，圆离名相。寂光真境，不属根尘。非有非空，五眼莫之能觑。非心非色，四智从何以宣。寂照虚通，真如净妙。万德具备，一法不形。佛净常住，尚不可称。生秽轮回，岂复能立。此实生佛本具之理体，无上菩提之法源也。</p><p class="p-trans">法身本体，圆离名称形相。寂光真境，不属六根六尘。非有非空，五眼不能看见。非心非色，四智从哪里宣演。寂照虚通，真如净妙。万德本自具足，却又了无形相。佛陀、清净、常住这些词，尚且不能称说它；众生、污秽、轮回这些法，哪里又能成立呢。它（法身本体）实在是众生与佛本自具备的理性本体，是无上菩提的法源。</p></div>
+<div class="para-pair"><p class="p-orig">此理生佛平等，无有高下。但以众生在迷，日用不知。虽具法身，妄受生死。虽处寂光，妄见秽恶。以故如来垂慈，广说诸经。普令一切众生，返妄归真，复本心性。</p><p class="p-trans">这个理体，众生与佛平等一如，没有高下。只因为众生处在迷惑之中，每天运用它而不自知。虽然具有法身，却妄受着生死轮回；虽然处在常寂光，却妄见秽恶娑婆。所以如来垂慈哀悯，广泛宣说诸经。普令一切众生，返妄归真，恢复本有心性。</p></div>
+<div class="para-pair"><p class="p-orig">然自力断惑，现生证道。中下根人，末由成办。爰有大士，名阿阇世。以大慈悲，欲佛开示仗佛慈力，舍秽取净，普令上中下根，皆得临终往生之不思议奇特大法门。</p><p class="p-trans">然而，要想靠自己的力量断除烦惑，于现生当中证得道果。对于中下根人来说，不可能做到。有一位大士，名叫阿阇世。以大慈悲心，想请佛陀开示仗佛慈力，舍离秽土，求取净土，普令上中下根众生，全都在临终时往生极乐的不可思议奇特大法门。</p></div>
+<div class="para-pair"><p class="p-orig">特示病行，作大逆恶。囚父禁母，以为发起。致其母韦提希，请佛降临。愿离娑婆，愿生净土。</p><p class="p-trans">特别示现菩萨治病之行，故意造作逆恶重罪。囚禁父母双亲，以此来发起这部经。从而使他的母亲韦提希夫人，求请佛陀降临，祈愿出离娑婆，往生净土。</p></div>
+<div class="para-pair"><p class="p-orig">于是世尊放眉间光，遍示诸佛净妙国土。其母唯愿生极乐国，又请众生得生方法。因兹如来说此十六依正妙观。</p><p class="p-trans">于是世尊放眉间光，遍示十方诸佛的净妙国土。韦提希夫人只愿生到极乐世界，又向世尊请示一切众生得生极乐世界的方法。世尊因此宣说了十六依正妙观。</p></div>
+<div class="para-pair"><p class="p-orig">但能依教修行，无一不满所愿。非但善人如是。即五逆十恶之人，临命终时，地狱相现。受知识教，称念佛名。或满十声，或止一声。亦得蒙佛慈力，带业往生。</p><p class="p-trans">只要能依教修行，没有一个不满所愿的。不但善人是这样，即使是造作五逆十恶重罪的人，临命终时，地狱境相已经现前，这时受到善知识的教导，称念阿弥陀佛的名号，或者念满十声，或者只念一声。也能蒙佛慈力加被，带业往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">诚可谓转凡成圣之大炉韛，畅佛本怀之大法门。其力用超出一代时教之上。若如来不开此法，则末法芸芸众生，谁能出离苦海乎。</p><p class="p-trans">实在可说是，转凡成圣的大熔炉，畅佛本怀的大法门。其力用超出释迦如来一代时教之上。假使佛不开示这个法门，那么末法时期的芸芸众生，有谁能出离苦海呢。</p></div>
+<div class="para-pair"><p class="p-orig">是知释迦弥陀，乘大愿轮，兴慈运悲，度脱众生。一则示居秽土，以秽以苦，折伏而发遣。一则示居净土，以净以乐，摄受而钧陶。</p><p class="p-trans">所以知道，释迦本师和弥陀如来，乘大愿轮，兴慈运悲，度脱众生。一位示现居于秽土，以秽恶和痛苦，来折服启发众生求生极乐；一位示现居于净土，以清净和妙乐，来摄受钧陶众生速成佛道。</p></div>
+<div class="para-pair"><p class="p-orig">而阿阇世王，交相赞助。特现恶逆，成就厌离。殆与两土世尊，砧锤相成，锻淬相济。一逆一顺，以为末世众生究竟得度之化仪。其为利益，难尽赞扬。行于非道，通达佛道。非久证法身者，孰能为之。</p><p class="p-trans">而阿阇世王，（与两土世尊）互相赞助支持。特意示现恶逆行为，成就其母厌离之心。想必与两土世尊，如同砧石铁锤一般，相辅相成；锻造淬火，相互补济。一逆一顺，成就了究竟度脱末世众生的教化仪式。这个利益，赞扬不尽。示现不合道义的行为，实际通达于佛道。如果不是久证法身的菩萨，还有谁能做到呢。</p></div>
+<div class="para-pair"><p class="p-orig">此经以是心作佛，是心是佛，生佛究竟不二为体。若能于此直下信去，则其人虽未出娑婆，已非娑婆之久客。未生极乐，已是极乐之嘉宾。</p><p class="p-trans">这部经以“是心作佛，是心是佛，生佛究竟不二”为体。如果能够对于这一义旨，当下信入，那么这个人即使还没有出离娑婆，也已经不会在娑婆世界久留；虽然还没有生到极乐，却已经是极乐世界的嘉宾。</p></div>
+<div class="para-pair"><p class="p-orig">智海居士刘朝侍，宿有灵根，笃修净业。因读此经，触发孝思。念母夫人张氏，守节抚孤，孝事翁姑。德镇坤维，身作闺范。笃信因果，长持十斋。净业正因，颇已具足。惜于生信发愿，专持佛号，以求往生，未极致力。由是发心，流布此经。</p><p class="p-trans">刘智海居士，宿世具有慧根，笃定修习净业。因为读了这部经，而触发了孝亲之心。想到母亲张夫人，守持贞节，抚育孤儿，孝顺公婆，德镇女界，身行可为闺门模范；深信因果，长持十斋，净业正因已经很是具足。可惜对于生信发愿，专持佛号，以求往生，用功还不够。因此刘居士就发心流布这部经。</p></div>
+<div class="para-pair"><p class="p-orig">陶玉耕居士，笔法超妙，堪追钟王，因请恭写，石印施送。普令见闻，同植净因。以此功德，令其母神超净域，业谢尘劳。莲开九品之花，佛授一生之记。</p><p class="p-trans">陶玉耕居士，书法高超绝妙，堪说是赶得上钟繇、王羲之。因此刘居士请他来恭写这部经，石刻印刷，布施赠送。普令见者闻者，共同种下净土因缘。以此功德，令母亲神识超升到净域，恶业凋谢于尘劳。莲花开在九品之中，佛陀授记一生成佛。</p></div>
+<div class="para-pair"><p class="p-orig">须知此经，与阿弥陀，无量寿二经。乃如来于一代通途教理以外，所立之特别法门。如阿伽陀药，万病总治。故无论业之轻重，惑之厚薄。但能信愿念佛，无一不获往生。如摩尼珠，随意雨宝。</p><p class="p-trans">必须知道这部经，与《阿弥陀经》，《无量寿经》二部经。乃是释迦如来在一代通途教理以外，所建立的特别法门。如同阿伽陀药，万病总治。所以无论罪业轻还是重，烦惑厚还是薄，只要能够信愿念佛，没有一个不往生的。正如同摩尼宝珠，可以随意洒下珍宝。</p></div>
+<div class="para-pair"><p class="p-orig">故但能都摄六根，净念相继。待至业尽情空，心佛双亡时。则一切法门，河沙妙义，无不融会贯通于自心矣。</p><p class="p-trans">所以，只要能够都摄六根，净念相继。等到罪业除尽，情见空灭，能念之心与所念之佛双双消亡时。那么一切法门，恒河沙般的妙义，无不融会贯通在自心之中了。</p></div>
+<div class="para-pair"><p class="p-orig">净土法门，其妙如是。其有欲上荐先亡，下济群品。令一切人，不废本分职业，各得现生出离生死轮回者，可不汲汲从事于此法门乎哉。</p><p class="p-trans">净土法门，如此殊妙。如果想要向上超荐祖先亡灵，向下救济有情众生，让一切人在不荒废本分职业的同时，各各于现生当中出离生死轮回，怎能不急切地从事于这个法门呢。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【五眼】</span>（名数）一、肉眼，肉身所有之眼。二、天眼，色界天人所有之眼，人中修禅定可得之，不问远近内外昼夜，皆能得见。三、慧眼，谓二乘之人，照见真空无相之理之智慧。四、法眼，谓菩萨为度众生照见一切法门之智慧。五、佛眼，佛陀身中具备前四眼者。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【四智】</span>法相宗所立四种如来的智慧，即成所作智、妙观察智、平等性智、大圆镜智。成所作智是转有漏的前五识所成，为佛成功所作一切普利众生的智慧；妙观察智是转有漏的第六识所成，为佛观察诸法及一切众生根器而应病予药与转凡成圣的智慧；平等性智是转有漏的第七识所成，为佛通达无我平等的道理，而对一切众生起无缘大悲的智慧；大圆镜智是转有漏的第八识所成，为佛观照一切事相理性无不明白的智慧，此智慧清净圆明，洞彻内外，如大圆镜，洞照万物。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【不形】</span>不显露。汉王褒《四子讲德论》：“好恶不形，则是非不分。”</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【病行】</span>菩萨五种行法之一。谓菩萨以无缘大慈，同体大悲之平等心，拔众生烦恼，治众生罪业之大行。病者喻众生之罪业。罪业是病；治病之行，故称病行。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【炉韛】</span>火炉鼓风的皮囊。亦借指熔炉。韛：古代用来鼓风吹火的皮囊。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【砧】</span>捣衣石。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【锻淬】</span>锻造淬火。锻造使之成形，淬火使之坚硬。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【孝思】</span>孝亲之思。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【守节】</span>1.坚守节操。2.特指妇女谨守礼节，能尽妇道。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【翁姑】</span>公婆。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【钟王】</span>指的就是钟繇和王羲之。据唐代张彦远《法书要录·笔法传授人名》说：蔡邕受于神人，而传与崔瑗及女文姬，文姬传之钟繇，钟繇传之卫夫人，卫夫人传之王羲之，王羲之传之王献之。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【汲汲】</span>心情急切貌。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>普陀普济寺化身塔记 · 印光法师文钞</title>
+<meta name="description" content="古人云，死生亦大矣，岂不痛哉。窃谓不知其由，虽痛何益。须知一切众生，随业流转，受生六道。生不知来处，死不知去处。由罪福因缘，而为升降。展转轮回，了无已时。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-126/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="普陀普济寺化身塔记 · 印光法师文钞">
+<meta property="og:description" content="古人云，死生亦大矣，岂不痛哉。窃谓不知其由，虽痛何益。须知一切众生，随业流转，受生六道。生不知来处，死不知去处。由罪福因缘，而为升降。展转轮回，了无已时。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-126/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 记</div>
+      <h1 class="art-title">普陀普济寺化身塔记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">古人云，死生亦大矣，岂不痛哉。窃谓不知其由，虽痛何益。须知一切众生，随业流转，受生六道。生不知来处，死不知去处。由罪福因缘，而为升降。展转轮回，了无已时。</p><p class="p-trans">古人说：“生死是大事啊，怎能不悲痛呢？”我认为，如果不知道生死的缘由，悲痛又有什么用呢。必须知道，一切众生随着业力流转，在六道中受生。生不知从哪里来，死不知到哪里去。由于自己的罪福因缘，从而在六道中上升下降，辗转轮回，没有停止的时候。</p></div>
+<div class="para-pair"><p class="p-orig">如来悯之，示以由惑起业，由业感苦之因缘。以及常乐我净，寂照圆融之本体。令其了知由无明故，遂有此身。</p><p class="p-trans">如来怜悯众生，开示了由烦惑而造作恶业，由恶业而招感苦果的因缘，以及常乐我净、寂照圆融的心性本体。令我们知晓，由于无明的缘故，才有了这个色身。</p></div>
+<div class="para-pair"><p class="p-orig">即此色身，全属幻妄。不但四大非有，兼复五蕴皆空。既知蕴空，则真如法性实相妙理，彻底圆彰矣。</p><p class="p-trans">这个色身，全体是虚幻不实的。不但地水火风四大不是实有，而且色受想行识五蕴也都是空。知道五蕴皆空之后，那么真如法性，实相妙理，就彻底圆满彰显了。</p></div>
+<div class="para-pair"><p class="p-orig">又恐或有执情固结，未能解脱。俾舍报之后，用火焚化。庶可令未离著者，速得离著。已离著者，速证法身。兼使现前大众，悟知此身，无有真实。用彼之身，以作证明。所谓应以灰身灭迹得度者，即现灰身灭迹而为说法。</p><p class="p-trans">又担心众生或许执著于凡情，不能解脱。让他们在舍离报身之后，用火焚化尸身。想必就可以让没有脱离执著的人，快速脱离；已经脱离执著的人，快速证得法身。同时也让现前的大众，觉悟到这个色身没有一点真实。用亡者的色身，作为证明。正所谓，应以灰身灭迹得度者，即现灰身灭迹而为说法。</p></div>
+<div class="para-pair"><p class="p-orig">焚化之制，盖由此设。凡属僧徒，悉皆遵行。当唐宋法道盛时，在家通人，亦多遵行，不独唯僧为然也。</p><p class="p-trans">殁后焚化的制度，大概就是由此而设立。凡是僧人，全都遵行。唐朝、宋朝法道兴盛的时候，通达佛法的在家人士，也大多遵行火化，并不是只有僧人才如此。</p></div>
+<div class="para-pair"><p class="p-orig">普陀，为观音大士道场。普济法雨，为十方共住丛林，来往僧众，实繁有徒。凡有亡者，悉用火化。而化身之窑，法甚拙朴。不但多费柴火，且致骨杂灰土。</p><p class="p-trans">普陀山，是观音大士的道场。普济寺、法雨寺，是十方共住的丛林，来往的僧人实在很多。凡有亡故的僧人，全都采用火化。然而化身窑，却修建得十分拙陋简朴。不但很费柴火，而且使骨灰中掺杂灰土。</p></div>
+<div class="para-pair"><p class="p-orig">同生诸居士，宿根深厚，笃信佛法。发菩提心，行利济事。遂仿外国之法，研究斟酌，必期合宜。特备工料，与前后两寺，各造一座。以其形若塔，故名为塔。每塔费千有余圆，可谓真实功德矣。</p><p class="p-trans">同生诸位居士，宿世善根深厚，笃实信奉佛法。发起菩提心，实行利他事，于是仿照外国的方法，反复研究，斟酌妥当。特地准备了工具材料，在普济、法雨两寺，各造了一座化身窑。因为窑的外形像一座塔，所以命名为化身塔。每座塔花费一千多圆，可以说是真实功德啊。</p></div>
+<div class="para-pair"><p class="p-orig">塔甫成，适有往生者，不三句钟，焚化净尽。而骨灰悉存铁函，了无零落灰土中者。因兹大众欢喜，祈勒石志之。</p><p class="p-trans">塔刚刚建成，正好有人往生。不到三个小时，就完全焚化干净了。骨灰全都存留在铁盒内，丝毫没有洒落到灰土当中。大众因此欢喜赞叹，祈请刻成石碑来记载这件事。</p></div>
+<div class="para-pair"><p class="p-orig">铭曰，受身之始，厥由无明。迷本真如，妄生爱情。爱情既起，幻质斯托。遂认为我，永不能觉。如来愍之，特设方便。俾彼存亡，俱离我见。身既叵得，我从何有。圆灭四相，顿空五蕴。生灭既灭，寂灭现前。真如法性，复彼本然。离幻妄相，发菩提心。回向净土，觐光寿尊。闻法受记，证无生忍。乘大愿轮，度诸可愍。令彼一切，同生西方。咸于未来，作法中王。</p><p class="p-trans">碑铭如下：受身之起始，正由于无明。迷本真如性，妄生贪爱情。贪爱一旦起，幻质便依托。于是认作我，永不能觉悟。如来怜愍之，特施设方便。普令存与亡，同得离我见。身既不可得，我又从何有。四相圆消灭，五蕴顿时空。生、灭消除后，寂灭则现前。真如法性体，回复到本原。脱离幻妄相，发起菩提心。回向求净土，礼拜弥陀佛。闻法更受记，亲证无生忍。乘坐大愿轮，救度诸有情。令一切众生，同生极乐土。普能于未来，同作法中王。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【同生】</span>一起活着。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【厥】</span>副词。乃。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【叵】</span>不；不可。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【觐】</span>泛称朝见帝王。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

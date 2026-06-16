@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复周伯遒居士书四 · 印光法师文钞</title>
+<meta name="description" content="前月廿九一函，谅已收到。所言烟毒，不止鸦片。香烟之毒，甚为酷烈。于众会时，当为提倡，劝勿吸食此物。吸久人必短寿。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-207/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复周伯遒居士书四 · 印光法师文钞">
+<meta property="og:description" content="前月廿九一函，谅已收到。所言烟毒，不止鸦片。香烟之毒，甚为酷烈。于众会时，当为提倡，劝勿吸食此物。吸久人必短寿。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-207/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复周伯遒居士书四</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前月廿九一函，谅已收到。所言烟毒，不止鸦片。香烟之毒，甚为酷烈。于众会时，当为提倡，劝勿吸食此物。吸久人必短寿。</p><p class="p-trans">上个月二十九日的一封信，想必已经收到了。所说的烟毒，不止是鸦片。香烟的毒害，很是猛烈。在大众集会时，应当加以提倡，劝人们不要吸食香烟。吸久了，人必定短寿。</p></div>
+<div class="para-pair"><p class="p-orig">妇女吸多，便断生产。此吾一弟子（赵月修乃武官，早已改业为商矣）亲见外国女教员说与女学生者。</p><p class="p-trans">妇女吸得多了，便不能生育。这是我的一个弟子（赵月修是武官，早已改行从商了）亲自听见外国女教员说给女学生的话。</p></div>
+<div class="para-pair"><p class="p-orig">文钞现另排，添数十篇，明年春夏间当出书。此为书局永远流通之备。初板当印一万，除光所要三四千部外，均当由彼作价发卖耳。</p><p class="p-trans">《文钞》现在另外排印，增添了几十篇，明年春夏间，应当可以出书。这次是为书局永远流通而做的准备。初板应当印一万部，除了我所要的三、四千部之外，都由书局按书价售卖。</p></div>
+<div class="para-pair"><p class="p-orig">九月函中所言鸡子事，与汉杨宝救雀事相仿佛。吾人但存一救生之心，切勿沾沾然冀彼三公之报，即有三公之报，亦当却之以回向九品，方为真正利己利物矣。</p><p class="p-trans">九月份的信中所说鸡子的事，与东汉杨宝救雀的故事相似。我们只要存着一颗救护众生的心，千万不要沾沾自喜，希望得到三公的果报，即使有三公的果报，也应当推却，用以回向九品莲，才是真正地利益自己、利益万物啊！</p></div>
+<div class="para-pair"><p class="p-orig">曾丙之染患，是其宿业。临终之肯念佛，是其宿善。既自能念，又蒙大家助念，死后面色光辉，有此三事，当可往生西方。何可云当坠何处乎。</p><p class="p-trans">曾丙之染病，是他的宿业；临终时肯念佛，是他的宿世善根。既然自己能念，又蒙大家助念，死后面色光辉，有这三件事，应当可以往生西方。怎么能说他应当坠到什么地方呢？</p></div>
+<div class="para-pair"><p class="p-orig">人生所遇善恶诸境，各有宿因。宿世有怨，见即怀瞋。宿世有恩，见即生爱。妇女无知，任性纵情，以致不能转怨为亲，令宿业消除也。</p><p class="p-trans">人生所遇的一切善恶境界，各有宿因。宿世有怨，见面就怀瞋恨；宿世有恩，见面就生爱恋。妇女无知，放任性子、放纵情感，以致不能转怨家为亲人，令宿业消除。</p></div>
+<div class="para-pair"><p class="p-orig">明理之人，既知一见生瞋，当对治此瞋，偏以慈爱待之，则宿业由现业而消灭矣（善心亦名业）。</p><p class="p-trans">明理之人，既已知道一见面就生瞋恨，就应当对治此瞋心，偏以慈爱心来对待，那么宿业由现业而消灭了（善心也名业）。</p></div>
+<div class="para-pair"><p class="p-orig">观世音菩萨，若能志诚恳切持念，不但愈病而已。果能志诚之极，则尚能了生脱死，以至成佛。楞严所谓求妻得妻（求妻者，求贤慧之妻也），求子得子，求长寿得长寿，求三昧得三昧，如是乃至求大涅槃得大涅槃。</p><p class="p-trans">观世音菩萨，如果能志诚恳切持念，不止治病而已。果真能够志诚到极点，那么还能了生脱死，以至成佛。《楞严经》中所说：求妻得妻（求妻，求贤慧之妻），求子得子，求长寿得长寿，求三昧得三昧，如是乃至求大涅槃得大涅槃。</p></div>
+<div class="para-pair"><p class="p-orig">大涅槃者，佛所证之究竟极果也。但以世人信心及至诚持诵未能至极，且随彼之诚而得其种种小利益。非谓尽此止此而已也。</p><p class="p-trans">大涅槃，是佛所证的究竟极果。只是因为世人的信心以及至诚持诵，没能到极点，暂且随着众生的诚心而得到种种的小利益。不是说到此就没有了，只有这些而已。</p></div>
+<div class="para-pair"><p class="p-orig">宜令内至家亲，外而一切人，皆以己之征验，及观音颂中诸感应相劝。俾各各得蒙菩萨慈悲护佑，此患难世道中，第一预防之妙法也。</p><p class="p-trans">应该令家内的亲人眷属，家外的一切相识的人，都以自己的征验，以及《观音颂》中诸多的感应事迹劝导他们。使得各各得蒙菩萨的慈悲护佑，在这个患难的世道中，是第一预防的妙法啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【杨宝救雀】</span>《救雀受衔环之报》：汉朝杨宝，天性仁慈，年纪才九岁时，有一次在华阴山北，看见一只黄雀被鸱鴞追逐搏伤，坠落地上。又被许多蚂蚁困咬伤口，黄雀痛苦挣扎，杨宝深为怜悯，便把它救回，敷治创伤，小心畜养在竹箱里，又用黄花喂它，等到创伤痊愈，羽毛生长后，就放它飞去。当夜梦见黄衣童子，向杨宝再三拜谢说道：“我是西王母使者，在飞往蓬莱仙山途中，遭受伤害，承蒙拯救疗养恩德如今我要返回南海了。”说罢，便以白玉环四枚赠送杨宝。继续地说：“祝愿你子孙洁白，位登三公，就如同这玉环一样。”后来杨宝子孙，杨震、杨秉、杨赐、杨彪四代，果然都位列三公，清风亮节，贵显无比。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【三公】</span>三公是中国秦朝地位最尊显的三个官职的合称。秦朝以后多为虚职，地位上略低于宰相。周代已有此词，西汉今文经学家据《尚书大传》、《礼记》等书，以为三公指司马、司徒、司空；古文经学家则据《周礼》，以太师、太傅、太保为三公。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【征验】</span>1.证据；事实根据。 2.应验；证实。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

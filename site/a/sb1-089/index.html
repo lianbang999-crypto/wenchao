@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复陈渭恩居士书 · 印光法师文钞</title>
+<meta name="description" content="适接龚宗元信，言汝欲皈依。本欲与宗元书，但以宗元乃法名，不记其原名，兼无号头，恐不易交。又恐彼在无锡，故直与汝书耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-089/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复陈渭恩居士书 · 印光法师文钞">
+<meta property="og:description" content="适接龚宗元信，言汝欲皈依。本欲与宗元书，但以宗元乃法名，不记其原名，兼无号头，恐不易交。又恐彼在无锡，故直与汝书耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-089/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷一 · 书一</div>
+      <h1 class="art-title">复陈渭恩居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">适接龚宗元信，言汝欲皈依。本欲与宗元书，但以宗元乃法名，不记其原名，兼无号头，恐不易交。又恐彼在无锡，故直与汝书耳。</p><p class="p-trans">刚刚接到龚宗元的信，说你想要皈依。本来想给宗元写信，但因为宗元是他的法名，不记得他的原名，又没有号码，恐怕不容易邮寄转交。又恐怕他在无锡，所以直接给你写信。</p></div>
+<div class="para-pair"><p class="p-orig">须知佛法，原与儒教无异。凡佛弟子必须要敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。</p><p class="p-trans">必须知道佛法，原本与儒教没有差异。凡是佛弟子，必须要敦伦尽分（敦笃人伦、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。</p></div>
+<div class="para-pair"><p class="p-orig">欲依佛法了生死，必须敦行世间伦常，以为贤人善人。否则纵学佛法，亦难得真实利益。以根本既缺，便难完全得佛法之真利益也。</p><p class="p-trans">想要依佛法了生死，必须切实实行世间的伦理纲常，成为贤人善人。否则，即使学了佛法，也很难得到真实利益。因为根本已然缺失，就很难完全得到佛法的真实利益了。</p></div>
+<div class="para-pair"><p class="p-orig">须知佛法乃一切众生之公共法。无一人不当修，亦无一人不能修。彼理学以种种谬说辟驳佛法者，乃昧心违理之言，非大公至正之论也。</p><p class="p-trans">必须知道佛法是一切众生的公共法。没有一个人不应当修，也没有一个人不能修。那些理学家以种种错谬的言说辟驳佛法，是昧心违理的话，并非大公至正的言论。</p></div>
+<div class="para-pair"><p class="p-orig">彼谓佛以因果轮回，为骗愚夫愚妇之据，乃凭空妄造，实无其事。是开天下后世了无忌惮之端。驯至于今，遂现废经废伦丧仁丧德之惨相。学说误人，一至于此。</p><p class="p-trans">他们认为佛法以因果轮回，作为欺骗愚夫愚妇的依据，是凭空妄造，实际上没有这些事。这是开了天下后世（之人）了无忌惮的开端。逐渐演化到了今天，于是出现了废儒经、废伦理、丧仁义、丧道德的惨相。这种学说误人害人，竟然到了如此地步。</p></div>
+<div class="para-pair"><p class="p-orig">今当极力提倡因果报应，庶可挽回颓风。尤当至诚念佛念观世音，以期生则消除恶业，增长善根。没则仗佛慈力，往生西方。</p><p class="p-trans">现今应当极力提倡因果报应，或许可以挽回颓败的风气。尤其应当至诚念佛、念观世音菩萨，以期在生则消除恶业，增长善根；临终则仗佛慈力，往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">又须以此内而劝其父母兄弟姊妹妻媳儿女，外而劝乎乡党邻里亲戚朋友，俾一切人同沐佛恩。以此功德，作我往生资粮，则必得径登上品矣。</p><p class="p-trans">又必须将这些道理，在家内劝导他的父母、兄弟、姐妹、妻媳、儿女；在家外劝导乡亲、邻里、亲戚、朋友。使得一切人共同沐浴佛恩。以此功德，作为我往生的资粮。那么必定会直接登上上品莲台啊！</p></div>
+<div class="para-pair"><p class="p-orig">今为汝取法名为宗法。宗，主也，至也。谓以佛法为宗本，而敦行世间伦常，以期超凡入圣了生脱死也。</p><p class="p-trans">现今为你取法名为宗法。宗，主的意思，至的意思。就是以佛法作为宗本，而切实实行世间的伦理纲常。以期超凡入圣，了生脱死。</p></div>
+<div class="para-pair"><p class="p-orig">若有净土各书，则甚好。否则按仿单向弘化社请而阅之。则其法门之所以然，与修持之各法，则当各了然矣。</p><p class="p-trans">如果有净土宗的各种书籍，则非常好。否则，按照仿单向弘化社请来阅读。那么净土法门的所以然，与修持的各种方法，就应当会各个明白清楚了。</p></div>
+<div class="para-pair"><p class="p-orig">光老矣，目力，精神，工夫，各不给，不得常来信。以肯息心看文钞，嘉言录，净土十要，佛学救劫编，正信录，则无须函询矣。若不注意，虽日日函询，亦无所益。</p><p class="p-trans">我老了，视力、精神、工夫，都不足了，不得常常来信。因为肯专心看《文钞》、《嘉言录》、《净土十要》、《佛学救劫编》、《正信录》，就不必写信询问了。如果不注意，虽然天天写信询问，也没有什么利益。</p></div>
+<div class="para-pair"><p class="p-orig">又一函遍复，实为一切人所当共宝守而修持者。文虽不嘉，义备各道，尤当依行。（民廿二年三月十二）</p><p class="p-trans">再有，《一函遍复》实在是一切人所应当共同宝守而修持的文章。文词虽然不好，但义理具备了各种道理，尤其应当依照而行。（民国二十二年&lt;1933年&gt;三月十二日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【号头】</span>1.工头。2.号码，号数。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>灵岩山起建永年佛七助修大殿功德碑记 · 印光法师文钞</title>
+<meta name="description" content="大雄宝殿开工以来，工程浩大，工料昂贵。更加年景荒旱，募化维艰，致令工事方面几经困难。所需工费料价除各护法乐捐外，不足尚巨。爰商得 印真二老人之同意，发起永年佛七两堂。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sbu-152/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="灵岩山起建永年佛七助修大殿功德碑记 · 印光法师文钞">
+<meta property="og:description" content="大雄宝殿开工以来，工程浩大，工料昂贵。更加年景荒旱，募化维艰，致令工事方面几经困难。所需工费料价除各护法乐捐外，不足尚巨。爰商得 印真二老人之同意，发起永年佛七两堂。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sbu-152/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编补 · 论文</div>
+      <h1 class="art-title">灵岩山起建永年佛七助修大殿功德碑记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大雄宝殿开工以来，工程浩大，工料昂贵。更加年景荒旱，募化维艰，致令工事方面几经困难。所需工费料价除各护法乐捐外，不足尚巨。爰商得   印真二老人之同意，发起永年佛七两堂。</p><p class="p-trans">大雄宝殿开工以来，工程浩大，人工、材料费昂贵，更加上年成饥荒干旱，募资化缘艰难，致使土木营造方面几经困难。所需的人工、材料费，除各位护法乐捐之外，还差很多。现在商得印公、真达二位老人的同意，发起常年佛七两堂。</p></div>
+<div class="para-pair"><p class="p-orig">一堂每份助洋五百元，加入者已有十五份（内有黄蘅秋居士一份，系创修大殿之发起人，去岁已独助洋五千元），定于旧历十一月十一日起，全堂念佛，至十七日圆满，永年照办。另一堂每份助洋一百元，加入者已有十八份，亦系永年照办，唯人数与日期得酌量定夺耳。</p><p class="p-trans">一堂每份乐助五百洋元，参加的人已经有十五份（其中有黄蘅秋居士一份，是创修大雄宝殿的发起人，去年已经单独捐助五千洋元），定于阴历十一月十一日起，全堂念佛，至十七日圆满，永久照此来办。另外一堂，每份乐助一百洋元，参加的人已经有十八份，也是永久照办，只是人数和日期要商量决定罢了。</p></div>
+<div class="para-pair"><p class="p-orig">念佛法门，即凡情契圣智，以果觉为因心，九界同归，诸佛共赞，功德广大，利益弘深，凡所祈求，皆得果遂。虽现生超凡入圣，了生脱死，尚可即得，况其下焉者乎。</p><p class="p-trans">念佛法门，即凡情契入圣智，以果地觉为因地心，九法界同归，十方诸佛共赞，功德广大，利益弘深，凡所祈求，都能如愿以偿。即使是现生超凡入圣，了生脱死，尚且可以马上得到，何况在这之下的利益呢？</p></div>
+<div class="para-pair"><p class="p-orig">以其为十方三世一切诸佛上成佛道，下化众生，成始成终之总持法门故也。无奈世人于修持多恃自力而弃佛力，于祈求多图场面而忽实益，以致种因而不得实果，出资而徒成虚文，亦可慨也。</p><p class="p-trans">因为这个法门，是十方三世一切诸佛，上成佛道，下化众生，成始成终的总持法门的缘故。无奈世人对于修持，大多依凭自力而舍弃佛力；对于祈求，大多贪图场面好看，而轻忽了真实利益，以致种善因而得不到真实善果，捐出资财而徒然成为虚文，也实在令人慨叹啊！</p></div>
+<div class="para-pair"><p class="p-orig">灵岩为千六百年之古道场，自晋司空陆玩舍宅为寺，后梁唐宋明清各蒙敕修，兼以智积菩萨或以画像，或现僧相以显灵异，致其道场为吴地冠。清季遭兵燹，竟成丘墟，唯砖塔一座巍然独存。经彭宫保玉麟公为之设法，始建一小殿，二十余间小屋。住僧行道，尚未暇及。</p><p class="p-trans">灵岩山寺是一千六百年的古道场，从晋朝司空陆玩舍家宅为寺院，以后梁、唐、宋、明、清历代各蒙皇命修缮，同时因为智积菩萨，有时以画像，有时现僧相，来示现灵异感应，使得这个道场成为吴地之首。清朝末年，遭到兵火焚毁，竟然成了废墟，唯有一座砖塔巍然独存。经宫保彭玉麟（注1、2）大人为此设法，才建起一座小殿，二十多间小屋。安住僧人、办道修行，还没有时间顾及。</p></div>
+<div class="para-pair"><p class="p-orig">宣统三年，吾友真达和尚由邑绅严公良灿函请住持，真师即欲恢复旧制。且相时机，至民十五年改为十方专修净业道场。长年念佛，与普通打七无异。不二三年，道风远闻，上海，天津，福建，甘肃等处各为函祈打七，由是住僧既多，不得不大启修造。</p><p class="p-trans">宣统三年（1911），我的道友真达和尚由乡绅严良灿函请住持寺院，真达法师就想恢复旧制。暂且等待时机，到了民国十五年（1926），改为十方专修净业道场。长年念佛，与普通打七一样。不到二三年，道风远闻，上海、天津、福建、甘肃等地纷纷写信，祈求打七，因此住的僧人多了，不得不大为修造。</p></div>
+<div class="para-pair"><p class="p-orig">念佛堂及各需要寮舍已次告成，唯大殿工程浩大，虽已开工而款缺甚巨，时局艰难，不便募化。故集一众姓永年佛七，人各出洋五百元，以此功德成就殿工。幸蒙季圣一，曹崧乔等诸大居士各为佽助，不致殿工半途而废。</p><p class="p-trans">念佛堂以及各项需要的寮舍已经次第告成，唯有大殿的工程浩大，虽然已经开工而所缺的钱款巨大，时局艰难，不便募资化缘。所以集起一堂众姓常年佛七，每人各出五百洋元，以此功德，成就大殿工程。幸蒙季圣一、曹崧乔等诸大居士，各各帮助，不致大殿工程半途而废。</p></div>
+<div class="para-pair"><p class="p-orig">由是含空宝殿指日成功，满月金容经劫常住。四众瞻礼种出世之福田，六和持诵成超凡之道业。其为功德，何能名焉。</p><p class="p-trans">从此，含空宝殿指日成功，满月金容经劫常住。四众弟子瞻礼，种出世福田；六和僧众持诵，成超凡道业。这个功德，如何能用语言来表达呢？</p></div>
+<div class="para-pair"><p class="p-orig">择于夏历十一月十一日起七，至十七阿弥陀佛圣诞日圆满。以此功德超荐先灵，祝延亲寿，忏己躬之罪障，荫裔世之子孙。又祈风雨顺时，谷麦成熟。中外常协和，天下永太平。四生九有同登净土玄门，八难三途共入弥陀愿海。</p><p class="p-trans">选择在阴历十一月十一日起七，到十七阿弥陀佛圣诞日圆满。以此功德，超荐先灵，祝延亲寿，忏悔自己的罪障，福荫后世的子孙。另外，祈求风调雨顺，谷麦成熟。中外常和谐，天下永太平。四生（注3）九有（注4）同登净土玄门，八难（注5）三途（注6）共入弥陀愿海。</p></div>
+<div class="para-pair"><p class="p-orig">以后每年各于此时打一佛七，概不出资，实为僧俗两便之道。出资芳名备列于后。</p><p class="p-trans">以后每年，都在这个时候打一个佛七，一概都不出钱，实在是僧俗两便之道。出资功德芳名，详细列在后面。</p></div>
+<p class="p-orig">（1）胎生，指从母胎而出生者，称为“胎生”。如人、象、牛、马，猪、羊、狗、猫等。</p>
+<p class="p-orig">（2）卵生，由卵壳出生者，称为“卵生”。如鸡、鸭、孔雀、蛇、鱼、蚁等。</p>
+<p class="p-orig">（3）湿生，又作因缘生、寒热和合生。即由粪聚、注道、秽厕、腐肉、丛草等润湿地之湿气所产生者，称为“湿生”，如飞蛾、蚊蚰、蠓蚋、麻生虫等。</p>
+<p class="p-orig">（4）化生，无所托而忽有，称为“化生”。如诸天、地狱、中有之有情，皆由其过去之业力而化生。</p>
+<p class="p-orig">（1）在地狱难，众生因恶业所感，堕于地狱，长夜冥冥而受苦无间，不得见佛闻法。</p>
+<p class="p-orig">（2）在饿鬼难，饿鬼有三种：①业最重之饿鬼，长劫不闻浆水之名。②业次重之饿鬼，唯在人间伺求荡涤脓血粪秽。③业轻之饿鬼，时或一饱，加以刀杖驱逼，填河塞海，受苦无量。</p>
+<p class="p-orig">（3）在畜生难，畜生种类不一，亦各随因受报，或为人畜养，或居山海等处，常受鞭打杀害，或互相吞啖，受苦无穷。</p>
+<p class="p-orig">（4）在长寿天难，此天以五百劫为寿，即色界第四禅中之无想天。无想者，以其心想不行，如冰鱼蛰虫，外道修行多生其处，而障于见佛闻法。</p>
+<p class="p-orig">（5）在边地之郁单越难，郁单越，译为胜处，生此处者，其人寿千岁，命无中夭，贪着享乐而不受教化，是以圣人不出其中，不得见佛闻法。</p>
+<p class="p-orig">（6）盲聋喑哑难，此等人虽生中国（指古印度中部摩竭陀国一带），而业障深重，盲聋喑哑，诸根不具，虽值佛出世，而不能见佛闻法。</p>
+<p class="p-orig">（7）世智辩聪难，谓虽聪利，唯务耽习外道经书，不信出世正法。</p>
+<p class="p-orig">（8）生在佛前佛后难，谓由业重缘薄，生在佛前佛后，不得见佛闻法。</p>
+<p class="p-orig">6、三途：即火途（地狱道）、血途（畜生道）、刀途（饿鬼道）。</p>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【宫保】</span>太子太保、少保的通称。明代习惯上尊称太子太保为宫保，清代则用以称太子少保。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【彭玉麟】</span>字雪琴，祖籍衡永郴桂道衡州府衡阳县（今衡阳市衡阳县渣江），生于安徽省安庆府。清朝著名政治家，军事家。清末水师统帅，湘军首领，人称“雪帅”。与曾国藩、左宗棠并称“大清三杰”，与曾国藩、左宗棠、胡林翼并称大清“中兴四大名臣”，湘军水师创建者、中国近代海军奠基人。官至两江总督兼南洋通商大臣，兵部尚书。彭玉麟于军事之暇，绘画作诗，以画梅名世。他的诗后由俞曲园结集付梓，题名《彭刚直诗集》（八卷），收录诗作500余首。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【四生】</span>指三界六道有情出生的四种方式：</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【九有】</span>（名数）又云九居。三界中有情乐住之地处有九所。名曰九有情居，又云九众生居。略云九有，又云九居：一欲界之人与六天，二初禅天，三二禅天，四三禅天，五四禅天中之无想天，六空处，七识处，八无所有处，九非想非非想处（此中除无想非想名七识住）。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【八难】</span>即指不得遇佛、不闻正法之八种障难。又作八难处、八难解法、八无暇、八不闲、八非时、八恶、八不闻时节：</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

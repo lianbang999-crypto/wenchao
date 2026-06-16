@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>新编观音灵感录序（民十八年） · 印光法师文钞</title>
+<meta name="description" content="观世音菩萨，誓愿宏深，慈悲广大，以故分身尘刹，随类逐形，寻声救苦，度脱众生。而于娑婆世界，更为愍念周挚，拯救无遗也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-016/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新编观音灵感录序（民十八年） · 印光法师文钞">
+<meta property="og:description" content="观世音菩萨，誓愿宏深，慈悲广大，以故分身尘刹，随类逐形，寻声救苦，度脱众生。而于娑婆世界，更为愍念周挚，拯救无遗也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-016/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">新编观音灵感录序（民十八年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观世音菩萨，誓愿宏深，慈悲广大，以故分身尘刹，随类逐形，寻声救苦，度脱众生。而于娑婆世界，更为愍念周挚，拯救无遗也。</p><p class="p-trans">观世音菩萨，誓愿宏深，慈悲广大，因此分身一切世界，随众生的种类、形态现身，寻声救苦，度脱众生。而且对于娑婆世界，更是周挚（至为真诚）地愍念，加以拯救而没有遗漏。</p></div>
+<div class="para-pair"><p class="p-orig">而况近年以来，人民日日在患难中，虽欲逃避，直无可逃之地，亦无可逃之法。以近来世道人心，坏至其极。虽父母生育之大恩，尚公然提倡废孝与杀父杀母，为大义灭亲者。民生斯世，可不哀哉。</p><p class="p-trans">况且近年来，人民天天在患难之中，虽然想要逃避，却根本没有可以逃避的地方，也没有可以逃避的方法。因为近来的世道人心，已经败坏到了极点。尽管父母有生育的大恩，竟然还公然提倡废除孝道与杀父杀母，认为这是大义灭亲。人民生在这种世道之中，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">由是凡有正知见者，莫不研究佛学，修持净业，以求出离此五浊恶世，速得上预于莲池海会，庶可永离众苦，但受诸乐矣。</p><p class="p-trans">因此，凡是有正知正见的人，无不研究佛学，修持净业，以求出离这个五浊恶世，速得往生加入莲池海会，只有这样才能永离众苦，但受诸乐。</p></div>
+<div class="para-pair"><p class="p-orig">而观世音菩萨，于斯时世，特为兴无缘大慈，运同体大悲，于种种苦难中，垂念护佑。称其洪名，而得逢凶化吉，遇难成祥者，何可胜数。</p><p class="p-trans">而且观世音菩萨，在这个大患难的时代，特别兴无缘大慈（慈即与乐），运同体大悲（悲即除苦），在种种的苦难中，垂念护佑众生。因称念观世音菩萨的洪名，而得以逢凶化吉、遇难成祥的人，哪里能数得完呢？</p></div>
+<div class="para-pair"><p class="p-orig">其纪载菩萨感应事迹者，散见各书。专纪之书，则有弘赞之观音慈林集，周克复之观音持验记，尤惜阴之观音灵感录，许止净之观音本迹颂，聂云台之观音灵验纪。悉皆随见随闻，而为纪录。</p><p class="p-trans">那些记载观世音菩萨感应事迹的文章，分散在各种书籍中。而专门纪载的书籍，则有弘赞法师的《观音慈林集》，周克复居士的《观音持验记》，尤惜阴居士的《观音灵感录》，许止净居士的《观音本迹颂》，聂云台居士的《观音灵验纪》。这些全都是根据所见所闻，来加以纪录的。</p></div>
+<div class="para-pair"><p class="p-orig">李圆净居士，又复总诸书而辑之，名新编观音灵感录。可谓集观音灵感之成，而为一切信奉持念者之依据也。</p><p class="p-trans">李圆净居士，又再汇总各书而加以编辑，名为《新编观音灵感录》。可以说是集观音灵感之大成，而成为一切信奉持念者的依据。</p></div>
+<div class="para-pair"><p class="p-orig">虽然，须知观音何以能灵感如是，以其能返闻闻自性，及照见五蕴皆空故。阅此编者，而能志诚恳切，念观音大士洪名。念至念极情亡时，则凡一切烦恼恶业，当体皆空。回视一切苦乐境缘，皆不可得。</p><p class="p-trans">虽然如此，必须知道观世音菩萨，为何能够如此灵感？这是因为观世音菩萨能够返闻闻自性，以及照见五蕴皆空的缘故。阅读这部《新编观音灵感录》的人，如果能够志诚恳切，念观音大士洪名。待念到念极情亡之时，那么所有的烦恼恶业，当体皆空。回头看一切苦乐境缘，都了不可得。</p></div>
+<div class="para-pair"><p class="p-orig">于此不可得中，不妨兴慈运悲，随机接引。以观音之心为心，以观音之事为事。普令一切受苦众生，同沐观世音之恩泽。以及于未来世中，同行观世音之道，以展转救度也。</p><p class="p-trans">在这了不可得的境界中，却不妨碍兴无缘大慈，运同体大悲，随机接引众生。以观世音菩萨的心为自己的心，以观世音菩萨的事业为自己的事业。普遍地令一切受苦的众生，同沐观世音菩萨的恩泽。并在未来世中，同行观世音菩萨之道，来辗转救度苦难众生啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【周挚】</span>至为真诚；至为笃厚。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【弘赞】</span>（1611-1685）明末清初曹洞宗僧。广东新会人，俗姓朱。字在参。早岁从余集生学儒典，博雅能文，弱冠补县学生员。清入主后，乃遁走为僧，研习禅法，参谒鼎湖道邱，而得印可，初住广州之宝象林，后继席肇庆鼎湖。师生平特重实践笃履，虽精于禅，因痛心于丛林中浮夸不实之风气，绝口不言禅道，仅弘律仪，倡导戒行，以为职事。于康熙二十四年示寂，世寿七十五。撰有鼎湖山木人居在参禅师刹稿五卷、七俱胝佛母所说准提陀罗尼经会释三卷、心经论、四分戒本如释十二卷、归戒要集三卷、八关斋法、礼佛仪式等数十种。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【观音慈林集】</span>凡三卷。清代弘赞编于康熙七年（1668）。收于卍续藏第一四九册。本书汇集有关观世音信仰之经典，及有关信仰者之事迹、感应等而成。卷上为诸经篇，包括悲华经、观世音大势至菩萨授记经、大乘庄严宝王经、请观世音菩萨消伏毒害陀罗尼咒经等十经；卷中、卷下为感应篇，抄录印度及我国自晋至清初之僧俗关于观世音信仰之事迹与感应，计一五四件，并一一记其出处。本书乃研究观世音信仰史之重要参考书。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【观音经持验记】</span>凡二卷。清代周克复作于顺治十六年（1659）。又称观世音持验记、观音持验记、观世音经咒持验记。收于卍续藏第一三四册。作者广搜诸书，采撷自晋代至清顺治时，所有僧俗有关观音信仰之灵验一一八件，汇集编纂而成。范围包括高僧传、法苑珠林、辨正论、法华感通、观音感应等，及冥详记、宣验记、太平广记、谈薮、玉堂闲话、朝野佥载等内外典籍，并于每件之下记其出典，乃研究观世音信仰之重要资料。卷末并附有不空所译之观世音大悲心陀罗尼、白衣大悲五印心陀罗尼经、礼观音文、辨讹语三则等。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

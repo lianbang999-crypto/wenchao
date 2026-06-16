@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与胡作初居士书（民国二十二年） · 印光法师文钞</title>
+<meta name="description" content="数日前，令甥崔澍萍来函，并将阁下与彼之函，亦并寄来，祈光为阁下寄各种书，已令寄矣。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-108/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与胡作初居士书（民国二十二年） · 印光法师文钞">
+<meta property="og:description" content="数日前，令甥崔澍萍来函，并将阁下与彼之函，亦并寄来，祈光为阁下寄各种书，已令寄矣。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-108/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">与胡作初居士书（民国二十二年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">数日前，令甥崔澍萍来函，并将阁下与彼之函，亦并寄来，祈光为阁下寄各种书，已令寄矣。</p><p class="p-trans">几天前，你外甥崔澍萍来信，并将你写给他的信，也一并寄来，请我为你邮寄各种书，已经让人寄了。</p></div>
+<div class="para-pair"><p class="p-orig">阁下一向有信心，而未遇通人，其所修持，乃外道炼丹运气之法。彼自诩性命双修，为得六祖之真传，实则但是保身之法，了无了生死之气分，彼何知性与命之意义哉。</p><p class="p-trans">你一向有信心，但是没有遇到通达佛法的人，你所修持的，是外道炼丹运气的方法。他们自诩是性命双修，得到了六祖的真传，其实那只是保养色身的方法，根本没有了生脱死的气分，他们哪里知道性与命的真正意义呢？</p></div>
+<div class="para-pair"><p class="p-orig">但世人不知正法，便无由抉择真伪，难免盲从。彼之炼丹运气之法，用之好，则血脉周流，身体强健。用之不如法，则气滞不通，其害非小。</p><p class="p-trans">但世间人不知道正法，便没有办法决择真伪，难免盲目信从。他们所说的炼丹运气的方法，用得好，则血脉周身流动，身体强健；用得不如法，则气滞不通，这个危害可不小。</p></div>
+<div class="para-pair"><p class="p-orig">有许多人，入同善社坐工，以致成痴呆，瘫痪，身体麻木者。皆由其法不善，以冀养身者，反以害身，可不哀哉。</p><p class="p-trans">有许多人，加入同善社运气静坐，以致出现痴呆，瘫痪，身体麻木等情况。都是由于这个方法不善，本来希望养身的，反而成了害身了，能不悲哀吗？</p></div>
+<div class="para-pair"><p class="p-orig">详察阁下之病，由于一向好胜，故每每因气受病，此其一。又以天性聪明，故带聪明人习气，致于女色，不加撙节。再加以忿怒之火，不时而起。譬如双斧伐孤树，已危险之极。又用同善社不良善之坐法，则又为病苦之助缘，以致种种现象，皆由之而生。</p><p class="p-trans">详细观察你的病症，是由于一向争强好胜，所以常常因为生气而受病，这是一个方面。另外，因为你天性聪明，所以带着聪明人的习气，对于女色，不加节制。再加上忿怒的心火，不时生起。譬如两把斧头同时砍伐一颗树，已经危险到极点了。再加上运用同善社中不好的静坐方法，就又成了病苦的助缘，以致种种病苦现象，都由此而生。</p></div>
+<div class="para-pair"><p class="p-orig">今若肯依清心寡欲，摄心念佛之法行之，久而久之，宿业消灭，善根增长，一切失眠，鼻梁颤动等，当皆逐渐消灭矣。</p><p class="p-trans">现今你如果肯依照清心寡欲，摄心念佛的方法来修行，久而久之，就会宿业消灭，善根增长，一切失眠，鼻梁颤动等病症，当会全都逐渐消灭了。</p></div>
+<div class="para-pair"><p class="p-orig">当先看嘉言录中修持方法，一句南无阿弥陀佛，绵绵密密，长时忆念。凡有忿怒，淫欲，好胜，赌气等念，偶尔萌动，即作念云，我念佛人，何可起此种心念乎。</p><p class="p-trans">应当先看《嘉言录》中的修持方法，一句“南无阿弥陀佛”，绵绵密密，长时忆念。凡有忿怒、淫欲、好胜、赌气等念头，偶尔萌生发动，立即就要这样想：我是一个念佛人，怎么可以生起这样的心念呢？</p></div>
+<div class="para-pair"><p class="p-orig">念起即息，久则凡一切劳神损身之念，皆无由而起。终日由佛不思议功德，加持身心，敢保不须十日，即见大效。</p><p class="p-trans">念头刚生起，就要让它立刻息灭，久而久之，凡是一切劳神损身的念头，都没有办法生起了。整天由阿弥陀佛不可思议的功德，加持自己的身心，敢保不须十天，就会见到大效。</p></div>
+<div class="para-pair"><p class="p-orig">若只偶尔念一句两句，便欲见效，则是自欺欺人。虽亦仍有功德，欲即由此愈病，则决不可得。</p><p class="p-trans">如果只是偶尔念一句、两句，就想要见到效果，那就是自欺欺人。虽然也仍会有功德，但想要即刻用这种方法治好病，就绝对不可能了。</p></div>
+<div class="para-pair"><p class="p-orig">凡事均以诚为本，修持可不用其诚，而欲得愈病灭苦之利益乎。又若习气深厚，尤当专念南无观世音菩萨，以菩萨救苦心切也。</p><p class="p-trans">一切事务都以至诚为根本，难道修持能不用至诚心，就想要得到治愈疾病、灭除痛苦的利益吗？再者，如果习气（淫欲、嗔恚、愚痴等）深厚，尤其应当专念“南无观世音菩萨”，因为菩萨的救苦之心殷切啊！</p></div>
+<div class="para-pair"><p class="p-orig">今附一函遍复，阅之，即可自知。光现在有甚急要之事，以后不须与光信，如有所商酌，当与澍萍信。然亦不许澍萍再来信，不过彼稍识门径，比阁下明白多矣。</p><p class="p-trans">现今附上《一函遍复》，看后，就自然可以明白了。我现在有非常紧急、重要的事情要做，以后不要给我写信，如果有事商酌，应当给崔澍萍写信。但是，也不许崔澍萍再给我来信，不过他稍微能识得门径，比你明白的多一些。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【性命】</span>中国古代哲学范畴。指万物的天赋和禀受。《易·干》：“干道变化，各正性命。”孔颖达疏：“性者，天生之质，若刚柔迟速之别；命者，人所禀受，若贵贱天寿之属也。”</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【同善社】</span>是民国时期民间宗教中的一个臭名昭著的教派，为四川大足县（今重庆市大足县）龙水镇人彭汝尊（1873-1950年）于1912年创立。同善社宣扬“用儒教礼节，做道教功夫，而证释教果位”，供奉孔子、老子、释迦牟尼像。宣扬孔孟大道，设立善堂，坐练气功为名，发展道务。又鼓吹“入教避劫”说，认为只有加入同善社，才能“升入天堂”。因同善社无须出家持斋守戒诵经，能“成仙得道”，信徒日众。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【坐工】</span>指练气功的静坐，如八段锦的坐工口诀为：“闭目冥心坐，握固静思神。叩齿三十六，两手抱昆仑。”等。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

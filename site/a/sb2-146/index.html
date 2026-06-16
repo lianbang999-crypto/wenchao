@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复（薛英慧，刘一鹤）二居士书 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。光乃无知无识之粥饭僧，唯安己愚劣之分。只知修持净业，以期仗佛慈力，带业往生。二位若不欲做大通家，则尚不至因光之庸劣，而致误所期。若欲做大通家，则完全适得其反。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-146/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复（薛英慧，刘一鹤）二居士书 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。光乃无知无识之粥饭僧，唯安己愚劣之分。只知修持净业，以期仗佛慈力，带业往生。二位若不欲做大通家，则尚不至因光之庸劣，而致误所期。若欲做大通家，则完全适得其反。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-146/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复（薛英慧，刘一鹤）二居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。光乃无知无识之粥饭僧，唯安己愚劣之分。只知修持净业，以期仗佛慈力，带业往生。二位若不欲做大通家，则尚不至因光之庸劣，而致误所期。若欲做大通家，则完全适得其反。</p><p class="p-trans">来信尽知。我是一个无知无识，只会喝粥吃饭的僧人，唯有安于自己愚劣的本分。只知道修持净土，以期仗佛慈力，带业往生。二位如果不想做精通佛法的大通家，那么还不至于因为我的平庸愚劣，而导致耽误了你们的期望。如果想要做大通家，则完全适得其反。</p></div>
+<div class="para-pair"><p class="p-orig">虽然，大通家谈何容易。即令做到，若不依信愿念佛，求生西方，诚恐尘沙劫又尘沙劫，仍在六道轮回中矣。</p><p class="p-trans">虽然如此，做大通家谈何容易。即使做到了大通家的地位，如果不依信愿念佛，求生西方，实在恐怕经过尘沙劫又尘沙劫，仍旧还在六道轮回中啊！</p></div>
+<div class="para-pair"><p class="p-orig">良以仗自力了生死，与仗佛力了生死，有日劫相悬之象。知好歹者，切不可效已了生死行菩萨道者之志愿。必须要决定现生即生西方。待往生后，然后效之，则为有益。未往生即效之，如坯器未烧，一经生死之雨，便成泥土。世每有好说大话者，以佛菩萨之身分自任，但成自误误人耳。愿二位深思之。</p><p class="p-trans">实在是因为仗自力了生死，与仗佛力了生死，有一天与一劫那样相差悬殊的情形。知道好歹的人，千万不可效仿已经了生死、行菩萨道的圣者的志愿。必须要决定现生就往生西方。等往生后，然后才效仿菩萨再来，这样才有利益。未得往生就效仿再来的菩萨，如同土坯泥器未经烧制，一经过生死之雨，便成为了泥土。世间常有好说大话的人，以佛菩萨的身分来自任，不过是自误误人罢了。愿二位深思这种情况。</p></div>
+<div class="para-pair"><p class="p-orig">然学佛之人，必须各尽己分。所言分者，如父慈子孝，兄友弟恭，夫和妇顺，主仁仆忠等。人若各尽其分，则天下自当太平。</p><p class="p-trans">然而学佛的人，必须各自恪尽自己的本分。所说的本分，如父亲要慈祥，儿子要孝顺，兄长要友爱，弟弟要恭敬，丈夫温和，妻子随顺，主人仁厚，仆人忠心等等。每个人如果各自恪尽自己的本分，那么天下自然就会太平。</p></div>
+<div class="para-pair"><p class="p-orig">而其中关系最重者，唯父母之职分为然。使世之为父母者，各各善教其子女。则瞎捣乱与顽劣不法之徒，皆成贤人善人。何至有互相侵陵劫夺戕杀之事。</p><p class="p-trans">而其中关系最重要的，就是父母的职位本分了。假使世间做父母的人，各各好好教导他们的子女。那么瞎捣乱与顽劣不法之徒，都会成为贤人善人。何至于有互相侵陵、劫夺、杀害的事。</p></div>
+<div class="para-pair"><p class="p-orig">天下不治，匹夫有责，即指家庭教育，俾儿女皆为良善而言。此上所说，虽属普通之话。然推类而明，固已包括净尽矣。</p><p class="p-trans">天下得不到治理，每个老百姓都有责任，就是指家庭教育，使儿女都成为良善来说的。以上所说，虽然是很普通的话。然而依次推论，道理显而易见，本就已经将治安世道包括净尽了。</p></div>
+<div class="para-pair"><p class="p-orig">二位身任军官，更当严以律己，为士卒之模范。所谓以言教者讼，以身教者从也。世间无一事，不以身为本者。至于对士卒，当以真诚待之，谆谆告诫。俾彼等各各守除暴安良，保绥百姓之志。</p><p class="p-trans">你们二位，身为军官，更应当要严以律己，作士兵的模范。所谓以言语教导，他人就会争辩不休；以自身行持来教导，他人就会顺从。世间没有一件事情，不是以自身行持为根本的。至于对待士兵，应当以真诚心来对待他们，谆谆告诫。使得他们各各遵守除暴安良，保护百姓的志向。</p></div>
+<div class="para-pair"><p class="p-orig">视人犹己，视己同人，毋相欺陵侵夺。视人之妇女，若己之姊妹，不敢起非分之妄念。必期于不负卫国保民之职，则其军可不谓之道德军仁义军乎。以道德仁义军制敌，则所向无敌，必能得胜。故孔子曰，我战则克者，此之谓也。</p><p class="p-trans">看待他人犹如自己，看自己如同他人，不要互相欺陵、侵夺。视他人的妇女，如同自己的姐妹，不敢起非分的妄念。必定要期望不辜负保卫国家、保护人民的职责，那么这样的军队，能不被称为“道德之军、仁义之军”吗！以道德、仁义之军来克制敌人，则所向无敌，必能得胜。所以孔子说：“我一打战，必定胜利。”就是说的这个意思。</p></div>
+<div class="para-pair"><p class="p-orig">近世年有战事，稍有心存仁慈忠信，并念经念佛者，多皆在枪林弹雨中，绝不受伤，此其效也。二位既欲皈依，今且随顺来意，为取法名。如后知其无知无识，不足为师，另拜高人，实所欣愿。</p><p class="p-trans">近世以来，年年都有战争，稍微有心存仁慈忠信，以及念经念佛的人，大多都在枪林弹雨中，绝不受伤，这就是效验。你们二位既然想要皈依，现今暂且随顺你们的意愿，为你们各取法名。如果以后知道我无知无识，不足以为师父，另拜高人，实在是我美好的祝愿。</p></div>
+<div class="para-pair"><p class="p-orig">薛英慧，法名宗慧。宗者，主也。谓一举一动，以智慧为主。则无所往而不善，无所往而不与世间圣人出世间佛菩萨心迹，相契相合也。</p><p class="p-trans">薛英慧，法名宗慧。宗，主的意思。就是一举一动，以智慧为主导。那么所到之处，无不是善；所到之处，无不与世间圣人、出世间佛菩萨的心迹，相契相合啊。</p></div>
+<div class="para-pair"><p class="p-orig">刘一鹤，法名宗一。一者，纯一无妄之谓。心中常能纯乎道德仁义，而无别种与道德仁义相反之妄念，则可谓真儒真佛弟子。以此率物，固不难彼此咸有一德矣。</p><p class="p-trans">刘一鹤，法名宗一。一，纯一无妄的意思。心中常常能够纯于道德仁义，而没有另外与道德仁义相反的妄念，就可称为真正的儒生，真正的佛弟子。以身作则，成为大家的榜样，这样就不难彼此都有纯一不杂之德了。</p></div>
+<div class="para-pair"><p class="p-orig">然现今天灾人祸，每相袭而来。必须常以信愿念佛及念观音，自行化他。以期生则消除业障，优入圣贤之域。殁则仗佛慈力，直登极乐之邦。庶可不虚此生，不虚此遇矣。</p><p class="p-trans">然而现在天灾人祸，常常相袭而来。必须常以信愿念佛，以及念观世音菩萨，自行化他。以期在生，消除业障，优入圣贤的领域。死后，就仗佛慈力，直接登入极乐莲邦。才可不虚此生，不虚此遇啊！</p></div>
+<div class="para-pair"><p class="p-orig">余详文钞等书，此不备书。如欲看各书，汉口泰安里八十六号田申甫处可请。去腊所印戒烟治疟等三方甚灵。而疟疾为夏秋最多之病，此方不费一文，治无不愈，爰附二张，当广为人说，亦利人之一端。</p><p class="p-trans">其余详看《文钞》等书，此处不再多写。如果想要看各种经书，汉口泰安里八十六号田申甫那里可以奉请。去年腊月，所印的戒烟、治疟等三个药方很灵验。而疟疾是夏秋之际，发病最多的疾病，这个药方不花费一文钱，治疗无不痊愈，现附二张，应当广为他人讲说，这也是利益他人的一个方面。</p></div>
+<div class="para-pair"><p class="p-orig">光已七十有二矣，朝不保夕。而且衰残已现，精神不给。但祈按文钞修持，切勿来信。以力难应酬，非不愿为人说。纵令详说，何如一部书之具备乎。（四月初五）</p><p class="p-trans">我已经七十二岁了，朝不保夕。而且衰老之相已经显现，精神不足。但请按照《印光法师文钞》修持，千万不要来信。因为力量难以应酬，不是不愿意为人讲说。纵然是详说，又哪会如《印光法师文钞》那样具足完备呢？（四月初五日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【相悬】</span>差别大；相去悬殊。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【保绥】</span>使得到保全，获得安定。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【我战则克】</span>《礼记正义》卷二十三，礼器第十，孔子曰：“我战则克，祭则受福，盖得其道矣。”我：谓知礼者。克：胜也。言知礼之人，战必胜，祭必受福，盖得其道矣者，解所以战胜而祭受福也。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【咸有一德】</span>《尚书·商书·咸有一德第八》：“惟尹躬暨汤，咸有一德，克享天心。”伊尹作《咸有一德》。言君臣皆有纯一之德，以戒太甲。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

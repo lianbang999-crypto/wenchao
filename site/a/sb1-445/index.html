@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复叶聘臣居士书 · 印光法师文钞</title>
+<meta name="description" content="佛念众生，比众生念佛，当切百千万倍。若肯依佛言教，念佛求生西方，决不至仍留娑婆，何特于光乎哉。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-445/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复叶聘臣居士书 · 印光法师文钞">
+<meta property="og:description" content="佛念众生，比众生念佛，当切百千万倍。若肯依佛言教，念佛求生西方，决不至仍留娑婆，何特于光乎哉。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-445/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复叶聘臣居士书</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛念众生，比众生念佛，当切百千万倍。若肯依佛言教，念佛求生西方，决不至仍留娑婆，何特于光乎哉。</p><p class="p-trans">佛念众生，比众生念佛，当迫切百千万倍。如果肯依照佛的言教，念佛求生西方，决定不至于仍然留在娑婆世界，哪里只是我呢？</p></div>
+<div class="para-pair"><p class="p-orig">所言寂照不二，真俗圆融之义，下文极为发挥显示，何不体认以求了解乎。今先将此四字之义说明，则自势如破竹，一了俱了矣。</p><p class="p-trans">(《重刻安士全书序一》中）所说的“寂照不二，真俗圆融”的义理，在下文中极为发挥显示，为什么不体认以求了解呢？现今先将“寂照真俗”这四个字的意义说明，就自然会势如破竹，一明白就全都明白了。</p></div>
+<div class="para-pair"><p class="p-orig">上说吾心本具之道，与吾心固有之法，原是寂照不二，真俗圆融。何名为寂，即吾不生不灭之心体。有生灭便不名寂。何名为照，即吾了了常知之心相。不了了常知，便不名照。</p><p class="p-trans">上文说，“吾心本具之道”与“吾心固有之法”，原是“寂照不二，真俗圆融”。什么是寂？就是我们不生不灭的心体。有生灭就不名为寂。什么是照？就是我们了了常知的心相。不能了了常知，就不名为照。</p></div>
+<div class="para-pair"><p class="p-orig">何名为真，即常寂常照之心体，原是真空无相，一法不立。何名为俗，俗即假义，谓虽则一法不立，而复万法俱备，万德圆彰（万法万德即事相也，事故名俗）。</p><p class="p-trans">什么是真？就是常寂常照的心体，原本是真空无相，一法不立。什么是俗？俗就是假的意思，虽然说一法不立，而又万法俱备，万德圆彰（万法万德就是事相，因为是事相，所以名为俗）。</p></div>
+<div class="para-pair"><p class="p-orig">寂即是体。照即是体之相状与力用耳。此体相用三，原是一法。具此三义，故曰寂照不二。</p><p class="p-trans">寂就是心体。照就是心体的相状与力用。这体、相、用三者，原本是一法。具有这三义，所以说“寂照不二”。</p></div>
+<div class="para-pair"><p class="p-orig">真即是理性。俗即是事修。此理性本具事修之道。此事修方显理性之德（所谓全性起修，全修在性也）。故曰真俗圆融也。</p><p class="p-trans">真就是理性。俗就是事修。这个理性本来具足事修之道。由此事修方才开显理性之德（所谓由全体性德起修，全部修德在于彰显性德）。所以说“真俗圆融”。</p></div>
+<div class="para-pair"><p class="p-orig">下去离念离情，不生不灭，谓此寂照真俗之体相理事，均皆离念离情，不生不灭也。详观下喻，并所断之数句，自可了然于心矣。</p><p class="p-trans">下面说的“离念离情，不生不灭”，是说这个“寂照真俗”的心体、心相，理性、事修，都是离念离情，不生不灭的。详看下面的譬喻（明镜、太虚），以及所判定的几句话（注1），心中自然可以明了了。</p></div>
+<div class="para-pair"><p class="p-orig">如仍不了，则是宿欠修习。但至诚恳切持佛名号，待业障一消，则明如观火，必有相视而笑之一日也。</p><p class="p-trans">如果仍然不明白，就是宿世欠缺修习。只要至诚恳切持佛名号，等到业障一消除，就会明如观火，必有相视而笑的一天啊！</p></div>
+<div class="para-pair"><p class="p-orig">此鹦鹉，由遇阿难，为说四谛法，生欢喜，并平常见僧欢喜，预报家人之功德。即得七返生六欲天，然后生人中，证阿罗汉。是知了生死之难。</p><p class="p-trans">这只鹦鹉，由于遇到阿难尊者，为它宣说四谛法，生欢喜心，以及平常见到僧人就欢喜，预报家人的功德。即得七次往返生到六欲天，然后生到人中，证得阿罗汉果。所以须知了生死之难。</p></div>
+<div class="para-pair"><p class="p-orig">七返六欲天，其为年月莫能算也（人间五十年，四王一昼夜，上皆加一倍，忉利一百，夜摩二百，兜率四百，化乐八百，他化一千六百。又寿长亦加倍，四王五百岁，忉利一千岁，以上各加倍）。此系小乘法，任运自力了生死者。</p><p class="p-trans">七次往返生到六欲天，经过的年月无法计算（人间五十年，是四天王的一昼夜，向上都是增加一倍。忉利天一昼夜，人间一百年；夜摩天一昼夜，人间二百年；兜率天一昼夜，人间四百年；化乐天一昼夜，人间八百年；他化天一昼夜，人间一千六百年。另外，寿长也加倍，四天王天寿长五百岁，忉利天寿长一千岁，以上各各加倍增寿）。这是小乘法，任运自力了生死的情形。</p></div>
+<div class="para-pair"><p class="p-orig">若生信发愿，念佛求生西方，则无有不于现生即生西方者。生西方，则生死已了矣。</p><p class="p-trans">如果生信发愿，念佛求生西方，就没有不在这一生往生西方的。生到西方，就已经了生死了。</p></div>
+<div class="para-pair"><p class="p-orig">当发恳切心。此念佛法门，实为佛大慈悲，普度一切无力了生死之众生，而令其即生速了之无上要道也。</p><p class="p-trans">应当发起恳切心。这个念佛法门，实在是佛陀大慈悲，普度一切没有能力了生死的众生，而令他们当生快速了生死的无上要道啊！</p></div>
+<div class="para-pair"><p class="p-orig">四谛者，苦集灭道是。此四法，皆是审实不虚，故名为谛。谛即审实之义故。又有以理为谛者，谓其真实不虚之理也。</p><p class="p-trans">四谛，就是苦、集、灭、道。这四法，都是真实不虚的，所以名为谛。谛就是真实的意思。又有人把理作为谛，认为谛是真实不虚的理。</p></div>
+<div class="para-pair"><p class="p-orig">苦，即指吾人所得之色身，并所住之国土，无不是苦。集者，聚集也，谓由不了真空，于诸境界起贪瞋痴也。灭者，灭除烦恼，得证不生不灭之理性也。道者，能通之义，谓修戒定慧道，即可断贪瞋痴之集，证不生不灭之理性。以出离此苦世界，与脱离此苦报身也。</p><p class="p-trans">苦，就是指我们所感得的色身，以及所居住的国土，无不是苦；集，聚集的意思，就是由于不明白真空之理，对于诸多境界生起贪瞋痴；灭，灭除烦恼，证得不生不灭的理性；道，能通的意思，就是修习戒定慧之道，就可以断除贪瞋痴之集，证得不生不灭的理性。来出离这个苦世界，以及脱离这个苦报身。</p></div>
+<div class="para-pair"><p class="p-orig">此四，皆先果后因以说。集是苦因，苦是集果。道是灭因，灭是道果。作此说者，令其知苦断集。慕灭修道也。</p><p class="p-trans">这四谛，都是先说果，后说因。集是苦的因，苦是集的果。道是灭的因，灭是道的果。这样先说果，后说因，是令我们知苦断集，慕灭修道。</p></div>
+<div class="para-pair"><p class="p-orig">真达和尚欲印西方公据，彼自己另编辑，不甚用原文。凡文钞中三皈五戒十善等皆录之。</p><p class="p-trans">真达和尚想要印《西方公据》，他自己另外编辑，没有用很多原文。凡是《文钞》中有关三皈、五戒、十善等内容都收录了进去。</p></div>
+<div class="para-pair"><p class="p-orig">又令光将三转四谛法轮，略释其义，有近二千字。又有临终三大要，亦二千多字。不久当排印施送，待出时，观之即可了然。</p><p class="p-trans">又令我将三转四谛法轮，大略解释它的意义（即《印光法师文钞三编补·三转四谛法轮略释》），有近二千字。还有《临终三大要》，也有二千多字。不久当会排印施送，等到印出时，看了就能明白。</p></div>
+<div class="para-pair"><p class="p-orig">现排增修历史感应统纪，南京又刻木板，排者年内可出书，刻者须明年年底。</p><p class="p-trans">现在排印《增修历史感应统纪》，南京又刻了木板。（铅版）排印的，年内可以出书。木刻的，必须等到明年年底（才能出书）。</p></div>
+<div class="para-pair"><p class="p-orig">又将排净土十要原本。此诸事虽有人料理，然亦不能不经目，及与商酌，故甚忙迫。（十月初二日）</p><p class="p-trans">另外，将要排印《净土十要》的原本。这些事虽然有人料理，然而也不能不过目，以及与其商议斟酌，所以很忙碌。（十月初二日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【并所断之数句】</span>大矣哉吾心本具之道，妙矣哉吾心固有之法。寂照不二，真俗圆融。离念离情，不生不灭。谓之为有而不有，不有而有。谓之为空而不空，不空而空。生佛皆由此出，圣凡俱莫能名。类明镜之了无一物，而复胡来汉现。犹太虚之远离诸相，不妨日照云屯。正所谓实际理地，不受一尘。本觉心中，圆具诸法。乃如来所证之无上觉道，亦众生所迷之常住真心。三教圣人，依此心性，各垂教迹，广导群萌。（《增广印光法师文钞·卷三·重刻安士全书序一》）</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

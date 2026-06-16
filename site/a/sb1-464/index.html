@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复王悟尘居士书二 · 印光法师文钞</title>
+<meta name="description" content="前者蔺伯操来，言汝欲皈依。又将汝所书之字条见示。所言手续者，固无一定之仪式。如面受皈依，升座宣说，则为时须在一小时以上。于法座下，顶礼跪受。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-464/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复王悟尘居士书二 · 印光法师文钞">
+<meta property="og:description" content="前者蔺伯操来，言汝欲皈依。又将汝所书之字条见示。所言手续者，固无一定之仪式。如面受皈依，升座宣说，则为时须在一小时以上。于法座下，顶礼跪受。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-464/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复王悟尘居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">前者蔺伯操来，言汝欲皈依。又将汝所书之字条见示。所言手续者，固无一定之仪式。如面受皈依，升座宣说，则为时须在一小时以上。于法座下，顶礼跪受。</p><p class="p-trans">前些日子，蔺伯操来，说你想皈依。又将你写的信给我看。所说的皈依手续，没有固定的仪式。如果面受皈依，有升座说法，这样需要一小时以上。在法座下，顶礼跪着受皈依。</p></div>
+<div class="para-pair"><p class="p-orig">或图省事，亦可方便宣说，则为时不久。汝人在数千里外，遥祈受皈。礼宜预于三日前，朝暮志心礼佛，或二十四，或四八，或百八若干拜，以忏宿业。</p><p class="p-trans">或图省事，也可方便地说法，这样时间就不长。你人在数千里外，遥祈求受皈依。礼应在皈依前三天，早晚志心礼佛，或二十四拜，或四十八拜，或一百零八拜，等等若干拜，来忏悔宿业。</p></div>
+<div class="para-pair"><p class="p-orig">至本日清晨，即于佛前礼拜毕，自宣我弟子某某，遥禀吾师印光之命，皈依佛，皈依法，皈依僧，从今以往，乃至寿终，决不皈依天魔外道，及外道典籍，与外道徒众，一顶礼。如是三说，三顶礼。再拜若干拜，即已。</p><p class="p-trans">到皈依当天早晨，就在佛前礼拜完毕，自己宣说“我弟子某某，遥禀吾师印光之命，皈依佛，皈依法，皈依僧，从今以往，乃至寿终，决不皈依天魔外道，及外道典籍，与外道徒众”，然后顶礼一次。如此说三次，顶礼三次，再拜若干拜，就行了。</p></div>
+<div class="para-pair"><p class="p-orig">今为汝寄文钞二包，观音颂二包，安士全书二包，弥陀经白话解一包。常读此书，则取法有地，堕魔无由矣。</p><p class="p-trans">现在为你寄去《文钞》两包，《观音颂》两包，《安士全书》两包，《弥陀白话解》一包。常读这些书，则取法有据，不会堕入魔见。</p></div>
+<div class="para-pair"><p class="p-orig">所寄之书，除自存受持外，余送通文理，有信心，能恭敬者。倘邪见文人，漫无忌惮，切勿与彼。恐或亵渎，致令获罪。</p><p class="p-trans">所寄去的佛书，除了自存受持的外，多余的可送给通晓文理，有信心，能恭敬的人。如果是邪见文人，漫无顾忌的，千万不要给他们。唯恐或许会亵渎佛书，致使彼此获罪。</p></div>
+<div class="para-pair"><p class="p-orig">吾秦佛化，甚是否塞。汝既发心，当须著力修真实行。今为汝取法名为慧悟。谓以智慧了悟世间出世间法，自行化他。以期离世间生死之苦，得出世间真常之乐也。出世间法，无量无边。唯念佛求生西方，最为第一。详看文钞自知。</p><p class="p-trans">我的家乡陕西欲佛化，相当困难。你既然已经发心，应当必须著力于真实的修持。现在为你取法名为“慧悟”。意思是以智慧了悟世间及出世间法，自行而化他。以期离世间的生死之苦，得出世间的真常之乐。出世间法，无量无边。唯有念佛求生西方，最为第一。详看《文钞》自然就会知道。</p></div>
+<div class="para-pair"><p class="p-orig">然欲往生西方，必须敦笃伦常，恪尽己分。闲邪存诚，克己复礼。诸恶莫作，众善奉行。信愿真切，决志求生。不得有一念求来生人天福报之心，庶可得其实益。</p><p class="p-trans">然而要往生西方，必须敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），克己复礼（战胜己私、还归真理）。诸恶莫作，众善奉行。信愿真切，决志求生净土。不能有一念求来生人天福报的心，如此或可得到其真实利益。</p></div>
+<div class="para-pair"><p class="p-orig">又须将上所说之事，上而劝其父母，中而劝其兄弟姊妹，下而劝其妻子，此约家庭中说也。</p><p class="p-trans">另外，必须将以上所说的事，上劝自己的父母，中劝自己的兄弟姊妹，下劝自己的妻子儿女，这是就家庭中来说的。</p></div>
+<div class="para-pair"><p class="p-orig">外而劝其亲戚朋友乡党邻里，及一切相识之人。则自己之功德，更为广大。往生之品位，便可高增矣。</p><p class="p-trans">家庭以外，则劝导自己的亲戚乡党邻里，以及一切相识的人。这样自己的功德，就更为广大，往生的品位，便可高增了。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

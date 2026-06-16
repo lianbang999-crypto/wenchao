@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>募修云谷禅师塔院序 · 印光法师文钞</title>
+<meta name="description" content="缅维得道高僧，于千百年后。或有见其肖像，读其著述，经历其栖迟之地，瞻仰其閟藏之塔。皆能令人生惭愧心，生景慕心。奋发大志，力修净业。以期远追宏猷，振兴法道。俾如来慧命，相续不断，不致有负人与天地并称三才，僧与佛法同名三宝者。明云谷禅师，即其人也。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-053/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="募修云谷禅师塔院序 · 印光法师文钞">
+<meta property="og:description" content="缅维得道高僧，于千百年后。或有见其肖像，读其著述，经历其栖迟之地，瞻仰其閟藏之塔。皆能令人生惭愧心，生景慕心。奋发大志，力修净业。以期远追宏猷，振兴法道。俾如来慧命，相续不断，不致有负人与天地并称三才，僧与佛法同名三宝者。明云谷禅师，即其人也。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-053/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">募修云谷禅师塔院序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">缅维得道高僧，于千百年后。或有见其肖像，读其著述，经历其栖迟之地，瞻仰其閟藏之塔。皆能令人生惭愧心，生景慕心。奋发大志，力修净业。以期远追宏猷，振兴法道。俾如来慧命，相续不断，不致有负人与天地并称三才，僧与佛法同名三宝者。明云谷禅师，即其人也。</p><p class="p-trans">自古得道高僧，千百年后看见他的肖像，读到他的著作，经过他曾经居住的地方，瞻仰埋藏他的骨塔，都能让人生起惭愧心，生起仰慕心。奋发大志，力修净业，以期望追随他们的宏图大志，振兴佛法，续佛慧命。而不致于辜负了与天地并称三才，与佛法同列三宝的名义。明朝的云谷禅师，就是这样的人。</p></div>
+<div class="para-pair"><p class="p-orig">师乘宿愿力，于弘治十三年，示生嘉善胥山怀氏。幼入法门，彻悟自性。平生所修，虽注重于禅。而于性相诸宗，儒道心要，无不融会贯通。故能于禅教衰颓，儒道晦昧之际，俾宗风丕振，心法昭明。</p><p class="p-trans">弘治十三年，禅师乘着宿世愿力，出生在浙江嘉兴胥山怀家。幼年就进入佛门，彻悟自性。平生的修行，虽然注重于禅宗。而对于性、相等诸多宗派，以及儒学的心要，无不融会贯通。所以能够在禅教衰颓，儒学晦昧的时期，大振禅门宗风，昭明儒学心法。</p></div>
+<div class="para-pair"><p class="p-orig">其于世道人心，裨益良非浅鲜。其得其传而融通儒释，使灵山泗水心法俱彰者，僧则憨山大师，俗则了凡袁公，为最显著之人也。</p><p class="p-trans">云谷禅师对于世道人心的利益影响很深。得到他的传授而融通儒佛，使得儒佛二教的心法全都彰显的人，僧人当中，有憨山大师，在家人中，有袁了凡先生，二者最为知名。</p></div>
+<div class="para-pair"><p class="p-orig">师灭于万历三年，建塔栖真寺侧。至四十五年，憨山来礼其塔。见其塔院岑寂，一僧独奉香火。因嘱沈定凡居士，修葺庄严，并置长生田，以为久远之计。迄今已三百余年矣。</p><p class="p-trans">云谷禅师在万历三年入灭，骨塔修建在栖真寺旁边。万历四十五年，憨山大师来礼拜骨塔时，见到塔院冷清，只有一位僧人在供奉香火。因此就嘱咐沈定凡居士，将塔院修葺庄严，并置办了长生田，作为久远的安排。到现在已经有三百多年了。</p></div>
+<div class="para-pair"><p class="p-orig">今则基址尚在，垣屋无存。致令古德遗迹，人无知者。近来世道人心，日趋日下。邪见炽盛，正法衰微。若不表彰古德懿范，何由使宗风丕振，魔外归降乎哉。</p><p class="p-trans">现今，塔院的基址还在，墙屋却已无存。致使古德的遗迹，没有人知道。近来世道人心，一天比一天下劣。邪见炽盛，正法衰微。如果不表彰古德的美德风范，还有什么办法让宗风大振，邪魔外道归降呢？</p></div>
+<div class="para-pair"><p class="p-orig">嘉兴䣝般音居士忧之，拟重建塔院，刊布行实。庶出家在家一切人等，咸知古德芳风。从兹挽回造化之权，命自我立。断除烦恼之障，佛从心现。则可继憨山，了凡之志，以慰云谷禅师之心也。</p><p class="p-trans">嘉兴的䣝般音居士对于此心怀忧虑，所以打算重建塔院，刊刻流布云谷禅师的生平事迹。使得出家在家一切人，都能知道古德高尚的道风。从此把握造化权柄，掌握自己命运；断除烦恼业障，佛从心中显现。那么就能继承憨山大师、袁了凡的志向，告慰云谷禅师的心了。</p></div>
+<div class="para-pair"><p class="p-orig">但以工程浩大，独力难成。不得不求助于诸大檀越。果能人各依云谷命自我立，福自己求之训，笃实做去。则五福三多，悉萃厥身。天灾人祸，绝闻于世。功勋罔测，利益莫名。谅不至惜彼五家所共之财，而不作此三生有幸之福也。因述所以，祈共赞襄云尔。</p><p class="p-trans">只是因为重建的工程浩大，䣝居士个人的力量难以完成。因此不得不求助于诸位大檀越护法。诸位如果能够依照云谷禅师“命自我立，福自我求”的训诲，努力踏实地去做，那么种种的福报，都会聚集而来，一生当中，都不会听到天灾人祸的名称。功德难以测量，利益无法言说。想来（大家）不至于吝惜那五家共有的钱财，而不培植这三生有幸的福报吧。在此叙述其中的缘由，祈望大家共同辅助。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【云谷】</span>（1500-1575）明代僧。嘉善胥山（浙江嘉兴）人，俗姓怀，讳法会。幼出家于大云寺。常思“出家以生死大事为切，何以碌碌衣食计为”，遂决志参方，登坛受具。后闻天台小止观法门，专精修习。时法舟济掩关于杭州天宁寺，师往参叩，法舟授以念佛审实话头，直令重下疑情。师依教日夜参究，寝食俱废，一日受食，食尽亦不自知，碗忽堕地，猛然有省，复请益法舟，乃蒙印可。又阅《宗镜录》，大悟唯心之旨，从此一切经教及诸祖公案，了然如睹家中故物。其后，寓居金陵天界毗卢阁三年，复至摄山栖霞，结茅于千佛岭下。时有盗侵师，窃去所有，夜行至天明，尚不离庵，人获之，送至师。师食以饮食，尽与所有持去。由是闻者感化。又建禅堂，开讲席，往来者众。万历三年示寂，世寿七十五，僧腊五十。蒙师化者以千万计，憨山德清曾从师受教悟旨。师平日胁不至席，终身礼诵，未尝中辍一夕。从来接人软语低声，一味平怀。寻常示人，特揭唯心净土法门。生平任缘，未尝树立门庭，诸山但有禅讲道场，常请师为方丈。师至，则举扬百丈规矩，务明先德风范，不少假借。明末袁了凡与憨山德清颇钦服其为人。德清在所撰《云谷大师传》中，曾誉之为“中兴禅道之祖”。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【缅惟】</span>遥想。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【栖迟】</span>1.游息。2滞留。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【閟】</span>埋。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【宏猷】</span>远大的谋略；宏伟的计划。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【岑寂】</span>寂寞，孤独冷清。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【行实】</span>指生平事迹。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【芳风】</span>美好的风尚和教化。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【五福】</span>五种幸福。《书·洪范》：“五福：一曰寿，二曰富，三曰康宁，四曰攸好德，五曰考终命。”</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【三多】</span>指多福、多寿、多男子。祝颂之辞。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【五家所共】</span>谓世间财物为王、贼、火、水、恶子等五家所共有，以其不能独用，故无须强求。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复王砚生居士书一 · 印光法师文钞</title>
+<meta name="description" content="手书备悉。光一粥饭僧，何可如是过誉。乩坛一事，光向不阐扬。以其中所说，多皆冒名，非一一皆真仙降临，况佛乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-069/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复王砚生居士书一 · 印光法师文钞">
+<meta property="og:description" content="手书备悉。光一粥饭僧，何可如是过誉。乩坛一事，光向不阐扬。以其中所说，多皆冒名，非一一皆真仙降临，况佛乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-069/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷三 · 书三</div>
+      <h1 class="art-title">复王砚生居士书一</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">手书备悉。光一粥饭僧，何可如是过誉。乩坛一事，光向不阐扬。以其中所说，多皆冒名，非一一皆真仙降临，况佛乎。</p><p class="p-trans">来信尽知。我是个只会吃饭的僧人，怎么能被如此过分地赞誉。乩坛这件事，我一向不宣扬。因为其中所说，大多都是冒名的，并非一一都是真仙降临，何况是佛呢？</p></div>
+<div class="para-pair"><p class="p-orig">此次观音所说之文，亦属冒名。忆此文当是旧文而录示之，否则何以文词每有词不达意之处。至其所说，亦多散漫，不甚显豁指其出要。</p><p class="p-trans">这次乩坛观世音菩萨所说的乩文，也属于冒名。回忆这篇乩文，应当是旧文录示出来的，否则，为什么文词常有词不达意的地方。至于其中所说的，也大多内容散漫，不是很显明豁达地指出出离的要道。</p></div>
+<div class="para-pair"><p class="p-orig">光固不敢自作聪明，以诸位将以为观音所说，或致贻人讥诮。因稍为笔削，比前较顺畅点，切勿指明光为笔削也。</p><p class="p-trans">我固然不敢自作聪明，因为诸位将要认为这是观世音菩萨所说的，或许导致让人讥笑。因此稍为修改，比以前的文字稍微顺畅一点，千万不要指明这是我修改的。</p></div>
+<div class="para-pair"><p class="p-orig">邱公之生净土，来此间固无可疑。以执经文不会经意，遂成大疑。娑婆一大劫，极乐一昼夜，此显示极乐时间耳。</p><p class="p-trans">邱公往生净土，又来到娑婆世界，固然没什么可怀疑的。但（诸位）执著经文，不领会经意，于是就成了很大的疑问。娑婆世界的一大劫，是极乐世界的一昼夜，这是显示极乐世界的时间罢了。</p></div>
+<div class="para-pair"><p class="p-orig">至云一日一夜，七日一劫，十二大劫等，皆约此方之时期言之。何以知之，此方利根，或钝根诚恳至极之人，即能数十日或数年，或大彻大悟及亲证三昧。岂往生西方，住于佛菩萨不思议神通威德所常加被之胜妙境界中，其得益比此方更迟得日劫相倍乎。</p><p class="p-trans">至于说一日一夜，七日一劫，十二大劫等，这都是就娑婆世界的时间来说的。为什么能知道呢？娑婆世界利根，或者钝根诚恳到极点的人，就能在数十天或数年，或大彻大悟以及亲证三昧。难道往生西方，住在佛菩萨不可思议神通威德所常加被的胜妙境界中，他们所得的利益却比在娑婆世界更迟，迟得就像一天与一劫的差距倍数吗？</p></div>
+<div class="para-pair"><p class="p-orig">此事此理，岂待智者方知乎。以诸位不善会意，颠倒说话，故有此失。况时劫不定，佛菩萨神通道力，能促长劫为一念，能延一念为长劫乎。</p><p class="p-trans">这件事情、这个道理，哪里需要等待有智慧的人，才能知道呢？因为诸位不善于领会文意，说话颠倒，所以有这种过失。何况时间劫数不固定，佛菩萨的神通道力，能够促使长劫为一念，能够延长一念为长劫呢？</p></div>
+<div class="para-pair"><p class="p-orig">执定五年不当来此，是执经文而悖经义也。得光此一说，群疑自释。况始往生即来报示者，皆承弥陀威神，欲藉此以开导迷蒙，实非自力专擅者可比也。计公即时生西，不逾时回报，皆属此义。</p><p class="p-trans">执定五年不应当来娑婆世界，这是执著经文而违悖经义啊！经我这么一说，群疑自然就消除了。何况刚刚往生，就来回报示现的人，都是承阿弥陀佛的威神之力，想要藉此来开导迷蒙众生，绝对不是专行自力的人能够相比的。考虑邱公当下往生西方，不一会儿就来回报，都属于这个义理。</p></div>
+<div class="para-pair"><p class="p-orig">所云须陀洹七生天上，七反人间，乃误以此间之须陀洹，论极乐之须陀洹。其错谬误人，实非小可。以彼国虽有此种小乘名字，实皆已了生死入菩萨乘。不过暂以所证者立此名耳。</p><p class="p-trans">所说的须陀洹七生天上，七返人间，这是错误地将娑婆世界的须陀洹，与极乐世界的须陀洹相论。这样的错谬误导他人，实在非同小可。因为极乐国土虽然有这种小乘圣者的名字，但实际都已经了生死，入于菩萨乘了。不过暂时以所证的位次来立这个名字罢了。</p></div>
+<div class="para-pair"><p class="p-orig">诸位直以此之须陀洹而论，则是西方极乐世界，尚未了生死，仍旧轮回矣。何不体两土实理实事，而妄生此种谬论，不惧违经误人之如是。现在人通通皆当恪修净业，方有实益可得。若学口头禅，则虽是善因，定招恶果。</p><p class="p-trans">诸位直接以娑婆世界的须陀洹来论说，就是指在西方极乐世界，还没有了生死，仍旧轮回了。为何不体悟（极乐、娑婆）两土的实理实事，而妄生这种谬论，不怕违背经义、误导他人到了如此地步。现在的人通通都应当恭敬谨慎地修持净业，才有真实利益可得。如果学口头禅，那么尽管是善因，一定会招来恶果。</p></div>
+<div class="para-pair"><p class="p-orig">现今世道，坏至其极。若欲挽回，必须提倡因果报应，又须注重教女。以女若失教，则不唯不能相夫教子以成德，反相夫教子以为恶。此吾国荒乱之根本也。舍此二法，欲天下太平，人民安乐，虽佛菩萨圣贤同出于世，皆无实益可得。况今人之狂悖主见乎。</p><p class="p-trans">现今的世道，坏乱到了极点。如果想要挽回，必须要提倡因果报应，另外必须注重教育女儿。因为女儿如果失于教导，那么不仅不能相夫教子，来成就他们的德业，反而相夫教子成为恶人。这是我国荒乱的根本原因啊！舍弃这二种方法，想要天下太平、人民安乐，即使是佛菩萨圣贤一同出现于世间，都没有实际利益可得。何况现在人狂妄悖逆的主见呢？</p></div>
+<div class="para-pair"><p class="p-orig">诸位既奉乩，则便与修净业之宗旨不合。然诸位尚明理，较彼余奉乩者尚高一筹，以故为诸位寄书，倘肯详阅，或可备知其中所以。</p><p class="p-trans">诸位既然信奉扶乩，那么就与修习净业的宗旨不符合。然而诸位还明白道理，比起其他信奉扶乩的人还高一筹，所以为诸位寄书，倘若肯详细阅读，或许可以详细知道其中的所以然。</p></div>
+<div class="para-pair"><p class="p-orig">光冗烦之极，以后不得常如此络索来问。但详看文钞等，则无疑不释矣。余详文钞，此不备书。</p><p class="p-trans">我繁忙到了极点，以后不得常常如此啰嗦地来问。只要详看《文钞》等书，就没有疑惑不能消除了。其余详看《文钞》，此处不再多说。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【专擅】</span>1.独揽。2.擅自行事。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【踰时】</span>1.超过规定的时间。 2.一会儿；片刻。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

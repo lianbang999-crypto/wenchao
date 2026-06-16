@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>上海市佛教会慈幼院序 · 印光法师文钞</title>
+<meta name="description" content="人之幼时，教养为急，良以知识初开，熏习易入。习于善，则为善士。习于恶，即成恶人。况无父无母，无衣无食之孤儿乎。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-048/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="上海市佛教会慈幼院序 · 印光法师文钞">
+<meta property="og:description" content="人之幼时，教养为急，良以知识初开，熏习易入。习于善，则为善士。习于恶，即成恶人。况无父无母，无衣无食之孤儿乎。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-048/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">上海市佛教会慈幼院序</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">人之幼时，教养为急，良以知识初开，熏习易入。习于善，则为善士。习于恶，即成恶人。况无父无母，无衣无食之孤儿乎。</p><p class="p-trans">人在幼年时，教养是最急迫的事，的确是因为小孩子知识初开，容易加以熏习教育的缘故。若教他学善并养成善习，将来就会成为善人。若教他学恶并养成恶习，将来就会成为恶人。更何况无父、无母、无衣、无食的孤儿呢？</p></div>
+<div class="para-pair"><p class="p-orig">此种人不得教养，不是即为饿殍，便是流为乞丐，及与匪类。以天赋之才德，由贫困而不得发显，可不惜哉。</p><p class="p-trans">孤儿若得不到教育抚养，不是立刻就会饿死，就是沦落成为乞丐，以及土匪流氓之类。本来具有天赋的才德，但是却由于贫困而得不到发展和显露，这能不令人痛惜吗？</p></div>
+<div class="para-pair"><p class="p-orig">若得其教养，如晋之释道安，明之释妙峰，道传佛心，上宏下化。宋之吕文穆，范文正，道济时艰，继往开来者，古今固不乏人。</p><p class="p-trans">如果能得到好的教育抚养，那么就能像晋朝的释道安大师，明朝的释妙峰大师那样，能够传佛的心法，上宏佛法，下化众生。也能像宋朝的吕文穆（吕蒙正）、范文正（范仲淹）那样，能够拯救当时世道的艰难，继往圣、开来学。古往今来，当然不乏这样的人。</p></div>
+<div class="para-pair"><p class="p-orig">纵令无此天资，亦当养成良善，得以自主，而为一乡一邑之淳谨士。以敦行乎孝弟，忠信，礼义，廉耻之八德，而得以改变世道人心于不知不觉中。而因兹巩国基而辅治道，其利益固不独在乎孤儿也。</p><p class="p-trans">即使没有这样的天资，也会养成善良的秉性，能够自食其力，作一乡一邑的淳厚、谦谨的君子。来努力实行孝弟、忠信、礼义、廉耻这八德，从而能在不知不觉中改变世道人心。那么，因此巩固国家的根本、辅助国家的大治，这样广大深远的利益，就绝不仅仅体现在教育抚养孤儿这件事上了。</p></div>
+<div class="para-pair"><p class="p-orig">愿仁人君子，本幼吾幼之心，而一致进行，赞襄其事，以慰孔子少怀，释迦一子之心，其为幼幼之心，方可圆满，无所欠缺也。不禁馨香日夕祷之。</p><p class="p-trans">祈愿仁人君子，本着孟子“幼吾幼，以及人之幼”的慈心，一致进行，赞助这件事，来安慰孔子“少者怀之”和释迦牟尼佛视一切众生为自己唯一的儿子，这种大慈悲心。只有这样做，幼吾幼以及人之幼之心，才能圆满、无所欠缺啊！我情不自禁地为此焚香，日夜祈祷。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【饿殍】</span>饿死的人。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【道安】</span>（人名）苻秦道安，常山扶柳人，家世世业儒，早丧父母。十二岁出家。神智聪敏，而形貌甚陋，不为师所重。数年驱役，安精勤不倦。后求经，师与一经，殆有一万言，安一日诵之，不差一字。师大惊，为授具戒。次使游方，入邺都，遇佛图澄师之。澄讲，则安每覆述，时人语曰：漆道人惊四邻。后历游诸处访道，于太行恒山创立寺塔。晋武帝宁康元年，避石氏乱，率弟子远等四百余人至襄阳，立檀溪寺铸佛像。武帝闻安名，资给厚禄，安固辞不受。晋太元四年，秦主苻坚取襄阳，得安。喜曰：吾以十万师取襄阳，得一人半，安公一人，习凿齿半人也。安至长安，僧徒数千人，大弘法化。坚欲取江南，安谏之，坚不听，攻之果大败。安注经，每求圣证。一日感长眉尊者来降，见所制钦叹。即宾头卢也。因日设供。安每与弟子法迈等于弥勒前立誓愿生兜率。秦建元二十一年寂，寿七十二。安生而左臂有肉隆起如印，时称印手菩萨。沙门姓释，注经开三分，皆由安始。见高僧传五。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【妙峰和尚】</span>名福登，山西平阳人，俗姓续，七岁时父母去世，为人放羊，12岁出家，拜郡东文昌阁朗公为师，受具戒。山阴王修中条山栖岩兰若，妙峰和尚往闭关三年。师一生建大道场十余处，逝前神宗敕封妙峰和尚为“真正佛子。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【吕文穆】</span>即吕蒙正（944或946-1011），字圣功，河南洛阳人。宋太宗太平兴国二年（977年）状元，皇帝为状元写诗赐宴就是从他开始的定例。988年起他当了多年宰相，是历史上第一位直接从平民出身的宰相，第一个书生宰相、状元宰相，是宋朝当宰相经历过三朝的两个人之一。吕蒙正为人宽厚质朴，素有重望，以正道自持，遇事敢言。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【范文正】</span>即范仲淹（989年－1052年）（即太宗端拱二年——皇佑四年），字希文。和包拯同朝，为北宋名臣，政治家，文学家，军事家，谥号“文正”，汉族，吴县（今江苏苏州木渎）人。少年时家贫但好学，当秀才时就常以天下为己任，有敢言之名。自幼孤贫，勤学苦读。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【幼吾幼】</span>《孟子·梁惠王上》：“老吾老，以及人之老；幼吾幼，以及人之幼。天下可运于掌。”意为：爱护自己的孩子，并由此推广到爱护别人的孩子。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【少怀】</span>在《论语·公冶长》中，孔子他老人家谈自己理想时说：“老者安之，朋友信之，少者怀之。”即，让老年人都能安享晚年，让朋友之间能互相信任，让孩子都能得到关怀和教育。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【一子】</span>出自《涅槃经》。谓菩萨修慈悲行，视诸众生犹如一子。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

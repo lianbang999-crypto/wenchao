@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>生西金鉴序（后改作净土清钟） · 印光法师文钞</title>
+<meta name="description" content="娑婆世界，以音声作佛事，生死苦海，非念佛莫出离。而芸芸众生，迷真逐妄，背觉合尘。久经长劫，轮回生死。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-078/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生西金鉴序（后改作净土清钟） · 印光法师文钞">
+<meta property="og:description" content="娑婆世界，以音声作佛事，生死苦海，非念佛莫出离。而芸芸众生，迷真逐妄，背觉合尘。久经长劫，轮回生死。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-078/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷三 · 序</div>
+      <h1 class="art-title">生西金鉴序（后改作净土清钟）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">娑婆世界，以音声作佛事，生死苦海，非念佛莫出离。而芸芸众生，迷真逐妄，背觉合尘。久经长劫，轮回生死。</p><p class="p-trans">娑婆世界，用音声来作佛事；生死苦海，舍弃念佛就不能出离。而芸芸众生，迷惑真性，追逐幻妄，背离觉性，合于尘境。经历长久劫数，轮回生死之中。</p></div>
+<div class="para-pair"><p class="p-orig">于是动我释迦世尊同体悲心，特开信愿念佛求生西方一门，俾上中下根，若圣若凡，同于现生，往生西方。</p><p class="p-trans">于是触动了释迦如来的同体大慈悲心，特别为众生开启了一个信愿念佛求生西方的法门。使得上、中、下根器，或圣或凡的众生，共同在现生之中，往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">其成就大机，顿证法身，俯提劣机，速出生死，一代时教，皆莫能及。以故西天东土之出格高人，莫不以此自行化他，由其为入道之妙门，成佛之捷径故也。</p><p class="p-trans">此净土法门，成就大根机众生，顿时证得法身；提携劣根机众生，快速出离生死。如来一代时教中所宣说的一切法门，都不如这个法门殊胜。所以西天东土的杰出高人，无不是自己修行这个法门，又用这个法门来度化他人。因为这个法门，是入道的妙门，成佛的捷径。</p></div>
+<div class="para-pair"><p class="p-orig">二林居士，取佛菩萨立法度生之因缘，与历代古德僧尼王臣士女，下及物类，念佛往生之事迹，兼录其宏扬净土之切要言句，以成一帙，名为净土圣贤录。</p><p class="p-trans">彭二林居士，摘取佛菩萨建立净土法门度化众生的因缘，与历代古德、僧、尼、王、臣、士、女以及动物念佛往生的事迹，同时摘录他们宏扬净土法门切要的言句，集成一册，命名为《净土圣贤录》。</p></div>
+<div class="para-pair"><p class="p-orig">莲归居士，又为续录，皆所以为迷背家乡者作指南，为不识自己者作宝鉴也。但以卷帙浩繁，不利初机。对凫居士欲令初机易生信向，于彼正续录中，略录事迹显著者，二百余条，附之以赞，名曰生西金鉴。冀阅者鉴古而怀景仰，咏叹而悉兴起焉，其意固甚深且远也。</p><p class="p-trans">莲归居士，又为这本书作了续录。（这两本书）都是在为迷背本有家乡的人作指南，为不认识自己本有佛性的人作宝镜啊。只是因为内容繁多，不方便初学。潘对凫居士想让初学的人容易生起信心向往，于是从正录和续录当中，简略摘录出二百多条昭明显著的事迹，又附上赞文，命名为《生西金鉴》。希望阅读的人，借鉴古人而心怀景仰，赞叹歌颂而全都奋起，这番用意自然是非常深远啊。</p></div>
+<div class="para-pair"><p class="p-orig">昔子房欲破楚军，遍令军中同唱楚歌，楚军闻之，皆动归思。况当此天灾人祸，相继降作，国运危岌，民不聊生，加以邪说纵横，魔侣炽盛，邪正莫辨，无所适从之时。一闻极乐世界之劫外风光，本有庄严，能不同赋归欤，以期乐我天真乎哉。</p><p class="p-trans">秦朝末年，张子房想要攻破楚军，于是命令全军将士同唱楚歌。楚军听到之后，全都动了归乡之情。更何况在这天灾人祸相继而来，国运危急民不聊生，又加上邪说流行，魔友炽盛，邪正不分，无所适从的时候，一听到极乐世界的劫外风光以及本有庄严，能不同归极乐家乡，以期乐我天真佛性吗？</p></div>
+<div class="para-pair"><p class="p-orig">倘阅者洞鉴夫娑婆极乐之利害，而反复咏叹之，吾知其求生西方之心，若决江河，沛然莫之能御矣。</p><p class="p-trans">倘若读者能够洞察到娑婆世界与极乐世界的好坏，而反复咏叹（这本书中的内容）。我确信他求生西方的心，将会像决堤的江河一般，汹涌澎湃无可阻挡了。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【咏叹】</span>1.歌唱；吟诵。2.赞叹歌颂。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【赋归欤】</span>《论语·公冶长》：“子在陈曰：‘归与，归与！’”后因以“赋归”表示告归，辞官归里。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

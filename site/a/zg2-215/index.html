@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>嘉言录题词 · 印光法师文钞</title>
+<meta name="description" content="净土大法门，其大无有外，如天以普覆，似地以普载。等觉欲成佛，尚复作依赖，逆恶将堕狱，十念登莲界。普被九界机，咸皆勤顶戴，畅佛度生心，唯一了无再。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg2-215/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嘉言录题词 · 印光法师文钞">
+<meta property="og:description" content="净土大法门，其大无有外，如天以普覆，似地以普载。等觉欲成佛，尚复作依赖，逆恶将堕狱，十念登莲界。普被九界机，咸皆勤顶戴，畅佛度生心，唯一了无再。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg2-215/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">嘉言录题词</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">净土大法门，其大无有外，如天以普覆，似地以普载。等觉欲成佛，尚复作依赖，逆恶将堕狱，十念登莲界。普被九界机，咸皆勤顶戴，畅佛度生心，唯一了无再。</p><p class="p-trans">净土法门，广大没有边际，如天穹普盖一切，似大地承载万物。等觉菩萨想要成佛，尚且还要作为依赖。五逆十恶之人将堕地狱，至心十念，即登入西方极乐世界。普被九法界众生根机，全都精勤顶戴。畅达佛陀度生的心怀，唯有此净土法门，便再无其他法门可以做到了。</p></div>
+<div class="para-pair"><p class="p-orig">我以宿业力，曾作一阐提，效法韩欧等，其愚莫能医。幸得病数年，时复深长思，古今众圣贤，岂皆无所知。彼既悉尊奉，我何敢毁訾，虽圣有不知，韩欧焉足师。</p><p class="p-trans">我因为宿世业力，曾经作过一阐提，效法韩愈、欧阳修等人辟佛，愚痴到不能医治。幸而得病数年，时常深深思量，古今众多圣贤，难道都无所觉知？他们既然都尊奉佛法，我哪敢加以毁谤？即使是圣人也有其所不知，韩愈、欧阳修又怎堪为师呢？</p></div>
+<div class="para-pair"><p class="p-orig">因兹皈依佛，剃发而披缁，自谅宿业深，宗教非所宜。唯有仗佛力，或可副所期，专心修净业，庶得预莲池。</p><p class="p-trans">因此皈依佛门，剃发出家披上僧衣。自知宿业深重，宗门教下不是适合我的法门。唯有仗佛慈力，或许可以满我所愿，专心修习净业，想必能预入莲池。</p></div>
+<div class="para-pair"><p class="p-orig">近十余年来，人或谬见问，所答亦以此，不敢稍越分。海盐徐蔚如，以其切而近，再三于京沪，为之付排印。语言虽朴质，人皆不见愠，遗迹而究益，多有生正信。</p><p class="p-trans">近十余年来，偶尔有人来请问，我的回答也是如此，不敢稍微逾越本分。浙江海盐县的徐蔚如居士，因为《文钞》切要而浅近，在北京、上海再三加以排印。《文钞》的语言虽然朴质，但读者看了都不见怪，忘了其质朴的表面而深究其实益，有许多人都生起了正信。</p></div>
+<div class="para-pair"><p class="p-orig">圆净李居士，宿根深复深，注释诸经论，阐明如来心。继以费精神，衰病每相侵，舍博而守约，立志追东林。又欲利初机，作修持规箴，节录文钞语，分类以编纴。</p><p class="p-trans">李圆净居士，宿根深厚，注释诸多经论，阐明如来心法。后因注释经论耗费精神，早衰、疾病常来困扰，于是舍广博而守简约，立志追逐东林莲社念佛人的美好行迹。又想要利益初学人，作为修持的规矩箴言，因此节录《文钞》中的言语，分门别类加以编辑。</p></div>
+<div class="para-pair"><p class="p-orig">并自出净资，印施诸有缘，冀使一切人，勉力希圣贤。敦伦而尽分，各完己性天，众善悉奉行，诸恶尽销蠲。信愿勤念佛，求登九品莲，临终佛来接，有若月印川。直下往西方，永出生死渊，见佛悟无生，渐致福慧圆。</p><p class="p-trans">并且自己捐出净资，刻印布施许多有缘人，希望能让一切人，都努力仰慕效法圣贤。敦伦尽分（敦笃伦常、恪尽己分），各各恢复自己的性天，众善全都奉行，诸恶尽皆销除。信愿精勤念佛，求登九品宝莲。临终佛来接引，有如月映江河。直下往生西方，永出生死轮回的深渊，见佛悟无生法忍，渐致福慧两足圆。</p></div>
+<div class="para-pair"><p class="p-orig">因请为著语，以期广流传，俚言入雅目，徒招诮且怜。赧颜贡愚诚，祈各自审焉，若未超等觉，且预回向员。</p><p class="p-trans">因此请我写几句话，以期广泛流传，俗语入于雅目，徒招嘲笑和怜悯。羞愧地献上一点愚诚，祈望各自好好审察。如果自己的修证没有超过等觉菩萨，那么就暂且加入回向求生西方极乐世界的一员吧！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【阐提】</span>亦作一阐提迦、一阐提柯、一颠底迦，略称阐提。意译为“断善根”或“信不具”。指永远不得成佛的根机。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【纴】</span>1.织布帛的丝缕。2.纺织。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【东林】</span>东林莲社。东晋时，慧远大师（净土宗初祖）集儒释精英慧永、慧持、道生、刘遗民等123人，于东林寺结白莲净社，共同发愿往生西方，人人皆有往生之瑞相，开创了净土法门在震旦国（中国）的弘扬。莲社初开，影响深远。此后，历代祖师、善知识续焰传灯，莲风遍布中外，源远流长。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【性天】</span>1.犹天性。谓人得之于自然的本性。语本《礼记·中庸》：“天命之谓性。”2.指人性和天命。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【俚言】</span>方言俗语；民间浅近的话语。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

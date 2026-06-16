@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>善女人何王氏圣缘生西记 · 印光法师文钞</title>
+<meta name="description" content="佛言一切众生，皆有佛性，皆堪作佛。然佛性是同，而众生心相，万有不齐。或有信受，或有背驰者，何也。须知众生虽皆在迷，由宿因现缘不同，以致发生逆顺二种现相耳。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-276/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="善女人何王氏圣缘生西记 · 印光法师文钞">
+<meta property="og:description" content="佛言一切众生，皆有佛性，皆堪作佛。然佛性是同，而众生心相，万有不齐。或有信受，或有背驰者，何也。须知众生虽皆在迷，由宿因现缘不同，以致发生逆顺二种现相耳。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-276/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">善女人何王氏圣缘生西记</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">佛言一切众生，皆有佛性，皆堪作佛。然佛性是同，而众生心相，万有不齐。或有信受，或有背驰者，何也。须知众生虽皆在迷，由宿因现缘不同，以致发生逆顺二种现相耳。</p><p class="p-trans">佛说：一切众生，都有佛性，都能够成佛。然而佛性是相同的，而众生的心相，却有万种不一。或有相信接受的，或有背道而驰的，为什么呢？要知道众生虽然都在迷惑之中，由于宿世之因，现世之缘不同，以致发生违逆、顺从的两种情形罢了。</p></div>
+<div class="para-pair"><p class="p-orig">佛性如种子，宿因如播种，现缘如时雨。种子既播于地，一经时雨，能不发生乎。而一切众生，谁无佛性，长劫轮回，决不能了无宿因。所最关要者，在善知识开导，及自己发决裂心耳。</p><p class="p-trans">佛性如同种子，宿因如同播种，现缘如同时雨。种子既然播种在地上，一经及时雨，能不发芽生长吗？而一切众生，有哪个没有佛性？长劫轮回六道，绝对不能没有一点宿世之因。最关键的地方，是在于善知识的开导，以及自己发起决裂的心啊！。</p></div>
+<div class="para-pair"><p class="p-orig">故法华经云，善知识者，是大因缘。所以化导令得见佛。楞严经云，若众生心，忆佛念佛，现前当来，必定见佛，去佛不远。如染香人，身有香气，此则名为香光庄严。</p><p class="p-trans">所以《法华经》说：“善知识者，是大因缘。所以化导令得见佛。”《楞严经》说：“若众生心，忆佛念佛，现前当来，必定见佛，去佛不远。如染香人，身有香气，此则名为香光庄严。”</p></div>
+<div class="para-pair"><p class="p-orig">若上海何王氏者，本一无知无识之妇女耳。自二十九岁，得闻净土法门，遂皈依三宝，吃素念佛。深厌娑婆浊恶，决志求生西方。三十年来精进不懈，于今民国十七年，年五十九岁，至六月十九日，预知时至，嘱咐家眷。吾于今夜十二句钟归西，汝等至时，当同声念佛相助。切不可悲哀哭泣，以致坏我正念。</p><p class="p-trans">像上海的何王氏，本来是一个无知无识的妇女。自从二十九岁，得以听闻到净土法门，于是便皈依三宝，吃素念佛。深深厌离娑婆世界的浊恶，决志求生西方。三十年来精进不懈，在今年民国十七年（1928），年纪五十九岁，到六月十九日，预知时至，嘱咐家中眷属：“我在今天夜里十二点钟归西，你们到时候，应当同声念佛来相助。千万不可以悲哀哭泣，以致破坏我的正念。”</p></div>
+<div class="para-pair"><p class="p-orig">因自行沐浴，著所制寿衣。先念大悲咒若干遍，次即专念阿弥陀佛圣号。至十一句钟，阖家大小同声助念南无阿弥陀佛。至十二句钟，遂端坐念佛而逝。</p><p class="p-trans">因此自己沐浴，穿上做好的寿衣。先念大悲咒若干遍，接着就专念阿弥陀佛圣号。到了十一点钟，阖家大小同声助念“南无阿弥陀佛”。到了十二点钟，便端坐念佛而逝。</p></div>
+<div class="para-pair"><p class="p-orig">夫如此作略，虽古今学问功业盖世者，亦不多见。况其下焉者乎。而何王氏以一无知无识之妇女，乃能于三十年精进修持，致临终现如是相。足见一切众生皆有佛性，皆堪作佛。及净土法门，实为转凡成圣之第一法门。愿见闻者，同事修持。庶可不孤佛化，不负己灵也已。</p><p class="p-trans">她如此的作为行迹，即使是古往今来，学问功业盖世的人，也不多见。何况在这之下的人呢？而何王氏，以一个无知无识的妇女，却能够在三十年中精进修持，致使临终现这样的瑞相。足见一切众生都有佛性，都能够成佛。以及净土法门，实在是转凡成圣的第一法门。祈愿看到或者听到她事迹的人们，共同修持净土法门。才能不辜负佛陀的教化，不辜负自己的性灵啊！</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

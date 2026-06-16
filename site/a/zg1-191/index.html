@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>杭州南高峰荣国禅寺重修宝塔疏（代住持振机作） · 印光法师文钞</title>
+<meta name="description" content="大觉世尊，愍诸众生，迷本妙心，轮回生死。示生世间，成等正觉。随众生根，为说妙法。普令有情，悉获利乐。及至一期事毕，示现灭度。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/zg1-191/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杭州南高峰荣国禅寺重修宝塔疏（代住持振机作） · 印光法师文钞">
+<meta property="og:description" content="大觉世尊，愍诸众生，迷本妙心，轮回生死。示生世间，成等正觉。随众生根，为说妙法。普令有情，悉获利乐。及至一期事毕，示现灭度。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/zg1-191/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">增广文钞 · 上册 · 卷二 · 疏</div>
+      <h1 class="art-title">杭州南高峰荣国禅寺重修宝塔疏（代住持振机作）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">大觉世尊，愍诸众生，迷本妙心，轮回生死。示生世间，成等正觉。随众生根，为说妙法。普令有情，悉获利乐。及至一期事毕，示现灭度。</p><p class="p-trans">大觉世尊，怜悯一切众生，迷失本有的妙心，轮回生死。示现化生来到世间，并证得无上正等正觉。随顺众生的根机，为众生演说妙法。普令一切有情，都获得利益快乐。等到一期教化的事业完毕，就示现灭度。</p></div>
+<div class="para-pair"><p class="p-orig">又以悲心无尽，特碎全身为八斛四斗舍利。分布天上人间，以为未来众生灭罪植福，出离轮回度脱生死，直至成佛之无上第一不可思议因缘。由是凡有得佛舍利者，无不高建宝塔，藏于其中。普令自他幽显，同消宿业，同种善根也。</p><p class="p-trans">又以无尽的悲心，特别焚碎全身为八斛四斗的舍利。分布在天上和人间，作为未来众生，灭罪植福，出离轮回，度脱生死，直至成佛的无上第一不可思议因缘。因此凡是有得到佛陀舍利的，没有不高建宝塔，将舍利珍藏在其中。普令自他阴阳二界众生，共同消除宿业，共同培植善根。</p></div>
+<div class="para-pair"><p class="p-orig">南高峰者，省会之名山，浙江之巨镇。自下至顶，高一千六百余丈。登巅远望，长江若带，西湖如杯。极湖山之胜概，豁达士之胸怀。与北高峰对峙，相去十余里。层峦叠嶂，蜿蜒盘结。山势既峻，能兴云雨，故其上多奇云。山峰高出云表，时露双尖，望之如插，因目之为双峰插云，为西湖十景之一。</p><p class="p-trans">南高峰，是浙江省会杭州的名山，浙江的巨镇。从山下到山顶，高度有一千六百多丈。登上山巅远远眺望，长江就如同腰带，西湖则如同酒杯。极尽湖光山色的美景，开阔高超之士的胸怀。与北高峰互相对峙，相距十多里。层峦叠嶂，蜿蜒盘结。由于山势陡峻，能够使云雨兴起，所以山上常出现奇云。山峰高出云层之上，时时露出双峰之尖，远远望去如同插在云中，因此称为双峰插云，乃西湖十景之一。</p></div>
+<div class="para-pair"><p class="p-orig">五代石晋天福间，浙江时属吴越。有梵僧自西竺来，登南高峰之巅，见其远望无极。遂欣然曰，于斯可以立大觉世尊之表相，令四远望者，同种善根。</p><p class="p-trans">五代石晋天福年间（公元940年左右），浙江当时属于吴越国。有一位梵僧从西竺来，登上南高峰的山顶，看到一望无极的景象。于是就高兴地说：在这里可以建立大觉世尊的轮塔，可令四面远望的人，同种善根。</p></div>
+<div class="para-pair"><p class="p-orig">因出舍利一颗，托有德望僧道圆，禀吴越国主文穆王，为建宝塔。高七层，通计十丈。其规模制度，精妙绝伦。于下建寺一所，名为荣国。以如来舍利来仪，为国荣庆故也。</p><p class="p-trans">因此献出一颗舍利，并托有德望的高僧道圆法师，禀告吴越国的文穆王，来建造宝塔。高有七层，共计十丈。这个宝塔的大小和样式，都无比精妙。在此塔的下面建造了一所寺院，名为荣国寺。因为如来舍利降临，是国家的荣耀庆幸的缘故啊！</p></div>
+<div class="para-pair"><p class="p-orig">历汉，周，宋，元，明，清，以迄于今，年满一千。其间革故鼎新，已非一次。现今宝塔崩坏，止存一级。寺院倾颓殆尽，破屋数间，不蔽风雨。前住僧人，不堪其苦，遂即舍去。</p><p class="p-trans">经历后汉、后周、宋、元、明、清，到了今天，已满一千年。在此期间，翻修建造，已经不只一次了。到现在宝塔已崩坏，只保存了一级。寺院全都破败不堪，几间破屋，不能遮蔽风雨。以前常住的僧人，不能忍受此苦，于是就都离去了。</p></div>
+<div class="para-pair"><p class="p-orig">机近方接住，奉侍香火。窃念前人建塔，原为国民植福。今已崩坏将尽，忍令古迹泯灭，损西湖之胜景，荒众生之福田乎。触目伤心，不遑安处。拟欲即兴工作，揭底重修。</p><p class="p-trans">振机法师近来才接住这座寺院，奉侍香火。想到前人建造佛塔，原本是为国家人民植福。现今佛塔已经崩坏将尽，怎么忍心令古迹泯灭，损害西湖的美景，荒废众生的福田呢？触目伤心，所以振机法师尚未安顿下来，就打算想要马上开始重新修建。</p></div>
+<div class="para-pair"><p class="p-orig">又以前人造法，难以经久。今不得不深虑而预防之。缅维古人建塔，原为藏如来之舍利，令其远而望者，近而礼者，悉种善根，同得解脱。至其塔中设道，屈曲宛转，从下渐升，以至厥顶。</p><p class="p-trans">又因为前人造塔的方法，难以经历久远的时间。现今不得不深思熟虑而加以预防。遥想古人建塔，原本为供藏如来的舍利，使得远处遥望、近处礼拜的人，同种善根，同得解脱。至于在塔中设置楼道，屈曲宛转，从下面渐渐上升，一直到顶。</p></div>
+<div class="para-pair"><p class="p-orig">四面开窗，以瞻四方。无非欲令众生，了知欲获佛果，必须脚踏实地，断恶修善，从凡至圣，渐次增进。既能身登上地，自可永断凡情。由兹彻见真空，何难直证妙觉。</p><p class="p-trans">在塔的四面开窗，以瞻视四方。无非是想要使众生，知道要获得佛果，必须脚踏实地的断恶修善，从凡夫到圣人，渐次的增进。既然能够身登上地，自然可以永断凡夫情见。由此彻见真空，直证妙觉又有何难呢？</p></div>
+<div class="para-pair"><p class="p-orig">然由中空，致不坚久。又无知之人，不知古人之用意处，每以登高望远为事。则亵慢实深，获罪非浅。今拟中不设道，通做实心。中竖铁柱，以为刚骨。一免烈风地震之摧残，一免游戏登临之罪咎。则唯得其益，不受其损。当为佛天所允许，善信所赞成也。</p><p class="p-trans">然而由于塔中是空的，导致不能坚固长久。又者，无知的人，不知道古人的用意之处，将登高望远做为游戏之事。那么亵慢实深，获罪不浅。所以现在打算在宝塔的中间不设置楼道，全部做成实心。中间竖立铁柱，作为刚骨。一则避免大风地震的摧残，一则避免游戏登塔的罪过。那么就只得到瞻仰佛塔的利益，而不受其它损失。（这样做）应当为佛陀天神所允许，善信居士所赞成啊！</p></div>
+<div class="para-pair"><p class="p-orig">但以工程浩大，非三万余圆，不克成办。因恭绘塔图，谨述愚诚。恳祈十方檀越，感佛恩德，发菩提心。打开宝藏，培植福田。俾巍巍宝塔，复峙云中。穰穰众生，重瞻法相。灭过去之罪业，种未来之善根。</p><p class="p-trans">但是因为工程浩大，没有三万多圆，不能建成。因此恭敬绘出宝塔的图表，谨述愚诚。恳祈十方檀越，感佛恩德，发菩提心。打开宝藏，培植福田。使得巍巍宝塔，又能耸峙在云中。芸芸众生，重新瞻仰法相。灭除过去的罪业，种植未来的善根。</p></div>
+<div class="para-pair"><p class="p-orig">将见佛天云护，灾障冰消。身心安泰，家门迪吉。前程随心地以远大，定获富寿康宁之征。余庆偕厚德以无疆，永膺簪缨爵位之福矣。</p><p class="p-trans">将会见到佛天云护，灾障冰消。身心安泰，家门吉祥。自身前程将随心地而变得高远宏大，必定获得富寿康宁的前途。荫及子孙的余庆也将伴随诸位的厚德而广大无边，让他们永远享受显贵爵位的福报啊！</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【幽显】</span>犹阴阳。亦指阴间与阳间。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【胜概】</span>美景；美好的境界。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【达士】</span>见识高超、不同于流俗的人。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【盘结】</span>1.勾结；纠结。2.回环连结。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【表相】</span>相轮：（术语）又曰轮相。塔上之九轮也。相者表相，表相高出，故谓之相。又相者视也，人仰视之，故云相。行事钞资持记下四之一曰：“相轮者，圆轮耸出，以为表相故也。”名义集七曰：“言轮相者，僧祇云：佛造迦叶佛塔，上施盘盖，长表轮相。经中多云相轮，以人仰望而瞻视也。”</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【来仪】</span>1.谓凤凰来舞而有容仪，古人以为瑞应。2.比喻杰出人物的降临。3.比喻爱慕之人的来临。</p>
+<p class="note-item"><span class="note-n">[7]</span><span class="note-term">【革故鼎新】</span>《易·杂卦》：“革，去故也；鼎，取新也。”后遂以“革故鼎新”指革除旧的，创建新的。</p>
+<p class="note-item"><span class="note-n">[8]</span><span class="note-term">【不遑】</span>无暇，没有闲暇。</p>
+<p class="note-item"><span class="note-n">[9]</span><span class="note-term">【安处】</span>安定闲适地生活。</p>
+<p class="note-item"><span class="note-n">[10]</span><span class="note-term">【缅惟】</span>遥想。</p>
+<p class="note-item"><span class="note-n">[11]</span><span class="note-term">【穰穰】</span>众多。</p>
+<p class="note-item"><span class="note-n">[12]</span><span class="note-term">【迪吉】</span>《书·大禹谟》：“惠迪吉，从逆凶。”孔传：“迪，道也。顺道吉，从逆凶。”后因以“迪吉”表示吉祥，安好。</p>
+<p class="note-item"><span class="note-n">[13]</span><span class="note-term">【簪缨】</span>古代官吏的冠饰。比喻显贵。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

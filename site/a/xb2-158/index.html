@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>杭州南天竺演福寺募修大殿并各殿堂寮舍疏（民十八年） · 印光法师文钞</title>
+<meta name="description" content="观世音菩萨，于无量劫前，早成佛道，号正法明。但以慈悲心切，度生情殷，故复不离寂光，垂形九界，随类逐形，寻声救苦，种种方便，度脱众生。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-158/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杭州南天竺演福寺募修大殿并各殿堂寮舍疏（民十八年） · 印光法师文钞">
+<meta property="og:description" content="观世音菩萨，于无量劫前，早成佛道，号正法明。但以慈悲心切，度生情殷，故复不离寂光，垂形九界，随类逐形，寻声救苦，种种方便，度脱众生。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-158/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 记</div>
+      <h1 class="art-title">杭州南天竺演福寺募修大殿并各殿堂寮舍疏（民十八年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观世音菩萨，于无量劫前，早成佛道，号正法明。但以慈悲心切，度生情殷，故复不离寂光，垂形九界，随类逐形，寻声救苦，种种方便，度脱众生。</p><p class="p-trans">观世音菩萨，在无量劫前，早已成就佛道，号正法明如来。但是因为慈悲心深切，度脱众生的情怀殷勤，所以又不离常寂光净土，垂形化迹于九法界，随众生的种类、外形现身，寻着众生求救之声而救苦，以种种方便，度脱众生。</p></div>
+<div class="para-pair"><p class="p-orig">所谓善根未种未熟未脱者，令其即种即熟即脱。应以何身得度者，即现何身而为说法。由是在处皆立道场，而天竺最为显著。以杭州素称佛国，人民善根深厚，致菩萨异常灵感也。</p><p class="p-trans">所谓：善根没有种下、没有成熟、没有解脱的人，菩萨就让他立即种下、立即成熟、立即解脱。“应当以什么身得度的人，菩萨就现什么身来为他说法。”因此到处都立有供奉大士的道场，而以杭州南天竺最为显著。因为杭州一向被称为佛国，人民善根深厚，所以致使菩萨异常灵感啊！</p></div>
+<div class="para-pair"><p class="p-orig">南天竺演福寺者，隋开皇十五年，陈仲宝所建，请真观法师开山。法师钱塘世家范氏子，幼出樊笼，智由天纵，深入经藏，彻悟自心。</p><p class="p-trans">南天竺演福寺，是隋朝开皇十五年（595年），陈仲宝所建立，其请真观法师开山。法师是钱塘世家范家的子孙，幼年出家，智慧天生，深入经藏，彻悟自心。</p></div>
+<div class="para-pair"><p class="p-orig">初谒天台智者大师，大师待以同门之礼，可以想见其道德悟证之高深也。及住此寺，常讲法华，法道之盛，少与相等。故时人语云，天竺有真观，当天下一半。</p><p class="p-trans">初次拜谒天台智者大师（天台宗三祖），大师就用对待同门的礼仪接待他，由此可以想见，法师道德悟证的高深了。等到法师住锡演福寺以后，常讲《法华经》，法道的兴盛，很少有人能和法师相等。因此当时的人说：“天竺有真观，当天下一半。”</p></div>
+<div class="para-pair"><p class="p-orig">自后沧桑迭变，兴废不一。至宋理宗淳祐八年，复得重兴，赐额为崇恩演福禅寺。以至元朝，代有高人。而蒙润法师，住持六年，大宏台教，及与莲宗。</p><p class="p-trans">从此以后，沧桑迭变，兴废不一。到了南宋理宗淳佑八年（1248年），再次得以重兴，皇帝赐匾额为“崇恩演福禅寺”。到了元朝，代有高人住持。而蒙润法师，住持的六年间，大宏天台教观，以及净土宗。</p></div>
+<div class="para-pair"><p class="p-orig">法师礼诵勤苦，世少等伦。初出家时，礼伽蓝神，像即崩倒，非有远本，其能然乎。迨至明末，一经兵燹，遂成荒墟。附近之民，据为己业，已二百余年矣。</p><p class="p-trans">蒙润法师礼佛诵经非常勤苦，世间很少有人能与之相比。法师刚出家时，顶礼伽蓝神，神像立即就崩倒了，如果不是有远本，能有这样的感应吗？等到明朝末年，一经兵火战乱，寺院就成了荒墟。附近的居民，据为自己的地产，已经二百多年了。</p></div>
+<div class="para-pair"><p class="p-orig">民国五年，虎跑法轮和尚，因观志书，始知原由。欲保存古迹，志图恢复，访诸耆老，得其原基，以三千圆，赎回一十余亩，随即搭一茅篷，派人经理，以待机缘。</p><p class="p-trans">民国五年（1916年），虎跑寺的法轮和尚，通过阅览地方志书，才知道原由。他想要保存古迹，立志恢复这座寺院，于是走访当地各位德高望重的老者，找到了寺院原来的基址，用三千圆，赎回十多亩地，随即搭建了一座茅篷，派人经理，等待机缘。</p></div>
+<div class="para-pair"><p class="p-orig">至十二年，佛缘大师，始为接管。晨夕礼诵，冀有乘大愿轮者，为之布金，重兴净土横超道场。（下略）</p><p class="p-trans">到了民国十二年（1923年），佛缘大师，才开始接管。早晚礼佛诵经，希望有乘大愿轮的人，为寺院布施资金，重兴这个专修净土法门来横超三界的道场。（下略）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【天竺】</span>山峰名。亦为寺名。在浙江杭州市灵隐山飞来峰之南。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【天纵】</span>天所放任，意谓上天赋予。后常用以谀美帝王。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【世家】</span>旧指门第高贵、世代为官的人家。</p>
+<p class="note-item"><span class="note-n">[4]</span><span class="note-term">【隋下竺真观法师《武林西湖高僧事略》】</span>师名真观。字圣达。钱塘范氏。世本显仕。师生有奇相。舌紫罗纹。手左右掌为仙人字。出家通经律论。时彦曰。钱塘有真观。佛法当天下一半。寻谒天台智者。请受禅观。智者以师齐年。止为法兄弟。开皇十五年。于灵隐山头陀石室宴坐。众于南去建南天竺寺请师居焉。是为开山始祖。常讲法华。以为心要。感皋亭神请讲。舍祠宇为佛殿。每盥洗余滴。地不为濡。人尤异之。师有雅操。文帝三征。秦王两延。皆以疾辞。大业中。因山行。自标葬地。未几示寂。梦兴智者同辈翼佛还山。觉而叹曰。吾六十二应终。以讲法华力延一纪。今七十四。生期毕矣。中夜入寂。塔在东冈。久废不治。</p>
+<p class="note-item"><span class="note-n">[5]</span><span class="note-term">【伽蓝神】</span>佛教寺院中的护法神。佛典原谓有美音、梵音、雷音、师子等十八神护伽蓝。禅宗寺院则供当山土地等为守护神。后世又以智顗（即天台智者大师，被后世尊称为“东土释迦”）在湖北当阳玉泉山趺坐入定，定中见关羽求智者大师为其授三皈五戒，并愿为智者大师在此建寺化供，护持佛法。此说自宋代开始流行，以后各寺院争相将关羽列为本寺伽蓝护法。</p>
+<p class="note-item"><span class="note-n">[6]</span><span class="note-term">【蒙润大师】</span>（1275-1342）元代僧。嘉禾（浙江嘉兴）人，俗姓顾。号玉冈。大师本地风光深不可测，文中的“远本”指大师或为菩萨再来。大师十四岁于白莲华寺从古源永清出家。就永清学止观、金刚錍论、十不二门论等，能了大义。永清示寂后，侍竹堂传公，刻苦精勤。后于南天竺演福寺大振宗风。居六年后辞去，至龙井风篁岭白莲庵，专修念佛三昧。闻风来集者日众，仍讲说止观之妙旨。后依宣政院之命，继下天竺灵山寺之席，经三年复归白莲庵养老。至正二年示寂，世寿六十八。著有四教仪集注三卷、四教仪集注科文一卷。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

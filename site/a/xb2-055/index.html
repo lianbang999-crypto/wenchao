@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>历朝名画观音圣像珂罗版印流通序（民二十七年） · 印光法师文钞</title>
+<meta name="description" content="观世音菩萨，于无量劫前，久成佛道，号正法明，安住寂光净土，恒享真常法乐。但以悲心无尽，慈誓莫穷，救苦情殷，度生念切，故复不离寂光，垂形九界。于十方微尘佛刹，普现色身，寻声救苦，而于娑婆世界，愍念更深。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb2-055/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="历朝名画观音圣像珂罗版印流通序（民二十七年） · 印光法师文钞">
+<meta property="og:description" content="观世音菩萨，于无量劫前，久成佛道，号正法明，安住寂光净土，恒享真常法乐。但以悲心无尽，慈誓莫穷，救苦情殷，度生念切，故复不离寂光，垂形九界。于十方微尘佛刹，普现色身，寻声救苦，而于娑婆世界，愍念更深。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb2-055/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 下册 · 卷下 · 序</div>
+      <h1 class="art-title">历朝名画观音圣像珂罗版印流通序（民二十七年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">观世音菩萨，于无量劫前，久成佛道，号正法明，安住寂光净土，恒享真常法乐。但以悲心无尽，慈誓莫穷，救苦情殷，度生念切，故复不离寂光，垂形九界。于十方微尘佛刹，普现色身，寻声救苦，而于娑婆世界，愍念更深。</p><p class="p-trans">观世音菩萨，在无量劫前，早已成就了佛道，号正法明如来，安住在常寂光净土，恒享真常法乐。但因为如来悲心无尽，慈誓无穷，救苦之情殷重，度众生的心迫切，所以才又不离常寂光，垂化示迹于九法界。在十方微尘佛刹，普现色身，寻声救苦，而且对于娑婆世界，愍念更深。</p></div>
+<div class="para-pair"><p class="p-orig">其有善根未种未熟未脱者，令其即种即熟即脱。应以何身得度者，即现何身而为说法。所现之身，所说之法，各随机宜，了无一定。其现前得离众苦，将来常享真乐，则一也。</p><p class="p-trans">其中有善根未种、未成熟、未解脱的，菩萨令他们即种、即成熟、即解脱。应以何身得度者，菩萨即现何身而为之说法。所示现的色身，所宣说的法门，各随众生的根机、时机，并无一定。但是使众生现前得以远离众苦，将来常享真常法乐，这却是一定的。</p></div>
+<div class="para-pair"><p class="p-orig">近多年来，世道人心，愈趋愈下，争地争城，互相残杀。人祸既烈，天灾又临，水旱虫疫，同时降作。此种灾祸，皆由大家宿世现生种种恶业之所感召。然心能造业，心能转业。</p><p class="p-trans">近许多年来，世道人心，愈趋愈下，争地争城，互相残杀。人祸已经非常惨烈，天灾又不断降临，水灾、旱灾、蝗灾、瘟疫，同时发生。虽然这些灾祸，都是由大家宿世、现生的种种恶业所感召来的。但是心能造业，心也能转业。</p></div>
+<div class="para-pair"><p class="p-orig">当此天灾人祸并临之时，若能发至诚心，念南无观世音菩萨圣号。誓愿从今以后，敦伦尽分，闲邪存诚，诸恶莫作，众善奉行。决定即蒙慈佑，逢凶化吉，于诸难中，不受危险。乃以现前念菩萨圣号之别业，转宿世现生所作之共业，故得常获吉祥也。</p><p class="p-trans">在这天灾人祸一并来临之时，如果能够发起至诚心，念“南无观世音菩萨”圣号。誓愿从今以后，敦伦尽分（敦笃伦常、恪尽己分），闲邪存诚（防止邪念、心怀诚敬），诸恶莫作，众善奉行。决定即刻蒙受菩萨的慈佑，逢凶化吉，在一切灾难中，不受危险。这是以现前念菩萨圣号的别业，转宿世现生所作的共业，所以能够常获吉祥啊！</p></div>
+<div class="para-pair"><p class="p-orig">诸佛菩萨，视一切六道众生，犹如亲生儿女，常欲令其离苦得乐。无奈众生迷昧，不生信向，以致徒费慈心，不能获益。譬如杲日当空，普照万方，戴盆者纵立其下，亦不蒙照。过在戴盆，非日咎也。</p><p class="p-trans">诸佛、菩萨，视一切六道众生，犹如亲生儿女，恒常想令他们离苦得乐。无奈众生迷昧，不能生起信心归向，以至于白费了菩萨的慈心，不能获得利益。譬如丽日当空，普照万方，但是头顶大盆的人，即使站在太阳下面，也不能蒙受阳光的照耀。过错在于头戴大盆的人，并不是太阳的过错啊！</p></div>
+<div class="para-pair"><p class="p-orig">近来杀劫弥漫，人民死亡流离，苦不堪言。南通费慧茂居士，久欲设法挽救，故特搜求唐，宋，元，明，清五朝，名笔所画观世音圣像，一百四十二尊。以最上宣纸，用珂罗版，印一千部。期见闻者，同生正信，同念圣号，同消宿现之恶业，同种菩提之善根。</p><p class="p-trans">近来杀劫弥漫，人民死亡流离，苦不堪言。江苏南通的费慧茂居士，早就想要设法挽救，所以特地搜求到唐、宋、元、明、清五个朝代，名家笔下所画的观世音菩萨圣像，一百四十二尊。用最上乘的宣纸，采用珂罗版印刷了一千部。期望见者闻者，同生正信，同念圣号，同消宿世、现生的恶业，同种菩提善根。</p></div>
+<div class="para-pair"><p class="p-orig">须知菩萨无心，以众生之心为心。菩萨无境，以众生之境为境。故得有感即通，不谋而应。良由众生心之本体，与菩萨之心，息息相通。</p><p class="p-trans">必须懂得，菩萨无心，以众生之心为心；菩萨无境，以众生之境为境。所以能够众生有感，菩萨即通，不谋而应。的确是由于众生心的本体，与菩萨的心，是息息相通的。</p></div>
+<div class="para-pair"><p class="p-orig">由众生背觉合尘，遂成通而不通之象。若众生一念生信，虔持圣号，背尘合觉，返迷归悟，又成不通而通之象。以故凡遇极大险难，举念即获感应。</p><p class="p-trans">但是由于众生背觉合尘，于是才造成了通而不通的现象。如果众生一念生起真信，虔诚持诵菩萨圣号，背离六尘、合于觉性，返迷归悟，就又形成不通而通的现象了。所以，凡是遇到极大的险难，一念观世音菩萨就可立刻获得感应。</p></div>
+<div class="para-pair"><p class="p-orig">又菩萨现身，不专现有情身。即山河树木，桥梁船筏，楼台房舍，墙壁村落，亦随机现。必使到绝地者，复登通衢。无躲避处，得大遮蔽。种种救护，难尽宣说。</p><p class="p-trans">还有，菩萨示现色身，不专门示现有情的色身。即使是山河树木，桥梁船筏，楼台房舍，墙壁村落，也会随机示现。必定使遇到绝境的人，再登上四通八达的大道。无处躲避的人，得到大的遮蔽。种种的救护，难以完全宣说。</p></div>
+<div class="para-pair"><p class="p-orig">当看观音本迹颂，观音灵感录，观音慈林集，可以知其大略。当此天灾人祸，相继降作之时，若不以改恶修善，常念观音圣号，以为恃怙，则欲得安乐，难之难矣。</p><p class="p-trans">应当看《观音本迹颂》、《观音灵感录》、《观音慈林集》，就可以知道其中的大概了。在这天灾人祸，相继发生的时候，如果不以改恶修善，常念观世音菩萨圣号，作为依靠，那么想要得到安乐，就难上加难了。</p></div>
+<div class="para-pair"><p class="p-orig">即绝无灾难，亦当常念，庶可生膺五福，优入圣贤之域，没登九品，彻证大觉之心。能如是者，方可慰菩萨救苦之心，以菩萨普施无畏，故以圆满菩提，方息施无畏之大慈悲心也。</p><p class="p-trans">即使绝对没有灾难，也应当常念观世音菩萨圣号，才可以在生获得五福，因德行优良而步入圣贤的行列，临终登上九品莲台，彻证大觉之心。能够如此，才可以慰籍菩萨救苦的悲心，因为菩萨普施无畏，所以只有我们圆满菩提，才能够平息菩萨普施无畏的大慈悲心啊！</p></div>
+<div class="para-pair"><p class="p-orig">法华经云，若有众生，多于淫欲，瞋恚，愚痴，常念恭敬观世音菩萨，便得离欲，离瞋，离痴。愿见闻者，同常念焉。</p><p class="p-trans">《法华经》说：若有众生，多于淫欲、瞋恚、愚痴，常念恭敬观世音菩萨，便得离淫欲、离瞋恚、离愚痴。祈愿见者闻者，共同常念“南无观世音菩萨”。</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【别业】</span>各别不同的业因。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【共业】</span>共业，指众生共通的业因。即招感自他共用之山河、大地等器世间的业，为依报之业。</p>
+<p class="note-item"><span class="note-n">[3]</span><span class="note-term">【珂罗版】</span>是英语的音译。印刷上所用照相平版印刷工艺的一种。把要复制的字、画的底片，晒制在涂过感光胶层的玻璃片上而成。多用于印刷美术品、手迹和重要文献等。又称玻璃版印刷。为保护那些具有高度艺术价值或历史价值、科研价值的书法、绘画作品，常常会由文物部门组织专业人员从事书画复制工作，书画作品的复制主要采用的是：人工临摹法、照相复制法、木版水印法、和珂罗版法、相比较几种复制技术而言，珂罗版复制法在复制要求、复制技术方面具有明显地优越性。珂罗版是清朝光绪初年由日本传入中国，并被大量用于中国画的复制。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

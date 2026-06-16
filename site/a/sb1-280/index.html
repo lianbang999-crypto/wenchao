@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>复常逢春居士书二 · 印光法师文钞</title>
+<meta name="description" content="慧佐之死，乃其父母祖母所致。其家生此聪颖之子，不告以保身寡欲之道，乃早为娶妻。又不说节欲之益，纵欲之祸。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb1-280/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复常逢春居士书二 · 印光法师文钞">
+<meta property="og:description" content="慧佐之死，乃其父母祖母所致。其家生此聪颖之子，不告以保身寡欲之道，乃早为娶妻。又不说节欲之益，纵欲之祸。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb1-280/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 上册 · 卷二 · 书二</div>
+      <h1 class="art-title">复常逢春居士书二</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">慧佐之死，乃其父母祖母所致。其家生此聪颖之子，不告以保身寡欲之道，乃早为娶妻。又不说节欲之益，纵欲之祸。</p><p class="p-trans">慧佐的死，是由他父母、祖母所致。他们家生了这个聪颖的儿子，却不告诉他保身寡欲之道，早早为他娶妻。然而又不说节欲的好处，纵欲的害处。</p></div>
+<div class="para-pair"><p class="p-orig">彼二青年只知求乐，不知速死。及已经得病，尚不令其妻归宁。以致年余大病，以至于死。将死见其妻，尚动念，故咬指以伏欲心耳。</p><p class="p-trans">他们二个青年人，只知道纵欲求乐，不知道这是加速死亡。等到已经得了病，还不让他的妻子回娘家。以致得了一年多的大病，最终死亡。临死前，见到他的妻子，还在动欲念，所以咬手指来伏灭自己的淫欲心。</p></div>
+<div class="para-pair"><p class="p-orig">天下此种事多极，姑述二事。一弟子家贫，其父早死，学生意，资质淳厚，十五六即娶妻，人已受伤。先在绸缎店司帐，其友人令住普陀法雨寺，养数月，已强健。</p><p class="p-trans">天下这种事极多，暂且讲述二件事。一位弟子家中贫苦，父亲早死，他学做生意，为人资质淳朴厚实，十五六岁就娶了妻子，人已纵欲受伤。起先在绸缎店管帐，他的朋友让他住到普陀山法雨寺，调养了几个月，身体已经强健。</p></div>
+<div class="para-pair"><p class="p-orig">其母与介绍人吵闹，恐其出家，挽彼店中老板及彼岳父，来叫回。光与来人说，回去则可，当令其妻常住娘家，非大复原，不可相见。</p><p class="p-trans">他母亲与介绍到寺院的人吵闹，恐怕他出家，拉着绸缎店老板和他的岳父，来叫他回去。我对来人说，回去是可以，应当让他的妻子常住娘家，身体还没有大复原的时候，不可相见。</p></div>
+<div class="para-pair"><p class="p-orig">此种人通最不知事务者，通不依光说，仍在店中司帐。光往上海至其店中（店老板亦系善人，素相识），见其面色光润，知尚能撙节。</p><p class="p-trans">这种人是最不知事务的，完全不依我所说，仍然让他在店中管帐。我前往上海，到了他的店铺中（店老板也是个善人，一向认识），看见他面色光润，知道他还能节制。</p></div>
+<div class="para-pair"><p class="p-orig">后光回山至宁，见面色大变，问汝回去过，言到家只住四天。已与未回去之相，天渊悬殊，后竟死亡。此子文字尚通顺，若非其母硬作主宰，当不至早夭。</p><p class="p-trans">后来我回普陀山，到了宁波，看见他面色大变，问他回去过吗？他说，到家只住了四天。已经与未回去时的相貌，如天地悬殊了，后来竟然死掉了。这个孩子文字还算通顺，如果不是他母亲硬作主张，应当不至于早夭。</p></div>
+<div class="para-pair"><p class="p-orig">又一皈依弟子之子，其岳父亦皈依，其人颇聪明，英文很好，以不知节欲，得病要往杭州西湖，云我一到西湖，病当好一半。</p><p class="p-trans">还有一位皈依弟子的儿子，他岳父也皈依了，这个人很聪明，英文很好，因为不知节欲，得了病，要前往杭州西湖，说：“我一到西湖，病应当就会好一半。”</p></div>
+<div class="para-pair"><p class="p-orig">其父母不知是不敢见妻，不许去。又要去医院，因送医院，尚令妻常去看，竟死于医院。</p><p class="p-trans">他父母不知道他是不敢见到妻子，不许他去。他又要去医院，因此送他到医院，还令他妻子常去看他，最后竟然死在医院里了。</p></div>
+<div class="para-pair"><p class="p-orig">其岳父与光说，光说汝等是痴人，以致彼欲不死，而必令其死。惜彼不明说不敢见妻，见即动念失精。</p><p class="p-trans">他岳父对我说这件事，我说，你们真是痴人，以致他想不死，却非要让他死。可惜他没有明说不敢见妻子，见到妻子，就动念失精。</p></div>
+<div class="para-pair"><p class="p-orig">慧佐至死，见妻咬指，汝认做厌，尚非真情，乃制欲念耳。至于死时得大家助念之力，自己向有信心，故致死后相变光润。</p><p class="p-trans">慧佐到临死前，见到妻子咬手指，你认做是讨厌，这不是他的真实情感，而是克制欲念罢了。至于死的时候，得到了大家助念的力量，他自己一向有信心，所以致使死后相貌变得光华润泽。</p></div>
+<div class="para-pair"><p class="p-orig">乃知佛力，法力，众生心力，均不可思议。众生心力，不承佛力法力不得发现。由承佛力法力得以发现，故有此现相也。</p><p class="p-trans">于是知道佛力、法力、众生心力，都不可思议。众生心力，不承佛力、法力不能发现。由于承藉佛力、法力得以发现，所以有这些现象。</p></div>
+<div class="para-pair"><p class="p-orig">后世子弟愈聪明，则欲心愈重，情窦未开，不可告。情窦已开，不为说保身寡欲之道，或致手淫邪淫，及已娶忘身徇欲，均所难免。</p><p class="p-trans">后世子弟越是聪明，淫欲心就越重，情窦若未开，不可告诉他们。情窦若已开，不对他们讲说保身寡欲之道，或许导致手淫、邪淫，还有已娶妻者，忘身纵欲，都在所难免。</p></div>
+<div class="para-pair"><p class="p-orig">男子则父与师当为说。女子则母当为说。使慧佐之妻知此义，何至一病近年而死。古者国家尚以令人节欲为令。今则病将死，尚不令其分隔。</p><p class="p-trans">对于男孩子，父亲与老师应当对他说明。对于女孩子，母亲应当对她说明。假使慧佐的妻子知道这个道理，何至于一病一年多就死了。古时候，国家还以令人节欲作为政令。现今则是病得都快死了，还不让他们分隔开。</p></div>
+<div class="para-pair"><p class="p-orig">此所以冤枉死亡之青年，不知其数。而一归于命，命岂令彼贪色无厌乎。慧佐之死系冤枉（若其父母早为训诲，深知利害，断不至死，故曰冤枉）。</p><p class="p-trans">这就是为什么冤枉而死亡的青年人，不知道有多少的原因。而一概都归于命，命哪里有让他去贪色无厌呢？慧佐的死是冤枉而死的（如果他的父母早早给他训导教诲，深知其利害，断然不至于早死，所以说他是冤枉而死）。</p></div>
+<div class="para-pair"><p class="p-orig">慧佐之生西，乃是侥幸。若无人助念，则由淫欲而死，纵不堕三恶道，难免不堕女身及娼妓身耳。由大家助念，承佛慈力，得此结果。</p><p class="p-trans">慧佐的往生西方，乃是侥幸。如果没有众人助念，那么由淫欲而死的人，纵然不堕落三恶道，也难免不堕女身以及娼妓身。由于大家助念，承佛慈力，得到这个结果。</p></div>
+<div class="para-pair"><p class="p-orig">此子之事不必发表。如欲发表，须依光说保身节欲之意，合而言之（不必全依文，但依其意）。则于为父母者及诸青年有所感发，亦显佛力法力众生心力三皆不可思议。</p><p class="p-trans">这个孩子的事不必发表出来。如果想要发表，必须依照我所说保身节欲的意思，合起来说明（不必完全依照原文，只要依照其中的意思）。那么对于为人父母的，以及诸位年青人有所感触启发，也显示佛力、法力、众生心力三者均不可思议。</p></div>
+<div class="para-pair"><p class="p-orig">助念用手术，不如用心观，宜以后不必提倡此法。此法光先见一弟子依兴慈法师而立。后四川慧定法师以彼所著应用唯识学，决定生净土论见寄，知兴慈法师依彼而立。</p><p class="p-trans">助念用手掌术，不如用心观，以后不必提倡这种方法。此法，我先前见到一位弟子，依兴慈法师而立这种方法。后来四川的慧定法师将他所著的《应用唯识学决定生净土论》寄给我，才知道兴慈法师是依慧定法师所说而立的这个方法。</p></div>
+<div class="para-pair"><p class="p-orig">光谓佛号功德，不可思议。舍大众助念，仗一人手运唤佛，乃是轻视佛号，重视手术，不足为法。祈勿作异，致无知之人，相率而舍本逐末也。（十一月廿一日）</p><p class="p-trans">我认为佛号功德，不可思议。舍弃大众的助念，依仗一个人双手运作唤佛，这是轻视佛号，重视手掌术，不足以作为法则。请不要作一些奇异的说法，致使无知的人，相继而学，舍本逐末。（十一月二十一日）</p></div>
+    </article>
+    <section class="notes-sec"><h3>注 释</h3><p class="note-item"><span class="note-n">[1]</span><span class="note-term">【撙节】</span>抑制；节制。</p>
+<p class="note-item"><span class="note-n">[2]</span><span class="note-term">【助念用手术】</span>参考：运掌助升法（宋尧阶居士补录）：气绝后。身未冷尽。仍须近耳唤佛。及敲磬和音不断。如其全身皆冷。惟有头顶尚温。可知生西无疑。不必再唤。但为敲磬念佛。待念至顶温散尽为要。（足底温入地狱。膝温投畜生。腹温落鬼道。胸温转人道。眉间温登天界。顶温超生西方。）若探其头顶先冷。而胸腹膝足等处。或有尚温。则其性灵尚在温处。佛声磬声。仍不可绝。并可请人用掌运之法。助其性灵由温处升向顶门。因生西者。必从顶出也。运掌之法。可平展两掌。虚覆在温处之上。惟不可着身。约离身半寸。遂将两掌用劲向上推运。直至头顶。两目精神专注于掌。默想其灵随掌直向顶门上去。此时口中祷告曰“南无大慈大悲阿弥陀佛。来接引某某之灵。从顶门出。往生西方极乐世界。决定往生。决定往生。”频频运掌。反覆祷告。再念弥陀观音圣号。如是神注掌运口念。三业并施。倦则换人轮流。或半日。或一日。切勿中止。必至其身各处冷尽。惟留顶温乃止。此之性灵。既得佛声磬声提醒不绝。又得掌运神注助力不息。或迟或早。必能升向顶门。见佛往生也。然呼唤及掌运之人。能请得念佛功深。慈悲心切者为上。</p></section>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

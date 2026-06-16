@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>与张静江居士书（民国二十四年） · 印光法师文钞</title>
+<meta name="description" content="闻居士久已念佛，不知曾注意于信愿求生西方否。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/xb1-105/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与张静江居士书（民国二十四年） · 印光法师文钞">
+<meta property="og:description" content="闻居士久已念佛，不知曾注意于信愿求生西方否。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/xb1-105/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">续编 · 上册 · 卷上 · 书</div>
+      <h1 class="art-title">与张静江居士书（民国二十四年）</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">闻居士久已念佛，不知曾注意于信愿求生西方否。</p><p class="p-trans">听说居士念佛已经很久了，不知道是否曾经对于真信切愿求生西方注意过呢？</p></div>
+<div class="para-pair"><p class="p-orig">佛法法门无量，无论大小权实，一切法门，均须以戒定慧，断贪瞋痴，令其净尽无余，方可了生脱死。此则难如登天，非吾辈具缚凡夫所能希冀。</p><p class="p-trans">佛法法门无量，无论大乘、小乘、权教、实教，一切法门，都必须以戒定慧，断贪瞋痴，使这些烦恼惑业净尽无余，才可以了生脱死。走这条路，难如登天，不是我们这些具缚凡夫所能够期望达到的。</p></div>
+<div class="para-pair"><p class="p-orig">若以真信切愿，念佛求生西方，则无论功夫浅深，功德大小，皆可仗佛慈力，往生西方。</p><p class="p-trans">如果以真信切愿，念佛求生西方，那么无论功夫是浅是深，功德是大是小，都可以仗佛慈力，往生西方。</p></div>
+<div class="para-pair"><p class="p-orig">此如坐火轮船过海，但肯上船，即可到于彼岸，乃属船力，非自己本事。信愿念佛求生西方亦然，完全是佛力，不是自己道力。</p><p class="p-trans">这就如同坐轮船渡过大海，只要肯上船，就可以到达彼岸，这是属于轮船的力量，并非自己的本事。真信切愿念佛求生西方也是如此，完全是佛力，不是自己的道力。</p></div>
+<div class="para-pair"><p class="p-orig">然一生西方，则生死已了，烦恼不生，已与在此地久用功夫，断烦恼净尽了生死者相同。故念佛决定要求生西方，切不可求来生人天福报。</p><p class="p-trans">然而一旦生到西方，就已经了脱生死，烦恼不生，已经与在这个娑婆世界久用功夫，究竟断除烦恼而了生死的人相同。所以念佛决定要求生西方，千万不可以求来生的人天福报。</p></div>
+<div class="para-pair"><p class="p-orig">彼离信愿以教人念佛求开悟之开示，切不可依。念佛之要，在于都摄六根。当念佛时，摄耳谛听，即是摄六根之下手处。能志心谛听，与不听而散念，其功德大相悬殊。</p><p class="p-trans">那些离开信愿来教人念佛求开悟的开示，千万不可依从。念佛的关键，在于都摄六根。正当念佛之时，摄住耳根仔细听，就是都摄六根的下手处。能够专心仔细听，与不听而散念相比，功德相差非常悬殊。</p></div>
+<div class="para-pair"><p class="p-orig">此法无论上中下根人皆可用，皆可得益，有利无弊，宜令一切人皆依此修。本欲详说，以为时无几，恐误归期，故略取要义书之。余详文钞，嘉言录，阅之自可悉知。</p><p class="p-trans">这个方法无论上中下根的人都可以用，都可以获得利益，有利无弊，应该让一切人都依照这个方法来修。我本来想要详细说说，因为时日不多，恐怕耽误了西方的归期，所以大略撮取重要大义写出来。其余的详细看《文钞》、《嘉言录》，阅读之后，自然可以全部了知。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

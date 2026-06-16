@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>张慧炳往生西方决疑论 · 印光法师文钞</title>
+<meta name="description" content="一切众生，皆有佛性，皆当作佛。但以从未悟故，迷而不知，起贪瞋痴，造杀盗淫。沉沦于生死苦海之中，从劫至劫，莫之能出，大可怜悯。">
+<link rel="canonical" href="https://wenchao.foyue.org/a/sb2-339/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="张慧炳往生西方决疑论 · 印光法师文钞">
+<meta property="og:description" content="一切众生，皆有佛性，皆当作佛。但以从未悟故，迷而不知，起贪瞋痴，造杀盗淫。沉沦于生死苦海之中，从劫至劫，莫之能出，大可怜悯。">
+<meta property="og:url" content="https://wenchao.foyue.org/a/sb2-339/">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<!-- 安卓无楷体：白话退化为宋体会失去文白区分，用按需切片的霞鹜文楷GB兜底；
+     苹果设备命中本地楷体，不会产生下载 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="css/app.css?v=20260614-ai13">
+</head>
+<body>
+
+<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<header class="topbar" id="topbar">
+  <button class="icon-btn" id="btn-nav" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+  </button>
+  <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
+<!-- 左抽屉：目录树 -->
+<nav class="drawer drawer-left" id="drawer-left" aria-label="目录">
+  <div class="drawer-head">
+    <span class="seal" aria-hidden="true">文钞</span>
+    <div class="drawer-head-text">
+      <strong>文钞目录</strong>
+      <small id="nav-stats"></small>
+    </div>
+  </div>
+  <div class="nav-search">
+    <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
+  </div>
+  <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- 右抽屉：AI 助读 -->
+<aside class="drawer drawer-right" id="drawer-right" aria-label="AI助读">
+  <div class="drawer-head">
+    <div class="drawer-head-text">
+      <strong>问文钞</strong>
+      <small id="ai-context">基于印光法师文钞全集</small>
+    </div>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-ai-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+  <div class="ai-log" id="ai-log"></div>
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="就印光大师文钞，随心提问…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</aside>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<!-- 中间：阅读主区 -->
+<main class="reader" id="reader">
+  <div class="reader-inner seo-prerender">
+    <header class="art-head">
+      <div class="art-crumb">三编 · 下册 · 卷四 · 杂著</div>
+      <h1 class="art-title">张慧炳往生西方决疑论</h1>
+      <div class="rule"></div>
+    </header>
+    <article class="art-body" data-mode="both">
+<div class="para-pair"><p class="p-orig">一切众生，皆有佛性，皆当作佛。但以从未悟故，迷而不知，起贪瞋痴，造杀盗淫。沉沦于生死苦海之中，从劫至劫，莫之能出，大可怜悯。</p><p class="p-trans">一切众生，皆有佛性，皆当作佛。但因为从来没有觉悟的缘故，迷惑不知，起贪瞋痴，造杀盗淫。沉沦于生死苦海之中，从劫至劫，不能出离，令人非常怜悯。</p></div>
+<div class="para-pair"><p class="p-orig">张慧炳宿世固有善根。惜其生于无佛法之区域，及其读书之后，渐染于程朱韩欧之学说（程朱辟佛之力，比韩欧为巨）。则于即心自性之理，更加锢蔽，无由发明矣。</p><p class="p-trans">张慧炳宿世固然有善根。可惜他生于没有佛法的区域，等到他读书之后，渐渐熏染了二程（程颢、程颐）、朱熹、韩愈、欧阳修辟佛的学说（二程、朱熹辟佛的力量，比韩愈、欧阳修更大）。这样就对于即心自性之理，更加固塞蒙蔽，没有办法阐发显明了。</p></div>
+<div class="para-pair"><p class="p-orig">所幸者，阅世既久，常罹祸乱，不免常存厌心。恰遇常慧扬以念佛求生西方相劝。则如久旱之苗，忽逢甘霖，即得勃然发生，势不可遏。</p><p class="p-trans">所庆幸的是，他阅历世事已久，常常遭遇灾祸动乱，不免常存厌离之心。恰好遇到常慧扬用念佛求生西方来相劝。于是便如同久旱的禾苗，忽逢甘霖大雨，立刻得以勃然发起生长，势不可挡。</p></div>
+<div class="para-pair"><p class="p-orig">虽于佛法未能大明，而于程朱韩欧之心曲，固已灼知深见，反由此更加信心。自闻净土法门以来，刻论时日，不满二年，遂得正念往生，亦可谓勇猛丈夫矣。</p><p class="p-trans">他虽然对于佛法未能很明白，而对于二程、朱熹、韩愈、欧阳修的心事，早就已经灼然了知、深深明见，反而由此更增加了信心。自从听闻净土法门以来，严格核算时间，还不满二年，便得以正念往生，也可以说是勇猛的丈夫啊！</p></div>
+<div class="para-pair"><p class="p-orig">至于临终中风失语，乃宿世恶业。当在死后来生受者，以现生修持功德，转后报重报作现报轻报而了之也。死后面色光泽，尸体柔软，面带笑容，顶热炙手。此种景相，均为往生之瑞相。然面色光泽，尸体柔软，面带笑容，生天者亦可有之。唯顶热一事，生天者所无。</p><p class="p-trans">至于临终时，中风失语，这是宿世恶业。原本应当在死后来生所受的业报，因为现生修持的功德，转后报、重报为现报、轻报，而得以了结。死后面色光泽，尸体柔软，面带笑容，头顶热气烫手。这种景相，都是往生的瑞相。然而面色光泽，尸体柔软，面带笑容，生天的人也可有这种瑞相。唯有头顶热这件事，是生天的人所没有的。</p></div>
+<div class="para-pair"><p class="p-orig">经中说死后生各道之证据，有偈云，顶圣眼生天，人心饿鬼腹，畜生膝盖离，地狱脚板出。以人死热气由下而上者，为超升。由上而下者，为堕落。若通身都冷，顶上犹热者，则超凡入圣。生西方，为超凡入圣之最胜者，故曰顶圣。若热在额颅及眼者，则生天。热在心者，则仍生人道。热在肚腹者，生饿鬼道。热在膝盖者，生畜生道。热在脚板者，生地狱道。以通身全冷，唯此处独热为准。</p><p class="p-trans">佛经中讲说人死后往生各道的证据，有偈颂说：“顶圣眼生天，人心饿鬼腹，畜生膝盖离，地狱脚板出。”认为人死热气从下往上走的，为超升。从上往下走的，为堕落。如果全身都冷，头顶上犹热的，就是超凡入圣。往生西方，是超凡入圣中最殊胜的，所以称为“顶圣”。如果热气在额颅以及眼窝的，是生到天道。热气在心口的，是仍旧投生人道。热气在肚腹的，是投生饿鬼道。热气在膝盖的，是投生畜生道。热气在脚板的，是投生地狱道。以全身完全冷却，唯有这个地方独有热气为准。</p></div>
+<div class="para-pair"><p class="p-orig">然念佛之人，平素若有真信切愿，临终又蒙善眷助念，不为恶劣眷属预为揩身换衣哭泣问事瞎安慰等所破坏，定规可以往生。慧炳临终失语，或有因此怀疑者。顶热一事，可以为证。况又有面色光泽等事乎。</p><p class="p-trans">然而念佛的人，平时如果有真信切愿，临终又有好眷属助念，不被恶劣眷属预先为他揩身、换衣、哭泣、问事、瞎安慰等事所破坏，一定可以往生。张慧炳临终失语，或许有因此生起怀疑的人。头顶有热气这件事，可以作为证明。何况又有面色光泽等事呢？</p></div>
+<div class="para-pair"><p class="p-orig">前年云南保山县郑慧洪死，其母爱子心切，服毒端坐，念佛而逝，绝无苦痛之相。其地向来不知佛法。其父名伯纯，乃一宿儒，不乐仕进，初研易经数年，继研丹经，后参禅宗。</p><p class="p-trans">前年云南保山县的郑慧洪死了，他的母亲爱子心切，服毒端坐，念佛而逝，绝对没有苦痛之相。那个地方的人向来不知道佛法。他的父亲郑伯纯，是一个修养有素的儒者，不乐仕途进取，起初研究《易经》数年，接着研究道教丹经，后来参究禅宗。</p></div>
+<div class="para-pair"><p class="p-orig">慧洪商于昭通，寄信求皈依，专修净业。屡劝其父修净业，请许多净土经书祈看。伯纯由是生信，自行化他，作念佛恳词，恳人念佛。民廿二年慧洪罢商回家，次年春死，无甚祥瑞。而其母服毒往生，较平常善终者，无所欠憾。</p><p class="p-trans">郑慧洪在云南昭通经商，寄信来求皈依，专修净业。多次劝他父亲修习净业，请了许多净土的经书，请他父亲看。郑伯纯因此生起信心，自行化他，写《念佛恳词》，恳请他人念佛。民国二十二年（1933），慧洪结束生意回家，第二年春天死了，没有什么瑞相。而他的母亲服毒往生，与平常善终的人相比，没有什么令人感到遗憾的了。</p></div>
+<div class="para-pair"><p class="p-orig">由是一方之人，为之感动。以伯纯乃文行兼优之士，为之提倡，又得其子其夫人之奇异，虽固执邪见绝无信向者，亦不得不为感动也。</p><p class="p-trans">因此一个地方的人，都被他感动了。因为郑伯纯是文章德行兼优之士，为之提倡，又得到他儿子、他夫人的奇异事迹，即使是固执邪见、绝对没有信心的人，也不得不为之感动。</p></div>
+<div class="para-pair"><p class="p-orig">宋儒读佛经，得其妙义以自雄，反从而辟佛者，恐后人识彼之妙义所从来，故昧心为之。以致后儒皆不敢讲因果轮回，以故善无以劝，恶无以惩。</p><p class="p-trans">宋朝儒生读佛经，得到佛经的妙义来自我壮大，反而从此辟佛的人，是恐怕后人识破他的妙义，是从什么地方来的，所以昧着良心来排斥佛教。以致后来的儒生都不敢讲因果轮回，所以，善没有了劝化的依据，恶也没有了惩罚的依据。</p></div>
+<div class="para-pair"><p class="p-orig">近幸修净业者多，犹可以稍挽狂澜。否则人道或几乎息。今由慧炳，令一方知往生西方之相。当有相继而往生者，愈久愈多也。因书此以明其实义。凡见闻者，各宜自勉。</p><p class="p-trans">所庆幸的是最近修习净业的人很多，还可以稍微挽回狂澜。否则，为人之道或许将要息灭了。现今由张慧炳的往生事迹，让一个地方的人得以知道往生西方的事相。应当有相继而往生的人，时间越久人越多啊！因此写下这些，来说明其中的真实义理。凡是见到听到的人，各个都应该勉励自己。</p></div>
+    </article>
+  </div>
+</main>
+
+<!-- 注释弹卡（底部抽出） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="注释">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="config.js?v=20260614-ai13"></script>
+<script src="js/qrcode.js"></script>
+<script type="module" src="js/app.js?v=20260614-ai13"></script>
+<script src="js/share.js?v=20260614-ai13"></script>
+</body>
+</html>

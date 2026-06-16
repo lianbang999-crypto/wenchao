@@ -24,19 +24,22 @@ const ALLOW_ORIGINS = [
 const SITE_BASE = 'https://wenchao.foyue.org';
 const EMBED_MODEL = '@cf/baai/bge-m3';   // 多语种向量(含古今汉语)，1024 维
 const CHAT_MODEL = 'deepseek-chat';
+const KB_NAMESPACE = 'v2';                // 优化后的知识库命名空间；默认 namespace 保留作回退
 const TOP_K = 8;                          // 检索段数
 const ANSWER_CHARS = 500;                 // 回复字数上限(软引导)
 const MAX_TOKENS = 700;                   // 回复 token 硬上限(约 500 汉字)
 const CACHE_TTL = 7 * 86400;              // 答案缓存 7 天
 const DAILY_LIMIT = 60;                   // 每 IP 每日提问上限
 const INDEX_BATCH = 25;                   // 每次 /index 处理的文章数
-const META_TEXT_MAX = 900;               // 存入向量库的段落文本上限
+const INDEX_EMBED_BATCH = 50;             // 每次 Workers AI embedding 文本数
+const CHUNK_CHARS = 720;                  // 单个向量块目标字数，避免长段被截断
+const CHUNK_OVERLAP = 80;                 // 长段切块重叠，保留上下文
 
 function cors(origin) {
   const allow = ALLOW_ORIGINS.includes(origin) ? origin : ALLOW_ORIGINS[0];
   return {
     'Access-Control-Allow-Origin': allow,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
   };
@@ -53,30 +56,106 @@ async function embed(env, texts) {
   return r.data;   // [[...1024], …]
 }
 
+function articlePath(id, pIndex) {
+  const p = Number.isFinite(Number(pIndex)) && Number(pIndex) >= 0
+    ? `?p=${Number(pIndex)}`
+    : '';
+  return `/a/${encodeURIComponent(id)}/${p}`;
+}
+function sourceTypeOf(art) {
+  if (art.volume === 'jx') return 'selected';
+  if (art.volume === 'jy') return 'jiayan';
+  return 'primary';
+}
+function sourcePriority(md) {
+  if ((md.sourceType || '') === 'primary') return 0;
+  if ((md.sourceType || '') === 'jiayan') return 1;
+  if ((md.sourceType || '') === 'selected') return 2;
+  return 3;
+}
+function cleanKey(s) {
+  return String(s || '').replace(/\s/g, '').slice(0, 80);
+}
+function splitLongText(text) {
+  text = String(text || '').trim();
+  if (!text || text.length <= CHUNK_CHARS) return text ? [text] : [];
+  const out = [];
+  let start = 0;
+  while (start < text.length) {
+    let end = Math.min(start + CHUNK_CHARS, text.length);
+    if (end < text.length) {
+      const win = text.slice(start, end);
+      const cuts = ['。', '；', '！', '？', '\n'].map((c) => win.lastIndexOf(c));
+      const cut = Math.max(...cuts);
+      if (cut > CHUNK_CHARS * 0.45) end = start + cut + 1;
+    }
+    const part = text.slice(start, end).trim();
+    if (part) out.push(part);
+    if (end >= text.length) break;
+    start = Math.max(start + 1, end - CHUNK_OVERLAP);
+  }
+  return out;
+}
+
 /* ---------- 建库：把一篇按自然段切成「原文(+白话)」段块 ----------
- * migrate 常把整篇并成一个 segment（orig[]/trans[] 各含多段），故须按段拆，
- * 否则长文钞只剩一块且被截断、检索会漏。 */
+ * migrate 常把整篇并成一个 segment（orig[]/trans[] 各含多段），故须按段拆。
+ * v2 不再截断长段，而是按标点切成带 overlap 的子块，并保存可跳转段落 metadata。 */
 function chunksOf(art) {
   const out = [];
   let idx = 0;
-  const push = (text) => {
+  let paraIndex = 0;
+  let pIndex = 0; // 与前端 p.p-orig / p.p-trans NodeList 下标一致
+  const sourceType = sourceTypeOf(art);
+  const push = (text, meta) => {
     text = (text || '').trim();
     if (!text) return;
-    out.push({
-      id: `${art.id}#${idx}`,
-      text: text.slice(0, META_TEXT_MAX),
-      meta: { aid: art.id, title: art.title || '', vol: art.volumeName || '', seg: idx },
+    splitLongText(text).forEach((part, partIdx) => {
+      const keyText = (part.split('\n（白话）')[0] || part).replace(/^（白话）/, '');
+      out.push({
+        id: `${art.id}#${idx}`,
+        text: part,
+        meta: {
+          aid: art.id,
+          title: art.title || '',
+          vol: art.volume || '',
+          volName: art.volumeName || '',
+          sourceType,
+          seg: idx,
+          paraIndex: meta.paraIndex,
+          pIndex: meta.pIndex,
+          part: partIdx,
+          kind: meta.kind || '',
+          url: articlePath(art.id, meta.pIndex),
+          origKey: cleanKey(keyText || part),
+        },
+      });
+      idx++;
     });
-    idx++;
   };
   (art.segments || []).forEach((s) => {
     const O = s.orig || (s.o ? [s.o] : []);
     const T = s.trans || [];
+    if (art.plain) {
+      O.forEach((p) => {
+        push(p, { kind: 'plain', paraIndex, pIndex });
+        paraIndex++; pIndex++;
+      });
+      return;
+    }
     if (O.length && O.length === T.length) {        // 对齐：逐段原文+白话成一块
-      for (let i = 0; i < O.length; i++) push(O[i] + (T[i] ? '\n（白话）' + T[i] : ''));
+      for (let i = 0; i < O.length; i++) {
+        push(O[i] + (T[i] ? '\n（白话）' + T[i] : ''), { kind: 'pair', paraIndex, pIndex });
+        paraIndex++; pIndex += 2;
+      }
     } else {                                        // 不齐：原文段、白话段各自成块
-      O.forEach((p) => push(p));
-      T.forEach((p) => push('（白话）' + p));
+      O.forEach((p) => {
+        push(p, { kind: 'orig', paraIndex, pIndex });
+        paraIndex++; pIndex++;
+      });
+      T.forEach((p) => {
+        push('（白话）' + p, { kind: 'trans', paraIndex, pIndex });
+        paraIndex++; pIndex++;
+      });
     }
   });
   return out;
@@ -89,6 +168,8 @@ async function handleIndex(req, env, url, headers) {
     return json({ error: 'forbidden' }, 403, headers);
   }
   const cursor = parseInt(url.searchParams.get('cursor') || '0', 10);
+  const reqLimit = parseInt(url.searchParams.get('limit') || String(INDEX_BATCH), 10);
+  const limit = Math.max(1, Math.min(INDEX_BATCH, Number.isFinite(reqLimit) ? reqLimit : INDEX_BATCH));
   const books = await (await fetch(`${SITE_BASE}/data/books.json`)).json();
   const ids = [];
   for (const b of books)
@@ -96,7 +177,7 @@ async function handleIndex(req, env, url, headers) {
       for (const c of j.cats)
         for (const it of c.items) ids.push(it.id);
 
-  const batch = ids.slice(cursor, cursor + INDEX_BATCH);
+  const batch = ids.slice(cursor, cursor + limit);
   let chunks = [];
   for (const id of batch) {
     try {
@@ -106,20 +187,55 @@ async function handleIndex(req, env, url, headers) {
   }
   // 分小批向量化并写入(bge-m3 单次建议 ≤ ~100 条)
   let n = 0;
-  for (let i = 0; i < chunks.length; i += 50) {
-    const part = chunks.slice(i, i + 50);
+  for (let i = 0; i < chunks.length; i += INDEX_EMBED_BATCH) {
+    const part = chunks.slice(i, i + INDEX_EMBED_BATCH);
     const vecs = await embed(env, part.map((c) => c.text));
     await env.VEC.upsert(part.map((c, k) => ({
-      id: c.id, values: vecs[k], metadata: { ...c.meta, text: c.text },
+      id: c.id, namespace: KB_NAMESPACE, values: vecs[k], metadata: { ...c.meta, text: c.text },
     })));
     n += part.length;
   }
-  const next = cursor + INDEX_BATCH;
+  const next = cursor + limit;
   return json({ ok: true, indexedArticles: batch.length, chunks: n,
-    cursor: next, done: next >= ids.length, total: ids.length }, 200, headers);
+    cursor: next, done: next >= ids.length, total: ids.length, limit, namespace: KB_NAMESPACE }, 200, headers);
 }
 
 /* ---------- 提问：检索 + DeepSeek ---------- */
+function wantsArticleScope(q) {
+  return /本篇|本文|此篇|这篇|這篇|此文|这封|這封|这段|這段|此段|上文|文中|这里|這裡|此处|此處|这一段|這一段/.test(q || '');
+}
+async function queryKnowledgeBase(env, qv, filter) {
+  const topK = Math.min(TOP_K * 3, 20);
+  const attempts = [
+    { topK, returnMetadata: 'all', namespace: KB_NAMESPACE, ...(filter ? { filter } : {}) },
+    { topK, returnMetadata: 'all', namespace: KB_NAMESPACE },
+    { topK, returnMetadata: 'all' }, // 回退旧默认 namespace，避免 v2 未建完时线上不可用
+  ];
+  for (const opts of attempts) {
+    try {
+      const res = await env.VEC.query(qv, opts);
+      if (res && res.matches && res.matches.length) return res.matches;
+    } catch { /* 尝试下一种查询策略 */ }
+  }
+  return [];
+}
+function dedupeMatches(matches) {
+  const byKey = new Map();
+  for (const m of matches) {
+    const md = m.metadata || {};
+    const text = md.text || '';
+    const key = md.origKey || cleanKey((text.split('\n（白话）')[0] || text).replace(/^（白话）/, ''));
+    if (!key) continue;
+    const prev = byKey.get(key);
+    if (!prev ||
+        sourcePriority(md) < sourcePriority(prev.metadata || {}) ||
+        (sourcePriority(md) === sourcePriority(prev.metadata || {}) && (m.score || 0) > (prev.score || 0))) {
+      byKey.set(key, m);
+    }
+  }
+  return [...byKey.values()].sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, TOP_K);
+}
+
 async function handleAsk(req, env, headers) {
   if (!env.DEEPSEEK_API_KEY) return json({ reply: '服务未配置密钥。' }, 500, headers);
 
@@ -139,6 +255,7 @@ async function handleAsk(req, env, headers) {
   const userMsgs = msgs.filter((m) => m.role === 'user');
   const lastU = userMsgs.length ? userMsgs[userMsgs.length - 1].content : '';
   if (!lastU.trim()) return json({ reply: '请输入问题。' }, 400, headers);
+  const articleId = body && typeof body.articleId === 'string' ? body.articleId.trim() : '';
   // ② 多轮追问：指代/短问/承上时，并入上一问做检索（否则"出处呢""再展开"会检索不到）
   const prevU = userMsgs.length > 1 ? userMsgs[userMsgs.length - 2].content : '';
   let retrievalQ = lastU;
@@ -149,7 +266,8 @@ async function handleAsk(req, env, headers) {
 
   // 答案缓存：仅单轮问答（多轮依赖上下文，不缓存以免串味）
   const cacheable = userMsgs.length === 1;
-  const ckey = 'a:' + (await sha256(retrievalQ.trim()));
+  const articleScoped = !!(articleId && wantsArticleScope(retrievalQ));
+  const ckey = 'a:' + KB_NAMESPACE + ':' + (await sha256((articleScoped ? articleId : '') + ':' + retrievalQ.trim()));
   let cached = null;
   if (cacheable && env.RL) {
     const hit = await env.RL.get(ckey);
@@ -165,28 +283,34 @@ async function handleAsk(req, env, headers) {
     let matches = [];
     try {
       const [qv] = await embed(env, [retrievalQ]);
-      const res = await env.VEC.query(qv, { topK: TOP_K * 2, returnMetadata: 'all' });
-      matches = res.matches || [];
+      matches = await queryKnowledgeBase(env, qv, articleScoped ? { aid: articleId } : null);
     } catch { /* 检索失败则裸答 */ }
     // ① 去重：原文近似相同的（如精选读本与文钞重出）只保留一条，凑足 TOP_K
-    const seen = new Set(), uniq = [];
-    for (const m of matches) {
-      const orig = (((m.metadata && m.metadata.text) || '').split('\n（白话）')[0]).replace(/\s/g, '');
-      const key = orig.slice(0, 40);
-      if (!key || seen.has(key)) continue;
-      seen.add(key); uniq.push(m);
-      if (uniq.length >= TOP_K) break;
-    }
-    matches = uniq;
+    matches = dedupeMatches(matches);
     const ctxBlocks = [], srcMap = new Map();
     matches.forEach((m, i) => {
       const md = m.metadata || {};
       const n = i + 1;
-      ctxBlocks.push(`【${n}】《${md.title || ''}》\n${md.text || ''}`);
-      passages.push({ n, aid: md.aid || '', title: md.title || '', text: md.text || '' });
-      if (md.aid && !srcMap.has(md.aid)) srcMap.set(md.aid, md.title || '');
+      const loc = md.pIndex != null ? `，第 ${Number(md.pIndex) + 1} 段` : '';
+      ctxBlocks.push(`【${n}】《${md.title || ''}》${md.volName ? `（${md.volName}${loc}）` : ''}\n${md.text || ''}`);
+      const url = md.url || (md.aid ? articlePath(md.aid, md.pIndex) : '');
+      passages.push({
+        n,
+        aid: md.aid || '',
+        title: md.title || '',
+        text: md.text || '',
+        url,
+        pIndex: md.pIndex,
+        paraIndex: md.paraIndex,
+        seg: md.seg,
+        part: md.part,
+        vol: md.vol || '',
+        volName: md.volName || '',
+        sourceType: md.sourceType || '',
+      });
+      if (md.aid && !srcMap.has(md.aid)) srcMap.set(md.aid, { id: md.aid, title: md.title || '', url });
     });
-    sources = [...srcMap].slice(0, 8).map(([id, title]) => ({ id, title }));
+    sources = [...srcMap.values()].slice(0, 8);
     const context = ctxBlocks.join('\n\n') || '（未检索到相关资料）';
     system = `你是「印光法师文钞」知识库助手。下面【资料】是依用户问题检索到的文钞段落，各以【n】编号。务必：
 1. 只依据这些资料作答，不引入资料以外的说法、不自行发挥；资料未涵盖或问题与文钞/净土无关，就说「文钞中未见相关开示」，绝不编造。
@@ -294,6 +418,25 @@ async function handleAdminData(req, env, headers) {
   return json({ stats: { up, down, total: up + down }, items, kb }, 200, headers);
 }
 
+async function handleHealth(env, headers) {
+  let kb = null;
+  try {
+    const d = await env.VEC.describe();
+    kb = d.vectorsCount != null ? d.vectorsCount : (d.vectorCount != null ? d.vectorCount : null);
+  } catch { /* 可选 */ }
+  return json({
+    ok: true,
+    service: 'wenchao-ai',
+    namespace: KB_NAMESPACE,
+    embedModel: EMBED_MODEL,
+    chatModel: CHAT_MODEL,
+    topK: TOP_K,
+    chunkChars: CHUNK_CHARS,
+    indexBatch: INDEX_BATCH,
+    vectors: kb,
+  }, 200, headers);
+}
+
 const ADMIN_HTML = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>问文钞 · 管理后台</title>
@@ -347,6 +490,7 @@ export default {
     const origin = req.headers.get('Origin') || '';
     const headers = { 'Content-Type': 'application/json', ...cors(origin) };
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors(origin) });
+    if (req.method === 'GET' && (pathname === '/' || pathname === '/health')) return handleHealth(env, headers);
     if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers });
     if (pathname === '/index') return handleIndex(req, env, url, headers);
     if (pathname === '/feedback') return handleFeedback(req, env, headers);

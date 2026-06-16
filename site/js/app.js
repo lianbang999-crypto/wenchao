@@ -585,7 +585,7 @@ function loadOpenCC() {
   if (_conv) return Promise.resolve(_conv);
   return new Promise((resolve) => {
     const s = document.createElement('script');
-    s.src = '/js/opencc.js?v=20260614-ai13';
+    s.src = '/js/opencc.js?v=20260616-ai-v2';
     s.onload = () => {
       try {
         const c = OpenCC.Converter({ from: 'cn', to: 'tw' });
@@ -666,19 +666,33 @@ function aiFormat(text, passages) {
   return html;
 }
 // 点角标 → 底部弹卡显示出处原文 + 阅读全篇（统一只显原文，白话在「阅读全篇」里）
+function citationExcerpt(p) {
+  const t = (p && p.text) || '';
+  const orig = (t.split('\n（白话）')[0] || '').trim();
+  return (orig && !orig.startsWith('（白话）')) ? orig : t.trim();
+}
 function showCitation(p) {
   if (!p) return;
-  const orig = (p.text || '').split('\n（白话）')[0];
+  const excerpt = citationExcerpt(p);
+  const url = p.url || (p.aid ? articleHref(p.aid, p.pIndex) : '');
+  const label = p.pIndex !== undefined && p.pIndex !== null && p.pIndex !== '' ? '定位段落' : '阅读全篇';
   $('#sheet-body').innerHTML =
-    `<h4>《${esc(p.title || '')}》<span class="note-n">出处原文</span></h4>` +
-    `<p class="cite-text">${esc(orig)}</p>` +
-    (p.aid ? `<button class="sheet-goto" data-id="${esc(p.aid)}">阅读全篇 ›</button>` : '');
+    `<h4>《${esc(p.title || '')}》<span class="note-n">出处摘录</span></h4>` +
+    `<p class="cite-text">${esc(excerpt)}</p>` +
+    (p.aid ? `<button class="sheet-goto" data-id="${esc(p.aid)}" data-p="${p.pIndex ?? ''}" data-url="${esc(url)}">${label} ›</button>` : '');
   $('#sheet').hidden = false;
   $('#sheet-backdrop').hidden = false;
   const g = $('#sheet-body .sheet-goto');
   if (g) g.onclick = () => {
     $('#sheet').hidden = true; $('#sheet-backdrop').hidden = true;
-    goArticle(g.dataset.id); closeDrawers();
+    if (g.dataset.url) {
+      const u = new URL(g.dataset.url, location.origin);
+      history.pushState(null, '', u.pathname + u.search);
+      route();
+    } else {
+      goArticle(g.dataset.id, g.dataset.p);
+    }
+    closeDrawers();
   };
 }
 // 角标 hover 预览（仅桌面；触屏走点击弹卡）
@@ -689,7 +703,7 @@ function citeHover(btn, p) {
   if (!p || !canHover()) return;
   btn.addEventListener('mouseenter', () => {
     if (!aiTip) { aiTip = document.createElement('div'); aiTip.className = 'ai-tip'; document.body.appendChild(aiTip); }
-    const orig = (p.text || '').split('\n（白话）')[0];
+    const orig = citationExcerpt(p);
     aiTip.innerHTML = `<b>《${esc(p.title || '')}》</b>${esc(orig.slice(0, 80))}${orig.length > 80 ? '…' : ''}`;
     aiTip.hidden = false;
     const r = btn.getBoundingClientRect();
@@ -754,9 +768,11 @@ async function aiAsk(q) {
   const sb = aiSendBtn(); if (sb) sb.textContent = '停止';
   let failed = false;
   try {
+    const payload = { messages: aiHistory.slice(-8) };
+    if (current && current.id) payload.articleId = current.id;
     const res = await fetch(CFG.aiEndpoint, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: aiHistory.slice(-8) }), signal: aiAbort.signal,
+      body: JSON.stringify(payload), signal: aiAbort.signal,
     });
     if (res.body && res.body.getReader) {          // 流式（打字机）
       const reader = res.body.getReader(), dec = new TextDecoder();

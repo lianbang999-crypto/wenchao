@@ -1,0 +1,20 @@
+{
+  "_readme": "RAG 评测题集。每条 question 是用户可能的提问；expectArticles 填写「答案理应引用到的文钞篇目 id」（可多个，命中任意一个即算召回成功）。id 见 site/data/books.json。留空数组表示尚未标注，脚本只对其统计引用率/拒答率，不计入召回率。请善知识按义理逐步补全 expectArticles，使召回率可信。",
+  "questions": [
+    { "question": "临终助念有哪些要点？", "expectArticles": ["jx-083", "xb2-135", "xb2-173"], "note": "临终三大要 / 得助念失助念之损益比较" },
+    { "question": "念佛时妄念纷飞，应如何对治？", "expectArticles": [], "note": "摄心念佛、十念记数等，待标注" },
+    { "question": "什么是念佛三昧？如何才能得到？", "expectArticles": ["zg2-221"], "note": "念佛三昧摸象记" },
+    { "question": "因果对学佛和做人有多重要？", "expectArticles": ["jx-078"], "note": "因果为儒释圣教之根本说" },
+    { "question": "为什么要戒杀吃素？", "expectArticles": ["jx-093", "zg2-158"], "note": "普劝戒杀吃素挽回劫运说" },
+    { "question": "初学净土，应如何下手？", "expectArticles": [], "note": "待标注" },
+    { "question": "如何才能生起真信切愿？", "expectArticles": ["jy-009"], "note": "勉具足信愿" },
+    { "question": "念佛和参禅有何不同，净土法门为何稳当？", "expectArticles": [], "note": "待标注" },
+    { "question": "在家居士应如何修持净业？", "expectArticles": [], "note": "待标注" },
+    { "question": "什么是敦伦尽分、闲邪存诚？", "expectArticles": [], "note": "待标注" },
+    { "question": "遇到病苦逆境时应如何用心？", "expectArticles": [], "note": "待标注" },
+    { "question": "如何为亡者做佛事最有利益？", "expectArticles": [], "note": "待标注" },
+    { "question": "念佛要不要记数？怎样记数最稳妥？", "expectArticles": [], "note": "十念记数法，待标注" },
+    { "question": "印光大师对儿童因果教育有何开示？", "expectArticles": [], "note": "待标注" },
+    { "question": "如何看待禅净双修？", "expectArticles": [], "note": "待标注" }
+  ]
+}

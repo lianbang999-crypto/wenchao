@@ -2,7 +2,7 @@
  *
  * 架构（全在 Cloudflare）：
  *   建库(一次)：/index 批量抓全站文章 → 切段 → Workers AI(bge-m3) 向量 → 存入 Vectorize
- *   提问：问题 → 向量 → Vectorize 检索最相关段 → DeepSeek 据此作答(标出处·限字数)
+ *   提问：问题 →(可选)文言改写多查询 → 向量 → Vectorize 召回 → 交叉编码器重排序 → DeepSeek 据最相关段作答(标出处·限字数)
  *   缓存：① 向量库本身(建一次长期用) ② 答案缓存(同问秒回,KV) ③ DeepSeek 前缀自动缓存
  *
  * 前端契约：POST { messages:[{role,content}…], articleId? } → { reply, cite, sources:[{id,title}] }
@@ -25,7 +25,12 @@ const SITE_BASE = 'https://wenchao.foyue.org';
 const EMBED_MODEL = '@cf/baai/bge-m3';   // 多语种向量(含古今汉语)，1024 维
 const CHAT_MODEL = 'deepseek-chat';
 const KB_NAMESPACE = 'v2';                // 优化后的知识库命名空间；默认 namespace 保留作回退
-const TOP_K = 8;                          // 检索段数
+const TOP_K = 8;                          // 喂给 DeepSeek 的最终段数
+const RERANK_MODEL = '@cf/baai/bge-reranker-base'; // 交叉编码器重排序，提升检索精度
+const RERANK_POOL = 24;                    // 去重后送入重排序的候选段上限
+const USE_RERANK = true;                   // 重排序总开关（异常时可一键回退纯向量序）
+const USE_QUERY_REWRITE = true;            // 多查询：原问 + DeepSeek 文言改写检索式
+const RETRIEVAL_VERSION = 'r2';            // 检索逻辑版本号，并入答案缓存键，避免旧缓存遮蔽新检索
 const ANSWER_CHARS = 500;                 // 回复字数上限(软引导)
 const MAX_TOKENS = 700;                   // 回复 token 硬上限(约 500 汉字)
 const CACHE_TTL = 7 * 86400;              // 答案缓存 7 天
@@ -233,7 +238,76 @@ function dedupeMatches(matches) {
       byKey.set(key, m);
     }
   }
-  return [...byKey.values()].sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, TOP_K);
+  return [...byKey.values()].sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, RERANK_POOL);
+}
+
+/* 多查询：把口语/白话问题改写成更贴近文钞文言、突出名相的检索式，与原问并用以提升召回。
+ * best-effort：超时或任何失败都退回只用原问，绝不阻塞问答。 */
+async function buildRetrievalQueries(env, q) {
+  const queries = [q];
+  if (!USE_QUERY_REWRITE || !env.DEEPSEEK_API_KEY) return queries;
+  try {
+    const opts = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
+      body: JSON.stringify({
+        model: CHAT_MODEL,
+        messages: [
+          { role: 'system', content: '你是检索助手。把用户的口语/白话问题改写成一句更贴近《印光法师文钞》文言用语、突出关键名相的检索式；只输出改写后的查询本身，不解释、不加引号，30字以内。' },
+          { role: 'user', content: q },
+        ],
+        temperature: 0, max_tokens: 60, stream: false,
+      }),
+    };
+    if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opts.signal = AbortSignal.timeout(4500);
+    const r = await fetch('https://api.deepseek.com/chat/completions', opts);
+    if (r.ok) {
+      const j = await r.json();
+      const rw = ((j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '')
+        .replace(/^["“”\s]+|["“”\s]+$/g, '').trim();
+      if (rw && rw !== q && rw.length <= 60) queries.push(rw);
+    }
+  } catch { /* 改写失败：仅用原问 */ }
+  return queries;
+}
+
+/* 合并多路检索结果：按向量 id 取并集，保留每条最高分 */
+function mergeMatchPools(pools) {
+  const byId = new Map();
+  for (const pool of pools)
+    for (const m of pool || []) {
+      const prev = byId.get(m.id);
+      if (!prev || (m.score || 0) > (prev.score || 0)) byId.set(m.id, m);
+    }
+  return [...byId.values()];
+}
+
+/* 交叉编码器重排序：对去重后的候选按与问题的真实相关度重排，仅用于排序、不丢段。
+ * best-effort：失败、无评分或模型不可用时保持原向量序，绝不让问答因此中断。 */
+async function rerankMatches(env, query, matches) {
+  if (!USE_RERANK || !env.AI || matches.length <= 1) return matches;
+  const pool = matches.slice(0, RERANK_POOL);
+  try {
+    const contexts = pool.map((m) => ({ text: (m.metadata && m.metadata.text) || '' }));
+    const r = await env.AI.run(RERANK_MODEL, { query, contexts, top_k: pool.length });
+    const ranked = (r && (r.response || r.data || r.results)) || null;
+    if (Array.isArray(ranked) && ranked.length) {
+      const ordered = [], seen = new Set();
+      for (const it of ranked) {
+        const idx = typeof it.id === 'number' ? it.id
+          : (typeof it.index === 'number' ? it.index : -1);
+        if (idx >= 0 && idx < pool.length && !seen.has(idx)) {
+          seen.add(idx);
+          if (typeof it.score === 'number') pool[idx].rerankScore = it.score;
+          ordered.push(pool[idx]);
+        }
+      }
+      // 补回重排序结果未覆盖到的候选，保证不丢段、顺序稳定
+      pool.forEach((m, i) => { if (!seen.has(i)) ordered.push(m); });
+      if (ordered.length) return ordered;
+    }
+  } catch { /* 重排序失败：退回向量序 */ }
+  return pool;
 }
 
 async function handleAsk(req, env, headers) {
@@ -267,7 +341,7 @@ async function handleAsk(req, env, headers) {
   // 答案缓存：仅单轮问答（多轮依赖上下文，不缓存以免串味）
   const cacheable = userMsgs.length === 1;
   const articleScoped = !!(articleId && wantsArticleScope(retrievalQ));
-  const ckey = 'a:' + KB_NAMESPACE + ':' + (await sha256((articleScoped ? articleId : '') + ':' + retrievalQ.trim()));
+  const ckey = 'a:' + KB_NAMESPACE + ':' + RETRIEVAL_VERSION + ':' + (await sha256((articleScoped ? articleId : '') + ':' + retrievalQ.trim()));
   let cached = null;
   if (cacheable && env.RL) {
     const hit = await env.RL.get(ckey);
@@ -282,11 +356,17 @@ async function handleAsk(req, env, headers) {
   } else {
     let matches = [];
     try {
-      const [qv] = await embed(env, [retrievalQ]);
-      matches = await queryKnowledgeBase(env, qv, articleScoped ? { aid: articleId } : null);
+      const filter = articleScoped ? { aid: articleId } : null;
+      const queries = await buildRetrievalQueries(env, retrievalQ);   // 多查询：原问 +（可选）文言改写
+      const qvs = await embed(env, queries);
+      const pools = await Promise.all(qvs.map((qv) => queryKnowledgeBase(env, qv, filter)));
+      matches = mergeMatchPools(pools);
     } catch { /* 检索失败则裸答 */ }
-    // ① 去重：原文近似相同的（如精选读本与文钞重出）只保留一条，凑足 TOP_K
+    // ① 去重：原文近似相同的（如精选读本与文钞重出）只保留一条，得到候选池
     matches = dedupeMatches(matches);
+    // ② 交叉编码器重排序：把真正最相关的段排到前面，再取 TOP_K 喂给 DeepSeek
+    matches = await rerankMatches(env, retrievalQ, matches);
+    matches = matches.slice(0, TOP_K);
     const ctxBlocks = [], srcMap = new Map();
     matches.forEach((m, i) => {
       const md = m.metadata || {};
@@ -313,10 +393,10 @@ async function handleAsk(req, env, headers) {
     sources = [...srcMap.values()].slice(0, 8);
     const context = ctxBlocks.join('\n\n') || '（未检索到相关资料）';
     system = `你是「印光法师文钞」知识库助手。下面【资料】是依用户问题检索到的文钞段落，各以【n】编号。务必：
-1. 只依据这些资料作答，不引入资料以外的说法、不自行发挥；资料未涵盖或问题与文钞/净土无关，就说「文钞中未见相关开示」，绝不编造。
-2. 每个论断后用方括号标出所依据的资料编号，如 [1] 或 [2][5]，以便读者点开核对原文；可直接引用大师原文并加引号。
-3. 不扮演佛菩萨或祖师口吻，不预言吉凶、不轻下因果定论；语气恭敬平实。
-4. 简明扼要，控制在约 ${ANSWER_CHARS} 字以内。
+1. 只依据这些资料作答，不引入资料以外的说法、不自行发挥、不做资料未支持的推断；若资料未涵盖或问题与文钞/净土无关，直接说「文钞中未见相关开示」并可建议换个问法，绝不编造、绝不臆测。
+2. 每一处论断后都用方括号标出所依据的资料编号，如 [1] 或 [2][5]，确保每个要点都可被点开核对；优先直接引用大师原文并加引号，且引文须与所标编号的资料一致，不可张冠李戴。
+3. 资料之间若说法有出入，如实并列、不强行调和；不扮演佛菩萨或祖师口吻，不预言吉凶、不轻下因果定论；语气恭敬平实。
+4. 简明扼要、紧扣问题，控制在约 ${ANSWER_CHARS} 字以内。
 
 【资料】
 ${context}`;
@@ -430,6 +510,10 @@ async function handleHealth(env, headers) {
     namespace: KB_NAMESPACE,
     embedModel: EMBED_MODEL,
     chatModel: CHAT_MODEL,
+    rerank: USE_RERANK ? RERANK_MODEL : false,
+    rerankPool: RERANK_POOL,
+    queryRewrite: USE_QUERY_REWRITE,
+    retrievalVersion: RETRIEVAL_VERSION,
     topK: TOP_K,
     chunkChars: CHUNK_CHARS,
     indexBatch: INDEX_BATCH,

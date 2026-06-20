@@ -44,6 +44,8 @@ Cloudflare Git Integration，先停用 `.github/workflows/deploy-cloudflare-page
 
 Cloudflare Worker 位于 `workers/ai-proxy/`，使用 Workers AI 生成 embedding、Vectorize 存储向量、KV 做限流与答案缓存。当前优化版知识库写入 Vectorize namespace `v2`；旧默认 namespace 保留作线上回退。
 
+检索链路为「多查询召回 → 去重 → 交叉编码器重排序（`@cf/baai/bge-reranker-base`）→ DeepSeek 据文作答标出处」，以提升回答准确度；细节与可调常量见 `workers/ai-proxy/README.md`。改动检索逻辑后用 `scripts/eval_rag.py` 跑召回率/引用率/拒答率回归，把准确性量化对比。
+
 首次或重建 `v2` 前，先创建 metadata index：
 
 ```bash

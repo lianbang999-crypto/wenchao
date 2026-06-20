@@ -42,16 +42,19 @@ Cloudflare Git Integration，先停用 `.github/workflows/deploy-cloudflare-page
 
 ## AI 知识库
 
-Cloudflare Worker 位于 `workers/ai-proxy/`，使用 Workers AI 生成 embedding、Vectorize 存储向量、KV 做限流与答案缓存。当前优化版知识库写入 Vectorize namespace `v2`；旧默认 namespace 保留作线上回退。
+Cloudflare Worker 位于 `workers/ai-proxy/`，使用 Workers AI 生成 embedding、Vectorize 存储向量、D1 存全文(关键词)索引、KV 做限流与答案缓存。当前优化版知识库写入 Vectorize namespace `v2`；旧默认 namespace 保留作线上回退。
 
-检索链路为「多查询召回 → 去重 → 交叉编码器重排序（`@cf/baai/bge-reranker-base`）→ DeepSeek 据文作答标出处」，以提升回答准确度；细节与可调常量见 `workers/ai-proxy/README.md`。改动检索逻辑后用 `scripts/eval_rag.py` 跑召回率/引用率/拒答率回归，把准确性量化对比。
+检索链路为「多查询+关键词抽取 → 混合召回（向量 + D1 全文 bigram 关键词）→ RRF 融合 → 去重 → 交叉编码器重排序（`@cf/baai/bge-reranker-base`）→ 小块检索大块喂入 → DeepSeek 据文作答标出处」，以提升回答准确度；混合检索/重排序/父段落全程 best-effort，缺 D1 或异常自动退回纯向量。细节与可调常量见 `workers/ai-proxy/README.md`。改动检索逻辑后用 `scripts/eval_rag.py` 跑召回率/引用率/拒答率回归，把准确性量化对比。
 
-首次或重建 `v2` 前，先创建 metadata index：
+首次或重建前，先创建 Vectorize metadata index 与 D1 全文库：
 
 ```bash
 npx wrangler vectorize create-metadata-index wenchao-kb --propertyName aid --type string
 npx wrangler vectorize create-metadata-index wenchao-kb --propertyName vol --type string
 npx wrangler vectorize create-metadata-index wenchao-kb --propertyName sourceType --type string
+
+# 混合检索的全文(关键词)索引；建后把 database_id 填进 workers/ai-proxy/wrangler.toml 的 DB 绑定
+npx wrangler d1 create wenchao-kb-fts
 ```
 
 部署 Worker：
@@ -60,4 +63,4 @@ npx wrangler vectorize create-metadata-index wenchao-kb --propertyName sourceTyp
 npx wrangler deploy --config workers/ai-proxy/wrangler.toml
 ```
 
-建库接口需要 `INDEX_SECRET`，分批循环调用 `/index?cursor=...`，直到返回 `done:true`；遇到大批次触发 CPU 限制时，可临时加 `limit=5` 降低每次处理篇数。每个向量块会保存 `aid`、`title`、`vol`、`sourceType`、`pIndex`、`url`、`origKey` 和摘录文本，用于 NotebookLM 式检索、引用和段落跳转。
+建库接口需要 `INDEX_SECRET`，**从 `cursor=0` 起**分批循环调用 `/index?cursor=...`，直到返回 `done:true`（同一次会同时写向量库与 D1 全文索引，且 `cursor=0` 时整库重建全文表，故务必从头顺序跑）；遇到大批次触发 CPU 限制时，可临时加 `limit=5` 降低每次处理篇数。每个向量块会保存 `aid`、`title`、`vol`、`sourceType`、`pIndex`、`url`、`origKey`、`ctx`（父段落，供大块喂入）和摘录文本，用于 NotebookLM 式混合检索、引用和段落跳转。

@@ -24,13 +24,19 @@ const ALLOW_ORIGINS = [
 const SITE_BASE = 'https://wenchao.foyue.org';
 const EMBED_MODEL = '@cf/baai/bge-m3';   // 多语种向量(含古今汉语)，1024 维
 const CHAT_MODEL = 'deepseek-chat';
+const REASONER_MODEL = 'deepseek-reasoner';   // 难题可路由到推理模型（更强综合，但更慢更贵）
+const USE_REASONER_FOR_HARD = false;          // 难题路由总开关：默认关；置 true 后对比较/辨析类长问改用 reasoner
+const USE_CONDENSE = true;                     // 多轮追问改写：把含指代/省略的追问改写成可独立检索的完整问题
 const KB_NAMESPACE = 'v2';                // 优化后的知识库命名空间；默认 namespace 保留作回退
 const TOP_K = 8;                          // 喂给 DeepSeek 的最终段数
 const RERANK_MODEL = '@cf/baai/bge-reranker-base'; // 交叉编码器重排序，提升检索精度
-const RERANK_POOL = 24;                    // 去重后送入重排序的候选段上限
+const RERANK_POOL = 32;                    // 去重后送入重排序的候选段上限
 const USE_RERANK = true;                   // 重排序总开关（异常时可一键回退纯向量序）
 const USE_QUERY_REWRITE = true;            // 多查询：原问 + DeepSeek 文言改写检索式
-const RETRIEVAL_VERSION = 'r2';            // 检索逻辑版本号，并入答案缓存键，避免旧缓存遮蔽新检索
+const USE_HYBRID = true;                   // 混合检索：向量召回 + D1 全文(关键词)召回 → RRF 融合；缺 D1 或异常自动退回纯向量
+const LEX_TOPK = 30;                       // 关键词(全文)召回上限
+const RRF_K = 60;                          // RRF 融合常数(越大越平滑，弱化各路头部的绝对名次)
+const RETRIEVAL_VERSION = 'r4';            // 检索/生成版本号，并入答案缓存键，避免旧缓存遮蔽新逻辑(r4: 追问改写+引用自检+接地 prompt 加范围约束)
 const ANSWER_CHARS = 500;                 // 回复字数上限(软引导)
 const MAX_TOKENS = 700;                   // 回复 token 硬上限(约 500 汉字)
 const CACHE_TTL = 7 * 86400;              // 答案缓存 7 天
@@ -39,6 +45,7 @@ const INDEX_BATCH = 25;                   // 每次 /index 处理的文章数
 const INDEX_EMBED_BATCH = 50;             // 每次 Workers AI embedding 文本数
 const CHUNK_CHARS = 720;                  // 单个向量块目标字数，避免长段被截断
 const CHUNK_OVERLAP = 80;                 // 长段切块重叠，保留上下文
+const PARENT_CHARS = 1100;               // 小块检索、大块喂入：命中后喂给模型的「父段落」字数上限（引用卡片仍用精确小块）
 
 function cors(origin) {
   const allow = ALLOW_ORIGINS.includes(origin) ? origin : ALLOW_ORIGINS[0];
@@ -81,6 +88,30 @@ function sourcePriority(md) {
 function cleanKey(s) {
   return String(s || '').replace(/\s/g, '').slice(0, 80);
 }
+/* 中文全文检索分词：FTS5 trigram 不能匹配 2 字词、unicode61 又把整段连成一个 token，
+ * 故自建「重叠二元(bigram)」分词——把汉字串切成相邻两字一组，英数词整体保留。
+ * 建库时对每段文本生成 bigram 串入 D1 FTS5；提问时对关键词同法切分做短语匹配，
+ * 让「戒杀」「念佛三昧」这类名相也能精确召回。 */
+function cjkBigrams(s) {
+  const out = [];
+  const tokens = String(s || '')
+    .replace(/[^\p{Script=Han}\p{L}\p{N}]+/gu, ' ')
+    .trim()
+    .split(/\s+/);
+  for (const tk of tokens) {
+    if (!tk) continue;
+    if (!/\p{Script=Han}/u.test(tk)) { out.push(tk.toLowerCase()); continue; } // 英数词整体保留
+    const chars = [...tk];
+    if (chars.length === 1) { out.push(chars[0]); continue; }                   // 单字兜底
+    for (let i = 0; i < chars.length - 1; i++) out.push(chars[i] + chars[i + 1]);
+  }
+  return out;
+}
+/* 把切块文本（含原文+白话）摊平成可检索文本：去掉「（白话）」标记与换行 */
+function lexText(text) {
+  return String(text || '').replace(/\n（白话）/g, ' ').replace(/^（白话）/, '');
+}
+
 function splitLongText(text) {
   text = String(text || '').trim();
   if (!text || text.length <= CHUNK_CHARS) return text ? [text] : [];
@@ -114,6 +145,8 @@ function chunksOf(art) {
   const push = (text, meta) => {
     text = (text || '').trim();
     if (!text) return;
+    // 父段落：完整一段（必要时截断），命中小块后整段喂给模型，避免长句被切块截断、利于综合
+    const ctx = text.length > PARENT_CHARS ? text.slice(0, PARENT_CHARS) : text;
     splitLongText(text).forEach((part, partIdx) => {
       const keyText = (part.split('\n（白话）')[0] || part).replace(/^（白话）/, '');
       out.push({
@@ -132,6 +165,7 @@ function chunksOf(art) {
           kind: meta.kind || '',
           url: articlePath(art.id, meta.pIndex),
           origKey: cleanKey(keyText || part),
+          ctx,
         },
       });
       idx++;
@@ -166,6 +200,49 @@ function chunksOf(art) {
   return out;
 }
 
+/* ---------- D1 全文索引（关键词召回）：建库时把每个切块的 bigram 串与元数据写入 FTS5 ----------
+ * 与向量库并行存在；缺 D1 绑定或写失败都不影响向量建库，仅退化为「只靠向量召回」。 */
+async function ensureFts(env, reset) {
+  if (!env.DB) return false;
+  try {
+    if (reset) await env.DB.exec('DROP TABLE IF EXISTS chunks_fts');
+    // unicode61 默认分词器作用在已用空格分好的 bigram 串上；其余列只存不索引(UNINDEXED)，便于直接复原成候选段
+    await env.DB.exec(
+      'CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts USING fts5(' +
+      'bigrams, cid UNINDEXED, text UNINDEXED, ctx UNINDEXED, aid UNINDEXED, title UNINDEXED, ' +
+      'vol UNINDEXED, volName UNINDEXED, sourceType UNINDEXED, pIndex UNINDEXED, paraIndex UNINDEXED, ' +
+      'seg UNINDEXED, part UNINDEXED, url UNINDEXED, origKey UNINDEXED)'
+    );
+    return true;
+  } catch { return false; }
+}
+async function writeD1(env, chunks) {
+  if (!env.DB || !chunks.length) return 0;
+  let n = 0;
+  const stmt = env.DB.prepare(
+    'INSERT INTO chunks_fts(bigrams, cid, text, ctx, aid, title, vol, volName, sourceType, ' +
+    'pIndex, paraIndex, seg, part, url, origKey) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+  );
+  for (let i = 0; i < chunks.length; i += 50) {
+    const part = chunks.slice(i, i + 50);
+    try {
+      await env.DB.batch(part.map((c) => {
+        const m = c.meta || {};
+        return stmt.bind(
+          cjkBigrams(lexText(c.text)).join(' '),
+          c.id, c.text, m.ctx || '', m.aid || '', m.title || '',
+          m.vol || '', m.volName || '', m.sourceType || '',
+          m.pIndex == null ? null : m.pIndex, m.paraIndex == null ? null : m.paraIndex,
+          m.seg == null ? null : m.seg, m.part == null ? null : m.part,
+          m.url || '', m.origKey || '',
+        );
+      }));
+      n += part.length;
+    } catch { /* 某批写 D1 失败：该批关键词召回退化为只靠向量，不阻塞建库 */ }
+  }
+  return n;
+}
+
 async function handleIndex(req, env, url, headers) {
   const indexSecret = req.headers.get('X-Index-Secret') ||
     (req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
@@ -183,6 +260,8 @@ async function handleIndex(req, env, url, headers) {
         for (const it of c.items) ids.push(it.id);
 
   const batch = ids.slice(cursor, cursor + limit);
+  // 全文索引：cursor===0 时整库重建（先 DROP 再 CREATE），故重建务必从 cursor=0 开始顺序跑到 done
+  const d1ok = await ensureFts(env, cursor === 0);
   let chunks = [];
   for (const id of batch) {
     try {
@@ -200,8 +279,10 @@ async function handleIndex(req, env, url, headers) {
     })));
     n += part.length;
   }
+  // 同一批切块写入 D1 全文索引（关键词召回用）
+  const lex = d1ok ? await writeD1(env, chunks) : 0;
   const next = cursor + limit;
-  return json({ ok: true, indexedArticles: batch.length, chunks: n,
+  return json({ ok: true, indexedArticles: batch.length, chunks: n, lexIndexed: lex, d1: d1ok,
     cursor: next, done: next >= ids.length, total: ids.length, limit, namespace: KB_NAMESPACE }, 200, headers);
 }
 
@@ -210,7 +291,7 @@ function wantsArticleScope(q) {
   return /本篇|本文|此篇|这篇|這篇|此文|这封|這封|这段|這段|此段|上文|文中|这里|這裡|此处|此處|这一段|這一段/.test(q || '');
 }
 async function queryKnowledgeBase(env, qv, filter) {
-  const topK = Math.min(TOP_K * 3, 20);
+  const topK = Math.min(TOP_K * 5, 40);   // 加宽召回，给去重/重排序更多候选可挑
   const attempts = [
     { topK, returnMetadata: 'all', namespace: KB_NAMESPACE, ...(filter ? { filter } : {}) },
     { topK, returnMetadata: 'all', namespace: KB_NAMESPACE },
@@ -241,11 +322,26 @@ function dedupeMatches(matches) {
   return [...byKey.values()].sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, RERANK_POOL);
 }
 
-/* 多查询：把口语/白话问题改写成更贴近文钞文言、突出名相的检索式，与原问并用以提升召回。
- * best-effort：超时或任何失败都退回只用原问，绝不阻塞问答。 */
-async function buildRetrievalQueries(env, q) {
-  const queries = [q];
-  if (!USE_QUERY_REWRITE || !env.DEEPSEEK_API_KEY) return queries;
+/* 不靠 LLM 的关键词兜底：去掉疑问/虚词与标点，留下 2 字以上的内容片段作关键词。
+ * LLM 抽词失败时仍能给全文检索喂上名相，best-effort。 */
+const STOP_RE = /如何|怎[么麼样樣办辦]|为什[么麼]|為什[麼么]|什[么麼]|哪[些个個]|是否|可以|应该|應該|需要|这样|這樣|那样|那樣|时候|時候|意思|請問|请问|我们|我們|关于|關於|以及|还有|還有|或者|的话|的話|一下|呢|吗|嗎|了|啊|呀|吧|和|与|與|及|在|对|對|把|被|给|給|让|讓|向|往|从|從|по/g;
+function naiveTerms(q) {
+  const segs = String(q || '')
+    .replace(/[^\p{Script=Han}\p{L}\p{N}]+/gu, ' ')
+    .replace(STOP_RE, ' ')
+    .split(/\s+/)
+    .map((s) => s.trim())
+    .filter((s) => [...s].length >= 2);
+  return [...new Set(segs)].slice(0, 6);
+}
+
+/* 多查询 + 关键词抽取：一次 DeepSeek 调用同时产出
+ *   - 贴近文钞文言、突出名相的「改写检索式」（供向量召回）
+ *   - 2~5 个关键名相「关键词」（供 D1 全文召回）
+ * 返回 { queries:[原问,(改写)], terms:[关键词…] }。best-effort：超时/解析失败都退回原问 + 启发式关键词，绝不阻塞问答。 */
+async function buildRetrieval(env, q) {
+  const result = { queries: [q], terms: naiveTerms(q) };
+  if (!USE_QUERY_REWRITE || !env.DEEPSEEK_API_KEY) return result;
   try {
     const opts = {
       method: 'POST',
@@ -253,22 +349,82 @@ async function buildRetrievalQueries(env, q) {
       body: JSON.stringify({
         model: CHAT_MODEL,
         messages: [
-          { role: 'system', content: '你是检索助手。把用户的口语/白话问题改写成一句更贴近《印光法师文钞》文言用语、突出关键名相的检索式；只输出改写后的查询本身，不解释、不加引号，30字以内。' },
+          { role: 'system', content: '你是《印光法师文钞》检索助手。读用户问题后只输出一行 JSON：{"q":"改写后的检索式","kw":["名相1","名相2"]}。其中 q 是把口语/白话问题改写成更贴近文钞文言、突出关键名相的检索式（30字内）；kw 是 2~5 个最关键的名相/术语词（如「念佛三昧」「敦伦尽分」「十念记数」）。不要解释，不要代码块，只输出该 JSON。' },
           { role: 'user', content: q },
         ],
-        temperature: 0, max_tokens: 60, stream: false,
+        temperature: 0, max_tokens: 120, stream: false,
       }),
     };
     if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opts.signal = AbortSignal.timeout(4500);
     const r = await fetch('https://api.deepseek.com/chat/completions', opts);
     if (r.ok) {
       const j = await r.json();
-      const rw = ((j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '')
-        .replace(/^["“”\s]+|["“”\s]+$/g, '').trim();
-      if (rw && rw !== q && rw.length <= 60) queries.push(rw);
+      let raw = ((j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '').trim();
+      const mt = raw.match(/\{[\s\S]*\}/);            // 容错：剥掉可能的代码块/前后缀，取第一段 JSON
+      if (mt) {
+        try {
+          const o = JSON.parse(mt[0]);
+          const rw = String(o.q || '').replace(/^["“”\s]+|["“”\s]+$/g, '').trim();
+          if (rw && rw !== q && rw.length <= 60) result.queries.push(rw);
+          if (Array.isArray(o.kw)) {
+            const kws = o.kw.map((s) => String(s || '').trim()).filter((s) => [...s].length >= 2);
+            if (kws.length) result.terms = [...new Set(kws)].slice(0, 6);
+          }
+        } catch { /* JSON 解析失败：保留启发式关键词 */ }
+      }
     }
-  } catch { /* 改写失败：仅用原问 */ }
-  return queries;
+  } catch { /* 改写失败：仅用原问 + 启发式关键词 */ }
+  return result;
+}
+
+/* D1 全文(关键词)召回：把关键词逐个切成 bigram 短语，OR 组合后做 FTS5 MATCH，
+ * 取回与向量候选同构的 match（含 metadata），供 RRF 融合。best-effort：缺 D1/无词/异常都返回 []。 */
+async function lexicalSearch(env, terms, filter) {
+  if (!USE_HYBRID || !env.DB || !terms || !terms.length) return [];
+  const exprs = [];
+  for (const t of terms) {
+    const bg = cjkBigrams(t);
+    if (bg.length) exprs.push('"' + bg.join(' ') + '"');   // bigram 已剔除引号等特殊字符，可安全包裹为短语
+  }
+  if (!exprs.length) return [];
+  let match = exprs.map((e) => '(' + e + ')').join(' OR ');
+  const cols = 'cid,text,ctx,aid,title,vol,volName,sourceType,pIndex,paraIndex,seg,part,url,origKey';
+  try {
+    let sql = `SELECT ${cols} FROM chunks_fts WHERE chunks_fts MATCH ?`;
+    const binds = [match];
+    if (filter && filter.aid) { sql += ' AND aid = ?'; binds.push(filter.aid); }
+    sql += ' ORDER BY rank LIMIT ?';
+    binds.push(LEX_TOPK);
+    const rs = await env.DB.prepare(sql).bind(...binds).all();
+    const rows = (rs && rs.results) || [];
+    return rows.map((row) => ({
+      id: row.cid,
+      metadata: {
+        text: row.text || '', ctx: row.ctx || '', aid: row.aid || '', title: row.title || '',
+        vol: row.vol || '', volName: row.volName || '', sourceType: row.sourceType || '',
+        pIndex: row.pIndex, paraIndex: row.paraIndex, seg: row.seg, part: row.part,
+        url: row.url || '', origKey: row.origKey || '',
+      },
+    }));
+  } catch { return []; }   // FTS 语法/连接异常：退回纯向量
+}
+
+/* RRF（倒数排名融合）：把多路召回按各自名次融合成一个排序，弱化「分数尺度不可比」问题。
+ * score = Σ 1/(RRF_K + 该路名次)。同 id 取信息更全的 metadata。 */
+function fuseRRF(pools) {
+  const acc = new Map();
+  for (const pool of pools) {
+    (pool || []).forEach((m, i) => {
+      const prev = acc.get(m.id);
+      const s = 1 / (RRF_K + i + 1);
+      if (!prev) acc.set(m.id, { m, s });
+      else {
+        prev.s += s;
+        if ((!prev.m.metadata || !prev.m.metadata.text) && m.metadata && m.metadata.text) prev.m = m;
+      }
+    });
+  }
+  return [...acc.values()].map((e) => ({ ...e.m, score: e.s })).sort((a, b) => b.score - a.score);
 }
 
 /* 合并多路检索结果：按向量 id 取并集，保留每条最高分 */
@@ -310,6 +466,73 @@ async function rerankMatches(env, query, matches) {
   return pool;
 }
 
+/* 多轮追问改写（condense question）：把末句可能含指代/省略的追问，结合最近对话改写成
+ * 可独立检索的完整问题。best-effort：未开/无历史/失败都退回原启发式（短问或承上时并入上一问）。 */
+const FOLLOWUP_RE = /它|他|她|这|那|上(面|述|文)|继续|再|还有|为什[么麽]|怎[么样]|出处|展开|具体|详细|例子|呢[？?]?$/;
+async function condenseQuestion(env, msgs, lastU) {
+  const userMsgs = msgs.filter((m) => m.role === 'user');
+  const prevU = userMsgs.length > 1 ? userMsgs[userMsgs.length - 2].content : '';
+  const heuristic = (prevU && (lastU.length < 12 || FOLLOWUP_RE.test(lastU))) ? prevU + '。' + lastU : lastU;
+  if (!USE_CONDENSE || !env.DEEPSEEK_API_KEY || !prevU) return heuristic;
+  try {
+    const hist = msgs.slice(-5)
+      .map((m) => (m.role === 'user' ? '用户：' : '助手：') + String(m.content).slice(0, 200)).join('\n');
+    const opts = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
+      body: JSON.stringify({
+        model: CHAT_MODEL,
+        messages: [
+          { role: 'system', content: '你是检索助手。根据对话历史，把用户最后一句可能含指代/省略的追问，改写成一句可独立用于检索的完整问题（补全主语与话题、保留原意）；若末句本身已完整，原样输出。只输出这句问题，不解释、不加引号，40字以内。' },
+          { role: 'user', content: hist },
+        ],
+        temperature: 0, max_tokens: 80, stream: false,
+      }),
+    };
+    if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opts.signal = AbortSignal.timeout(4500);
+    const r = await fetch('https://api.deepseek.com/chat/completions', opts);
+    if (r.ok) {
+      const j = await r.json();
+      const rw = ((j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '')
+        .replace(/^["“”\s]+|["“”\s]+$/g, '').trim();
+      if (rw && rw.length >= 4 && rw.length <= 80) return rw;
+    }
+  } catch { /* 改写失败：退回启发式 */ }
+  return heuristic;
+}
+
+/* 难题判别：比较/辨析类、含多问、较长的问题，综合难度高，可（在开关打开时）路由到 reasoner */
+function isHardQuestion(q) {
+  const s = String(q || '');
+  const multiQ = (s.match(/[？?]/g) || []).length >= 2;
+  return s.length >= 24 || multiQ ||
+    /区别|不同|对比|對比|比较|比較|异同|異同|关系|關係|为何|為何|界限|混滥|混濫|双修|雙修|与.{0,8}[的之]?(区别|不同|关系)/.test(s);
+}
+
+/* 引用逐字自检：纯字符串校验回答里的 [n]——编号是否在资料范围内、「直引原文」是否能在所标资料中逐字找到。
+ * 不改写已流式输出的内容，仅作遥测/评测信号（接地忠实度），契合「不妄语·可核验优先」。 */
+function normForMatch(s) {
+  return String(s || '').replace(/[\s，。、；：！？「」『』“”"'‘’（）()【】\[\]．·—\-…\n]/g, '');
+}
+function validateCitations(reply, passages, ctxTexts) {
+  const text = String(reply || '');
+  const N = passages.length;
+  const nums = [...text.matchAll(/\[(\d{1,2})\]/g)].map((m) => +m[1]);
+  const invalid = nums.filter((n) => n < 1 || n > N).length;
+  let quoteChecked = 0, quoteOk = 0;
+  const qre = /[「“"]([^」”"\n]{2,40})[」”"]\s*\[(\d{1,2})\]/g;
+  let mm;
+  while ((mm = qre.exec(text))) {
+    quoteChecked++;
+    const n = +mm[2];
+    if (n < 1 || n > N) continue;
+    const src = (ctxTexts && ctxTexts[n - 1]) || (passages[n - 1] && passages[n - 1].text) || '';
+    if (normForMatch(src).includes(normForMatch(mm[1]))) quoteOk++;
+  }
+  const faithful = invalid === 0 && (quoteChecked === 0 || quoteOk === quoteChecked);
+  return { cited: nums.length, invalid, quoteChecked, quoteOk, faithful };
+}
+
 async function handleAsk(req, env, headers) {
   if (!env.DEEPSEEK_API_KEY) return json({ reply: '服务未配置密钥。' }, 500, headers);
 
@@ -330,13 +553,8 @@ async function handleAsk(req, env, headers) {
   const lastU = userMsgs.length ? userMsgs[userMsgs.length - 1].content : '';
   if (!lastU.trim()) return json({ reply: '请输入问题。' }, 400, headers);
   const articleId = body && typeof body.articleId === 'string' ? body.articleId.trim() : '';
-  // ② 多轮追问：指代/短问/承上时，并入上一问做检索（否则"出处呢""再展开"会检索不到）
-  const prevU = userMsgs.length > 1 ? userMsgs[userMsgs.length - 2].content : '';
-  let retrievalQ = lastU;
-  if (prevU && (lastU.length < 12 ||
-      /它|他|她|这|那|上(面|述|文)|继续|再|还有|为什[么麽]|怎[么样]|出处|展开|具体|详细|例子|呢[？?]?$/.test(lastU))) {
-    retrievalQ = prevU + '。' + lastU;
-  }
+  // ② 多轮追问改写：把含指代/省略的追问改写成可独立检索的完整问题（LLM best-effort，失败退回启发式拼接）
+  const retrievalQ = await condenseQuestion(env, msgs, lastU);
 
   // 答案缓存：仅单轮问答（多轮依赖上下文，不缓存以免串味）
   const cacheable = userMsgs.length === 1;
@@ -351,16 +569,22 @@ async function handleAsk(req, env, headers) {
 
   // 检索（缓存命中则复用其 passages/sources）
   let passages = [], sources = [], system = '';
+  let ctxTexts = [];   // 喂给模型的父段落正文（按 passage 序），用于引用逐字自检
   if (useCache) {
     passages = cached.passages; sources = cached.sources || [];
   } else {
     let matches = [];
     try {
       const filter = articleScoped ? { aid: articleId } : null;
-      const queries = await buildRetrievalQueries(env, retrievalQ);   // 多查询：原问 +（可选）文言改写
-      const qvs = await embed(env, queries);
+      const { queries, terms } = await buildRetrieval(env, retrievalQ);  // 多查询(原问+文言改写) + 关键词
+      const [qvs, lex] = await Promise.all([
+        embed(env, queries),
+        lexicalSearch(env, terms, filter),                              // D1 全文(关键词)召回，与向量化并行
+      ]);
       const pools = await Promise.all(qvs.map((qv) => queryKnowledgeBase(env, qv, filter)));
-      matches = mergeMatchPools(pools);
+      const vecMerged = mergeMatchPools(pools);                          // 多路向量并集(各保留最高分)
+      // 向量 + 关键词两路 RRF 融合；未开混合或关键词无命中时退回纯向量序
+      matches = (USE_HYBRID && lex.length) ? fuseRRF([vecMerged, lex]) : vecMerged;
     } catch { /* 检索失败则裸答 */ }
     // ① 去重：原文近似相同的（如精选读本与文钞重出）只保留一条，得到候选池
     matches = dedupeMatches(matches);
@@ -372,7 +596,10 @@ async function handleAsk(req, env, headers) {
       const md = m.metadata || {};
       const n = i + 1;
       const loc = md.pIndex != null ? `，第 ${Number(md.pIndex) + 1} 段` : '';
-      ctxBlocks.push(`【${n}】《${md.title || ''}》${md.volName ? `（${md.volName}${loc}）` : ''}\n${md.text || ''}`);
+      // 小块检索、大块喂入：喂给模型的是命中小块所在的「父段落」(md.ctx)，更完整、利于综合；引用卡片仍用精确小块 md.text
+      const ctxText = md.ctx || md.text || '';
+      ctxBlocks.push(`【${n}】《${md.title || ''}》${md.volName ? `（${md.volName}${loc}）` : ''}\n${ctxText}`);
+      ctxTexts.push(ctxText);   // 留作引用逐字自检：以「模型真正看到的父段落」为准
       const url = md.url || (md.aid ? articlePath(md.aid, md.pIndex) : '');
       passages.push({
         n,
@@ -395,7 +622,7 @@ async function handleAsk(req, env, headers) {
     system = `你是「印光法师文钞」知识库助手，仿 NotebookLM 的「源接地」方式作答：下面【资料】是依用户问题从文钞中检索到的段落，各以【n】编号；你只是这些资料的转述与归纳者，把「可核验」放在第一位。务必：
 
 1. 严格接地：只依据【资料】中的内容回答，绝不掺入资料之外的常识、教理或自己的发挥，凡资料未支持的一律不说。问题若超出资料范围，或与文钞、净土无关，直接答「文钞中未见相关开示」，可建议换个问法，绝不臆测编造。
-2. 逐点引用：每一处论断之后都用方括号标出所依据的资料编号，如 [1] 或 [2][5]，做到句句可点开核对原文；优先直接引用大师原文并加引号，引文须与所标编号的资料严格一致，不可张冠李戴。
+2. 逐点引用：每一处论断之后都用方括号标出所依据的资料编号，如 [1] 或 [2][5]，做到句句可点开核对原文；优先直接引用大师原文并加引号，引文须与所标编号的资料严格一致、能逐字对上，不可张冠李戴。【资料】共 ${passages.length} 条，编号 1–${passages.length}，**不得引用此范围外的编号**。
 3. 综合而非罗列：把多段资料融会成连贯回答，不要逐段复述；资料之间说法有出入时如实并列，不强行调和。
 4. 条理清晰：当内容涉及多个方面时，用简短小标题（如「一、…」）配合分点（1. 2. …）、必要时子项来组织，便于阅读；问题简单则直接作答，不强行套格式。
 5. 恭敬平实：不扮演佛菩萨或祖师口吻、不预言吉凶、不轻下因果定论；直接作答，不写「根据资料」「综上所述」之类的套话。
@@ -414,17 +641,19 @@ ${context}`;
       send({ type: 'meta', passages, sources, cite });
       if (useCache) {
         send({ type: 'delta', text: cached.reply });
-        send({ type: 'done' });
+        send({ type: 'done', verify: validateCitations(cached.reply, passages, ctxTexts) });
         controller.close();
         return;
       }
+      // 难题路由：开关打开且属比较/辨析类长问时，改用 reasoner（推理 token 不在 delta.content 里，自然不外显）
+      const model = (USE_REASONER_FOR_HARD && isHardQuestion(retrievalQ)) ? REASONER_MODEL : CHAT_MODEL;
       let full = '';
       try {
         const ds = await fetch('https://api.deepseek.com/chat/completions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
           body: JSON.stringify({
-            model: CHAT_MODEL,
+            model,
             messages: [{ role: 'system', content: system }, ...msgs],
             temperature: 0.3, max_tokens: MAX_TOKENS, stream: true,
           }),
@@ -456,7 +685,8 @@ ${context}`;
       if (cacheable && env.RL && full) {
         await env.RL.put(ckey, JSON.stringify({ reply: full, cite, sources, passages }), { expirationTtl: CACHE_TTL });
       }
-      send({ type: 'done' });
+      // 引用逐字自检：以模型实际看到的父段落为准，校验 [n] 是否越界、直引是否能逐字对上（遥测信号，不改写已输出内容）
+      send({ type: 'done', verify: full ? validateCitations(full, passages, ctxTexts) : null });
       controller.close();
     },
   });
@@ -507,6 +737,15 @@ async function handleHealth(env, headers) {
     const d = await env.VEC.describe();
     kb = d.vectorsCount != null ? d.vectorsCount : (d.vectorCount != null ? d.vectorCount : null);
   } catch { /* 可选 */ }
+  // D1 全文索引自检：绑定是否存在、已建多少行（缺 D1 时为 null，混合检索自动退回纯向量）
+  let lexRows = null, hybridReady = false;
+  if (env.DB) {
+    try {
+      const r = await env.DB.prepare('SELECT count(*) AS c FROM chunks_fts').first();
+      lexRows = r && r.c != null ? r.c : null;
+      hybridReady = USE_HYBRID && lexRows > 0;
+    } catch { /* 表未建或查询失败 */ }
+  }
   return json({
     ok: true,
     service: 'wenchao-ai',
@@ -516,6 +755,14 @@ async function handleHealth(env, headers) {
     rerank: USE_RERANK ? RERANK_MODEL : false,
     rerankPool: RERANK_POOL,
     queryRewrite: USE_QUERY_REWRITE,
+    condense: USE_CONDENSE,
+    reasonerForHard: USE_REASONER_FOR_HARD,
+    hybrid: USE_HYBRID,
+    hybridReady,
+    lexTopK: LEX_TOPK,
+    rrfK: RRF_K,
+    lexRows,
+    parentChars: PARENT_CHARS,
     retrievalVersion: RETRIEVAL_VERSION,
     topK: TOP_K,
     chunkChars: CHUNK_CHARS,

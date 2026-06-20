@@ -25,5 +25,14 @@ binding = "AI"
 binding = "VEC"
 index_name = "wenchao-kb"
 
+# D1：混合检索的「全文(关键词)索引」。先创建，再把返回的 database_id 填到下面：
+#   npx wrangler d1 create wenchao-kb-fts
+# FTS5 表由 Worker 在 /index?cursor=0 时自动 DROP+CREATE，无需手工建表。
+# 缺这个绑定时，混合检索自动退回纯向量召回，问答仍可用。
+[[d1_databases]]
+binding = "DB"
+database_name = "wenchao-kb-fts"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
 # 还需设置保护建库接口的密钥（交互输入，不入文件；调用时放 X-Index-Secret 请求头）：
 #   npx wrangler secret put INDEX_SECRET

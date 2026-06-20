@@ -29,13 +29,17 @@ REFUSAL_MARK = "未见相关开示"
 
 
 def ask(endpoint, question, timeout=60):
-    """发一题，返回 (reply, source_ids, passage_aids, status)。"""
+    """发一题，返回 (reply, source_ids, passage_aids, verify, status)。
+
+    verify 为服务端 done 事件里的引用自检结果（{cited,invalid,quoteChecked,quoteOk,faithful}），
+    以「模型实际看到的父段落」为准，无则为 None。
+    """
     payload = json.dumps({"messages": [{"role": "user", "content": question}]}).encode("utf-8")
     req = urllib.request.Request(
         endpoint, data=payload,
         headers={"Content-Type": "application/json"}, method="POST",
     )
-    reply, source_ids, passage_aids = "", [], []
+    reply, source_ids, passage_aids, verify = "", [], [], None
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             buf = b""
@@ -56,11 +60,13 @@ def ask(endpoint, question, timeout=60):
                         passage_aids = [p.get("aid", "") for p in obj.get("passages", []) if p.get("aid")]
                     elif t == "delta":
                         reply += obj.get("text", "")
-        return reply, source_ids, passage_aids, "ok"
+                    elif t == "done":
+                        verify = obj.get("verify")
+        return reply, source_ids, passage_aids, verify, "ok"
     except urllib.error.HTTPError as e:
-        return "", [], [], "http_%d" % e.code
+        return "", [], [], None, "http_%d" % e.code
     except Exception as e:  # noqa: BLE001
-        return "", [], [], "err_%s" % type(e).__name__
+        return "", [], [], None, "err_%s" % type(e).__name__
 
 
 def has_citation(reply):
@@ -85,11 +91,13 @@ def main():
     n_recall_q = n_recall_hit = 0
     n_cite = n_refusal = n_ok = 0
     sum_sources = sum_passages = 0
+    n_verify = n_unfaithful = n_badnum = 0      # 接地忠实度统计（服务端 verify）
+    sum_qchk = sum_qok = 0
 
     for i, q in enumerate(questions, 1):
         question = q.get("question", "")
         expect = [a for a in q.get("expectArticles", []) if a]
-        reply, source_ids, passage_aids, status = ask(args.endpoint, question)
+        reply, source_ids, passage_aids, verify, status = ask(args.endpoint, question)
         found = set(source_ids) | set(passage_aids)
         hit = bool(expect) and any(a in found for a in expect)
         cited = has_citation(reply)
@@ -107,20 +115,36 @@ def main():
                 n_recall_q += 1
                 if hit:
                     n_recall_hit += 1
+            if isinstance(verify, dict):
+                n_verify += 1
+                if not verify.get("faithful", True):
+                    n_unfaithful += 1
+                if verify.get("invalid", 0):
+                    n_badnum += 1
+                sum_qchk += verify.get("quoteChecked", 0)
+                sum_qok += verify.get("quoteOk", 0)
 
         mark = "  " if not expect else ("✓ " if hit else "✗ ")
         flag = "" if status == "ok" else "  [%s]" % status
+        vtag = ""
+        if isinstance(verify, dict):
+            vtag = " · 自检 %s(直引 %d/%d%s)" % (
+                "忠实" if verify.get("faithful", True) else "存疑",
+                verify.get("quoteOk", 0), verify.get("quoteChecked", 0),
+                " 越界!" if verify.get("invalid", 0) else "",
+            )
         print("%s%2d. %s%s" % (mark, i, question, flag))
-        print("     出处 %d · 段 %d · 引用 %s · %s%s" % (
+        print("     出处 %d · 段 %d · 引用 %s · %s%s%s" % (
             len(source_ids), len(passage_aids),
             "有" if cited else "无",
             "拒答" if refusal else "作答",
             ("  期望 %s → %s" % (",".join(expect), "命中" if hit else "未命中")) if expect else "",
+            vtag,
         ))
         results.append({
             "question": question, "expect": expect, "hit": hit,
             "sources": source_ids, "passageAids": passage_aids,
-            "cited": cited, "refusal": refusal, "status": status,
+            "cited": cited, "refusal": refusal, "verify": verify, "status": status,
             "reply": reply,
         })
         if i < len(questions) and args.delay:
@@ -136,6 +160,17 @@ def main():
     if n_ok:
         print("引用率：%.0f%%   拒答率：%.0f%%" % (100.0 * n_cite / n_ok, 100.0 * n_refusal / n_ok))
         print("平均出处 %.1f · 平均检索段 %.1f" % (sum_sources / n_ok, sum_passages / n_ok))
+    if n_verify:
+        print("接地忠实度（服务端引用自检，越高越好）：")
+        print("  忠实率：%.0f%%  (%d/%d 题无越界编号且直引可逐字对上)" % (
+            100.0 * (n_verify - n_unfaithful) / n_verify, n_verify - n_unfaithful, n_verify))
+        if sum_qchk:
+            print("  直引逐字命中：%.0f%%  (%d/%d 处直引能在所标资料中找到)" % (
+                100.0 * sum_qok / sum_qchk, sum_qok, sum_qchk))
+        if n_badnum:
+            print("  ⚠ 越界引用：%d 题出现超出资料范围的编号" % n_badnum)
+    else:
+        print("接地忠实度：暂无（服务端未返回 verify；部署新版 worker 后即有）")
 
     if args.out:
         json.dump({"endpoint": args.endpoint, "results": results}, open(args.out, "w", encoding="utf-8"),

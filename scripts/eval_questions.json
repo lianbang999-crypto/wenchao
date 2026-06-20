@@ -1,20 +1,20 @@
 {
-  "_readme": "RAG 评测题集。每条 question 是用户可能的提问；expectArticles 填写「答案理应引用到的文钞篇目 id」（可多个，命中任意一个即算召回成功）。id 见 site/data/books.json。留空数组表示尚未标注，脚本只对其统计引用率/拒答率，不计入召回率。请善知识按义理逐步补全 expectArticles，使召回率可信。",
+  "_readme": "RAG 评测题集。每条 question 是用户可能的提问；expectArticles 填写「答案理应引用到的文钞篇目 id」（可多个，命中任意一个即算召回成功）。id 见 site/data/books.json。这些标注由『标题+摘要+正文关键词』检索得出的高相关篇目作为首版基准，请善知识按义理复核增删——尤其是『在家修持』『敦伦尽分』等开示分散全钞的题，可按需补充更多篇目，使召回率更可信。留空数组的题脚本只统计引用率/拒答率，不计入召回率。",
   "questions": [
     { "question": "临终助念有哪些要点？", "expectArticles": ["jx-083", "xb2-135", "xb2-173"], "note": "临终三大要 / 得助念失助念之损益比较" },
-    { "question": "念佛时妄念纷飞，应如何对治？", "expectArticles": [], "note": "摄心念佛、十念记数等，待标注" },
+    { "question": "念佛时妄念纷飞，应如何对治？", "expectArticles": ["jx-009", "sbu-137", "xb2-171"], "note": "复高邵麟居士书四(摄心念佛·十念记数) / 十念记数念佛方法 / 念佛摄心偈" },
     { "question": "什么是念佛三昧？如何才能得到？", "expectArticles": ["zg2-221"], "note": "念佛三昧摸象记" },
     { "question": "因果对学佛和做人有多重要？", "expectArticles": ["jx-078"], "note": "因果为儒释圣教之根本说" },
     { "question": "为什么要戒杀吃素？", "expectArticles": ["jx-093", "zg2-158"], "note": "普劝戒杀吃素挽回劫运说" },
-    { "question": "初学净土，应如何下手？", "expectArticles": [], "note": "待标注" },
+    { "question": "初学净土，应如何下手？", "expectArticles": ["jx-051", "sbu-121", "jx-061"], "note": "一函遍复 / 初机学佛摘要序 / 净土法门普被三根论" },
     { "question": "如何才能生起真信切愿？", "expectArticles": ["jy-009"], "note": "勉具足信愿" },
-    { "question": "念佛和参禅有何不同，净土法门为何稳当？", "expectArticles": [], "note": "待标注" },
-    { "question": "在家居士应如何修持净业？", "expectArticles": [], "note": "待标注" },
-    { "question": "什么是敦伦尽分、闲邪存诚？", "expectArticles": [], "note": "待标注" },
-    { "question": "遇到病苦逆境时应如何用心？", "expectArticles": [], "note": "待标注" },
-    { "question": "如何为亡者做佛事最有利益？", "expectArticles": [], "note": "待标注" },
-    { "question": "念佛要不要记数？怎样记数最稳妥？", "expectArticles": [], "note": "十念记数法，待标注" },
-    { "question": "印光大师对儿童因果教育有何开示？", "expectArticles": [], "note": "待标注" },
-    { "question": "如何看待禅净双修？", "expectArticles": [], "note": "待标注" }
+    { "question": "念佛和参禅有何不同，净土法门为何稳当？", "expectArticles": ["jy-023", "jx-089"], "note": "分禅净界限 / 净土法门说要" },
+    { "question": "在家居士应如何修持净业？", "expectArticles": ["jx-051"], "note": "一函遍复(开示分散全钞，宜按义理补充更多篇目)" },
+    { "question": "什么是敦伦尽分、闲邪存诚？", "expectArticles": ["jx-051"], "note": "一函遍复(此为印祖通贯全钞之纲，宜补充更多篇目)" },
+    { "question": "遇到病苦逆境时应如何用心？", "expectArticles": ["jx-050", "sb2-365"], "note": "复周孟由昆弟书(念佛人如何对待疾病) / 上海护国息灾法会法语" },
+    { "question": "如何为亡者做佛事最有利益？", "expectArticles": ["sbu-102", "jx-050", "jx-083"], "note": "答孙庆泽居士丧礼不宜用荤书 / 复周孟由昆弟书 / 临终三大要" },
+    { "question": "念佛要不要记数？怎样记数最稳妥？", "expectArticles": ["sbu-137", "jx-009"], "note": "十念记数念佛方法 / 复高邵麟居士书四" },
+    { "question": "印光大师对儿童因果教育有何开示？", "expectArticles": ["jy-026", "jx-085", "xb2-138"], "note": "论家庭教育 / 家庭教育为天下太平之根本发隐" },
+    { "question": "如何看待禅净双修？", "expectArticles": ["jx-089", "jy-023", "jx-062"], "note": "净土法门说要 / 分禅净界限 / 宗教不宜混滥论" }
   ]
 }

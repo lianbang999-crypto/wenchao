@@ -813,6 +813,7 @@ if(S)load();else login();
 
 export default {
   async fetch(req, env) {
+    try {
     const url = new URL(req.url);
     const apiPrefix = '/api/ai';
     const pathname = url.pathname.startsWith(apiPrefix)
@@ -830,5 +831,11 @@ export default {
     if (pathname === '/feedback') return handleFeedback(req, env, headers);
     if (pathname === '/admin/data') return handleAdminData(req, env, headers);
     return handleAsk(req, env, headers);
+    } catch (e) {
+      return new Response(JSON.stringify({ error: e.message, stack: e.stack }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
   },
 };

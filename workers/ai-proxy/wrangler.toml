@@ -32,7 +32,7 @@ index_name = "wenchao-kb"
 [[d1_databases]]
 binding = "DB"
 database_name = "wenchao-kb-fts"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "a6e17323-e03d-4837-93d2-aea6b893527e"
 
 # 还需设置保护建库接口的密钥（交互输入，不入文件；调用时放 X-Index-Secret 请求头）：
 #   npx wrangler secret put INDEX_SECRET

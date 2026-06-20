@@ -639,26 +639,38 @@ function aiAppend(role, text, passages) {
   aiLog.scrollTop = aiLog.scrollHeight;
   return div;
 }
-// 轻量 Markdown（粗体 / 有序·无序列表 / 段落）+ 行内角标 [n]
+// 轻量 Markdown（小标题 / 粗体 / 有序·无序列表 / 一级子项 / 段落）+ 行内角标 [n]
+// 仿 NotebookLM：多层次回答用「一、」小标题分节、子项缩进，便于扫读
 function aiFormat(text, passages) {
-  let t = esc(text).replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-  let html = '', list = '';
-  const close = () => { if (list) { html += '</' + list + '>'; list = ''; } };
+  const t = esc(text).replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+  let html = '', list = '', sub = false, liOpen = false;
+  const closeSub = () => { if (sub) { html += '</ul>'; sub = false; } };
+  const closeLi = () => { if (liOpen) { closeSub(); html += '</li>'; liOpen = false; } };
+  const closeList = () => { closeLi(); if (list) { html += '</' + list + '>'; list = ''; } };
   for (const raw of t.split('\n')) {
+    const indented = /^\s{2,}/.test(raw);
     const ln = raw.trim();
     if (!ln) continue;   // 空行跳过即可，勿关闭列表（否则每项各成一个 ol、序号都回到1）
     let m;
-    if ((m = ln.match(/^(\d+)[.、)]\s*(.+)$/))) {
-      if (list !== 'ol') { close(); html += '<ol>'; list = 'ol'; }
-      html += '<li>' + m[2] + '</li>';
-    } else if ((m = ln.match(/^[-*●·•]\s+(.+)$/))) {
-      if (list !== 'ul') { close(); html += '<ul>'; list = 'ul'; }
+    // 小标题：markdown # / 「一、…」/「（一）…」（独占一行、较短）
+    if ((m = ln.match(/^#{1,4}\s*(.+)$/)) ||
+        (m = ln.match(/^(?:<strong>)?\s*((?:[一二三四五六七八九十]+、|（[一二三四五六七八九十]+）)[^<\n]{0,40})(?:<\/strong>)?$/))) {
+      closeList(); html += '<h4 class="ai-h">' + m[1] + '</h4>';
+    // 子项：「○ ◦」标记，或缩进的 - * • —— 挂到当前条目下成一级子列表
+    } else if (liOpen && ((m = ln.match(/^[○◦]\s+(.+)$/)) || (indented && (m = ln.match(/^[-*•·]\s+(.+)$/))))) {
+      if (!sub) { html += '<ul class="ai-sub">'; sub = true; }
       html += '<li>' + m[1] + '</li>';
+    } else if ((m = ln.match(/^(\d+)[.、)]\s*(.+)$/))) {
+      if (list !== 'ol') { closeList(); html += '<ol>'; list = 'ol'; } else closeLi();
+      html += '<li>' + m[2]; liOpen = true;
+    } else if ((m = ln.match(/^[-*●·•]\s+(.+)$/))) {
+      if (list !== 'ul') { closeList(); html += '<ul>'; list = 'ul'; } else closeLi();
+      html += '<li>' + m[1]; liOpen = true;
     } else {
-      close(); html += '<p>' + ln + '</p>';
+      closeList(); html += '<p>' + ln + '</p>';
     }
   }
-  close();
+  closeList();
   if (passages && passages.length) {
     html = html.replace(/\[(\d{1,2})\]/g, (mm, n) =>
       passages[+n - 1] ? '<button class="ai-cite" data-n="' + n + '">' + n + '</button>' : mm);

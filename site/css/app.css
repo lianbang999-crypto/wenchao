@@ -254,6 +254,15 @@ button { font-family: inherit; color: inherit; }
 .ai-fb-label { font-size: 12.5px; color: var(--ink-3); margin-right: 2px; }
 .ai-fb-thx { font-size: 12.5px; color: var(--ink-3); }
 
+/* AI 回答：小标题分节（仿 NotebookLM，浅灰细线分隔）+ 一级子项 */
+.ai-msg.bot h4.ai-h {
+  margin: 18px 0 8px; padding-top: 14px; border-top: 1px solid var(--line);
+  font: 700 15.5px var(--serif); color: var(--ink); letter-spacing: .02em;
+}
+.ai-msg.bot h4.ai-h:first-child { margin-top: 2px; padding-top: 0; border-top: 0; }
+.ai-msg.bot ul.ai-sub { margin: 5px 0 7px; padding-left: 1.5em; list-style: circle; }
+.ai-msg.bot ul.ai-sub > li { color: var(--ink-2); font-size: .96em; line-height: 1.75; margin: 2px 0; }
+
 /* 问文钞：独立全屏形态 */
 .drawer-right { width: 100%; max-width: 100%; left: 0; }
 .drawer-right > .drawer-head,

@@ -621,7 +621,16 @@ if ($('#cc-trad')) $('#cc-trad').onclick = () => setTrad(true);
 
 /* ---------- AI 助读 ---------- */
 const aiLog = $('#ai-log');
-const aiHistory = [];
+const aiHistory = [];                       // 发给后端的上下文（{role,content}）
+let aiSession = store.get('aiSession', []);  // 持久化的可渲染会话：u={r,c} / b={r,c,p:passages,q,v}
+// 给一段已渲染的回答绑定行内角标 [n] 的点击/悬停（点开出处弹卡）；多处渲染共用
+function wireCites(div, passages) {
+  div.querySelectorAll('.ai-cite').forEach((b) => {
+    const p = passages && passages[+b.dataset.n - 1];
+    b.onclick = () => showCitation(p);
+    citeHover(b, p);
+  });
+}
 function aiAppend(role, text, passages) {
   const div = document.createElement('div');
   div.className = 'ai-msg ' + (role === 'user' ? 'user' : 'bot');
@@ -629,11 +638,7 @@ function aiAppend(role, text, passages) {
     div.textContent = text;
   } else {
     div.innerHTML = aiFormat(text, passages);
-    div.querySelectorAll('.ai-cite').forEach((b) => {
-      const p = passages[+b.dataset.n - 1];
-      b.onclick = () => showCitation(p);
-      citeHover(b, p);
-    });
+    wireCites(div, passages);
   }
   aiLog.appendChild(div);
   aiLog.scrollTop = aiLog.scrollHeight;
@@ -723,13 +728,43 @@ function citeHover(btn, p) {
   });
   btn.addEventListener('mouseleave', () => { if (aiTip) aiTip.hidden = true; });
 }
-// 首次进入的欢迎引导语（仅展示，不计入对话历史）
+// 首次进入的欢迎引导语（仅展示，不计入对话历史）——简明传达「什么都可以问，依文钞作答」
 function aiWelcome() {
   if (aiLog.children.length) return;
   const div = document.createElement('div');
   div.className = 'ai-welcome';
-  div.textContent = '南无阿弥陀佛。可就《印光法师文钞》全集随心提问——念佛、信愿、因果、临终助念等皆可。回答据大师原文，并附可点出处；义理以原文为准。可点上方常见问题，或在下方输入。';
+  div.innerHTML =
+    '<p class="aw-greet">南无阿弥陀佛</p>' +
+    '<p class="aw-lead">心有所惑，皆可来问。</p>' +
+    '<p>无论念佛、信愿、因果、家庭，还是病苦、临终大事，我都会依《印光法师文钞》原文为您解答，并附出处可查。</p>' +
+    '<p class="aw-hint">点上方常见问题，或在下方直接问。</p>';
   aiLog.appendChild(div);
+}
+// 会话留存：刷新/重开不丢最近问答（最多 30 条记录，约 15 轮）
+function saveSession() { try { store.set('aiSession', aiSession.slice(-30)); } catch {} }
+// 静态渲染一条已存的回答（含可点出处与操作条），供恢复会话复用
+function renderBot(rec) {
+  const div = document.createElement('div');
+  div.className = 'ai-msg bot';
+  div.innerHTML = aiFormat(rec.c, rec.p);
+  maybeTradify(div);
+  wireCites(div, rec.p);
+  aiLog.appendChild(div);
+  aiFeedback(div, rec.q, rec.c, rec.p);
+  return div;
+}
+// 启动：有留存会话则恢复（含上下文与可点出处），否则显示欢迎语
+function aiInit() {
+  if (aiSession.length) {
+    aiHistory.length = 0;
+    aiSession.forEach((rec) => {
+      if (rec.r === 'u') { aiAppend('user', rec.c); aiHistory.push({ role: 'user', content: rec.c }); }
+      else { renderBot(rec); aiHistory.push({ role: 'assistant', content: rec.c }); }
+    });
+    aiLog.scrollTop = aiLog.scrollHeight;
+  } else {
+    aiWelcome();
+  }
 }
 let aiAbort = null;
 const aiSendBtn = () => $('.ai-send');
@@ -760,18 +795,18 @@ async function aiAsk(q) {
     const d = ensureDiv();
     d.innerHTML = aiFormat(full, passages);
     maybeTradify(d);
-    d.querySelectorAll('.ai-cite').forEach((b) => {
-      const p = passages && passages[+b.dataset.n - 1];
-      b.onclick = () => showCitation(p); citeHover(b, p);
-    });
+    wireCites(d, passages);
     aiLog.scrollTop = aiLog.scrollHeight;
   };
   const onMsg = (m) => {
+    if (!m) return;
     if (m.type === 'meta') passages = m.passages;
     else if (m.type === 'delta') {
-      full += m.text;
+      full += m.text || '';
       const t = Date.now();
       if (t - lastPaint > 120) { lastPaint = t; paint(); }   // 节流，避免每字重排
+    } else if (typeof m.reply === 'string' && m.reply) {
+      full += m.reply;   // 错误/限流等返回 {reply:'…'}（无 type），照样显示给用户而非吞成"无回复"
     }
   };
 
@@ -798,6 +833,7 @@ async function aiAsk(q) {
           if (line) try { onMsg(JSON.parse(line)); } catch { /* 半行 */ }
         }
       }
+      if (buf.trim()) { try { onMsg(JSON.parse(buf.trim())); } catch { /* 末行：无换行的 {reply} 错误体也要收尾解析 */ } }
     } else {                                        // 不支持流式：整体读取
       (await res.text()).split('\n').forEach((l) => { if (l.trim()) try { onMsg(JSON.parse(l)); } catch {} });
     }
@@ -816,7 +852,12 @@ async function aiAsk(q) {
   if (!full) full = '（无回复）';
   paint();   // 收尾：完整排版（"停止"则保留已生成部分）
   aiHistory.push({ role: 'assistant', content: full });
-  if (full !== '（无回复）') aiFeedback(ensureDiv(), q, full);
+  if (full !== '（无回复）') {
+    aiFeedback(ensureDiv(), q, full, passages);
+    aiSession.push({ r: 'u', c: q });
+    aiSession.push({ r: 'b', c: full, p: passages || [], q });
+    saveSession();
+  }
 }
 function copyText(t) {
   if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).catch(() => execCopy(t));
@@ -837,7 +878,23 @@ const FB_ICON = {
   check: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
   speak: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4z"/><path d="M16 9a3.5 3.5 0 0 1 0 6M19 6.5a7 7 0 0 1 0 11"/></svg>',
   stop: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2.5"/></svg>',
+  share: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>',
 };
+// 把一问一答制成可转发的图（复用 share.js 的卡片/二维码/系统分享）
+function aiShare(question, reply, passages) {
+  if (!(window.WenchaoShare && window.WenchaoShare.card)) { copyText(reply); return; }
+  const body = (reply || '')
+    .replace(/\[\d{1,2}\]/g, '').replace(/\*\*/g, '')
+    .replace(/^\s*#{1,4}\s*/gm, '').replace(/^\s*\d+[.、)]\s*/gm, '')
+    .replace(/^\s*[-*•●○◦·]\s+/gm, '').replace(/\n{3,}/g, '\n\n').trim();
+  const text = '问：' + question + '\n\n' + body;
+  const titles = [];
+  (passages || []).forEach((p) => { if (p && p.title && titles.indexOf(p.title) < 0) titles.push(p.title); });
+  const src = '印光法师文钞' + (titles.length ? ' · ' + titles.slice(0, 3).map((t) => '《' + t + '》').join('') : '');
+  const first = (passages || []).find((p) => p && p.url);
+  const url = first ? new URL(first.url, location.origin).href : location.origin;
+  window.WenchaoShare.card(text, src, url, '问文钞');
+}
 // 朗读：浏览器免费 TTS（speechSynthesis）；佛教高频词读音替换（仅朗读用，不改显示）
 const PRON = [['南无', '南摩'], ['南無', '南摩'], ['般若', '波惹'], ['伽蓝', '茄蓝'], ['阿弥陀', '婀弥陀'], ['比丘', '笔丘'], ['迦叶', '迦摄']];
 function speakable(t) {
@@ -859,17 +916,19 @@ function aiSpeak(text, btn) {
   u.onend = u.onerror = () => { btn.classList.remove('on'); btn.innerHTML = FB_ICON.speak; btn.title = '朗读'; };
   synth.speak(u);
 }
-function aiFeedback(el, question, reply) {
+function aiFeedback(el, question, reply, passages) {
   const bar = document.createElement('div');
   bar.className = 'ai-fb';
   bar.innerHTML =
     '<button class="ai-fb-btn ai-speak" type="button" title="朗读" aria-label="朗读">' + FB_ICON.speak + '</button>' +
     '<button class="ai-fb-btn ai-copy" type="button" title="复制回答" aria-label="复制回答">' + FB_ICON.copy + '</button>' +
+    '<button class="ai-fb-btn ai-share" type="button" title="分享问答" aria-label="分享问答">' + FB_ICON.share + '</button>' +
     '<span class="ai-fb-gap"></span>' +
     '<button class="ai-fb-btn" data-v="up" type="button" title="有帮助" aria-label="有帮助">' + FB_ICON.up + '</button>' +
     '<button class="ai-fb-btn" data-v="down" type="button" title="需更正" aria-label="需更正">' + FB_ICON.down + '</button>';
   el.appendChild(bar);
   bar.querySelector('.ai-speak').onclick = function () { aiSpeak(reply, this); };
+  bar.querySelector('.ai-share').onclick = function () { aiShare(question, reply, passages); };
   const cp = bar.querySelector('.ai-copy');
   cp.onclick = () => {
     copyText(reply);
@@ -915,14 +974,16 @@ document.querySelectorAll('#ai-chips .chip-btn').forEach((b) => {
   b.onclick = () => aiAsk(b.dataset.q);    // 全库问答，不绑当前篇
 });
 const aiNewBtn = $('#btn-ai-new');
-if (aiNewBtn) aiNewBtn.onclick = () => {     // 新对话：清空重来
+if (aiNewBtn) aiNewBtn.onclick = () => {     // 新对话：清空重来（含留存）
   if (window.speechSynthesis) window.speechSynthesis.cancel();
   if (aiAbort) aiAbort.abort();
   aiHistory.length = 0;
+  aiSession.length = 0;
+  saveSession();
   aiLog.innerHTML = '';
   aiWelcome();
 };
-aiWelcome();
+aiInit();
 
 /* ---------- 启动 ---------- */
 async function boot() {
@@ -948,7 +1009,7 @@ async function boot() {
   $('#nav-stats').textContent = `${books.length} 部 · ${flat.length} 篇 · 文白对照`;
   renderTree();
   await route();
-  if (prefs.trad) loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); });
+  if (prefs.trad) loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); tradify($('#ai-log')); });
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost'))
     navigator.serviceWorker.register('/sw.js').catch(() => {});
 }

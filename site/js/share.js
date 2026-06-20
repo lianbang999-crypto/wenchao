@@ -146,13 +146,23 @@
 
   async function openCard() {
     if (!picked) return;
-    ensureModal();
     var text = picked.text.replace(/[ \t]+/g, ' ').trim();
-    if (clen(text) > MAX) text = sliceByChars(text, MAX) + '…';
     // 出处：《书名》篇名（书名缺失则只用篇名）
     var src = (picked.book ? '《' + picked.book + '》' : '') + (picked.title || '');
+    await showCard(text, src, shareUrl(picked.id, picked.pIndex), picked.title);
+    hideBar();
+  }
+
+  /* 通用「制作分享卡」入口：选段分享与 AI 问答分享共用同一套绘制/二维码/系统分享。
+   * text 支持多段（\n 分段，首行缩进）；src 为落款；url 进二维码；title 仅作保存文件名。 */
+  async function showCard(text, src, url, title) {
+    ensureModal();
+    text = String(text || '').trim();
+    if (clen(text) > MAX) text = sliceByChars(text, MAX) + '…';
+    picked = picked || {};
+    if (title) picked.title = title;
     lastText = text + (src ? '\n——' + src : '');
-    lastUrl = shareUrl(picked.id, picked.pIndex);
+    lastUrl = url || (CFG.shareBase || location.origin);
     modal.hidden = false;
     modalImg.removeAttribute('src');
     try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
@@ -160,8 +170,10 @@
     modalImg.src = canvas.toDataURL('image/png');
     lastBlob = null;
     if (canvas.toBlob) canvas.toBlob(function (b) { lastBlob = b; }, 'image/png');
-    hideBar();
   }
+
+  // 暴露给 app.js 的 AI 问答分享复用（问答→一张可转发的图）
+  window.WenchaoShare = { card: showCard };
 
   /* ---------- 画「素简卡」：所选文字 + 出处（《书》篇）+ 裸二维码 ---------- */
   function drawCard(text, src, url) {

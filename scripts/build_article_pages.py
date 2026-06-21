@@ -434,7 +434,8 @@ def write_volume_pages(books: list[dict], css_link: str) -> list[str]:
 def write_sitemap(items: list[dict], volumes: list[str]) -> None:
   today = dt.date.today().isoformat()
   urls = [
-    f"  <url><loc>{h(ORIGIN)}/</loc><lastmod>{today}</lastmod><priority>1.0</priority></url>"
+    f"  <url><loc>{h(ORIGIN)}/</loc><lastmod>{today}</lastmod><priority>1.0</priority></url>",
+    f"  <url><loc>{h(ORIGIN)}/ying/</loc><lastmod>{today}</lastmod><priority>0.6</priority></url>",
   ]
   for vid in volumes:
     vq = quote(vid, safe="")

@@ -10,6 +10,12 @@
 /a/*
   Cache-Control: no-cache
 
+/ying/
+  Cache-Control: no-cache
+
+/img/*
+  Cache-Control: public, max-age=2592000, immutable
+
 /sitemap.xml
   Cache-Control: no-cache
 

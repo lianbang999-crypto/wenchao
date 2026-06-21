@@ -265,8 +265,16 @@ function articleRoute() {
   return { id: decodeURIComponent(m[1]), p };
 }
 async function route() {
-  const r = articleRoute();
   closeDrawers();
+  // 影像陈列页：内容随静态页预渲染，app.js 不重绘，仅同步标题/繁体
+  if (/^\/ying\/?$/.test(location.pathname)) {
+    current = null;
+    $('#topbar-title').textContent = '印祖法相';
+    $('#ai-context').textContent = '基于印光法师文钞全集';
+    maybeTradify($('#reader'));
+    return;
+  }
+  const r = articleRoute();
   if (!r) { renderHome(); maybeTradify($('#reader')); return; }
   await renderArticle(r.id);
   maybeTradify($('#reader'));     // 繁体模式：正文渲染后转换
@@ -316,6 +324,9 @@ function renderHome() {
       ${resume}
       <h2>${books.length} 部 · 共 ${total} 篇</h2>
       ${vols}
+      <div class="home-extra">
+        <a class="home-cta" href="/ying/">瞻礼 · 印祖法相与传印长老题词 →</a>
+      </div>
       <p class="home-note">底本为《印光法师文钞》增广、续编、三编及三编补之文白对照本。文言原文与白话译文逐篇对照排录；正文中带朱点之词语，点按可查名相注释。<br>愿见闻者，同沾法益。</p>
     </div>`;
   paintProgress();

@@ -153,10 +153,11 @@
   async function openCard() {
     if (!picked) return;
     var text = picked.text.replace(/[ \t]+/g, ' ').trim();
-    // 出处：《书名》篇名 · 原文/白话（书名缺失则只用篇名；白话为今译，注明以免误作原话）
-    var src = (picked.book ? '《' + picked.book + '》' : '') + (picked.title || '');
-    if (picked.kind === 'trans') src += ' · 白话';
-    else if (picked.kind === 'orig') src += ' · 原文';
+    // 出处：原文段只标《书名》篇名；白话段在书名后注明「白话文」（书名已含「白话」则不重复），避免今译被误作大师原话
+    var book = picked.book ? '《' + picked.book + '》' : '';
+    if (book && picked.kind === 'trans' && !/白话/.test(picked.book)) book += '白话文';
+    var src = book + (book && picked.title ? '·' : '') + (picked.title || '');
+    if (!book && picked.kind === 'trans') src += '（白话）';
     await showCard(text, src, shareUrl(picked.id, picked.pIndex), picked.title);
     hideBar();
   }
@@ -272,29 +273,60 @@
     ctx.fillText(ch, x + sz / 2, y + sz / 2 + fs * 0.36);
   }
 
-  /* 画「AI 问答卡」：顶部品牌 +「本文基于《印光法师文钞》检索整理」一行；问/答分区；
-   * 底部二维码「扫码进入 AI「问文钞」」。AI 只在码下说一次、来源只在顶部说一次，去重不误导。 */
+  // 解析回答为结构块：小标题(一、/##) · 序号(1.) · 要点(- ) · 段落，供分享卡分层排版
+  function parseAnswerBlocks(answer) {
+    var out = [], lines = String(answer || '').split('\n'), m;
+    for (var i = 0; i < lines.length; i++) {
+      var ln = lines[i].trim();
+      if (!ln) continue;
+      if ((m = ln.match(/^#{1,4}\s*(.+)$/)) ||
+          (m = ln.match(/^((?:[一二三四五六七八九十]+、|（[一二三四五六七八九十]+）)[^\n]{0,40})$/))) {
+        out.push({ t: 'h', s: m[1] });
+      } else if ((m = ln.match(/^(\d+)[.、)]\s*(.+)$/))) {
+        out.push({ t: 'num', n: m[1], s: m[2] });
+      } else if ((m = ln.match(/^[-*•●·]\s+(.+)$/))) {
+        out.push({ t: 'li', s: m[1] });
+      } else {
+        out.push({ t: 'p', s: ln });
+      }
+    }
+    return out;
+  }
+
+  /* 画「AI 问答卡」：顶部品牌 +「本文由 AI 基于《印光法师文钞》检索整理」一行；问/答分区，
+   * 答案保留小标题/序号/要点的层次以便阅读；底部二维码「扫码进入「问文钞」」。 */
   function drawAICard(question, answer, url) {
     var W = 1080, M = 100, TW = W - M * 2, FI = 44;
     var paper = '#f6f1e6', ink = '#322a1e', ink2 = '#6d5f49', ink3 = '#a3937a', line = '#d9cdb2', cin = '#b03a26';
     var brandFS = 56, subFS = 27, bodyFS = 40, tagFS = 30, capFS = 28, qrS = 196;
     var qLH = Math.round(bodyFS * 1.55), aLH = Math.round(bodyFS * 1.85);
     var tagW = 48, tagGap = 22, colX = M + tagW + tagGap, colW = TW - (tagW + tagGap);
+    var numIndent = Math.round(bodyFS * 1.7), liIndent = Math.round(bodyFS * 1.05);
+    var hGap = Math.round(aLH * 0.45), bGap = Math.round(aLH * 0.12);
 
     var probe = document.createElement('canvas').getContext('2d');
     probe.font = bodyFS + 'px ' + SERIF;
     var qLines = layout(probe, question, colW, bodyFS);
-    var aLines = layout(probe, answer, colW, bodyFS);
+
+    // 答区结构化预排版（求高）
+    var blocks = parseAnswerBlocks(answer), items = [], aH = 0;
+    for (var b = 0; b < blocks.length; b++) {
+      var blk = blocks[b], gap = b === 0 ? 0 : (blk.t === 'h' ? hGap : bGap);
+      var wide = blk.t === 'num' ? colW - numIndent : (blk.t === 'li' ? colW - liIndent : colW);
+      probe.font = (blk.t === 'h' ? '500 ' : '') + bodyFS + 'px ' + SERIF;
+      var it = { t: blk.t, n: blk.n, lines: layout(probe, blk.s, wide, bodyFS), gap: gap };
+      aH += gap + it.lines.length * aLH;
+      items.push(it);
+    }
 
     var brandY = 96 + brandFS;
     var subY = brandY + 16 + subFS;
     var topDivY = subY + 34;
     var qBaseY = topDivY + 34 + bodyFS;
-    var qEndY = qBaseY + (qLines.length - 1) * qLH;
-    var midDivY = qEndY + 34;
-    var aBaseY = midDivY + 34 + bodyFS;
-    var aEndY = aBaseY + (aLines.length - 1) * aLH;
-    var botDivY = aEndY + 40;
+    var midDivY = qBaseY + (qLines.length - 1) * qLH + 34;
+    var aTop = midDivY + 30;
+    var aEndY = aTop + aH;
+    var botDivY = aEndY + 34;
     var qrY = botDivY + 34;
     var capY = qrY + qrS + 34 + capFS;
     var H = Math.round(capY + 64);
@@ -327,10 +359,30 @@
     ctx.strokeStyle = '#e6dcc5'; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(M, midDivY); ctx.lineTo(W - M, midDivY); ctx.stroke();
 
-    // 答区
-    drawTag(ctx, '答', ink2, M, aBaseY - bodyFS + 4, tagW, tagFS);
-    ctx.textAlign = 'left'; ctx.fillStyle = ink; ctx.font = bodyFS + 'px ' + SERIF;
-    for (var j = 0; j < aLines.length; j++) ctx.fillText(aLines[j].t, colX, aBaseY + j * aLH);
+    // 答区：分层绘制（小标题加粗、序号悬挂缩进、要点缩进）
+    drawTag(ctx, '答', ink2, M, aTop + 4, tagW, tagFS);
+    ctx.textAlign = 'left';
+    var y = aTop;
+    for (var k = 0; k < items.length; k++) {
+      var c = items[k]; y += c.gap;
+      if (c.t === 'h') {
+        ctx.fillStyle = ink; ctx.font = '500 ' + bodyFS + 'px ' + SERIF;
+        for (var h = 0; h < c.lines.length; h++) { ctx.fillText(c.lines[h].t, colX, y + bodyFS); y += aLH; }
+      } else if (c.t === 'num') {
+        ctx.fillStyle = cin; ctx.font = '500 ' + bodyFS + 'px ' + SERIF;
+        ctx.fillText(c.n + '.', colX, y + bodyFS);
+        ctx.fillStyle = ink; ctx.font = bodyFS + 'px ' + SERIF;
+        for (var u = 0; u < c.lines.length; u++) { ctx.fillText(c.lines[u].t, colX + numIndent, y + bodyFS); y += aLH; }
+      } else if (c.t === 'li') {
+        ctx.fillStyle = cin; ctx.font = bodyFS + 'px ' + SERIF;
+        ctx.fillText('·', colX + 10, y + bodyFS);
+        ctx.fillStyle = ink; ctx.font = bodyFS + 'px ' + SERIF;
+        for (var v = 0; v < c.lines.length; v++) { ctx.fillText(c.lines[v].t, colX + liIndent, y + bodyFS); y += aLH; }
+      } else {
+        ctx.fillStyle = ink; ctx.font = bodyFS + 'px ' + SERIF;
+        for (var w = 0; w < c.lines.length; w++) { ctx.fillText(c.lines[w].t, colX, y + bodyFS); y += aLH; }
+      }
+    }
 
     // 底分隔 + 二维码 + 说明
     ctx.strokeStyle = line; ctx.lineWidth = 1;

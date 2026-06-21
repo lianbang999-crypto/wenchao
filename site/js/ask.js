@@ -20,7 +20,7 @@ const FB_ICON = {
   check: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
   speak: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4z"/><path d="M16 9a3.5 3.5 0 0 1 0 6M19 6.5a7 7 0 0 1 0 11"/></svg>',
   stop: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2.5"/></svg>',
-  share: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>',
+  share: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>',
 };
 
 /* ---------- 渲染 ---------- */
@@ -118,10 +118,10 @@ function aiSpeak(text, btn) {
 /* ---------- 分享：二维码直达本 /ask/ 页（带问题，扫码即重问） ---------- */
 function aiShare(question, reply, passages) {
   if (!(window.WenchaoShare && window.WenchaoShare.aiCard)) { copyText(reply); return; }
+  // 仅去引用角标与加粗符；保留小标题/序号/要点，供分享卡按结构排版
   const body = (reply || '')
     .replace(/\[\d{1,2}\]/g, '').replace(/\*\*/g, '')
-    .replace(/^\s*#{1,4}\s*/gm, '').replace(/^\s*\d+[.、)]\s*/gm, '')
-    .replace(/^\s*[-*•●○◦·]\s+/gm, '').replace(/\n{3,}/g, '\n\n').trim();
+    .replace(/\n{3,}/g, '\n\n').trim();
   window.WenchaoShare.aiCard(question, body, SHARE_BASE + '/ask/');
 }
 

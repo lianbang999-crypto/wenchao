@@ -7,7 +7,8 @@ routes = [
 ]
 
 # 密钥务必用 Secret 设置，切勿写在此文件或任何仓库文件里：
-#   npx wrangler secret put DEEPSEEK_API_KEY
+#   npx wrangler secret put DEEPSEEK_API_KEY      # 问答生成
+#   npx wrangler secret put SILICONFLOW_API_KEY   # bge-m3 嵌入 + bge-reranker 重排序（硅基流动）
 #
 # 限流 + 答案缓存（同一个 KV）。每 IP 每日上限由 worker.js 的 DAILY_LIMIT 控制。
 #   npx wrangler kv namespace create RL
@@ -15,9 +16,8 @@ routes = [
 binding = "RL"
 id = "b96813bac7164eb8b31e843bca933825"
 
-# Workers AI：问题/段落向量化（bge-m3）
-[ai]
-binding = "AI"
+# 嵌入/重排序已改用硅基流动（HTTP API，见 worker.js 的 embed/rerankMatches），
+# 不再依赖 Cloudflare Workers AI，故移除 [ai] 绑定。
 
 # Vectorize：文钞知识库向量库。先创建（维度 1024 对应 bge-m3，余弦相似度）：
 #   npx wrangler vectorize create wenchao-kb --dimensions=1024 --metric=cosine

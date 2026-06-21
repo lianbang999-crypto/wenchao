@@ -51,12 +51,20 @@ function goHome() {
 /* 卷名缩写：「增广印光法师文钞卷第一」→「卷第一」 */
 const shortJuan = (j) => j.replace(/^(增广)?印光法师文钞(续编|三编)?/, '') || j;
 
+/* 底色主题表：id → { data-theme 属性值, 浏览器 UI 主题色 } */
+const THEMES = {
+  paper: { attr: '',      color: '#f6f1e6' },  /* 纸色（默认） */
+  plain: { attr: 'plain', color: '#e8e7e3' },  /* 素白 · 墨水屏 */
+  night: { attr: 'night', color: '#171310' },  /* 墨夜 */
+};
+
 function applyPrefs() {
   document.documentElement.style.setProperty('--fs', prefs.fs + 'px');
-  document.documentElement.dataset.theme = prefs.theme === 'night' ? 'night' : '';
-  document.querySelector('meta[name=theme-color]')
-    .setAttribute('content', prefs.theme === 'night' ? '#171310' : '#f6f1e6');
-  $('#theme-paper').classList.toggle('on', prefs.theme !== 'night');
+  const t = THEMES[prefs.theme] || THEMES.paper;
+  document.documentElement.dataset.theme = t.attr;
+  document.querySelector('meta[name=theme-color]').setAttribute('content', t.color);
+  $('#theme-paper').classList.toggle('on', prefs.theme === 'paper');
+  if ($('#theme-plain')) $('#theme-plain').classList.toggle('on', prefs.theme === 'plain');
   $('#theme-night').classList.toggle('on', prefs.theme === 'night');
   if ($('#cc-simp')) $('#cc-simp').classList.toggle('on', !prefs.trad);
   if ($('#cc-trad')) $('#cc-trad').classList.toggle('on', prefs.trad);
@@ -383,8 +391,16 @@ async function renderArticle(id) {
   const seen = new Set();
 
   const hasNotes = allNotes.length > 0;
-  const crumb = [art.volumeName, shortJuan(art.juan || ''), art.category, art.translator]
-    .filter(Boolean).join(' · ');
+  // 面包屑：首页 › 分册聚合页 › 本篇（前两级为链接，与预渲染同口径，点击走原生导航到静态聚合页）
+  const crumbRest = [shortJuan(art.juan || ''), art.category, art.translator]
+    .filter(Boolean).map(esc).join(' · ');
+  const crumbHtml = '<a href="/">文钞</a>'
+    + (art.volumeName
+        ? ' · ' + (art.volume
+            ? `<a href="/v/${encodeURIComponent(art.volume)}/">${esc(art.volumeName)}</a>`
+            : esc(art.volumeName))
+        : '')
+    + (crumbRest ? ' · ' + crumbRest : '');
 
   let body = '';
   for (const seg of art.segments) {
@@ -465,7 +481,7 @@ async function renderArticle(id) {
   reader.innerHTML = `<div class="reader-inner">
       ${modeBar}
       <header class="art-head">
-        <div class="art-crumb">${esc(crumb)}</div>
+        <div class="art-crumb">${crumbHtml}</div>
         <h1 class="art-title">${esc(art.title)}</h1>
         <div class="rule"></div>
       </header>
@@ -576,8 +592,10 @@ sheet.onclick = (e) => { if (e.target === sheet) closeSheet(); };
 /* ---------- 偏好控件 ---------- */
 $('#font-inc').onclick = () => { prefs.fs = Math.min(24, prefs.fs + 1); store.set('fs', prefs.fs); applyPrefs(); };
 $('#font-dec').onclick = () => { prefs.fs = Math.max(14, prefs.fs - 1); store.set('fs', prefs.fs); applyPrefs(); };
-$('#theme-paper').onclick = () => { prefs.theme = 'paper'; store.set('theme', prefs.theme); applyPrefs(); };
-$('#theme-night').onclick = () => { prefs.theme = 'night'; store.set('theme', prefs.theme); applyPrefs(); };
+const setTheme = (name) => { prefs.theme = name; store.set('theme', name); applyPrefs(); };
+$('#theme-paper').onclick = () => setTheme('paper');
+if ($('#theme-plain')) $('#theme-plain').onclick = () => setTheme('plain');
+$('#theme-night').onclick = () => setTheme('night');
 
 /* ---------- 简繁转换（OpenCC 自托管，懒加载；仅显示层，不改底本数据）---------- */
 let _conv = null;

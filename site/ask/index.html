@@ -35,8 +35,12 @@
   /* 独立页外壳：抽屉的 .ai-log/.ai-input 布局是 .drawer-right 局部的，这里自带一套 */
   html, body { height: 100%; }
   body { margin: 0; }
+  /* 实色纸背景：盖住 body 的宣纸点阵，与抽屉一致（抽屉 .drawer 亦为实色 var(--paper)） */
   .ask-shell { display: flex; flex-direction: column; height: 100dvh; max-width: 720px; margin: 0 auto;
+    background: var(--paper);
     border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+  /* 「阅读原文」用 <a> 实现，去掉锚点默认下划线，与抽屉的按钮观感一致 */
+  .sheet-goto { text-decoration: none; display: inline-block; }
   .ask-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px;
     border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 5; }
   .ask-head .ask-title { display: flex; flex-direction: column; line-height: 1.25; }

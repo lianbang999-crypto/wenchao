@@ -117,17 +117,12 @@ function aiSpeak(text, btn) {
 
 /* ---------- 分享：二维码直达本 /ask/ 页（带问题，扫码即重问） ---------- */
 function aiShare(question, reply, passages) {
-  if (!(window.WenchaoShare && window.WenchaoShare.card)) { copyText(reply); return; }
+  if (!(window.WenchaoShare && window.WenchaoShare.aiCard)) { copyText(reply); return; }
   const body = (reply || '')
     .replace(/\[\d{1,2}\]/g, '').replace(/\*\*/g, '')
     .replace(/^\s*#{1,4}\s*/gm, '').replace(/^\s*\d+[.、)]\s*/gm, '')
     .replace(/^\s*[-*•●○◦·]\s+/gm, '').replace(/\n{3,}/g, '\n\n').trim();
-  const text = '问：' + question + '\n\n' + body;
-  const titles = [];
-  (passages || []).forEach((p) => { if (p && p.title && titles.indexOf(p.title) < 0) titles.push(p.title); });
-  const src = '印光法师文钞' + (titles.length ? ' · ' + titles.slice(0, 3).map((t) => '《' + t + '》').join('') : '');
-  const url = SHARE_BASE + '/ask/';
-  window.WenchaoShare.card(text, src, url, '问文钞');
+  window.WenchaoShare.aiCard(question, body, SHARE_BASE + '/ask/');
 }
 
 /* ---------- 反馈条 ---------- */

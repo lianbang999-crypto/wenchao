@@ -36,6 +36,12 @@
     base = base.replace(/[#?].*$/, '').replace(/\/+$/, '');
     return base + '/a/' + encodeURIComponent(id) + '/' + (p != null ? '?p=' + p : '');
   }
+  // 选区起点所在段落是「原文」还是「白话」（白话为今译，分享时须注明，避免误作大师原话）
+  function paraKindOf(node) {
+    var el = node && (node.nodeType === 1 ? node : node.parentElement);
+    var p = el && el.closest ? el.closest('p.p-orig, p.p-trans') : null;
+    return p ? (p.classList.contains('p-trans') ? 'trans' : 'orig') : '';
+  }
   // 选区起点所在段落在 .art-body 内的序号（深链定位用，与 app.js scrollToPara 同口径）
   function paraIndexOf(node) {
     var body = $('.art-body', reader());
@@ -104,7 +110,7 @@
     picked = {
       text: text, id: id,
       title: meta.title || curTitle(), book: meta.book || '',
-      pIndex: pIndex,
+      pIndex: pIndex, kind: paraKindOf(sel.anchorNode),
     };
     ensureBar();
     barCount.textContent = '已选 ' + n + ' 字' + (n > MAX ? '（取前 ' + MAX + ' 字）' : '');
@@ -147,8 +153,10 @@
   async function openCard() {
     if (!picked) return;
     var text = picked.text.replace(/[ \t]+/g, ' ').trim();
-    // 出处：《书名》篇名（书名缺失则只用篇名）
+    // 出处：《书名》篇名 · 原文/白话（书名缺失则只用篇名；白话为今译，注明以免误作原话）
     var src = (picked.book ? '《' + picked.book + '》' : '') + (picked.title || '');
+    if (picked.kind === 'trans') src += ' · 白话';
+    else if (picked.kind === 'orig') src += ' · 原文';
     await showCard(text, src, shareUrl(picked.id, picked.pIndex), picked.title);
     hideBar();
   }
@@ -172,8 +180,26 @@
     if (canvas.toBlob) canvas.toBlob(function (b) { lastBlob = b; }, 'image/png');
   }
 
-  // 暴露给 app.js 的 AI 问答分享复用（问答→一张可转发的图）
-  window.WenchaoShare = { card: showCard };
+  /* AI 问答卡：问/答分区 + 顶部一行来源说明 + 二维码。与选段卡分开，避免把 AI 整理误作文钞原文。 */
+  async function showAICard(question, answer, url) {
+    ensureModal();
+    question = String(question || '').trim();
+    answer = String(answer || '').trim();
+    if (clen(answer) > MAX) answer = sliceByChars(answer, MAX) + '…';
+    picked = picked || {}; picked.title = '问文钞';
+    lastText = '问：' + question + '\n\n' + answer;
+    lastUrl = url || (CFG.shareBase || location.origin);
+    modal.hidden = false;
+    modalImg.removeAttribute('src');
+    try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
+    var canvas = drawAICard(question, answer, lastUrl);
+    modalImg.src = canvas.toDataURL('image/png');
+    lastBlob = null;
+    if (canvas.toBlob) canvas.toBlob(function (b) { lastBlob = b; }, 'image/png');
+  }
+
+  // 暴露给 app.js / ask.js：选段卡(card) 与 AI 问答卡(aiCard)
+  window.WenchaoShare = { card: showCard, aiCard: showAICard };
 
   /* ---------- 画「素简卡」：所选文字 + 出处（《书》篇）+ 裸二维码 ---------- */
   function drawCard(text, src, url) {
@@ -226,6 +252,92 @@
     drawQR(ctx, url, (W - qrS) / 2, qy, qrS);
     ctx.textAlign = 'center'; ctx.fillStyle = ink2; ctx.font = capFS + 'px ' + SERIF;
     ctx.fillText('查询《文钞》原文出处', W / 2, qy + qrS + capGap + capFS);
+    return canvas;
+  }
+
+  function roundRectPath(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+  // 问/答 方块标签（朱「问」墨「答」）
+  function drawTag(ctx, ch, color, x, y, sz, fs) {
+    roundRectPath(ctx, x, y, sz, sz, 9);
+    ctx.fillStyle = color; ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.font = fs + 'px ' + SERIF;
+    ctx.fillText(ch, x + sz / 2, y + sz / 2 + fs * 0.36);
+  }
+
+  /* 画「AI 问答卡」：顶部品牌 +「本文基于《印光法师文钞》检索整理」一行；问/答分区；
+   * 底部二维码「扫码进入 AI「问文钞」」。AI 只在码下说一次、来源只在顶部说一次，去重不误导。 */
+  function drawAICard(question, answer, url) {
+    var W = 1080, M = 100, TW = W - M * 2, FI = 44;
+    var paper = '#f6f1e6', ink = '#322a1e', ink2 = '#6d5f49', ink3 = '#a3937a', line = '#d9cdb2', cin = '#b03a26';
+    var brandFS = 56, subFS = 27, bodyFS = 40, tagFS = 30, capFS = 28, qrS = 196;
+    var qLH = Math.round(bodyFS * 1.55), aLH = Math.round(bodyFS * 1.85);
+    var tagW = 48, tagGap = 22, colX = M + tagW + tagGap, colW = TW - (tagW + tagGap);
+
+    var probe = document.createElement('canvas').getContext('2d');
+    probe.font = bodyFS + 'px ' + SERIF;
+    var qLines = layout(probe, question, colW, bodyFS);
+    var aLines = layout(probe, answer, colW, bodyFS);
+
+    var brandY = 96 + brandFS;
+    var subY = brandY + 16 + subFS;
+    var topDivY = subY + 34;
+    var qBaseY = topDivY + 34 + bodyFS;
+    var qEndY = qBaseY + (qLines.length - 1) * qLH;
+    var midDivY = qEndY + 34;
+    var aBaseY = midDivY + 34 + bodyFS;
+    var aEndY = aBaseY + (aLines.length - 1) * aLH;
+    var botDivY = aEndY + 40;
+    var qrY = botDivY + 34;
+    var capY = qrY + qrS + 34 + capFS;
+    var H = Math.round(capY + 64);
+
+    var DPR = Math.min(window.devicePixelRatio || 1, H > 4200 ? 1.5 : 2);
+    var canvas = document.createElement('canvas');
+    canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
+    var ctx = canvas.getContext('2d');
+    ctx.scale(DPR, DPR);
+    ctx.textBaseline = 'alphabetic';
+
+    ctx.fillStyle = paper; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = line; ctx.lineWidth = 1.5;
+    ctx.strokeRect(FI, FI, W - FI * 2, H - FI * 2);
+
+    // 顶部：品牌 + 单行来源说明
+    ctx.textAlign = 'center'; ctx.fillStyle = cin; ctx.font = '600 ' + brandFS + 'px ' + SERIF;
+    ctx.fillText('问文钞', W / 2, brandY);
+    ctx.fillStyle = ink3; ctx.font = subFS + 'px ' + SERIF;
+    ctx.fillText('本文由 AI 基于《印光法师文钞》检索整理', W / 2, subY);
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(W / 2 - 110, topDivY); ctx.lineTo(W / 2 + 110, topDivY); ctx.stroke();
+
+    // 问区
+    drawTag(ctx, '问', cin, M, qBaseY - bodyFS + 4, tagW, tagFS);
+    ctx.textAlign = 'left'; ctx.fillStyle = ink; ctx.font = '500 ' + bodyFS + 'px ' + SERIF;
+    for (var i = 0; i < qLines.length; i++) ctx.fillText(qLines[i].t, colX, qBaseY + i * qLH);
+
+    // 中分隔
+    ctx.strokeStyle = '#e6dcc5'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(M, midDivY); ctx.lineTo(W - M, midDivY); ctx.stroke();
+
+    // 答区
+    drawTag(ctx, '答', ink2, M, aBaseY - bodyFS + 4, tagW, tagFS);
+    ctx.textAlign = 'left'; ctx.fillStyle = ink; ctx.font = bodyFS + 'px ' + SERIF;
+    for (var j = 0; j < aLines.length; j++) ctx.fillText(aLines[j].t, colX, aBaseY + j * aLH);
+
+    // 底分隔 + 二维码 + 说明
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(W / 2 - 110, botDivY); ctx.lineTo(W / 2 + 110, botDivY); ctx.stroke();
+    drawQR(ctx, url, (W - qrS) / 2, qrY, qrS);
+    ctx.textAlign = 'center'; ctx.fillStyle = ink2; ctx.font = capFS + 'px ' + SERIF;
+    ctx.fillText('扫码进入「问文钞」', W / 2, capY);
     return canvas;
   }
 

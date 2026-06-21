@@ -77,8 +77,9 @@ button { font-family: inherit; color: inherit; }
 .icon-btn:active { color: var(--cinnabar); }
 .topbar-title {
   border: 0; background: none; cursor: pointer;
+  flex: 1; min-width: 0; text-align: center;
   font-size: 15px; letter-spacing: .12em; font-weight: 600;
-  max-width: 56vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   color: var(--ink);
 }
 
@@ -640,6 +641,37 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
 
 /* 载入态 */
 .loading { padding: 80px 0; text-align: center; color: var(--ink-3); letter-spacing: .3em; font-size: 13px; }
+
+/* ---------------- 正文朗读 / 跟读 ---------------- */
+#btn-speak.on { color: var(--cinnabar); }
+/* 当前句：Custom Highlight API（不改 DOM、不动名相/角标的可点性） */
+::highlight(wc-read) { background-color: var(--cinnabar-soft); color: var(--cinnabar); }
+/* 当前段落：轻底纹（兼作不支持 Highlight API 时的兜底定位） */
+.reading-para { background: linear-gradient(90deg, var(--cinnabar-soft), transparent 90%); border-radius: 4px; }
+/* 听读控制条（沿用分享条的造型语言，z-index 低于分享条以免选词时相撞） */
+.read-bar {
+  position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 49;
+  display: flex; align-items: center; gap: 4px; max-width: 92vw;
+  margin-bottom: calc(14px + env(safe-area-inset-bottom));
+  padding: 6px 8px; background: var(--paper);
+  border: 1px solid var(--line); border-radius: 999px;
+  box-shadow: 0 6px 24px rgba(40, 28, 12, .22);
+}
+.read-bar[hidden] { display: none; }
+.rb-btn {
+  width: 40px; height: 40px; border: 0; background: none; cursor: pointer;
+  display: grid; place-items: center; color: var(--ink-2); border-radius: 50%;
+}
+.rb-btn:active { color: var(--cinnabar); }
+.rb-play { background: var(--cinnabar); color: #f6f1e6; }
+.rb-play:active { color: #f6f1e6; opacity: .85; }
+.rb-rate {
+  border: 1px solid var(--line); background: var(--paper-2); color: var(--ink-2);
+  border-radius: 999px; padding: 5px 12px; margin: 0 2px;
+  font-size: 13px; cursor: pointer; white-space: nowrap; min-width: 52px;
+}
+.rb-rate:active { color: var(--cinnabar); border-color: var(--cinnabar); }
+.rb-x { width: 34px; height: 40px; border: 0; background: none; color: var(--ink-3); font-size: 20px; line-height: 1; cursor: pointer; }
 
 /* ---------------- 平板/桌面：左侧目录常驻，AI 默认隐藏 ---------------- */
 @media (min-width: 1180px) {

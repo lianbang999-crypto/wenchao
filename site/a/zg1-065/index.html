@@ -28,7 +28,7 @@
      苹果设备命中本地楷体，不会产生下载 -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
-<link rel="stylesheet" href="css/app.css?v=20260621-ying2">
+<link rel="stylesheet" href="css/app.css?v=20260621-tts">
 </head>
 <body>
 
@@ -38,6 +38,9 @@
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
   </button>
   <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
+  <button class="icon-btn" id="btn-speak" aria-label="朗读本篇" hidden>
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12"/></svg>
+  </button>
   <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
   </button>
@@ -105,7 +108,7 @@
   </div>
   <div class="ai-log" id="ai-log"></div>
   <form class="ai-input" id="ai-form">
-    <textarea id="ai-text" rows="1" placeholder="有困惑，问文钞…"></textarea>
+    <textarea id="ai-text" rows="1" placeholder="向文钞请教…"></textarea>
     <button type="submit" class="chip-btn ai-send">发送</button>
   </form>
   <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
@@ -187,7 +190,7 @@
 
 <script src="config.js?v=20260616-ai-panel"></script>
 <script src="js/qrcode.js"></script>
-<script type="module" src="js/app.js?v=20260621-ying"></script>
+<script type="module" src="js/app.js?v=20260621-tts"></script>
 <script src="js/share.js?v=20260620-ai-ux"></script>
 </body>
 </html>

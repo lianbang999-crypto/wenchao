@@ -77,6 +77,7 @@ const drawerL = $('#drawer-left'), drawerR = $('#drawer-right'), overlay = $('#o
 const isWide = () => matchMedia('(min-width: 1180px)').matches;
 
 function openDrawer(side) {
+  stopRead();        // 打开目录/AI：停读，腾出注意力
   if (isWide() && side === 'L') return;
   (side === 'L' ? drawerL : drawerR).classList.add('open');
   overlay.hidden = false;
@@ -267,10 +268,12 @@ function articleRoute() {
   return { id: decodeURIComponent(m[1]), p };
 }
 async function route() {
+  stopRead();        // 切篇/回首页：停掉正在进行的朗读，避免高亮/进度错位
   closeDrawers();
   // 影像陈列页：内容随静态页预渲染，app.js 不重绘，仅同步标题/繁体
   if (/^\/ying\/?$/.test(location.pathname)) {
     current = null;
+    showSpeakBtn(false);
     $('#topbar-title').textContent = '印祖法相';
     $('#ai-context').textContent = '基于印光法师文钞全集';
     maybeTradify($('#reader'));
@@ -280,8 +283,12 @@ async function route() {
   if (!r) { renderHome(); maybeTradify($('#reader')); return; }
   await renderArticle(r.id);
   maybeTradify($('#reader'));     // 繁体模式：正文渲染后转换
-  // 分享二维码深链：?p=N 定位到所引段落
-  if (r.p !== null && r.p !== undefined && r.p !== '') scrollToPara(+r.p);
+  // 分享二维码深链：?p=N 进入文白对照并定位到所引段落（便于对照原文/白话；不改用户保存的模式）
+  if (r.p !== null && r.p !== undefined && r.p !== '') {
+    const ab = document.querySelector('#reader .art-body');
+    if (ab && ab.querySelector('.p-trans')) ab.dataset.mode = 'both';
+    scrollToPara(+r.p);
+  }
 }
 // 滚动到正文第 n 段并短暂高亮（与 share.js paraIndexOf 同口径）
 function scrollToPara(n) {
@@ -298,6 +305,7 @@ function scrollToPara(n) {
 /* ---------- 首页 ---------- */
 function renderHome() {
   current = null;
+  showSpeakBtn(false);
   $('#topbar-title').textContent = '印光法师文钞';
   $('#ai-context').textContent = '基于印光法师文钞全集';
   const total = flat.length;
@@ -388,6 +396,7 @@ async function renderArticle(id) {
   try { art = await loadArticle(id); }
   catch {
     reader.innerHTML = '<p class="loading">此篇载入失败，请检查网络后重试</p>';
+    showSpeakBtn(false);
     return;
   }
   current = art;
@@ -517,6 +526,7 @@ async function renderArticle(id) {
   reader.querySelectorAll('.mode-bar .seg').forEach((b) => {
     b.classList.toggle('on', b.dataset.m === prefs.mode);
     b.onclick = () => {
+      stopRead();     // 切换原文/白话/对照 → 可见段落变了，停读重来
       prefs.mode = b.dataset.m;
       store.set('mode', prefs.mode);
       reader.querySelector('.art-body').dataset.mode = prefs.mode;
@@ -566,6 +576,7 @@ async function renderArticle(id) {
   store.set('lastRead', lastRead);
   highlightNav();
   paintProgress();
+  showSpeakBtn(true);     // 文章就绪 → 显示朗读键
 }
 
 /* 阅读进度：顶部细线实时更新（rAF），localStorage 节流保存 */
@@ -601,6 +612,176 @@ function openSheet(note) {
 function closeSheet() { sheet.hidden = true; sheetBd.hidden = true; }
 sheetBd.onclick = closeSheet;
 sheet.onclick = (e) => { if (e.target === sheet) closeSheet(); };
+
+/* ---------- 正文朗读 / 跟读高亮 ----------
+   speechSynthesis 逐句朗读当前可见正文（随阅读模式：原文 / 白话 / 对照）；
+   当前句以 Custom Highlight API 高亮（不改 DOM，保留名相·角标可点），并自动滚动跟随。
+   暂停=取消当前句、恢复=从本句重读（比 pause/resume 在安卓上更稳）。 */
+const speakBtn = $('#btn-speak');
+const synthOK = () => 'speechSynthesis' in window;
+const RATES = [0.75, 0.95, 1.2];
+const rateLabel = (r) => (r <= 0.8 ? '慢' : r >= 1.2 ? '快' : '常') + '速';
+const READ = { units: [], idx: 0, on: false, paused: false, cur: null, bar: null, rate: store.get('ttsRate', 0.95) };
+// 优先用 Custom Highlight API（句级、零 DOM 改动）；不支持则退化为 .reading-para 段级高亮
+const HL = (window.CSS && CSS.highlights && typeof Highlight !== 'undefined') ? new Highlight() : null;
+if (HL) CSS.highlights.set('wc-read', HL);
+const RB_ICON = {
+  play: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+  pause: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+  prev: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 6h2v12H7zM20 6 11 12l9 6z"/></svg>',
+  next: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M15 6h2v12h-2zM4 6l9 6-9 6z"/></svg>',
+};
+
+// 文章页才显示朗读键（设备不支持 TTS 则始终隐藏）；切走时一并停读
+function showSpeakBtn(on) {
+  if (!speakBtn) return;
+  speakBtn.hidden = !(on && synthOK());
+  if (!on) stopRead();
+}
+
+// 中文嗓音：列表常异步加载，voiceschanged 后重选
+let _voice = null, _voiceTried = false;
+function pickVoice() {
+  if (_voice || _voiceTried) return _voice;
+  const vs = window.speechSynthesis.getVoices() || [];
+  _voice = vs.find((x) => /zh|chinese|中文|普通话|han/i.test((x.lang || '') + (x.name || ''))) || null;
+  if (vs.length) _voiceTried = true;
+  return _voice;
+}
+if (synthOK()) window.speechSynthesis.onvoiceschanged = () => { _voice = null; _voiceTried = false; pickVoice(); };
+
+// 把当前可见正文切成「句」单元，并为每句留一个可高亮的 DOM Range（跨行内子节点安全）
+function buildUnits() {
+  const els = [...$('#reader').querySelectorAll('.art-title, .art-body .p-orig, .art-body .p-trans')]
+    .filter((el) => el.offsetParent !== null);
+  const END = '。！？!?…', CLOSE = '」』）)】》”’';
+  const units = [];
+  for (const el of els) {
+    const map = []; let s = '';
+    const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => (n.nodeValue && !(n.parentElement && n.parentElement.closest('sup.note-ref')))
+        ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT,
+    });
+    let n; while ((n = w.nextNode())) { const v = n.nodeValue; for (let i = 0; i < v.length; i++) { map.push([n, i]); s += v[i]; } }
+    const push = (a, b) => {
+      let ai = a; while (ai < b && /\s/.test(s[ai])) ai++;
+      let bi = b - 1; while (bi > ai && /\s/.test(s[bi])) bi--;
+      if (bi < ai) return;
+      const text = s.slice(ai, bi + 1);
+      if (!/[一-鿿A-Za-z0-9]/.test(text)) return;   // 纯标点/空白：跳过
+      const r = document.createRange();
+      r.setStart(map[ai][0], map[ai][1]);
+      r.setEnd(map[bi][0], map[bi][1] + 1);
+      units.push({ el, text, range: r });
+    };
+    let start = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] === '\n') { push(start, i); start = i + 1; continue; }
+      if (END.indexOf(s[i]) >= 0) {                 // 句末标点连同其后的收尾引号/括号归本句
+        let j = i + 1; while (j < s.length && CLOSE.indexOf(s[j]) >= 0) j++;
+        push(start, j); i = j - 1; start = j;
+      }
+    }
+    push(start, s.length);
+  }
+  return units;
+}
+
+function clearHL() {
+  document.querySelectorAll('.reading-para').forEach((e) => e.classList.remove('reading-para'));
+  if (HL) HL.clear();
+}
+function markUnit(u) {
+  document.querySelectorAll('.reading-para').forEach((e) => e.classList.remove('reading-para'));
+  u.el.classList.add('reading-para');
+  if (HL) { HL.clear(); HL.add(u.range); }
+}
+function scrollUnit(u) {
+  const r = u.range.getBoundingClientRect();
+  if (!r.height && !r.width) return;
+  const top = ($('#topbar') ? $('#topbar').offsetHeight : 52) + 10;
+  if (r.top < top || r.bottom > innerHeight - 110)
+    scrollTo({ top: Math.max(0, scrollY + r.top - innerHeight * 0.32), behavior: 'smooth' });
+}
+
+function ensureReadBar() {
+  if (READ.bar) return READ.bar;
+  const bar = document.createElement('div');
+  bar.className = 'read-bar'; bar.hidden = true;
+  bar.innerHTML =
+    `<button class="rb-btn rb-prev" type="button" aria-label="上一句">${RB_ICON.prev}</button>` +
+    `<button class="rb-btn rb-play" type="button" aria-label="暂停">${RB_ICON.pause}</button>` +
+    `<button class="rb-btn rb-next" type="button" aria-label="下一句">${RB_ICON.next}</button>` +
+    `<button class="rb-rate" type="button" aria-label="切换语速">常速</button>` +
+    `<button class="rb-x" type="button" aria-label="结束朗读">×</button>`;
+  document.body.appendChild(bar);
+  bar.querySelector('.rb-prev').onclick = () => jumpRead(-1);
+  bar.querySelector('.rb-next').onclick = () => jumpRead(1);
+  bar.querySelector('.rb-play').onclick = togglePause;
+  bar.querySelector('.rb-rate').onclick = cycleRate;
+  bar.querySelector('.rb-x').onclick = stopRead;
+  READ.bar = bar;
+  return bar;
+}
+function syncBar() {
+  if (!READ.bar) return;
+  const play = READ.bar.querySelector('.rb-play');
+  play.innerHTML = READ.paused ? RB_ICON.play : RB_ICON.pause;
+  play.setAttribute('aria-label', READ.paused ? '继续朗读' : '暂停');
+  READ.bar.querySelector('.rb-rate').textContent = rateLabel(READ.rate);
+}
+
+function speakIdx(i) {
+  if (i < 0) i = 0;
+  if (i >= READ.units.length) { stopRead(); return; }   // 读完：自动结束
+  READ.idx = i;
+  const u = READ.units[i];
+  markUnit(u); scrollUnit(u);
+  const utt = new SpeechSynthesisUtterance(speakable(u.text));
+  utt.lang = 'zh-CN'; utt.rate = READ.rate;
+  const v = pickVoice(); if (v) utt.voice = v;
+  // 仅当本句仍是「当前句」（未被取消/切走）才推进，避免取消触发的回调误进下一句
+  utt.onend = () => { if (READ.on && !READ.paused && READ.cur === utt) speakIdx(READ.idx + 1); };
+  utt.onerror = () => { if (READ.on && !READ.paused && READ.cur === utt) speakIdx(READ.idx + 1); };
+  READ.cur = utt;
+  try { window.speechSynthesis.speak(utt); } catch {}
+}
+function startRead() {
+  if (!current || !synthOK()) return;
+  READ.units = buildUnits();
+  if (!READ.units.length) return;
+  window.speechSynthesis.cancel();
+  READ.on = true; READ.paused = false;
+  if (speakBtn) speakBtn.classList.add('on');
+  ensureReadBar().hidden = false;
+  syncBar();
+  speakIdx(0);
+}
+function stopRead() {
+  if (synthOK()) window.speechSynthesis.cancel();
+  READ.on = false; READ.paused = false; READ.cur = null; READ.units = [];
+  clearHL();
+  if (speakBtn) speakBtn.classList.remove('on');
+  if (READ.bar) READ.bar.hidden = true;
+}
+function togglePause() {
+  if (!READ.on) return;
+  if (READ.paused) { READ.paused = false; syncBar(); speakIdx(READ.idx); }
+  else { READ.paused = true; READ.cur = null; if (synthOK()) window.speechSynthesis.cancel(); syncBar(); }
+}
+function jumpRead(d) {
+  if (!READ.on) return;
+  READ.paused = false; READ.cur = null;
+  if (synthOK()) window.speechSynthesis.cancel();
+  syncBar(); speakIdx(READ.idx + d);
+}
+function cycleRate() {
+  READ.rate = RATES[(RATES.indexOf(READ.rate) + 1) % RATES.length];
+  store.set('ttsRate', READ.rate);
+  syncBar();
+  if (READ.on && !READ.paused) { READ.cur = null; if (synthOK()) window.speechSynthesis.cancel(); speakIdx(READ.idx); }
+}
+if (speakBtn) speakBtn.onclick = () => { READ.on ? stopRead() : startRead(); };
 
 /* ---------- 偏好控件 ---------- */
 $('#font-inc').onclick = () => { prefs.fs = Math.min(24, prefs.fs + 1); store.set('fs', prefs.fs); applyPrefs(); };
@@ -640,6 +821,7 @@ function tradify(root) {                 // 把元素内文本节点 简→繁�
 }
 function maybeTradify(el) { if (prefs.trad && _conv && el) tradify(el); }
 function setTrad(on) {
+  stopRead();     // 简繁切换会改写文本节点，正读着的 Range 会失效 → 先停
   prefs.trad = on; store.set('trad', on); applyPrefs();
   if (on) {
     loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); tradify($('#ai-log')); });
@@ -872,19 +1054,14 @@ const FB_ICON = {
 };
 // 把一问一答制成可转发的图（复用 share.js 的卡片/二维码/系统分享）
 function aiShare(question, reply, passages) {
-  if (!(window.WenchaoShare && window.WenchaoShare.card)) { copyText(reply); return; }
+  if (!(window.WenchaoShare && window.WenchaoShare.aiCard)) { copyText(reply); return; }
   const body = (reply || '')
     .replace(/\[\d{1,2}\]/g, '').replace(/\*\*/g, '')
     .replace(/^\s*#{1,4}\s*/gm, '').replace(/^\s*\d+[.、)]\s*/gm, '')
     .replace(/^\s*[-*•●○◦·]\s+/gm, '').replace(/\n{3,}/g, '\n\n').trim();
-  const text = '问：' + question + '\n\n' + body;
-  const titles = [];
-  (passages || []).forEach((p) => { if (p && p.title && titles.indexOf(p.title) < 0) titles.push(p.title); });
-  const src = '印光法师文钞' + (titles.length ? ' · ' + titles.slice(0, 3).map((t) => '《' + t + '》').join('') : '');
-  // 二维码直达独立 AI 页 /ask/（仅打开页面，不自动重问）
+  // 二维码直达独立 AI 页 /ask/；AI 问答卡见 share.js 的 drawAICard
   const base = (CFG.shareBase || location.origin).replace(/\/$/, '');
-  const url = base + '/ask/';
-  window.WenchaoShare.card(text, src, url, '问文钞');
+  window.WenchaoShare.aiCard(question, body, base + '/ask/');
 }
 // 朗读：浏览器免费 TTS（speechSynthesis）；佛教高频词读音替换（仅朗读用，不改显示）
 const PRON = [['南无', '南摩'], ['南無', '南摩'], ['般若', '波惹'], ['伽蓝', '茄蓝'], ['阿弥陀', '婀弥陀'], ['比丘', '笔丘'], ['迦叶', '迦摄']];

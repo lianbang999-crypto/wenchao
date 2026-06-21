@@ -3,6 +3,8 @@
    纯前端、无构建：books.json 目录树 + articles/{id}.json 按篇懒加载
    =================================================================== */
 
+import { aiFormat, citationExcerpt } from './ai-core.js';
+
 const $ = (s) => document.querySelector(s);
 const CFG = window.WENCHAO_CONFIG || {};
 
@@ -673,50 +675,9 @@ function aiAppend(role, text, passages) {
   aiLog.scrollTop = aiLog.scrollHeight;
   return div;
 }
-// 轻量 Markdown（小标题 / 粗体 / 有序·无序列表 / 一级子项 / 段落）+ 行内角标 [n]
-// 仿 NotebookLM：多层次回答用「一、」小标题分节、子项缩进，便于扫读
-function aiFormat(text, passages) {
-  const t = esc(text).replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-  let html = '', list = '', sub = false, liOpen = false;
-  const closeSub = () => { if (sub) { html += '</ul>'; sub = false; } };
-  const closeLi = () => { if (liOpen) { closeSub(); html += '</li>'; liOpen = false; } };
-  const closeList = () => { closeLi(); if (list) { html += '</' + list + '>'; list = ''; } };
-  for (const raw of t.split('\n')) {
-    const indented = /^\s{2,}/.test(raw);
-    const ln = raw.trim();
-    if (!ln) continue;   // 空行跳过即可，勿关闭列表（否则每项各成一个 ol、序号都回到1）
-    let m;
-    // 小标题：markdown # / 「一、…」/「（一）…」（独占一行、较短）
-    if ((m = ln.match(/^#{1,4}\s*(.+)$/)) ||
-        (m = ln.match(/^(?:<strong>)?\s*((?:[一二三四五六七八九十]+、|（[一二三四五六七八九十]+）)[^<\n]{0,40})(?:<\/strong>)?$/))) {
-      closeList(); html += '<h4 class="ai-h">' + m[1] + '</h4>';
-    // 子项：「○ ◦」标记，或缩进的 - * • —— 挂到当前条目下成一级子列表
-    } else if (liOpen && ((m = ln.match(/^[○◦]\s+(.+)$/)) || (indented && (m = ln.match(/^[-*•·]\s+(.+)$/))))) {
-      if (!sub) { html += '<ul class="ai-sub">'; sub = true; }
-      html += '<li>' + m[1] + '</li>';
-    } else if ((m = ln.match(/^(\d+)[.、)]\s*(.+)$/))) {
-      if (list !== 'ol') { closeList(); html += '<ol>'; list = 'ol'; } else closeLi();
-      html += '<li>' + m[2]; liOpen = true;
-    } else if ((m = ln.match(/^[-*●·•]\s+(.+)$/))) {
-      if (list !== 'ul') { closeList(); html += '<ul>'; list = 'ul'; } else closeLi();
-      html += '<li>' + m[1]; liOpen = true;
-    } else {
-      closeList(); html += '<p>' + ln + '</p>';
-    }
-  }
-  closeList();
-  if (passages && passages.length) {
-    html = html.replace(/\[(\d{1,2})\]/g, (mm, n) =>
-      passages[+n - 1] ? '<button class="ai-cite" data-n="' + n + '">' + n + '</button>' : mm);
-  }
-  return html;
-}
+// aiFormat（轻量 Markdown + 角标）与 citationExcerpt（出处摘录）已移至共享内核 ai-core.js，
+// 供抽屉与独立页 /ask/ 共用（顶部 import）。
 // 点角标 → 底部弹卡显示出处原文 + 阅读原文（统一只显原文，白话在「阅读原文」里）
-function citationExcerpt(p) {
-  const t = (p && p.text) || '';
-  const orig = (t.split('\n（白话）')[0] || '').trim();
-  return (orig && !orig.startsWith('（白话）')) ? orig : t.trim();
-}
 function showCitation(p) {
   if (!p) return;
   const excerpt = citationExcerpt(p);
@@ -920,8 +881,9 @@ function aiShare(question, reply, passages) {
   const titles = [];
   (passages || []).forEach((p) => { if (p && p.title && titles.indexOf(p.title) < 0) titles.push(p.title); });
   const src = '印光法师文钞' + (titles.length ? ' · ' + titles.slice(0, 3).map((t) => '《' + t + '》').join('') : '');
-  const first = (passages || []).find((p) => p && p.url);
-  const url = first ? new URL(first.url, location.origin).href : location.origin;
+  // 二维码直达独立 AI 页 /ask/（仅打开页面，不自动重问）
+  const base = (CFG.shareBase || location.origin).replace(/\/$/, '');
+  const url = base + '/ask/';
   window.WenchaoShare.card(text, src, url, '问文钞');
 }
 // 朗读：浏览器免费 TTS（speechSynthesis）；佛教高频词读音替换（仅朗读用，不改显示）

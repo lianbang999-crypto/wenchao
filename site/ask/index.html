@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-Hans" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>问文钞 · 印光法师文钞 AI 助读</title>
+<meta name="description" content="向《印光法师文钞》请教：念佛、信愿、因果、临终大事，依大师原文作答并附出处可查。">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<!-- 分享预览卡（微信/社交） -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="问文钞 · 印光法师文钞 AI 助读">
+<meta property="og:description" content="心有所惑，皆可来问。依《印光法师文钞》原文为您解答，并附出处可查。">
+<meta property="og:url" content="https://wenchao.foyue.org/ask/">
+<meta name="twitter:card" content="summary">
+<!-- 进入前先按本地偏好应用主题/字号，避免闪烁，并与主站一致 -->
+<script>
+(function () {
+  try {
+    var T = { paper: ['', '#f6f1e6'], plain: ['plain', '#e8e7e3'], night: ['night', '#171310'] };
+    var theme = JSON.parse(localStorage.getItem('wc.theme')) || 'paper';
+    var fs = JSON.parse(localStorage.getItem('wc.fs')) || 17;
+    var t = T[theme] || T.paper;
+    document.documentElement.dataset.theme = t[0];
+    document.documentElement.style.setProperty('--fs', fs + 'px');
+    document.querySelector('meta[name=theme-color]').setAttribute('content', t[1]);
+  } catch (e) {}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<link rel="stylesheet" href="/css/app.css?v=20260621-ying2">
+<style>
+  /* 独立页外壳：抽屉的 .ai-log/.ai-input 布局是 .drawer-right 局部的，这里自带一套 */
+  html, body { height: 100%; }
+  body { margin: 0; }
+  .ask-shell { display: flex; flex-direction: column; height: 100dvh; max-width: 720px; margin: 0 auto;
+    border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .ask-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+    border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 5; }
+  .ask-head .ask-title { display: flex; flex-direction: column; line-height: 1.25; }
+  .ask-head .ask-title strong { font: 600 17px var(--serif); color: var(--ink); }
+  .ask-head .ask-title small { color: var(--ink-3); font-size: 12px; }
+  .ask-head .ask-spacer { flex: 1; }
+  .ask-back, .icon-btn { display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--line);
+    background: var(--paper); color: var(--ink-2); cursor: pointer; }
+  .ask-back:hover, .icon-btn:hover { color: var(--cinnabar); border-color: var(--cinnabar); }
+  .ai-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px 4px; }
+  .ask-shell .ai-log { flex: 1; }
+  .ai-disclaimer { margin: 0; padding: 4px 14px 12px; color: var(--ink-3); font-size: 12px; text-align: center; }
+</style>
+</head>
+<body>
+<main class="ask-shell">
+  <header class="ask-head">
+    <a class="ask-back" href="/" title="返回文钞" aria-label="返回文钞">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <div class="ask-title">
+      <strong>问文钞</strong>
+      <small>基于印光法师文钞全集</small>
+    </div>
+    <span class="ask-spacer"></span>
+    <button class="icon-btn" id="btn-ai-new" aria-label="新对话" title="新对话">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+  </header>
+
+  <div class="ai-chips" id="ai-chips">
+    <button class="chip-btn" data-q="初学净土，应如何下手？">如何入门</button>
+    <button class="chip-btn" data-q="念佛时妄念纷飞，应如何对治？">对治妄念</button>
+    <button class="chip-btn" data-q="临终助念有哪些要点？">临终助念</button>
+    <button class="chip-btn" data-q="如何才能生起真信切愿？">信愿行</button>
+  </div>
+
+  <div class="ai-log" id="ai-log"></div>
+
+  <form class="ai-input" id="ai-form">
+    <textarea id="ai-text" rows="1" placeholder="向文钞请教…"></textarea>
+    <button type="submit" class="chip-btn ai-send">发送</button>
+  </form>
+  <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
+</main>
+
+<!-- 出处弹卡（复用 app.css 的 sheet 样式） -->
+<div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+<section class="sheet" id="sheet" hidden aria-label="出处">
+  <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-body" id="sheet-body"></div>
+</section>
+
+<script src="/config.js?v=20260616-ai-panel"></script>
+<script src="/js/qrcode.js"></script>
+<script src="/js/share.js?v=20260620-ai-ux"></script>
+<script type="module" src="/js/ask.js?v=20260621-ask2"></script>
+</body>
+</html>

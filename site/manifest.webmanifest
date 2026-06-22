@@ -1,12 +1,30 @@
 {
   "name": "印光法师文钞 · 文白对照",
   "short_name": "印光文钞",
-  "description": "印光法师文钞全七册文白对照阅读",
+  "description": "印光法师文钞全七册文白对照阅读，附 AI 助读问答与朗读。",
+  "lang": "zh-Hans",
+  "dir": "ltr",
+  "id": "/",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#f6f1e6",
   "theme_color": "#f6f1e6",
+  "categories": ["books", "education", "lifestyle"],
   "icons": [
+    { "src": "img/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "img/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "img/icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "img/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    {
+      "name": "问文钞（AI 助读）",
+      "short_name": "问文钞",
+      "description": "向印光法师文钞 AI 助读提问",
+      "url": "/ask/"
+    }
   ]
 }

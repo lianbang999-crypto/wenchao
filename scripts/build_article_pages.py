@@ -379,7 +379,13 @@ def volume_page_html(vol: dict, css_link: str, all_vols: list[tuple]) -> str:
 <meta name="twitter:title" content="{h(name)} · 印光法师文钞">
 <meta name="twitter:description" content="{h(desc)}">
 <meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="192x192" href="/img/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="印光文钞">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">

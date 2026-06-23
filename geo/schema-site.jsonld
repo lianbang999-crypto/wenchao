@@ -1,0 +1,125 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://wenchao.foyue.org/#organization",
+      "name": "印光法师文钞 · 文白对照",
+      "url": "https://wenchao.foyue.org",
+      "description": "专注印光大师文钞全集的文白对照整理与弘传，旨在如实传布净土宗第十三祖的法义。",
+      "sameAs": [
+        "https://wenchao.foyue.org"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://wenchao.foyue.org/#website",
+      "name": "印光法师文钞 · 文白对照",
+      "url": "https://wenchao.foyue.org",
+      "description": "净土宗第十三祖印光大师文钞全集，文言原文与白话译文逐篇对照，共 9 部 1944 篇，另收《印光法师答念佛600问》。",
+      "inLanguage": "zh",
+      "publisher": {
+        "@id": "https://wenchao.foyue.org/#organization"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://wenchao.foyue.org/#yinguang",
+      "name": "印光大师",
+      "alternateName": [
+        "印光法师",
+        "释印光",
+        "常惭愧僧",
+        "印光",
+        "圣量"
+      ],
+      "birthDate": "1862-01-11",
+      "deathDate": "1940-12-02",
+      "nationality": "中国",
+      "description": "中国近代高僧，净土宗第十三祖。俗姓赵，法名圣量，字印光。生于陕西，圆寂于苏州灵岩山。毕生专弘净土法门，著有《印光法师文钞》增广、续编、三编及三编补，影响深远。",
+      "knowsAbout": [
+        "净土宗",
+        "念佛法门",
+        "信愿行",
+        "因果",
+        "临终助念",
+        "家庭教育",
+        "戒杀吃素"
+      ],
+      "sameAs": [
+        "https://zh.wikipedia.org/wiki/%E9%87%8B%E5%8D%B0%E5%85%89",
+        "https://baike.baidu.com/item/%E5%8D%B0%E5%85%89/3516"
+      ]
+    },
+    {
+      "@type": "Book",
+      "@id": "https://wenchao.foyue.org/#wenchao",
+      "name": "印光法师文钞",
+      "alternateName": [
+        "增广印光法师文钞",
+        "印光大师文钞"
+      ],
+      "author": {
+        "@id": "https://wenchao.foyue.org/#yinguang"
+      },
+      "inLanguage": "zh",
+      "numberOfPages": 1944,
+      "about": [
+        "净土宗",
+        "念佛法门",
+        "信愿行",
+        "因果",
+        "临终助念",
+        "家庭教育",
+        "戒杀吃素"
+      ],
+      "description": "印光大师文钞全集，含增广、续编、三编及三编补，共 9 部 1944 篇。本站以文言原文与白话译文逐篇对照排录，正文名相附朱点注释，每篇均注明精确出处。",
+      "url": "https://wenchao.foyue.org",
+      "publisher": {
+        "@id": "https://wenchao.foyue.org/#organization"
+      },
+      "hasPart": [
+        {
+          "@type": "Book",
+          "@id": "https://wenchao.foyue.org/jiayanlu#book",
+          "name": "印光法师嘉言录",
+          "url": "https://wenchao.foyue.org/jiayanlu",
+          "description": "按十大主题分类的精要选编，34 篇",
+          "numberOfPages": 34
+        },
+        {
+          "@type": "Book",
+          "@id": "https://wenchao.foyue.org/baihua#book",
+          "name": "印光法师文钞白话精选读本",
+          "url": "https://wenchao.foyue.org/baihua",
+          "description": "97 篇书信、论文、开示的文白对照精选",
+          "numberOfPages": 97
+        },
+        {
+          "@type": "Book",
+          "@id": "https://wenchao.foyue.org/zengguang#book",
+          "name": "增广印光法师文钞",
+          "url": "https://wenchao.foyue.org/zengguang",
+          "description": "增广文钞上下册，共 434 篇",
+          "numberOfPages": 434
+        },
+        {
+          "@type": "Book",
+          "@id": "https://wenchao.foyue.org/xubian#book",
+          "name": "印光法师文钞续编",
+          "url": "https://wenchao.foyue.org/xubian",
+          "description": "续编上下册，共 348 篇",
+          "numberOfPages": 348
+        },
+        {
+          "@type": "Book",
+          "@id": "https://wenchao.foyue.org/sanbian#book",
+          "name": "印光法师文钞三编",
+          "url": "https://wenchao.foyue.org/sanbian",
+          "description": "三编及三编补，共 1031 篇",
+          "numberOfPages": 1031
+        }
+      ]
+    }
+  ]
+}

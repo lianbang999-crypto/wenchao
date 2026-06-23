@@ -87,7 +87,10 @@ def build_corpus_index():
     pos = 0
     for f in sorted(glob.glob(os.path.join(ART, "*.json"))):
         b = os.path.basename(f)
-        if b.startswith("jy-") or b.startswith(VOL_ID + "-"):
+        # 排除：嘉言录(主题摘录)、自身 q600，以及 jx「白话精选读本」——
+        # jx 是文钞选段，内容全在增广/续编/三编里，且其按整段成行（行很长），
+        # 会让锚点先命中粗粒度长行而漏配；统一改由句级分行的全本卷匹配。
+        if b.startswith("jy-") or b.startswith("jx-") or b.startswith(VOL_ID + "-"):
             continue
         art = json.load(open(f, encoding="utf-8"))
         aidx = len(art_lines)
@@ -111,61 +114,76 @@ def build_corpus_index():
     return "".join(chunks), starts, line_art, art_lines
 
 
-MIN_LINE = 8       # 短于此的语料行不参与（避免短串巧合）
-CONTAIN = 0.80     # 语料行须有 ≥80% 字符被引文包含，才取其白话（保证白话不溢出原文范围）
+MIN_LINE = 8        # 短于此的语料行不参与（避免短串巧合）
+LINE_OVL = 0.6      # 语料行须 ≥60% 字符与引文对齐，才取其白话（剔除「引文只占长行一截」的溢出/错位）
+COVER = 0.6         # 候选篇须覆盖引文 ≥60%，否则不算命中
+SEED = 14           # 候选篇种子锚点长度
 
 
-def _anchors(qs: str):
-    """从引文均匀取若干锚点，用于定位候选源篇（容忍首部错字/注音导致的漂移）。"""
+def _candidates(qs: str, BIG: str, starts: list, line_art: list):
+    """收集所有可能的源篇：沿引文取多个种子锚点，每个锚点找出其**全部**出现处所属篇。
+    （不只取首次出现——同一段往往在多卷重复，需全找出来再择优，避免被早出现的粗粒度本垄断。）"""
     L = len(qs)
-    if L <= ANCHOR:
-        return [qs]
-    step = max(ANCHOR, (L - ANCHOR) // 6 or ANCHOR)
-    out = [qs[i:i + ANCHOR] for i in range(0, L - ANCHOR + 1, step)]
-    out.append(qs[L - ANCHOR:])
-    return out
+    if L <= SEED:
+        offs = [0]
+    else:
+        step = max(8, L // 8)
+        offs = list(range(0, L - SEED + 1, step)) + [L - SEED]
+    cands = set()
+    for i in offs:
+        anc = qs[i:i + SEED]
+        if len(anc) < 10:
+            continue
+        start, n = 0, 0
+        while n < 8:
+            p = BIG.find(anc, start)
+            if p < 0:
+                break
+            li = bisect.bisect_right(starts, p) - 1
+            if li >= 0:
+                cands.add(line_art[li])
+            start, n = p + 1, n + 1
+    return cands
 
 
-def match_white(quote: str, idx_data) -> str | None:
-    """多锚点投票定候选篇 → 篇内逐行判定：仅取「几乎整行被引文包含」的语料行白话，
-    按其在引文中的位置排序拼接。容忍行内个别字差异；越界/漂移/覆盖不足一律留白。
-    原则：宁可不给，不给错；白话不溢出原文所述范围。"""
+def match_white(quote: str, idx_data):
+    """多候选源篇 → 篇内逐行**严格对齐**取白话：仅纳入干净对齐的语料行（行首即对齐且尾部
+    不大溢出，或整行≥75%被覆盖），按其在引文中的位置拼接。多卷重复时择最贴合者；候选篇
+    覆盖引文不足 60% 即留白。原则：原文与白话严格对齐，对不齐的宁可留白，绝不给错/溢出。"""
     BIG, starts, line_art, art_lines = idx_data
     qs = squash(quote)
     if len(qs) < MIN_MATCH:
         return None
 
-    # 候选篇投票
-    votes = {}
-    for anc in _anchors(qs):
-        p = BIG.find(anc)
-        if p >= 0:
-            li = bisect.bisect_right(starts, p) - 1
-            if li >= 0:
-                a = line_art[li]
-                votes[a] = votes.get(a, 0) + 1
-    if not votes:
+    cands = _candidates(qs, BIG, starts, line_art)
+    if not cands:
         return None
 
-    best_parts, best_cov = [], 0
-    for a in sorted(votes, key=lambda k: -votes[k]):
-        hits, cov = [], 0
+    best = None   # (key, hits)；key=(-覆盖分桶, 溢出度) 越小越好
+    need = len(qs) * COVER
+    for a in cands:
+        hits, cov, tot = [], 0, 0
         for lsq, tr in art_lines[a]:
             if len(lsq) < MIN_LINE:
                 continue
             blocks = SequenceMatcher(None, lsq, qs, autojunk=False).get_matching_blocks()
-            mtotal = sum(bk.size for bk in blocks)   # 该行与引文的总对齐字数（容忍内部插字/异字）
-            if mtotal >= len(lsq) * CONTAIN:         # 该语料行几乎整行落在引文内
-                posb = next((bk.b for bk in blocks if bk.size), 0)
-                hits.append((posb, tr))
-                cov += mtotal
-        if cov > best_cov:
-            best_cov, best_parts = cov, hits
-    # 整体须覆盖引文过半（短引文如偈颂只需达 MIN_MATCH），否则判未命中
-    if best_cov < max(MIN_MATCH, len(qs) * 0.5):
+            m = sum(bk.size for bk in blocks)          # 该行与引文总对齐字数（容忍内部插字/异字）
+            sig = [bk for bk in blocks if bk.size >= 6]
+            if not sig or m < MIN_MATCH:
+                continue
+            head = sig[0].a                            # 行首未落在引文内的字数
+            # 行首即对齐且尾部不大溢出，或整行≥75%被覆盖 —— 否则舍弃（不带出引文范围外内容）
+            if (head <= 4 and len(lsq) <= m * 2.0) or m >= len(lsq) * 0.75:
+                hits.append((sig[0].b, tr)); cov += m; tot += len(lsq)
+        if cov >= need:
+            key = (-round(cov / len(qs), 1), round(tot / len(qs), 2))
+            if best is None or key < best[0]:
+                best = (key, hits)
+
+    if best is None:
         return None
-    best_parts.sort(key=lambda x: x[0])
-    out = "".join(tr for _pos, tr in best_parts if tr)
+    parts = sorted(best[1], key=lambda x: x[0])
+    out = "".join(tr for _p, tr in parts if tr)
     return out or None
 
 
@@ -241,7 +259,8 @@ def build_q_article(block, idx_data, unmatched_acc):
         k += 1
     summary = ' '.join(summary_parts).strip()
 
-    segments, n_unmatched = [], 0
+    segments = []
+    stats = {'matched': 0, 'unmatched': 0}
     for p in paras[k:]:
         t = p.text.strip()
         if not t or t in NOISE or t.isdigit():
@@ -257,8 +276,10 @@ def build_q_article(block, idx_data, unmatched_acc):
         if src:
             seg['src'] = src
         segments.append(seg)
-        if not white:
-            n_unmatched += 1
+        if white:
+            stats['matched'] += 1
+        else:
+            stats['unmatched'] += 1
             unmatched_acc.append((block['num'], body))
 
     juan = block['juan'] or '卷首'
@@ -269,7 +290,7 @@ def build_q_article(block, idx_data, unmatched_acc):
         'juan': juan, 'category': cat or '', 'title': block['title'],
         'translator': '', 'summary': summary, 'segments': segments, 'anomalies': [],
     }
-    return art, paired, n_unmatched
+    return art, paired, stats
 
 
 # ---------------- books.json 装配 ----------------
@@ -305,7 +326,8 @@ def main():
 
     article_meta = []      # 有序 (juan, cat, item) 用于 books.json
     unmatched_acc = []     # [(qnum, 引文)]
-    total_seg = total_matched = 0
+    total_seg = 0
+    tot = {'matched': 0, 'unmatched': 0}
     written = 0
 
     # 卷首传记
@@ -320,13 +342,13 @@ def main():
 
     # 各问
     for block in blocks:
-        a, paired, n_un = build_q_article(block, idx_data, unmatched_acc)
+        a, paired, stats = build_q_article(block, idx_data, unmatched_acc)
         json.dump(a, open(os.path.join(ART, a['id'] + '.json'), 'w', encoding='utf-8'),
                   ensure_ascii=False, separators=(',', ':'))
         written += 1
-        nseg = len(a['segments'])
-        total_seg += nseg
-        total_matched += nseg - n_un
+        total_seg += len(a['segments'])
+        for k in tot:
+            tot[k] += stats[k]
         article_meta.append((a['juan'], a['category'] or None, {
             'id': a['id'], 'title': a['title'], 'paired': paired,
             'plain': False, 'notes': 0}))
@@ -339,14 +361,15 @@ def main():
               ensure_ascii=False, separators=(',', ':'))
 
     # 报告
-    rate = (total_matched / total_seg * 100) if total_seg else 0
+    rate = (tot['matched'] / total_seg * 100) if total_seg else 0
     lines = [
         f"# 《印光法师答念佛600问》构建报告",
         "",
         f"- 问题数：{len(blocks)}（末号 {last_num}）；卷首传记：{'1 篇' if bio else '无'}",
         f"- 写出文章 JSON：{written} 篇 → site/data/articles/{VOL_ID}-*.json",
         f"- 引文段总数：{total_seg}",
-        f"- 白话命中：{total_matched}　未命中：{total_seg - total_matched}　**命中率 {rate:.1f}%**",
+        f"- 白话命中（原文↔白话严格对齐）：{tot['matched']}　未命中：{tot['unmatched']}"
+        f"　**命中率 {rate:.1f}%**",
         "",
         "## 编号告警",
         *(report_warn or ["- 无"]),
@@ -357,7 +380,8 @@ def main():
         lines.append(f"- [问{qn}] {body[:70]}")
     open(REPORT, 'w', encoding='utf-8').write("\n".join(lines) + "\n")
 
-    print(f"==> 完成：{written} 篇，白话命中率 {rate:.1f}%（{total_matched}/{total_seg}）")
+    print(f"==> 完成：{written} 篇，白话命中率 {rate:.1f}%"
+          f"（{tot['matched']}/{total_seg}，原文↔白话严格对齐）")
     print(f"   报告 → {os.path.relpath(REPORT, PROJ)}")
     print("   注意：改了 site/data，请给 site/sw.js 的 VER 升号。")
 

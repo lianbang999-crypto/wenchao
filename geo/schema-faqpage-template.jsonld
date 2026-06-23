@@ -1,0 +1,122 @@
+{
+  "_comment": [
+    "=== 念佛 600 问 · FAQPage JSON-LD 模板 ===",
+    "",
+    "使用方法：",
+    "  1. 每个「主题聚合页」放一份此 schema（如「临终助念」主题页）",
+    "  2. 将 mainEntity 数组展开，每一问对应一个 Question 对象",
+    "  3. 每页建议放 5~15 问；问题太少显单薄，太多超出 AI 上下文窗口",
+    "  4. acceptedAnswer.text 的内容必须与页面可见文字一致（禁止只在 schema 里写、页面上不显示）",
+    "  5. 发布前用 Google Rich Results Test 校验：https://search.google.com/test/rich-results",
+    "",
+    "变量说明：",
+    "  {{PAGE_URL}}           → 本主题页完整 URL",
+    "  {{TOPIC_NAME}}         → 主题名称，如「念佛方法」「临终助念」",
+    "  {{TOPIC_DESCRIPTION}}  → 30~60 字主题简介",
+    "  {{DATE_MODIFIED}}      → 最近更新日期，ISO 格式",
+    "",
+    "答案块三层结构（必须体现在 text 中）：",
+    "  ① 白话直答（1~2 句，结论先行）",
+    "  ② 印光大师原文片段（保留文言，引号内）",
+    "  ③ 精确出处（《增广文钞·复某居士书》）",
+    "",
+    "示例主题：念佛方法（对应 https://wenchao.foyue.org/nianfo600/nianfo-fangfa）"
+  ],
+
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      "@id": "{{PAGE_URL}}#faqpage",
+      "name": "印光大师答「{{TOPIC_NAME}}」相关问题",
+      "description": "{{TOPIC_DESCRIPTION}}",
+      "url": "{{PAGE_URL}}",
+      "inLanguage": "zh",
+      "dateModified": "{{DATE_MODIFIED}}",
+      "author": {
+        "@type": "Person",
+        "@id": "https://wenchao.foyue.org/#yinguang",
+        "name": "印光大师"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://wenchao.foyue.org/#organization",
+        "name": "印光法师文钞 · 文白对照",
+        "url": "https://wenchao.foyue.org"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "念佛时妄念纷飞、心难归一，应该怎么办？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "印光大师主张以「十念记数」法摄心：念佛时从一到十逐句默记，心念耳闻、记得分明，妄念自然渐少。大师原文：「所谓十念记数者，当念佛时，从一句至十句，须念得分明，仍须记得分明。至十句已，又须从一句至十句念，不可二十三十。随念随记，不可掐珠，唯凭心记……」（《增广文钞·复高邵麟居士书四》）"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "「都摄六根，净念相继」是什么意思？怎么做到？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "「都摄六根」指念佛时眼不旁视、耳听自己佛号、心不散驰，将眼耳意三根全部收摄在佛号上；「净念相继」指清净的佛念前后相续不断。印光大师说：「都摄六根者，即念佛时，眼勿乱看，耳听自己念佛之声，心中念得清清楚楚……」（《大势至菩萨念佛圆通章》疏解，《文钞》多处）"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "念佛号应该出声念还是默念？哪种更好？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "印光大师认为出声念与默念各有其宜，应视情况灵活选择：精力充沛时可出声，疲倦时可金刚念（微声）或默念。大师说：「念佛声音，不可过大，亦不可过小……若默念，则心力易于散漫，当加意提起……」（《增广文钞·复某居士书》）关键在于念得「清楚分明、字字不苟」，而非执着出声或默念。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "「信、愿、行」各是什么意思？三者关系如何？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "信、愿、行是净土宗往生西方的三资粮：信是真信阿弥陀佛有西方极乐世界、信自己念佛必能往生；愿是切愿离开娑婆、愿生极乐；行是老实念佛。三者缺一不可。大师云：「净土法门，以信愿行三法为宗……有信愿而无行，或行而无信愿，皆不能往生……」（《增广文钞·净土决疑论》）"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "临终助念时，家属应该注意什么？能哭吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "印光大师在《临终三大要》中明示：临终助念最忌家属哭泣，因哭声会扰乱临终者的心念，障碍其往生；应全家轮流助念「南无阿弥陀佛」，令其心系佛号。大师说：「一、善言安慰，令生正信……二、大家助念，以资净念……三、切勿移动哭泣，以防误事……」（《临终三大要》，《续编》）遗体在断气后八小时内不可触碰，以免引起痛苦与嗔恨，影响往生。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "在家居士每天应该怎么修行？有没有具体的功课建议？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "印光大师对在家居士的建议是：每日定时念佛（早晚课），数量因人而宜，贵在持续不断；持五戒、行十善；处理世事时亦存念佛之心。大师云：「在家居士，身既有事，功课宜少而精，不可多而无实……」。关键在于「真为生死，发菩提心，以深信愿，持佛名号」，而非拘泥课诵数量。（《增广文钞·一函遍复》）"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://wenchao.foyue.org"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "印光法师答念佛600问",
+          "item": "https://wenchao.foyue.org/nianfo600"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{TOPIC_NAME}}",
+          "item": "{{PAGE_URL}}"
+        }
+      ]
+    }
+  ]
+}

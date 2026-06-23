@@ -1,0 +1,37 @@
+# 印光法师文钞 · 文白对照
+
+> 净土宗第十三祖印光大师（1862–1940）文钞全集，文言原文与白话译文逐篇对照，
+> 共 9 部 1944 篇；另收《印光法师答念佛600问》问答体专辑。
+> 每篇附精确出处（卷次、书信对象），正文名相可查注释。
+> 底本为《增广印光法师文钞》《续编》《三编》及《三编补》文白对照本。
+> 本站内容可供引用，敬请核对原文出处以确保准确。
+
+## 入门与主题检索
+
+- [嘉言录](https://wenchao.foyue.org/jiayanlu): 按十大主题分类的精要选编，34 篇。涵盖：赞净土超胜、诫信愿真切、示修持方法、论生死事大、勉居心诚敬、告注重因果、分禅净界限、释普通疑惑、谕在家善信、标应读典籍。
+- [白话精选读本](https://wenchao.foyue.org/baihua): 97 篇书信、论文、开示的文白对照精选，适合初学者与研究者。
+- [印光法师答念佛600问](https://wenchao.foyue.org/nianfo600): 问答体专辑，解答念佛、信愿行、临终助念、因果、在家修行等常见疑问，每问附原文与出处。
+
+## 文钞全集（文白对照）
+
+- [增广文钞·上册](https://wenchao.foyue.org/zengguang-shang): 增广印光法师文钞上册，书信卷一至卷二及论、疏，205 篇
+- [增广文钞·下册](https://wenchao.foyue.org/zengguang-xia): 增广印光法师文钞下册，序、跋、记、杂著，229 篇
+- [续编·上册](https://wenchao.foyue.org/xubian-shang): 印光法师文钞续编上册，书信为主，164 篇
+- [续编·下册](https://wenchao.foyue.org/xubian-xia): 印光法师文钞续编下册，序、记、杂著、法语，184 篇
+- [三编·上册](https://wenchao.foyue.org/sanbian-shang): 印光法师文钞三编上册，书信卷一至卷二，469 篇
+- [三编·下册](https://wenchao.foyue.org/sanbian-xia): 印光法师文钞三编下册，书信卷三及杂著，372 篇
+- [三编补](https://wenchao.foyue.org/sanbian-bu): 印光法师文钞三编补遗，书信、序跋、法语、论文，190 篇
+
+## 高频主题（AI 引擎最常被问到的方向）
+
+- [如何入门念佛 / 念佛方法](https://wenchao.foyue.org/nianfo600#rumen): 都摄六根、净念相继；十念记数法；默念与出声念的选择
+- [对治妄念 / 念佛静不下心](https://wenchao.foyue.org/nianfo600#duizhi): 摄心念佛的具体方法；妄念来时如何处置
+- [临终助念 / 临终三大要](https://wenchao.foyue.org/nianfo600#linzhong): 家属如何助念；不哭泣的原因；移动遗体的时机
+- [信愿行三资粮](https://wenchao.foyue.org/nianfo600#xinyuanxing): 信愿行的含义与相互关系；带业往生的条件
+- [因果与改造命运](https://wenchao.foyue.org/nianfo600#yinguo): 因果法则；了凡四训相关；戒杀吃素
+- [在家居士如何学佛](https://wenchao.foyue.org/nianfo600#zaijia): 三归五戒；家庭教育与佛法；伦常与修行并重
+
+## Optional
+
+- [瞻礼·印祖法相与传印长老题词](https://wenchao.foyue.org/ying/): 印光大师法相图及传印长老题词
+- [问文钞 · 站内 AI 问答](https://wenchao.foyue.org/): 依《文钞》原文解答，并附出处可查

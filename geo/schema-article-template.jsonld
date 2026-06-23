@@ -1,0 +1,79 @@
+{
+  "_comment": [
+    "=== 文钞文章页 JSON-LD 模板 ===",
+    "使用方法：将每篇文章页 <head> 中加入此 JSON-LD（用 <script type='application/ld+json'> 包裹）",
+    "所有 {{双花括号}} 变量需按每篇实际值替换，说明见下方变量表",
+    "",
+    "变量替换表：",
+    "  {{PAGE_URL}}          → 本页面完整 URL，如 https://wenchao.foyue.org/zengguang/fuga-gaoshaolin-4",
+    "  {{ARTICLE_TITLE}}     → 篇名，如「复高邵麟居士书四」",
+    "  {{ARTICLE_DESCRIPTION}} → 30~80 字白话简介，如「印光大师就念佛摄心方法，提出十念记数之法……」",
+    "  {{BOOK_NAME}}         → 所属文集名称，如「增广印光法师文钞」",
+    "  {{BOOK_URL}}          → 所属文集页面 URL",
+    "  {{VOLUME_NAME}}       → 卷次，如「卷一·书一」",
+    "  {{DATE_PUBLISHED}}    → 页面首次上线日期，ISO 格式，如「2024-01-01」",
+    "  {{DATE_MODIFIED}}     → 最近更新日期，ISO 格式，如「2026-06-23」",
+    "  {{CITATION_STRING}}   → 精确出处文字，如「《增广印光法师文钞·卷一·复高邵麟居士书四》」"
+  ],
+
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "{{PAGE_URL}}#article",
+      "headline": "{{ARTICLE_TITLE}}",
+      "name": "{{ARTICLE_TITLE}}",
+      "description": "{{ARTICLE_DESCRIPTION}}",
+      "url": "{{PAGE_URL}}",
+      "inLanguage": "zh",
+      "isPartOf": {
+        "@type": "Book",
+        "@id": "https://wenchao.foyue.org/#wenchao",
+        "name": "印光法师文钞"
+      },
+      "isPartOf": {
+        "@type": "Book",
+        "@id": "{{BOOK_URL}}#book",
+        "name": "{{BOOK_NAME}}"
+      },
+      "author": {
+        "@type": "Person",
+        "@id": "https://wenchao.foyue.org/#yinguang",
+        "name": "印光大师"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://wenchao.foyue.org/#organization",
+        "name": "印光法师文钞 · 文白对照",
+        "url": "https://wenchao.foyue.org"
+      },
+      "datePublished": "{{DATE_PUBLISHED}}",
+      "dateModified": "{{DATE_MODIFIED}}",
+      "citation": "{{CITATION_STRING}}",
+      "about": ["净土宗", "念佛", "印光大师"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://wenchao.foyue.org"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "{{BOOK_NAME}}",
+          "item": "{{BOOK_URL}}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ARTICLE_TITLE}}",
+          "item": "{{PAGE_URL}}"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+# ============================================================
+# robots.txt — wenchao.foyue.org
+# GEO 配置：放行所有主流 AI 引擎爬虫（训练 + 引用/索引）
+# 最后更新：2026-06-23
+# ============================================================
+
+# ===== OpenAI（ChatGPT / ChatGPT Search）=====
+# GPTBot       → 训练数据抓取
+# OAI-SearchBot → ChatGPT 搜索索引（决定 ChatGPT 是否引用你）
+# ChatGPT-User  → 用户在 ChatGPT 中触发的实时抓取
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# ===== Anthropic（Claude）=====
+# ClaudeBot      → 主索引爬虫
+# Claude-User    → 用户触发引用抓取
+# Claude-SearchBot → 搜索引用爬虫
+# anthropic-ai   → 旧版 UA（兼容保留）
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: claude-web
+Allow: /
+
+# ===== Perplexity =====
+# PerplexityBot  → 建立 Perplexity 索引库
+# Perplexity-User → 用户点击引用时触发的抓取
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ===== Google（Googlebot 搜索 + Google-Extended Gemini）=====
+# Googlebot      → 常规 Google 搜索索引（同时喂给 AI Overview / Gemini）
+# Google-Extended → 专控 Gemini 训练与 AI 摘要的 robots token
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# ===== 微软 Bing / Copilot =====
+User-agent: Bingbot
+Allow: /
+
+# ===== xAI / Grok =====
+User-agent: Grok
+Allow: /
+
+# ===== Meta（LLaMA 相关研究抓取）=====
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# ===== Apple（Apple Intelligence / Siri）=====
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ===== Amazon（Alexa / Rufus AI）=====
+User-agent: Amazonbot
+Allow: /
+
+# ===== 国内主流 AI 引擎 =====
+# Bytespider → 字节跳动（豆包 / 抖音搜索）
+# Baiduspider → 百度（文心一言 / 百度 AI 搜索）
+User-agent: Bytespider
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# ===== 通用兜底：其余所有爬虫一律放行 =====
+User-agent: *
+Allow: /
+
+# ===== Sitemap 声明 =====
+Sitemap: https://wenchao.foyue.org/sitemap.xml

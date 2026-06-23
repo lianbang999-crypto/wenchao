@@ -21,6 +21,7 @@ VOL_DIR = SITE / "v"
 ORIGIN = os.environ.get("SITE_ORIGIN", "https://wenchao.foyue.org").rstrip("/")
 SITE_NAME = "印光法师文钞"
 AUTHOR = "印光法师"
+QNUM_RE = re.compile(r'^\d+[、.]')   # q600 题号正则，与 build_faq_schema.py 同口径
 
 
 def h(value: object) -> str:

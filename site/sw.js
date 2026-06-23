@@ -1,6 +1,6 @@
 /* 离线缓存：一律网络优先、写穿缓存；离线时回退缓存。
    读过的篇目离线可重读，数据更新后在线立即生效。 */
-const VER = 'wc-v31';
+const VER = 'wc-v32';
 const SHELL = ['./', 'index.html', 'css/app.css?v=20260621-tts', 'js/app.js?v=20260621-aicard2', 'js/ai-core.js', 'js/qrcode.js', 'js/share.js?v=20260621-aicard2', 'js/opencc.js?v=20260616-ai-v2', 'js/pwa.js?v=20260622-pwa', 'config.js?v=20260616-ai-panel', 'icon.svg', 'manifest.webmanifest', 'img/icons/icon-192.png', 'img/icons/maskable-192.png', 'apple-touch-icon.png', 'data/books.json'];
 
 self.addEventListener('install', (e) => {

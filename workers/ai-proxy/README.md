@@ -72,11 +72,40 @@ curl -X POST "https://<worker>/index?cursor=0" \
 
 把 Worker 地址填到 `site/config.js` 的 `aiEndpoint`，再部署站点。
 
+## 对外开放：API key 鉴权 + 按 key 配额
+
+问答接口 `POST /api/ai` 支持三类调用来源，分流鉴权（`worker.js` 的 `authenticate`/`enforceQuota`）：
+
+1. **带 API key**（第三方 / 服务端）：请求头 `Authorization: Bearer <key>` 或 `X-Api-Key: <key>`。校验通过后按**该 key 独立的每日配额**计数（默认 `KEY_DAILY_LIMIT`，可在密钥表里给某 key 单独写 `limit`），不与他人共享 IP 限额。
+2. **无 key 但来自白名单 `Origin`/`Referer`**（自家网页）：沿用**每 IP 每日 `DAILY_LIMIT`** 限额，行为不变。
+3. **既无 key 又非自家网页**：`REQUIRE_KEY_FOR_API=true`（默认）时返回 `401`，把匿名 `curl` 直调挡在门外；置 `false` 则退回②的匿名路径（仅受 IP 限额）。
+
+> `Origin`/`Referer` 可被伪造，仅用于「是不是自家前端」的软判断；真正的鉴权靠 API key。浏览器里放不住真密钥，所以**网页前端始终走②的匿名+IP 限额路径**，这是公开网站后端的固有约束——API key 是给服务端/第三方用的。
+
+**签发 / 停用 key**（用 `scripts/api_keys.sh`，维护本地主表 `workers/ai-proxy/.api_keys.json`，已 gitignore；Worker Secret 写后不可读回，本地主表是唯一真相来源）：
+
+```bash
+bash scripts/api_keys.sh new 伙伴A 1000   # 生成 key + 每日额度，打印明文(仅此一次)
+bash scripts/api_keys.sh list             # 查看（不显明文）
+bash scripts/api_keys.sh revoke 伙伴A      # 停用
+bash scripts/api_keys.sh push             # 写入 Worker Secret API_KEYS，即时生效
+```
+
+第三方调用示例：
+
+```bash
+curl -X POST https://wenchao.foyue.org/api/ai \
+  -H "Authorization: Bearer <明文key>" -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"念佛如何摄心？"}]}'
+```
+
+返回与网页一致：`application/x-ndjson` 流（`meta`/`delta`/`done`）。`GET /api/ai/health` 会回报 `apiKeyAuth`（是否已配置密钥表）、`apiKeys`（已配 key 数）、`requireKey`、`keyDailyLimit`，便于确认生效。
+
 ## 安全须知
 
 - 密钥若曾以明文出现（聊天/截图/日志），请到 DeepSeek 后台轮换后再 `secret put`。
-- 代理已做：同源 CORS 白名单、每 IP 每日限流、答案缓存、检索资料约束、低温保真。
-- 调优：`worker.js` 顶部常量可调 `TOP_K`、`RERANK_POOL`、`USE_RERANK`、`USE_QUERY_REWRITE`、`USE_HYBRID`、`LEX_TOPK`、`RRF_K`、`PARENT_CHARS`、`USE_CONDENSE`、`USE_REASONER_FOR_HARD`、`ANSWER_CHARS`、`MAX_TOKENS`、`CACHE_TTL`、`DAILY_LIMIT`。
+- 代理已做：同源 CORS 白名单、API key 鉴权 + 按 key 配额、每 IP 每日限流、答案缓存、检索资料约束、低温保真。
+- 调优：`worker.js` 顶部常量可调 `TOP_K`、`RERANK_POOL`、`USE_RERANK`、`USE_QUERY_REWRITE`、`USE_HYBRID`、`LEX_TOPK`、`RRF_K`、`PARENT_CHARS`、`USE_CONDENSE`、`USE_REASONER_FOR_HARD`、`ANSWER_CHARS`、`MAX_TOKENS`、`CACHE_TTL`、`DAILY_LIMIT`、`REQUIRE_KEY_FOR_API`、`KEY_DAILY_LIMIT`。
 - 自检：部署后 `GET /api/ai/health` 会回报当前 `rerank`、`queryRewrite`、`condense`、`reasonerForHard`、`hybrid`、`hybridReady`（D1 全文索引是否就绪）、`lexRows`（已建全文索引行数）、`parentChars`、`retrievalVersion`、`vectors`（已建向量数）等，便于确认配置生效。
 
 ## 评测准确度（改检索逻辑后必跑）

@@ -10,6 +10,10 @@ routes = [
 #   npx wrangler secret put DEEPSEEK_API_KEY      # 问答生成
 #   npx wrangler secret put SILICONFLOW_API_KEY   # bge-m3 嵌入 + bge-reranker 重排序（硅基流动）
 #
+# 可选：第三方/服务端调用的 API key 鉴权表（JSON）。不配置则只有自家网页能用。
+# 用 scripts/api_keys.sh 维护本地主表并写入，等价于：
+#   npx wrangler secret put API_KEYS    # 值形如 {"<token>":{"name":"伙伴A","limit":1000}}
+#
 # 限流 + 答案缓存（同一个 KV）。每 IP 每日上限由 worker.js 的 DAILY_LIMIT 控制。
 #   npx wrangler kv namespace create RL
 [[kv_namespaces]]

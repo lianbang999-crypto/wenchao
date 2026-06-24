@@ -41,7 +41,9 @@ const RETRIEVAL_VERSION = 'r6';            // 检索/生成版本号，并入答
 const ANSWER_CHARS = 500;                 // 回复字数上限(软引导)
 const MAX_TOKENS = 700;                   // 回复 token 硬上限(约 500 汉字)
 const CACHE_TTL = 7 * 86400;              // 答案缓存 7 天
-const DAILY_LIMIT = 60;                   // 每 IP 每日提问上限
+const DAILY_LIMIT = 60;                   // 每 IP 每日提问上限（自家网页/匿名路径）
+const REQUIRE_KEY_FOR_API = true;         // 非自家网页(无白名单 Origin/Referer)的请求必须带有效 API key；置 false 则匿名 curl 也可用(仅受每 IP 日限额)
+const KEY_DAILY_LIMIT = 2000;             // API key 默认每日额度；可在 API_KEYS 里给某个 key 加 "limit" 字段单独覆盖
 const INDEX_BATCH = 25;                   // 每次 /index 处理的文章数
 const INDEX_EMBED_BATCH = 50;             // 每次 Workers AI embedding 文本数
 const CHUNK_CHARS = 720;                  // 单个向量块目标字数，避免长段被截断
@@ -53,7 +55,7 @@ function cors(origin) {
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Api-Key',
     'Access-Control-Max-Age': '86400',
   };
 }
@@ -549,17 +551,68 @@ function validateCitations(reply, passages, ctxTexts) {
   return { cited: nums.length, invalid, quoteChecked, quoteOk, faithful };
 }
 
+/* ---------- API key 鉴权 + 按 key 配额 ----------
+   三种调用来源分流：
+   ① 带 API key（第三方/服务端）：校验 key，按 key 独立日配额（KEY_DAILY_LIMIT，可被单 key 覆盖）。
+   ② 无 key 但来自白名单 Origin/Referer（自家网页）：沿用每 IP 日限额。
+   ③ 既无 key 又非自家网页：REQUIRE_KEY_FOR_API=true 时拒绝（默认），否则退回②的匿名路径。
+   注意：Origin/Referer 可被 curl 伪造，仅作"是否自家前端"的软判断；真正的鉴权靠 API key。 */
+function extractApiKey(req) {
+  const m = (req.headers.get('Authorization') || '').match(/^Bearer\s+(.+)$/i);
+  if (m) return m[1].trim();
+  return (req.headers.get('X-Api-Key') || '').trim();
+}
+function loadApiKeys(env) {
+  // 密钥表存于 Worker Secret API_KEYS（JSON）：{ "<token>": { "name": "...", "limit": 1000, "disabled": false } }
+  if (!env.API_KEYS) return null;
+  try { const o = JSON.parse(env.API_KEYS); return o && typeof o === 'object' ? o : null; } catch { return null; }
+}
+function isFirstParty(req) {
+  const origin = req.headers.get('Origin') || '';
+  if (origin && ALLOW_ORIGINS.includes(origin)) return true;
+  const ref = req.headers.get('Referer') || '';
+  return ALLOW_ORIGINS.some((o) => ref === o || ref.startsWith(o + '/'));
+}
+async function authenticate(req, env) {
+  const token = extractApiKey(req);
+  if (token) {
+    const keys = loadApiKeys(env);
+    const rec = keys && Object.prototype.hasOwnProperty.call(keys, token) ? keys[token] : null;
+    if (!rec || rec.disabled) return { error: true, status: 401, message: 'API key 无效或已停用。' };
+    const id = (await sha256(token)).slice(0, 16);
+    const limit = Number.isFinite(rec.limit) ? rec.limit : KEY_DAILY_LIMIT;
+    return { kind: 'key', id, name: rec.name || 'key', limit };
+  }
+  if (isFirstParty(req)) return { kind: 'ip' };
+  if (REQUIRE_KEY_FOR_API) return { error: true, status: 401, message: '需要 API key：请在请求头加 Authorization: Bearer <你的密钥>。' };
+  return { kind: 'ip' };
+}
+async function enforceQuota(req, env, auth) {
+  if (!env.RL) return { limited: false };
+  const today = new Date().toISOString().slice(0, 10);
+  if (auth.kind === 'key') {
+    const k = `akq:${today}:${auth.id}`;
+    const c = parseInt((await env.RL.get(k)) || '0', 10);
+    if (c >= auth.limit) return { limited: true, message: `本 API key 今日额度（${auth.limit}）已用尽，请明日再来。` };
+    await env.RL.put(k, String(c + 1), { expirationTtl: 90000 });
+    return { limited: false };
+  }
+  const ip = req.headers.get('CF-Connecting-IP') || 'anon';
+  const k = `d:${today}:${ip}`;
+  const c = parseInt((await env.RL.get(k)) || '0', 10);
+  if (c >= DAILY_LIMIT) return { limited: true, message: '今日提问已达上限，请明日再来。阿弥陀佛。' };
+  await env.RL.put(k, String(c + 1), { expirationTtl: 90000 });
+  return { limited: false };
+}
+
 async function handleAsk(req, env, headers) {
   if (!env.DEEPSEEK_API_KEY) return json({ reply: '服务未配置密钥。' }, 500, headers);
 
-  // 限流
-  if (env.RL) {
-    const ip = req.headers.get('CF-Connecting-IP') || 'anon';
-    const key = `d:${new Date().toISOString().slice(0, 10)}:${ip}`;
-    const c = parseInt((await env.RL.get(key)) || '0', 10);
-    if (c >= DAILY_LIMIT) return json({ reply: '今日提问已达上限，请明日再来。阿弥陀佛。' }, 429, headers);
-    await env.RL.put(key, String(c + 1), { expirationTtl: 90000 });
-  }
+  // 鉴权（API key / 自家网页 / 匿名）+ 对应配额
+  const auth = await authenticate(req, env);
+  if (auth.error) return json({ reply: auth.message }, auth.status, headers);
+  const quota = await enforceQuota(req, env, auth);
+  if (quota.limited) return json({ reply: quota.message }, 429, headers);
 
   let body;
   try { body = await req.json(); } catch { body = null; }
@@ -783,6 +836,11 @@ async function handleHealth(env, headers) {
     lexRows,
     parentChars: PARENT_CHARS,
     retrievalVersion: RETRIEVAL_VERSION,
+    apiKeyAuth: !!loadApiKeys(env),       // 是否已配置 API_KEYS 密钥表
+    apiKeys: (function () { const k = loadApiKeys(env); return k ? Object.keys(k).length : 0; })(),
+    requireKey: REQUIRE_KEY_FOR_API,      // 非自家网页是否强制要求 API key
+    keyDailyLimit: KEY_DAILY_LIMIT,
+    dailyLimit: DAILY_LIMIT,
     topK: TOP_K,
     chunkChars: CHUNK_CHARS,
     indexBatch: INDEX_BATCH,

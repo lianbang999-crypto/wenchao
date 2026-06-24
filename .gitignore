@@ -4,6 +4,7 @@ Thumbs.db
 node_modules/
 .wrangler/
 .dev.vars
+.api_keys.json
 .env
 .env.*
 !.env.example

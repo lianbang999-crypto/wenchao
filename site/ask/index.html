@@ -46,10 +46,11 @@
   .ask-head .ask-title strong { font: 600 17px var(--serif); color: var(--ink); }
   .ask-head .ask-title small { color: var(--ink-3); font-size: 12px; }
   .ask-head .ask-spacer { flex: 1; }
+  /* 两枚角标：飞白色、无边框（首页与聊天统一） */
   .ask-back, .icon-btn { display: inline-flex; align-items: center; justify-content: center;
-    width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--line);
-    background: var(--paper); color: var(--ink-2); cursor: pointer; }
-  .ask-back:hover, .icon-btn:hover { color: var(--cinnabar); border-color: var(--cinnabar); }
+    width: 36px; height: 36px; border-radius: 9px; border: 1px solid transparent;
+    background: transparent; color: var(--ink-3); cursor: pointer; }
+  .ask-back:hover, .icon-btn:hover { color: var(--cinnabar); }
   .ask-shell .ai-log { flex: 1; }
   .ai-disclaimer { margin: 0; padding: 4px 14px 12px; color: var(--ink-3); font-size: 12px; text-align: center; }
 
@@ -62,12 +63,9 @@
      只留「问文钞 + 输入框」一个焦点，其余退成轻提示，垂直居中、大留白。 */
   .ai-home { flex: 1; overflow-y: auto; overscroll-behavior: contain;
     display: flex; flex-direction: column; justify-content: center; padding: 24px 26px 36px; }
-  /* 极简：首页态弱化页头——去边框、隐藏标题，两枚角标淡到最轻 */
+  /* 极简：首页态进一步弱化页头——去边框、隐藏标题（角标淡化已在基样里统一） */
   [data-state="home"] .ask-head { border-bottom: 0; background: transparent; }
   [data-state="home"] .ask-head .ask-title { display: none; }
-  [data-state="home"] .ask-back, [data-state="home"] #btn-ai-new {
-    border-color: transparent; background: transparent; color: var(--ink-3); }
-  [data-state="home"] .ask-back:hover, [data-state="home"] #btn-ai-new:hover { color: var(--cinnabar); }
 
   .ask-hero { text-align: center; }
   .ask-brand { margin: 0; font: 900 32px/1 var(--serif); letter-spacing: .2em; color: var(--ink); }
@@ -121,7 +119,7 @@
 
   <!-- 单一输入框：首页态在 #home-input-slot，对话态移到底部 -->
   <form class="ai-input" id="ai-form">
-    <textarea id="ai-text" rows="1" placeholder="心有所惑，皆可来问…"></textarea>
+    <textarea id="ai-text" rows="1" placeholder="向印祖文钞请益"></textarea>
     <button type="submit" class="chip-btn ai-send">发送</button>
   </form>
   <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>

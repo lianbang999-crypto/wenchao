@@ -8,10 +8,21 @@ const CFG = window.WENCHAO_CONFIG || {};
 const SHARE_BASE = (CFG.shareBase || location.origin).replace(/\/$/, '');
 const aiLog = $('#ai-log');
 const aiText = $('#ai-text');
+const shell = $('#ask-shell');
+const aiForm = $('#ai-form');
+const homeSlot = $('#ask-input-slot');
+const aiDisc = document.querySelector('.ai-disclaimer');
 
 const aiHistory = [];                          // 发给后端的上下文
 let aiSession = lstore.get('aiSession', []);   // 与抽屉同键，天然互通
 let aiAbort = null;
+
+/* 单页双态：首页态把输入框移入首屏居中槽，对话态移回底部（同一节点，监听不丢） */
+function setState(s) {
+  shell.dataset.state = s;
+  if (s === 'home') homeSlot.appendChild(aiForm);
+  else shell.insertBefore(aiForm, aiDisc);     // 底部：对话区之后、免责声明之前
+}
 
 const FB_ICON = {
   up: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>',
@@ -40,18 +51,6 @@ function aiAppend(role, text, passages) {
   aiLog.scrollTop = aiLog.scrollHeight;
   return div;
 }
-function aiWelcome() {
-  if (aiLog.children.length) return;
-  const div = document.createElement('div');
-  div.className = 'ai-welcome';
-  div.innerHTML =
-    '<p class="aw-greet">南无阿弥陀佛</p>' +
-    '<p class="aw-lead">心有所惑，皆可来问。</p>' +
-    '<p>无论念佛、信愿、因果、家庭，还是病苦、临终大事，我都会依《印光法师文钞》原文为您解答，并附出处可查。</p>' +
-    '<p class="aw-hint">点上方常见问题，或在下方直接问。</p>';
-  aiLog.appendChild(div);
-}
-
 /* ---------- 出处弹卡 ---------- */
 function showCitation(p) {
   if (!p) return;
@@ -166,6 +165,7 @@ function renderBot(rec) {
 }
 function aiInit() {
   if (aiSession.length) {
+    setState('chat');
     aiHistory.length = 0;
     aiSession.forEach((rec) => {
       if (rec.r === 'u') { aiAppend('user', rec.c); aiHistory.push({ role: 'user', content: rec.c }); }
@@ -173,13 +173,14 @@ function aiInit() {
     });
     aiLog.scrollTop = aiLog.scrollHeight;
   } else {
-    aiWelcome();
+    setState('home');
   }
 }
 
 /* ---------- 提问（流式） ---------- */
 const aiSendBtn = () => $('.ai-send');
 async function aiAsk(q) {
+  if (shell.dataset.state !== 'chat') setState('chat');   // 首页态 → 对话态：首屏淡出、输入框移底
   aiAppend('user', q);
   aiHistory.push({ role: 'user', content: q });
   if (!CFG.aiEndpoint) {
@@ -259,13 +260,15 @@ aiText.addEventListener('input', () => {
   aiText.style.height = 'auto';
   aiText.style.height = Math.min(aiText.scrollHeight, 120) + 'px';
 });
-document.querySelectorAll('#ai-chips .chip-btn').forEach((b) => { b.onclick = () => aiAsk(b.dataset.q); });
+document.querySelectorAll('#ai-home [data-q]').forEach((b) => { b.onclick = () => aiAsk(b.dataset.q); });
 const newBtn = $('#btn-ai-new');
 if (newBtn) newBtn.onclick = () => {
   if (window.speechSynthesis) window.speechSynthesis.cancel();
   if (aiAbort) aiAbort.abort();
   aiHistory.length = 0; aiSession.length = 0; saveSession();
-  aiLog.innerHTML = ''; aiWelcome();
+  aiLog.innerHTML = '';
+  aiText.value = ''; aiText.style.height = 'auto';
+  setState('home');
 };
 $('#sheet-backdrop').onclick = closeSheet;
 const sheetClose = $('#sheet-close'); if (sheetClose) sheetClose.onclick = closeSheet;

@@ -34,7 +34,7 @@
      苹果设备命中本地楷体，不会产生下载 -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
-<link rel="stylesheet" href="css/app.css?v=20260623-600q">
+<link rel="stylesheet" href="css/app.css?v=20260703-reader">
   <meta name="msvalidate.01" content="2E887F8A75C595EF89E235E27D2816E0" />
   <meta name="baidu-site-verification" content="codeva-345JAH4iJi" />
 </head>
@@ -67,6 +67,18 @@
   <div class="nav-search">
     <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
   </div>
+  <nav class="nav-topics" aria-label="专题">
+    <span class="nav-topics-label">专题</span>
+    <a class="chip-btn" href="/t/nianfo/">念佛法门</a>
+    <a class="chip-btn" href="/t/xinyuan/">信愿往生</a>
+    <a class="chip-btn" href="/t/linzhong/">临终助念</a>
+    <a class="chip-btn" href="/t/yinguo/">因果报应</a>
+    <a class="chip-btn" href="/t/jiesha/">戒杀护生</a>
+    <a class="chip-btn" href="/t/dunlun/">家庭教育</a>
+    <a class="chip-btn" href="/t/chengjing/">持戒诚敬</a>
+    <a class="chip-btn" href="/t/guanyin/">观音感应</a>
+    <a class="chip-btn nav-topics-all" href="/t/">全部 »</a>
+  </nav>
   <div class="nav-tree" id="nav-tree" role="tree"></div>
   <div class="drawer-foot">
     <div class="pref-row">
@@ -122,7 +134,7 @@
   </div>
   <div class="ai-log" id="ai-log"></div>
   <form class="ai-input" id="ai-form">
-    <textarea id="ai-text" rows="1" placeholder="向文钞请教…"></textarea>
+    <textarea id="ai-text" rows="1" placeholder="向文钞请益…"></textarea>
     <button type="submit" class="chip-btn ai-send">发送</button>
   </form>
   <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
@@ -140,7 +152,7 @@
     </header>
     <div class="art-summary"><b>提 要</b>光则早晚必按朝暮课诵直念。先则日礼数百拜，近数年来事多，只二时功课。冬则日过百拜，夏则只数十拜。亦只拜释迦，弥陀，净土三经，及诸大乘经，观音、势至、清净海众，尽虚空、遍法界，过去、现在、未来，一切诸佛、一切尊法、一切贤圣僧。</div>
     <article class="art-body" data-mode="both">
-<div class="para-pair"><p class="p-orig">功课各随己意，亦无定章。光则早晚必按朝暮课诵直念。凡起腔唱者，亦作直念，但稍缓点，光绝未学唱念。然在丛林中，只可小声，不得声闻于外，以致惊动别人。先则日礼数百拜，近数年来事多，只二时功课。冬则日过百拜，夏则只数十拜。亦只拜释迦，弥陀，净土三经，及诸大乘经，观音、势至、清净海众，尽虚空、遍法界，过去、现在、未来，一切诸佛、一切尊法、一切贤圣僧。</p><p class="p-trans">功课各随自己的心意，也没有一定的章程。我是早晚必定按照《朝暮课诵》直接念。凡是要起腔唱的，也是直念，只是稍为缓慢一点。我绝对没有学过唱念。然而在丛林中，只可以小声，不得大声传到外面，以致惊动别人。起先是每天拜几百拜，近些年来，事情多，只念早晚二时的功课。冬天，每天超过一百拜。夏天则只是几十拜。也只拜释迦牟尼佛，阿弥陀佛，净土三经，以及诸大乘经，观世音菩萨，大势至菩萨，清净大海众菩萨，尽虚空遍法界、过去、现在、未来一切诸佛、一切尊法、一切贤圣僧（阿弥陀佛的礼拜，拜多少不一定，按照精神的盛衰、天气时节而增减，其余各三拜）。近来，白天绝对无法看经拜佛，所有的信件以及委托校证、校对的事情，已经没有一点闲暇了。</p></div>
+<p class="p-orig">功课各随己意，亦无定章。光则早晚必按朝暮课诵直念。凡起腔唱者，亦作直念，但稍缓点，光绝未学唱念。然在丛林中，只可小声，不得声闻于外，以致惊动别人。先则日礼数百拜，近数年来事多，只二时功课。冬则日过百拜，夏则只数十拜。亦只拜释迦，弥陀，净土三经，及诸大乘经，观音、势至、清净海众，尽虚空、遍法界，过去、现在、未来，一切诸佛、一切尊法、一切贤圣僧。</p>
 <p class="seg-src">（《新编全本印光法师文钞》卷十三第114页 复许止净居士书）</p>
     </article>
     <nav class="art-nav"><a href="/a/q600-429/"><small>上一篇</small>429、念佛一定要有章程吗？念佛为什么不可有急欲见佛之心？</a><a href="/a/q600-431/"><small>下一篇</small>431、为什么念佛一定要有定课？</a></nav>
@@ -158,7 +170,7 @@
 <script src="js/pwa.js?v=20260622-pwa" defer></script>
 <script src="js/offline.js?v=20260622-offline" defer></script>
 <script src="js/qrcode.js"></script>
-<script type="module" src="js/app.js?v=20260623-600q"></script>
+<script type="module" src="js/app.js?v=20260703-reader"></script>
 <script src="js/share.js?v=20260621-aicard2"></script>
 </body>
 </html>

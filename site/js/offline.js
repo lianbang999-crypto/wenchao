@@ -2,7 +2,7 @@
    把整册 / 全集的 data/articles/{id}.json 预存进独立缓存 wc-dl；
    断网时 sw.js 的「网络失败 → caches.match」会自动跨 cache 命中，无需改 app.js。
    注释内嵌在每篇 JSON 内，故离线阅读只需缓存这些文件 + 已在外壳里的 books.json。
-   全文搜索(search.json 15MB)默认不下载，离线时篇名搜索仍可用。 */
+   全文搜索查后端 D1 索引，需联网；离线时篇名搜索（本地目录过滤）仍可用。 */
 (function () {
   'use strict';
 

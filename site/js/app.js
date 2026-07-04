@@ -120,42 +120,62 @@ document.addEventListener('touchstart', (e) => { edgeStart = e.touches[0].client
 const touchStartNearEdge = (e, side) =>
   side === 'left' ? edgeStart < 32 : edgeStart > innerWidth - 32;
 
-/* ---------- 全文检索（懒加载语料，子串扫描） ---------- */
-let searchIndex = null;
+/* ---------- 全文检索：篇名本地过滤 + 正文查后端 D1 全文索引 ----------
+   不再下载整站语料（曾是 15MB 的 search.json，全量拉取+客户端线性扫描）；
+   正文一路改为调用 workers/ai-proxy 的 /search，复用 RAG 已建的 D1 全文索引，
+   只传回命中篇目与摘录。篇名一路仍走本地 flat 数组，瞬时、不需要请求。 */
 let pendingFind = '';
+
+// 高亮片段渲染：服务端只回传一小段纯文本摘录，转义与 <mark> 包裹在前端做
+function buildSnip(raw, kw) {
+  if (!raw) return '';
+  const idx = raw.indexOf(kw);
+  if (idx === -1) return esc(raw);
+  return esc(raw.slice(0, idx)) + '<mark>' + esc(kw) + '</mark>' + esc(raw.slice(idx + kw.length));
+}
 
 async function fullSearch(kw) {
   const tree = $('#nav-tree');
-  if (!searchIndex) {
-    tree.innerHTML = '<p class="nav-empty">正在载入全文索引…<br><small>首次约数秒，此后离线可用</small></p>';
-    try {
-      searchIndex = await (await fetch('/data/search.json', { cache: 'no-cache' })).json();
-    } catch {
-      tree.innerHTML = '<p class="nav-empty">索引载入失败，请检查网络</p>';
-      return;
-    }
-  }
+  tree.innerHTML = '<p class="nav-empty">正在搜索…</p>';
   const hits = [];
-  for (const rec of searchIndex) {
-    const idx = rec.x.indexOf(kw);
-    if (idx === -1 && !rec.t.includes(kw)) continue;
-    let snip = '';
-    if (idx >= 0) {
-      const from = Math.max(0, idx - 22);
-      const raw = rec.x.slice(from, idx + kw.length + 34).replace(/\n/g, ' ');
-      const at = idx - from;
-      snip = (from > 0 ? '…' : '') + esc(raw.slice(0, at)) +
-        '<mark>' + esc(kw) + '</mark>' + esc(raw.slice(at + kw.length)) + '…';
-    }
-    hits.push({ id: rec.i, t: rec.t, v: rec.v, snip });
+  const seen = new Set();
+  for (const it of flat) {                 // 篇名匹配：本地过滤已加载目录，无需请求
+    if (!it.title.includes(kw)) continue;
+    seen.add(it.id);
+    hits.push({ id: it.id, t: it.title, v: it.volName || '', snip: '' });
     if (hits.length >= 100) break;
   }
-  tree.innerHTML = `<p class="search-count">全文命中 ${hits.length}${hits.length >= 100 ? '+' : ''} 篇</p>` +
-    (hits.length ? hits.map((h) => `
+  let bodyFailed = false;
+  if (hits.length < 100) {                 // 正文匹配：查后端全文索引
+    if (!CFG.aiEndpoint) {
+      bodyFailed = true;
+    } else {
+      try {
+        const res = await fetch(CFG.aiEndpoint.replace(/\/$/, '') + '/search', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ q: kw }),
+        });
+        if (!res.ok) throw new Error('search ' + res.status);
+        const data = await res.json();
+        for (const h of (data.hits || [])) {
+          if (seen.has(h.i) || hits.length >= 100) continue;
+          seen.add(h.i);
+          hits.push({ id: h.i, t: h.t, v: h.v, snip: buildSnip(h.snip, kw) });
+        }
+      } catch { bodyFailed = true; }   // 网络/服务异常：仍展示篇名匹配结果
+    }
+  }
+  const empty = bodyFailed
+    ? '正文全文搜索暂不可用，请检查网络（也可只按篇名搜）'
+    : '没有找到「' + esc(kw) + '」';
+  tree.innerHTML = hits.length
+    ? `<p class="search-count">共找到 ${hits.length}${hits.length >= 100 ? '+' : ''} 篇</p>` +
+      hits.map((h) => `
       <button class="search-hit" data-id="${h.id}">
         <span class="sh-title">${esc(h.t)}</span><span class="sh-vol">${esc(h.v)}</span>
         ${h.snip ? `<span class="sh-snip">${h.snip}</span>` : ''}
-      </button>`).join('') : '<p class="nav-empty">没有找到「' + esc(kw) + '」</p>');
+      </button>`).join('')
+    : `<p class="nav-empty">${empty}</p>`;
   tree.querySelectorAll('.search-hit').forEach((b) => {
     b.onclick = () => {
       pendingFind = kw;
@@ -305,6 +325,7 @@ function scrollToPara(n) {
 /* ---------- 首页 ---------- */
 function renderHome() {
   current = null;
+  document.body.classList.remove('nav-hidden');   // 回首页顶栏必现
   showSpeakBtn(false);
   $('#topbar-title').textContent = '印光法师文钞';
   $('#ai-context').textContent = '基于印光法师文钞全集';
@@ -575,18 +596,27 @@ async function renderArticle(id) {
   lastRead = { id, title: art.title };
   store.set('lastRead', lastRead);
   highlightNav();
+  // 沉浸阅读基准：以当前（可能是续读跳位后的）滚动位置为准，避免开篇即误藏顶栏
+  lastNavY = scrollY;
+  document.body.classList.remove('nav-hidden');
   paintProgress();
   showSpeakBtn(true);     // 文章就绪 → 显示朗读键
 }
 
 /* 阅读进度：顶部细线实时更新（rAF），localStorage 节流保存 */
 const progressBar = $('#read-progress');
-let scrollTimer = null, rafPending = false;
+let scrollTimer = null, rafPending = false, lastNavY = 0;
 function paintProgress() {
   rafPending = false;
   const max = document.body.scrollHeight - innerHeight;
   progressBar.style.width = (current && max > 200)
     ? Math.min(100, scrollY / max * 100) + '%' : '0';
+  // 沉浸阅读：读文章时下滑藏顶栏、上滑或近顶唤出（阈值 8px 防抖）
+  const y = scrollY;
+  if (!current || y < 72) document.body.classList.remove('nav-hidden');
+  else if (y > lastNavY + 8) document.body.classList.add('nav-hidden');
+  else if (y < lastNavY - 8) document.body.classList.remove('nav-hidden');
+  lastNavY = y;
 }
 addEventListener('scroll', () => {
   if (!rafPending) { rafPending = true; requestAnimationFrame(paintProgress); }

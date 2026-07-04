@@ -72,6 +72,14 @@ curl -X POST "https://<worker>/index?cursor=0" \
 
 把 Worker 地址填到 `site/config.js` 的 `aiEndpoint`，再部署站点。
 
+## 网站全文搜索（`POST /search`）
+
+左抽屉「全文搜索」调用此接口，请求 `{ q: "关键词" }`，返回 `{ hits: [{i,t,v,snip}], total }`
+（`i`=篇号、`t`=标题、`v`=分册名、`snip`=命中处前后一小段纯文本，高亮由前端做）。复用问答检索同一份
+D1 `chunks_fts` 全文索引，**不需要单独建库**；查询走 bigram 短语 `MATCH`，单字等短语命中不到时退化为
+`LIKE` 扫描兜底。只搜正文（原文+白话切块），注释/提要/《文钞》选读标题不在此索引内——这是有意的范围
+取舍，避免为了搜索功能牵动 `chunksOf`（RAG 检索语料，已用 `eval_rag.py` 调优过）。
+
 ## 对外开放：API key 鉴权 + 按 key 配额
 
 问答接口 `POST /api/ai` 支持三类调用来源，分流鉴权（`worker.js` 的 `authenticate`/`enforceQuota`）：

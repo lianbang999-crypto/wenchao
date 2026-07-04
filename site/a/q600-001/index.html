@@ -34,7 +34,7 @@
      苹果设备命中本地楷体，不会产生下载 -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
-<link rel="stylesheet" href="css/app.css?v=20260623-600q">
+<link rel="stylesheet" href="css/app.css?v=20260703-reader">
   <meta name="msvalidate.01" content="2E887F8A75C595EF89E235E27D2816E0" />
   <meta name="baidu-site-verification" content="codeva-345JAH4iJi" />
 </head>
@@ -67,6 +67,18 @@
   <div class="nav-search">
     <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
   </div>
+  <nav class="nav-topics" aria-label="专题">
+    <span class="nav-topics-label">专题</span>
+    <a class="chip-btn" href="/t/nianfo/">念佛法门</a>
+    <a class="chip-btn" href="/t/xinyuan/">信愿往生</a>
+    <a class="chip-btn" href="/t/linzhong/">临终助念</a>
+    <a class="chip-btn" href="/t/yinguo/">因果报应</a>
+    <a class="chip-btn" href="/t/jiesha/">戒杀护生</a>
+    <a class="chip-btn" href="/t/dunlun/">家庭教育</a>
+    <a class="chip-btn" href="/t/chengjing/">持戒诚敬</a>
+    <a class="chip-btn" href="/t/guanyin/">观音感应</a>
+    <a class="chip-btn nav-topics-all" href="/t/">全部 »</a>
+  </nav>
   <div class="nav-tree" id="nav-tree" role="tree"></div>
   <div class="drawer-foot">
     <div class="pref-row">
@@ -122,7 +134,7 @@
   </div>
   <div class="ai-log" id="ai-log"></div>
   <form class="ai-input" id="ai-form">
-    <textarea id="ai-text" rows="1" placeholder="向文钞请教…"></textarea>
+    <textarea id="ai-text" rows="1" placeholder="向文钞请益…"></textarea>
     <button type="submit" class="chip-btn ai-send">发送</button>
   </form>
   <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
@@ -141,8 +153,8 @@
     <div class="art-summary"><b>提 要</b>南无，此翻恭敬，归命顶礼等。阿弥陀佛，此翻无量寿，亦无量光。</div>
     <article class="art-body" data-mode="both">
 <p class="p-orig">南无阿弥陀佛，乃西方极乐世界教主之号。</p>
-<div class="para-pair"><p class="p-orig">汝何不知《阿弥陀经》云：“舍利弗，于汝意云何，彼佛何故号阿弥陀？舍利弗，彼佛光明无量，照十方国，无所障碍，是故号为阿弥陀。又舍利弗，彼佛寿命，及其人民，无量无边阿僧祇劫，故名阿弥陀。”此是释迦佛所说。</p><p class="p-trans">你怎会不知道《阿弥陀经》中有云：“舍利弗，于汝意云何，彼佛何故号阿弥陀？舍利弗，彼佛光明无量，照十方国，无所障碍，是故号为阿弥陀。又舍利弗，彼佛寿命，及其人民，无量无边阿僧祇劫，故名阿弥陀。”这是释迦牟尼佛所说。</p></div>
-<div class="para-pair"><p class="p-orig">南无阿弥陀佛六字，通是梵语。南无（音na(/) mo(/)）,亦作有曩谟者，经中通作南无。此翻恭敬，归命顶礼等。此二字，乃直示恭敬归依之意。阿弥陀佛，此翻无量寿，亦翻无量光。谓此佛之寿命光明悉皆无量。</p><p class="p-trans">现今为你大略解释。“南无阿弥陀佛”六个字，全都是梵语。“南无”也作“曩谟”，经中全作“南无”。我国翻译为恭敬，归命、顶礼等义。这二个字，是直接显示恭敬、归依的意思。“阿弥陀佛”，我国翻译为无量寿。也翻译为无量光。是说这尊佛的寿命、光明，全都无量无边。</p></div>
+<p class="p-orig">汝何不知《阿弥陀经》云：“舍利弗，于汝意云何，彼佛何故号阿弥陀？舍利弗，彼佛光明无量，照十方国，无所障碍，是故号为阿弥陀。又舍利弗，彼佛寿命，及其人民，无量无边阿僧祇劫，故名阿弥陀。”此是释迦佛所说。</p>
+<p class="p-orig">南无阿弥陀佛六字，通是梵语。南无（音na(/) mo(/)）,亦作有曩谟者，经中通作南无。此翻恭敬，归命顶礼等。此二字，乃直示恭敬归依之意。阿弥陀佛，此翻无量寿，亦翻无量光。谓此佛之寿命光明悉皆无量。</p>
 <p class="seg-src">（《新编全本印光法师文钞》卷十三第20页 复应脱大师书三）</p>
     </article>
     <nav class="art-nav"><a href="/a/q600-000/"><small>上一篇</small>中兴净宗印光大师行业记</a><a href="/a/q600-002/"><small>下一篇</small>2、阿弥陀佛有什么大愿？</a></nav>
@@ -160,7 +172,7 @@
 <script src="js/pwa.js?v=20260622-pwa" defer></script>
 <script src="js/offline.js?v=20260622-offline" defer></script>
 <script src="js/qrcode.js"></script>
-<script type="module" src="js/app.js?v=20260623-600q"></script>
+<script type="module" src="js/app.js?v=20260703-reader"></script>
 <script src="js/share.js?v=20260621-aicard2"></script>
 </body>
 </html>

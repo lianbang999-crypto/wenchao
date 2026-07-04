@@ -49,6 +49,8 @@ const INDEX_EMBED_BATCH = 50;             // 每次 Workers AI embedding 文本�
 const CHUNK_CHARS = 720;                  // 单个向量块目标字数，避免长段被截断
 const CHUNK_OVERLAP = 80;                 // 长段切块重叠，保留上下文
 const PARENT_CHARS = 1100;               // 小块检索、大块喂入：命中后喂给模型的「父段落」字数上限（引用卡片仍用精确小块）
+const SEARCH_ROWS = 400;                  // 网站全文搜索：扫描的原始切块行数上限
+const SEARCH_LIMIT = 80;                  // 网站全文搜索：去重后返回的文章数上限
 
 function cors(origin) {
   const allow = ALLOW_ORIGINS.includes(origin) ? origin : ALLOW_ORIGINS[0];
@@ -419,6 +421,57 @@ async function lexicalSearch(env, terms, filter) {
       },
     }));
   } catch { return []; }   // FTS 语法/连接异常：退回纯向量
+}
+
+/* 截取关键词前后一小段窗口，供前端高亮渲染（返回纯文本，HTML 转义交给前端）。
+ * 找不到精确子串（如单字查询落在 bigram 边界）时，退化为该切块开头一小段，仍能给用户看到候选篇目。 */
+function snippetAround(full, q) {
+  const idx = full.indexOf(q);
+  if (idx === -1) return full.slice(0, 56).trim();
+  const from = Math.max(0, idx - 22);
+  const to = Math.min(full.length, idx + q.length + 34);
+  return (from > 0 ? '…' : '') + full.slice(from, to).trim() + (to < full.length ? '…' : '');
+}
+
+/* ---------- 网站「全文搜索」：供左抽屉直接调用，复用 D1 全文索引，取代前端下载整站语料 ----------
+ * 只搜正文（segments 的原文+白话切块，与 RAG 检索同一份索引）；注释/提要/选读标题不在此索引内，
+ * 属有意的范围取舍——不动 chunksOf/RAG 语料，避免牵动已调优的问答检索与召回率评测。
+ * 篇名匹配由前端用已加载的 books.json 就地过滤，此接口只管「正文内容」这一路。 */
+async function handleSearch(req, env, headers) {
+  if (!env.DB) return json({ hits: [], total: 0 }, 200, headers);
+  let b; try { b = await req.json(); } catch { b = null; }
+  const q = String((b && b.q) || '').trim().slice(0, 40);
+  if (!q) return json({ hits: [], total: 0 }, 200, headers);
+  const cols = 'aid,title,vol,volName,text,ctx';
+  const collect = (rows) => {
+    const seen = new Set(); const hits = [];
+    for (const row of rows) {
+      if (seen.has(row.aid)) continue;
+      seen.add(row.aid);
+      const full = lexText(row.ctx || row.text || '');
+      hits.push({ i: row.aid, t: row.title || '', v: row.volName || row.vol || '', snip: snippetAround(full, q) });
+      if (hits.length >= SEARCH_LIMIT) break;
+    }
+    return hits;
+  };
+  try {
+    const bg = cjkBigrams(q);
+    let hits = [];
+    if (bg.length) {
+      const rs = await env.DB.prepare(
+        `SELECT ${cols} FROM chunks_fts WHERE chunks_fts MATCH ? ORDER BY rank LIMIT ?`
+      ).bind('"' + bg.join(' ') + '"', SEARCH_ROWS).all();
+      hits = collect((rs && rs.results) || []);
+    }
+    // 兜底：单字查询等 bigram 短语匹配不到时，退化为字面 LIKE 扫描（次数少、语料不大，接受较慢）
+    if (!hits.length) {
+      const rs = await env.DB.prepare(
+        `SELECT ${cols} FROM chunks_fts WHERE text LIKE ? ESCAPE '\\' LIMIT ?`
+      ).bind('%' + q.replace(/[%_\\]/g, '\\$&') + '%', SEARCH_ROWS).all();
+      hits = collect((rs && rs.results) || []);
+    }
+    return json({ hits, total: hits.length }, 200, headers);
+  } catch { return json({ hits: [], total: 0 }, 200, headers); }   // 异常：前端仍展示篇名匹配结果
 }
 
 /* RRF（倒数排名融合）：把多路召回按各自名次融合成一个排序，弱化「分数尺度不可比」问题。
@@ -906,6 +959,7 @@ export default {
     if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers });
     if (pathname === '/index') return handleIndex(req, env, url, headers);
     if (pathname === '/feedback') return handleFeedback(req, env, headers);
+    if (pathname === '/search') return handleSearch(req, env, headers);
     if (pathname === '/admin/data') return handleAdminData(req, env, headers);
     return handleAsk(req, env, headers);
     } catch (e) {

@@ -34,7 +34,7 @@
      苹果设备命中本地楷体，不会产生下载 -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
-<link rel="stylesheet" href="css/app.css?v=20260623-600q">
+<link rel="stylesheet" href="css/app.css?v=20260703-reader">
   <meta name="msvalidate.01" content="2E887F8A75C595EF89E235E27D2816E0" />
   <meta name="baidu-site-verification" content="codeva-345JAH4iJi" />
 </head>
@@ -67,6 +67,18 @@
   <div class="nav-search">
     <input type="search" id="nav-search" placeholder="搜索篇名…" autocomplete="off">
   </div>
+  <nav class="nav-topics" aria-label="专题">
+    <span class="nav-topics-label">专题</span>
+    <a class="chip-btn" href="/t/nianfo/">念佛法门</a>
+    <a class="chip-btn" href="/t/xinyuan/">信愿往生</a>
+    <a class="chip-btn" href="/t/linzhong/">临终助念</a>
+    <a class="chip-btn" href="/t/yinguo/">因果报应</a>
+    <a class="chip-btn" href="/t/jiesha/">戒杀护生</a>
+    <a class="chip-btn" href="/t/dunlun/">家庭教育</a>
+    <a class="chip-btn" href="/t/chengjing/">持戒诚敬</a>
+    <a class="chip-btn" href="/t/guanyin/">观音感应</a>
+    <a class="chip-btn nav-topics-all" href="/t/">全部 »</a>
+  </nav>
   <div class="nav-tree" id="nav-tree" role="tree"></div>
   <div class="drawer-foot">
     <div class="pref-row">
@@ -122,7 +134,7 @@
   </div>
   <div class="ai-log" id="ai-log"></div>
   <form class="ai-input" id="ai-form">
-    <textarea id="ai-text" rows="1" placeholder="向文钞请教…"></textarea>
+    <textarea id="ai-text" rows="1" placeholder="向文钞请益…"></textarea>
     <button type="submit" class="chip-btn ai-send">发送</button>
   </form>
   <p class="ai-disclaimer">回答仅供参考，请仔细核对《文钞》出处</p>
@@ -140,7 +152,7 @@
     </header>
     <div class="art-summary"><b>提 要</b>由最初教者不得其道所致。如教以浅近因果，并能志心忏悔已往之罪，改往修来，以正知见，修习净业，自利利他，则罪障雾消，性天开朗。</div>
     <article class="art-body" data-mode="both">
-<div class="para-pair"><p class="p-orig">凡夫在迷，信心不定，故有屡信屡退，屡修屡造之迹。亦由最初教者不得其道所致，使最初从浅近因果等起，便不至有此迷惑颠倒也。然已往之罪，虽极深重，但能志心忏悔，改往修来，以正知见，修习净业，自利利他，则罪障雾消，性天开朗。故经云，世间有二健儿，一者自不作罪，二者作已能悔。悔之一字，要从心起，心不真悔，说之无益。譬如读方而不服药，决无愈病之望。倘能依方服药，自可病愈身安。所患者立志不坚，一暴十寒，则徒有虚名，毫无实益矣。</p><p class="p-trans">凡夫在迷惑当中，信心不坚定，所以有多次相信而又多次退心，常常修行而又常常造业的事情。这也是由于最初教导的人，不得教诲之道所导致的，假使最初从浅近的因果道理等教起，就不至于有这样的迷惑颠倒。然而以往的罪障，虽然极为深重，但只要能够志心忏悔，改正过去的错误，修习正确的，以正知见，修习净业，自利利他，作为志向事业，那么罪障如浓雾消散，自性的天空就开朗了。所以《涅槃经》中说：世间有二种健儿，一者自己不作罪，二者作了以后能忏悔。“悔”这个字，要从心生起，心若不真正的忏悔，说说是没有益处的。譬如读读药方而不服药，绝对没有治愈疾病的希望。倘若能够依药方来服药，自然可以病愈而身安。最怕，是立志不坚定，一暴十寒，那么就徒有虚名，而毫无实益了啊！</p></div>
+<p class="p-orig">凡夫在迷，信心不定，故有屡信屡退，屡修屡造之迹。亦由最初教者不得其道所致，使最初从浅近因果等起，便不至有此迷惑颠倒也。然已往之罪，虽极深重，但能志心忏悔，改往修来，以正知见，修习净业，自利利他，则罪障雾消，性天开朗。故经云，世间有二健儿，一者自不作罪，二者作已能悔。悔之一字，要从心起，心不真悔，说之无益。譬如读方而不服药，决无愈病之望。倘能依方服药，自可病愈身安。所患者立志不坚，一暴十寒，则徒有虚名，毫无实益矣。</p>
 <p class="seg-src">（《新编全本印光法师文钞》卷二第325页 复周智茂居士书）</p>
     </article>
     <nav class="art-nav"><a href="/a/q600-486/"><small>上一篇</small>486、为人不做亏心事，为什么要怕鬼呢？</a><a href="/a/q600-488/"><small>下一篇</small>488、念佛人遇大祸临头时，如何才能不失正念？</a></nav>
@@ -158,7 +170,7 @@
 <script src="js/pwa.js?v=20260622-pwa" defer></script>
 <script src="js/offline.js?v=20260622-offline" defer></script>
 <script src="js/qrcode.js"></script>
-<script type="module" src="js/app.js?v=20260623-600q"></script>
+<script type="module" src="js/app.js?v=20260703-reader"></script>
 <script src="js/share.js?v=20260621-aicard2"></script>
 </body>
 </html>

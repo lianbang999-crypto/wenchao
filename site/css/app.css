@@ -90,7 +90,13 @@ button { font-family: inherit; color: inherit; }
   height: 2px; width: 0;
   background: var(--cinnabar);
   pointer-events: none;
+  transition: top .28s ease;
 }
+
+/* 沉浸阅读：读文章时下滑藏顶栏、上滑/近顶唤出；进度线随之贴顶保持可见 */
+.topbar { transition: transform .28s ease; }
+body.nav-hidden .topbar { transform: translateY(-100%); }
+body.nav-hidden .read-progress { top: 0; }
 
 /* ---------------- 朱印 ---------------- */
 .seal {
@@ -346,6 +352,12 @@ button { font-family: inherit; color: inherit; }
 }
 .chip-btn:active, .chip-btn.on { color: var(--cinnabar); border-color: var(--cinnabar); }
 
+/* 抽屉内「专题」直达入口（主题聚合页 /t/） */
+.nav-topics { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 4px 14px 10px; border-bottom: 1px solid var(--line); }
+.nav-topics-label { font-size: 12px; color: var(--ink-3); margin-right: 2px; }
+.nav-topics a.chip-btn { text-decoration: none; }
+.nav-topics a.nav-topics-all { border-style: dashed; }
+
 /* ---------------- 阅读主区 ---------------- */
 .reader {
   max-width: var(--reader-w);
@@ -570,7 +582,7 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
   padding: 13px 2px; font-size: 16px;
 }
 .vol-card:last-of-type { border-bottom: 1px solid var(--line); }
-.vol-card .vol-name { font-weight: 500; letter-spacing: .04em; }
+.vol-card .vol-name { font-weight: 600; letter-spacing: .04em; }
 .vol-card .vol-group { font-size: 12px; color: var(--ink-3); }
 .vol-card .vol-count { margin-left: auto; flex: none; font-size: 12.5px; color: var(--ink-3); }
 .home-extra { margin-top: 22px; text-align: center; }

@@ -18,6 +18,7 @@ SITE = ROOT / "site"
 ARTICLE_DIR = SITE / "data" / "articles"
 OUT_DIR = SITE / "a"
 VOL_DIR = SITE / "v"
+TOPIC_DIR = SITE / "t"
 ORIGIN = os.environ.get("SITE_ORIGIN", "https://wenchao.foyue.org").rstrip("/")
 SITE_NAME = "印光法师文钞"
 AUTHOR = "印光法师"
@@ -438,23 +439,310 @@ def write_volume_pages(books: list[dict], css_link: str) -> list[str]:
   return [v["id"] for v in books]
 
 
-def write_sitemap(items: list[dict], volumes: list[str]) -> None:
+# ───────────────────────────── 主题专题页 ─────────────────────────────
+# 按关键词把全集文章归入通俗主题，生成 /t/{slug}/ 静态聚合页：
+# 既作长尾 SEO 枢纽，也方便读者按困惑（念佛/临终/因果…）直接找文。
+# 纯静态、不引 app.js，风格比照分册页 /v/。
+TOPICS = [
+  {"slug": "nianfo", "name": "念佛法门",
+   "blurb": "如何念佛、持名的方法与用心——都摄六根、净念相继，一句佛号绵密不断。",
+   "kw": ["念佛", "持名", "名号", "佛号", "执持名号", "都摄六根",
+          "净念相继", "十念", "摄心", "一句佛"]},
+  {"slug": "xinyuan", "name": "信愿往生",
+   "blurb": "真信切愿、求生西方——净土法门的宗要与往生正因。",
+   "kw": ["信愿", "真信", "切愿", "求生西方", "求生净土", "往生西方",
+          "愿生", "深信", "决定往生", "带业往生"]},
+  {"slug": "linzhong", "name": "临终助念",
+   "blurb": "临终一念与助念之法——命终关头如何护持正念、成就往生。",
+   "kw": ["临终", "助念", "命终", "临命终", "临终一念", "断气", "咽气",
+          "中阴", "送终", "临终关怀"]},
+  {"slug": "yinguo", "name": "因果报应",
+   "blurb": "深信因果、明辨罪福——三世因果与断恶修善之理。",
+   "kw": ["因果", "报应", "果报", "罪福", "善恶", "三世因果", "阴德",
+          "报应不爽", "祸福"]},
+  {"slug": "jiesha", "name": "戒杀护生",
+   "blurb": "戒杀放生、茹素护生——长养慈心、消解宿世冤业。",
+   "kw": ["戒杀", "护生", "放生", "吃素", "素食", "食肉", "杀生",
+          "断肉", "蔬食", "茹素", "冤业"]},
+  {"slug": "dunlun", "name": "敦伦尽分·家庭教育",
+   "blurb": "敦伦尽分、教子治家——在家庭伦常中修行，因果母教并重。",
+   "kw": ["敦伦", "尽分", "教子", "治家", "夫妇", "教女", "胎教",
+          "母教", "儿女", "为人子", "尽伦", "相夫", "家庭教育"]},
+  {"slug": "chengjing", "name": "持戒诚敬",
+   "blurb": "诚敬存心、持戒惜福——一分诚敬得一分利益，主敬存诚。",
+   "kw": ["诚敬", "恭敬", "至诚", "持戒", "三皈", "五戒", "竭诚",
+          "礼敬", "主敬存诚", "惜福", "敬惜字纸"]},
+  {"slug": "guanyin", "name": "观音感应",
+   "blurb": "观世音菩萨寻声救苦——念观音的用心与真实感应。",
+   "kw": ["观世音", "观音", "大士", "寻声救苦", "普门", "念观音",
+          "观音感应", "菩萨加被"]},
+]
+
+TOPIC_INCLUDE = 6     # 计入某主题的最低权重
+TOPIC_CAP = 120       # 每个专题页最多列出的篇数（按相关度取前 N）
+
+
+def classify_topics(art: dict) -> dict:
+  """给一篇文章按各主题打分：标题命中权重最高，摘要次之，正文最低。"""
+  title = clean_text(art.get("title", "") or "")
+  summary = clean_text(art.get("summary", "") or "")
+  parts: list[str] = []
+  for seg in art.get("segments", []) or []:
+    for key in ("orig", "trans"):
+      v = seg.get(key)
+      if isinstance(v, list):
+        parts.extend(v)
+      elif v:
+        parts.append(v)
+  body = clean_text(" ".join(parts))
+  scores: dict[str, int] = {}
+  for t in TOPICS:
+    s = 0
+    for kw in t["kw"]:
+      s += 8 * title.count(kw) + 4 * summary.count(kw) + body.count(kw)
+    if s:
+      scores[t["slug"]] = s
+  return scores
+
+
+def _hub_head(title_full: str, desc: str, url: str, css_link: str, *ld_blocks: str) -> str:
+  """分册页/专题页共用的 <head>（含字体、图标、OG、结构化数据）。"""
+  ld = "\n".join(b for b in ld_blocks if b)
+  return f"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{h(title_full)}</title>
+<meta name="description" content="{h(desc)}">
+<link rel="canonical" href="{h(url)}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{h(title_full)}">
+<meta property="og:description" content="{h(desc)}">
+<meta property="og:url" content="{h(url)}">
+<meta property="og:site_name" content="印光法师文钞">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{h(title_full)}">
+<meta name="twitter:description" content="{h(desc)}">
+<meta name="theme-color" content="#f6f1e6">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="192x192" href="/img/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="印光文钞">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<link rel="stylesheet" href="{h(css_link)}">
+{ld}
+</head>"""
+
+
+def topic_page_html(topic: dict, rows_items: list[dict], css_link: str) -> str:
+  """单个主题的纯静态聚合页：按分册分组列出该主题相关篇目。"""
+  slug = topic["slug"]
+  name = topic["name"]
+  blurb = topic["blurb"]
+  url = f"{ORIGIN}/t/{quote(slug, safe='')}/"
+  count = len(rows_items)
+  desc = clip(f"{blurb} 印光法师文钞中论及「{name}」的篇章精选，共 {count} 篇，文白对照。", 150)
+
+  groups: dict[str, list] = {}
+  for it in rows_items:
+    groups.setdefault(it["volumeName"] or "文钞", []).append(it)
+  rows: list[str] = []
+  for vname, arts in groups.items():
+    rows.append(f'<h2 class="vi-juan">{h(vname)}</h2>')
+    for it in arts:
+      rows.append(
+        f'<a class="vi-link" href="{article_path(it["id"])}">{h(nav_title(it["title"]))}</a>'
+      )
+  index_body = "\n      ".join(rows)
+
+  others = "".join(
+    f'<a href="/t/{quote(o["slug"], safe="")}/">{h(o["name"])}</a>'
+    for o in TOPICS if o["slug"] != slug
+  )
+
+  breadcrumb = _ld({
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": SITE_NAME, "item": ORIGIN + "/"},
+      {"@type": "ListItem", "position": 2, "name": "专题", "item": ORIGIN + "/t/"},
+      {"@type": "ListItem", "position": 3, "name": name, "item": url},
+    ],
+  })
+  collection = _ld({
+    "@context": "https://schema.org", "@type": "CollectionPage",
+    "name": f"{name} · {SITE_NAME}", "url": url, "description": blurb,
+    "inLanguage": "zh-Hans",
+    "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": ORIGIN + "/"},
+  })
+  head = _hub_head(f"{name} · 印光法师文钞", desc, url, css_link, breadcrumb, collection)
+  return f"""{head}
+<body>
+<header class="topbar">
+  <a class="icon-btn" href="/" aria-label="返回首页">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  </a>
+  <a class="topbar-title" href="/">印光法师文钞</a>
+  <span class="icon-btn" aria-hidden="true"></span>
+</header>
+<main class="reader">
+  <div class="reader-inner">
+    <nav class="crumb-nav"><a href="/">印光法师文钞</a> › <a href="/t/">专题</a> › <span aria-current="page">{h(name)}</span></nav>
+    <header class="art-head">
+      <div class="art-crumb">专题 · 共 {count} 篇</div>
+      <h1 class="art-title">{h(name)}</h1>
+      <p class="art-summary">{h(blurb)}</p>
+      <div class="rule"></div>
+    </header>
+    <div class="vol-index">
+      {index_body}
+    </div>
+    <nav class="vol-others">
+      <h3>其余专题</h3>
+      {others}
+      <a href="/t/">全部专题 »</a>
+    </nav>
+  </div>
+</main>
+</body>
+</html>
+"""
+
+
+def topic_index_html(meta: dict, css_link: str) -> str:
+  """/t/ 专题总览页：列出全部主题、导语与篇数，作专题枢纽。"""
+  url = f"{ORIGIN}/t/"
+  desc = clip("按主题浏览印光法师文钞：念佛、信愿往生、临终助念、因果、戒杀护生、家庭教育、持戒诚敬、观音感应，随困惑找文。", 150)
+  cards: list[str] = []
+  for t in TOPICS:
+    name, cnt, _lm = meta[t["slug"]]
+    cards.append(
+      f'<a class="vi-link" href="/t/{quote(t["slug"], safe="")}/">'
+      f'{h(name)}（{cnt} 篇）<br><span class="art-crumb">{h(t["blurb"])}</span></a>'
+    )
+  index_body = "\n      ".join(cards)
+  breadcrumb = _ld({
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": SITE_NAME, "item": ORIGIN + "/"},
+      {"@type": "ListItem", "position": 2, "name": "专题", "item": url},
+    ],
+  })
+  collection = _ld({
+    "@context": "https://schema.org", "@type": "CollectionPage",
+    "name": f"专题 · {SITE_NAME}", "url": url, "inLanguage": "zh-Hans",
+    "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": ORIGIN + "/"},
+  })
+  head = _hub_head("专题 · 印光法师文钞", desc, url, css_link, breadcrumb, collection)
+  return f"""{head}
+<body>
+<header class="topbar">
+  <a class="icon-btn" href="/" aria-label="返回首页">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  </a>
+  <a class="topbar-title" href="/">印光法师文钞</a>
+  <span class="icon-btn" aria-hidden="true"></span>
+</header>
+<main class="reader">
+  <div class="reader-inner">
+    <nav class="crumb-nav"><a href="/">印光法师文钞</a> › <span aria-current="page">专题</span></nav>
+    <header class="art-head">
+      <div class="art-crumb">按困惑找文</div>
+      <h1 class="art-title">专题浏览</h1>
+      <div class="rule"></div>
+    </header>
+    <div class="vol-index">
+      {index_body}
+    </div>
+  </div>
+</main>
+</body>
+</html>
+"""
+
+
+def write_topic_pages(topic_hits: dict, css_link: str) -> dict:
+  """写出全部 /t/{slug}/ 专题页与 /t/ 总览页，返回 {slug: (name, count, lastmod)}。"""
+  if TOPIC_DIR.exists():
+    shutil.rmtree(TOPIC_DIR)
+  TOPIC_DIR.mkdir(parents=True)
+  meta: dict = {}
+  for t in TOPICS:
+    hits = sorted(topic_hits[t["slug"]], key=lambda x: -x[0])[:TOPIC_CAP]
+    rows_items = [{"id": aid, "title": title, "volumeName": vn} for (_s, aid, title, vn) in hits]
+    dates: list[str] = []
+    for it in rows_items:
+      p = ARTICLE_DIR / f'{it["id"]}.json'
+      try:
+        dates.append(dt.date.fromtimestamp(p.stat().st_mtime).isoformat())
+      except OSError:
+        pass
+    lm = max(dates) if dates else dt.date.today().isoformat()
+    out = TOPIC_DIR / t["slug"] / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(topic_page_html(t, rows_items, css_link), encoding="utf-8")
+    meta[t["slug"]] = (t["name"], len(rows_items), lm)
+  (TOPIC_DIR / "index.html").write_text(topic_index_html(meta, css_link), encoding="utf-8")
+  return meta
+
+
+def write_sitemap(items: list[dict], volumes: list[str], topics: dict | None = None) -> None:
   today = dt.date.today().isoformat()
+  # lastmod 取文章数据文件的真实 mtime（内容没变则日期不动），
+  # 避免每次构建都把整站刷成当天、误导爬虫以为天天全量更新。
+  art_dates: dict[str, str] = {}
+  for item in items:
+    aid = item["id"]
+    p = ARTICLE_DIR / f"{aid}.json"
+    try:
+      art_dates[aid] = dt.date.fromtimestamp(p.stat().st_mtime).isoformat()
+    except OSError:
+      art_dates[aid] = today
+  # 分册页取该册文章的最新 mtime；首页/影像页取全站最新。
+  vol_dates: dict[str, str] = {}
+  for aid, d in art_dates.items():
+    vid = aid.rsplit("-", 1)[0]
+    if d > vol_dates.get(vid, ""):
+      vol_dates[vid] = d
+  newest = max(art_dates.values(), default=today)
   urls = [
-    f"  <url><loc>{h(ORIGIN)}/</loc><lastmod>{today}</lastmod><priority>1.0</priority></url>",
-    f"  <url><loc>{h(ORIGIN)}/ying/</loc><lastmod>{today}</lastmod><priority>0.6</priority></url>",
+    f"  <url><loc>{h(ORIGIN)}/</loc><lastmod>{newest}</lastmod><priority>1.0</priority></url>",
+    f"  <url><loc>{h(ORIGIN)}/ying/</loc><lastmod>{newest}</lastmod><priority>0.6</priority></url>",
   ]
   for vid in volumes:
     vq = quote(vid, safe="")
+    lm = vol_dates.get(vid, newest)
     urls.append(
       f"  <url><loc>{h(ORIGIN)}/v/{vq}/</loc>"
-      f"<lastmod>{today}</lastmod><priority>0.9</priority></url>"
+      f"<lastmod>{lm}</lastmod><priority>0.9</priority></url>"
     )
+  if topics:
+    topic_newest = max((lm for (_n, _c, lm) in topics.values()), default=newest)
+    urls.append(
+      f"  <url><loc>{h(ORIGIN)}/t/</loc>"
+      f"<lastmod>{topic_newest}</lastmod><priority>0.8</priority></url>"
+    )
+    for slug, (_name, _cnt, lm) in topics.items():
+      tq = quote(slug, safe="")
+      urls.append(
+        f"  <url><loc>{h(ORIGIN)}/t/{tq}/</loc>"
+        f"<lastmod>{lm}</lastmod><priority>0.8</priority></url>"
+      )
   for item in items:
     aid = quote(item["id"], safe="")
+    lm = art_dates.get(item["id"], newest)
     urls.append(
       f"  <url><loc>{h(ORIGIN)}/a/{aid}/</loc>"
-      f"<lastmod>{today}</lastmod><priority>0.8</priority></url>"
+      f"<lastmod>{lm}</lastmod><priority>0.8</priority></url>"
     )
   xml = (
     '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -477,6 +765,7 @@ def main() -> None:
     shutil.rmtree(OUT_DIR)
   OUT_DIR.mkdir(parents=True)
   total = len(items)
+  topic_hits: dict = {t["slug"]: [] for t in TOPICS}
   for i, item in enumerate(items):
     aid = item["id"]
     art = json.loads((ARTICLE_DIR / f"{aid}.json").read_text(encoding="utf-8"))
@@ -486,14 +775,21 @@ def main() -> None:
     out = OUT_DIR / aid / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page_html(index_html, art, url, prev, nxt), encoding="utf-8")
-  write_sitemap(items, volumes)
+    # 顺带按主题归类（复用已加载的 art，避免二次读盘）
+    vn = art.get("volumeName", "") or item.get("_volumeName", "")
+    for slug, score in classify_topics(art).items():
+      if score >= TOPIC_INCLUDE:
+        topic_hits[slug].append((score, aid, art.get("title", ""), vn))
+  topics_meta = write_topic_pages(topic_hits, css_link)
+  write_sitemap(items, volumes, topics_meta)
   (SITE / "robots.txt").write_text(
     f"User-agent: *\nAllow: /\n\nSitemap: {ORIGIN}/sitemap.xml\n",
     encoding="utf-8",
   )
   print(
-    f"Generated {len(items)} article pages under {OUT_DIR.relative_to(ROOT)} "
-    f"and {len(volumes)} volume index pages under {VOL_DIR.relative_to(ROOT)}"
+    f"Generated {len(items)} article pages under {OUT_DIR.relative_to(ROOT)}, "
+    f"{len(volumes)} volume pages under {VOL_DIR.relative_to(ROOT)}, "
+    f"and {len(topics_meta)} topic pages under {TOPIC_DIR.relative_to(ROOT)}"
   )
 
 

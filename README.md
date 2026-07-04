@@ -37,8 +37,10 @@ Cloudflare Git Integration，先停用 `.github/workflows/deploy-cloudflare-page
 
 - `scripts/parse_v2.py`：从文档提取实验模型数据到 `build/`
 - `scripts/migrate_v2.py`：将 `build/` 数据迁移到 `site/data/`
-- `scripts/build_search.py`：生成 `site/data/search.json`
 - `scripts/verify_alignment.py`：校验原文与 JSON 对齐
+
+站内「全文搜索」不再打包整站语料下发浏览器：篇名匹配走前端已加载的 `books.json` 本地过滤，
+正文匹配调用 `workers/ai-proxy` 的 `POST /api/ai/search`，复用 AI 知识库已建的 D1 全文索引（见下）。
 
 ## AI 知识库
 

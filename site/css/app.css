@@ -709,6 +709,15 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
   transition: opacity .2s ease, transform .2s ease;
 }
 .wc-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* 高清取音中：播放键转圈，示意在生成/取音而非卡死 */
+.rb-play { position: relative; }
+.read-bar[data-loading] .rb-play svg { opacity: 0; }
+.read-bar[data-loading] .rb-play::after {
+  content: ''; position: absolute; width: 18px; height: 18px;
+  border: 2px solid rgba(246, 241, 230, .45); border-top-color: #f6f1e6;
+  border-radius: 50%; animation: rb-spin .7s linear infinite;
+}
+@keyframes rb-spin { to { transform: rotate(360deg); } }
 
 /* ---------------- 平板/桌面：左侧目录常驻，AI 默认隐藏 ---------------- */
 @media (min-width: 1180px) {

@@ -655,14 +655,15 @@ const READ = {
   units: [], idx: 0, on: false, paused: false, cur: null, bar: null, seq: 0,
   rate: store.get('ttsRate', 0.95),
   engine: store.get('ttsEngine', 'cloud'),   // cloud=高清(服务端 CosyVoice2) / local=本机(speechSynthesis)
-  voice: store.get('ttsVoice', 'david'),      // 仅高清引擎用；须在服务端音色白名单内
+  voice: store.get('ttsVoice', 'charles'),    // 仅高清引擎用；须在服务端音色白名单内；默认清亮男声
   layer: store.get('ttsLayer', 't'),          // o=原文 / t=白话（默认白话，读得准）
 };
 // 高清朗读端点（同 AI 代理：POST { text, layer, voice } → 音频字节；命中 R2 秒回）
 const TTS_ENDPOINT = (CFG.aiEndpoint || '/api/ai').replace(/\/$/, '') + '/tts';
-const TTS_VOICES = [
-  { id: 'david', name: '沉稳男声' }, { id: 'benjamin', name: '温厚男声' }, { id: 'charles', name: '清亮男声' },
-  { id: 'anna', name: '柔和女声' }, { id: 'bella', name: '明净女声' }, { id: 'claire', name: '温婉女声' },
+const TTS_VOICES = [   // 极简：只留 3 个（两男一女），默认第一个
+  { id: 'charles', name: '清亮男声' },
+  { id: 'david', name: '沉稳男声' },
+  { id: 'anna', name: '柔和女声' },
 ];
 const voiceName = (id) => (TTS_VOICES.find((v) => v.id === id) || TTS_VOICES[0]).name;
 let _audio = null;                              // 高清引擎共用的 <audio>
@@ -670,10 +671,29 @@ function ensureAudio() { if (!_audio) { _audio = new Audio(); _audio.preload = '
 // 本句是否仍「当前」：异步(高清 fetch / 音频)回调据此判断，避免切走后误推进
 function isCurrent(token) { return READ.on && !READ.paused && READ.cur === token; }
 function stopCur() {
-  READ.cur = null;
+  READ.cur = null; setLoading(false);
   if (synthOK()) window.speechSynthesis.cancel();
   if (_audio) { _audio.pause(); _audio.onended = _audio.onerror = null; }
 }
+// 句间预取：播当前句时顺手取下一句，命中 R2 秒回 → 消除句间空档
+const _pf = new Map();   // idx -> Promise<objectURL>
+function fetchUnitAudio(i) {
+  if (_pf.has(i)) return _pf.get(i);
+  const u = READ.units[i];
+  if (!u) return Promise.reject(new Error('no unit'));
+  const layer = u.el.classList.contains('p-orig') ? 'o' : 't';
+  const p = fetch(TTS_ENDPOINT, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text: u.text, layer, voice: READ.voice, a: current && current.id }),
+  }).then((res) => { if (!res.ok) throw new Error('tts ' + res.status); return res.blob(); })
+    .then((blob) => URL.createObjectURL(blob));
+  _pf.set(i, p);
+  return p;
+}
+function revokePf(p) { Promise.resolve(p).then((u) => { try { URL.revokeObjectURL(u); } catch {} }, () => {}); }
+function clearPrefetch() { for (const p of _pf.values()) revokePf(p); _pf.clear(); }
+function prunePrefetch(keep) { for (const [i, p] of [..._pf]) if (!keep.includes(i)) { revokePf(p); _pf.delete(i); } }
+function setLoading(on) { if (READ.bar) READ.bar[on ? 'setAttribute' : 'removeAttribute']('data-loading', ''); }
 let _fbNoted = false;                            // 本次朗读是否已提示过「降级本机」
 function noteFallback() { if (_fbNoted) return; _fbNoted = true; toast('高清朗读暂不可用，已切到本机朗读'); }
 function toast(msg) {
@@ -771,18 +791,19 @@ function ensureReadBar() {
   const bar = document.createElement('div');
   bar.className = 'read-bar'; bar.hidden = true;
   bar.innerHTML =
+    // 极简：主行只留基本 transport；原文·白话/高清·本机/音色/语速/报错全收进「⋯」面板
     `<div class="rb-panel" hidden>` +
+      `<button class="rb-pill rb-layer" type="button" aria-label="原文/白话">白话</button>` +
+      `<button class="rb-pill rb-engine" type="button" aria-label="高清/本机">高清</button>` +
+      `<button class="rb-pill rb-voice" type="button" aria-label="切换音色">清亮男声</button>` +
       `<button class="rb-pill rb-rate" type="button" aria-label="切换语速">常速</button>` +
-      `<button class="rb-pill rb-voice" type="button" aria-label="切换音色">沉稳男声</button>` +
       `<button class="rb-pill rb-report" type="button" aria-label="读音报错">读音报错</button>` +
     `</div>` +
     `<div class="rb-row">` +
       `<button class="rb-btn rb-prev" type="button" aria-label="上一句">${RB_ICON.prev}</button>` +
       `<button class="rb-btn rb-play" type="button" aria-label="暂停">${RB_ICON.pause}</button>` +
       `<button class="rb-btn rb-next" type="button" aria-label="下一句">${RB_ICON.next}</button>` +
-      `<button class="rb-pill rb-layer" type="button" aria-label="原文/白话">白话</button>` +
-      `<button class="rb-pill rb-engine" type="button" aria-label="高清/本机">高清</button>` +
-      `<button class="rb-btn rb-more" type="button" aria-label="更多">${RB_ICON.more}</button>` +
+      `<button class="rb-btn rb-more" type="button" aria-label="更多设置">${RB_ICON.more}</button>` +
       `<button class="rb-x" type="button" aria-label="结束朗读">×</button>` +
     `</div>`;
   document.body.appendChild(bar);
@@ -836,10 +857,9 @@ function speakIdx(i) {
   READ.idx = i;
   const u = READ.units[i];
   markUnit(u); scrollUnit(u);
-  const layer = u.el.classList.contains('p-orig') ? 'o' : 't';
   const token = ++READ.seq;
   READ.cur = token;
-  if (READ.engine === 'cloud') playCloud(u, layer, token);
+  if (READ.engine === 'cloud') playCloud(i, token);
   else playLocal(u, token);
 }
 // 本机引擎：speechSynthesis 逐句合成（免费·离线可用）
@@ -852,26 +872,27 @@ function playLocal(u, token) {
   utt.onerror = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
   try { window.speechSynthesis.speak(utt); } catch {}
 }
-// 高清引擎：请求 /tts（命中 R2 秒回）→ <audio> 播放；失败自动降级本机
-async function playCloud(u, layer, token) {
+// 高清引擎：优先用预取好的音频 → <audio> 播放，同时预取下一句以消除句间停顿；失败自动降级本机
+async function playCloud(i, token) {
+  const u = READ.units[i];
   const a = ensureAudio();
-  try {
-    const res = await fetch(TTS_ENDPOINT, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: u.text, layer, voice: READ.voice, a: current && current.id }),
-    });
-    if (!res.ok) throw new Error('tts ' + res.status);
-    const blob = await res.blob();
-    if (!isCurrent(token)) return;                       // 期间被切走/暂停/停止 → 丢弃
-    if (a._url) URL.revokeObjectURL(a._url);
-    a._url = URL.createObjectURL(blob); a.src = a._url; a.playbackRate = READ.rate;
-    a.onended = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
-    a.onerror = () => { if (isCurrent(token)) { noteFallback(); READ.engine = 'local'; syncBar(); playLocal(u, token); } };
-    await a.play();
-  } catch (e) {
+  prunePrefetch([i, i + 1]);            // 回收更早的音频，控内存
+  let url;
+  setLoading(true);
+  try { url = await fetchUnitAudio(i); }
+  catch (e) {
+    setLoading(false);
     if (!isCurrent(token)) return;
     noteFallback(); READ.engine = 'local'; syncBar(); playLocal(u, token);   // 整体切本机并续读本句
+    return;
   }
+  setLoading(false);
+  if (!isCurrent(token)) return;         // 期间被切走/暂停/停止 → 丢弃
+  a.src = url; a.playbackRate = READ.rate;
+  a.onended = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
+  a.onerror = () => { if (isCurrent(token)) { noteFallback(); READ.engine = 'local'; syncBar(); playLocal(u, token); } };
+  a.play().catch(() => {});
+  if (i + 1 < READ.units.length) fetchUnitAudio(i + 1).catch(() => {});   // 预取下一句
 }
 
 function startRead() {
@@ -887,9 +908,9 @@ function startRead() {
   speakIdx(0);
 }
 function stopRead() {
-  stopCur();
+  stopCur(); clearPrefetch();
   READ.on = false; READ.paused = false; READ.units = [];
-  if (_audio && _audio._url) { URL.revokeObjectURL(_audio._url); _audio._url = null; _audio.removeAttribute('src'); }
+  if (_audio) _audio.removeAttribute('src');
   clearHL();
   if (speakBtn) speakBtn.classList.remove('on');
   if (READ.bar) { READ.bar.hidden = true; const p = READ.bar.querySelector('.rb-panel'); if (p) p.hidden = true; }
@@ -929,6 +950,7 @@ function toggleLayer() {
   if (!ab || !ab.querySelector('.p-trans')) return;      // 无白话，不可切
   READ.layer = READ.layer === 'o' ? 't' : 'o';
   store.set('ttsLayer', READ.layer);
+  clearPrefetch();                       // 分层变了，预取作废
   const eff = applyReadLayer();
   const wasOn = READ.on && !READ.paused;
   READ.units = buildUnits(eff);
@@ -938,7 +960,7 @@ function toggleLayer() {
 function toggleEngine() {
   READ.engine = READ.engine === 'cloud' ? 'local' : 'cloud';
   store.set('ttsEngine', READ.engine);
-  _fbNoted = false;
+  _fbNoted = false; clearPrefetch();
   syncBar();
   if (READ.on && !READ.paused) { stopCur(); speakIdx(READ.idx); }   // 用新引擎重读本句
 }
@@ -947,6 +969,7 @@ function cycleVoice() {
   const ids = TTS_VOICES.map((v) => v.id);
   READ.voice = ids[(ids.indexOf(READ.voice) + 1) % ids.length];
   store.set('ttsVoice', READ.voice);
+  clearPrefetch();                       // 音色变了，预取作废
   syncBar();
   if (READ.on && !READ.paused) { stopCur(); speakIdx(READ.idx); }
 }

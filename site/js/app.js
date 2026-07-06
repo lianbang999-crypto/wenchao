@@ -651,7 +651,37 @@ const speakBtn = $('#btn-speak');
 const synthOK = () => 'speechSynthesis' in window;
 const RATES = [0.75, 0.95, 1.2];
 const rateLabel = (r) => (r <= 0.8 ? '慢' : r >= 1.2 ? '快' : '常') + '速';
-const READ = { units: [], idx: 0, on: false, paused: false, cur: null, bar: null, rate: store.get('ttsRate', 0.95) };
+const READ = {
+  units: [], idx: 0, on: false, paused: false, cur: null, bar: null, seq: 0,
+  rate: store.get('ttsRate', 0.95),
+  engine: store.get('ttsEngine', 'cloud'),   // cloud=高清(服务端 CosyVoice2) / local=本机(speechSynthesis)
+  voice: store.get('ttsVoice', 'david'),      // 仅高清引擎用；须在服务端音色白名单内
+  layer: store.get('ttsLayer', 't'),          // o=原文 / t=白话（默认白话，读得准）
+};
+// 高清朗读端点（同 AI 代理：POST { text, layer, voice } → 音频字节；命中 R2 秒回）
+const TTS_ENDPOINT = (CFG.aiEndpoint || '/api/ai').replace(/\/$/, '') + '/tts';
+const TTS_VOICES = [
+  { id: 'david', name: '沉稳男声' }, { id: 'benjamin', name: '温厚男声' }, { id: 'charles', name: '清亮男声' },
+  { id: 'anna', name: '柔和女声' }, { id: 'bella', name: '明净女声' }, { id: 'claire', name: '温婉女声' },
+];
+const voiceName = (id) => (TTS_VOICES.find((v) => v.id === id) || TTS_VOICES[0]).name;
+let _audio = null;                              // 高清引擎共用的 <audio>
+function ensureAudio() { if (!_audio) { _audio = new Audio(); _audio.preload = 'auto'; } return _audio; }
+// 本句是否仍「当前」：异步(高清 fetch / 音频)回调据此判断，避免切走后误推进
+function isCurrent(token) { return READ.on && !READ.paused && READ.cur === token; }
+function stopCur() {
+  READ.cur = null;
+  if (synthOK()) window.speechSynthesis.cancel();
+  if (_audio) { _audio.pause(); _audio.onended = _audio.onerror = null; }
+}
+let _fbNoted = false;                            // 本次朗读是否已提示过「降级本机」
+function noteFallback() { if (_fbNoted) return; _fbNoted = true; toast('高清朗读暂不可用，已切到本机朗读'); }
+function toast(msg) {
+  let t = document.getElementById('wc-toast');
+  if (!t) { t = document.createElement('div'); t.id = 'wc-toast'; t.className = 'wc-toast'; document.body.appendChild(t); }
+  t.textContent = msg; t.classList.add('on');
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('on'), 2400);
+}
 // 优先用 Custom Highlight API（句级、零 DOM 改动）；不支持则退化为 .reading-para 段级高亮
 const HL = (window.CSS && CSS.highlights && typeof Highlight !== 'undefined') ? new Highlight() : null;
 if (HL) CSS.highlights.set('wc-read', HL);
@@ -660,12 +690,13 @@ const RB_ICON = {
   pause: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
   prev: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 6h2v12H7zM20 6 11 12l9 6z"/></svg>',
   next: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M15 6h2v12h-2zM4 6l9 6-9 6z"/></svg>',
+  more: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>',
 };
 
 // 文章页才显示朗读键（设备不支持 TTS 则始终隐藏）；切走时一并停读
 function showSpeakBtn(on) {
   if (!speakBtn) return;
-  speakBtn.hidden = !(on && synthOK());
+  speakBtn.hidden = !on;   // 高清引擎无需本机 TTS 支持，故文章页恒显；不支持时点播自动降级/提示
   if (!on) stopRead();
 }
 
@@ -681,8 +712,9 @@ function pickVoice() {
 if (synthOK()) window.speechSynthesis.onvoiceschanged = () => { _voice = null; _voiceTried = false; pickVoice(); };
 
 // 把当前可见正文切成「句」单元，并为每句留一个可高亮的 DOM Range（跨行内子节点安全）
-function buildUnits() {
-  const els = [...$('#reader').querySelectorAll('.art-title, .art-body .p-orig, .art-body .p-trans')]
+function buildUnits(layer) {
+  const sel = layer === 'o' ? '.art-body .p-orig' : '.art-body .p-trans';   // 单层朗读，不做文白交替
+  const els = [...$('#reader').querySelectorAll('.art-title, ' + sel)]
     .filter((el) => el.offsetParent !== null);
   const END = '。！？!?…', CLOSE = '」』）)】》”’';
   const units = [];
@@ -739,26 +771,63 @@ function ensureReadBar() {
   const bar = document.createElement('div');
   bar.className = 'read-bar'; bar.hidden = true;
   bar.innerHTML =
-    `<button class="rb-btn rb-prev" type="button" aria-label="上一句">${RB_ICON.prev}</button>` +
-    `<button class="rb-btn rb-play" type="button" aria-label="暂停">${RB_ICON.pause}</button>` +
-    `<button class="rb-btn rb-next" type="button" aria-label="下一句">${RB_ICON.next}</button>` +
-    `<button class="rb-rate" type="button" aria-label="切换语速">常速</button>` +
-    `<button class="rb-x" type="button" aria-label="结束朗读">×</button>`;
+    `<div class="rb-panel" hidden>` +
+      `<button class="rb-pill rb-rate" type="button" aria-label="切换语速">常速</button>` +
+      `<button class="rb-pill rb-voice" type="button" aria-label="切换音色">沉稳男声</button>` +
+      `<button class="rb-pill rb-report" type="button" aria-label="读音报错">读音报错</button>` +
+    `</div>` +
+    `<div class="rb-row">` +
+      `<button class="rb-btn rb-prev" type="button" aria-label="上一句">${RB_ICON.prev}</button>` +
+      `<button class="rb-btn rb-play" type="button" aria-label="暂停">${RB_ICON.pause}</button>` +
+      `<button class="rb-btn rb-next" type="button" aria-label="下一句">${RB_ICON.next}</button>` +
+      `<button class="rb-pill rb-layer" type="button" aria-label="原文/白话">白话</button>` +
+      `<button class="rb-pill rb-engine" type="button" aria-label="高清/本机">高清</button>` +
+      `<button class="rb-btn rb-more" type="button" aria-label="更多">${RB_ICON.more}</button>` +
+      `<button class="rb-x" type="button" aria-label="结束朗读">×</button>` +
+    `</div>`;
   document.body.appendChild(bar);
   bar.querySelector('.rb-prev').onclick = () => jumpRead(-1);
   bar.querySelector('.rb-next').onclick = () => jumpRead(1);
   bar.querySelector('.rb-play').onclick = togglePause;
+  bar.querySelector('.rb-layer').onclick = toggleLayer;
+  bar.querySelector('.rb-engine').onclick = toggleEngine;
   bar.querySelector('.rb-rate').onclick = cycleRate;
+  bar.querySelector('.rb-voice').onclick = cycleVoice;
+  bar.querySelector('.rb-report').onclick = reportPron;
+  bar.querySelector('.rb-more').onclick = () => { const p = bar.querySelector('.rb-panel'); p.hidden = !p.hidden; };
   bar.querySelector('.rb-x').onclick = stopRead;
   READ.bar = bar;
   return bar;
 }
 function syncBar() {
   if (!READ.bar) return;
-  const play = READ.bar.querySelector('.rb-play');
+  const q = (s) => READ.bar.querySelector(s);
+  const play = q('.rb-play');
   play.innerHTML = READ.paused ? RB_ICON.play : RB_ICON.pause;
   play.setAttribute('aria-label', READ.paused ? '继续朗读' : '暂停');
-  READ.bar.querySelector('.rb-rate').textContent = rateLabel(READ.rate);
+  q('.rb-rate').textContent = rateLabel(READ.rate);
+  const layerBtn = q('.rb-layer');
+  layerBtn.textContent = READ.layer === 'o' ? '原文' : '白话';
+  layerBtn.hidden = !document.querySelector('#reader .art-body .p-trans');   // 无白话的篇目不显示切换
+  const engBtn = q('.rb-engine');
+  engBtn.textContent = READ.engine === 'cloud' ? '高清' : '本机';
+  engBtn.classList.toggle('alt', READ.engine === 'local');
+  const voiceBtn = q('.rb-voice');
+  voiceBtn.textContent = voiceName(READ.voice);
+  voiceBtn.hidden = READ.engine !== 'cloud';           // 仅高清可选音色
+}
+
+// 让所读分层可见（单层显示，同步模式按钮）；返回本篇实际可读分层。
+// 纯原文篇临时按原文，但不改动用户的 READ.layer 偏好；也不写 store.mode，保留显示偏好。
+function applyReadLayer() {
+  const reader = $('#reader');
+  const ab = reader && reader.querySelector('.art-body');
+  if (!ab) return READ.layer;
+  const eff = ab.querySelector('.p-trans') ? READ.layer : 'o';   // 无白话 → 只能原文
+  const m = eff === 'o' ? 'orig' : 'trans';
+  ab.dataset.mode = m;
+  reader.querySelectorAll('.mode-bar .seg').forEach((x) => x.classList.toggle('on', x.dataset.m === m));
+  return eff;
 }
 
 function speakIdx(i) {
@@ -767,20 +836,50 @@ function speakIdx(i) {
   READ.idx = i;
   const u = READ.units[i];
   markUnit(u); scrollUnit(u);
+  const layer = u.el.classList.contains('p-orig') ? 'o' : 't';
+  const token = ++READ.seq;
+  READ.cur = token;
+  if (READ.engine === 'cloud') playCloud(u, layer, token);
+  else playLocal(u, token);
+}
+// 本机引擎：speechSynthesis 逐句合成（免费·离线可用）
+function playLocal(u, token) {
+  if (!synthOK()) { toast('本设备不支持本机朗读'); stopRead(); return; }
   const utt = new SpeechSynthesisUtterance(speakable(u.text));
   utt.lang = 'zh-CN'; utt.rate = READ.rate;
   const v = pickVoice(); if (v) utt.voice = v;
-  // 仅当本句仍是「当前句」（未被取消/切走）才推进，避免取消触发的回调误进下一句
-  utt.onend = () => { if (READ.on && !READ.paused && READ.cur === utt) speakIdx(READ.idx + 1); };
-  utt.onerror = () => { if (READ.on && !READ.paused && READ.cur === utt) speakIdx(READ.idx + 1); };
-  READ.cur = utt;
+  utt.onend = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
+  utt.onerror = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
   try { window.speechSynthesis.speak(utt); } catch {}
 }
+// 高清引擎：请求 /tts（命中 R2 秒回）→ <audio> 播放；失败自动降级本机
+async function playCloud(u, layer, token) {
+  const a = ensureAudio();
+  try {
+    const res = await fetch(TTS_ENDPOINT, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: u.text, layer, voice: READ.voice, a: current && current.id }),
+    });
+    if (!res.ok) throw new Error('tts ' + res.status);
+    const blob = await res.blob();
+    if (!isCurrent(token)) return;                       // 期间被切走/暂停/停止 → 丢弃
+    if (a._url) URL.revokeObjectURL(a._url);
+    a._url = URL.createObjectURL(blob); a.src = a._url; a.playbackRate = READ.rate;
+    a.onended = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
+    a.onerror = () => { if (isCurrent(token)) { noteFallback(); READ.engine = 'local'; syncBar(); playLocal(u, token); } };
+    await a.play();
+  } catch (e) {
+    if (!isCurrent(token)) return;
+    noteFallback(); READ.engine = 'local'; syncBar(); playLocal(u, token);   // 整体切本机并续读本句
+  }
+}
+
 function startRead() {
-  if (!current || !synthOK()) return;
-  READ.units = buildUnits();
+  if (!current) return;
+  const eff = applyReadLayer();   // 按偏好 READ.layer（纯原文篇自动降原文），并让该层单独可见
+  READ.units = buildUnits(eff);
   if (!READ.units.length) return;
-  window.speechSynthesis.cancel();
+  stopCur(); _fbNoted = false;
   READ.on = true; READ.paused = false;
   if (speakBtn) speakBtn.classList.add('on');
   ensureReadBar().hidden = false;
@@ -788,28 +887,78 @@ function startRead() {
   speakIdx(0);
 }
 function stopRead() {
-  if (synthOK()) window.speechSynthesis.cancel();
-  READ.on = false; READ.paused = false; READ.cur = null; READ.units = [];
+  stopCur();
+  READ.on = false; READ.paused = false; READ.units = [];
+  if (_audio && _audio._url) { URL.revokeObjectURL(_audio._url); _audio._url = null; _audio.removeAttribute('src'); }
   clearHL();
   if (speakBtn) speakBtn.classList.remove('on');
-  if (READ.bar) READ.bar.hidden = true;
+  if (READ.bar) { READ.bar.hidden = true; const p = READ.bar.querySelector('.rb-panel'); if (p) p.hidden = true; }
 }
 function togglePause() {
   if (!READ.on) return;
-  if (READ.paused) { READ.paused = false; syncBar(); speakIdx(READ.idx); }
-  else { READ.paused = true; READ.cur = null; if (synthOK()) window.speechSynthesis.cancel(); syncBar(); }
+  if (READ.paused) {
+    READ.paused = false; syncBar();
+    // 高清：音频未播完则原地续播；否则（本机/已播完/尚未取到）从本句重来
+    if (READ.engine === 'cloud' && _audio && _audio.src && _audio.duration && _audio.currentTime < _audio.duration) {
+      _audio.play().catch(() => speakIdx(READ.idx));
+    } else { speakIdx(READ.idx); }
+  } else {
+    READ.paused = true;
+    if (READ.engine === 'cloud') { if (_audio) _audio.pause(); }
+    else if (synthOK()) window.speechSynthesis.cancel();
+    syncBar();
+  }
 }
 function jumpRead(d) {
   if (!READ.on) return;
-  READ.paused = false; READ.cur = null;
-  if (synthOK()) window.speechSynthesis.cancel();
+  READ.paused = false; stopCur();
   syncBar(); speakIdx(READ.idx + d);
 }
 function cycleRate() {
   READ.rate = RATES[(RATES.indexOf(READ.rate) + 1) % RATES.length];
   store.set('ttsRate', READ.rate);
   syncBar();
-  if (READ.on && !READ.paused) { READ.cur = null; if (synthOK()) window.speechSynthesis.cancel(); speakIdx(READ.idx); }
+  if (READ.on && !READ.paused) {
+    if (READ.engine === 'cloud' && _audio && _audio.src) _audio.playbackRate = READ.rate;  // 高清即时变速，无需重读
+    else { stopCur(); speakIdx(READ.idx); }
+  }
+}
+function toggleLayer() {
+  if (!current) return;
+  const ab = document.querySelector('#reader .art-body');
+  if (!ab || !ab.querySelector('.p-trans')) return;      // 无白话，不可切
+  READ.layer = READ.layer === 'o' ? 't' : 'o';
+  store.set('ttsLayer', READ.layer);
+  const eff = applyReadLayer();
+  const wasOn = READ.on && !READ.paused;
+  READ.units = buildUnits(eff);
+  syncBar();
+  if (READ.on) { stopCur(); if (wasOn) speakIdx(Math.min(READ.idx, READ.units.length - 1)); }
+}
+function toggleEngine() {
+  READ.engine = READ.engine === 'cloud' ? 'local' : 'cloud';
+  store.set('ttsEngine', READ.engine);
+  _fbNoted = false;
+  syncBar();
+  if (READ.on && !READ.paused) { stopCur(); speakIdx(READ.idx); }   // 用新引擎重读本句
+}
+function cycleVoice() {
+  if (READ.engine !== 'cloud') { toast('切到高清朗读才能换音色'); return; }
+  const ids = TTS_VOICES.map((v) => v.id);
+  READ.voice = ids[(ids.indexOf(READ.voice) + 1) % ids.length];
+  store.set('ttsVoice', READ.voice);
+  syncBar();
+  if (READ.on && !READ.paused) { stopCur(); speakIdx(READ.idx); }
+}
+function reportPron() {
+  const u = READ.units[READ.idx];
+  const note = window.prompt('这句里哪个字/词读错了？可写正确读音，便于我们校对（选填）：', '');
+  if (note === null) return;
+  const layer = u && u.el.classList.contains('p-orig') ? 'o' : 't';
+  fetch(TTS_ENDPOINT + '/report', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ a: current && current.id, seg: READ.idx, layer, text: u ? u.text : '', note, voice: READ.voice }),
+  }).then(() => toast('已收到，感恩！我们会尽快校正。')).catch(() => toast('提交失败，请稍后再试'));
 }
 if (speakBtn) speakBtn.onclick = () => { READ.on ? stopRead() : startRead(); };
 

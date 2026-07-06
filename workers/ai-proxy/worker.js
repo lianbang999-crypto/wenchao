@@ -52,6 +52,33 @@ const PARENT_CHARS = 1100;               // 小块检索、大块喂入：命中
 const SEARCH_ROWS = 400;                  // 网站全文搜索：扫描的原始切块行数上限
 const SEARCH_LIMIT = 80;                  // 网站全文搜索：去重后返回的文章数上限
 
+/* ---------- 朗读 TTS（硅基流动 CosyVoice2 + R2 懒缓存）----------
+   按需生成、懒缓存：用户点谁才生成谁，命中 R2 直接返回、不再计费。 */
+const TTS_MODEL = 'FunAudioLLM/CosyVoice2-0.5B';   // 中文最自然，支持中/英/日/韩+方言
+const TTS_FORMAT = 'mp3';                           // 体积小、浏览器兼容好
+const TTS_VOICES = ['david', 'benjamin', 'charles', 'anna', 'bella', 'claire'];  // 预置音色白名单（防注入）
+const TTS_DEFAULT_VOICE = 'david';                  // 默认男声，沉稳宜诵读
+const TTS_GEN_DAILY = 300;                          // 每 IP 每日「生成」上限；只计 cache-miss，命中/播放不受限
+const TTS_MAX_CHARS = 2000;                         // 单次合成文本上限（段级足够；超长截断保护）
+const TTS_VER = 't1';                               // 版本号并入缓存键：换模型/换读音词典时整体失效
+
+/* 佛门读音归一：通用 TTS 按现代普通话注音，会读错佛经专名与多音字。
+   仅替换「喂给 TTS 的文本」为正确读音的同音字，屏显原文分毫不动（遵「经典原文不可篡改」）。
+   保守起见只放高置信、高频易错词；拿不准的读音宁可不加，靠 /tts/report 反馈核实后再补。
+   长词在前，避免短词先替换破坏长词。 */
+const READ_DICT = [
+  ['南无', '那摩'],   // nā mó（非 nán wú）——净土文本最高频
+  ['般若', '波惹'],   // bō rě
+  ['迦叶', '迦摄'],   // jiā shè（叶读 shè）
+  ['伽蓝', '茄蓝'],   // qié lán
+  ['刹那', '岔那'],   // chà nà
+];
+function normalizeReading(text) {
+  let s = text;
+  for (const [a, b] of READ_DICT) if (s.indexOf(a) >= 0) s = s.split(a).join(b);
+  return s;
+}
+
 function cors(origin) {
   const allow = ALLOW_ORIGINS.includes(origin) ? origin : ALLOW_ORIGINS[0];
   return {
@@ -941,8 +968,106 @@ if(S)load();else login();
 })();
 </script></body></html>`;
 
+/* ---------- 朗读：按需生成 + R2 懒缓存 ----------
+   前端契约：POST { text, layer:'o'|'t', voice } → 音频字节(audio/mpeg)。
+   命中 R2 直接返回(不计配额)；未命中受「生成配额」约束后调 CosyVoice2，并后台落桶。 */
+async function ttsGenQuota(req, env) {
+  // 独立于问答日额度；只对生成(cache-miss)计数，命中/重复播放不消耗。
+  if (!env.RL) return { limited: false };
+  const today = new Date().toISOString().slice(0, 10);
+  const ip = req.headers.get('CF-Connecting-IP') || 'anon';
+  const k = `ttsgen:${today}:${ip}`;
+  const c = parseInt((await env.RL.get(k)) || '0', 10);
+  if (c >= TTS_GEN_DAILY) return { limited: true, message: '今日朗读生成已达上限，请明日再来。阿弥陀佛。' };
+  await env.RL.put(k, String(c + 1), { expirationTtl: 90000 });
+  return { limited: false };
+}
+async function handleTts(req, env, ctx, origin) {
+  const aCors = cors(origin);
+  const jerr = (obj, status) => json(obj, status, { 'Content-Type': 'application/json', ...aCors });
+  if (!env.TTS) return jerr({ error: '朗读存储未配置。' }, 500);
+  if (!env.SILICONFLOW_API_KEY) return jerr({ error: '朗读密钥未配置。' }, 500);
+
+  // 鉴权沿用问答同一套（API key / 自家网页 / 匿名）
+  const auth = await authenticate(req, env);
+  if (auth.error) return jerr({ error: auth.message }, auth.status);
+
+  let body;
+  try { body = await req.json(); } catch { body = null; }
+  const rawText = body && typeof body.text === 'string' ? body.text.trim() : '';
+  if (!rawText) return jerr({ error: '缺少文本。' }, 400);
+  const layer = body && body.layer === 'o' ? 'o' : 't';   // o=原文 t=白话（默认白话）
+  let voice = body && typeof body.voice === 'string' ? body.voice : TTS_DEFAULT_VOICE;
+  if (!TTS_VOICES.includes(voice)) voice = TTS_DEFAULT_VOICE;
+  const text = rawText.slice(0, TTS_MAX_CHARS);
+
+  // 确定性缓存键：版本+音色+分层+文本哈希 → 文本一改即失效、重复播放必命中
+  const digest = await sha256(TTS_VER + '|' + TTS_MODEL + '|' + voice + '|' + layer + '|' + text);
+  const key = `${TTS_VER}/${layer}/${voice}/${digest}.${TTS_FORMAT}`;
+  const audioType = 'audio/' + (TTS_FORMAT === 'mp3' ? 'mpeg' : TTS_FORMAT);
+  const audioHeaders = { 'Content-Type': audioType, 'Cache-Control': 'public, max-age=31536000, immutable', ...aCors };
+
+  // ① 命中 R2：直接回，不计配额、不再生成
+  const hit = await env.TTS.get(key);
+  if (hit) return new Response(hit.body, { headers: { ...audioHeaders, 'X-Tts-Cache': 'hit' } });
+
+  // ② 未命中：受生成配额约束，再调 CosyVoice2
+  const quota = await ttsGenQuota(req, env);
+  if (quota.limited) return jerr({ error: quota.message }, 429);
+
+  const spoken = normalizeReading(text);   // 只影响发音，不影响 key（key 用原文，便于按屏显文本命中）
+  let r;
+  try {
+    const opts = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.SILICONFLOW_API_KEY}` },
+      body: JSON.stringify({ model: TTS_MODEL, input: spoken, voice: `${TTS_MODEL}:${voice}`, response_format: TTS_FORMAT }),
+    };
+    if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opts.signal = AbortSignal.timeout(30000);
+    r = await fetch(`${SF_BASE}/audio/speech`, opts);
+  } catch (e) {
+    return jerr({ error: '朗读生成超时或失败：' + ((e && e.message) || e) }, 502);
+  }
+  if (!r.ok) return jerr({ error: '朗读上游错误 ' + r.status + ' ' + (await r.text()).slice(0, 200) }, 502);
+
+  const buf = await r.arrayBuffer();
+  const put = env.TTS.put(key, buf, {
+    httpMetadata: { contentType: audioType },
+    customMetadata: { layer, voice, model: TTS_MODEL, ver: TTS_VER, len: String(text.length) },
+  });
+  if (ctx && ctx.waitUntil) ctx.waitUntil(put); else await put;   // 后台落桶，不阻塞返回
+  return new Response(buf, { headers: { ...audioHeaders, 'X-Tts-Cache': 'miss' } });
+}
+
+/* 读音报错：用户听到读错的字词，一键上报，攒起来供管理端核实、扩充 READ_DICT。 */
+async function handleTtsReport(req, env, headers) {
+  const auth = await authenticate(req, env);
+  if (auth.error) return json({ error: auth.message }, auth.status, headers);
+  let b; try { b = await req.json(); } catch { b = null; }
+  if (!b) return json({ error: '无效请求' }, 400, headers);
+  const rec = {
+    t: new Date().toISOString(),
+    a: String(b.a || '').slice(0, 40),
+    seg: String(b.seg == null ? '' : b.seg).slice(0, 8),
+    layer: b.layer === 'o' ? 'o' : 't',
+    text: String(b.text || '').slice(0, 300),
+    note: String(b.note || '').slice(0, 200),
+    voice: String(b.voice || '').slice(0, 24),
+  };
+  if (env.RL) {
+    const k = 'ttsreport:list';
+    let arr = [];
+    try { arr = JSON.parse((await env.RL.get(k)) || '[]'); } catch {}
+    if (!Array.isArray(arr)) arr = [];
+    arr.unshift(rec);
+    if (arr.length > 500) arr = arr.slice(0, 500);
+    await env.RL.put(k, JSON.stringify(arr));
+  }
+  return json({ ok: true }, 200, headers);
+}
+
 export default {
-  async fetch(req, env) {
+  async fetch(req, env, ctx) {
     try {
     const url = new URL(req.url);
     const apiPrefix = '/api/ai';
@@ -958,6 +1083,8 @@ export default {
     if (req.method === 'GET' && (pathname === '/' || pathname === '/health')) return handleHealth(env, headers);
     if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers });
     if (pathname === '/index') return handleIndex(req, env, url, headers);
+    if (pathname === '/tts') return handleTts(req, env, ctx, origin);
+    if (pathname === '/tts/report') return handleTtsReport(req, env, headers);
     if (pathname === '/feedback') return handleFeedback(req, env, headers);
     if (pathname === '/search') return handleSearch(req, env, headers);
     if (pathname === '/admin/data') return handleAdminData(req, env, headers);

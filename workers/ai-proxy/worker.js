@@ -2,13 +2,13 @@
  *
  * 架构（全在 Cloudflare）：
  *   建库(一次)：/index 批量抓全站文章 → 切段 → SiliconFlow(bge-m3) 向量 → 存入 Vectorize
- *   提问：问题 →(可选)文言改写多查询 → 向量 → Vectorize 召回 → 交叉编码器重排序 → DeepSeek 据最相关段作答(标出处·限字数)
- *   缓存：① 向量库本身(建一次长期用) ② 答案缓存(同问秒回,KV) ③ DeepSeek 前缀自动缓存
+ *   提问：问题 →(可选)文言改写多查询 → 向量 → Vectorize 召回 → 交叉编码器重排序 → SiliconFlow(DeepSeek-V4-Flash) 据最相关段作答(标出处·限字数)
+ *   缓存：① 向量库本身(建一次长期用) ② 答案缓存(同问秒回,KV) ③ SiliconFlow 前缀自动缓存
  *
  * 前端契约：POST { messages:[{role,content}…], articleId? } → { reply, cite, sources:[{id,title}] }
  *
  * 绑定(见 wrangler.toml)：VEC(Vectorize)、RL(KV 限流+答案缓存)、DB(D1 全文索引)
- * 密钥(Secret)：DEEPSEEK_API_KEY(问答)、SILICONFLOW_API_KEY(bge-m3 嵌入+重排序)、INDEX_SECRET(保护 /index)
+ * 密钥(Secret)：SILICONFLOW_API_KEY(问答+嵌入+重排序+TTS，统一硅基流动)、INDEX_SECRET(保护 /index)
  *
  * 建库：部署后调用（分批，循环到 done:true）
  *   curl -X POST "https://<worker>/index?cursor=0" -H "X-Index-Secret: <INDEX_SECRET>"
@@ -22,10 +22,10 @@ const ALLOW_ORIGINS = [
   'http://127.0.0.1:4188',
 ];
 const SITE_BASE = 'https://wenchao.foyue.org';
-const SF_BASE = 'https://api.siliconflow.cn/v1';   // 硅基流动：bge-m3 嵌入 + bge-reranker 重排序（替代 Cloudflare Workers AI，绕开免费版神经元日额）
+const SF_BASE = 'https://api.siliconflow.cn/v1';   // 硅基流动：统一入口（嵌入 + 重排序 + 问答生成 + TTS）
 const EMBED_MODEL = 'BAAI/bge-m3';       // 多语种向量(含古今汉语)，1024 维（硅基流动；与原 Cloudflare bge-m3 同模型，向量兼容，无需重建库）
-const CHAT_MODEL = 'deepseek-v4-flash';        // 非思考模式（各请求显式 thinking:disabled，等价旧 deepseek-chat）；旧名 deepseek-chat 于 2026/07/24 弃用
-const REASONER_MODEL = 'deepseek-v4-pro';      // 难题路由用更强模型 + 思考模式（USE_REASONER_FOR_HARD 默认关）
+const CHAT_MODEL = 'deepseek-ai/DeepSeek-V4-Flash';  // 非思考模式（硅基流动；原 deepseek-v4-flash，迁移至硅基统一管理）
+const REASONER_MODEL = 'deepseek-ai/DeepSeek-V4-Pro'; // 难题路由用更强模型 + 思考模式（USE_REASONER_FOR_HARD 默认关；硅基流动）
 const USE_REASONER_FOR_HARD = false;          // 难题路由总开关：默认关；置 true 后对比较/辨析类长问改用 pro + 思考模式
 const USE_CONDENSE = true;                     // 多轮追问改写：把含指代/省略的追问改写成可独立检索的完整问题
 const KB_NAMESPACE = 'v2';                // 优化后的知识库命名空间；默认 namespace 保留作回退
@@ -37,7 +37,7 @@ const USE_QUERY_REWRITE = true;            // 多查询：原问 + DeepSeek 文�
 const USE_HYBRID = true;                   // 混合检索：向量召回 + D1 全文(关键词)召回 → RRF 融合；缺 D1 或异常自动退回纯向量
 const LEX_TOPK = 30;                       // 关键词(全文)召回上限
 const RRF_K = 60;                          // RRF 融合常数(越大越平滑，弱化各路头部的绝对名次)
-const RETRIEVAL_VERSION = 'r6';            // 检索/生成版本号，并入答案缓存键，避免旧缓存遮蔽新逻辑(r6: 生成模型迁移至 deepseek-v4-flash 非思考模式)
+const RETRIEVAL_VERSION = 'r7';            // 检索/生成版本号，并入答案缓存键，避免旧缓存遮蔽新逻辑(r7: 问答生成迁移至硅基流动 DeepSeek-V4-Flash)
 const ANSWER_CHARS = 500;                 // 回复字数上限(软引导)
 const MAX_TOKENS = 700;                   // 回复 token 硬上限(约 500 汉字)
 const CACHE_TTL = 7 * 86400;              // 答案缓存 7 天
@@ -382,11 +382,11 @@ function naiveTerms(q) {
  * 返回 { queries:[原问,(改写)], terms:[关键词…] }。best-effort：超时/解析失败都退回原问 + 启发式关键词，绝不阻塞问答。 */
 async function buildRetrieval(env, q) {
   const result = { queries: [q], terms: naiveTerms(q) };
-  if (!USE_QUERY_REWRITE || !env.DEEPSEEK_API_KEY) return result;
+  if (!USE_QUERY_REWRITE || !env.SILICONFLOW_API_KEY) return result;
   try {
     const opts = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.SILICONFLOW_API_KEY}` },
       body: JSON.stringify({
         model: CHAT_MODEL,
         messages: [
@@ -397,7 +397,7 @@ async function buildRetrieval(env, q) {
       }),
     };
     if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opts.signal = AbortSignal.timeout(4500);
-    const r = await fetch('https://api.deepseek.com/chat/completions', opts);
+    const r = await fetch(`${SF_BASE}/chat/completions`, opts);
     if (r.ok) {
       const j = await r.json();
       let raw = ((j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '').trim();
@@ -571,13 +571,13 @@ async function condenseQuestion(env, msgs, lastU) {
   const userMsgs = msgs.filter((m) => m.role === 'user');
   const prevU = userMsgs.length > 1 ? userMsgs[userMsgs.length - 2].content : '';
   const heuristic = (prevU && (lastU.length < 12 || FOLLOWUP_RE.test(lastU))) ? prevU + '。' + lastU : lastU;
-  if (!USE_CONDENSE || !env.DEEPSEEK_API_KEY || !prevU) return heuristic;
+  if (!USE_CONDENSE || !env.SILICONFLOW_API_KEY || !prevU) return heuristic;
   try {
     const hist = msgs.slice(-5)
       .map((m) => (m.role === 'user' ? '用户：' : '助手：') + String(m.content).slice(0, 200)).join('\n');
     const opts = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.SILICONFLOW_API_KEY}` },
       body: JSON.stringify({
         model: CHAT_MODEL,
         messages: [
@@ -588,7 +588,7 @@ async function condenseQuestion(env, msgs, lastU) {
       }),
     };
     if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opts.signal = AbortSignal.timeout(4500);
-    const r = await fetch('https://api.deepseek.com/chat/completions', opts);
+    const r = await fetch(`${SF_BASE}/chat/completions`, opts);
     if (r.ok) {
       const j = await r.json();
       const rw = ((j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '')
@@ -686,7 +686,7 @@ async function enforceQuota(req, env, auth) {
 }
 
 async function handleAsk(req, env, headers) {
-  if (!env.DEEPSEEK_API_KEY) return json({ reply: '服务未配置密钥。' }, 500, headers);
+  if (!env.SILICONFLOW_API_KEY) return json({ reply: '服务未配置密钥。' }, 500, headers);
 
   // 鉴权（API key / 自家网页 / 匿名）+ 对应配额
   const auth = await authenticate(req, env);
@@ -801,9 +801,9 @@ ${context}`;
       const thinking = hard ? { type: 'enabled' } : { type: 'disabled' };  // 默认非思考(等价旧 deepseek-chat)；仅难题路由开思考
       let full = '';
       try {
-        const ds = await fetch('https://api.deepseek.com/chat/completions', {
+        const ds = await fetch(`${SF_BASE}/chat/completions`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.SILICONFLOW_API_KEY}` },
           body: JSON.stringify({
             model,
             messages: [{ role: 'system', content: system }, ...msgs],

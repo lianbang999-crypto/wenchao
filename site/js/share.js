@@ -61,18 +61,33 @@
     bar = document.createElement('div');
     bar.className = 'share-bar';
     bar.hidden = true;
+    // 极简：全图标 + 字数 chip（不写按钮文字，避免长选时撑破居中胶囊）。划线·朗读·问·分享·关
+    var IC = {
+      mark: '<path d="M4 20h16"/><path d="M14.6 4.4 6 13l-1 4 4-1 8.6-8.6a2.05 2.05 0 0 0-3-3z"/>',
+      read: '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/>',
+      ask: '<path d="M12 4c4.4 0 8 3 8 6.5S16.4 17 12 17a9 9 0 0 1-2.6-.4L5.5 18l.9-2.7A6 6 0 0 1 4 10.5C4 7 7.6 4 12 4z"/>',
+      share: '<circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 13.2l7.4 4.3M15.7 6.5l-7.4 4.3"/>',
+      x: '<path d="M6 6l12 12M18 6 6 18"/>',
+    };
+    var svg = function (p) { return '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; };
     bar.innerHTML =
       '<span class="sb-count"></span>' +
-      '<button class="sb-mark" type="button">划线</button>' +
-      '<button class="sb-ask" type="button">问文钞</button>' +
-      '<button class="sb-make" type="button">分享卡</button>' +
-      '<button class="sb-x" type="button" aria-label="取消">×</button>';
+      '<button class="sb-btn sb-mark" type="button" title="划线" aria-label="划线">' + svg(IC.mark) + '</button>' +
+      '<button class="sb-btn sb-read" type="button" title="从这里朗读" aria-label="从这里朗读">' + svg(IC.read) + '</button>' +
+      '<button class="sb-btn sb-ask" type="button" title="问文钞" aria-label="问文钞">' + svg(IC.ask) + '</button>' +
+      '<button class="sb-btn sb-share sb-primary" type="button" title="分享卡" aria-label="分享卡">' + svg(IC.share) + '</button>' +
+      '<button class="sb-x" type="button" aria-label="取消">' + svg(IC.x) + '</button>';
     document.body.appendChild(bar);
     barCount = $('.sb-count', bar);
-    $('.sb-make', bar).addEventListener('click', openCard);
+    $('.sb-share', bar).addEventListener('click', openCard);
     // 划线：把选段存为高亮（app.js 提供）。传入选段时克隆的 Range，避免点按钮时活动选区已被收起
     $('.sb-mark', bar).addEventListener('click', function () {
       if (window.__wcHighlight && picked) window.__wcHighlight(picked.range);
+      hideBar();
+    });
+    // 从这里朗读：从所选那句读到篇末（app.js 提供）
+    $('.sb-read', bar).addEventListener('click', function () {
+      if (window.__wcReadFrom && picked) window.__wcReadFrom(picked.range);
       hideBar();
     });
     // 问文钞：把选段发给右侧 AI 助读解说（app.js 提供）
@@ -126,7 +141,7 @@
       range: sel.getRangeAt(0).cloneRange(),   // 供「划线」用：点按钮时活动选区可能已收起
     };
     ensureBar();
-    barCount.textContent = '已选 ' + n + ' 字' + (n > MAX ? '（取前 ' + MAX + ' 字）' : '');
+    barCount.textContent = n + ' 字';   // 精简为字数 chip；「取前 MAX 字」的提示改由分享卡承载，不占选段条
     showBar();
   }
 

@@ -100,6 +100,11 @@ $('#btn-nav').onclick = () => openDrawer('L');
 $('#btn-ai').onclick = () => openDrawer('R');
 $('#btn-ai-close').onclick = closeDrawers;
 overlay.onclick = closeDrawers;
+// 阅读设置弹卡（字号/底色/文字/离线）：顶栏 Aa 开，点遮罩/背景关；控件本身沿用各自 ID 的既有逻辑
+const closeSettings = () => { const s = $('#settings-sheet'), b = $('#settings-backdrop'); if (s) s.hidden = true; if (b) b.hidden = true; };
+if ($('#btn-settings')) $('#btn-settings').onclick = () => { $('#settings-sheet').hidden = false; $('#settings-backdrop').hidden = false; };
+if ($('#settings-backdrop')) $('#settings-backdrop').onclick = closeSettings;
+if ($('#settings-sheet')) $('#settings-sheet').onclick = (e) => { if (e.target === $('#settings-sheet')) closeSettings(); };
 $('#topbar-title').onclick = () => { goHome(); closeDrawers(); };
 
 /* 边缘滑动手势：左缘右滑开目录，右缘左滑开AI；抽屉上反向滑动关闭 */
@@ -310,7 +315,11 @@ async function route() {
     return;
   }
   const r = articleRoute();
-  if (!r) { renderHome(); maybeTradify($('#reader')); return; }
+  if (!r) {
+    if (location.hash === '#me') renderMe(); else renderHome();   // 案头页 vs 启程页
+    maybeTradify($('#reader'));
+    return;
+  }
   await renderArticle(r.id);
   maybeTradify($('#reader'));     // 繁体模式：正文渲染后转换
   // 分享二维码深链：?p=N 进入文白对照并定位到所引段落（便于对照原文/白话；不改用户保存的模式）
@@ -332,23 +341,15 @@ function scrollToPara(n) {
   setTimeout(() => el.classList.remove('para-flash'), 2400);
 }
 
-/* ---------- 首页 ---------- */
-function renderHome() {
-  current = null;
-  document.body.classList.remove('nav-hidden');   // 回首页顶栏必现
-  showSpeakBtn(false);
-  showBookmarkBtn(false);
-  $('#topbar-title').textContent = '印光法师文钞';
-  $('#ai-context').textContent = '基于印光法师文钞全集';
-  const total = flat.length;
-  const resume = lastRead && progress[lastRead.id]
-    ? `<button class="resume-card" data-id="${lastRead.id}">
-         <small>继续阅读</small>
-         <strong>${esc(lastRead.title)}</strong>
-         <span class="pct">${Math.round((progress[lastRead.id].pct || 0) * 100)}%</span>
-       </button>`
-    : '';
-  // 我的：收藏与划线（都为空则不显示）
+/* ---------- 首页 = 启程页（一个明确主入口 + 少量图标入口，个人内容移到「我的」） ---------- */
+// 某册首篇 id（"开始阅读"入口用）
+function firstArticleId(vid) {
+  const v = books.find((b) => b.id === vid);
+  const it = v && v.juans[0] && v.juans[0].cats[0] && v.juans[0].cats[0].items[0];
+  return it ? it.id : (flat[0] && flat[0].id) || '';
+}
+// 收藏/划线两段 HTML（首页不再显示，仅「我的」页用）
+function mineListsHtml() {
   const bks = bookmarkList();
   const hls = allHighlights();
   const bkHtml = bks.length ? `
@@ -363,14 +364,33 @@ function renderHome() {
         <div class="mine-list">${hls.map((h) =>
           `<div class="mine-row"><button class="mine-item hl-item" data-go="${esc(h.id)}" data-p="${h.p}"><span class="mi-quote">「${esc(h.t)}${(h.t || '').length >= 40 ? '…' : ''}」</span><span class="mi-sub">${esc(h.title)}</span></button><button class="mi-del" data-del="${esc(h.id)}" data-p="${h.p}" data-s="${h.s}" aria-label="删除划线">×</button></div>`).join('')}</div>
       </section>` : '';
-  const vols = books.map((vol) => {
-    const count = vol.juans.reduce((n, j) => n + j.cats.reduce((m, c) => m + c.items.length, 0), 0);
-    return `<button class="vol-card" data-vol="${vol.id}">
-        <span class="vol-name">${esc(vol.name)}</span>
-        <span class="vol-group">${esc(vol.group)}</span>
-        <span class="vol-count">${count} 篇</span>
-      </button>`;
-  }).join('');
+  return { bkHtml, hlHtml, empty: !bks.length && !hls.length };
+}
+// 绑定「我的」列表交互：点条目跳篇（划线带 ?p 定位到段），点 × 删除划线后重绘
+function wireMine() {
+  $('#reader').querySelectorAll('.mine-item[data-go]').forEach((b) => {
+    b.onclick = () => goArticle(b.dataset.go, b.dataset.p);
+  });
+  $('#reader').querySelectorAll('.mi-del').forEach((b) => {
+    b.onclick = () => { removeHighlight(b.dataset.del, +b.dataset.p, +b.dataset.s); renderMe(); };
+  });
+}
+function renderHome() {
+  current = null;
+  document.body.classList.remove('nav-hidden');   // 回首页顶栏必现
+  showSpeakBtn(false);
+  $('#topbar-title').textContent = '印光法师文钞';
+  $('#ai-context').textContent = '基于印光法师文钞全集';
+  const resumed = lastRead && progress[lastRead.id];
+  const primary = resumed
+    ? `<button class="start-card" data-id="${esc(lastRead.id)}">
+         <span class="sc-k">继续阅读</span><strong class="sc-t">${esc(lastRead.title)}</strong>
+         <span class="sc-pct">${Math.round((progress[lastRead.id].pct || 0) * 100)}%</span>
+       </button>`
+    : `<button class="start-card" data-id="${esc(firstArticleId('jx'))}">
+         <span class="sc-k">开始阅读</span><strong class="sc-t">白话精选读本</strong>
+         <span class="sc-pct">入门</span>
+       </button>`;
   $('#reader').innerHTML = `
     <div class="home">
       <div class="home-hero">
@@ -378,32 +398,48 @@ function renderHome() {
         <h1 class="v-title" style="margin:0">印光法师文钞</h1>
         <span class="seal" aria-hidden="true">文钞</span>
       </div>
-      ${resume}
-      ${bkHtml}${hlHtml}
-      <h2>${books.length} 部 · 共 ${total} 篇</h2>
-      ${vols}
-      <div class="home-extra">
-        <a class="home-cta" href="/ying/">瞻礼 · 印祖法相与传印长老题词 →</a>
-      </div>
-      <p class="home-note">底本为《印光法师文钞》增广、续编、三编及三编补之文白对照本。文言原文与白话译文逐篇对照排录；正文中带朱点之词语，点按可查名相注释。<br>愿见闻者，同沾法益。</p>
+      ${primary}
+      <nav class="home-nav">
+        <button class="hn" type="button" data-act="catalog">目录</button>
+        <a class="hn" href="/#me">我的</a>
+        <button class="hn" type="button" data-act="ai">问文钞</button>
+        <a class="hn" href="/ying/">瞻礼</a>
+      </nav>
+      <p class="home-sub">${books.length} 部 · 共 ${flat.length} 篇</p>
     </div>`;
   paintProgress();
-  const rc = $('.resume-card');
-  if (rc) rc.onclick = () => { goArticle(rc.dataset.id); };
-  document.querySelectorAll('.vol-card').forEach((b) => {
-    b.onclick = () => {
-      openDrawer('L');
-      const el = $(`.nav-vol[data-vol="${b.dataset.vol}"]`);
-      if (el) { el.open = true; el.scrollIntoView({ block: 'start' }); }
-    };
-  });
-  // 我的收藏/划线：点条目跳篇（划线项带 ?p 定位到段），点 × 删除划线
-  $('#reader').querySelectorAll('.mine-item[data-go]').forEach((b) => {
-    b.onclick = () => goArticle(b.dataset.go, b.dataset.p);
-  });
-  $('#reader').querySelectorAll('.mi-del').forEach((b) => {
-    b.onclick = () => { removeHighlight(b.dataset.del, +b.dataset.p, +b.dataset.s); renderHome(); };
-  });
+  const sc = $('.start-card'); if (sc) sc.onclick = () => goArticle(sc.dataset.id);
+  const cat = $('#reader [data-act="catalog"]'); if (cat) cat.onclick = () => openDrawer('L');
+  const ai = $('#reader [data-act="ai"]'); if (ai) ai.onclick = () => openDrawer('R');
+}
+/* ---------- 「我的」= 案头（续读 · 收藏 · 划线；hash 路由 /#me） ---------- */
+function renderMe() {
+  current = null;
+  document.body.classList.remove('nav-hidden');
+  showSpeakBtn(false);
+  $('#topbar-title').textContent = '我的';
+  $('#ai-context').textContent = '基于印光法师文钞全集';
+  const resumed = lastRead && progress[lastRead.id];
+  const resumeHtml = resumed ? `
+      <section class="home-mine">
+        <h2 class="mine-h">继续阅读</h2>
+        <div class="mine-list"><button class="mine-item" data-go="${esc(lastRead.id)}"><span class="mi-title">${esc(lastRead.title)}</span><span class="mi-sub">读到 ${Math.round((progress[lastRead.id].pct || 0) * 100)}%</span></button></div>
+      </section>` : '';
+  const { bkHtml, hlHtml, empty } = mineListsHtml();
+  const emptyHtml = (!resumed && empty)
+    ? `<p class="mine-empty">这里会汇集你的续读、收藏与划线。<br>翻开文钞，点篇头 ★ 收藏；选中经文点「划线」，都会留在这里。</p>` : '';
+  $('#reader').innerHTML = `
+    <div class="home me-page">
+      <div class="home-hero"><span class="v-sub">案　头</span><h1 class="v-title" style="margin:0">我的</h1></div>
+      ${resumeHtml}${bkHtml}${hlHtml}${emptyHtml}
+      <nav class="home-nav">
+        <a class="hn" href="/">首页</a>
+        <button class="hn" type="button" data-act="catalog">目录</button>
+      </nav>
+    </div>`;
+  paintProgress();
+  wireMine();
+  const cat = $('#reader [data-act="catalog"]'); if (cat) cat.onclick = () => openDrawer('L');
 }
 
 /* ---------- 文章 ---------- */
@@ -558,6 +594,7 @@ async function renderArticle(id) {
   reader.innerHTML = `<div class="reader-inner">
       ${modeBar}
       <header class="art-head">
+        <button class="art-bk" type="button" aria-label="收藏本篇" aria-pressed="false">${BK_ICON}</button>
         <div class="art-crumb">${crumbHtml}</div>
         <h1 class="art-title">${esc(art.title)}</h1>
         <div class="rule"></div>
@@ -648,8 +685,11 @@ async function renderArticle(id) {
   document.body.classList.remove('nav-hidden');
   paintProgress();
   showSpeakBtn(true);     // 文章就绪 → 显示朗读键
-  showBookmarkBtn(true); syncBookmarkBtn();   // 显示收藏键并反映本篇状态
+  const bkBtn = reader.querySelector('.art-bk');   // 篇头收藏星：点按加/取消收藏
+  if (bkBtn) bkBtn.onclick = toggleBookmark;
+  syncBookmarkBtn();      // 反映本篇收藏状态
   applyMarks();           // 铺本篇已存的划线
+  if (autoNextPending) { autoNextPending = false; startRead(); }   // 连播：上一篇读完自动跳来 → 起读本篇
 }
 
 /* 阅读进度：顶部细线实时更新（rAF），localStorage 节流保存 */
@@ -699,26 +739,25 @@ function closeSheet() { sheet.hidden = true; sheetBd.hidden = true; }
 sheetBd.onclick = closeSheet;
 sheet.onclick = (e) => { if (e.target === sheet) closeSheet(); };
 
-/* ---------- 收藏（书签）：整篇加星，首页列出 ---------- */
-const bookmarkBtn = $('#btn-bookmark');
+/* ---------- 收藏（书签）：星标下沉到篇头（.art-bk，随文章渲染），我的页列出 ---------- */
 const isBooked = (id) => !!bookmarks[id];
+const BK_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>';
 function syncBookmarkBtn() {
-  if (!bookmarkBtn) return;
-  const on = !!(current && isBooked(current.id));
-  bookmarkBtn.classList.toggle('on', on);
-  bookmarkBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-  bookmarkBtn.setAttribute('aria-label', on ? '取消收藏' : '收藏本篇');
+  const bk = $('#reader .art-bk');
+  if (!bk || !current) return;
+  const on = isBooked(current.id);
+  bk.classList.toggle('on', on);
+  bk.setAttribute('aria-pressed', on ? 'true' : 'false');
+  bk.setAttribute('aria-label', on ? '取消收藏' : '收藏本篇');
 }
-function showBookmarkBtn(on) { if (bookmarkBtn) bookmarkBtn.hidden = !on; }
 function toggleBookmark() {
   if (!current) return;
   const id = current.id;
   if (bookmarks[id]) { delete bookmarks[id]; toast('已取消收藏'); }
-  else { bookmarks[id] = { t: current.title, v: current.volumeName || '', ts: Date.now() }; toast('已收藏 · 首页可查看'); }
+  else { bookmarks[id] = { t: current.title, v: current.volumeName || '', ts: Date.now() }; toast('已收藏 · 「我的」可查看'); }
   store.set('bookmarks', bookmarks);
   syncBookmarkBtn();
 }
-if (bookmarkBtn) bookmarkBtn.onclick = toggleBookmark;
 // 收藏列表（按收藏时间倒序），首页「我的收藏」用
 function bookmarkList() {
   return Object.entries(bookmarks)
@@ -839,10 +878,69 @@ const rateLabel = (r) => (r <= 0.8 ? '慢' : r >= 1.2 ? '快' : '常') + '速';
 const READ = {
   units: [], idx: 0, on: false, paused: false, cur: null, bar: null, seq: 0,
   rate: store.get('ttsRate', 0.95),
-  engine: store.get('ttsEngine', 'cloud'),   // cloud=高清(服务端 CosyVoice2) / local=本机(speechSynthesis)
+  engine: store.get('ttsEngine', 'cloud'),   // cloud=高清(服务端 CosyVoice2) / local=本机(speechSynthesis)；仅自动降级用，无手动开关
   voice: store.get('ttsVoice', 'charles'),    // 仅高清引擎用；须在服务端音色白名单内；默认清亮男声
   layer: store.get('ttsLayer', 't'),          // o=原文 / t=白话（默认白话，读得准）
+  auto: store.get('ttsAuto', true),           // 连播：读完自动续下一篇（默认开）
+  sleepMode: 0,                               // 睡眠定时：0=关 / 15 / 30（分钟）/ 'end'=读完本篇停
 };
+let sleepTimer = null;                         // 分钟档睡眠定时器
+let autoNextPending = false;                   // 连播：正在跳下一篇，待其渲染完自动起读
+const SLEEPS = [0, 15, 30, 'end'];
+const sleepLabel = () => (READ.sleepMode === 'end' ? '本篇' : READ.sleepMode ? READ.sleepMode + '分' : '关');
+function clearSleep() { if (sleepTimer) { clearTimeout(sleepTimer); sleepTimer = null; } }
+function cycleSleep() {
+  clearSleep();
+  READ.sleepMode = SLEEPS[(SLEEPS.indexOf(READ.sleepMode) + 1) % SLEEPS.length];
+  if (typeof READ.sleepMode === 'number' && READ.sleepMode > 0) {
+    sleepTimer = setTimeout(() => {            // 到点轻轻暂停（不结束，方便再续）
+      sleepTimer = null;
+      if (READ.on && !READ.paused) togglePause();
+      READ.sleepMode = 0; syncBar(); toast('定时已到，已暂停');
+    }, READ.sleepMode * 60000);
+  }
+  syncBar();
+}
+function toggleAuto() { READ.auto = !READ.auto; store.set('ttsAuto', READ.auto); syncBar(); }
+
+/* ---------- MediaSession：锁屏 / 通知栏 / 耳机线控 / 蓝牙 / 车机 控制与元数据 ---------- */
+const MS = ('mediaSession' in navigator) ? navigator.mediaSession : null;
+let msWired = false;
+// 跳相邻篇（供锁屏上一/下一曲用）；正在朗读则跳后自动续读
+function goAdjacentArticle(d) {
+  if (!current) return;
+  const i = flat.findIndex((it) => it.id === current.id);
+  const nx = i >= 0 ? flat[i + d] : null;
+  if (nx) { autoNextPending = READ.on; goArticle(nx.id); }
+}
+function wireMediaSession() {
+  if (!MS || msWired) return;
+  msWired = true;
+  const set = (a, fn) => { try { MS.setActionHandler(a, fn); } catch {} };
+  set('play', () => { if (READ.on && READ.paused) togglePause(); });
+  set('pause', () => { if (READ.on && !READ.paused) togglePause(); });
+  set('stop', () => { clearSleep(); READ.sleepMode = 0; stopRead(); });
+  set('previoustrack', () => goAdjacentArticle(-1));   // 锁屏「上一曲」= 上一篇
+  set('nexttrack', () => goAdjacentArticle(1));        // 锁屏「下一曲」= 下一篇
+}
+function updateMediaSession() {
+  if (!MS) return;
+  wireMediaSession();
+  if (current) {
+    try {
+      MS.metadata = new MediaMetadata({
+        title: current.title || '印光法师文钞',
+        artist: current.volumeName ? '《' + current.volumeName + '》' : '印光法师文钞',
+        album: '印光法师文钞 · 文白对照',
+        artwork: [
+          { src: location.origin + '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+          { src: location.origin + '/img/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+        ],
+      });
+    } catch {}
+  }
+  try { MS.playbackState = READ.on ? (READ.paused ? 'paused' : 'playing') : 'none'; } catch {}
+}
 // 高清朗读端点（同 AI 代理：POST { text, layer, voice } → 音频字节；命中 R2 秒回）
 const TTS_ENDPOINT = (CFG.aiEndpoint || '/api/ai').replace(/\/$/, '') + '/tts';
 const TTS_VOICES = [   // 极简：只留 3 个（两男一女），默认第一个
@@ -976,32 +1074,30 @@ function ensureReadBar() {
   const bar = document.createElement('div');
   bar.className = 'read-bar'; bar.hidden = true;
   bar.innerHTML =
-    // 极简：主行只留基本 transport；原文·白话/高清·本机/音色/语速/报错全收进「⋯」面板
+    // 极简：主行只留 播放 · 语速 · 设置 · 关；文白/音色/睡眠/连播/报错收进「⋯」面板。跳读靠"选段→朗读"，故不设上一句/下一句
     `<div class="rb-panel" hidden>` +
       `<button class="rb-pill rb-layer" type="button" aria-label="原文/白话">白话</button>` +
-      `<button class="rb-pill rb-engine" type="button" aria-label="高清/本机">高清</button>` +
       `<button class="rb-pill rb-voice" type="button" aria-label="切换音色">清亮男声</button>` +
-      `<button class="rb-pill rb-rate" type="button" aria-label="切换语速">常速</button>` +
+      `<button class="rb-pill rb-sleep" type="button" aria-label="睡眠定时">睡眠·关</button>` +
+      `<button class="rb-pill rb-auto" type="button" aria-label="连播下一篇">连播·开</button>` +
       `<button class="rb-pill rb-report" type="button" aria-label="读音报错">读音报错</button>` +
     `</div>` +
     `<div class="rb-row">` +
-      `<button class="rb-btn rb-prev" type="button" aria-label="上一句">${RB_ICON.prev}</button>` +
       `<button class="rb-btn rb-play" type="button" aria-label="暂停">${RB_ICON.pause}</button>` +
-      `<button class="rb-btn rb-next" type="button" aria-label="下一句">${RB_ICON.next}</button>` +
+      `<button class="rb-pill rb-rate" type="button" aria-label="切换语速">常速</button>` +
       `<button class="rb-btn rb-more" type="button" aria-label="更多设置">${RB_ICON.more}</button>` +
       `<button class="rb-x" type="button" aria-label="结束朗读">×</button>` +
     `</div>`;
   document.body.appendChild(bar);
-  bar.querySelector('.rb-prev').onclick = () => jumpRead(-1);
-  bar.querySelector('.rb-next').onclick = () => jumpRead(1);
   bar.querySelector('.rb-play').onclick = togglePause;
-  bar.querySelector('.rb-layer').onclick = toggleLayer;
-  bar.querySelector('.rb-engine').onclick = toggleEngine;
   bar.querySelector('.rb-rate').onclick = cycleRate;
+  bar.querySelector('.rb-layer').onclick = toggleLayer;
   bar.querySelector('.rb-voice').onclick = cycleVoice;
+  bar.querySelector('.rb-sleep').onclick = cycleSleep;
+  bar.querySelector('.rb-auto').onclick = toggleAuto;
   bar.querySelector('.rb-report').onclick = reportPron;
   bar.querySelector('.rb-more').onclick = () => { const p = bar.querySelector('.rb-panel'); p.hidden = !p.hidden; };
-  bar.querySelector('.rb-x').onclick = stopRead;
+  bar.querySelector('.rb-x').onclick = () => { clearSleep(); READ.sleepMode = 0; stopRead(); };   // 手动结束：连睡眠定时一并清
   READ.bar = bar;
   return bar;
 }
@@ -1015,12 +1111,13 @@ function syncBar() {
   const layerBtn = q('.rb-layer');
   layerBtn.textContent = READ.layer === 'o' ? '原文' : '白话';
   layerBtn.hidden = !document.querySelector('#reader .art-body .p-trans');   // 无白话的篇目不显示切换
-  const engBtn = q('.rb-engine');
-  engBtn.textContent = READ.engine === 'cloud' ? '高清' : '本机';
-  engBtn.classList.toggle('alt', READ.engine === 'local');
   const voiceBtn = q('.rb-voice');
   voiceBtn.textContent = voiceName(READ.voice);
-  voiceBtn.hidden = READ.engine !== 'cloud';           // 仅高清可选音色
+  voiceBtn.hidden = READ.engine !== 'cloud';           // 云端（默认）可选音色；自动降级本机时隐去
+  q('.rb-sleep').textContent = '睡眠·' + sleepLabel();
+  const autoBtn = q('.rb-auto');
+  autoBtn.textContent = '连播·' + (READ.auto ? '开' : '关');
+  autoBtn.classList.toggle('alt', !READ.auto);
 }
 
 // 让所读分层可见（单层显示，同步模式按钮）；返回本篇实际可读分层。
@@ -1036,9 +1133,19 @@ function applyReadLayer() {
   return eff;
 }
 
+// 读完本篇：连播则续下一篇（睡眠"本篇"档除外），否则结束
+function onReadEnd() {
+  if (READ.auto && READ.sleepMode !== 'end' && current) {
+    const i = flat.findIndex((it) => it.id === current.id);
+    const nx = i >= 0 ? flat[i + 1] : null;
+    if (nx) { autoNextPending = true; goArticle(nx.id); return; }   // 标记 → 下一篇渲染完自动起读（route 会 stopRead，此标记不清）
+  }
+  if (READ.sleepMode === 'end') { READ.sleepMode = 0; clearSleep(); }
+  stopRead();
+}
 function speakIdx(i) {
   if (i < 0) i = 0;
-  if (i >= READ.units.length) { stopRead(); return; }   // 读完：自动结束
+  if (i >= READ.units.length) { onReadEnd(); return; }   // 读完本篇 → 连播/结束
   READ.idx = i;
   const u = READ.units[i];
   markUnit(u); scrollUnit(u);
@@ -1080,18 +1187,44 @@ async function playCloud(i, token) {
   if (i + 1 < READ.units.length) fetchUnitAudio(i + 1).catch(() => {});   // 预取下一句
 }
 
-function startRead() {
-  if (!current) return;
-  const eff = applyReadLayer();   // 按偏好 READ.layer（纯原文篇自动降原文），并让该层单独可见
-  READ.units = buildUnits(eff);
-  if (!READ.units.length) return;
+// 共同起读：装入句单元、亮控制条、从第 idx 句开始
+function beginRead(units, idx) {
+  if (!units || !units.length) return;
   stopCur(); _fbNoted = false;
+  READ.units = units;
   READ.on = true; READ.paused = false;
   if (speakBtn) speakBtn.classList.add('on');
   ensureReadBar().hidden = false;
   syncBar();
-  speakIdx(0);
+  updateMediaSession();     // 起读：写锁屏元数据 + 播放态
+  speakIdx(idx || 0);
 }
+function startRead() {
+  if (!current) return;
+  const eff = applyReadLayer();   // 按偏好 READ.layer（纯原文篇自动降原文），并让该层单独可见
+  beginRead(buildUnits(eff), 0);
+}
+// 选区起点落在哪一句单元：句内→该句；落在句间空白→其后第一句；找不到→0
+function unitIndexAtPoint(units, node, offset) {
+  for (let i = 0; i < units.length; i++) {
+    let c; try { c = units[i].range.comparePoint(node, offset); } catch { continue; }
+    if (c <= 0) return i;   // c===0 句内 / c===-1 该句之前（前面的句已排除）→ 从此句起
+  }
+  return 0;
+}
+// 从用户选中处朗读到篇末（供 share.js 选段条「朗读」调用）：按所选段的层(原文/白话)读
+window.__wcReadFrom = (range) => {
+  if (!current) return;
+  if (range) {
+    const el = range.startContainer.nodeType === 1 ? range.startContainer : range.startContainer.parentElement;
+    const para = el && el.closest ? el.closest('.p-orig, .p-trans') : null;
+    if (para) READ.layer = para.classList.contains('p-orig') ? 'o' : 't';   // 读你选的那一层
+  }
+  const eff = applyReadLayer();
+  const units = buildUnits(eff);
+  const idx = range ? unitIndexAtPoint(units, range.startContainer, range.startOffset) : 0;
+  beginRead(units, idx);
+};
 function stopRead() {
   stopCur(); clearPrefetch();
   READ.on = false; READ.paused = false; READ.units = [];
@@ -1099,6 +1232,7 @@ function stopRead() {
   clearHL();
   if (speakBtn) speakBtn.classList.remove('on');
   if (READ.bar) { READ.bar.hidden = true; const p = READ.bar.querySelector('.rb-panel'); if (p) p.hidden = true; }
+  updateMediaSession();    // 收起锁屏播放态
 }
 function togglePause() {
   if (!READ.on) return;
@@ -1114,11 +1248,7 @@ function togglePause() {
     else if (synthOK()) window.speechSynthesis.cancel();
     syncBar();
   }
-}
-function jumpRead(d) {
-  if (!READ.on) return;
-  READ.paused = false; stopCur();
-  syncBar(); speakIdx(READ.idx + d);
+  updateMediaSession();    // 同步锁屏播放/暂停态
 }
 function cycleRate() {
   READ.rate = RATES[(RATES.indexOf(READ.rate) + 1) % RATES.length];
@@ -1141,13 +1271,6 @@ function toggleLayer() {
   READ.units = buildUnits(eff);
   syncBar();
   if (READ.on) { stopCur(); if (wasOn) speakIdx(Math.min(READ.idx, READ.units.length - 1)); }
-}
-function toggleEngine() {
-  READ.engine = READ.engine === 'cloud' ? 'local' : 'cloud';
-  store.set('ttsEngine', READ.engine);
-  _fbNoted = false; clearPrefetch();
-  syncBar();
-  if (READ.on && !READ.paused) { stopCur(); speakIdx(READ.idx); }   // 用新引擎重读本句
 }
 function cycleVoice() {
   if (READ.engine !== 'cloud') { toast('切到高清朗读才能换音色'); return; }

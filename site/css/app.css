@@ -186,21 +186,33 @@ body.nav-hidden .read-progress { top: 0; }
 .nav-empty { padding: 24px 16px; color: var(--ink-3); font-size: 13.5px; text-align: center; }
 
 /* ---------- 分享：底部操作条 + 卡片弹层 ---------- */
+/* 底部动作层：选段条（全图标 + 字数 chip，长选也不撑破居中胶囊） */
 .share-bar {
   position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 50;
-  display: flex; align-items: center; gap: 12px; max-width: 92vw;
+  display: flex; align-items: center; gap: 6px; max-width: 92vw;
   margin-bottom: calc(14px + env(safe-area-inset-bottom));
-  padding: 9px 10px 9px 18px; background: var(--paper);
+  padding: 7px 9px 7px 12px; background: var(--paper);
   border: 1px solid var(--line); border-radius: 999px;
   box-shadow: 0 6px 24px rgba(40, 28, 12, .22);
 }
 .share-bar[hidden] { display: none; }
-.sb-count { font-size: 13.5px; color: var(--ink-2); white-space: nowrap; }
-.sb-make {
-  border: 0; background: var(--cinnabar); color: #fff; font-size: 14.5px;
-  padding: 8px 18px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+.sb-count {
+  font-size: 12.5px; color: var(--ink-2); white-space: nowrap; flex: none;
+  background: var(--paper-2); border: 1px solid var(--line); border-radius: 999px;
+  padding: 4px 10px; font-variant-numeric: tabular-nums; margin-right: 2px;
 }
-.sb-x { border: 0; background: none; color: var(--ink-3); font-size: 20px; line-height: 1; cursor: pointer; padding: 4px 8px; }
+.sb-btn {
+  width: 40px; height: 40px; display: grid; place-items: center; flex: none;
+  border: 1px solid var(--line); background: none; color: var(--ink);
+  border-radius: 50%; cursor: pointer;
+}
+.sb-btn:active { color: var(--cinnabar); border-color: var(--cinnabar); }
+.sb-btn.sb-primary { border: 0; background: var(--cinnabar); color: #fff; }
+.sb-btn.sb-primary:active { opacity: .85; color: #fff; }
+.sb-x {
+  width: 32px; height: 40px; display: grid; place-items: center; flex: none;
+  border: 0; background: none; color: var(--ink-3); cursor: pointer; padding: 0;
+}
 
 .share-modal { position: fixed; inset: 0; z-index: 60; display: flex; }
 .share-modal[hidden] { display: none; }
@@ -406,7 +418,16 @@ body.nav-hidden .read-progress { top: 0; }
 body.nav-hidden .mode-bar { transform: translateY(calc(-100% - var(--topbar-h) - env(safe-area-inset-top))); }
 
 /* 文章头 */
-.art-head { text-align: center; padding: 26px 0 8px; }
+.art-head { text-align: center; padding: 26px 0 8px; position: relative; }
+/* 篇头收藏星（下沉自顶栏）：置于篇头右上，收藏后填朱砂 */
+.art-bk {
+  position: absolute; top: 18px; right: 0; width: 40px; height: 40px;
+  display: grid; place-items: center; border: 0; background: none;
+  color: var(--ink-3); cursor: pointer; border-radius: 50%;
+}
+.art-bk:active { color: var(--cinnabar); }
+.art-bk.on { color: var(--cinnabar); }
+.art-bk.on svg { fill: var(--cinnabar-soft); }
 .art-crumb { font-size: 12.5px; color: var(--ink-3); letter-spacing: .25em; }
 .art-crumb a { color: var(--ink-2); text-decoration: none; border-bottom: 1px dotted var(--line); }
 .art-crumb a:hover { color: var(--cinnabar); }
@@ -592,6 +613,30 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
 .resume-card small { display: block; color: var(--ink-3); font-size: 11.5px; letter-spacing: .25em; margin-bottom: 4px; }
 .resume-card strong { font-size: 15.5px; font-weight: 600; }
 .resume-card .pct { float: right; color: var(--cinnabar); font-size: 13px; }
+
+/* 启程页：主入口卡（继续/开始阅读）+ 图标入口 */
+.start-card {
+  display: block; width: 100%; text-align: center; cursor: pointer;
+  background: var(--cinnabar); color: #f6f1e6; border: 0; border-radius: 16px;
+  padding: 20px 22px; margin: 6px 0 22px; box-shadow: 0 8px 26px rgba(176, 58, 38, .24);
+}
+.start-card .sc-k { display: block; font-size: 12px; letter-spacing: .28em; opacity: .82; margin-bottom: 6px; }
+.start-card .sc-t { display: block; font-size: 20px; font-weight: 700; }
+.start-card .sc-pct { display: inline-block; margin-top: 9px; font-size: 12.5px; opacity: .92; border: 1px solid rgba(246, 241, 230, .5); border-radius: 999px; padding: 2px 12px; }
+.home-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 4px 0 24px; }
+.home-nav .hn {
+  border: 1px solid var(--line); background: var(--paper-2); color: var(--ink);
+  border-radius: 999px; padding: 9px 20px; font-size: 15px; cursor: pointer; text-decoration: none; font-family: var(--serif);
+}
+.home-nav .hn:active { color: var(--cinnabar); border-color: var(--cinnabar); }
+.home-sub { text-align: center; color: var(--ink-3); font-size: 12.5px; letter-spacing: .1em; }
+.mine-empty { text-align: center; color: var(--ink-3); font-size: 14px; line-height: 1.95; margin: 26px 0; }
+.me-page .home-hero { padding-bottom: 22px; }
+/* 顶栏 Aa 阅读设置键 */
+.btn-aa { display: flex; align-items: baseline; justify-content: center; gap: 1px; font-family: var(--serif); line-height: 1; }
+.btn-aa .aa-sm { font-size: 13px; }
+.btn-aa .aa-lg { font-size: 19px; }
+.btn-aa:active { color: var(--cinnabar); }
 .home h2 {
   font-size: 13px; color: var(--ink-3); letter-spacing: .35em;
   font-weight: 600; margin: 26px 0 10px;
@@ -685,15 +730,6 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
 ::highlight(wc-mark) { background-color: var(--cinnabar-soft); text-decoration-line: underline; text-decoration-color: var(--cinnabar); text-underline-offset: 2px; }
 
 /* ---------- 收藏键 · 选区操作条扩展 · 首页「我的」 ---------- */
-#btn-bookmark.on { color: var(--cinnabar); }
-#btn-bookmark.on svg { fill: var(--cinnabar-soft); }
-/* 选区条：划线/问文钞为次级幽灵键，分享卡仍为主键 */
-.share-bar { gap: 8px; padding-left: 14px; }
-.sb-mark, .sb-ask {
-  border: 1px solid var(--line); background: none; color: var(--ink);
-  font-size: 14px; padding: 7px 13px; border-radius: 999px; cursor: pointer; white-space: nowrap;
-}
-.sb-mark:active, .sb-ask:active { color: var(--cinnabar); border-color: var(--cinnabar); }
 /* 首页：我的收藏 / 我的划线 */
 .home-mine { margin: 20px 0 4px; text-align: left; }
 .mine-h { font-size: 15px; color: var(--ink-2); margin: 0 0 10px; font-weight: 600; letter-spacing: .02em; }
@@ -750,7 +786,7 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
 }
 .rb-pill:active { color: var(--cinnabar); border-color: var(--cinnabar); }
 .rb-pill[hidden] { display: none; }
-.rb-engine.alt { color: var(--ink-3); }
+.rb-pill.alt { color: var(--ink-3); }   /* 连播·关 等弱化态 */
 .wc-toast {
   position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%) translateY(8px);
   z-index: 60; max-width: 84vw; padding: 9px 16px; border-radius: 999px;

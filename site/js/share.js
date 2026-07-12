@@ -62,11 +62,16 @@
     bar.className = 'share-bar';
     bar.hidden = true;
     bar.innerHTML =
-      '<span class="sb-count"></span>' +
-      '<button class="sb-mark" type="button">划线</button>' +
-      '<button class="sb-ask" type="button">问文钞</button>' +
-      '<button class="sb-make" type="button">分享卡</button>' +
-      '<button class="sb-x" type="button" aria-label="取消">×</button>';
+      '<span class="sb-count" aria-live="polite"></span>' +
+      '<button class="sb-btn sb-mark" type="button">' +
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="m14.3 5.7 4 4L9 19l-4.2.8L5.7 15.6z"/></svg>划线</button>' +
+      '<button class="sb-btn sb-ask" type="button">' +
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1.3-4.2A7.5 7.5 0 1 1 20 11.5Z"/></svg>问文钞</button>' +
+      '<button class="sb-btn sb-make" type="button">' +
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8.2 10.9 15.8 7.1M8.2 13.1l7.6 3.8"/></svg>分享</button>' +
+      '<span class="sb-sep" aria-hidden="true"></span>' +
+      '<button class="sb-x" type="button" aria-label="取消">' +
+        '<svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>';
     document.body.appendChild(bar);
     barCount = $('.sb-count', bar);
     $('.sb-make', bar).addEventListener('click', openCard);
@@ -126,7 +131,7 @@
       range: sel.getRangeAt(0).cloneRange(),   // 供「划线」用：点按钮时活动选区可能已收起
     };
     ensureBar();
-    barCount.textContent = '已选 ' + n + ' 字' + (n > MAX ? '（取前 ' + MAX + ' 字）' : '');
+    barCount.textContent = n > MAX ? '仅取前 ' + MAX + ' 字分享' : '';   // 极简：平时不显字数，仅超限时轻提示
     showBar();
   }
 

@@ -56,6 +56,11 @@ function goHome() {
   }
   route();
 }
+// 「我的」页用 hash 路由（静态站无 SPA 回退，hash 直链也能命中）；强制路径为 /，避开文章路由
+function goMine() {
+  if (location.pathname !== '/' || location.hash !== '#me') history.pushState(null, '', '/#me');
+  route();
+}
 /* 卷名缩写：「增广印光法师文钞卷第一」→「卷第一」 */
 const shortJuan = (j) => j.replace(/^(增广)?印光法师文钞(续编|三编)?/, '') || j;
 
@@ -71,11 +76,13 @@ function applyPrefs() {
   const t = THEMES[prefs.theme] || THEMES.paper;
   document.documentElement.dataset.theme = t.attr;
   document.querySelector('meta[name=theme-color]').setAttribute('content', t.color);
-  $('#theme-paper').classList.toggle('on', prefs.theme === 'paper');
-  if ($('#theme-plain')) $('#theme-plain').classList.toggle('on', prefs.theme === 'plain');
-  $('#theme-night').classList.toggle('on', prefs.theme === 'night');
-  if ($('#cc-simp')) $('#cc-simp').classList.toggle('on', !prefs.trad);
-  if ($('#cc-trad')) $('#cc-trad').classList.toggle('on', prefs.trad);
+  // 偏好按钮现渲染于「我的」页（动态存在）→ 全部按需切换，不在页时安全跳过
+  const tog = (sel, on) => { const el = $(sel); if (el) el.classList.toggle('on', on); };
+  tog('#theme-paper', prefs.theme === 'paper');
+  tog('#theme-plain', prefs.theme === 'plain');
+  tog('#theme-night', prefs.theme === 'night');
+  tog('#cc-simp', !prefs.trad);
+  tog('#cc-trad', prefs.trad);
 }
 
 /* ---------- 抽屉 ---------- */
@@ -101,6 +108,8 @@ $('#btn-ai').onclick = () => openDrawer('R');
 $('#btn-ai-close').onclick = closeDrawers;
 overlay.onclick = closeDrawers;
 $('#topbar-title').onclick = () => { goHome(); closeDrawers(); };
+{ const sh = $('#seal-home'); if (sh) sh.onclick = () => { goHome(); closeDrawers(); }; }   // 左上角「文钞」印章 → 回首页
+{ const bm = $('#btn-mine'); if (bm) bm.onclick = () => { goMine(); closeDrawers(); }; }   // 右上角人形 →「我的」页
 
 /* 边缘滑动手势：左缘右滑开目录，右缘左滑开AI；抽屉上反向滑动关闭 */
 let touch = null;
@@ -300,6 +309,7 @@ function articleRoute() {
 async function route() {
   stopRead();        // 切篇/回首页：停掉正在进行的朗读，避免高亮/进度错位
   closeDrawers();
+  { const bm = $('#btn-mine'); if (bm) bm.classList.remove('on'); }   // 默认非「我的」态；renderMine 会再点亮
   // 影像陈列页：内容随静态页预渲染，app.js 不重绘，仅同步标题/繁体
   if (/^\/ying\/?$/.test(location.pathname)) {
     current = null;
@@ -308,6 +318,10 @@ async function route() {
     $('#ai-context').textContent = '基于印光法师文钞全集';
     maybeTradify($('#reader'));
     return;
+  }
+  // 「我的」页（hash 路由，仅在非文章路径下命中）
+  if (location.hash === '#me' && !/^\/a\//.test(location.pathname)) {
+    renderMine(); maybeTradify($('#reader')); return;
   }
   const r = articleRoute();
   if (!r) { renderHome(); maybeTradify($('#reader')); return; }
@@ -333,6 +347,46 @@ function scrollToPara(n) {
 }
 
 /* ---------- 首页 ---------- */
+// 继续阅读卡（首页与「我的」页共用）
+function resumeCardHtml() {
+  return lastRead && progress[lastRead.id]
+    ? `<button class="resume-card" data-id="${lastRead.id}">
+         <small>上次读到</small>
+         <strong>${esc(lastRead.title)}</strong>
+         <span class="pct">${Math.round((progress[lastRead.id].pct || 0) * 100)}%</span>
+       </button>`
+    : '';
+}
+// 收藏 / 划线两段列表 HTML（「我的」页用）
+function mineListsHtml() {
+  const bks = bookmarkList();
+  const hls = allHighlights();
+  const bkHtml = bks.length ? `
+      <section class="home-mine">
+        <h2 class="mine-h">收藏 · ${bks.length}</h2>
+        <div class="mine-list">${bks.map((b) =>
+          `<button class="mine-item" data-go="${esc(b.id)}"><span class="mi-title">${esc(b.t)}</span>${b.v ? `<span class="mi-sub">${esc(b.v)}</span>` : ''}</button>`).join('')}</div>
+      </section>` : '';
+  const hlHtml = hls.length ? `
+      <section class="home-mine">
+        <h2 class="mine-h">划线 · ${hls.length} 处</h2>
+        <div class="mine-list">${hls.map((h) =>
+          `<div class="mine-row"><button class="mine-item hl-item" data-go="${esc(h.id)}" data-p="${h.p}"><span class="mi-quote">「${esc(h.t)}${(h.t || '').length >= 40 ? '…' : ''}」</span><span class="mi-sub">${esc(h.title)}</span></button><button class="mi-del" data-del="${esc(h.id)}" data-p="${h.p}" data-s="${h.s}" aria-label="删除划线">×</button></div>`).join('')}</div>
+      </section>` : '';
+  return { bks, hls, bkHtml, hlHtml };
+}
+// 继续阅读 / 收藏 / 划线 条目的公共点击绑定；delRerender=删划线后重绘当前视图
+function wireMineItems(root, delRerender) {
+  const rc = root.querySelector('.resume-card');
+  if (rc) rc.onclick = () => goArticle(rc.dataset.id);
+  root.querySelectorAll('.mine-item[data-go]').forEach((b) => {
+    b.onclick = () => goArticle(b.dataset.go, b.dataset.p);
+  });
+  root.querySelectorAll('.mi-del').forEach((b) => {
+    b.onclick = () => { removeHighlight(b.dataset.del, +b.dataset.p, +b.dataset.s); delRerender(); };
+  });
+}
+
 function renderHome() {
   current = null;
   document.body.classList.remove('nav-hidden');   // 回首页顶栏必现
@@ -341,28 +395,7 @@ function renderHome() {
   $('#topbar-title').textContent = '印光法师文钞';
   $('#ai-context').textContent = '基于印光法师文钞全集';
   const total = flat.length;
-  const resume = lastRead && progress[lastRead.id]
-    ? `<button class="resume-card" data-id="${lastRead.id}">
-         <small>继续阅读</small>
-         <strong>${esc(lastRead.title)}</strong>
-         <span class="pct">${Math.round((progress[lastRead.id].pct || 0) * 100)}%</span>
-       </button>`
-    : '';
-  // 我的：收藏与划线（都为空则不显示）
-  const bks = bookmarkList();
-  const hls = allHighlights();
-  const bkHtml = bks.length ? `
-      <section class="home-mine">
-        <h2 class="mine-h">我的收藏 · ${bks.length}</h2>
-        <div class="mine-list">${bks.map((b) =>
-          `<button class="mine-item" data-go="${esc(b.id)}"><span class="mi-title">${esc(b.t)}</span>${b.v ? `<span class="mi-sub">${esc(b.v)}</span>` : ''}</button>`).join('')}</div>
-      </section>` : '';
-  const hlHtml = hls.length ? `
-      <section class="home-mine">
-        <h2 class="mine-h">我的划线 · ${hls.length} 处</h2>
-        <div class="mine-list">${hls.map((h) =>
-          `<div class="mine-row"><button class="mine-item hl-item" data-go="${esc(h.id)}" data-p="${h.p}"><span class="mi-quote">「${esc(h.t)}${(h.t || '').length >= 40 ? '…' : ''}」</span><span class="mi-sub">${esc(h.title)}</span></button><button class="mi-del" data-del="${esc(h.id)}" data-p="${h.p}" data-s="${h.s}" aria-label="删除划线">×</button></div>`).join('')}</div>
-      </section>` : '';
+  // 首页回归纯目录：个人内容（继续阅读/收藏/划线）全部集中到「我的」页（右上人形图标进入）
   const vols = books.map((vol) => {
     const count = vol.juans.reduce((n, j) => n + j.cats.reduce((m, c) => m + c.items.length, 0), 0);
     return `<button class="vol-card" data-vol="${vol.id}">
@@ -378,8 +411,6 @@ function renderHome() {
         <h1 class="v-title" style="margin:0">印光法师文钞</h1>
         <span class="seal" aria-hidden="true">文钞</span>
       </div>
-      ${resume}
-      ${bkHtml}${hlHtml}
       <h2>${books.length} 部 · 共 ${total} 篇</h2>
       ${vols}
       <div class="home-extra">
@@ -388,8 +419,6 @@ function renderHome() {
       <p class="home-note">底本为《印光法师文钞》增广、续编、三编及三编补之文白对照本。文言原文与白话译文逐篇对照排录；正文中带朱点之词语，点按可查名相注释。<br>愿见闻者，同沾法益。</p>
     </div>`;
   paintProgress();
-  const rc = $('.resume-card');
-  if (rc) rc.onclick = () => { goArticle(rc.dataset.id); };
   document.querySelectorAll('.vol-card').forEach((b) => {
     b.onclick = () => {
       openDrawer('L');
@@ -397,13 +426,59 @@ function renderHome() {
       if (el) { el.open = true; el.scrollIntoView({ block: 'start' }); }
     };
   });
-  // 我的收藏/划线：点条目跳篇（划线项带 ?p 定位到段），点 × 删除划线
-  $('#reader').querySelectorAll('.mine-item[data-go]').forEach((b) => {
-    b.onclick = () => goArticle(b.dataset.go, b.dataset.p);
-  });
-  $('#reader').querySelectorAll('.mi-del').forEach((b) => {
-    b.onclick = () => { removeHighlight(b.dataset.del, +b.dataset.p, +b.dataset.s); renderHome(); };
-  });
+}
+
+// 「我的」页：继续阅读 · 收藏 · 划线 · 阅读设置 全部集中此处（右上人形图标为唯一入口）
+function renderMine() {
+  current = null;
+  document.body.classList.remove('nav-hidden');
+  showSpeakBtn(false);
+  showBookmarkBtn(false);
+  $('#topbar-title').textContent = '我的';
+  $('#ai-context').textContent = '基于印光法师文钞全集';
+  const mb = $('#btn-mine'); if (mb) mb.classList.add('on');
+  const resume = resumeCardHtml();
+  const resumeSec = resume ? `<section class="home-mine"><h2 class="mine-h">继续阅读</h2>${resume}</section>` : '';
+  const { bks, hls, bkHtml, hlHtml } = mineListsHtml();
+  const empty = (!bks.length && !hls.length && !resume)
+    ? `<p class="mine-empty">阅读时点右上收藏本篇、或选中文字「划线」，都会收进这里；上次读到的位置也会出现在「继续阅读」。</p>`
+    : '';
+  const settings = `
+      <section class="home-mine mine-set">
+        <h2 class="mine-h">阅读设置</h2>
+        <div class="set-card">
+          <div class="set-row"><span class="set-k">字号</span><span class="set-c">
+            <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+            <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button></span></div>
+          <div class="set-row"><span class="set-k">底色</span><span class="set-c">
+            <button class="chip-btn" id="theme-paper">纸色</button>
+            <button class="chip-btn" id="theme-plain">素白</button>
+            <button class="chip-btn" id="theme-night">墨夜</button></span></div>
+          <div class="set-row"><span class="set-k">文字</span><span class="set-c">
+            <button class="chip-btn" id="cc-simp">简体</button>
+            <button class="chip-btn" id="cc-trad">繁体</button></span></div>
+          <div class="set-row"><span class="set-k">离线</span><span class="set-c">
+            <button class="chip-btn" id="offline-open">下载整册</button></span></div>
+        </div>
+      </section>`;
+  $('#reader').innerHTML = `
+    <div class="home mine-page">
+      ${resumeSec}
+      ${bkHtml}${hlHtml}${empty}
+      ${settings}
+    </div>`;
+  paintProgress();
+  wireMineItems($('#reader'), renderMine);
+  // 阅读设置控件此处动态渲染，逐次重新挂载处理器（原静态 id 沿用）
+  $('#font-inc').onclick = incFont;
+  $('#font-dec').onclick = decFont;
+  $('#theme-paper').onclick = () => setTheme('paper');
+  $('#theme-plain').onclick = () => setTheme('plain');
+  $('#theme-night').onclick = () => setTheme('night');
+  $('#cc-simp').onclick = () => setTrad(false);
+  $('#cc-trad').onclick = () => setTrad(true);
+  if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
+  applyPrefs();   // 同步各偏好按钮的选中态
 }
 
 /* ---------- 文章 ---------- */
@@ -895,7 +970,8 @@ const RB_ICON = {
   pause: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
   prev: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 6h2v12H7zM20 6 11 12l9 6z"/></svg>',
   next: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M15 6h2v12h-2zM4 6l9 6-9 6z"/></svg>',
-  more: '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>',
+  more: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h9M17 8h3M4 16h3M11 16h9"/><circle cx="15" cy="8" r="2.1"/><circle cx="9" cy="16" r="2.1"/></svg>',
+  close: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
 };
 
 // 文章页才显示朗读键（设备不支持 TTS 则始终隐藏）；切走时一并停读
@@ -976,20 +1052,25 @@ function ensureReadBar() {
   const bar = document.createElement('div');
   bar.className = 'read-bar'; bar.hidden = true;
   bar.innerHTML =
-    // 极简：主行只留基本 transport；原文·白话/高清·本机/音色/语速/报错全收进「⋯」面板
+    // 极简：主行恒为单行 transport；分层/音质/音色/语速/报错收进上浮的设置面板（不撑高主条）
     `<div class="rb-panel" hidden>` +
-      `<button class="rb-pill rb-layer" type="button" aria-label="原文/白话">白话</button>` +
-      `<button class="rb-pill rb-engine" type="button" aria-label="高清/本机">高清</button>` +
-      `<button class="rb-pill rb-voice" type="button" aria-label="切换音色">清亮男声</button>` +
-      `<button class="rb-pill rb-rate" type="button" aria-label="切换语速">常速</button>` +
-      `<button class="rb-pill rb-report" type="button" aria-label="读音报错">读音报错</button>` +
+      `<div class="rb-set rb-set-layer"><span class="rb-set-k">分层</span>` +
+        `<button class="rb-ctl rb-layer" type="button" aria-label="原文／白话">白话</button></div>` +
+      `<div class="rb-set rb-set-engine"><span class="rb-set-k">音质</span>` +
+        `<button class="rb-ctl rb-engine" type="button" aria-label="高清／本机">高清</button></div>` +
+      `<div class="rb-set rb-set-voice"><span class="rb-set-k">音色</span>` +
+        `<button class="rb-ctl rb-voice" type="button" aria-label="切换音色">清亮男声</button></div>` +
+      `<div class="rb-set rb-set-rate"><span class="rb-set-k">语速</span>` +
+        `<button class="rb-ctl rb-rate" type="button" aria-label="切换语速">常速</button></div>` +
+      `<button class="rb-report" type="button" aria-label="读音报错">读音报错</button>` +
     `</div>` +
     `<div class="rb-row">` +
       `<button class="rb-btn rb-prev" type="button" aria-label="上一句">${RB_ICON.prev}</button>` +
       `<button class="rb-btn rb-play" type="button" aria-label="暂停">${RB_ICON.pause}</button>` +
       `<button class="rb-btn rb-next" type="button" aria-label="下一句">${RB_ICON.next}</button>` +
-      `<button class="rb-btn rb-more" type="button" aria-label="更多设置">${RB_ICON.more}</button>` +
-      `<button class="rb-x" type="button" aria-label="结束朗读">×</button>` +
+      `<span class="rb-sep" aria-hidden="true"></span>` +
+      `<button class="rb-btn rb-more" type="button" aria-label="朗读设置">${RB_ICON.more}</button>` +
+      `<button class="rb-btn rb-x" type="button" aria-label="结束朗读">${RB_ICON.close}</button>` +
     `</div>`;
   document.body.appendChild(bar);
   bar.querySelector('.rb-prev').onclick = () => jumpRead(-1);
@@ -1000,7 +1081,7 @@ function ensureReadBar() {
   bar.querySelector('.rb-rate').onclick = cycleRate;
   bar.querySelector('.rb-voice').onclick = cycleVoice;
   bar.querySelector('.rb-report').onclick = reportPron;
-  bar.querySelector('.rb-more').onclick = () => { const p = bar.querySelector('.rb-panel'); p.hidden = !p.hidden; };
+  bar.querySelector('.rb-more').onclick = (e) => { const p = bar.querySelector('.rb-panel'); p.hidden = !p.hidden; e.currentTarget.classList.toggle('on', !p.hidden); };
   bar.querySelector('.rb-x').onclick = stopRead;
   READ.bar = bar;
   return bar;
@@ -1014,13 +1095,15 @@ function syncBar() {
   q('.rb-rate').textContent = rateLabel(READ.rate);
   const layerBtn = q('.rb-layer');
   layerBtn.textContent = READ.layer === 'o' ? '原文' : '白话';
-  layerBtn.hidden = !document.querySelector('#reader .art-body .p-trans');   // 无白话的篇目不显示切换
+  const layerRow = layerBtn.closest('.rb-set');
+  if (layerRow) layerRow.hidden = !document.querySelector('#reader .art-body .p-trans');   // 无白话的篇目整行隐藏
   const engBtn = q('.rb-engine');
   engBtn.textContent = READ.engine === 'cloud' ? '高清' : '本机';
   engBtn.classList.toggle('alt', READ.engine === 'local');
   const voiceBtn = q('.rb-voice');
   voiceBtn.textContent = voiceName(READ.voice);
-  voiceBtn.hidden = READ.engine !== 'cloud';           // 仅高清可选音色
+  const voiceRow = voiceBtn.closest('.rb-set');
+  if (voiceRow) voiceRow.hidden = READ.engine !== 'cloud';           // 仅高清可选音色
 }
 
 // 让所读分层可见（单层显示，同步模式按钮）；返回本篇实际可读分层。
@@ -1080,17 +1163,37 @@ async function playCloud(i, token) {
   if (i + 1 < READ.units.length) fetchUnitAudio(i + 1).catch(() => {});   // 预取下一句
 }
 
+// 朗读起点：不再一律从篇首。优先「从选中处」，其次「从当前视口顶部当前句」，都没有才篇首。
+// 因文章重开会自动滚回上次进度（loadArticle 恢复 pct），故此逻辑天然实现「续读」。
+function readStartIndex() {
+  const units = READ.units;
+  if (!units.length) return 0;
+  const ab = $('#reader .art-body');
+  // 1) 有选区且落在正文内 → 从选区顶端所在（或其后第一）句起
+  const sel = getSelection();
+  if (sel && sel.rangeCount && !sel.isCollapsed && ab && ab.contains(sel.anchorNode)) {
+    const y = sel.getRangeAt(0).getBoundingClientRect().top;
+    const i = units.findIndex((u) => { const r = u.range.getBoundingClientRect(); return r.height && r.bottom > y - 1; });
+    if (i >= 0) return i;
+  }
+  // 2) 从当前视口顶部（顶栏之下）第一句起
+  const top = ($('#topbar') ? $('#topbar').offsetHeight : 52) + 8;
+  const i = units.findIndex((u) => { const r = u.range.getBoundingClientRect(); return r.height && r.bottom > top; });
+  return i >= 0 ? i : 0;
+}
 function startRead() {
   if (!current) return;
   const eff = applyReadLayer();   // 按偏好 READ.layer（纯原文篇自动降原文），并让该层单独可见
   READ.units = buildUnits(eff);
   if (!READ.units.length) return;
+  const from = readStartIndex();      // 先定起点（要用到当前选区/滚动位置）
+  const s = getSelection(); if (s) s.removeAllRanges();   // 用过选区即收起，避免与朗读高亮/选段条打架
   stopCur(); _fbNoted = false;
   READ.on = true; READ.paused = false;
   if (speakBtn) speakBtn.classList.add('on');
   ensureReadBar().hidden = false;
   syncBar();
-  speakIdx(0);
+  speakIdx(from);
 }
 function stopRead() {
   stopCur(); clearPrefetch();
@@ -1098,7 +1201,7 @@ function stopRead() {
   if (_audio) _audio.removeAttribute('src');
   clearHL();
   if (speakBtn) speakBtn.classList.remove('on');
-  if (READ.bar) { READ.bar.hidden = true; const p = READ.bar.querySelector('.rb-panel'); if (p) p.hidden = true; }
+  if (READ.bar) { READ.bar.hidden = true; const p = READ.bar.querySelector('.rb-panel'); if (p) p.hidden = true; const m = READ.bar.querySelector('.rb-more'); if (m) m.classList.remove('on'); }
 }
 function togglePause() {
   if (!READ.on) return;
@@ -1170,15 +1273,12 @@ function reportPron() {
 }
 if (speakBtn) speakBtn.onclick = () => { READ.on ? stopRead() : startRead(); };
 
-/* ---------- 偏好控件 ---------- */
+/* ---------- 偏好控件（渲染于「我的」页，由 renderMine 动态挂载）---------- */
 // 调字号后正文重排、总高变化 → 刷新高度缓存与进度条（续读落点不动，仅让进度条即时准确）
 const afterFontChange = () => { applyPrefs(); measureMax(); paintProgress(); };
-$('#font-inc').onclick = () => { prefs.fs = Math.min(24, prefs.fs + 1); store.set('fs', prefs.fs); afterFontChange(); };
-$('#font-dec').onclick = () => { prefs.fs = Math.max(14, prefs.fs - 1); store.set('fs', prefs.fs); afterFontChange(); };
+const incFont = () => { prefs.fs = Math.min(24, prefs.fs + 1); store.set('fs', prefs.fs); afterFontChange(); };
+const decFont = () => { prefs.fs = Math.max(14, prefs.fs - 1); store.set('fs', prefs.fs); afterFontChange(); };
 const setTheme = (name) => { prefs.theme = name; store.set('theme', name); applyPrefs(); };
-$('#theme-paper').onclick = () => setTheme('paper');
-if ($('#theme-plain')) $('#theme-plain').onclick = () => setTheme('plain');
-$('#theme-night').onclick = () => setTheme('night');
 
 /* ---------- 简繁转换（OpenCC 自托管，懒加载；仅显示层，不改底本数据）---------- */
 let _conv = null;
@@ -1218,8 +1318,6 @@ function setTrad(on) {
     route(); renderTree($('#nav-search').value);   // 从简体源重渲染（无损还原）
   }
 }
-if ($('#cc-simp')) $('#cc-simp').onclick = () => setTrad(false);
-if ($('#cc-trad')) $('#cc-trad').onclick = () => setTrad(true);
 
 /* ---------- AI 助读 ---------- */
 const aiLog = $('#ai-log');

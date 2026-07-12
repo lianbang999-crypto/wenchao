@@ -246,4 +246,5 @@
   }
   if (document.readyState !== 'loading') wire();
   else document.addEventListener('DOMContentLoaded', wire);
+  window.__wcOfflineWire = wire;   // 「我的」页动态渲染离线按钮后由 app.js 调用重新挂载（wire 内有 _wired 幂等保护）
 })();

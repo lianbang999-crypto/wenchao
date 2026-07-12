@@ -34,7 +34,7 @@
      苹果设备命中本地楷体，不会产生下载 -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
-<link rel="stylesheet" href="css/app.css?v=20260712-ui">
+<link rel="stylesheet" href="css/app.css?v=20260711-aivoice">
   <meta name="msvalidate.01" content="2E887F8A75C595EF89E235E27D2816E0" />
   <meta name="baidu-site-verification" content="codeva-345JAH4iJi" />
 </head>
@@ -46,7 +46,9 @@
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
   </button>
   <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
-  <button class="icon-btn btn-aa" id="btn-settings" aria-label="阅读设置"><span class="aa-sm">A</span><span class="aa-lg">A</span></button>
+  <button class="icon-btn" id="btn-bookmark" aria-label="收藏本篇" aria-pressed="false" hidden>
+    <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
+  </button>
   <button class="icon-btn" id="btn-speak" aria-label="朗读本篇" hidden>
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12"/></svg>
   </button>
@@ -81,6 +83,36 @@
     <a class="chip-btn nav-topics-all" href="/t/">全部 »</a>
   </nav>
   <div class="nav-tree" id="nav-tree" role="tree"></div>
+  <div class="drawer-foot">
+    <div class="pref-row">
+      <span>字号</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
+        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>底色</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="theme-paper">纸色</button>
+        <button class="chip-btn" id="theme-plain">素白</button>
+        <button class="chip-btn" id="theme-night">墨夜</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>文字</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="cc-simp">简体</button>
+        <button class="chip-btn" id="cc-trad">繁体</button>
+      </span>
+    </div>
+    <div class="pref-row">
+      <span>离线</span>
+      <span class="pref-btns">
+        <button class="chip-btn" id="offline-open">下载整册</button>
+      </span>
+    </div>
+  </div>
 </nav>
 
 <!-- 右抽屉：AI 助读 -->
@@ -332,46 +364,10 @@
   <div class="sheet-body" id="sheet-body"></div>
 </section>
 
-<!-- 阅读设置弹卡（顶栏 Aa 打开；字号/底色/文字/离线从抽屉迁此，ID 不变故沿用原有逻辑） -->
-<div class="sheet-backdrop" id="settings-backdrop" hidden></div>
-<section class="sheet" id="settings-sheet" hidden aria-label="阅读设置">
-  <div class="sheet-handle" aria-hidden="true"></div>
-  <div class="sheet-body">
-    <div class="pref-row">
-      <span>字号</span>
-      <span class="pref-btns">
-        <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
-        <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button>
-      </span>
-    </div>
-    <div class="pref-row">
-      <span>底色</span>
-      <span class="pref-btns">
-        <button class="chip-btn" id="theme-paper">纸色</button>
-        <button class="chip-btn" id="theme-plain">素白</button>
-        <button class="chip-btn" id="theme-night">墨夜</button>
-      </span>
-    </div>
-    <div class="pref-row">
-      <span>文字</span>
-      <span class="pref-btns">
-        <button class="chip-btn" id="cc-simp">简体</button>
-        <button class="chip-btn" id="cc-trad">繁体</button>
-      </span>
-    </div>
-    <div class="pref-row">
-      <span>离线</span>
-      <span class="pref-btns">
-        <button class="chip-btn" id="offline-open">下载整册</button>
-      </span>
-    </div>
-  </div>
-</section>
-
 <script src="config.js?v=20260616-ai-panel"></script>
 <script src="js/pwa.js?v=20260622-pwa" defer></script>
 <script src="js/offline.js?v=20260622-offline" defer></script>
-<script type="module" src="js/app.js?v=20260712-ui"></script>
-<script src="js/share.js?v=20260712-ui" defer></script>
+<script type="module" src="js/app.js?v=20260711-aivoice"></script>
+<script src="js/share.js?v=20260711-aivoice" defer></script>
 </body>
 </html>

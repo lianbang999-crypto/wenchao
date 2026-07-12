@@ -63,11 +63,23 @@
     bar.hidden = true;
     bar.innerHTML =
       '<span class="sb-count"></span>' +
-      '<button class="sb-make" type="button">制作分享卡</button>' +
+      '<button class="sb-mark" type="button">划线</button>' +
+      '<button class="sb-ask" type="button">问文钞</button>' +
+      '<button class="sb-make" type="button">分享卡</button>' +
       '<button class="sb-x" type="button" aria-label="取消">×</button>';
     document.body.appendChild(bar);
     barCount = $('.sb-count', bar);
     $('.sb-make', bar).addEventListener('click', openCard);
+    // 划线：把选段存为高亮（app.js 提供）。传入选段时克隆的 Range，避免点按钮时活动选区已被收起
+    $('.sb-mark', bar).addEventListener('click', function () {
+      if (window.__wcHighlight && picked) window.__wcHighlight(picked.range);
+      hideBar();
+    });
+    // 问文钞：把选段发给右侧 AI 助读解说（app.js 提供）
+    $('.sb-ask', bar).addEventListener('click', function () {
+      if (window.__wcAsk && picked) window.__wcAsk(picked.text);
+      hideBar();
+    });
     $('.sb-x', bar).addEventListener('click', hideBar);
   }
   function showBar() { ensureBar(); bar.hidden = false; }
@@ -111,6 +123,7 @@
       text: text, id: id,
       title: meta.title || curTitle(), book: meta.book || '',
       pIndex: pIndex, kind: paraKindOf(sel.anchorNode),
+      range: sel.getRangeAt(0).cloneRange(),   // 供「划线」用：点按钮时活动选区可能已收起
     };
     ensureBar();
     barCount.textContent = '已选 ' + n + ' 字' + (n > MAX ? '（取前 ' + MAX + ' 字）' : '');
@@ -175,6 +188,7 @@
     modal.hidden = false;
     modalImg.removeAttribute('src');
     try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
+    await ensureQR();
     var canvas = drawCard(text, src, lastUrl);
     modalImg.src = canvas.toDataURL('image/png');
     lastBlob = null;
@@ -193,6 +207,7 @@
     modal.hidden = false;
     modalImg.removeAttribute('src');
     try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
+    await ensureQR();
     var canvas = drawAICard(question, answer, lastUrl);
     modalImg.src = canvas.toDataURL('image/png');
     lastBlob = null;
@@ -423,6 +438,22 @@
       if (ln) out.push({ t: ln, first: lineNo === 0, newPara: lineNo === 0 && np });
     }
     return out;
+  }
+
+  // 二维码库(qrcode.js ~55KB)按需加载：绝大多数访问不生成分享卡，故首屏不再同步引入，
+  // 首次做卡时才注入；失败也照常出卡（drawQR 有 !window.qrcode 兜底），仅少一枚二维码。
+  var _qrLoad = null;
+  function ensureQR() {
+    if (window.qrcode) return Promise.resolve();
+    if (_qrLoad) return _qrLoad;
+    _qrLoad = new Promise(function (resolve) {
+      var s = document.createElement('script');
+      s.src = '/js/qrcode.js';
+      s.onload = function () { resolve(); };
+      s.onerror = function () { _qrLoad = null; resolve(); };
+      document.head.appendChild(s);
+    });
+    return _qrLoad;
   }
 
   // 二维码（本地 qrcode.js）

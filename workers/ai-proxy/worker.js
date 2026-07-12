@@ -37,7 +37,7 @@ const USE_QUERY_REWRITE = true;            // 多查询：原问 + DeepSeek 文�
 const USE_HYBRID = true;                   // 混合检索：向量召回 + D1 全文(关键词)召回 → RRF 融合；缺 D1 或异常自动退回纯向量
 const LEX_TOPK = 30;                       // 关键词(全文)召回上限
 const RRF_K = 60;                          // RRF 融合常数(越大越平滑，弱化各路头部的绝对名次)
-const RETRIEVAL_VERSION = 'r7';            // 检索/生成版本号，并入答案缓存键，避免旧缓存遮蔽新逻辑(r7: 问答生成迁移至硅基流动 DeepSeek-V4-Flash)
+const RETRIEVAL_VERSION = 'r8';            // 检索/生成版本号，并入答案缓存键，避免旧缓存遮蔽新逻辑(r8: 检索故障/零命中护栏——据实告知不诬为"未见开示"、零段直接拒答不调用生成)
 const ANSWER_CHARS = 500;                 // 回复字数上限(软引导)
 const MAX_TOKENS = 700;                   // 回复 token 硬上限(约 500 汉字)
 const CACHE_TTL = 7 * 86400;              // 答案缓存 7 天
@@ -300,6 +300,8 @@ async function handleIndex(req, env, url, headers) {
       for (const c of j.cats)
         for (const it of c.items) ids.push(it.id);
 
+  // 只建 D1 词法索引、不重嵌入：向量库已就绪时用它补建全文索引，零嵌入调用（省额度，不动 Vectorize）
+  const lexOnly = url.searchParams.get('lexOnly') === '1' || url.searchParams.get('mode') === 'lex';
   const batch = ids.slice(cursor, cursor + limit);
   // 全文索引：cursor===0 时整库重建（先 DROP 再 CREATE），故重建务必从 cursor=0 开始顺序跑到 done
   const d1ok = await ensureFts(env, cursor === 0);
@@ -310,15 +312,17 @@ async function handleIndex(req, env, url, headers) {
       chunks = chunks.concat(chunksOf(a));
     } catch { /* 跳过取不到的篇 */ }
   }
-  // 分小批向量化并写入(bge-m3 单次建议 ≤ ~100 条)
+  // 分小批向量化并写入(bge-m3 单次建议 ≤ ~100 条)；lexOnly 时跳过，只建下方 D1 词法索引
   let n = 0;
-  for (let i = 0; i < chunks.length; i += INDEX_EMBED_BATCH) {
-    const part = chunks.slice(i, i + INDEX_EMBED_BATCH);
-    const vecs = await embed(env, part.map((c) => c.text));
-    await env.VEC.upsert(part.map((c, k) => ({
-      id: c.id, namespace: KB_NAMESPACE, values: vecs[k], metadata: { ...c.meta, text: c.text },
-    })));
-    n += part.length;
+  if (!lexOnly) {
+    for (let i = 0; i < chunks.length; i += INDEX_EMBED_BATCH) {
+      const part = chunks.slice(i, i + INDEX_EMBED_BATCH);
+      const vecs = await embed(env, part.map((c) => c.text));
+      await env.VEC.upsert(part.map((c, k) => ({
+        id: c.id, namespace: KB_NAMESPACE, values: vecs[k], metadata: { ...c.meta, text: c.text },
+      })));
+      n += part.length;
+    }
   }
   // 同一批切块写入 D1 全文索引（关键词召回用）
   const lex = d1ok ? await writeD1(env, chunks) : 0;
@@ -497,8 +501,14 @@ async function handleSearch(req, env, headers) {
       ).bind('%' + q.replace(/[%_\\]/g, '\\$&') + '%', SEARCH_ROWS).all();
       hits = collect((rs && rs.results) || []);
     }
-    return json({ hits, total: hits.length }, 200, headers);
-  } catch { return json({ hits: [], total: 0 }, 200, headers); }   // 异常：前端仍展示篇名匹配结果
+    // 无命中时探一下索引是否为空（未建索引 lexRows=0）；ready:false 让前端如实说"检索未就绪"而非"没找到"
+    let ready = true;
+    if (!hits.length) {
+      try { const probe = await env.DB.prepare('SELECT 1 FROM chunks_fts LIMIT 1').all(); ready = !!(probe && probe.results && probe.results.length); }
+      catch { ready = false; }
+    }
+    return json({ hits, total: hits.length, ready }, 200, headers);
+  } catch { return json({ hits: [], total: 0, ready: false }, 200, headers); }   // 异常：前端仍展示篇名匹配结果
 }
 
 /* RRF（倒数排名融合）：把多路召回按各自名次融合成一个排序，弱化「分数尺度不可比」问题。
@@ -719,7 +729,8 @@ async function handleAsk(req, env, headers) {
   // 检索（缓存命中则复用其 passages/sources）
   let passages = [], sources = [], system = '';
   let ctxTexts = [];   // 喂给模型的父段落正文（按 passage 序），用于引用逐字自检
-  let retrievalErrored = false;   // 检索是否真的报错（多为 Workers AI 神经元日额度用尽）；据实告知，不误判"未见相关开示"
+  let retrievalErrored = false;   // 检索是否真的报错（多为嵌入/重排上游繁忙或额度耗尽）；据实告知，不误判"未见相关开示"
+  let earlyReply = '';            // 护栏短路：命中则直接回该句，不调用生成模型、不写缓存
   if (useCache) {
     passages = cached.passages; sources = cached.sources || [];
   } else {
@@ -781,6 +792,13 @@ async function handleAsk(req, env, headers) {
 【资料】
 ${context}`;
   }
+  // 检索护栏（贴「不妄语·宁可不答，不可妄说」）：
+  //  ① 检索服务本身故障（嵌入/重排上游繁忙或额度耗尽）→ 据实告知，绝不诬为"未见开示"，不调用生成、不写缓存；
+  //  ② 检索正常但零命中 → 直接拒答，不调用生成模型（省算力，且从机制上杜绝无据发挥）。
+  if (!useCache) {
+    if (retrievalErrored) earlyReply = '抱歉，文钞检索服务暂时不可用（上游繁忙或额度受限），请稍后再试。南无阿弥陀佛。';
+    else if (!passages.length) earlyReply = '文钞中未见相关开示。可以换个说法，或就具体的净土法门、修持问题再问。';
+  }
   const cite = sources.length ? '参见：' + sources.map((s) => `《${s.title}》`).join('、') : '回答仅供参考，请核对《文钞》原文';
 
   // ---- 流式输出（ndjson 逐行：meta / delta / done）----
@@ -792,6 +810,13 @@ ${context}`;
       if (useCache) {
         send({ type: 'delta', text: cached.reply });
         send({ type: 'done', verify: validateCitations(cached.reply, passages, ctxTexts) });
+        controller.close();
+        return;
+      }
+      // 护栏短路：检索故障 / 零命中 → 直接回定句，不调用生成模型、不写缓存
+      if (earlyReply) {
+        send({ type: 'delta', text: earlyReply });
+        send({ type: 'done', verify: null });
         controller.close();
         return;
       }

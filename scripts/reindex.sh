@@ -8,6 +8,10 @@
 # 例：
 #   INDEX_SECRET=*** bash scripts/reindex.sh https://wenchao.foyue.org/api/ai
 #   INDEX_SECRET=*** bash scripts/reindex.sh https://wenchao.foyue.org/api/ai 5   # 触发 CPU 限制时降批
+#   INDEX_SECRET=*** LEX_ONLY=1 bash scripts/reindex.sh                            # 只补建 D1 全文索引，不重嵌入（省额度）
+#
+# 向量库已就绪、只是站内正文搜索返回空（/health 显示 lexRows:0）时，用 LEX_ONLY=1：
+# 它只重建 D1 全文/关键词索引，不调用嵌入接口、不动 Vectorize，零嵌入额度，最省最稳。
 #
 # INDEX_SECRET 从环境变量读取（不进命令行参数、不入仓库），即 wrangler secret put INDEX_SECRET 的那个值。
 set -euo pipefail
@@ -18,10 +22,15 @@ LIMIT="${2:-}"
 
 cursor=0
 echo "==> 重建索引：$ENDPOINT"
-echo "    从 cursor=0 开始（会 DROP+CREATE D1 全文表），逐批循环到 done…"
+if [ -n "${LEX_ONLY:-}" ]; then
+  echo "    LEX_ONLY=1：只补建 D1 全文/关键词索引，跳过重嵌入（不动 Vectorize、零嵌入额度）"
+else
+  echo "    从 cursor=0 开始（会 DROP+CREATE D1 全文表 + 重嵌入向量库，消耗嵌入额度），逐批循环到 done…"
+fi
 while : ; do
   url="$ENDPOINT/index?cursor=$cursor"
   [ -n "$LIMIT" ] && url="$url&limit=$LIMIT"
+  [ -n "${LEX_ONLY:-}" ] && url="$url&lexOnly=1"
   resp="$(curl -s -m 120 -X POST "$url" -H "X-Index-Secret: $INDEX_SECRET")"
   # 用 python3 解析这一批的进度（响应只含计数，不含正文，安全）
   fields="$(python3 - "$resp" <<'PY'

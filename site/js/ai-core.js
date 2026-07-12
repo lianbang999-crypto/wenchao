@@ -63,7 +63,7 @@ export function citationExcerpt(p) {
  * handlers: { onMeta(passages, sources, cite), onDelta(fullText, deltaText) }
  * 兼容非流式与错误体 {reply:'…'}（无 type）：照样并入文本，不吞成"无回复"。 */
 export async function streamAsk(endpoint, payload, handlers, signal) {
-  const { onMeta, onDelta } = handlers || {};
+  const { onMeta, onDelta, onDone } = handlers || {};
   const res = await fetch(endpoint, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload), signal,
@@ -73,6 +73,7 @@ export async function streamAsk(endpoint, payload, handlers, signal) {
     if (!m) return;
     if (m.type === 'meta') { if (onMeta) onMeta(m.passages || [], m.sources || [], m.cite || ''); }
     else if (m.type === 'delta') { full += m.text || ''; if (onDelta) onDelta(full, m.text || ''); }
+    else if (m.type === 'done') { if (onDone) onDone(m.verify || null); }   // 引用逐字自检信号，供前端渲染核验徽标
     else if (typeof m.reply === 'string' && m.reply) { full += m.reply; if (onDelta) onDelta(full, m.reply); }
   };
   if (res.body && res.body.getReader) {                 // 流式（打字机）
@@ -101,4 +102,159 @@ export function postFeedback(endpoint, vote, question, reply) {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ vote, question, reply }),
   }).catch(() => {});
+}
+
+/* ---------- AI 回答朗读：高清(服务端 CosyVoice2) 优先，失败降级本机 speechSynthesis ----------
+ * AI 回答通常 ≤500 字（在 /tts 单次上限内），一次合成即可，无需阅读器那套逐句队列/预取。
+ * 与阅读器共用同一 /tts 端点与音色；高清引擎由服务端 READ_DICT 归一读音，故高清路径不再本地替换。 */
+
+// 佛门高频词读音（仅本机降级引擎用；高清由服务端 READ_DICT 处理，勿重复替换）
+const SPEAK_PRON = [['南无', '南摩'], ['南無', '南摩'], ['般若', '波惹'], ['伽蓝', '茄蓝'], ['阿弥陀', '婀弥陀'], ['比丘', '笔丘'], ['迦叶', '迦摄']];
+// 去掉角标 [n] / 加粗符 / 列表序号，得到适合朗读的纯文本
+export function speakableText(t) {
+  return String(t || '')
+    .replace(/\[\d{1,2}\]/g, '').replace(/\*\*/g, '')
+    .replace(/^\s*\d+[.、)]\s*/gm, '').replace(/^\s*[-*•●·]\s*/gm, '');
+}
+// 朗读用纯文本 + 佛门读音替换（阅读器本机朗读 playLocal 与 AI 本机降级共用同一张表）
+export function localPron(t) { let s = speakableText(t); SPEAK_PRON.forEach(([a, b]) => { s = s.split(a).join(b); }); return s; }
+
+// 单例状态：同一时刻只读一条回答；token 作废进行中的异步回调，避免切走后误播/误改按钮
+let _aiAudio = null, _aiToken = 0;
+function aiAudioEl() { if (!_aiAudio) { _aiAudio = new Audio(); _aiAudio.preload = 'auto'; } return _aiAudio; }
+
+/* 立即停止任何 AI 朗读（高清音频 + 本机合成）。新对话/关面板/再点按钮时调用。 */
+export function aiSpeakStop() {
+  _aiToken++;
+  if (_aiAudio) { try { _aiAudio.pause(); } catch {} _aiAudio.onended = _aiAudio.onerror = null; }
+  if (typeof speechSynthesis !== 'undefined') { try { speechSynthesis.cancel(); } catch {} }
+}
+
+// 本机降级：speechSynthesis 合成（免费·离线可用）
+function speakLocal(reply, token, onIdle) {
+  const synth = typeof speechSynthesis !== 'undefined' ? speechSynthesis : null;
+  if (!synth) { onIdle(); return false; }
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(localPron(reply));
+  u.lang = 'zh-CN'; u.rate = 0.95;
+  const v = (synth.getVoices() || []).find((x) => /zh|chinese|中文|普通话|han/i.test((x.lang || '') + (x.name || '')));
+  if (v) u.voice = v;
+  u.onend = u.onerror = () => { if (token === _aiToken) onIdle(); };
+  try { synth.speak(u); } catch { onIdle(); return false; }
+  return true;
+}
+
+/* 朗读一条 AI 回答。回调 { onPlaying(), onIdle() } 驱动按钮 UI（播放中/闲置）。
+ * 流程：/tts 取高清音频 → <audio> 播放；任何失败（网络/上游/额度/不支持音频）自动降级本机。 */
+export async function aiSpeakReply(endpoint, reply, cbs, voice) {
+  const onPlaying = (cbs && cbs.onPlaying) || (() => {});
+  const onIdle = (cbs && cbs.onIdle) || (() => {});
+  const token = ++_aiToken;
+  const isCur = () => token === _aiToken;
+  const text = speakableText(reply).slice(0, 2000);
+  let blobUrl = null;
+  try {
+    const res = await fetch(endpoint.replace(/\/$/, '') + '/tts', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, layer: 't', voice: voice || 'charles' }),
+    });
+    if (!res.ok) throw new Error('tts ' + res.status);
+    const blob = await res.blob();
+    if (!isCur()) return;                       // 期间被停止/切走：丢弃
+    blobUrl = URL.createObjectURL(blob);
+    const a = aiAudioEl();
+    a.src = blobUrl; a.playbackRate = 1;
+    a.onended = () => { try { URL.revokeObjectURL(blobUrl); } catch {} if (isCur()) onIdle(); };
+    a.onerror = () => { try { URL.revokeObjectURL(blobUrl); } catch {} if (isCur() && !speakLocal(reply, token, onIdle)) onIdle(); };
+    onPlaying();
+    await a.play().catch(() => {});
+  } catch {
+    if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch {} }
+    if (!isCur()) return;
+    onPlaying();                                // 高清失败 → 本机续读（本机 onend 会复位为 idle）
+    if (!speakLocal(reply, token, onIdle)) onIdle();
+  }
+}
+
+/* 反馈条「朗读」按钮的点按开关：闲置→开始（先 loading 再 playing），播放中/加载中→停止。
+ * icons = { speak, stop }；由调用方传入本页的 SVG，保持外观一致。 */
+export function aiSpeakToggle(endpoint, reply, btn, icons, voice) {
+  const toIdle = () => { btn.classList.remove('on', 'loading'); btn.innerHTML = icons.speak; btn.title = '朗读'; };
+  if (btn.classList.contains('on') || btn.classList.contains('loading')) { aiSpeakStop(); toIdle(); return; }
+  btn.classList.add('loading'); btn.title = '正在合成…';
+  aiSpeakReply(endpoint, reply, {
+    onPlaying() { btn.classList.remove('loading'); btn.classList.add('on'); btn.innerHTML = icons.stop; btn.title = '停止朗读'; },
+    onIdle: toIdle,
+  }, voice);
+}
+
+/* 引用核验徽标：把后端 done.verify（引用逐字自检结果）翻成一句可信度提示。
+ * 贴「不妄语·可核验优先」——据实标注，不夸大：
+ *   · 有直引且逐字对上 → 绿「引文已核验」
+ *   · 仅有出处编号(无直引) → 中性「已附 N 处出处」
+ *   · 有越界编号或直引对不上 → 琥珀「部分引用请核对」
+ * 无任何引用则不显示（避免噪声，页底免责声明已兜底）。返回 HTML 字符串或 ''。 */
+export function verifyBadgeHTML(verify) {
+  if (!verify || !verify.cited) return '';
+  const ICON_OK = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  const ICON_WARN = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>';
+  if (!verify.faithful) {
+    return `<div class="ai-verify warn" title="回答中的方括号引用存在越界编号，或直引原文未能与所标出处逐字对上，请点开出处核对">${ICON_WARN}部分引用请核对原文</div>`;
+  }
+  if (verify.quoteChecked > 0) {
+    return `<div class="ai-verify ok" title="回答中 ${verify.quoteChecked} 处直引已与所标出处逐字比对一致">${ICON_OK}引文已核验 · 与出处逐字一致</div>`;
+  }
+  return `<div class="ai-verify ok" title="回答已标注 ${verify.cited} 处出处编号，均在检索资料范围内，可点开逐条核对">${ICON_OK}已附 ${verify.cited} 处出处 · 可点开核对</div>`;
+}
+
+/* ---------- 出处角标 / 反馈条 公用件（抽屉 app.js 与独立页 ask.js 逐字相同，故集中于此） ---------- */
+
+// 反馈条按钮图标集
+export const FB_ICON = {
+  up: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>',
+  down: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  check: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  speak: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4z"/><path d="M16 9a3.5 3.5 0 0 1 0 6M19 6.5a7 7 0 0 1 0 11"/></svg>',
+  stop: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2.5"/></svg>',
+  share: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>',
+};
+
+// 角标 hover 预览（仅"有真鼠标"的桌面启用；手机/触屏一律走点按弹卡）
+let _aiTip;
+const canHover = () => window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+export function citeHover(btn, p) {
+  if (!p || !canHover()) return;
+  btn.addEventListener('mouseenter', () => {
+    if (!_aiTip) { _aiTip = document.createElement('div'); _aiTip.className = 'ai-tip'; document.body.appendChild(_aiTip); }
+    const orig = citationExcerpt(p);
+    _aiTip.innerHTML = `<b>《${esc(p.title || '')}》</b>${esc(orig.slice(0, 80))}${orig.length > 80 ? '…' : ''}`;
+    _aiTip.hidden = false;
+    const r = btn.getBoundingClientRect();
+    _aiTip.style.left = Math.max(8, Math.min(r.left, innerWidth - _aiTip.offsetWidth - 12)) + 'px';
+    _aiTip.style.top = (r.bottom + 6) + 'px';
+  });
+  btn.addEventListener('mouseleave', () => { if (_aiTip) _aiTip.hidden = true; });
+}
+
+// 复制：优先 navigator.clipboard（安全上下文），失败/不支持则隐藏 textarea + execCommand 兜底
+export function copyText(t) {
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).catch(() => execCopy(t));
+  else execCopy(t);
+}
+export function execCopy(t) {
+  const ta = document.createElement('textarea');
+  ta.value = t; ta.style.position = 'fixed'; ta.style.top = '-1000px';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+// 引用核验徽标落地：把 verifyBadgeHTML 结果挂到回答末尾、反馈条之前（无引用则不显示）
+export function appendVerify(div, verify) {
+  const html = verifyBadgeHTML(verify);
+  if (!html) return;
+  const wrap = document.createElement('div');
+  wrap.innerHTML = html;
+  if (wrap.firstChild) div.appendChild(wrap.firstChild);
 }

@@ -1,7 +1,9 @@
 /* 印光法师文钞 · 独立问答页 /ask/
  * 复用共享内核 ai-core.js（与抽屉同一套排版/流式/出处/会话存储），
  * 打同一个 /api/ai；会话键 wc.aiSession 与抽屉互通（同设备）。 */
-import { aiFormat, citationExcerpt, streamAsk, postFeedback, lstore, esc } from './ai-core.js';
+import { aiFormat, citationExcerpt, streamAsk, postFeedback, lstore, esc,
+  aiSpeakToggle, aiSpeakStop, verifyBadgeHTML,
+  FB_ICON, citeHover, copyText, appendVerify } from './ai-core.js';
 
 const $ = (s) => document.querySelector(s);
 const CFG = window.WENCHAO_CONFIG || {};
@@ -23,16 +25,6 @@ function setState(s) {
   if (s === 'home') homeSlot.appendChild(aiForm);
   else shell.insertBefore(aiForm, aiDisc);     // 底部：对话区之后、免责声明之前
 }
-
-const FB_ICON = {
-  up: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>',
-  down: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>',
-  copy: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
-  check: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
-  speak: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4z"/><path d="M16 9a3.5 3.5 0 0 1 0 6M19 6.5a7 7 0 0 1 0 11"/></svg>',
-  stop: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2.5"/></svg>',
-  share: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>',
-};
 
 /* ---------- 渲染 ---------- */
 function wireCites(div, passages) {
@@ -64,55 +56,12 @@ function showCitation(p) {
   $('#sheet-backdrop').hidden = false;
 }
 function closeSheet() { $('#sheet').hidden = true; $('#sheet-backdrop').hidden = true; }
+// 角标 hover 预览（citeHover）、复制（copyText/execCopy）已移至共享内核 ai-core.js。
 
-let aiTip;
-const canHover = () => window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
-function citeHover(btn, p) {
-  if (!p || !canHover()) return;
-  btn.addEventListener('mouseenter', () => {
-    if (!aiTip) { aiTip = document.createElement('div'); aiTip.className = 'ai-tip'; document.body.appendChild(aiTip); }
-    const orig = citationExcerpt(p);
-    aiTip.innerHTML = `<b>《${esc(p.title || '')}》</b>${esc(orig.slice(0, 80))}${orig.length > 80 ? '…' : ''}`;
-    aiTip.hidden = false;
-    const r = btn.getBoundingClientRect();
-    aiTip.style.left = Math.max(8, Math.min(r.left, innerWidth - aiTip.offsetWidth - 12)) + 'px';
-    aiTip.style.top = (r.bottom + 6) + 'px';
-  });
-  btn.addEventListener('mouseleave', () => { if (aiTip) aiTip.hidden = true; });
-}
-
-/* ---------- 复制 / 朗读 ---------- */
-function copyText(t) {
-  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).catch(() => execCopy(t));
-  else execCopy(t);
-}
-function execCopy(t) {
-  const ta = document.createElement('textarea');
-  ta.value = t; ta.style.position = 'fixed'; ta.style.top = '-1000px';
-  document.body.appendChild(ta); ta.select();
-  try { document.execCommand('copy'); } catch (e) {}
-  document.body.removeChild(ta);
-}
-const PRON = [['南无', '南摩'], ['南無', '南摩'], ['般若', '波惹'], ['伽蓝', '茄蓝'], ['阿弥陀', '婀弥陀'], ['比丘', '笔丘'], ['迦叶', '迦摄']];
-function speakable(t) {
-  t = t.replace(/\[\d{1,2}\]/g, '').replace(/\*\*/g, '')
-    .replace(/^\s*\d+[.、)]\s*/gm, '').replace(/^\s*[-*•●]\s*/gm, '');
-  PRON.forEach(([a, b]) => { t = t.split(a).join(b); });
-  return t;
-}
-function aiSpeak(text, btn) {
-  const synth = window.speechSynthesis;
-  if (!synth) { btn.title = '此设备暂不支持朗读'; return; }
-  if (btn.classList.contains('on')) { synth.cancel(); return; }
-  synth.cancel();
-  const u = new SpeechSynthesisUtterance(speakable(text));
-  u.lang = 'zh-CN'; u.rate = 0.95;
-  const v = (synth.getVoices() || []).find((x) => /zh|chinese|中文|普通话/i.test((x.lang || '') + (x.name || '')));
-  if (v) u.voice = v;
-  btn.classList.add('on'); btn.innerHTML = FB_ICON.stop; btn.title = '停止朗读';
-  u.onend = u.onerror = () => { btn.classList.remove('on'); btn.innerHTML = FB_ICON.speak; btn.title = '朗读'; };
-  synth.speak(u);
-}
+/* ---------- 朗读 ---------- */
+// 高清(服务端 CosyVoice2) 优先、失败降级本机；逻辑集中在共享内核 aiSpeakToggle。
+const AI_ENDPOINT = CFG.aiEndpoint || '/api/ai';
+const speakToggle = (reply, btn) => aiSpeakToggle(AI_ENDPOINT, reply, btn, { speak: FB_ICON.speak, stop: FB_ICON.stop });
 
 /* ---------- 分享：二维码直达本 /ask/ 页（带问题，扫码即重问） ---------- */
 function aiShare(question, reply, passages) {
@@ -136,7 +85,7 @@ function aiFeedback(el, question, reply, passages) {
     '<button class="ai-fb-btn" data-v="up" type="button" title="有帮助" aria-label="有帮助">' + FB_ICON.up + '</button>' +
     '<button class="ai-fb-btn" data-v="down" type="button" title="需更正" aria-label="需更正">' + FB_ICON.down + '</button>';
   el.appendChild(bar);
-  bar.querySelector('.ai-speak').onclick = function () { aiSpeak(reply, this); };
+  bar.querySelector('.ai-speak').onclick = function () { speakToggle(reply, this); };
   bar.querySelector('.ai-share').onclick = function () { aiShare(question, reply, passages); };
   const cp = bar.querySelector('.ai-copy');
   cp.onclick = () => {
@@ -152,6 +101,8 @@ function aiFeedback(el, question, reply, passages) {
   });
 }
 
+/* 引用核验徽标落地（appendVerify）已移至共享内核 ai-core.js。 */
+
 /* ---------- 会话恢复 ---------- */
 function saveSession() { try { lstore.set('aiSession', aiSession.slice(-30)); } catch {} }
 function renderBot(rec) {
@@ -160,6 +111,7 @@ function renderBot(rec) {
   div.innerHTML = aiFormat(rec.c, rec.p);
   wireCites(div, rec.p);
   aiLog.appendChild(div);
+  appendVerify(div, rec.v);
   aiFeedback(div, rec.q, rec.c, rec.p);
   return div;
 }
@@ -211,12 +163,13 @@ async function aiAsk(q) {
 
   aiAbort = new AbortController();
   const sb = aiSendBtn(); if (sb) sb.textContent = '停止';
-  let full = '', failed = false;
+  let full = '', failed = false, verify = null;
   try {
     const payload = { messages: aiHistory.slice(-8) };
     full = await streamAsk(CFG.aiEndpoint, payload, {
       onMeta: (ps) => { passages = ps; },
       onDelta: (f) => { const t = Date.now(); if (t - lastPaint > 120) { lastPaint = t; paint(f); } },
+      onDone: (v) => { verify = v; },
     }, aiAbort.signal);
   } catch (err) {
     if (!(err && err.name === 'AbortError')) {
@@ -234,9 +187,10 @@ async function aiAsk(q) {
   paint(full);
   aiHistory.push({ role: 'assistant', content: full });
   if (full !== '（无回复）') {
+    appendVerify(ensureDiv(), verify);
     aiFeedback(ensureDiv(), q, full, passages);
     aiSession.push({ r: 'u', c: q });
-    aiSession.push({ r: 'b', c: full, p: passages || [], q });
+    aiSession.push({ r: 'b', c: full, p: passages || [], q, v: verify });
     saveSession();
   }
 }
@@ -263,7 +217,7 @@ aiText.addEventListener('input', () => {
 document.querySelectorAll('#ai-home [data-q]').forEach((b) => { b.onclick = () => aiAsk(b.dataset.q); });
 const newBtn = $('#btn-ai-new');
 if (newBtn) newBtn.onclick = () => {
-  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  aiSpeakStop();
   if (aiAbort) aiAbort.abort();
   aiHistory.length = 0; aiSession.length = 0; saveSession();
   aiLog.innerHTML = '';

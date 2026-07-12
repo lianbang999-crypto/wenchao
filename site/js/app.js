@@ -3,7 +3,8 @@
    纯前端、无构建：books.json 目录树 + articles/{id}.json 按篇懒加载
    =================================================================== */
 
-import { aiFormat, citationExcerpt } from './ai-core.js';
+import { aiFormat, citationExcerpt, aiSpeakToggle, aiSpeakStop, verifyBadgeHTML,
+  FB_ICON, citeHover, copyText, appendVerify, localPron } from './ai-core.js';
 
 const $ = (s) => document.querySelector(s);
 const CFG = window.WENCHAO_CONFIG || {};
@@ -21,6 +22,11 @@ const prefs = {
 };
 const progress = store.get('progress', {});   // {id: {pct, t}}
 let lastRead = store.get('lastRead', null);   // {id, title}
+// 收藏（书签）：整篇加星。{id: {t:篇名, v:分册, ts}}。键 wc.bookmarks，模型对齐主站 fy.bk 便于并站。
+let bookmarks = store.get('bookmarks', {});
+// 划线（用户高亮）：每篇一条数组 wc.hl.<id> = [{p 段序, s/e 段内字符偏移, t 摘句}]（换字号/设备不漂移，对齐主站 fy.hl）
+const getHls = (id) => store.get('hl.' + id, []);
+const setHls = (id, arr) => store.set('hl.' + id, arr);
 
 /* ---------- 全局状态 ---------- */
 let books = [];          // 目录树
@@ -88,7 +94,7 @@ function closeDrawers() {
   drawerR.classList.remove('open');
   overlay.classList.remove('show');
   setTimeout(() => { overlay.hidden = true; }, 280);
-  if (window.speechSynthesis) window.speechSynthesis.cancel();   // 关面板即停朗读
+  aiSpeakStop();   // 关面板即停 AI 回答朗读（高清音频 + 本机合成）
 }
 $('#btn-nav').onclick = () => openDrawer('L');
 $('#btn-ai').onclick = () => openDrawer('R');
@@ -145,7 +151,7 @@ async function fullSearch(kw) {
     hits.push({ id: it.id, t: it.title, v: it.volName || '', snip: '' });
     if (hits.length >= 100) break;
   }
-  let bodyFailed = false;
+  let bodyFailed = false, indexEmpty = false;
   if (hits.length < 100) {                 // 正文匹配：查后端全文索引
     if (!CFG.aiEndpoint) {
       bodyFailed = true;
@@ -157,6 +163,7 @@ async function fullSearch(kw) {
         });
         if (!res.ok) throw new Error('search ' + res.status);
         const data = await res.json();
+        if (data.ready === false) indexEmpty = true;   // 后端正文索引未建（lexRows=0）
         for (const h of (data.hits || [])) {
           if (seen.has(h.i) || hits.length >= 100) continue;
           seen.add(h.i);
@@ -165,9 +172,12 @@ async function fullSearch(kw) {
       } catch { bodyFailed = true; }   // 网络/服务异常：仍展示篇名匹配结果
     }
   }
-  const empty = bodyFailed
-    ? '正文全文搜索暂不可用，请检查网络（也可只按篇名搜）'
-    : '没有找到「' + esc(kw) + '」';
+  // 空结果文案据实：索引未就绪 / 网络异常 / 确实没有，三者分开，不把"检索未开"说成"没找到"
+  const empty = indexEmpty
+    ? '正文全文检索尚未就绪，目前仅按篇名搜索。<br>想按义理找内容，可用右上角「问文钞」。'
+    : bodyFailed
+      ? '正文全文搜索暂不可用，请检查网络（也可只按篇名搜）'
+      : '没有找到「' + esc(kw) + '」';
   tree.innerHTML = hits.length
     ? `<p class="search-count">共找到 ${hits.length}${hits.length >= 100 ? '+' : ''} 篇</p>` +
       hits.map((h) => `
@@ -327,6 +337,7 @@ function renderHome() {
   current = null;
   document.body.classList.remove('nav-hidden');   // 回首页顶栏必现
   showSpeakBtn(false);
+  showBookmarkBtn(false);
   $('#topbar-title').textContent = '印光法师文钞';
   $('#ai-context').textContent = '基于印光法师文钞全集';
   const total = flat.length;
@@ -337,6 +348,21 @@ function renderHome() {
          <span class="pct">${Math.round((progress[lastRead.id].pct || 0) * 100)}%</span>
        </button>`
     : '';
+  // 我的：收藏与划线（都为空则不显示）
+  const bks = bookmarkList();
+  const hls = allHighlights();
+  const bkHtml = bks.length ? `
+      <section class="home-mine">
+        <h2 class="mine-h">我的收藏 · ${bks.length}</h2>
+        <div class="mine-list">${bks.map((b) =>
+          `<button class="mine-item" data-go="${esc(b.id)}"><span class="mi-title">${esc(b.t)}</span>${b.v ? `<span class="mi-sub">${esc(b.v)}</span>` : ''}</button>`).join('')}</div>
+      </section>` : '';
+  const hlHtml = hls.length ? `
+      <section class="home-mine">
+        <h2 class="mine-h">我的划线 · ${hls.length} 处</h2>
+        <div class="mine-list">${hls.map((h) =>
+          `<div class="mine-row"><button class="mine-item hl-item" data-go="${esc(h.id)}" data-p="${h.p}"><span class="mi-quote">「${esc(h.t)}${(h.t || '').length >= 40 ? '…' : ''}」</span><span class="mi-sub">${esc(h.title)}</span></button><button class="mi-del" data-del="${esc(h.id)}" data-p="${h.p}" data-s="${h.s}" aria-label="删除划线">×</button></div>`).join('')}</div>
+      </section>` : '';
   const vols = books.map((vol) => {
     const count = vol.juans.reduce((n, j) => n + j.cats.reduce((m, c) => m + c.items.length, 0), 0);
     return `<button class="vol-card" data-vol="${vol.id}">
@@ -353,6 +379,7 @@ function renderHome() {
         <span class="seal" aria-hidden="true">文钞</span>
       </div>
       ${resume}
+      ${bkHtml}${hlHtml}
       <h2>${books.length} 部 · 共 ${total} 篇</h2>
       ${vols}
       <div class="home-extra">
@@ -369,6 +396,13 @@ function renderHome() {
       const el = $(`.nav-vol[data-vol="${b.dataset.vol}"]`);
       if (el) { el.open = true; el.scrollIntoView({ block: 'start' }); }
     };
+  });
+  // 我的收藏/划线：点条目跳篇（划线项带 ?p 定位到段），点 × 删除划线
+  $('#reader').querySelectorAll('.mine-item[data-go]').forEach((b) => {
+    b.onclick = () => goArticle(b.dataset.go, b.dataset.p);
+  });
+  $('#reader').querySelectorAll('.mi-del').forEach((b) => {
+    b.onclick = () => { removeHighlight(b.dataset.del, +b.dataset.p, +b.dataset.s); renderHome(); };
   });
 }
 
@@ -553,6 +587,7 @@ async function renderArticle(id) {
       reader.querySelector('.art-body').dataset.mode = prefs.mode;
       reader.querySelectorAll('.mode-bar .seg').forEach((x) =>
         x.classList.toggle('on', x === b));
+      measureMax(); paintProgress();   // 可见段落变了，总高随之变 → 刷新高度缓存与进度条
     };
   });
   // 选读篇目 → 跳转文钞原篇
@@ -581,16 +616,28 @@ async function renderArticle(id) {
     b.onclick = () => { goArticle(b.dataset.go); };
   });
 
-  // 搜索跳转：高亮全文命中并定位首处；否则恢复阅读进度
+  // 定位：搜索命中高亮首处 / 否则续读恢复。先按当前(回退)字体立即定位，长文不空等；
+  // 再等网络字体换入后重算高度重定位，消除 display=swap 换字后落点漂移（仅当用户尚未接管滚动）。
+  let anchorEl = null, restorePct = 0;
   if (pendingFind) {
-    const first = markInRoot(reader.querySelector('.reader-inner'), pendingFind);
+    anchorEl = markInRoot(reader.querySelector('.reader-inner'), pendingFind);
     pendingFind = '';
-    if (first) first.scrollIntoView({ block: 'center' });
-    else scrollTo(0, 0);
   } else {
     const saved = progress[id];
-    scrollTo(0, saved && saved.pct > 0.02
-      ? saved.pct * (document.body.scrollHeight - innerHeight) : 0);
+    if (saved && saved.pct > 0.02) restorePct = saved.pct;
+  }
+  const anchor = () => {
+    measureMax();
+    if (anchorEl) anchorEl.scrollIntoView({ block: 'center' });
+    else scrollTo(0, restorePct ? restorePct * maxScroll : 0);
+  };
+  anchor();
+  if ((anchorEl || restorePct) && document.fonts && document.fonts.status !== 'loaded') {
+    const anchoredY = scrollY;
+    fontsReady().then(() => {
+      // 篇未切走、且用户未手动滚动接管（阈值 4px）时才校正，避免把正在阅读的人拽回
+      if (current && current.id === id && Math.abs(scrollY - anchoredY) < 4) { anchor(); paintProgress(); }
+    });
   }
 
   lastRead = { id, title: art.title };
@@ -601,16 +648,25 @@ async function renderArticle(id) {
   document.body.classList.remove('nav-hidden');
   paintProgress();
   showSpeakBtn(true);     // 文章就绪 → 显示朗读键
+  showBookmarkBtn(true); syncBookmarkBtn();   // 显示收藏键并反映本篇状态
+  applyMarks();           // 铺本篇已存的划线
 }
 
 /* 阅读进度：顶部细线实时更新（rAF），localStorage 节流保存 */
 const progressBar = $('#read-progress');
-let scrollTimer = null, rafPending = false, lastNavY = 0;
+let scrollTimer = null, rafPending = false, lastNavY = 0, maxScroll = 0;
+// 可滚动高度缓存：滚动时若每帧读 scrollHeight 会触发回流，故缓存之，只在渲染/字体换入/resize/存档时重算
+function measureMax() { maxScroll = document.body.scrollHeight - innerHeight; return maxScroll; }
+addEventListener('resize', measureMax, { passive: true });
+// 网络字体（正文 Noto Serif SC，display=swap）就绪：换入后行高、总高变化，据此在渲染后重算高度并重定位
+function fontsReady(timeout = 1500) {
+  if (!document.fonts || !document.fonts.ready) return Promise.resolve();
+  return Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, timeout))]);
+}
 function paintProgress() {
   rafPending = false;
-  const max = document.body.scrollHeight - innerHeight;
-  progressBar.style.width = (current && max > 200)
-    ? Math.min(100, scrollY / max * 100) + '%' : '0';
+  progressBar.style.width = (current && maxScroll > 200)
+    ? Math.min(100, scrollY / maxScroll * 100) + '%' : '0';
   // 沉浸阅读：读文章时下滑藏顶栏、上滑或近顶唤出（阈值 8px 防抖）
   const y = scrollY;
   if (!current || y < 72) document.body.classList.remove('nav-hidden');
@@ -623,9 +679,9 @@ addEventListener('scroll', () => {
   if (!current || scrollTimer) return;
   scrollTimer = setTimeout(() => {
     scrollTimer = null;
-    const max = document.body.scrollHeight - innerHeight;
-    if (max > 200) {
-      progress[current.id] = { pct: Math.min(1, scrollY / max), t: Date.now() };
+    measureMax();   // 顺带刷新高度缓存（含晚到的字体换入、图片等引起的高度变化）
+    if (maxScroll > 200) {
+      progress[current.id] = { pct: Math.min(1, scrollY / maxScroll), t: Date.now() };
       store.set('progress', progress);
     }
   }, 600);
@@ -642,6 +698,135 @@ function openSheet(note) {
 function closeSheet() { sheet.hidden = true; sheetBd.hidden = true; }
 sheetBd.onclick = closeSheet;
 sheet.onclick = (e) => { if (e.target === sheet) closeSheet(); };
+
+/* ---------- 收藏（书签）：整篇加星，首页列出 ---------- */
+const bookmarkBtn = $('#btn-bookmark');
+const isBooked = (id) => !!bookmarks[id];
+function syncBookmarkBtn() {
+  if (!bookmarkBtn) return;
+  const on = !!(current && isBooked(current.id));
+  bookmarkBtn.classList.toggle('on', on);
+  bookmarkBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  bookmarkBtn.setAttribute('aria-label', on ? '取消收藏' : '收藏本篇');
+}
+function showBookmarkBtn(on) { if (bookmarkBtn) bookmarkBtn.hidden = !on; }
+function toggleBookmark() {
+  if (!current) return;
+  const id = current.id;
+  if (bookmarks[id]) { delete bookmarks[id]; toast('已取消收藏'); }
+  else { bookmarks[id] = { t: current.title, v: current.volumeName || '', ts: Date.now() }; toast('已收藏 · 首页可查看'); }
+  store.set('bookmarks', bookmarks);
+  syncBookmarkBtn();
+}
+if (bookmarkBtn) bookmarkBtn.onclick = toggleBookmark;
+// 收藏列表（按收藏时间倒序），首页「我的收藏」用
+function bookmarkList() {
+  return Object.entries(bookmarks)
+    .map(([id, m]) => ({ id, t: (m && m.t) || id, v: (m && m.v) || '', ts: (m && m.ts) || 0 }))
+    .sort((a, b) => b.ts - a.ts);
+}
+
+/* ---------- 划线（用户高亮）：Highlight API 不改 DOM（保名相/角标），段落序号+字符偏移换字号不漂移 ---------- */
+const MARK = (window.CSS && CSS.highlights && typeof Highlight !== 'undefined') ? new Highlight() : null;
+if (MARK) CSS.highlights.set('wc-mark', MARK);
+// 本篇可划线段落（原文+白话，DOM 序）；隐藏态段落的 range 不绘制，故无需按模式过滤
+function readableParas() { const ab = $('#reader .art-body'); return ab ? [...ab.querySelectorAll('.p-orig, .p-trans')] : []; }
+// el 内第 target 个字符所在的 (文本节点, 节点内偏移)
+function charPointInEl(el, target) {
+  const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+  let n, acc = 0, last = null;
+  while ((n = w.nextNode())) {
+    const len = n.nodeValue.length;
+    if (target <= acc + len) return [n, target - acc];
+    acc += len; last = n;
+  }
+  return last ? [last, last.nodeValue.length] : null;
+}
+// 选区边界 (node,off) 在段落 el 内的字符偏移
+function offsetIn(el, node, off) {
+  const r = document.createRange(); r.selectNodeContents(el);
+  try { r.setEnd(node, off); } catch { return 0; }
+  return r.toString().length;
+}
+// 同段重叠划线合并
+function mergeHls(arr) {
+  const byP = new Map();
+  for (const h of arr) { if (!byP.has(h.p)) byP.set(h.p, []); byP.get(h.p).push(h); }
+  const out = [];
+  for (const [p, list] of byP) {
+    list.sort((a, b) => a.s - b.s);
+    let cur = null;
+    for (const h of list) {
+      if (cur && h.s <= cur.e) cur.e = Math.max(cur.e, h.e);
+      else { cur = { p, s: h.s, e: h.e, t: h.t }; out.push(cur); }
+    }
+  }
+  return out.sort((a, b) => a.p - b.p || a.s - b.s);
+}
+// 铺当前篇的划线到 Highlight（零 DOM 改动）
+function applyMarks() {
+  if (!MARK || !current) return;
+  MARK.clear();
+  const paras = readableParas();
+  for (const h of getHls(current.id)) {
+    const el = paras[h.p]; if (!el) continue;
+    const a = charPointInEl(el, h.s), b = charPointInEl(el, h.e);
+    if (!a || !b) continue;
+    const r = document.createRange();
+    try { r.setStart(a[0], a[1]); r.setEnd(b[0], b[1]); MARK.add(r); } catch {}
+  }
+}
+// 把选区存为划线（供 share.js 选区操作条调用）。range 可传入（点按钮时活动选区可能已被收起，故 share.js 传选段时克隆的 Range）；返回是否成功
+function addHighlightFromSelection(range) {
+  const sel = getSelection();
+  const r = range || (sel && sel.rangeCount && !sel.isCollapsed ? sel.getRangeAt(0) : null);
+  if (!r || !current) return false;
+  const paras = readableParas();
+  const add = [];
+  paras.forEach((el, p) => {
+    if (!r.intersectsNode(el) || !el.textContent.trim()) return;
+    const whole = document.createRange(); whole.selectNodeContents(el);
+    const s = r.compareBoundaryPoints(Range.START_TO_START, whole) <= 0 ? 0 : offsetIn(el, r.startContainer, r.startOffset);
+    const e = r.compareBoundaryPoints(Range.END_TO_END, whole) >= 0 ? el.textContent.length : offsetIn(el, r.endContainer, r.endOffset);
+    if (e > s) add.push({ p, s, e, t: el.textContent.slice(s, Math.min(e, s + 40)) });
+  });
+  if (!add.length) return false;
+  setHls(current.id, mergeHls([...getHls(current.id), ...add]));
+  applyMarks();
+  try { sel.removeAllRanges(); } catch {}
+  toast('已划线 · 首页可回看');
+  return true;
+}
+// 清除本篇某条划线（据段序+起点定位），供「我的划线」列表删除用
+function removeHighlight(id, p, s) {
+  const arr = getHls(id).filter((h) => !(h.p === p && h.s === s));
+  setHls(id, arr);
+  if (current && current.id === id) applyMarks();
+}
+// 全部划线（跨篇，扫 wc.hl.* 键），首页「我的划线」用
+function allHighlights() {
+  const out = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (!k || !k.startsWith('wc.hl.')) continue;
+    const id = k.slice(6);
+    let arr; try { arr = JSON.parse(localStorage.getItem(k)) || []; } catch { continue; }
+    if (!arr.length) continue;
+    const fi = flat.find((x) => x.id === id);
+    const title = (bookmarks[id] && bookmarks[id].t) || (fi && fi.title) || id;
+    for (const h of arr) out.push({ id, p: h.p, s: h.s, t: h.t || '', title });
+  }
+  return out;
+}
+// 供 share.js 选区操作条调用：划词 → 划线 / 问文钞
+window.__wcHighlight = addHighlightFromSelection;
+window.__wcAsk = (text) => {
+  const t = (text || '').replace(/\s+/g, ' ').trim();
+  if (!t) return;
+  openDrawer('R');
+  const quote = t.length > 240 ? t.slice(0, 240) + '…' : t;
+  aiAsk('请依《印光法师文钞》为我解说这一段：「' + quote + '」');
+};
 
 /* ---------- 正文朗读 / 跟读高亮 ----------
    speechSynthesis 逐句朗读当前可见正文（随阅读模式：原文 / 白话 / 对照）；
@@ -865,7 +1050,7 @@ function speakIdx(i) {
 // 本机引擎：speechSynthesis 逐句合成（免费·离线可用）
 function playLocal(u, token) {
   if (!synthOK()) { toast('本设备不支持本机朗读'); stopRead(); return; }
-  const utt = new SpeechSynthesisUtterance(speakable(u.text));
+  const utt = new SpeechSynthesisUtterance(localPron(u.text));
   utt.lang = 'zh-CN'; utt.rate = READ.rate;
   const v = pickVoice(); if (v) utt.voice = v;
   utt.onend = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
@@ -986,8 +1171,10 @@ function reportPron() {
 if (speakBtn) speakBtn.onclick = () => { READ.on ? stopRead() : startRead(); };
 
 /* ---------- 偏好控件 ---------- */
-$('#font-inc').onclick = () => { prefs.fs = Math.min(24, prefs.fs + 1); store.set('fs', prefs.fs); applyPrefs(); };
-$('#font-dec').onclick = () => { prefs.fs = Math.max(14, prefs.fs - 1); store.set('fs', prefs.fs); applyPrefs(); };
+// 调字号后正文重排、总高变化 → 刷新高度缓存与进度条（续读落点不动，仅让进度条即时准确）
+const afterFontChange = () => { applyPrefs(); measureMax(); paintProgress(); };
+$('#font-inc').onclick = () => { prefs.fs = Math.min(24, prefs.fs + 1); store.set('fs', prefs.fs); afterFontChange(); };
+$('#font-dec').onclick = () => { prefs.fs = Math.max(14, prefs.fs - 1); store.set('fs', prefs.fs); afterFontChange(); };
 const setTheme = (name) => { prefs.theme = name; store.set('theme', name); applyPrefs(); };
 $('#theme-paper').onclick = () => setTheme('paper');
 if ($('#theme-plain')) $('#theme-plain').onclick = () => setTheme('plain');
@@ -1085,23 +1272,7 @@ function showCitation(p) {
     closeDrawers();
   };
 }
-// 角标 hover 预览（仅桌面；触屏走点击弹卡）
-let aiTip;
-// 仅"有真鼠标"的桌面启用 hover 预览；手机/触屏一律走点按弹卡
-const canHover = () => window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
-function citeHover(btn, p) {
-  if (!p || !canHover()) return;
-  btn.addEventListener('mouseenter', () => {
-    if (!aiTip) { aiTip = document.createElement('div'); aiTip.className = 'ai-tip'; document.body.appendChild(aiTip); }
-    const orig = citationExcerpt(p);
-    aiTip.innerHTML = `<b>《${esc(p.title || '')}》</b>${esc(orig.slice(0, 80))}${orig.length > 80 ? '…' : ''}`;
-    aiTip.hidden = false;
-    const r = btn.getBoundingClientRect();
-    aiTip.style.left = Math.max(8, Math.min(r.left, innerWidth - aiTip.offsetWidth - 12)) + 'px';
-    aiTip.style.top = (r.bottom + 6) + 'px';
-  });
-  btn.addEventListener('mouseleave', () => { if (aiTip) aiTip.hidden = true; });
-}
+// 角标 hover 预览（citeHover）已移至共享内核 ai-core.js，抽屉与 /ask/ 共用。
 // 首次进入的欢迎引导语（仅展示，不计入对话历史）——简明传达「什么都可以问，依文钞作答」
 function aiWelcome() {
   if (aiLog.children.length) return;
@@ -1124,6 +1295,7 @@ function renderBot(rec) {
   maybeTradify(div);
   wireCites(div, rec.p);
   aiLog.appendChild(div);
+  appendVerify(div, rec.v);
   aiFeedback(div, rec.q, rec.c, rec.p);
   return div;
 }
@@ -1156,7 +1328,7 @@ async function aiAsk(q) {
   aiLog.appendChild(placeholder);
   aiLog.scrollTop = aiLog.scrollHeight;
 
-  let passages = null, full = '', div = null, lastPaint = 0;
+  let passages = null, full = '', div = null, lastPaint = 0, verify = null;
   const ensureDiv = () => {
     if (!div) {
       if (placeholder.parentNode) placeholder.remove();
@@ -1179,6 +1351,8 @@ async function aiAsk(q) {
       full += m.text || '';
       const t = Date.now();
       if (t - lastPaint > 120) { lastPaint = t; paint(); }   // 节流，避免每字重排
+    } else if (m.type === 'done') {
+      verify = m.verify || null;   // 引用逐字自检信号，供渲染核验徽标
     } else if (typeof m.reply === 'string' && m.reply) {
       full += m.reply;   // 错误/限流等返回 {reply:'…'}（无 type），照样显示给用户而非吞成"无回复"
     }
@@ -1227,33 +1401,14 @@ async function aiAsk(q) {
   paint();   // 收尾：完整排版（"停止"则保留已生成部分）
   aiHistory.push({ role: 'assistant', content: full });
   if (full !== '（无回复）') {
+    appendVerify(ensureDiv(), verify);
     aiFeedback(ensureDiv(), q, full, passages);
     aiSession.push({ r: 'u', c: q });
-    aiSession.push({ r: 'b', c: full, p: passages || [], q });
+    aiSession.push({ r: 'b', c: full, p: passages || [], q, v: verify });
     saveSession();
   }
 }
-function copyText(t) {
-  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).catch(() => execCopy(t));
-  else execCopy(t);
-}
-function execCopy(t) {
-  const ta = document.createElement('textarea');
-  ta.value = t; ta.style.position = 'fixed'; ta.style.top = '-1000px';
-  document.body.appendChild(ta); ta.select();
-  try { document.execCommand('copy'); } catch (e) {}
-  document.body.removeChild(ta);
-}
-// 反馈闭环：有帮助 / 需更正 → 存后端，供日后善知识审核沉淀；+ 复制
-const FB_ICON = {
-  up: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>',
-  down: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>',
-  copy: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
-  check: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
-  speak: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4z"/><path d="M16 9a3.5 3.5 0 0 1 0 6M19 6.5a7 7 0 0 1 0 11"/></svg>',
-  stop: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2.5"/></svg>',
-  share: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>',
-};
+// appendVerify（核验徽标落地）、copyText/execCopy（复制）、FB_ICON（图标集）已移至共享内核 ai-core.js。
 // 把一问一答制成可转发的图（复用 share.js 的卡片/二维码/系统分享）
 function aiShare(question, reply, passages) {
   if (!(window.WenchaoShare && window.WenchaoShare.aiCard)) { copyText(reply); return; }
@@ -1265,27 +1420,9 @@ function aiShare(question, reply, passages) {
   const base = (CFG.shareBase || location.origin).replace(/\/$/, '');
   window.WenchaoShare.aiCard(question, body, base + '/ask/');
 }
-// 朗读：浏览器免费 TTS（speechSynthesis）；佛教高频词读音替换（仅朗读用，不改显示）
-const PRON = [['南无', '南摩'], ['南無', '南摩'], ['般若', '波惹'], ['伽蓝', '茄蓝'], ['阿弥陀', '婀弥陀'], ['比丘', '笔丘'], ['迦叶', '迦摄']];
-function speakable(t) {
-  t = t.replace(/\[\d{1,2}\]/g, '').replace(/\*\*/g, '')
-    .replace(/^\s*\d+[.、)]\s*/gm, '').replace(/^\s*[-*•●]\s*/gm, '');
-  PRON.forEach(([a, b]) => { t = t.split(a).join(b); });
-  return t;
-}
-function aiSpeak(text, btn) {
-  const synth = window.speechSynthesis;
-  if (!synth) { btn.title = '此设备暂不支持朗读'; return; }
-  if (btn.classList.contains('on')) { synth.cancel(); return; }   // 再点=停止
-  synth.cancel();
-  const u = new SpeechSynthesisUtterance(speakable(text));
-  u.lang = 'zh-CN'; u.rate = 0.95;
-  const v = (synth.getVoices() || []).find((x) => /zh|chinese|中文|普通话/i.test((x.lang || '') + (x.name || '')));
-  if (v) u.voice = v;
-  btn.classList.add('on'); btn.innerHTML = FB_ICON.stop; btn.title = '停止朗读';
-  u.onend = u.onerror = () => { btn.classList.remove('on'); btn.innerHTML = FB_ICON.speak; btn.title = '朗读'; };
-  synth.speak(u);
-}
+// 朗读用纯文本 + 佛门读音替换（PRON/speakable）已并入共享内核 ai-core.js 的 localPron，阅读器与 AI 降级共用一张表。
+// AI 回答朗读：高清(服务端 CosyVoice2) 优先、失败自动降级本机；逻辑集中在共享内核 aiSpeakToggle。
+const aiSpeak = (reply, btn) => aiSpeakToggle(CFG.aiEndpoint || '/api/ai', reply, btn, { speak: FB_ICON.speak, stop: FB_ICON.stop });
 function aiFeedback(el, question, reply, passages) {
   const bar = document.createElement('div');
   bar.className = 'ai-fb';
@@ -1345,7 +1482,7 @@ document.querySelectorAll('#ai-chips .chip-btn').forEach((b) => {
 });
 const aiNewBtn = $('#btn-ai-new');
 if (aiNewBtn) aiNewBtn.onclick = () => {     // 新对话：清空重来（含留存）
-  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  aiSpeakStop();
   if (aiAbort) aiAbort.abort();
   aiHistory.length = 0;
   aiSession.length = 0;

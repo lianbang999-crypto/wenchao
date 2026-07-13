@@ -34,24 +34,18 @@
      苹果设备命中本地楷体，不会产生下载 -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
-<link rel="stylesheet" href="css/app.css?v=20260712-mine2">
+<link rel="stylesheet" href="css/app.css?v=20260713-toolbar">
   <meta name="msvalidate.01" content="2E887F8A75C595EF89E235E27D2816E0" />
   <meta name="baidu-site-verification" content="codeva-345JAH4iJi" />
 </head>
 <body>
 
-<!-- 顶栏：左目录 · 中标题 · 右AI -->
+<!-- 顶栏（全站恒定四键）：左目录 · 中标题 · 右问文钞+我的；朗读/收藏是本篇功能，在文章工具行内 -->
 <header class="topbar" id="topbar">
   <button class="icon-btn" id="btn-nav" aria-label="打开目录">
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
   </button>
   <button class="topbar-title" id="topbar-title" aria-label="回到首页">印光法师文钞</button>
-  <button class="icon-btn" id="btn-bookmark" aria-label="收藏本篇" aria-pressed="false" hidden>
-    <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
-  </button>
-  <button class="icon-btn" id="btn-speak" aria-label="朗读本篇" hidden>
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12"/></svg>
-  </button>
   <button class="icon-btn" id="btn-ai" aria-label="打开AI助读">
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3c4.97 0 9 3.36 9 7.5 0 4.14-4.03 7.5-9 7.5-.98 0-1.92-.13-2.8-.37L5 19.5l1.04-3.05C4.18 15.1 3 12.93 3 10.5 3 6.36 7.03 3 12 3Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M8.5 10.5h7M8.5 13h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
   </button>
@@ -197,7 +191,7 @@
 <script src="config.js?v=20260616-ai-panel"></script>
 <script src="js/pwa.js?v=20260622-pwa" defer></script>
 <script src="js/offline.js?v=20260712-mine2" defer></script>
-<script type="module" src="js/app.js?v=20260712-mine2"></script>
-<script src="js/share.js?v=20260712-uiux" defer></script>
+<script type="module" src="js/app.js?v=20260713-toolbar"></script>
+<script src="js/share.js?v=20260713-toolbar" defer></script>
 </body>
 </html>

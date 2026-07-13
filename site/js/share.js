@@ -65,6 +65,8 @@
       '<span class="sb-count" aria-live="polite"></span>' +
       '<button class="sb-btn sb-mark" type="button">' +
         '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="m14.3 5.7 4 4L9 19l-4.2.8L5.7 15.6z"/></svg>划线</button>' +
+      '<button class="sb-btn sb-copy" type="button">' +
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>' +
       '<button class="sb-btn sb-ask" type="button">' +
         '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1.3-4.2A7.5 7.5 0 1 1 20 11.5Z"/></svg>问文钞</button>' +
       '<button class="sb-btn sb-make" type="button">' +
@@ -79,6 +81,18 @@
     $('.sb-mark', bar).addEventListener('click', function () {
       if (window.__wcHighlight && picked) window.__wcHighlight(picked.range);
       hideBar();
+    });
+    // 复制：选段文字 + 出处落款（与分享卡同口径），供摘抄笔记；轻反馈后自动收条
+    $('.sb-copy', bar).addEventListener('click', function () {
+      if (!picked) return;
+      var text = picked.text.replace(/[ \t]+/g, ' ').trim();
+      var src = srcOf(picked);
+      copyText(text + (src ? '\n——' + src : ''), $('span', this));
+      // 轻反馈显示完再收：清选区（防指针一动操作条又弹回）并收条
+      setTimeout(function () {
+        try { window.getSelection().removeAllRanges(); } catch (e) {}
+        hideBar();
+      }, 1200);
     });
     // 问文钞：把选段发给右侧 AI 助读解说（app.js 提供）
     $('.sb-ask', bar).addEventListener('click', function () {
@@ -168,15 +182,20 @@
   }
   function closeModal() { if (modal) modal.hidden = true; }
 
+  // 出处落款：原文段只标《书名》篇名；白话段在书名后注明「白话文」（书名已含「白话」则不重复），
+  // 避免今译被误作大师原话。复制与分享卡共用同一口径。
+  function srcOf(p) {
+    var book = p.book ? '《' + p.book + '》' : '';
+    if (book && p.kind === 'trans' && !/白话/.test(p.book)) book += '白话文';
+    var src = book + (book && p.title ? '·' : '') + (p.title || '');
+    if (!book && p.kind === 'trans') src += '（白话）';
+    return src;
+  }
+
   async function openCard() {
     if (!picked) return;
     var text = picked.text.replace(/[ \t]+/g, ' ').trim();
-    // 出处：原文段只标《书名》篇名；白话段在书名后注明「白话文」（书名已含「白话」则不重复），避免今译被误作大师原话
-    var book = picked.book ? '《' + picked.book + '》' : '';
-    if (book && picked.kind === 'trans' && !/白话/.test(picked.book)) book += '白话文';
-    var src = book + (book && picked.title ? '·' : '') + (picked.title || '');
-    if (!book && picked.kind === 'trans') src += '（白话）';
-    await showCard(text, src, shareUrl(picked.id, picked.pIndex), picked.title);
+    await showCard(text, srcOf(picked), shareUrl(picked.id, picked.pIndex), picked.title);
     hideBar();
   }
 

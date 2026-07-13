@@ -313,7 +313,6 @@ async function route() {
   // 影像陈列页：内容随静态页预渲染，app.js 不重绘，仅同步标题/繁体
   if (/^\/ying\/?$/.test(location.pathname)) {
     current = null;
-    showSpeakBtn(false);
     $('#topbar-title').textContent = '印祖法相';
     $('#ai-context').textContent = '基于印光法师文钞全集';
     maybeTradify($('#reader'));
@@ -390,12 +389,11 @@ function wireMineItems(root, delRerender) {
 function renderHome() {
   current = null;
   document.body.classList.remove('nav-hidden');   // 回首页顶栏必现
-  showSpeakBtn(false);
-  showBookmarkBtn(false);
   $('#topbar-title').textContent = '印光法师文钞';
   $('#ai-context').textContent = '基于印光法师文钞全集';
   const total = flat.length;
-  // 首页回归纯目录：个人内容（继续阅读/收藏/划线）全部集中到「我的」页（右上人形图标进入）
+  // 首页＝目录 +「继续阅读」一张轻卡（续读是最高频动作，值得首屏一个入口）；
+  // 收藏/划线等其余个人内容仍集中在「我的」页（右上人形图标进入）
   const vols = books.map((vol) => {
     const count = vol.juans.reduce((n, j) => n + j.cats.reduce((m, c) => m + c.items.length, 0), 0);
     return `<button class="vol-card" data-vol="${vol.id}">
@@ -411,6 +409,7 @@ function renderHome() {
         <h1 class="v-title" style="margin:0">印光法师文钞</h1>
         <span class="seal" aria-hidden="true">文钞</span>
       </div>
+      ${resumeCardHtml()}
       <h2>${books.length} 部 · 共 ${total} 篇</h2>
       ${vols}
       <div class="home-extra">
@@ -419,6 +418,7 @@ function renderHome() {
       <p class="home-note">底本为《印光法师文钞》增广、续编、三编及三编补之文白对照本。文言原文与白话译文逐篇对照排录；正文中带朱点之词语，点按可查名相注释。<br>愿见闻者，同沾法益。</p>
     </div>`;
   paintProgress();
+  { const rc = $('#reader .resume-card'); if (rc) rc.onclick = () => goArticle(rc.dataset.id); }
   document.querySelectorAll('.vol-card').forEach((b) => {
     b.onclick = () => {
       openDrawer('L');
@@ -432,8 +432,6 @@ function renderHome() {
 function renderMine() {
   current = null;
   document.body.classList.remove('nav-hidden');
-  showSpeakBtn(false);
-  showBookmarkBtn(false);
   $('#topbar-title').textContent = '我的';
   $('#ai-context').textContent = '基于印光法师文钞全集';
   const mb = $('#btn-mine'); if (mb) mb.classList.add('on');
@@ -526,7 +524,6 @@ async function renderArticle(id) {
   try { art = await loadArticle(id); }
   catch {
     reader.innerHTML = '<p class="loading">此篇载入失败，请检查网络后重试</p>';
-    showSpeakBtn(false);
     return;
   }
   current = art;
@@ -613,12 +610,25 @@ async function renderArticle(id) {
     </nav>`;
 
   const hasTrans = art.segments.some((s) => s.trans.length);
-  const modeBar = (!art.plain && hasTrans)
-    ? `<div class="mode-bar" role="tablist">
+  // 篇内工具行（吸顶，随沉浸模式同顶栏隐现）：中＝原文/对照/白话切换（无白话篇隐藏），
+  // 右＝收藏·朗读——本篇功能跟着篇走，不占顶栏（顶栏恒定：目录·标题·问文钞·我的）
+  const segsHtml = (!art.plain && hasTrans)
+    ? `<div class="mb-segs" role="tablist">
         <button class="seg" data-m="orig">原文</button>
         <button class="seg" data-m="both">对照</button>
         <button class="seg" data-m="trans">白话</button>
       </div>` : '';
+  const modeBar = `<div class="mode-bar">
+      ${segsHtml}
+      <div class="mb-acts">
+        <button class="icon-btn mb-bookmark" aria-label="收藏本篇" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
+        </button>
+        <button class="icon-btn mb-speak" aria-label="朗读本篇">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12"/></svg>
+        </button>
+      </div>
+    </div>`;
 
   // 《文钞》选读：圆净所列初机必读篇目，分组呈现，可链接者点按直达文钞原篇
   const xuanduHtml = (art.xuandu && art.xuandu.length)
@@ -722,8 +732,12 @@ async function renderArticle(id) {
   lastNavY = scrollY;
   document.body.classList.remove('nav-hidden');
   paintProgress();
-  showSpeakBtn(true);     // 文章就绪 → 显示朗读键
-  showBookmarkBtn(true); syncBookmarkBtn();   // 显示收藏键并反映本篇状态
+  // 朗读/收藏键随本篇重挂（渲染在篇内工具行，不在顶栏）
+  bookmarkBtn = reader.querySelector('.mb-bookmark');
+  speakBtn = reader.querySelector('.mb-speak');
+  if (bookmarkBtn) bookmarkBtn.onclick = toggleBookmark;
+  if (speakBtn) speakBtn.onclick = () => { READ.on ? stopRead() : startRead(); };
+  syncBookmarkBtn();      // 反映本篇收藏态
   applyMarks();           // 铺本篇已存的划线
 }
 
@@ -774,8 +788,8 @@ function closeSheet() { sheet.hidden = true; sheetBd.hidden = true; }
 sheetBd.onclick = closeSheet;
 sheet.onclick = (e) => { if (e.target === sheet) closeSheet(); };
 
-/* ---------- 收藏（书签）：整篇加星，首页列出 ---------- */
-const bookmarkBtn = $('#btn-bookmark');
+/* ---------- 收藏（书签）：整篇加星，「我的」页列出 ---------- */
+let bookmarkBtn = null;   // 篇内工具行里的收藏键，每次 renderArticle 重挂
 const isBooked = (id) => !!bookmarks[id];
 function syncBookmarkBtn() {
   if (!bookmarkBtn) return;
@@ -784,17 +798,15 @@ function syncBookmarkBtn() {
   bookmarkBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
   bookmarkBtn.setAttribute('aria-label', on ? '取消收藏' : '收藏本篇');
 }
-function showBookmarkBtn(on) { if (bookmarkBtn) bookmarkBtn.hidden = !on; }
 function toggleBookmark() {
   if (!current) return;
   const id = current.id;
   if (bookmarks[id]) { delete bookmarks[id]; toast('已取消收藏'); }
-  else { bookmarks[id] = { t: current.title, v: current.volumeName || '', ts: Date.now() }; toast('已收藏 · 首页可查看'); }
+  else { bookmarks[id] = { t: current.title, v: current.volumeName || '', ts: Date.now() }; toast('已收藏 · 在「我的」页可查看'); }
   store.set('bookmarks', bookmarks);
   syncBookmarkBtn();
 }
-if (bookmarkBtn) bookmarkBtn.onclick = toggleBookmark;
-// 收藏列表（按收藏时间倒序），首页「我的收藏」用
+// 收藏列表（按收藏时间倒序），「我的」页用
 function bookmarkList() {
   return Object.entries(bookmarks)
     .map(([id, m]) => ({ id, t: (m && m.t) || id, v: (m && m.v) || '', ts: (m && m.ts) || 0 }))
@@ -869,7 +881,7 @@ function addHighlightFromSelection(range) {
   setHls(current.id, mergeHls([...getHls(current.id), ...add]));
   applyMarks();
   try { sel.removeAllRanges(); } catch {}
-  toast('已划线 · 首页可回看');
+  toast('已划线 · 在「我的」页可回看');
   return true;
 }
 // 清除本篇某条划线（据段序+起点定位），供「我的划线」列表删除用
@@ -907,7 +919,7 @@ window.__wcAsk = (text) => {
    speechSynthesis 逐句朗读当前可见正文（随阅读模式：原文 / 白话 / 对照）；
    当前句以 Custom Highlight API 高亮（不改 DOM，保留名相·角标可点），并自动滚动跟随。
    暂停=取消当前句、恢复=从本句重读（比 pause/resume 在安卓上更稳）。 */
-const speakBtn = $('#btn-speak');
+let speakBtn = null;   // 篇内工具行里的朗读键，每次 renderArticle 重挂
 const synthOK = () => 'speechSynthesis' in window;
 const RATES = [0.75, 0.95, 1.2];
 const rateLabel = (r) => (r <= 0.8 ? '慢' : r >= 1.2 ? '快' : '常') + '速';
@@ -973,13 +985,6 @@ const RB_ICON = {
   more: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h9M17 8h3M4 16h3M11 16h9"/><circle cx="15" cy="8" r="2.1"/><circle cx="9" cy="16" r="2.1"/></svg>',
   close: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
 };
-
-// 文章页才显示朗读键（设备不支持 TTS 则始终隐藏）；切走时一并停读
-function showSpeakBtn(on) {
-  if (!speakBtn) return;
-  speakBtn.hidden = !on;   // 高清引擎无需本机 TTS 支持，故文章页恒显；不支持时点播自动降级/提示
-  if (!on) stopRead();
-}
 
 // 中文嗓音：列表常异步加载，voiceschanged 后重选
 let _voice = null, _voiceTried = false;
@@ -1271,7 +1276,6 @@ function reportPron() {
     body: JSON.stringify({ a: current && current.id, seg: READ.idx, layer, text: u ? u.text : '', note, voice: READ.voice }),
   }).then(() => toast('已收到，感恩！我们会尽快校正。')).catch(() => toast('提交失败，请稍后再试'));
 }
-if (speakBtn) speakBtn.onclick = () => { READ.on ? stopRead() : startRead(); };
 
 /* ---------- 偏好控件（渲染于「我的」页，由 renderMine 动态挂载）---------- */
 // 调字号后正文重排、总高变化 → 刷新高度缓存与进度条（续读落点不动，仅让进度条即时准确）

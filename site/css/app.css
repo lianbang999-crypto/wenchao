@@ -201,6 +201,7 @@ body.nav-hidden .read-progress { top: 0; }
   border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
   border-radius: 999px;
   box-shadow: 0 10px 34px rgba(40, 28, 12, .16);
+  transition: margin-bottom .22s ease;   /* 朗读条在场时上移堆叠的过渡 */
 }
 .share-bar[hidden] { display: none; }
 .sb-btn {
@@ -228,7 +229,7 @@ body.nav-hidden .read-progress { top: 0; }
   padding: 3px 12px; box-shadow: 0 4px 14px rgba(40, 28, 12, .12);
 }
 .sb-count:empty { display: none; }
-/* 窄屏四键（划线·复制·问文钞·分享）放不下 → 收紧字距与内距 */
+/* 窄屏四键（划线·复制·朗读·法布施）放不下 → 收紧字距与内距 */
 @media (max-width: 430px) {
   .sb-btn { padding: 8px 9px; gap: 4px; font-size: 13px; }
   .sb-sep { margin: 0 1px; }
@@ -243,6 +244,12 @@ body.nav-hidden .read-progress { top: 0; }
 }
 /* 弹层 chrome 恒处深色遮罩之上，用固定浅色，不随「墨夜」主题变暗 */
 .sm-tip { text-align: center; color: #ece3d0; font-size: 14px; letter-spacing: .04em; }
+.sm-close {
+  position: absolute; top: -34px; right: 6px; width: 36px; height: 36px;
+  border: 0; background: none; color: #ece3d0; cursor: pointer;
+  display: grid; place-items: center; border-radius: 50%;
+}
+.sm-close:hover { background: rgba(255, 255, 255, .12); }
 .sm-imgwrap {
   overflow-y: auto; -webkit-overflow-scrolling: touch; border-radius: 8px;
   box-shadow: 0 12px 44px rgba(0, 0, 0, .45);
@@ -254,7 +261,6 @@ body.nav-hidden .read-progress { top: 0; }
   background: #f0ead9; color: #322a1e;
 }
 .sm-acts .sm-primary { background: var(--cinnabar); color: #fff; }
-.sm-close { align-self: center; border: 0; background: none; color: #ece3d0; font-size: 14px; cursor: pointer; padding: 4px 14px; text-decoration: underline; }
 
 /* 《文钞》选读篇目清单 */
 .xuandu { margin-top: 6px; }
@@ -647,6 +653,7 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
   padding: 13px 2px; font-size: 16px;
 }
 .vol-card:last-of-type { border-bottom: 1px solid var(--line); }
+a.vol-card { color: inherit; text-decoration: none; }   /* 首页预渲染书架用 <a>（爬虫可循链），JS 重绘后为 button */
 .vol-card .vol-name { font-weight: 600; letter-spacing: .04em; }
 .vol-card .vol-group { font-size: 12px; color: var(--ink-3); }
 .vol-card .vol-count { margin-left: auto; flex: none; font-size: 12.5px; color: var(--ink-3); }
@@ -778,37 +785,27 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
 .rb-more.on { background: color-mix(in srgb, var(--cinnabar) 12%, transparent); color: var(--cinnabar); }
 .rb-sep { width: 1px; height: 22px; background: var(--line); margin: 0 4px; flex: none; }
 
-/* 设置浮层：由「⋯」上浮的卡片，不撑高主条；每项一行「标签 · 控件」 */
+/* 设置浮层：由「⋯」上浮的卡片，不撑高主条；三行「标签 + chip 单选组」，选项全可见、一点即选 */
 .rb-panel {
   position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%);
-  width: 250px; max-width: 88vw;
-  display: flex; flex-direction: column; gap: 1px;
-  padding: 8px; background: var(--paper);
+  width: max-content; max-width: 92vw;
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 10px; background: var(--paper);
   border: 1px solid var(--line); border-radius: 16px;
   box-shadow: 0 14px 40px rgba(40, 28, 12, .22);
 }
 .rb-panel[hidden] { display: none; }
-.rb-set {
-  display: flex; align-items: center; justify-content: space-between; gap: 14px;
-  padding: 8px 8px 8px 12px; border-radius: 10px;
+.rb-set { display: flex; align-items: center; gap: 12px; padding: 5px 4px; }
+.rb-set-k { font-size: 13px; color: var(--ink-3); flex: none; }
+.rb-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.rb-chip {
+  border: 1px solid var(--line); background: none; color: var(--ink-2);
+  border-radius: 999px; padding: 5px 12px; font-size: 13px; line-height: 1;
+  cursor: pointer; white-space: nowrap;
+  transition: border-color .18s ease, color .18s ease, background .18s ease;
 }
-.rb-set[hidden] { display: none; }
-.rb-set-k { font-size: 13.5px; color: var(--ink-2); }
-.rb-ctl {
-  border: 1px solid var(--line); background: var(--paper-2); color: var(--ink);
-  border-radius: 999px; padding: 6px 16px; font-size: 13px; line-height: 1;
-  min-width: 78px; text-align: center; cursor: pointer; white-space: nowrap;
-  transition: border-color .18s ease, color .18s ease;
-}
-.rb-ctl:hover { border-color: var(--ink-3); }
-.rb-ctl:active { color: var(--cinnabar); border-color: var(--cinnabar); }
-.rb-engine.alt { color: var(--ink-3); }
-.rb-report {
-  margin-top: 5px; border: 0; border-top: 1px solid var(--line); background: none;
-  color: var(--ink-3); font-size: 12.5px; padding: 10px 8px 4px;
-  text-align: center; cursor: pointer;
-}
-.rb-report:active { color: var(--cinnabar); }
+.rb-chip:hover { border-color: var(--ink-3); }
+.rb-chip.on { background: var(--cinnabar); border-color: var(--cinnabar); color: #f8f3e8; }
 .wc-toast {
   position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%) translateY(8px);
   z-index: 60; max-width: 84vw; padding: 9px 16px; border-radius: 999px;

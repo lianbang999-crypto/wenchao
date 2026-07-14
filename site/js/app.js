@@ -666,13 +666,15 @@ async function renderArticle(id) {
   reader.querySelectorAll('.mode-bar .seg').forEach((b) => {
     b.classList.toggle('on', b.dataset.m === prefs.mode);
     b.onclick = () => {
-      stopRead();     // 切换原文/白话/对照 → 可见段落变了，停读重来
+      const wasReading = READ.on;
+      stopRead();     // 切换原文/白话/对照 → 可见段落变了，句 Range 作废
       prefs.mode = b.dataset.m;
       store.set('mode', prefs.mode);
       reader.querySelector('.art-body').dataset.mode = prefs.mode;
       reader.querySelectorAll('.mode-bar .seg').forEach((x) =>
         x.classList.toggle('on', x === b));
       measureMax(); paintProgress();   // 可见段落变了，总高随之变 → 刷新高度缓存与进度条
+      if (wasReading) startRead();     // 听着切层 → 换层后从当前位置接着读（读你所看）
     };
   });
   // 选读篇目 → 跳转文钞原篇
@@ -779,6 +781,7 @@ addEventListener('scroll', () => {
 /* ---------- 注释弹卡 ---------- */
 const sheet = $('#sheet'), sheetBd = $('#sheet-backdrop');
 function openSheet(note) {
+  if (window.__wcSelBarHide) window.__wcSelBarHide();   // 注释卡打开时收起选段条，底部浮层不叠压
   $('#sheet-body').innerHTML = `
     <h4>${note.term ? '【' + esc(note.term) + '】' : '注释'}<span class="note-n">本篇注释 [${note.n}]</span></h4>
     <p>${esc(note.text)}</p>`;
@@ -905,14 +908,13 @@ function allHighlights() {
   }
   return out;
 }
-// 供 share.js 选区操作条调用：划词 → 划线 / 问文钞
+// 供 share.js 选区操作条调用：划词 → 划线（「问文钞」入口已按用户决定从选段条移除）
 window.__wcHighlight = addHighlightFromSelection;
-window.__wcAsk = (text) => {
-  const t = (text || '').replace(/\s+/g, ' ').trim();
-  if (!t) return;
-  openDrawer('R');
-  const quote = t.length > 240 ? t.slice(0, 240) + '…' : t;
-  aiAsk('请依《印光法师文钞》为我解说这一段：「' + quote + '」');
+// 供 share.js 选段条「朗读」键调用：先还原克隆的选区（点按钮时活动选区可能已收起），
+// 起点定位/清选区/「从选中处开始朗读」提示全部复用 startRead 现成逻辑
+window.__wcReadFrom = (range) => {
+  if (range) { try { const s = getSelection(); s.removeAllRanges(); s.addRange(range); } catch {} }
+  startRead();
 };
 
 /* ---------- 正文朗读 / 跟读高亮 ----------
@@ -921,23 +923,26 @@ window.__wcAsk = (text) => {
    暂停=取消当前句、恢复=从本句重读（比 pause/resume 在安卓上更稳）。 */
 let speakBtn = null;   // 篇内工具行里的朗读键，每次 renderArticle 重挂
 const synthOK = () => 'speechSynthesis' in window;
-const RATES = [0.75, 0.95, 1.2];
-const rateLabel = (r) => (r <= 0.8 ? '慢' : r >= 1.2 ? '快' : '常') + '速';
 const READ = {
   units: [], idx: 0, on: false, paused: false, cur: null, bar: null, seq: 0,
   rate: store.get('ttsRate', 0.95),
-  engine: store.get('ttsEngine', 'cloud'),   // cloud=高清(服务端 CosyVoice2) / local=本机(speechSynthesis)
-  voice: store.get('ttsVoice', 'charles'),    // 仅高清引擎用；须在服务端音色白名单内；默认清亮男声
-  layer: store.get('ttsLayer', 't'),          // o=原文 / t=白话（默认白话，读得准）
+  voice: store.get('ttsVoice', 'charles'),    // 「声音」四选一：charles/david/anna=高清，local=本机嗓音（音质概念并入声音）
+  sleep: 'off', sleepAt: 0,                   // 定时：off | 15 | 30 | 'chapter'（会话内，不持久化）
+  degraded: false,                            // 高清故障临时降级本机；换声音/重开朗读时重试高清
 };
+// 读哪层不再单设开关（旧 ttsLayer/ttsAuto 键弃用）：「读你所看」——正文停在原文读原文，
+// 白话/对照读白话；连播恒开，「只听这一篇」由定时「读完本篇」承担。
+// 旧「音质=本机」偏好迁移为 声音=本机嗓音
+if (store.get('ttsEngine') === 'local' && READ.voice !== 'local') READ.voice = 'local';
+const useCloud = () => !READ.degraded && READ.voice !== 'local';
 // 高清朗读端点（同 AI 代理：POST { text, layer, voice } → 音频字节；命中 R2 秒回）
 const TTS_ENDPOINT = (CFG.aiEndpoint || '/api/ai').replace(/\/$/, '') + '/tts';
-const TTS_VOICES = [   // 极简：只留 3 个（两男一女），默认第一个
-  { id: 'charles', name: '清亮男声' },
-  { id: 'david', name: '沉稳男声' },
-  { id: 'anna', name: '柔和女声' },
+const TTS_VOICES = [   // 三种高清 + 本机嗓音（离线本机合成），默认第一个；chip=面板短标签
+  { id: 'charles', name: '清亮男声', chip: '清亮' },
+  { id: 'david', name: '沉稳男声', chip: '沉稳' },
+  { id: 'anna', name: '柔和女声', chip: '柔和' },
+  { id: 'local', name: '本机嗓音', chip: '本机' },
 ];
-const voiceName = (id) => (TTS_VOICES.find((v) => v.id === id) || TTS_VOICES[0]).name;
 let _audio = null;                              // 高清引擎共用的 <audio>
 function ensureAudio() { if (!_audio) { _audio = new Audio(); _audio.preload = 'auto'; } return _audio; }
 // 本句是否仍「当前」：异步(高清 fetch / 音频)回调据此判断，避免切走后误推进
@@ -1056,18 +1061,19 @@ function ensureReadBar() {
   if (READ.bar) return READ.bar;
   const bar = document.createElement('div');
   bar.className = 'read-bar'; bar.hidden = true;
+  // 一行「标签 + chip 单选组」：所有选项一眼可见、一点即选，不做循环盲切
+  const chips = (key, opts) =>
+    `<div class="rb-set"><span class="rb-set-k">${key === 'voice' ? '声音' : key === 'rate' ? '语速' : '定时'}</span>` +
+    `<span class="rb-chips">` +
+    opts.map(([v, label, full]) =>
+      `<button class="rb-chip rb-c-${key}" type="button" data-v="${v}"${full ? ` aria-label="${full}"` : ''}>${label}</button>`).join('') +
+    `</span></div>`;
   bar.innerHTML =
-    // 极简：主行恒为单行 transport；分层/音质/音色/语速/报错收进上浮的设置面板（不撑高主条）
+    // 极简：主行恒为单行 transport；设置只剩 声音/语速/定时 三行，收进上浮面板（不撑高主条）
     `<div class="rb-panel" hidden>` +
-      `<div class="rb-set rb-set-layer"><span class="rb-set-k">分层</span>` +
-        `<button class="rb-ctl rb-layer" type="button" aria-label="原文／白话">白话</button></div>` +
-      `<div class="rb-set rb-set-engine"><span class="rb-set-k">音质</span>` +
-        `<button class="rb-ctl rb-engine" type="button" aria-label="高清／本机">高清</button></div>` +
-      `<div class="rb-set rb-set-voice"><span class="rb-set-k">音色</span>` +
-        `<button class="rb-ctl rb-voice" type="button" aria-label="切换音色">清亮男声</button></div>` +
-      `<div class="rb-set rb-set-rate"><span class="rb-set-k">语速</span>` +
-        `<button class="rb-ctl rb-rate" type="button" aria-label="切换语速">常速</button></div>` +
-      `<button class="rb-report" type="button" aria-label="读音报错">读音报错</button>` +
+      chips('voice', TTS_VOICES.map((v) => [v.id, v.chip, v.name])) +
+      chips('rate', [['0.75', '慢'], ['0.95', '常'], ['1.2', '快']]) +
+      chips('sleep', [['off', '不停'], ['chapter', '读完本篇'], ['15', '15分'], ['30', '30分']]) +
     `</div>` +
     `<div class="rb-row">` +
       `<button class="rb-btn rb-prev" type="button" aria-label="上一句">${RB_ICON.prev}</button>` +
@@ -1081,59 +1087,77 @@ function ensureReadBar() {
   bar.querySelector('.rb-prev').onclick = () => jumpRead(-1);
   bar.querySelector('.rb-next').onclick = () => jumpRead(1);
   bar.querySelector('.rb-play').onclick = togglePause;
-  bar.querySelector('.rb-layer').onclick = toggleLayer;
-  bar.querySelector('.rb-engine').onclick = toggleEngine;
-  bar.querySelector('.rb-rate').onclick = cycleRate;
-  bar.querySelector('.rb-voice').onclick = cycleVoice;
-  bar.querySelector('.rb-report').onclick = reportPron;
+  bar.querySelectorAll('.rb-c-voice').forEach((c) => { c.onclick = () => setVoice(c.dataset.v); });
+  bar.querySelectorAll('.rb-c-rate').forEach((c) => { c.onclick = () => setRate(+c.dataset.v); });
+  bar.querySelectorAll('.rb-c-sleep').forEach((c) => {
+    c.onclick = () => setSleep(/^\d+$/.test(c.dataset.v) ? +c.dataset.v : c.dataset.v);
+  });
   bar.querySelector('.rb-more').onclick = (e) => { const p = bar.querySelector('.rb-panel'); p.hidden = !p.hidden; e.currentTarget.classList.toggle('on', !p.hidden); };
-  bar.querySelector('.rb-x').onclick = stopRead;
+  // 点面板与条以外任意处 → 收起设置面板（朗读继续）
+  document.addEventListener('pointerdown', (e) => {
+    const p = bar.querySelector('.rb-panel');
+    if (p.hidden || bar.contains(e.target)) return;
+    p.hidden = true; bar.querySelector('.rb-more').classList.remove('on');
+  });
+  // 手动关闭＝结束本次收听：定时一并清零
+  bar.querySelector('.rb-x').onclick = () => { READ.sleep = 'off'; READ.sleepAt = 0; stopRead(); };
   READ.bar = bar;
   return bar;
 }
 function syncBar() {
   if (!READ.bar) return;
-  const q = (s) => READ.bar.querySelector(s);
-  const play = q('.rb-play');
+  const play = READ.bar.querySelector('.rb-play');
   play.innerHTML = READ.paused ? RB_ICON.play : RB_ICON.pause;
   play.setAttribute('aria-label', READ.paused ? '继续朗读' : '暂停');
-  q('.rb-rate').textContent = rateLabel(READ.rate);
-  const layerBtn = q('.rb-layer');
-  layerBtn.textContent = READ.layer === 'o' ? '原文' : '白话';
-  const layerRow = layerBtn.closest('.rb-set');
-  if (layerRow) layerRow.hidden = !document.querySelector('#reader .art-body .p-trans');   // 无白话的篇目整行隐藏
-  const engBtn = q('.rb-engine');
-  engBtn.textContent = READ.engine === 'cloud' ? '高清' : '本机';
-  engBtn.classList.toggle('alt', READ.engine === 'local');
-  const voiceBtn = q('.rb-voice');
-  voiceBtn.textContent = voiceName(READ.voice);
-  const voiceRow = voiceBtn.closest('.rb-set');
-  if (voiceRow) voiceRow.hidden = READ.engine !== 'cloud';           // 仅高清可选音色
+  const mark = (cls, val) => READ.bar.querySelectorAll('.' + cls).forEach((c) =>
+    c.classList.toggle('on', c.dataset.v === String(val)));
+  mark('rb-c-voice', READ.voice);
+  mark('rb-c-rate', READ.rate);
+  mark('rb-c-sleep', READ.sleep);
 }
 
-// 让所读分层可见（单层显示，同步模式按钮）；返回本篇实际可读分层。
-// 纯原文篇临时按原文，但不改动用户的 READ.layer 偏好；也不写 store.mode，保留显示偏好。
-function applyReadLayer() {
-  const reader = $('#reader');
-  const ab = reader && reader.querySelector('.art-body');
-  if (!ab) return READ.layer;
-  const eff = ab.querySelector('.p-trans') ? READ.layer : 'o';   // 无白话 → 只能原文
-  const m = eff === 'o' ? 'orig' : 'trans';
-  ab.dataset.mode = m;
-  reader.querySelectorAll('.mode-bar .seg').forEach((x) => x.classList.toggle('on', x.dataset.m === m));
-  return eff;
+// 读你所看：正文停在原文读原文；白话/对照读白话；无白话篇只能原文。不改动页面显示。
+function readLayer() {
+  const ab = $('#reader .art-body');
+  if (!ab || !ab.querySelector('.p-trans')) return 'o';
+  return ab.dataset.mode === 'orig' ? 'o' : 't';
 }
 
 function speakIdx(i) {
   if (i < 0) i = 0;
-  if (i >= READ.units.length) { stopRead(); return; }   // 读完：自动结束
+  if (READ.sleepAt && Date.now() >= READ.sleepAt) {     // 睡眠定时到点：句间自然收声
+    READ.sleep = 'off'; READ.sleepAt = 0;
+    stopRead(); toast('睡眠定时到，朗读结束');
+    return;
+  }
+  if (i >= READ.units.length) { endOfArticle(); return; }   // 读完本篇：连播或结束
   READ.idx = i;
   const u = READ.units[i];
   markUnit(u); scrollUnit(u);
   const token = ++READ.seq;
   READ.cur = token;
-  if (READ.engine === 'cloud') playCloud(i, token);
+  if (useCloud()) playCloud(i, token);
   else playLocal(u, token);
+}
+// 读完本篇：连播恒开，自动接读下一篇；定时设「读完本篇」或已是最后一篇则到此止
+function endOfArticle() {
+  const i = current ? flat.findIndex((it) => it.id === current.id) : -1;
+  const next = i >= 0 && i < flat.length - 1 ? flat[i + 1] : null;
+  if (READ.sleep === 'chapter' || !next) {
+    const chapterEnd = READ.sleep === 'chapter';
+    READ.sleep = 'off'; READ.sleepAt = 0;
+    stopRead();
+    if (chapterEnd) toast('本篇读毕，朗读结束');
+    return;
+  }
+  autoNext(next);
+}
+async function autoNext(next) {
+  toast('续播 · ' + next.title);
+  history.pushState(null, '', articleHref(next.id));
+  await route();        // route 会停掉本篇朗读并渲染下一篇
+  scrollTo(0, 0);       // 连播从篇首读起，不受该篇旧续读位置影响
+  startRead();
 }
 // 本机引擎：speechSynthesis 逐句合成（免费·离线可用）
 function playLocal(u, token) {
@@ -1156,14 +1180,14 @@ async function playCloud(i, token) {
   catch (e) {
     setLoading(false);
     if (!isCurrent(token)) return;
-    noteFallback(); READ.engine = 'local'; syncBar(); playLocal(u, token);   // 整体切本机并续读本句
+    noteFallback(); READ.degraded = true; playLocal(u, token);   // 本次朗读临时降级本机并续读本句
     return;
   }
   setLoading(false);
   if (!isCurrent(token)) return;         // 期间被切走/暂停/停止 → 丢弃
   a.src = url; a.playbackRate = READ.rate;
   a.onended = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
-  a.onerror = () => { if (isCurrent(token)) { noteFallback(); READ.engine = 'local'; syncBar(); playLocal(u, token); } };
+  a.onerror = () => { if (isCurrent(token)) { noteFallback(); READ.degraded = true; playLocal(u, token); } };
   a.play().catch(() => {});
   if (i + 1 < READ.units.length) fetchUnitAudio(i + 1).catch(() => {});   // 预取下一句
 }
@@ -1188,16 +1212,22 @@ function readStartIndex() {
 }
 function startRead() {
   if (!current) return;
-  const eff = applyReadLayer();   // 按偏好 READ.layer（纯原文篇自动降原文），并让该层单独可见
-  READ.units = buildUnits(eff);
+  if (READ.sleepAt && Date.now() >= READ.sleepAt) { READ.sleep = 'off'; READ.sleepAt = 0; }   // 过期定时清零，防重开即停
+  READ.units = buildUnits(readLayer());   // 读你所看：不切换页面显示
   if (!READ.units.length) return;
+  // 起点提示：让「选中即从此处读」「滚到哪读到哪」这两个能力被看见
+  const ab = $('#reader .art-body');
+  const s0 = getSelection();
+  const hadSel = !!(s0 && s0.rangeCount && !s0.isCollapsed && ab && ab.contains(s0.anchorNode));
   const from = readStartIndex();      // 先定起点（要用到当前选区/滚动位置）
   const s = getSelection(); if (s) s.removeAllRanges();   // 用过选区即收起，避免与朗读高亮/选段条打架
-  stopCur(); _fbNoted = false;
+  stopCur(); _fbNoted = false; READ.degraded = false;     // 每次开读重试高清
   READ.on = true; READ.paused = false;
   if (speakBtn) speakBtn.classList.add('on');
   ensureReadBar().hidden = false;
   syncBar();
+  setupMediaSession(); syncMediaState();
+  if (from > 0) toast(hadSel ? '从选中处开始朗读' : '从当前位置开始朗读');
   speakIdx(from);
 }
 function stopRead() {
@@ -1207,20 +1237,45 @@ function stopRead() {
   clearHL();
   if (speakBtn) speakBtn.classList.remove('on');
   if (READ.bar) { READ.bar.hidden = true; const p = READ.bar.querySelector('.rb-panel'); if (p) p.hidden = true; const m = READ.bar.querySelector('.rb-more'); if (m) m.classList.remove('on'); }
+  syncMediaState();
+}
+/* 锁屏/耳机媒体控制（MediaSession）：高清朗读经 <audio> 播放，锁屏可见篇名封面、可控播停切句 */
+function setupMediaSession() {
+  if (!('mediaSession' in navigator)) return;
+  try {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: (current && current.title) || '印光法师文钞',
+      artist: '印光法师文钞',
+      album: (current && current.volumeName) || '文白对照',
+      artwork: [
+        { src: '/img/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+        { src: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+    });
+    navigator.mediaSession.setActionHandler('play', () => { if (READ.on && READ.paused) togglePause(); });
+    navigator.mediaSession.setActionHandler('pause', () => { if (READ.on && !READ.paused) togglePause(); });
+    navigator.mediaSession.setActionHandler('stop', () => stopRead());
+    navigator.mediaSession.setActionHandler('previoustrack', () => jumpRead(-1));
+    navigator.mediaSession.setActionHandler('nexttrack', () => jumpRead(1));
+  } catch {}
+}
+function syncMediaState() {
+  if (!('mediaSession' in navigator)) return;
+  try { navigator.mediaSession.playbackState = READ.on ? (READ.paused ? 'paused' : 'playing') : 'none'; } catch {}
 }
 function togglePause() {
   if (!READ.on) return;
   if (READ.paused) {
-    READ.paused = false; syncBar();
+    READ.paused = false; syncBar(); syncMediaState();
     // 高清：音频未播完则原地续播；否则（本机/已播完/尚未取到）从本句重来
-    if (READ.engine === 'cloud' && _audio && _audio.src && _audio.duration && _audio.currentTime < _audio.duration) {
+    if (useCloud() && _audio && _audio.src && _audio.duration && _audio.currentTime < _audio.duration) {
       _audio.play().catch(() => speakIdx(READ.idx));
     } else { speakIdx(READ.idx); }
   } else {
     READ.paused = true;
-    if (READ.engine === 'cloud') { if (_audio) _audio.pause(); }
+    if (useCloud()) { if (_audio) _audio.pause(); }
     else if (synthOK()) window.speechSynthesis.cancel();
-    syncBar();
+    syncBar(); syncMediaState();
   }
 }
 function jumpRead(d) {
@@ -1228,53 +1283,33 @@ function jumpRead(d) {
   READ.paused = false; stopCur();
   syncBar(); speakIdx(READ.idx + d);
 }
-function cycleRate() {
-  READ.rate = RATES[(RATES.indexOf(READ.rate) + 1) % RATES.length];
+function setRate(r) {
+  if (READ.rate === r) return;
+  READ.rate = r;
   store.set('ttsRate', READ.rate);
   syncBar();
   if (READ.on && !READ.paused) {
-    if (READ.engine === 'cloud' && _audio && _audio.src) _audio.playbackRate = READ.rate;  // 高清即时变速，无需重读
+    if (useCloud() && _audio && _audio.src) _audio.playbackRate = READ.rate;  // 高清即时变速，无需重读
     else { stopCur(); speakIdx(READ.idx); }
   }
 }
-function toggleLayer() {
-  if (!current) return;
-  const ab = document.querySelector('#reader .art-body');
-  if (!ab || !ab.querySelector('.p-trans')) return;      // 无白话，不可切
-  READ.layer = READ.layer === 'o' ? 't' : 'o';
-  store.set('ttsLayer', READ.layer);
-  clearPrefetch();                       // 分层变了，预取作废
-  const eff = applyReadLayer();
-  const wasOn = READ.on && !READ.paused;
-  READ.units = buildUnits(eff);
-  syncBar();
-  if (READ.on) { stopCur(); if (wasOn) speakIdx(Math.min(READ.idx, READ.units.length - 1)); }
-}
-function toggleEngine() {
-  READ.engine = READ.engine === 'cloud' ? 'local' : 'cloud';
-  store.set('ttsEngine', READ.engine);
-  _fbNoted = false; clearPrefetch();
-  syncBar();
-  if (READ.on && !READ.paused) { stopCur(); speakIdx(READ.idx); }   // 用新引擎重读本句
-}
-function cycleVoice() {
-  if (READ.engine !== 'cloud') { toast('切到高清朗读才能换音色'); return; }
-  const ids = TTS_VOICES.map((v) => v.id);
-  READ.voice = ids[(ids.indexOf(READ.voice) + 1) % ids.length];
+function setVoice(id) {
+  if (READ.voice === id) return;
+  READ.voice = id;
   store.set('ttsVoice', READ.voice);
-  clearPrefetch();                       // 音色变了，预取作废
+  READ.degraded = false; _fbNoted = false;   // 换声音重试高清
+  clearPrefetch();                           // 声音变了，预取作废
   syncBar();
   if (READ.on && !READ.paused) { stopCur(); speakIdx(READ.idx); }
 }
-function reportPron() {
-  const u = READ.units[READ.idx];
-  const note = window.prompt('这句里哪个字/词读错了？可写正确读音，便于我们校对（选填）：', '');
-  if (note === null) return;
-  const layer = u && u.el.classList.contains('p-orig') ? 'o' : 't';
-  fetch(TTS_ENDPOINT + '/report', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ a: current && current.id, seg: READ.idx, layer, text: u ? u.text : '', note, voice: READ.voice }),
-  }).then(() => toast('已收到，感恩！我们会尽快校正。')).catch(() => toast('提交失败，请稍后再试'));
+function setSleep(v) {
+  if (READ.sleep === v) return;
+  READ.sleep = v;
+  READ.sleepAt = typeof v === 'number' ? Date.now() + v * 60000 : 0;
+  syncBar();
+  toast(v === 'off' ? '定时已关'
+    : v === 'chapter' ? '读完本篇自动停止'
+    : v + ' 分钟后自动停止');
 }
 
 /* ---------- 偏好控件（渲染于「我的」页，由 renderMine 动态挂载）---------- */

@@ -202,8 +202,8 @@ def migrate(vol):
     with open(books_path, 'w', encoding='utf-8') as f:
         json.dump(books, f, ensure_ascii=False)
 
-    # 名相库合并
-    terms_path = os.path.join(OUT, 'terms.json')
+    # 名相库合并（仅作构建侧参考数据，前端不消费——写入 build/ 不再随站点部署）
+    terms_path = os.path.join(SRC_BASE, 'terms.json')
     terms = json.load(open(terms_path, encoding='utf-8')) if os.path.exists(terms_path) else {}
     # 先清掉本册旧词条
     for k in list(terms):

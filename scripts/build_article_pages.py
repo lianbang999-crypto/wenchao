@@ -753,10 +753,72 @@ def write_sitemap(items: list[dict], volumes: list[str], topics: dict | None = N
   (SITE / "sitemap.xml").write_text(xml, encoding="utf-8")
 
 
+
+def sync_page_versions(css_link: str) -> list:
+  """把外壳版本串同步进独立静态页（/ying/、/ask/）的带版本资源引用。
+  这些页不由本脚本生成，版本串曾长期落后；统一后 _headers 才能放心给
+  css/js 设 immutable 长缓存。"""
+  m = re.search(r"v=([\w-]+)", css_link)
+  if not m:
+    return []
+  ver = m.group(1)
+  synced = []
+  for rel in ("ying/index.html", "ask/index.html"):
+    fp = SITE / rel
+    if not fp.exists():
+      continue
+    doc = fp.read_text(encoding="utf-8")
+    out = re.sub(
+      r"((?:css/app\.css|css/fonts\.css|js/app\.js|js/share\.js|js/ask\.js)\?v=)[\w-]+",
+      lambda mm: mm.group(1) + ver, doc)
+    if out != doc:
+      fp.write_text(out, encoding="utf-8")
+      synced.append(rel)
+  return synced
+
+
+HOME_HERO = (
+  '<div class="home-hero"><span class="v-sub">文白对照 · 闻思修学</span>'
+  '<h1 class="v-title" style="margin:0">印光法师文钞</h1>'
+  '<span class="seal" aria-hidden="true">文钞</span></div>'
+)
+HOME_NOTE = (
+  '<p class="home-note">底本为《印光法师文钞》增广、续编、三编及三编补之文白对照本。'
+  '文言原文与白话译文逐篇对照排录；正文中带朱点之词语，点按可查名相注释。<br>愿见闻者，同沾法益。</p>'
+)
+
+
+def prerender_home(index_html: str, books: list) -> str:
+  """把首页书架预渲染进 index.html 的 #reader：百度等不执行 JS 的爬虫也能收录首页内容，
+  分册卡用 <a href="/v/…/">（可循链）；运行时 app.js renderHome 以同样式重绘并接管交互。"""
+  total = 0
+  cards = []
+  for vol in books:
+    count = sum(len(c["items"]) for j in vol["juans"] for c in j["cats"])
+    total += count
+    cards.append(
+      f'<a class="vol-card" href="/v/{h(vol["id"])}/">'
+      f'<span class="vol-name">{h(vol["name"])}</span>'
+      f'<span class="vol-group">{h(vol.get("group", ""))}</span>'
+      f'<span class="vol-count">{count} 篇</span></a>'
+    )
+  inner = (
+    '<div class="home">' + HOME_HERO +
+    f'<h2>{len(books)} 部 · 共 {total} 篇</h2>' + "".join(cards) +
+    '<div class="home-extra"><a class="home-cta" href="/ying/">瞻礼 · 印祖法相与传印长老题词 →</a></div>' +
+    HOME_NOTE + '</div>'
+  )
+  marker = '<main class="reader" id="reader"></main>'
+  return index_html.replace(marker, f'<main class="reader" id="reader">{inner}</main>', 1)
+
+
 def main() -> None:
   books = json.loads((SITE / "data" / "books.json").read_text(encoding="utf-8"))
   items = flatten_books(books)
   index_html = (SITE / "index.html").read_text(encoding="utf-8")
+  # 剥掉上次构建注入的首页预渲染内容，恢复空壳占位符（幂等；文章页模板始终从空壳出发）
+  index_html = re.sub(r'(<main class="reader" id="reader">).*?(</main>)',
+                      r"\1\2", index_html, count=1, flags=re.S)
   # 复用首页引用的 css 版本，保证聚合页与其余页样式一致、同步破缓存
   m = re.search(r'href="(css/app\.css[^"]*)"', index_html)
   css_link = m.group(1) if m else "css/app.css"
@@ -786,10 +848,13 @@ def main() -> None:
     f"User-agent: *\nAllow: /\n\nSitemap: {ORIGIN}/sitemap.xml\n",
     encoding="utf-8",
   )
+  (SITE / "index.html").write_text(prerender_home(index_html, books), encoding="utf-8")
+  synced = sync_page_versions(css_link)
   print(
     f"Generated {len(items)} article pages under {OUT_DIR.relative_to(ROOT)}, "
     f"{len(volumes)} volume pages under {VOL_DIR.relative_to(ROOT)}, "
-    f"and {len(topics_meta)} topic pages under {TOPIC_DIR.relative_to(ROOT)}"
+    f"and {len(topics_meta)} topic pages under {TOPIC_DIR.relative_to(ROOT)}; "
+    f"home prerendered" + (f", versions synced: {', '.join(synced)}" if synced else "")
   )
 
 

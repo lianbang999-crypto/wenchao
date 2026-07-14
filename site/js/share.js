@@ -15,7 +15,7 @@
   var FORBID_END = '（「『【《〔“‘([{';
 
   var picked = null;     // { text, id, title, pIndex }
-  var lastBlob = null, lastUrl = '', lastText = '';
+  var lastUrl = '', lastText = '';
 
   function $(s, r) { return (r || document).querySelector(s); }
   function reader() { return document.getElementById('reader'); }
@@ -61,16 +61,17 @@
     bar = document.createElement('div');
     bar.className = 'share-bar';
     bar.hidden = true;
+    // 极简四键：划线 · 复制 · 朗读（从选中处读）· 法布施（分享结缘）
     bar.innerHTML =
       '<span class="sb-count" aria-live="polite"></span>' +
       '<button class="sb-btn sb-mark" type="button">' +
         '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="m14.3 5.7 4 4L9 19l-4.2.8L5.7 15.6z"/></svg>划线</button>' +
       '<button class="sb-btn sb-copy" type="button">' +
         '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>' +
-      '<button class="sb-btn sb-ask" type="button">' +
-        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1.3-4.2A7.5 7.5 0 1 1 20 11.5Z"/></svg>问文钞</button>' +
+      '<button class="sb-btn sb-read" type="button">' +
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/></svg>朗读</button>' +
       '<button class="sb-btn sb-make" type="button">' +
-        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8.2 10.9 15.8 7.1M8.2 13.1l7.6 3.8"/></svg>分享</button>' +
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8.2 10.9 15.8 7.1M8.2 13.1l7.6 3.8"/></svg>法布施</button>' +
       '<span class="sb-sep" aria-hidden="true"></span>' +
       '<button class="sb-x" type="button" aria-label="取消">' +
         '<svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>';
@@ -82,7 +83,12 @@
       if (window.__wcHighlight && picked) window.__wcHighlight(picked.range);
       hideBar();
     });
-    // 复制：选段文字 + 出处落款（与分享卡同口径），供摘抄笔记；轻反馈后自动收条
+    // 朗读：从选中处开始读（app.js 提供；起点/清选区/提示均复用其现成逻辑）
+    $('.sb-read', bar).addEventListener('click', function () {
+      if (window.__wcReadFrom && picked) window.__wcReadFrom(picked.range);
+      hideBar();
+    });
+    // 复制：选段文字 + 出处落款（与法布施卡同口径），供摘抄笔记；轻反馈后自动收条
     $('.sb-copy', bar).addEventListener('click', function () {
       if (!picked) return;
       var text = picked.text.replace(/[ \t]+/g, ' ').trim();
@@ -94,14 +100,17 @@
         hideBar();
       }, 1200);
     });
-    // 问文钞：把选段发给右侧 AI 助读解说（app.js 提供）
-    $('.sb-ask', bar).addEventListener('click', function () {
-      if (window.__wcAsk && picked) window.__wcAsk(picked.text);
-      hideBar();
-    });
     $('.sb-x', bar).addEventListener('click', hideBar);
   }
-  function showBar() { ensureBar(); bar.hidden = false; }
+  function showBar() {
+    ensureBar();
+    // 朗读条在场时上移堆叠其上，两条底部浮层不叠压
+    var rb = document.querySelector('.read-bar');
+    bar.style.marginBottom = (rb && !rb.hidden)
+      ? (window.innerHeight - rb.getBoundingClientRect().top + 10) + 'px'
+      : '';
+    bar.hidden = false;
+  }
   function hideBar() {
     if (bar) bar.hidden = true;
     lastSelKey = '';
@@ -149,26 +158,27 @@
     showBar();
   }
 
-  /* ---------- 卡片弹层 ---------- */
+  /* ---------- 卡片弹层 ----------
+     极简：一行提示 + 图 + 三键（保存图片·复制文字·复制链接）；关闭＝点蒙层或右上角 ✕。
+     不做「系统分享」键——微信内置浏览器不支持 navigator.share，支持处又与长按/保存重复。 */
   var modal, modalImg;
   function ensureModal() {
     if (modal) return;
-    var canSys = !!navigator.share;     // 支持 Web Share 才有系统分享面板（微信内置浏览器没有）
     modal = document.createElement('div');
     modal.className = 'share-modal';
     modal.hidden = true;
     modal.innerHTML =
       '<div class="sm-mask"></div>' +
       '<div class="sm-panel">' +
-      '  <div class="sm-tip">' + (canSys ? '点「分享图片」直接转发，或长按图片保存' : '长按图片 · 保存或转发给好友') + '</div>' +
-      '  <div class="sm-imgwrap"><img class="sm-img" alt="分享卡"></div>' +
+      '  <button class="sm-close" type="button" aria-label="关闭">' +
+      '    <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>' +
+      '  <div class="sm-tip">长按图片可直接转发</div>' +
+      '  <div class="sm-imgwrap"><img class="sm-img" alt="法布施卡"></div>' +
       '  <div class="sm-acts">' +
-      (canSys ? '    <button class="sm-sys sm-primary" type="button">分享图片</button>' : '') +
-      '    <button class="sm-save' + (canSys ? '' : ' sm-primary') + '" type="button">保存图片</button>' +
+      '    <button class="sm-save sm-primary" type="button">保存图片</button>' +
       '    <button class="sm-copy" type="button">复制文字</button>' +
       '    <button class="sm-link" type="button">复制链接</button>' +
       '  </div>' +
-      '  <button class="sm-close" type="button">关闭</button>' +
       '</div>';
     document.body.appendChild(modal);
     modalImg = $('.sm-img', modal);
@@ -177,8 +187,6 @@
     $('.sm-save', modal).addEventListener('click', function () { saveImg(); });
     $('.sm-copy', modal).addEventListener('click', function () { copyText(lastText, this); });
     $('.sm-link', modal).addEventListener('click', function () { copyText(lastUrl, this); });
-    var sys = $('.sm-sys', modal);
-    if (sys) sys.addEventListener('click', sysShare);
   }
   function closeModal() { if (modal) modal.hidden = true; }
 
@@ -215,8 +223,6 @@
     await ensureQR();
     var canvas = drawCard(text, src, lastUrl);
     modalImg.src = canvas.toDataURL('image/png');
-    lastBlob = null;
-    if (canvas.toBlob) canvas.toBlob(function (b) { lastBlob = b; }, 'image/png');
   }
 
   /* AI 问答卡：问/答分区 + 顶部一行来源说明 + 二维码。与选段卡分开，避免把 AI 整理误作文钞原文。 */
@@ -234,20 +240,20 @@
     await ensureQR();
     var canvas = drawAICard(question, answer, lastUrl);
     modalImg.src = canvas.toDataURL('image/png');
-    lastBlob = null;
-    if (canvas.toBlob) canvas.toBlob(function (b) { lastBlob = b; }, 'image/png');
   }
 
   // 暴露给 app.js / ask.js：选段卡(card) 与 AI 问答卡(aiCard)
   window.WenchaoShare = { card: showCard, aiCard: showAICard };
 
-  /* ---------- 画「素简卡」：所选文字 + 出处（《书》篇）+ 裸二维码 ---------- */
+  /* ---------- 画「法布施卡」：素纸细框 + 所选文字 + 出处落款 + 二维码 ----------
+     极简三段式：正文（宽行距）· 落款行（右对齐出处）· 中缝短线下二维码。
+     不加品牌抬头、不加印章，纯内容排版。 */
   function drawCard(text, src, url) {
-    var W = 1080, M = 100, TW = W - M * 2, FI = 44;   // 宽 / 文字边距 / 界栏内框
-    var paper = '#f6f1e6', ink = '#322a1e', ink2 = '#6d5f49', line = '#d9cdb2';
-    var bodyFS = 41, LH = Math.round(bodyFS * 1.9), paraGap = Math.round(bodyFS * 0.7);
-    var srcFS = 30, qrS = 168, topPad = 104, qrGap = 58, botPad = 64;
-    var capFS = 26, capGap = 26;   // 二维码下说明文字
+    var W = 1080, M = 104, TW = W - M * 2, FI = 40;   // 宽 / 文字边距 / 界栏内框
+    var paper = '#f6f1e6', ink = '#322a1e', ink2 = '#6d5f49', ink3 = '#a3937a',
+        line = '#ddd2b8';
+    var bodyFS = 41, LH = Math.round(bodyFS * 1.95), paraGap = Math.round(bodyFS * 0.7);
+    var srcFS = 29, qrS = 156, topPad = 116, capFS = 25;
 
     var probe = document.createElement('canvas').getContext('2d');
     probe.font = bodyFS + 'px ' + SERIF;
@@ -255,10 +261,11 @@
     var nGap = 0; for (var k = 0; k < lines.length; k++) if (lines[k].newPara) nGap++;
 
     var bodyH = lines.length * LH + nGap * paraGap;
-    var ruleY = topPad + bodyH + 32;                  // 出处前短分隔
-    var sy = ruleY + 30 + srcFS;                      // 出处基线
-    var qy = sy + qrGap;                              // 二维码顶
-    var H = Math.round(qy + qrS + capGap + capFS + botPad);
+    var srcBase = topPad + bodyH + 52 + srcFS;          // 落款基线
+    var divY = srcBase + 52;                            // 中缝短线
+    var qy = divY + 36;                                 // 二维码顶
+    var capBase = qy + qrS + 30 + capFS;
+    var H = Math.round(capBase + 66);
     var DPR = Math.min(window.devicePixelRatio || 1, H > 4200 ? 1.5 : 2);
 
     var canvas = document.createElement('canvas');
@@ -268,8 +275,8 @@
     ctx.textBaseline = 'alphabetic';
 
     ctx.fillStyle = paper; ctx.fillRect(0, 0, W, H);
-    // 极淡内框界栏（素简之质感，非装饰）
-    ctx.strokeStyle = line; ctx.lineWidth = 1.5;
+    // 极淡单线界栏（素简之质感，非装饰）
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
     ctx.strokeRect(FI, FI, W - FI * 2, H - FI * 2);
 
     // 正文（左对齐，每段首行缩进二字，段间留白；折行已避头尾）
@@ -281,17 +288,16 @@
       y += LH;
     }
 
-    // 出处前短分隔（右对齐短线）
-    ctx.strokeStyle = line; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(W - M - 66, ruleY); ctx.lineTo(W - M, ruleY); ctx.stroke();
-    // 出处（右对齐落款）
+    // 落款：右对齐一行出处
     ctx.textAlign = 'right'; ctx.fillStyle = ink2; ctx.font = srcFS + 'px ' + SERIF;
-    ctx.fillText(ellipsize(ctx, '——' + (src || '印光法师文钞'), TW), W - M, sy);
+    ctx.fillText(ellipsize(ctx, '——' + (src || '印光法师文钞'), TW), W - M, srcBase);
 
-    // 二维码（居中）+ 下方说明：查询原文出处
+    // 中缝短线 + 二维码（居中）+ 一行极简说明
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(W / 2 - 44, divY); ctx.lineTo(W / 2 + 44, divY); ctx.stroke();
     drawQR(ctx, url, (W - qrS) / 2, qy, qrS);
-    ctx.textAlign = 'center'; ctx.fillStyle = ink2; ctx.font = capFS + 'px ' + SERIF;
-    ctx.fillText('查询《文钞》原文出处', W / 2, qy + qrS + capGap + capFS);
+    ctx.textAlign = 'center'; ctx.fillStyle = ink3; ctx.font = capFS + 'px ' + SERIF;
+    ctx.fillText('扫码恭读原文', W / 2, capBase);
     return canvas;
   }
 
@@ -531,28 +537,8 @@
     var url = modalImg && modalImg.src; if (!url) return;
     var a = document.createElement('a');
     a.href = url;
-    a.download = '文钞·' + ((picked && picked.title) || '分享').replace(/[\\/:*?"<>|]/g, '') + '.png';
+    a.download = '法布施·' + ((picked && picked.title) || '文钞').replace(/[\\/:*?"<>|]/g, '') + '.png';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  }
-  async function sysShare() {
-    try {
-      var blob = lastBlob || dataURLtoBlob(modalImg && modalImg.src);
-      if (blob && navigator.canShare) {
-        var f = new File([blob], 'wenchao.png', { type: 'image/png' });
-        if (navigator.canShare({ files: [f] })) {
-          await navigator.share({ files: [f] });          // 直接把图片转发到已装社交软件
-          return;
-        }
-      }
-      await navigator.share({ text: lastText, url: lastUrl });   // 不支持图片则退化为文字+链接
-    } catch (e) {}
-  }
-  function dataURLtoBlob(d) {
-    if (!d || d.indexOf('data:') !== 0) return null;
-    var parts = d.split(','), mime = (parts[0].match(/:(.*?);/) || [])[1] || 'image/png';
-    var bin = atob(parts[1]), n = bin.length, u8 = new Uint8Array(n);
-    while (n--) u8[n] = bin.charCodeAt(n);
-    return new Blob([u8], { type: mime });
   }
   function flash(btn, label) {
     if (!btn) return;
@@ -561,6 +547,7 @@
   }
 
   /* ---------- 初始化 ---------- */
+  window.__wcSelBarHide = hideBar;   // 供 app.js 在注释卡等弹层打开时收起选段条
   document.addEventListener('selectionchange', onSelChange);
   document.addEventListener('pointerup', function () { scheduleSelectionEval(90); });
   document.addEventListener('touchend', function () { scheduleSelectionEval(140); }, { passive: true });

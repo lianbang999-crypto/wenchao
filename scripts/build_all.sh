@@ -20,5 +20,7 @@ python3 scripts/build_600.py
 
 echo "==> 5/5 生成文章独立 URL 页面"
 python3 scripts/build_article_pages.py
+# 字体自托管切片（site/font/ + css/fonts.css）已就位；如需刷新字体版本单独跑：
+#   python3 scripts/fetch_fonts.py   （需外网，已存在的切片自动跳过）
 
 echo "==> 完成。改数据后记得给 site/sw.js 的 VER 升版号。"

@@ -10,11 +10,42 @@
 /a/*
   Cache-Control: no-cache
 
+/v/*
+  Cache-Control: no-cache
+
+/t/*
+  Cache-Control: no-cache
+
 /ying/
+  Cache-Control: no-cache
+
+/ask/
   Cache-Control: no-cache
 
 /img/*
   Cache-Control: public, max-age=2592000, immutable
+
+# css/js 全部经 ?v= 版本串引用（构建脚本统一注入），内容变则版本变，可放心长缓存。
+# 字体切片文件名即内容标识（Google/字体包切片命名稳定），同样不可变。
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/font/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 例外：无版本串直引的文件不能 immutable——
+# ai-core.js 被 app.js 以裸 import './ai-core.js' 引入；sw.js 是 SW 脚本本体。
+/js/ai-core.js
+  Cache-Control: no-cache
+
+/js/qrcode.js
+  Cache-Control: public, max-age=2592000
+
+/sw.js
+  Cache-Control: no-cache
 
 /sitemap.xml
   Cache-Control: no-cache

@@ -309,6 +309,7 @@ function articleRoute() {
 async function route() {
   stopRead();        // 切篇/回首页：停掉正在进行的朗读，避免高亮/进度错位
   closeDrawers();
+  closeAaSheet();    // 阅读设置 sheet 不跨页残留
   { const bm = $('#btn-mine'); if (bm) bm.classList.remove('on'); }   // 默认非「我的」态；renderMine 会再点亮
   // 影像陈列页：内容随静态页预渲染，app.js 不重绘，仅同步标题/繁体
   if (/^\/ying\/?$/.test(location.pathname)) {
@@ -428,7 +429,8 @@ function renderHome() {
   });
 }
 
-// 「我的」页：继续阅读 · 收藏 · 划线 · 阅读设置 全部集中此处（右上人形图标为唯一入口）
+// 「我的」页：继续阅读 · 收藏 · 划线 · 离线整册（右上人形图标为唯一入口）。
+// 字号/底色/简繁已并入阅读器工具行「Aa」sheet——设置只有一个家，且在正文旁所见即所得。
 function renderMine() {
   current = null;
   document.body.classList.remove('nav-hidden');
@@ -439,23 +441,13 @@ function renderMine() {
   const resumeSec = resume ? `<section class="home-mine"><h2 class="mine-h">继续阅读</h2>${resume}</section>` : '';
   const { bks, hls, bkHtml, hlHtml } = mineListsHtml();
   const empty = (!bks.length && !hls.length && !resume)
-    ? `<p class="mine-empty">阅读时点右上收藏本篇、或选中文字「划线」，都会收进这里；上次读到的位置也会出现在「继续阅读」。</p>`
+    ? `<p class="mine-empty">阅读时点篇首的「收藏」、或选中文字「划线」，都会收进这里；上次读到的位置也会出现在「继续阅读」。</p>`
     : '';
   const settings = `
       <section class="home-mine mine-set">
-        <h2 class="mine-h">阅读设置</h2>
+        <h2 class="mine-h">离线</h2>
         <div class="set-card">
-          <div class="set-row"><span class="set-k">字号</span><span class="set-c">
-            <button class="chip-btn" id="font-dec" aria-label="减小字号">小</button>
-            <button class="chip-btn" id="font-inc" aria-label="增大字号">大</button></span></div>
-          <div class="set-row"><span class="set-k">底色</span><span class="set-c">
-            <button class="chip-btn" id="theme-paper">纸色</button>
-            <button class="chip-btn" id="theme-plain">素白</button>
-            <button class="chip-btn" id="theme-night">墨夜</button></span></div>
-          <div class="set-row"><span class="set-k">文字</span><span class="set-c">
-            <button class="chip-btn" id="cc-simp">简体</button>
-            <button class="chip-btn" id="cc-trad">繁体</button></span></div>
-          <div class="set-row"><span class="set-k">离线</span><span class="set-c">
+          <div class="set-row"><span class="set-k">整册离线</span><span class="set-c">
             <button class="chip-btn" id="offline-open">下载整册</button></span></div>
         </div>
       </section>`;
@@ -467,16 +459,7 @@ function renderMine() {
     </div>`;
   paintProgress();
   wireMineItems($('#reader'), renderMine);
-  // 阅读设置控件此处动态渲染，逐次重新挂载处理器（原静态 id 沿用）
-  $('#font-inc').onclick = incFont;
-  $('#font-dec').onclick = decFont;
-  $('#theme-paper').onclick = () => setTheme('paper');
-  $('#theme-plain').onclick = () => setTheme('plain');
-  $('#theme-night').onclick = () => setTheme('night');
-  $('#cc-simp').onclick = () => setTrad(false);
-  $('#cc-trad').onclick = () => setTrad(true);
   if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
-  applyPrefs();   // 同步各偏好按钮的选中态
 }
 
 /* ---------- 文章 ---------- */
@@ -610,23 +593,26 @@ async function renderArticle(id) {
     </nav>`;
 
   const hasTrans = art.segments.some((s) => s.trans.length);
-  // 篇内工具行（吸顶，随沉浸模式同顶栏隐现）：中＝原文/对照/白话切换（无白话篇隐藏），
-  // 右＝收藏·朗读——本篇功能跟着篇走，不占顶栏（顶栏恒定：目录·标题·问文钞·我的）
-  const segsHtml = (!art.plain && hasTrans)
-    ? `<div class="mb-segs" role="tablist">
+  const canSeg = !art.plain && hasTrans;
+  // 篇内工具行（吸顶，随沉浸模式同顶栏隐现）——阅读器唯一功能面，两行居中：
+  // 上行＝分层条（全篇恒显统一风格；无白话篇 对照/白话 置灰，点按轻提示）；
+  // 下行＝朗读 · 收藏 · Aa（本篇动作 + 阅读设置，不占顶栏——顶栏恒定：目录·标题·问文钞·我的）
+  const segOff = canSeg ? '' : ' seg-off" aria-disabled="true';
+  const segsHtml = `<div class="mb-segs" role="tablist">
         <button class="seg" data-m="orig">原文</button>
-        <button class="seg" data-m="both">对照</button>
-        <button class="seg" data-m="trans">白话</button>
-      </div>` : '';
+        <button class="seg${segOff}" data-m="both">对照</button>
+        <button class="seg${segOff}" data-m="trans">白话</button>
+      </div>`;
   const modeBar = `<div class="mode-bar">
       ${segsHtml}
       <div class="mb-acts">
-        <button class="icon-btn mb-bookmark" aria-label="收藏本篇" aria-pressed="false">
-          <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v16l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>
-        </button>
-        <button class="icon-btn mb-speak" aria-label="朗读本篇">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12"/></svg>
-        </button>
+        <button class="mb-act mb-speak" aria-label="朗读本篇">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/></svg>朗读</button>
+        <span class="mb-dot" aria-hidden="true">·</span>
+        <button class="mb-act mb-bookmark" aria-label="收藏本篇" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>收藏</button>
+        <span class="mb-dot" aria-hidden="true">·</span>
+        <button class="mb-act mb-aa" aria-label="阅读设置"><span class="mb-aa-g">Aa</span></button>
       </div>
     </div>`;
 
@@ -662,10 +648,11 @@ async function renderArticle(id) {
     title: art.title || '',
   };
 
-  // 模式切换
+  // 模式切换（无白话篇：分层条恒显但仅「原文」可用，点灰键轻提示）
   reader.querySelectorAll('.mode-bar .seg').forEach((b) => {
-    b.classList.toggle('on', b.dataset.m === prefs.mode);
+    b.classList.toggle('on', b.dataset.m === (canSeg ? prefs.mode : 'orig'));
     b.onclick = () => {
+      if (b.classList.contains('seg-off')) { toast('本篇暂无白话对照'); return; }
       const wasReading = READ.on;
       stopRead();     // 切换原文/白话/对照 → 可见段落变了，句 Range 作废
       prefs.mode = b.dataset.m;
@@ -734,11 +721,12 @@ async function renderArticle(id) {
   lastNavY = scrollY;
   document.body.classList.remove('nav-hidden');
   paintProgress();
-  // 朗读/收藏键随本篇重挂（渲染在篇内工具行，不在顶栏）
+  // 朗读/收藏/Aa 键随本篇重挂（渲染在篇内工具行，不在顶栏）
   bookmarkBtn = reader.querySelector('.mb-bookmark');
   speakBtn = reader.querySelector('.mb-speak');
   if (bookmarkBtn) bookmarkBtn.onclick = toggleBookmark;
   if (speakBtn) speakBtn.onclick = () => { READ.on ? stopRead() : startRead(); };
+  { const aa = reader.querySelector('.mb-aa'); if (aa) aa.onclick = openAaSheet; }
   syncBookmarkBtn();      // 反映本篇收藏态
   applyMarks();           // 铺本篇已存的划线
 }
@@ -1312,12 +1300,59 @@ function setSleep(v) {
     : v + ' 分钟后自动停止');
 }
 
-/* ---------- 偏好控件（渲染于「我的」页，由 renderMine 动态挂载）---------- */
+/* ---------- 偏好控件 ---------- */
 // 调字号后正文重排、总高变化 → 刷新高度缓存与进度条（续读落点不动，仅让进度条即时准确）
 const afterFontChange = () => { applyPrefs(); measureMax(); paintProgress(); };
 const incFont = () => { prefs.fs = Math.min(24, prefs.fs + 1); store.set('fs', prefs.fs); afterFontChange(); };
 const decFont = () => { prefs.fs = Math.max(14, prefs.fs - 1); store.set('fs', prefs.fs); afterFontChange(); };
 const setTheme = (name) => { prefs.theme = name; store.set('theme', name); applyPrefs(); };
+
+/* ---------- 阅读设置 sheet（工具行「Aa」打开）----------
+   字号/底色/简繁集中于此，正文就在 sheet 后面，改动所见即所得；
+   形制同注释弹卡，行样式与播放器面板同一套 chip 语言。 */
+let aaSheet = null;
+function ensureAaSheet() {
+  if (aaSheet) return aaSheet;
+  const el = document.createElement('div');
+  el.className = 'aa-sheet'; el.hidden = true;
+  el.innerHTML =
+    `<div class="aa-mask"></div>` +
+    `<div class="aa-panel">` +
+      `<div class="rb-set"><span class="rb-set-k">字号</span><span class="rb-chips">` +
+        `<button class="rb-chip" id="font-dec" type="button" aria-label="减小字号">A−</button>` +
+        `<span class="aa-fs" aria-live="polite"></span>` +
+        `<button class="rb-chip" id="font-inc" type="button" aria-label="增大字号">A＋</button></span></div>` +
+      `<div class="rb-set"><span class="rb-set-k">底色</span><span class="rb-chips">` +
+        `<button class="rb-chip" id="theme-paper" type="button">纸色</button>` +
+        `<button class="rb-chip" id="theme-plain" type="button">素白</button>` +
+        `<button class="rb-chip" id="theme-night" type="button">墨夜</button></span></div>` +
+      `<div class="rb-set"><span class="rb-set-k">文字</span><span class="rb-chips">` +
+        `<button class="rb-chip" id="cc-simp" type="button">简体</button>` +
+        `<button class="rb-chip" id="cc-trad" type="button">繁体</button></span></div>` +
+    `</div>`;
+  document.body.appendChild(el);
+  el.querySelector('.aa-mask').onclick = closeAaSheet;
+  el.querySelector('#font-dec').onclick = () => { decFont(); syncAaSheet(); };
+  el.querySelector('#font-inc').onclick = () => { incFont(); syncAaSheet(); };
+  el.querySelector('#theme-paper').onclick = () => setTheme('paper');
+  el.querySelector('#theme-plain').onclick = () => setTheme('plain');
+  el.querySelector('#theme-night').onclick = () => setTheme('night');
+  el.querySelector('#cc-simp').onclick = () => setTrad(false);
+  el.querySelector('#cc-trad').onclick = () => setTrad(true);
+  aaSheet = el;
+  return el;
+}
+function syncAaSheet() {
+  if (!aaSheet) return;
+  aaSheet.querySelector('.aa-fs').textContent = prefs.fs;
+  applyPrefs();   // 同步 #theme-* / #cc-* 的选中态（applyPrefs 按需寻元素，安全）
+}
+function openAaSheet() {
+  if (window.__wcSelBarHide) window.__wcSelBarHide();   // 底部浮层不叠压
+  ensureAaSheet().hidden = false;
+  syncAaSheet();
+}
+function closeAaSheet() { if (aaSheet) aaSheet.hidden = true; }
 
 /* ---------- 简繁转换（OpenCC 自托管，懒加载；仅显示层，不改底本数据）---------- */
 let _conv = null;

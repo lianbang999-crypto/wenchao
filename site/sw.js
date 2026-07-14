@@ -1,12 +1,12 @@
 /* 离线缓存：一律网络优先、写穿缓存；离线时回退缓存。
    读过的篇目离线可重读，数据更新后在线立即生效。 */
-const VER = 'wc-v45';   // v43 曾被已回滚的 07-12 重设计短暂占用，跳过避免缓存名撞车
+const VER = 'wc-v46';   // v43 曾被已回滚的 07-12 重设计短暂占用，跳过避免缓存名撞车
 // 用户主动"下载整册"的离线缓存：与外壳版本解耦，升版时不清除（见 activate）。
 // 取数失败时下方 fetch 处理器的 caches.match 会自动跨 cache 命中这里。
 const DL = 'wc-dl';
 // 注：opencc.js(1.1MB)/qrcode.js(55KB) 是懒加载件，不进首装清单——运行时写穿缓存会在首次使用后自动离线可用；
 // 塞进 SHELL 会让每个新访客装 SW 时白下 1.2MB，且 addAll 原子安装在弱网下更易整体失败。
-const SHELL = ['./', 'index.html', 'css/app.css?v=20260714-reader', 'js/app.js?v=20260714-reader', 'js/ai-core.js', 'js/share.js?v=20260714-reader', 'js/pwa.js?v=20260622-pwa', 'js/offline.js?v=20260712-mine2', 'config.js?v=20260616-ai-panel', 'icon.svg', 'manifest.webmanifest', 'img/icons/icon-192.png', 'img/icons/maskable-192.png', 'apple-touch-icon.png', 'data/books.json'];
+const SHELL = ['./', 'index.html', 'css/app.css?v=20260715-aa', 'js/app.js?v=20260715-aa', 'js/ai-core.js', 'js/share.js?v=20260715-aa', 'js/pwa.js?v=20260622-pwa', 'js/offline.js?v=20260712-mine2', 'config.js?v=20260616-ai-panel', 'icon.svg', 'manifest.webmanifest', 'img/icons/icon-192.png', 'img/icons/maskable-192.png', 'apple-touch-icon.png', 'data/books.json'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(VER).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

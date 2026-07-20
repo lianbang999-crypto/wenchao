@@ -805,7 +805,8 @@ def prerender_home(index_html: str, books: list) -> str:
   inner = (
     '<div class="home">' + HOME_HERO +
     f'<h2>{len(books)} 部 · 共 {total} 篇</h2>' + "".join(cards) +
-    '<div class="home-extra"><a class="home-cta" href="/ying/">瞻礼 · 印祖法相与传印长老题词 →</a></div>' +
+    '<div class="home-extra"><a class="home-cta" href="/ying/">瞻礼 · 印祖法相与传印长老题词 →</a>'
+    '<a class="home-cta" href="https://foyue.org/">佛乐 · 返回净土法音主站 →</a></div>' +
     HOME_NOTE + '</div>'
   )
   marker = '<main class="reader" id="reader"></main>'

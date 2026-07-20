@@ -415,6 +415,7 @@ function renderHome() {
       ${vols}
       <div class="home-extra">
         <a class="home-cta" href="/ying/">瞻礼 · 印祖法相与传印长老题词 →</a>
+        <a class="home-cta" href="https://foyue.org/">佛乐 · 返回净土法音主站 →</a>
       </div>
       <p class="home-note">底本为《印光法师文钞》增广、续编、三编及三编补之文白对照本。文言原文与白话译文逐篇对照排录；正文中带朱点之词语，点按可查名相注释。<br>愿见闻者，同沾法益。</p>
     </div>`;

@@ -388,11 +388,10 @@ def volume_page_html(vol: dict, css_link: str, all_vols: list[tuple]) -> str:
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="印光文钞">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<!-- 字体走同源自托管（与首页/文章页同一套 css/fonts.css）。原先此处是 Google Fonts +
+     jsdelivr 双外链：大陆常被阻断、render-blocking，且开了 Cloudflare Fonts 后会被改写成
+     每页 277KB 的内联 @font-face 表。字族名（Noto Serif SC / LXGW WenKai GB Screen）一致。 -->
+<link rel="stylesheet" href="{h(css_link.replace('app.css', 'fonts.css'))}">
 <link rel="stylesheet" href="{h(css_link)}">
 {breadcrumb}
 {collection}
@@ -534,11 +533,10 @@ def _hub_head(title_full: str, desc: str, url: str, css_link: str, *ld_blocks: s
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="印光文钞">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&display=swap">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen@1.0.6/font.css">
+<!-- 字体走同源自托管（与首页/文章页同一套 css/fonts.css）。原先此处是 Google Fonts +
+     jsdelivr 双外链：大陆常被阻断、render-blocking，且开了 Cloudflare Fonts 后会被改写成
+     每页 277KB 的内联 @font-face 表。字族名（Noto Serif SC / LXGW WenKai GB Screen）一致。 -->
+<link rel="stylesheet" href="{h(css_link.replace('app.css', 'fonts.css'))}">
 <link rel="stylesheet" href="{h(css_link)}">
 {ld}
 </head>"""
@@ -717,6 +715,8 @@ def write_sitemap(items: list[dict], volumes: list[str], topics: dict | None = N
   urls = [
     f"  <url><loc>{h(ORIGIN)}/</loc><lastmod>{newest}</lastmod><priority>1.0</priority></url>",
     f"  <url><loc>{h(ORIGIN)}/ying/</loc><lastmod>{newest}</lastmod><priority>0.6</priority></url>",
+    # 「问文钞」独立页此前一直漏在站点地图外，从未被提交收录
+    f"  <url><loc>{h(ORIGIN)}/ask/</loc><lastmod>{newest}</lastmod><priority>0.9</priority></url>",
   ]
   for vid in volumes:
     vq = quote(vid, safe="")

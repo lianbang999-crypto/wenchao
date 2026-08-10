@@ -31,6 +31,7 @@ const setHls = (id, arr) => store.set('hl.' + id, arr);
 /* ---------- 全局状态 ---------- */
 let books = [];          // 目录树
 let flat = [];           // 扁平篇目序（上一篇/下一篇用）
+let booksReady = null;   // books.json 的在途 Promise：与篇 JSON 并发取，谁也不等谁
 let current = null;      // 当前文章 JSON
 const articleCache = new Map();
 
@@ -91,6 +92,7 @@ const isWide = () => matchMedia('(min-width: 1180px)').matches;
 
 function openDrawer(side) {
   stopRead();        // 打开目录/AI：停读，腾出注意力
+  if (side === 'L') ensureTree();
   if (isWide() && side === 'L') return;
   (side === 'L' ? drawerL : drawerR).classList.add('open');
   overlay.hidden = false;
@@ -230,6 +232,18 @@ function markInRoot(root, kw) {
 }
 
 /* ---------- 目录树 ---------- */
+// 目录树是 2565 条篇名、约 1680 个不重复汉字。抽屉靠 translateX 移出视口——
+// 是「在渲染树里但看不见」，浏览器照样为这些字下载字体分片（实测多花 ~1.1MB）。
+// 故窄屏下推迟到首次拉开抽屉再建；宽屏目录常驻可见，照常立即建。
+let treeWanted = false, treeDone = false;
+function ensureTree() {
+  treeWanted = true;
+  if (treeDone || !flat.length) return;
+  treeDone = true;
+  renderTree();
+  highlightNav();
+  maybeTradify($('#nav-tree'));   // 繁体模式下晚建的树也要跟着转
+}
 function renderTree(filter) {
   const tree = $('#nav-tree');
   if (filter) {
@@ -321,10 +335,11 @@ async function route() {
   }
   // 「我的」页（hash 路由，仅在非文章路径下命中）
   if (location.hash === '#me' && !/^\/a\//.test(location.pathname)) {
-    renderMine(); maybeTradify($('#reader')); return;
+    await booksReady; renderMine(); maybeTradify($('#reader')); return;
   }
   const r = articleRoute();
-  if (!r) { renderHome(); maybeTradify($('#reader')); return; }
+  // 首页/「我的」要照着目录画；文章页不必——renderArticle 只在拼上下篇时才等目录
+  if (!r) { await booksReady; renderHome(); maybeTradify($('#reader')); return; }
   await renderArticle(r.id);
   maybeTradify($('#reader'));     // 繁体模式：正文渲染后转换
   // 分享二维码深链：?p=N 进入文白对照并定位到所引段落（便于对照原文/白话；不改用户保存的模式）
@@ -335,13 +350,15 @@ async function route() {
   }
 }
 // 滚动到正文第 n 段并短暂高亮（与 share.js paraIndexOf 同口径）
+// 系统开了「减弱动态效果」就不做平滑滚动：CSS 的 scroll-behavior 管不到 JS 里显式传的 smooth
+const smoothOK = () => !matchMedia('(prefers-reduced-motion: reduce)').matches;
 function scrollToPara(n) {
   const body = document.querySelector('#reader .art-body');
   if (!body) return;
   const ps = body.querySelectorAll('p.p-orig, p.p-trans');
   const el = ps[n];
   if (!el) return;
-  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.scrollIntoView({ behavior: smoothOK() ? 'smooth' : 'auto', block: 'center' });
   el.classList.add('para-flash');
   setTimeout(() => el.classList.remove('para-flash'), 2400);
 }
@@ -503,13 +520,20 @@ function segSrcHtml(seg) {
 
 async function renderArticle(id) {
   const reader = $('#reader');
-  reader.innerHTML = '<p class="loading">展 卷 …</p>';
+  // 直接进入 /a/{id}/ 时正文已由 build_article_pages.py 预渲染在 HTML 里，首屏早就画好了。
+  // 此处若照旧先清成「展 卷 …」，用户会看到「正文 → 占位 → 正文」的闪动，且预渲染白做。
+  // 故仅在没有可用预渲染时才显示占位；有则原样留着，等交互版就绪再整体换入。
+  const prerendered = reader.querySelector('.seo-prerender');
+  if (!prerendered) reader.innerHTML = '<p class="loading">展 卷 …</p>';
   let art;
   try { art = await loadArticle(id); }
   catch {
+    // 预渲染正文可读，别为了报错把它抹掉——降级成「能读不能玩」比白屏强
+    if (prerendered) { toast('交互功能载入失败，正文仍可阅读'); return; }
     reader.innerHTML = '<p class="loading">此篇载入失败，请检查网络后重试</p>';
     return;
   }
+  await booksReady;          // 上一篇/下一篇要用 flat；与篇 JSON 并发取，此处通常已就绪
   current = art;
   $('#topbar-title').textContent = art.title;
   $('#ai-context').textContent = '基于印光法师文钞全集';
@@ -658,7 +682,12 @@ async function renderArticle(id) {
       stopRead();     // 切换原文/白话/对照 → 可见段落变了，句 Range 作废
       prefs.mode = b.dataset.m;
       store.set('mode', prefs.mode);
-      reader.querySelector('.art-body').dataset.mode = prefs.mode;
+      const ab = reader.querySelector('.art-body');
+      // display:none 切不出过渡，靠一次短促淡出淡入把整段文字的跳变糊过去
+      ab.classList.remove('mode-swap');
+      void ab.offsetWidth;                 // 强制回流，让动画能连点重放
+      ab.classList.add('mode-swap');
+      ab.dataset.mode = prefs.mode;
       reader.querySelectorAll('.mode-bar .seg').forEach((x) =>
         x.classList.toggle('on', x === b));
       measureMax(); paintProgress();   // 可见段落变了，总高随之变 → 刷新高度缓存与进度条
@@ -1043,7 +1072,8 @@ function scrollUnit(u) {
   if (!r.height && !r.width) return;
   const top = ($('#topbar') ? $('#topbar').offsetHeight : 52) + 10;
   if (r.top < top || r.bottom > innerHeight - 110)
-    scrollTo({ top: Math.max(0, scrollY + r.top - innerHeight * 0.32), behavior: 'smooth' });
+    scrollTo({ top: Math.max(0, scrollY + r.top - innerHeight * 0.32),
+               behavior: smoothOK() ? 'smooth' : 'auto' });
 }
 
 function ensureReadBar() {
@@ -1390,7 +1420,8 @@ function setTrad(on) {
   if (on) {
     loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); tradify($('#ai-log')); });
   } else {
-    route(); renderTree($('#nav-search').value);   // 从简体源重渲染（无损还原）
+    // 从简体源重渲染（无损还原）；目录树没建过就别在这儿建，留给首次开抽屉
+    route(); if (treeDone) renderTree($('#nav-search').value);
   }
 }
 
@@ -1669,25 +1700,27 @@ aiInit();
 async function boot() {
   applyPrefs();
   const syncWide = () => {
-    if (isWide()) { document.body.dataset.wide = '1'; closeDrawers(); }
+    if (isWide()) { document.body.dataset.wide = '1'; closeDrawers(); ensureTree(); }
     else delete document.body.dataset.wide;
   };
   syncWide();
   matchMedia('(min-width: 1180px)').addEventListener('change', syncWide);
-  try {
-    books = await (await fetch('/data/books.json', { cache: 'no-cache' })).json();
-  } catch {
-    $('#reader').innerHTML = '<p class="loading">目录载入失败，请刷新重试</p>';
-    return;
-  }
-  flat = [];
-  for (const vol of books)
-    for (const j of vol.juans)
-      for (const c of j.cats)
-        for (const it of c.items)
-          flat.push({ ...it, volName: vol.name });
-  $('#nav-stats').textContent = `${books.length} 部 · ${flat.length} 篇 · 文白对照`;
-  renderTree();
+  // 目录(264KB) 与 篇 JSON 并发取。原先是串行：直接进 /a/{id}/ 时正文要排在整份目录之后，
+  // 白等一个与本篇无关的大请求。目录只供左抽屉树和上下篇用，不该卡正文。
+  booksReady = fetch('/data/books.json', { cache: 'no-cache' })
+    .then((r) => r.json())
+    .then((data) => {
+      books = data;
+      flat = [];
+      for (const vol of books)
+        for (const j of vol.juans)
+          for (const c of j.cats)
+            for (const it of c.items)
+              flat.push({ ...it, volName: vol.name });
+      $('#nav-stats').textContent = `${books.length} 部 · ${flat.length} 篇 · 文白对照`;
+      if (isWide() || treeWanted) ensureTree();   // 窄屏且没拉开抽屉：留到首次开抽屉再建
+    })
+    .catch(() => { books = []; flat = []; $('#nav-stats').textContent = '目录载入失败'; });
   await route();
   if (prefs.trad) loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); tradify($('#ai-log')); });
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost'))

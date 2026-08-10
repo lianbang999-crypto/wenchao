@@ -409,7 +409,9 @@ body.nav-hidden .read-progress { top: 0; }
 .chip-btn {
   border: 1px solid var(--line); background: var(--paper-2);
   border-radius: 999px; padding: 4px 14px; font-size: 13px; cursor: pointer;
-  color: var(--ink-2); transition: all .15s;
+  color: var(--ink-2);
+  /* 曾是 transition: all —— 连 padding/border-width 一起动，切「专题」时按钮会抖 */
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
 }
 .chip-btn:active, .chip-btn.on { color: var(--cinnabar); border-color: var(--cinnabar); }
 
@@ -853,6 +855,72 @@ a.vol-card { color: inherit; text-decoration: none; }   /* 首页预渲染书架
   border-radius: 50%; animation: rb-spin .7s linear infinite;
 }
 @keyframes rb-spin { to { transform: rotate(360deg); } }
+
+/* ===================================================================
+   交互与动效
+   纸墨主题的动效基调：慢、短、无弹跳——像翻纸，不像弹窗。
+   =================================================================== */
+
+/* 主题声明：让滚动条、输入框、表单控件跟着纸/夜走，
+   不然「墨夜」下抽屉滚动条仍是亮色，长目录里很扎眼 */
+:root, html[data-theme="paper"], html[data-theme="plain"] { color-scheme: light; accent-color: var(--cinnabar); }
+html[data-theme="night"] { color-scheme: dark; }
+
+/* 键盘焦点：站内按钮多是 border:0;background:none，原本 Tab 过去几乎看不出落点。
+   只用 :focus-visible，鼠标点按不会平白多出一圈框。 */
+:focus-visible {
+  outline: 2px solid var(--cinnabar);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+.nav-item:focus-visible, .drawer summary:focus-visible { outline-offset: -2px; }
+
+/* 移动端点按：去掉系统那块灰方块，改用站内统一的朱砂/压暗反馈 */
+a, button, summary, [role="tab"], input, textarea { -webkit-tap-highlight-color: transparent; }
+.nav-item, .vol-card, .vi-link, .backref, .xd-link {
+  transition: background .16s ease, color .16s ease, transform .16s ease;
+}
+.nav-item:active, .vi-link:active, .backref:active, .xd-link:active {
+  background: var(--cinnabar-soft);
+}
+.vol-card:active { transform: scale(.985); }
+
+/* 换篇：innerHTML 整块替换原是硬切，正文「啪」地跳一下。
+   给一层极轻的上浮淡入，读感接近翻页。只动 opacity/transform，不触发布局。 */
+.reader-inner { animation: page-in .26s cubic-bezier(.2, .7, .3, 1); }
+@keyframes page-in { from { opacity: 0; transform: translateY(6px); } }
+/* 预渲染的首屏不参与——它随 HTML 一起到，本就该立刻可读 */
+.reader-inner.seo-prerender { animation: none; }
+
+/* 文白切换：display:none 无法过渡，切层时整段文字瞬间换掉。
+   借一次短促的淡出淡入把跳变糊过去（JS 在切换时挂 .mode-swap）。 */
+.art-body.mode-swap { animation: mode-swap .22s ease; }
+@keyframes mode-swap { 0% { opacity: 1; } 35% { opacity: .25; } 100% { opacity: 1; } }
+
+/* 弹卡遮罩：面板有 sheet-up，遮罩却是硬出现，两者不同步 */
+.sheet-backdrop, .aa-mask, .sm-mask { animation: mask-in .22s ease-out; }
+@keyframes mask-in { from { opacity: 0; } }
+
+/* 顶栏标题换篇时跟着淡入，避免长标题瞬间截断跳字 */
+.topbar-title { transition: opacity .2s ease; }
+
+/* ---- 动效降级：系统开了「减弱动态效果」就只保留必要的状态变化 ----
+   前庭失调、晕动症用户需要；长篇阅读场景尤其。
+   保留 opacity/color 一类不产生位移的过渡，去掉位移与循环动画。 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* 抽屉仍需可开合，只是不做滑入 */
+  .drawer { transition: none; }
+  /* 朗读取音的转圈是「还在忙」的唯一提示，不能停——放慢即可 */
+  .read-bar[data-loading] .rb-play::after {
+    animation: rb-spin 1.6s linear infinite !important;
+  }
+}
 
 /* ---------------- 平板/桌面：左侧目录常驻，AI 默认隐藏 ---------------- */
 @media (min-width: 1180px) {

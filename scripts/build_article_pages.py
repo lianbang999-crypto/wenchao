@@ -768,8 +768,11 @@ def sync_page_versions(css_link: str) -> list:
     if not fp.exists():
       continue
     doc = fp.read_text(encoding="utf-8")
+    # 覆盖所有带版本串直引的资源。漏一个就会在 /js/* immutable 下被缓存一年：
+    # pwa.js / offline.js / config.js 曾各自停在旧版本串上，正是这么漏的。
     out = re.sub(
-      r"((?:css/app\.css|css/fonts\.css|js/app\.js|js/share\.js|js/ask\.js)\?v=)[\w-]+",
+      r"((?:css/app\.css|css/fonts\.css|js/app\.js|js/share\.js|js/ask\.js"
+      r"|js/pwa\.js|js/offline\.js|config\.js)\?v=)[\w.-]+",
       lambda mm: mm.group(1) + ver, doc)
     if out != doc:
       fp.write_text(out, encoding="utf-8")

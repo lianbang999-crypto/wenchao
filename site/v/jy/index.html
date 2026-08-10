@@ -24,8 +24,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="印光文钞">
-<link rel="stylesheet" href="css/fonts.css?v=20260715-aa2">
-<link rel="stylesheet" href="css/app.css?v=20260715-aa2">
+<!-- 字体走同源自托管（与首页/文章页同一套 css/fonts.css）。原先此处是 Google Fonts +
+     jsdelivr 双外链：大陆常被阻断、render-blocking，且开了 Cloudflare Fonts 后会被改写成
+     每页 277KB 的内联 @font-face 表。字族名（Noto Serif SC / LXGW WenKai GB Screen）一致。 -->
+<link rel="stylesheet" href="css/fonts.css?v=20260810-fnt1">
+<link rel="stylesheet" href="css/app.css?v=20260810-fnt1">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"印光法师文钞","item":"https://wenchao.foyue.org/"},{"@type":"ListItem","position":2,"name":"嘉言录","item":"https://wenchao.foyue.org/v/jy/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"嘉言录 · 印光法师文钞","url":"https://wenchao.foyue.org/v/jy/","inLanguage":"zh-Hans","isPartOf":{"@type":"WebSite","name":"印光法师文钞","url":"https://wenchao.foyue.org/"}}</script>
 </head>

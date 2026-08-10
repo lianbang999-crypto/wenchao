@@ -2,6 +2,8 @@
 Thumbs.db
 
 node_modules/
+.venv/
+.fontsrc/
 .wrangler/
 .dev.vars
 .api_keys.json

@@ -42,6 +42,26 @@ Cloudflare Git Integration，先停用 `.github/workflows/deploy-cloudflare-page
 站内「全文搜索」不再打包整站语料下发浏览器：篇名匹配走前端已加载的 `books.json` 本地过滤，
 正文匹配调用 `workers/ai-proxy` 的 `POST /api/ai/search`，复用 AI 知识库已建的 D1 全文索引（见下）。
 
+## 字体
+
+`site/font/` 与 `site/css/fonts.css` 由 `scripts/build_font_subset.py` 生成，**不要手改**。
+它按站内语料把 Noto Serif SC（可变，400–900）与霞鹜文楷 GB Screen 子集化，再按词频分层切片：
+头片 1000 字覆盖语料 92.5%，尾片每 250 字一档；繁体（OpenCC cn→tw）排在简体之后自成连续块，
+简体读者不会连带下载繁体分片。另含 GB2312 全字表兜底，AI 回答与搜索输入不掉字。
+
+早先是原样镜像上游切片（每 192 字一片、按码位顺序），与中文行文用字完全不匹配——
+实测单篇文章要拉 106 个切片共 4.65MB；改用本方案后同一篇是 13 片 1.62MB，`fonts.css` 从 496KB 降到 131KB。
+
+只有语料字集变了（增删篇目）才需重跑：
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install fonttools brotli
+.venv/bin/python scripts/build_font_subset.py
+```
+
+源字体（各约 25MB）自动下载并缓存到 `.fontsrc/`（已 gitignore）。跑完记得升 `site/index.html`
+的资源版本串并重跑 `build_article_pages.py`——`/css/*`、`/font/*` 都是 immutable 长缓存。
+
 ## AI 知识库
 
 Cloudflare Worker 位于 `workers/ai-proxy/`，使用 Workers AI 生成 embedding、Vectorize 存储向量、D1 存全文(关键词)索引、KV 做限流与答案缓存。当前优化版知识库写入 Vectorize namespace `v2`；旧默认 namespace 保留作线上回退。

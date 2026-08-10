@@ -1,3 +1,20 @@
+# 全站安全响应头。站点纯静态、无 eval、无外域请求（AI 走同源 /api/ai），
+# 故 connect-src/font-src/object-src 等一律收到最紧。
+#
+# script-src 为何留 'unsafe-inline'：每页两段 <script type="application/ld+json">
+# 结构化数据（Article/BreadcrumbList/Book 图谱）会被严格 script-src 判为内联脚本拦下，
+# 每页刷两条控制台报错。它们各页内容不同，2565 页没法逐个下 hash。
+# 站内没有可执行的内联脚本，AI 回答经 ai-core.js 的 esc() 转义后才入 DOM，
+# 没有 HTML 注入面——用整套 SEO 结构化数据换这一条的严格度不划算。
+#
+# 注意：若把 config.js 的 aiEndpoint 改成跨域 workers.dev 地址，须同步放开 connect-src。
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'
+
 /config.js
   Cache-Control: no-store
 
@@ -24,6 +41,11 @@
 
 /img/*
   Cache-Control: public, max-age=2592000, immutable
+
+# 目录与篇 JSON 随内容重建而变，且前端是按 no-cache 取的：显式声明一下，
+# 保证浏览器留着副本走 ETag 协商（304），而不是落到启发式缓存或每次全量重下。
+/data/*
+  Cache-Control: no-cache
 
 # css/js 全部经 ?v= 版本串引用（构建脚本统一注入），内容变则版本变，可放心长缓存。
 # 字体切片文件名即内容标识（Google/字体包切片命名稳定），同样不可变。

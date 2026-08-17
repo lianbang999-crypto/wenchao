@@ -799,8 +799,8 @@ def prerender_home(index_html: str, books: list) -> str:
   分册卡用 <a href="/v/…/">（可循链）；运行时 app.js renderHome 以同样式重绘并接管交互。"""
   total = 0
   cards = []
-  # 「入门」小签：与 app.js renderHome 的 STARTER_VOLS 同口径（嘉言录/白话精选是初机首选）
-  starter = {"jy": "入门", "jx": "入门"}
+  # 分册标签位：与 app.js 的 STARTER_VOLS 同口径，留空即不挂标签
+  starter: dict[str, str] = {}
   for vol in books:
     count = sum(len(c["items"]) for j in vol["juans"] for c in j["cats"])
     total += count

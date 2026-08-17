@@ -17,5 +17,10 @@ window.WENCHAO_CONFIG = {
      留空则不显示该行，只引导浏览器原生安装（PWA / 添加到主屏）。
      文件名带版本号，更新时换新文件并改此处，不会撞长缓存。
      日后若迁到对象存储，把这里换成完整 URL 即可，其余不动。 */
-  apkUrl: '/app/wenchao-1.0.2.apk',
+  apkUrl: '/app/wenchao-1.0.3.apk',
+
+  /* 最新安装包版本号，与 app-android/twa-manifest.json 的 appVersion 保持一致。
+     APP 内会拿自己的版本（TWA startUrl 带的 ?app=x.y.z）与此比对，
+     落后才在「我的」页多显示一行「下载新版」。发新包时与 apkUrl 一起改。 */
+  apkVersion: '1.0.3',
 };

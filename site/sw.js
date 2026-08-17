@@ -5,16 +5,23 @@
      文字勘误下次打开即见（stale-while-revalidate）。
    - HTML / books.json：网络优先、写穿缓存，离线回退——目录与页面壳始终最新。
    - config.js：恒取网络（no-store），离线才回缓存。 */
-const VER = 'wc-v57';   // v43 曾被已回滚的 07-12 重设计短暂占用，跳过避免缓存名撞车
+const VER = 'wc-v58';   // v43 曾被已回滚的 07-12 重设计短暂占用，跳过避免缓存名撞车
 // 用户主动"下载整册"的离线缓存：与外壳版本解耦，升版时不清除（见 activate）。
 // 取数失败时 caches.match 会自动跨 cache 命中这里。
 const DL = 'wc-dl';
 // 注：opencc.js(1.1MB)/qrcode.js(55KB) 是懒加载件，不进首装清单——运行时缓存优先会在首次使用后自动离线可用；
 // 塞进 SHELL 会让每个新访客装 SW 时白下 1.2MB，且 addAll 原子安装在弱网下更易整体失败。
-const SHELL = ['./', 'index.html', 'css/app.css?v=20260817-app9', 'js/app.js?v=20260817-app9', 'js/ai-core.js', 'js/share.js?v=20260817-app9', 'js/pwa.js?v=20260817-app9', 'js/offline.js?v=20260817-app9', 'config.js?v=20260817-app9', 'icon.svg', 'manifest.webmanifest', 'img/icons/icon-192.png', 'img/icons/maskable-192.png', 'apple-touch-icon.png', 'data/books.json'];
+const SHELL = ['./', 'index.html', 'css/app.css?v=20260817-app10', 'js/app.js?v=20260817-app10', 'js/ai-core.js', 'js/share.js?v=20260817-app10', 'js/pwa.js?v=20260817-app10', 'js/offline.js?v=20260817-app10', 'config.js?v=20260817-app10', 'icon.svg', 'manifest.webmanifest', 'img/icons/icon-192.png', 'img/icons/maskable-192.png', 'apple-touch-icon.png', 'data/books.json'];
 
+/* 装好即等待，不抢先接管。
+   原先 install 就 skipWaiting：用户正读着，新版本一到便强行换人并清掉旧缓存，
+   此时若去取下一篇，可能拿到新旧混着的文件甚至取空。改为等页面提示、用户点了
+   「刷新」再切（见 app.js 的更新条）；用户不理会也无妨，下次冷启动自然是新版。 */
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(VER).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(VER).then((c) => c.addAll(SHELL)));
+});
+self.addEventListener('message', (e) => {
+  if (e.data === 'SKIP_WAITING') self.skipWaiting();
 });
 self.addEventListener('activate', (e) => {
   e.waitUntil(

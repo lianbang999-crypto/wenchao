@@ -429,8 +429,9 @@ function scrollToPara(n) {
 }
 
 /* ---------- 首页 ---------- */
-// 「入门」小签：印祖本人示初机先读《嘉言录》；白话精选便于今人入手。2565 篇面前给新读者一个起点
-const STARTER_VOLS = { jy: '入门', jx: '入门' };
+// 分册标签位：如需给某册挂一句短提示，在此登记 { 分册id: '标签' }。
+// 曾给嘉言录/白话精选挂过「入门」，后撤除——是否初机所宜由读者自择，不由站方标定。
+const STARTER_VOLS = {};
 // 继续阅读卡（首页与「我的」页共用）
 function resumeCardHtml() {
   return lastRead && progress[lastRead.id]
@@ -538,6 +539,7 @@ function renderMine() {
             <span class="set-v">字号 · 字体 · 底色 · 简繁</span></button>
           <div class="set-row"><span class="set-k">整册离线</span><span class="set-c">
             <button class="chip-btn" id="offline-open">下载整册</button></span></div>
+          ${updateRowHtml()}
         </div>
       </section>
       ${installSectionHtml()}`;
@@ -550,8 +552,24 @@ function renderMine() {
   paintProgress();
   wireMineItems($('#reader'), renderMine);
   { const aa = $('#mine-aa'); if (aa) aa.onclick = openAaSheet; }
+  { const u = $('#chk-update'); if (u) u.onclick = () => checkUpdate(u); }
   wireInstall($('#reader'));
   if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
+}
+
+/* 「我的」页 · 更新行：站点更新点一下即可查；装了 APP 且外壳落后于最新包时，
+   另给一行下载新版（外壳只在图标/名称/启动屏这类改动时才需要换，故通常不出现）。 */
+function updateRowHtml() {
+  const I = window.__wcInstall || {};
+  const latest = CFG.apkVersion || '';
+  const apk = CFG.apkUrl || '';
+  const stale = I.standalone && I.isAndroid && APP_VER && latest && verLt(APP_VER, latest) && apk;
+  const ver = APP_VER ? `<span class="set-v">当前 ${esc(APP_VER)}</span>` : '';
+  return `<div class="set-row"><span class="set-k">检查更新</span>${ver}<span class="set-c">
+            <button class="chip-btn" id="chk-update">检查更新</button></span></div>`
+    + (stale ? `<div class="set-row"><span class="set-k">应用新版本</span>
+         <span class="set-v">${esc(latest)}</span><span class="set-c">
+         <a class="chip-btn ins-primary" href="${esc(apk)}" download>下载新版</a></span></div>` : '');
 }
 
 /* ---------- 「我的」页 · 安装到手机 ----------
@@ -1958,6 +1976,79 @@ if (aiNewBtn) aiNewBtn.onclick = () => {     // 新对话：清空重来（含�
 };
 aiInit();
 
+/* ---------- 版本与更新 ----------
+   站点更新（改文字、改功能）不需要重装 APP——TWA 打开的就是本站，冷启动即最新。
+   仅当已开着页面时才需要这条：新版本就绪 → 浮出一条提示 → 用户点了才切换并刷新，
+   不打断正读到一半的人。APP 外壳版本另计，见 appVersion / 「我的」页的检查更新。 */
+let swReg = null;
+function watchUpdate(reg) {
+  if (!reg) return;
+  swReg = reg;
+  if (reg.waiting && navigator.serviceWorker.controller) showUpdateBar();
+  reg.addEventListener('updatefound', () => {
+    const sw = reg.installing;
+    if (!sw) return;
+    sw.addEventListener('statechange', () => {
+      // controller 存在 = 本就装过旧版，这才叫"更新"；首次安装不打扰
+      if (sw.state === 'installed' && navigator.serviceWorker.controller) showUpdateBar();
+    });
+  });
+}
+// 新 SW 接管后整页重载一次，让页面用上新代码（只允许一次，防循环）
+let _reloading = false;
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (_reloading) return;
+    _reloading = true;
+    location.reload();
+  });
+}
+function applyUpdate() {
+  const w = swReg && swReg.waiting;
+  if (!w) { location.reload(); return; }
+  w.postMessage('SKIP_WAITING');       // → SW skipWaiting → controllerchange → reload
+  setTimeout(() => { if (!_reloading) { _reloading = true; location.reload(); } }, 1500);
+}
+function showUpdateBar() {
+  if (document.getElementById('wc-update')) return;
+  const bar = document.createElement('div');
+  bar.id = 'wc-update'; bar.className = 'wc-update';
+  bar.setAttribute('role', 'status');
+  bar.innerHTML = '<span>文钞已更新</span>' +
+    '<button type="button" class="wu-go">刷新查看</button>' +
+    '<button type="button" class="wu-x" aria-label="稍后">✕</button>';
+  document.body.appendChild(bar);
+  requestAnimationFrame(() => bar.classList.add('on'));
+  bar.querySelector('.wu-go').onclick = applyUpdate;
+  bar.querySelector('.wu-x').onclick = () => bar.remove();
+}
+// 手动检查（「我的」页）：向服务器要一次 sw.js，有新版就会触发 updatefound
+function checkUpdate(btn) {
+  if (!swReg) { toast('当前环境不支持更新检查'); return; }
+  if (btn) { btn.disabled = true; btn.textContent = '检查中…'; }
+  const done = (msg) => {
+    if (btn) { btn.disabled = false; btn.textContent = '检查更新'; }
+    if (msg) toast(msg);
+  };
+  swReg.update()
+    .then(() => setTimeout(() => {
+      if (swReg.waiting || swReg.installing) { showUpdateBar(); done(); }
+      else done('已是最新版本');
+    }, 900))
+    .catch(() => done('检查失败，请稍后再试'));
+}
+// APP 外壳版本：TWA 的 startUrl 带 ?app=x.y.z，首次进入记下，供「我的」页比对
+const APP_VER = (() => {
+  const q = new URLSearchParams(location.search).get('app');
+  if (q) { store.set('appVer', q); return q; }
+  return store.get('appVer', '');
+})();
+const verLt = (a, b) => {                 // 语义版本比较：a < b ?
+  const pa = String(a).split('.').map(Number), pb = String(b).split('.').map(Number);
+  for (let i = 0; i < 3; i++) { const x = pa[i] || 0, y = pb[i] || 0; if (x !== y) return x < y; }
+  return false;
+};
+
 /* ---------- 启动 ---------- */
 async function boot() {
   applyPrefs();
@@ -1986,6 +2077,6 @@ async function boot() {
   await route();
   if (prefs.trad) loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); tradify($('#ai-log')); });
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost'))
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    navigator.serviceWorker.register('/sw.js').then(watchUpdate).catch(() => {});
 }
 boot();

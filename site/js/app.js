@@ -572,7 +572,8 @@ function renderMine() {
           <div class="set-row"><span class="set-k">整册离线</span><span class="set-c">
             <button class="chip-btn" id="offline-open">下载整册</button></span></div>
         </div>
-      </section>`;
+      </section>
+      ${installSectionHtml()}`;
   $('#reader').innerHTML = `
     <div class="home mine-page">
       ${resumeSec}
@@ -583,8 +584,85 @@ function renderMine() {
   wireMineItems($('#reader'), renderMine);
   wireSettings($('#reader'));
   syncSettings();
+  wireInstall($('#reader'));
   if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
 }
+
+/* ---------- 「我的」页 · 安装到手机 ----------
+   装成 APP 后启动更快、离线可读、无浏览器地址栏。按能力分支：
+   已装 / 可直接唤起系统安装 / iOS 手动添加 / 内置浏览器需外跳 / 其余给 APK。
+   安装能力由 pwa.js 捕获并经 window.__wcInstall 暴露（该事件全局只触发一次）。 */
+function installSectionHtml() {
+  const I = window.__wcInstall;
+  if (!I) return '';                    // pwa.js 未加载（极少）：不画空壳
+  const apk = CFG.apkUrl || '';
+  let row;
+  if (I.standalone) {
+    // 已在 APP 窗口内运行：只作一行确认，不喧宾夺主
+    row = `<div class="set-row"><span class="set-k">已安装到主屏</span>
+             <span class="set-c ins-done">✓ 正以应用方式运行</span></div>`;
+  } else if (I.canPrompt()) {
+    row = `<div class="set-row"><span class="set-k">装到手机主屏</span><span class="set-c">
+             <button class="chip-btn ins-primary" id="ins-go">安装</button></span></div>
+           <div class="set-note">启动更快、可离线阅读，不占多少空间。</div>`;
+  } else if (I.isIOS) {
+    row = I.isSafari
+      ? `<div class="set-row"><span class="set-k">装到手机主屏</span><span class="set-c">
+           <button class="chip-btn" id="ins-how">如何安装</button></span></div>
+         <div class="set-note" id="ins-tip" hidden>在 Safari 底部点「分享」<span aria-hidden="true">⎙</span>，
+           下拉选择「添加到主屏幕」，即可像应用一样打开。</div>`
+      : `<div class="set-row"><span class="set-k">装到手机主屏</span></div>
+         <div class="set-note">请用 Safari 打开本站，再从「分享 → 添加到主屏幕」安装。</div>`;
+  } else if (I.inAppBrowser) {
+    row = `<div class="set-row"><span class="set-k">装到手机主屏</span><span class="set-c">
+             <button class="chip-btn" id="ins-copy">复制网址</button></span></div>
+           <div class="set-note">当前是内置浏览器，无法直接安装。请在浏览器（如 Chrome）中打开本站再装。</div>`;
+  } else if (apk) {
+    row = `<div class="set-row"><span class="set-k">安卓安装包</span><span class="set-c">
+             <a class="chip-btn" href="${esc(apk)}" download>下载 APK</a></span></div>
+           <div class="set-note">若浏览器未提示安装，可下载安装包直接安装。</div>`;
+  } else {
+    row = `<div class="set-row"><span class="set-k">装到手机主屏</span></div>
+           <div class="set-note">在 Chrome 等浏览器中打开本站，浏览器菜单里选「安装应用」或「添加到主屏幕」。</div>`;
+  }
+  // 可直接安装时，APK 作为备选补一行（国产 ROM 拦 PWA 时的兜底）
+  const apkExtra = (apk && !I.standalone && (I.canPrompt() || I.isAndroid))
+    ? `<div class="set-row"><span class="set-k">安卓安装包</span><span class="set-c">
+         <a class="chip-btn" href="${esc(apk)}" download>下载 APK</a></span></div>` : '';
+  return `<section class="home-mine mine-set">
+      <h2 class="mine-h">安装</h2>
+      <div class="set-card">${row}${apkExtra}</div>
+    </section>`;
+}
+function wireInstall(root) {
+  const I = window.__wcInstall;
+  if (!I) return;
+  const go = root.querySelector('#ins-go');
+  if (go) go.onclick = () => {
+    go.disabled = true;
+    I.prompt().then((r) => {
+      if (r === 'accepted') toast('正在安装…装好后可从桌面图标打开');
+      else if (r === 'dismissed') { go.disabled = false; toast('已取消安装'); }
+      else { go.disabled = false; toast('当前浏览器暂不支持一键安装'); }
+    });
+  };
+  const how = root.querySelector('#ins-how');
+  if (how) how.onclick = () => {
+    const t = root.querySelector('#ins-tip');
+    if (t) { t.hidden = !t.hidden; how.textContent = t.hidden ? '如何安装' : '收起'; }
+  };
+  const cp = root.querySelector('#ins-copy');
+  if (cp) cp.onclick = () => {
+    const url = (CFG.shareBase || location.origin).replace(/\/$/, '') + '/';
+    copyText(url);
+    cp.textContent = '已复制';
+    setTimeout(() => { cp.textContent = '复制网址'; }, 1600);
+  };
+}
+// 安装能力可能晚于「我的」页渲染到达（beforeinstallprompt 是异步事件）→ 到了就地重绘
+addEventListener('wc-install-change', () => {
+  if (location.hash === '#me' && !/^\/a\//.test(location.pathname)) renderMine();
+});
 
 /* ---------- 文章 ---------- */
 async function loadArticle(id) {

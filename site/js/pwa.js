@@ -1,26 +1,74 @@
-/* 安装到主屏（A2HS）引导。
-   - Android / Chrome：捕获 beforeinstallprompt，点"安装"直接唤起系统安装。
-   - iOS Safari：无该事件，给出"分享 → 添加到主屏幕"图文提示。
-   - 已安装（standalone）或近期已关闭过则不显示。纯原生 DOM，配色取自 :root 主题变量。*/
+/* 安装到主屏（A2HS）：底部横幅引导 + 对外安装 API。
+   - beforeinstallprompt 全局只触发一次：无论是否显示横幅都必须无条件捕获，
+     否则 standalone / 静默期早退会让「我的」页的安装按钮永久拿不到安装能力。
+   - 横幅仍守旧规矩：已安装或近 14 天关过就不打扰；「我的」页按钮不受静默期约束
+     （用户主动进设置找安装，理应总能装）。
+   - window.__wcInstall 供 app.js 渲染「我的」页安装区。 */
 (function () {
   'use strict';
-
-  // 已经是独立窗口运行（装过了）就不打扰
-  var standalone = window.matchMedia('(display-mode: standalone)').matches ||
-                   window.navigator.standalone === true;
-  if (standalone) return;
-
-  var HIDE_KEY = 'pwa-a2hs-hide';
-  var HIDE_DAYS = 14;
-  try {
-    var until = parseInt(localStorage.getItem(HIDE_KEY) || '0', 10);
-    if (until && Date.now() < until) return;
-  } catch (e) { /* localStorage 不可用则照常提示 */ }
 
   var ua = navigator.userAgent || '';
   var isIOS = /iphone|ipad|ipod/i.test(ua) && !window.MSStream;
   var isSafari = isIOS && /safari/i.test(ua) && !/crios|fxios|edgios/i.test(ua);
+  var isAndroid = /android/i.test(ua);
+  // 微信/QQ/微博/UC 等内置 WebView：无 A2HS 能力，只能引导到系统浏览器打开
+  var inAppBrowser = /micromessenger|qq\/|qqbrowser|weibo|baiduboxapp|ucbrowser|quark/i.test(ua);
+  var standalone = window.matchMedia('(display-mode: standalone)').matches ||
+                   window.navigator.standalone === true;
+
+  var HIDE_KEY = 'pwa-a2hs-hide';
+  var HIDE_DAYS = 14;
   var deferredPrompt = null;
+
+  /* ---- 对外 API（app.js 用）---- */
+  window.__wcInstall = {
+    standalone: standalone,
+    isIOS: isIOS,
+    isSafari: isSafari,
+    isAndroid: isAndroid,
+    inAppBrowser: inAppBrowser,
+    canPrompt: function () { return !!deferredPrompt; },
+    // 唤起系统安装弹窗；返回 Promise<'accepted'|'dismissed'|'unavailable'>
+    prompt: function () {
+      if (!deferredPrompt) return Promise.resolve('unavailable');
+      var dp = deferredPrompt;
+      dp.prompt();
+      return dp.userChoice.then(function (r) {
+        deferredPrompt = null;                 // prompt() 只能用一次
+        notify();
+        return (r && r.outcome) || 'dismissed';
+      }).catch(function () { return 'dismissed'; });
+    },
+  };
+  // 状态变了通知「我的」页重绘（事件可能晚于页面渲染到达）
+  function notify() {
+    try { window.dispatchEvent(new CustomEvent('wc-install-change')); } catch (e) {}
+  }
+
+  /* ---- 无条件捕获：早退会让事件永久丢失 ---- */
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    notify();
+    if (!bannerAllowed()) return;              // 不显示横幅，但安装能力已存下
+    setTimeout(showInstallBanner, 2500);
+  });
+  window.addEventListener('appinstalled', function () {
+    deferredPrompt = null;
+    window.__wcInstall.standalone = true;      // 「我的」页据此切到「已安装」
+    notify();
+    dismiss();
+  });
+
+  /* ---- 底部横幅（原有引导，规则不变）---- */
+  function bannerAllowed() {
+    if (standalone) return false;
+    try {
+      var until = parseInt(localStorage.getItem(HIDE_KEY) || '0', 10);
+      if (until && Date.now() < until) return false;
+    } catch (e) { /* localStorage 不可用则照常提示 */ }
+    return true;
+  }
 
   function dismiss() {
     try { localStorage.setItem(HIDE_KEY, String(Date.now() + HIDE_DAYS * 864e5)); } catch (e) {}
@@ -69,35 +117,25 @@
     return bar;
   }
 
-  // —— Android / Chrome：系统提供安装能力 ——
-  window.addEventListener('beforeinstallprompt', function (e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    setTimeout(function () {
-      var bar = banner('装到主屏，离线随时读，启动更快。');
-      if (!bar) return;
-      var btn = document.createElement('button');
-      btn.textContent = '安装';
-      btn.style.cssText = 'flex:0 0 auto;margin-left:.5rem;border:0;border-radius:8px;' +
-        'background:var(--cinnabar,#b03a26);color:var(--paper,#f6f1e6);' +
-        'font-family:inherit;font-size:14px;font-weight:600;padding:.42rem .9rem;cursor:pointer';
-      btn.onclick = function () {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.finally(function () { deferredPrompt = null; dismiss(); });
-      };
-      bar.insertBefore(btn, bar.lastChild); // 放在关闭按钮之前
-    }, 2500);
-  });
+  function showInstallBanner() {
+    var bar = banner('装到主屏，离线随时读，启动更快。');
+    if (!bar) return;
+    var btn = document.createElement('button');
+    btn.textContent = '安装';
+    btn.style.cssText = 'flex:0 0 auto;margin-left:.5rem;border:0;border-radius:8px;' +
+      'background:var(--cinnabar,#b03a26);color:var(--paper,#f6f1e6);' +
+      'font-family:inherit;font-size:14px;font-weight:600;padding:.42rem .9rem;cursor:pointer';
+    btn.onclick = function () {
+      window.__wcInstall.prompt().finally(function () { dismiss(); });
+    };
+    bar.insertBefore(btn, bar.lastChild); // 放在关闭按钮之前
+  }
 
-  // 装好后清理
-  window.addEventListener('appinstalled', dismiss);
-
-  // —— iOS Safari：只能引导手动添加 ——
-  if (isSafari) {
+  // —— iOS Safari：无 beforeinstallprompt，只能引导手动添加 ——
+  if (isSafari && bannerAllowed()) {
     window.addEventListener('load', function () {
       setTimeout(function () {
-        banner('在 Safari 里点 <span aria-hidden="true">⎙</span> 分享 → “添加到主屏幕”，即可像 App 一样离线阅读。');
+        banner('在 Safari 里点 <span aria-hidden="true">⎙</span> 分享 →「添加到主屏幕」，即可像 App 一样离线阅读。');
       }, 3000);
     });
   }

@@ -415,6 +415,21 @@ body.nav-hidden .read-progress { top: 0; }
 .set-card .rb-set + .rb-set { border-top: 1px solid var(--paper-3); }
 .set-card .rb-set-k { font-size: 14px; color: var(--ink-2); }
 .set-card .rb-chips { margin-left: auto; justify-content: flex-end; }
+/* 卡内说明行：贴在所属操作行下方，故取消上边框、上移收紧 */
+.set-note {
+  padding: 0 16px 12px; margin-top: -4px;
+  font-size: 12.5px; line-height: 1.75; color: var(--ink-3); font-family: var(--kai);
+}
+.set-note[hidden] { display: none; }
+/* 安装：唯一的朱砂实心键——全站仅此一处主行动色，用完即隐（装后转确认态） */
+.chip-btn.ins-primary {
+  background: var(--cinnabar); border-color: var(--cinnabar); color: #f8f3e8;
+  padding: 5px 20px; font-size: 13.5px;
+}
+.chip-btn.ins-primary:active { opacity: .88; color: #f8f3e8; }
+.chip-btn.ins-primary:disabled { opacity: .5; cursor: default; }
+.set-c.ins-done { font-size: 13px; color: var(--ink-3); letter-spacing: .04em; }
+a.chip-btn { text-decoration: none; }
 .chip-btn {
   border: 1px solid var(--line); background: var(--paper-2);
   border-radius: 999px; padding: 4px 14px; font-size: 13px; cursor: pointer;

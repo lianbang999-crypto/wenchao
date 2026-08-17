@@ -582,7 +582,9 @@ body.nav-hidden .mode-bar { transform: translateY(calc(-100% - var(--topbar-h) -
   margin: 0 0 1.35em;
   font-family: var(--font-trans);
   font-size: calc(var(--fs) - 1px);
-  color: var(--ink-2); line-height: 1.95; text-align: justify; text-indent: 2em;
+  /* 与原文同色：白话是给今人读的正文，不是附注，淡一度反而费眼。
+     文白之别交给字体与字号，不再用墨色深浅表示主次。 */
+  color: var(--ink); line-height: 1.95; text-align: justify; text-indent: 2em;
 }
 /* 单读模式：原文连排向书页靠拢——段距收窄，靠首行缩进分段 */
 .art-body[data-mode="orig"] .p-trans { display: none; }

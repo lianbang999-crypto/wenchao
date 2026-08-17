@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "org.foyue.wenchao",
+      "sha256_cert_fingerprints": [
+        "E6:09:86:0C:AE:98:35:78:4E:B4:93:38:00:15:E8:5B:1E:90:C4:43:9E:C2:3C:2E:23:65:37:2F:C1:AF:2A:97"
+      ]
+    }
+  }
+]

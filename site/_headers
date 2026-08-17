@@ -74,3 +74,8 @@
 
 /robots.txt
   Cache-Control: no-cache
+
+# TWA 数字资产链接：Chrome 安装/打开 APP 时校验，须始终最新（Play 上架后要补 Play 签名指纹）
+/.well-known/assetlinks.json
+  Cache-Control: no-cache
+  Content-Type: application/json

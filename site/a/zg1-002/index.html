@@ -30,8 +30,8 @@
 <!-- 字体自托管（scripts/fetch_fonts.py 抓取切片到 /font/）：宋体 Noto Serif SC + 楷体兜底霞鹜文楷GB；
      安卓无楷体时白话退化宋体会失去文白区分，靠霞鹜文楷兜底，苹果命中本地楷体不产生下载。
      原 Google Fonts / jsdelivr 双外链在大陆常被阻断，render-blocking 挂起首屏；同源后无此患。 -->
-<link rel="stylesheet" href="css/fonts.css?v=20260810-fnt1">
-<link rel="stylesheet" href="css/app.css?v=20260810-fnt1">
+<link rel="stylesheet" href="css/fonts.css?v=20260817-app2">
+<link rel="stylesheet" href="css/app.css?v=20260817-app2">
   <meta name="msvalidate.01" content="2E887F8A75C595EF89E235E27D2816E0" />
   <meta name="baidu-site-verification" content="codeva-345JAH4iJi" />
 </head>
@@ -158,15 +158,15 @@
 
 <!-- 注释弹卡（底部抽出） -->
 <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
-<section class="sheet" id="sheet" hidden aria-label="注释">
-  <div class="sheet-handle" aria-hidden="true"></div>
+<section class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-label="注释" tabindex="-1">
+  <div class="sheet-grip" aria-hidden="true"><div class="sheet-handle"></div></div>
   <div class="sheet-body" id="sheet-body"></div>
 </section>
 
-<script src="config.js?v=20260810-fnt1"></script>
-<script src="js/pwa.js?v=20260810-fnt1" defer></script>
-<script src="js/offline.js?v=20260810-fnt1" defer></script>
-<script type="module" src="js/app.js?v=20260810-fnt1"></script>
-<script src="js/share.js?v=20260810-fnt1" defer></script>
+<script src="config.js?v=20260817-app2"></script>
+<script src="js/pwa.js?v=20260817-app2" defer></script>
+<script src="js/offline.js?v=20260817-app2" defer></script>
+<script type="module" src="js/app.js?v=20260817-app2"></script>
+<script src="js/share.js?v=20260817-app2" defer></script>
 </body>
 </html>

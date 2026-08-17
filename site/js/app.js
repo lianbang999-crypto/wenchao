@@ -16,7 +16,10 @@ const store = {
 };
 const prefs = {
   fs: store.get('fs', 17),
-  theme: store.get('theme', 'paper'),
+  // 底色：auto=跟随系统深浅色（新默认——夜里打开不刺眼）。
+  // 老用户手选过的 paper/plain/night 原样保留；没选过的自然落到 auto。
+  theme: store.get('theme', 'auto'),
+  font: store.get('font', 'song'),     // 正文字体：song 宋（原文宋/白话楷）| kai 全楷
   mode: store.get('mode', 'both'),     // orig | trans | both
   trad: store.get('trad', false),      // 繁体显示（OpenCC 简→繁，仅显示层）
 };
@@ -72,38 +75,55 @@ const THEMES = {
   night: { attr: 'night', color: '#171310' },  /* 墨夜 */
 };
 
+// auto 底色解析：跟随系统深浅色 → 墨夜/纸色
+const sysDark = matchMedia('(prefers-color-scheme: dark)');
+const resolveTheme = () => (prefs.theme === 'auto' ? (sysDark.matches ? 'night' : 'paper') : prefs.theme);
+sysDark.addEventListener('change', () => { if (prefs.theme === 'auto') applyPrefs(); });
+
 function applyPrefs() {
   document.documentElement.style.setProperty('--fs', prefs.fs + 'px');
-  const t = THEMES[prefs.theme] || THEMES.paper;
+  const t = THEMES[resolveTheme()] || THEMES.paper;
   document.documentElement.dataset.theme = t.attr;
+  if (prefs.font === 'kai') document.documentElement.dataset.font = 'kai';
+  else delete document.documentElement.dataset.font;
   document.querySelector('meta[name=theme-color]').setAttribute('content', t.color);
-  // 偏好按钮现渲染于「我的」页（动态存在）→ 全部按需切换，不在页时安全跳过
-  const tog = (sel, on) => { const el = $(sel); if (el) el.classList.toggle('on', on); };
-  tog('#theme-paper', prefs.theme === 'paper');
-  tog('#theme-plain', prefs.theme === 'plain');
-  tog('#theme-night', prefs.theme === 'night');
-  tog('#cc-simp', !prefs.trad);
-  tog('#cc-trad', prefs.trad);
+  syncSettings();   // 同步所有已渲染设置组（Aa 面板 /「我的」页）的选中态
 }
 
 /* ---------- 抽屉 ---------- */
 const drawerL = $('#drawer-left'), drawerR = $('#drawer-right'), overlay = $('#overlay');
 const isWide = () => matchMedia('(min-width: 1180px)').matches;
 
+let drawerLastFocus = null;
 function openDrawer(side) {
   stopRead();        // 打开目录/AI：停读，腾出注意力
   if (side === 'L') ensureTree();
   if (isWide() && side === 'L') return;
-  (side === 'L' ? drawerL : drawerR).classList.add('open');
+  const d = side === 'L' ? drawerL : drawerR;
+  d.classList.add('open');
   overlay.hidden = false;
   requestAnimationFrame(() => overlay.classList.add('show'));
+  // 窄屏抽屉即模态：对话框语义 + 焦点移入 + 背景 inert（Esc/遮罩可关，Tab 不穿透）
+  d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true');
+  if (!d.hasAttribute('tabindex')) d.tabIndex = -1;
+  drawerLastFocus = document.activeElement;
+  d.focus({ preventScroll: true });
+  syncInert(); syncTabs();
 }
 function closeDrawers() {
-  drawerL.classList.remove('open');
-  drawerR.classList.remove('open');
+  const wasOpen = drawerL.classList.contains('open') || drawerR.classList.contains('open');
+  for (const d of [drawerL, drawerR]) {
+    d.classList.remove('open');
+    d.removeAttribute('role'); d.removeAttribute('aria-modal');   // 关闭/宽屏常驻恢复 nav/aside 本义
+  }
   overlay.classList.remove('show');
   setTimeout(() => { overlay.hidden = true; }, 280);
   aiSpeakStop();   // 关面板即停 AI 回答朗读（高清音频 + 本机合成）
+  syncInert(); syncTabs();
+  if (wasOpen && drawerLastFocus && drawerLastFocus.isConnected) {
+    try { drawerLastFocus.focus({ preventScroll: true }); } catch {}
+  }
+  drawerLastFocus = null;
 }
 $('#btn-nav').onclick = () => openDrawer('L');
 $('#btn-ai').onclick = () => openDrawer('R');
@@ -136,6 +156,82 @@ let edgeStart = 0;
 document.addEventListener('touchstart', (e) => { edgeStart = e.touches[0].clientX; }, { passive: true });
 const touchStartNearEdge = (e, side) =>
   side === 'left' ? edgeStart < 32 : edgeStart > innerWidth - 32;
+
+/* ---------- 模态分层：背景 inert + 全局 Esc ----------
+   层序（高→低）：阅读设置 Aa > 注释/出处弹卡 > 分享弹层 > 抽屉。
+   inert 由「当前最高层」一次算清——开关任何层后调 syncInert 重算，
+   嵌套（如 AI 抽屉里点角标开出处卡）也不会漏解。 */
+function topLayer() {
+  if (aaSheet && !aaSheet.hidden) return 'aa';
+  if (sheet && !sheet.hidden) return 'sheet';
+  if (drawerL.classList.contains('open')) return 'L';
+  if (drawerR.classList.contains('open')) return 'R';
+  return null;
+}
+function syncInert() {
+  const top = topLayer();
+  const set = (el, on) => { if (el && el.inert !== on) el.inert = on; };
+  set($('#topbar'), !!top);
+  set($('#reader'), !!top);
+  set($('#tabbar'), !!top);
+  // 宽屏常驻左栏平时可用；有弹层时同样锁住（遮罩本就盖着它）
+  set(drawerL, !!top && top !== 'L');
+  set(drawerR, !!top && top !== 'R');
+  set(sheet, top === 'aa');
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (aaSheet && !aaSheet.hidden) { closeAaSheet(); return; }
+  if (sheet && !sheet.hidden) { closeSheet(); return; }
+  const sm = document.querySelector('.share-modal');   // 分享弹层归 share.js，Esc 代点遮罩
+  if (sm && !sm.hidden) { const m = sm.querySelector('.sm-mask'); if (m) m.click(); return; }
+  if (READ.bar && !READ.bar.hidden) {                  // 朗读设置浮层：先收面板，不停朗读
+    const p = READ.bar.querySelector('.rb-panel');
+    if (p && !p.hidden) { p.hidden = true; READ.bar.querySelector('.rb-more').classList.remove('on'); return; }
+  }
+  if (drawerL.classList.contains('open') || drawerR.classList.contains('open')) closeDrawers();
+});
+
+/* ---------- APP 形态：底部四键 tab（安装到主屏后出现） ----------
+   TWA / A2HS 的 standalone 窗口里顶栏四键拇指够不到——下放一份到底部。
+   浏览器形态不注入，网页气质不变；宽屏由 CSS 隐藏。 */
+const isApp = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+function buildTabbar() {
+  if (!isApp) return;
+  document.body.dataset.app = '1';
+  const icon = {
+    home: '<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 5.6C10.2 4.2 7.7 3.6 4.5 3.6v14.2c3.2 0 5.7.6 7.5 2 1.8-1.4 4.3-2 7.5-2V3.6c-3.2 0-5.7.6-7.5 2Z"/><path d="M12 5.6v14.2" stroke-linecap="round"/></svg>',
+    nav: '<svg viewBox="0 0 24 24" width="21" height="21"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>',
+    ai: '<svg viewBox="0 0 24 24" width="21" height="21"><path d="M12 3.5c4.7 0 8.5 3.2 8.5 7.1 0 3.9-3.8 7.1-8.5 7.1-.9 0-1.8-.1-2.6-.35L5.2 19l1-2.9C4.4 14.7 3.5 12.7 3.5 10.6c0-3.9 3.8-7.1 8.5-7.1Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/></svg>',
+    mine: '<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.4"/><path d="M5.8 19.6a6.2 6.2 0 0 1 12.4 0"/></svg>',
+  };
+  const bar = document.createElement('nav');
+  bar.className = 'tabbar'; bar.id = 'tabbar';
+  bar.setAttribute('aria-label', '主导航');
+  bar.innerHTML =
+    `<button class="tab-btn" type="button" data-tab="home">${icon.home}<span>书斋</span></button>` +
+    `<button class="tab-btn" type="button" data-tab="nav">${icon.nav}<span>目录</span></button>` +
+    `<button class="tab-btn" type="button" data-tab="ai">${icon.ai}<span>问文钞</span></button>` +
+    `<button class="tab-btn" type="button" data-tab="mine">${icon.mine}<span>我的</span></button>`;
+  document.body.appendChild(bar);
+  const act = {
+    home: () => { closeDrawers(); goHome(); },
+    nav: () => openDrawer('L'),
+    ai: () => openDrawer('R'),
+    mine: () => { closeDrawers(); goMine(); },
+  };
+  bar.querySelectorAll('.tab-btn').forEach((b) => { b.onclick = act[b.dataset.tab]; });
+  syncTabs();
+}
+function syncTabs() {
+  const bar = document.getElementById('tabbar');
+  if (!bar) return;
+  const cur = drawerR.classList.contains('open') ? 'ai'
+    : drawerL.classList.contains('open') ? 'nav'
+    : (location.hash === '#me' && !/^\/a\//.test(location.pathname)) ? 'mine'
+    : (location.pathname === '/' ? 'home' : null);   // 读文章时不点亮：阅读不属于任何 tab
+  bar.querySelectorAll('.tab-btn').forEach((b) => b.classList.toggle('on', b.dataset.tab === cur));
+}
 
 /* ---------- 全文检索：篇名本地过滤 + 正文查后端 D1 全文索引 ----------
    不再下载整站语料（曾是 15MB 的 search.json，全量拉取+客户端线性扫描）；
@@ -323,7 +419,8 @@ function articleRoute() {
 async function route() {
   stopRead();        // 切篇/回首页：停掉正在进行的朗读，避免高亮/进度错位
   closeDrawers();
-  closeAaSheet();    // 阅读设置 sheet 不跨页残留
+  closeAaSheet(true);   // 弹层不跨页残留（切页即时收，不走退场）
+  closeSheet(true);
   { const bm = $('#btn-mine'); if (bm) bm.classList.remove('on'); }   // 默认非「我的」态；renderMine 会再点亮
   // 影像陈列页：内容随静态页预渲染，app.js 不重绘，仅同步标题/繁体
   if (/^\/ying\/?$/.test(location.pathname)) {
@@ -364,6 +461,8 @@ function scrollToPara(n) {
 }
 
 /* ---------- 首页 ---------- */
+// 「入门」小签：印祖本人示初机先读《嘉言录》；白话精选便于今人入手。2565 篇面前给新读者一个起点
+const STARTER_VOLS = { jy: '入门', jx: '入门' };
 // 继续阅读卡（首页与「我的」页共用）
 function resumeCardHtml() {
   return lastRead && progress[lastRead.id]
@@ -414,8 +513,9 @@ function renderHome() {
   // 收藏/划线等其余个人内容仍集中在「我的」页（右上人形图标进入）
   const vols = books.map((vol) => {
     const count = vol.juans.reduce((n, j) => n + j.cats.reduce((m, c) => m + c.items.length, 0), 0);
+    const tag = STARTER_VOLS[vol.id] ? `<span class="vol-tag">${STARTER_VOLS[vol.id]}</span>` : '';
     return `<button class="vol-card" data-vol="${vol.id}">
-        <span class="vol-name">${esc(vol.name)}</span>
+        <span class="vol-name">${esc(vol.name)}</span>${tag}
         <span class="vol-group">${esc(vol.group)}</span>
         <span class="vol-count">${count} 篇</span>
       </button>`;
@@ -447,8 +547,8 @@ function renderHome() {
   });
 }
 
-// 「我的」页：继续阅读 · 收藏 · 划线 · 离线整册（右上人形图标为唯一入口）。
-// 字号/底色/简繁已并入阅读器工具行「Aa」sheet——设置只有一个家，且在正文旁所见即所得。
+// 「我的」页：继续阅读 · 收藏 · 划线 · 阅读设置 · 离线整册（右上人形图标为唯一入口）。
+// 阅读设置与文章页「Aa」弹卡同一份渲染（settingsRowsHtml）——一处改，两处同。
 function renderMine() {
   current = null;
   document.body.classList.remove('nav-hidden');
@@ -462,6 +562,10 @@ function renderMine() {
     ? `<p class="mine-empty">阅读时点篇首的「收藏」、或选中文字「划线」，都会收进这里；上次读到的位置也会出现在「继续阅读」。</p>`
     : '';
   const settings = `
+      <section class="home-mine mine-set">
+        <h2 class="mine-h">阅读设置</h2>
+        <div class="set-card">${settingsRowsHtml()}</div>
+      </section>
       <section class="home-mine mine-set">
         <h2 class="mine-h">离线</h2>
         <div class="set-card">
@@ -477,6 +581,8 @@ function renderMine() {
     </div>`;
   paintProgress();
   wireMineItems($('#reader'), renderMine);
+  wireSettings($('#reader'));
+  syncSettings();
   if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
 }
 
@@ -628,15 +734,15 @@ async function renderArticle(id) {
         <button class="seg${segOff}" data-m="both">对照</button>
         <button class="seg${segOff}" data-m="trans">白话</button>
       </div>`;
+  // 三键：收藏 · 朗读 · Aa——朗读居中作主键（细线圆圈，播放器 play 的位次直觉）；
+  // 收藏/设置分居两侧。留白分组，不用中点；热区 44px（负 margin 溢进行距，不撑高吸顶条）
   const modeBar = `<div class="mode-bar">
       ${segsHtml}
       <div class="mb-acts">
-        <button class="mb-act mb-speak" aria-label="朗读本篇">
-          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/></svg></button>
-        <span class="mb-dot" aria-hidden="true">·</span>
         <button class="mb-act mb-bookmark" aria-label="收藏本篇" aria-pressed="false">
-          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></button>
-        <span class="mb-dot" aria-hidden="true">·</span>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></button>
+        <button class="mb-act mb-speak" aria-label="朗读本篇">
+          <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/></svg></button>
         <button class="mb-act mb-aa" aria-label="阅读设置"><span class="mb-aa-g">Aa</span></button>
       </div>
     </div>`;
@@ -796,18 +902,33 @@ addEventListener('scroll', () => {
   }, 600);
 }, { passive: true });
 
-/* ---------- 注释弹卡 ---------- */
+/* ---------- 注释弹卡（注释词条与 AI 出处共用同一张） ---------- */
 const sheet = $('#sheet'), sheetBd = $('#sheet-backdrop');
+let sheetLastFocus = null;
+function sheetShow() {   // 内容由调用方先填好；此处统一弹出、记焦点、锁背景
+  if (window.__wcSelBarHide) window.__wcSelBarHide();   // 弹卡打开时收起选段条，底部浮层不叠压
+  sheet.hidden = false; sheetBd.hidden = false;
+  sheetLastFocus = document.activeElement;
+  sheet.focus({ preventScroll: true });
+  syncInert();
+}
 function openSheet(note) {
-  if (window.__wcSelBarHide) window.__wcSelBarHide();   // 注释卡打开时收起选段条，底部浮层不叠压
   $('#sheet-body').innerHTML = `
     <h4>${note.term ? '【' + esc(note.term) + '】' : '注释'}<span class="note-n">本篇注释 [${note.n}]</span></h4>
     <p>${esc(note.text)}</p>`;
-  sheet.hidden = false; sheetBd.hidden = false;
+  sheetShow();
 }
-function closeSheet() { sheet.hidden = true; sheetBd.hidden = true; }
-sheetBd.onclick = closeSheet;
+function closeSheet(instant) {
+  if (sheet.hidden) return;
+  sheetDismiss(sheet, sheet, sheetBd, instant, () => {
+    syncInert();
+    if (sheetLastFocus && sheetLastFocus.isConnected) { try { sheetLastFocus.focus({ preventScroll: true }); } catch {} }
+    sheetLastFocus = null;
+  });
+}
+sheetBd.onclick = () => closeSheet();
 sheet.onclick = (e) => { if (e.target === sheet) closeSheet(); };
+attachSheetDrag(sheet.querySelector('.sheet-grip') || sheet.querySelector('.sheet-handle'), sheet, () => closeSheet());
 
 /* ---------- 收藏（书签）：整篇加星，「我的」页列出 ---------- */
 let bookmarkBtn = null;   // 篇内工具行里的收藏键，每次 renderArticle 重挂
@@ -1332,58 +1453,133 @@ function setSleep(v) {
 }
 
 /* ---------- 偏好控件 ---------- */
-// 调字号后正文重排、总高变化 → 刷新高度缓存与进度条（续读落点不动，仅让进度条即时准确）
+// 调字号/换字体后正文重排、总高变化 → 刷新高度缓存与进度条（续读落点不动，仅让进度条即时准确）
 const afterFontChange = () => { applyPrefs(); measureMax(); paintProgress(); };
 const incFont = () => { prefs.fs = Math.min(24, prefs.fs + 1); store.set('fs', prefs.fs); afterFontChange(); };
 const decFont = () => { prefs.fs = Math.max(14, prefs.fs - 1); store.set('fs', prefs.fs); afterFontChange(); };
-const setTheme = (name) => { prefs.theme = name; store.set('theme', name); applyPrefs(); };
 
-/* ---------- 阅读设置 sheet（工具行「Aa」打开）----------
-   字号/底色/简繁集中于此，正文就在 sheet 后面，改动所见即所得；
-   形制同注释弹卡，行样式与播放器面板同一套 chip 语言。 */
+/* ---------- 阅读设置（唯一一套）：字号 · 字体 · 底色 · 文字 ----------
+   同一份渲染两处落位：文章页「Aa」底部弹卡（正文就在后面，所见即所得）
+   与「我的」页平铺卡片。data-set/data-v 驱动，不用 id——两处并存不打架。 */
+function settingsRowsHtml() {
+  const chip = (set, v, label, extra) =>
+    `<button class="rb-chip" type="button" data-set="${set}" data-v="${v}"${extra || ''}>${label}</button>`;
+  return (
+    `<div class="rb-set"><span class="rb-set-k">字号</span><span class="rb-chips">` +
+      chip('fs', '-', 'A−', ' aria-label="减小字号"') +
+      `<span class="aa-fs" aria-live="polite"></span>` +
+      chip('fs', '+', 'A＋', ' aria-label="增大字号"') + `</span></div>` +
+    `<div class="rb-set"><span class="rb-set-k">字体</span><span class="rb-chips">` +
+      chip('font', 'song', '宋体') + chip('font', 'kai', '楷体') + `</span></div>` +
+    `<div class="rb-set"><span class="rb-set-k">底色</span><span class="rb-chips">` +
+      chip('theme', 'auto', '自动', ' aria-label="底色跟随系统"') +
+      chip('theme', 'paper', '纸色') + chip('theme', 'plain', '素白') + chip('theme', 'night', '墨夜') + `</span></div>` +
+    `<div class="rb-set"><span class="rb-set-k">文字</span><span class="rb-chips">` +
+      chip('trad', '0', '简体') + chip('trad', '1', '繁体') + `</span></div>`
+  );
+}
+function applySetting(k, v) {
+  if (k === 'fs') { (v === '+' ? incFont : decFont)(); return; }   // afterFontChange → applyPrefs → syncSettings
+  if (k === 'font') { prefs.font = v; store.set('font', v); afterFontChange(); return; }
+  if (k === 'theme') { prefs.theme = v; store.set('theme', v); applyPrefs(); return; }
+  if (k === 'trad') { setTrad(v === '1'); }                        // setTrad 内部 applyPrefs
+}
+function wireSettings(root) {
+  root.querySelectorAll('[data-set]').forEach((b) => {
+    b.onclick = () => applySetting(b.dataset.set, b.dataset.v);
+  });
+}
+// 所有已渲染设置组一起同步选中态（applyPrefs 每次调用；不在页的组安全跳过）
+function syncSettings() {
+  const on = { font: prefs.font, theme: prefs.theme, trad: prefs.trad ? '1' : '0' };
+  document.querySelectorAll('[data-set]').forEach((b) => {
+    const k = b.dataset.set;
+    if (k !== 'fs') b.classList.toggle('on', on[k] === b.dataset.v);
+  });
+  document.querySelectorAll('.aa-fs').forEach((e) => { e.textContent = prefs.fs; });
+}
+
+/* ---------- 底部弹卡通用件：下滑退场动画 + 把手拖拽关闭 ---------- */
+// 退场：面板挂 .closing 下滑、遮罩同步淡出，动画完再 hidden（instant=true 立即藏，供切页用）
+function sheetDismiss(host, panel, mask, instant, after) {
+  const done = () => {
+    host.hidden = true;
+    if (mask && !host.contains(mask)) mask.hidden = true;   // 独立遮罩（注释卡）自己藏；容器内遮罩随 host
+    panel.classList.remove('closing'); panel.style.transform = '';
+    if (mask) mask.classList.remove('closing');
+    if (after) after();
+  };
+  if (instant || panel.classList.contains('closing')) { done(); return; }
+  panel.classList.add('closing');
+  if (mask) mask.classList.add('closing');
+  setTimeout(done, 210);   // 与 CSS sheet-down .2s 对齐；reduced-motion 下动画瞬完，稍后藏亦无感
+}
+// 把手拖拽：跟手下移，松手超过阈值（距离或速度）即关，否则弹回。
+// 只绑在把手上——不与面板内容自身的滚动抢手势。
+function attachSheetDrag(grip, panel, close) {
+  let y0 = 0, dy = 0, t0 = 0, on = false;
+  grip.addEventListener('pointerdown', (e) => {
+    on = true; y0 = e.clientY; dy = 0; t0 = Date.now();
+    panel.classList.add('dragging');
+    try { grip.setPointerCapture(e.pointerId); } catch {}
+  });
+  grip.addEventListener('pointermove', (e) => {
+    if (!on) return;
+    dy = Math.max(0, e.clientY - y0);
+    panel.style.transform = `translateY(${dy}px)`;
+  });
+  const up = () => {
+    if (!on) return;
+    on = false;
+    panel.classList.remove('dragging');
+    const fast = dy > 24 && dy / (Date.now() - t0) > 0.45;   // px/ms
+    if (dy > 72 || fast) { close(); return; }
+    panel.classList.add('snapback');
+    panel.style.transform = '';
+    setTimeout(() => panel.classList.remove('snapback'), 200);
+  };
+  grip.addEventListener('pointerup', up);
+  grip.addEventListener('pointercancel', up);
+}
+
+/* ---------- 阅读设置 sheet（文章工具行「Aa」打开） ---------- */
 let aaSheet = null;
 function ensureAaSheet() {
   if (aaSheet) return aaSheet;
   const el = document.createElement('div');
   el.className = 'aa-sheet'; el.hidden = true;
+  el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', '阅读设置');
   el.innerHTML =
     `<div class="aa-mask"></div>` +
-    `<div class="aa-panel">` +
-      `<div class="rb-set"><span class="rb-set-k">字号</span><span class="rb-chips">` +
-        `<button class="rb-chip" id="font-dec" type="button" aria-label="减小字号">A−</button>` +
-        `<span class="aa-fs" aria-live="polite"></span>` +
-        `<button class="rb-chip" id="font-inc" type="button" aria-label="增大字号">A＋</button></span></div>` +
-      `<div class="rb-set"><span class="rb-set-k">底色</span><span class="rb-chips">` +
-        `<button class="rb-chip" id="theme-paper" type="button">纸色</button>` +
-        `<button class="rb-chip" id="theme-plain" type="button">素白</button>` +
-        `<button class="rb-chip" id="theme-night" type="button">墨夜</button></span></div>` +
-      `<div class="rb-set"><span class="rb-set-k">文字</span><span class="rb-chips">` +
-        `<button class="rb-chip" id="cc-simp" type="button">简体</button>` +
-        `<button class="rb-chip" id="cc-trad" type="button">繁体</button></span></div>` +
+    `<div class="aa-panel" tabindex="-1">` +
+      `<div class="sheet-grip" aria-hidden="true"><div class="sheet-handle"></div></div>` +
+      settingsRowsHtml() +
     `</div>`;
   document.body.appendChild(el);
-  el.querySelector('.aa-mask').onclick = closeAaSheet;
-  el.querySelector('#font-dec').onclick = () => { decFont(); syncAaSheet(); };
-  el.querySelector('#font-inc').onclick = () => { incFont(); syncAaSheet(); };
-  el.querySelector('#theme-paper').onclick = () => setTheme('paper');
-  el.querySelector('#theme-plain').onclick = () => setTheme('plain');
-  el.querySelector('#theme-night').onclick = () => setTheme('night');
-  el.querySelector('#cc-simp').onclick = () => setTrad(false);
-  el.querySelector('#cc-trad').onclick = () => setTrad(true);
+  el.querySelector('.aa-mask').onclick = () => closeAaSheet();
+  wireSettings(el);
+  attachSheetDrag(el.querySelector('.sheet-grip'), el.querySelector('.aa-panel'), () => closeAaSheet());
   aaSheet = el;
   return el;
 }
-function syncAaSheet() {
-  if (!aaSheet) return;
-  aaSheet.querySelector('.aa-fs').textContent = prefs.fs;
-  applyPrefs();   // 同步 #theme-* / #cc-* 的选中态（applyPrefs 按需寻元素，安全）
-}
+let aaLastFocus = null;
 function openAaSheet() {
   if (window.__wcSelBarHide) window.__wcSelBarHide();   // 底部浮层不叠压
-  ensureAaSheet().hidden = false;
-  syncAaSheet();
+  const el = ensureAaSheet();
+  el.hidden = false;
+  syncSettings();
+  aaLastFocus = document.activeElement;
+  el.querySelector('.aa-panel').focus({ preventScroll: true });
+  syncInert();
 }
-function closeAaSheet() { if (aaSheet) aaSheet.hidden = true; }
+function closeAaSheet(instant) {
+  if (!aaSheet || aaSheet.hidden) return;
+  sheetDismiss(aaSheet, aaSheet.querySelector('.aa-panel'), aaSheet.querySelector('.aa-mask'), instant, () => {
+    syncInert();
+    if (aaLastFocus && aaLastFocus.isConnected) { try { aaLastFocus.focus({ preventScroll: true }); } catch {} }
+    aaLastFocus = null;
+  });
+}
 
 /* ---------- 简繁转换（OpenCC 自托管，懒加载；仅显示层，不改底本数据）---------- */
 let _conv = null;
@@ -1461,11 +1657,10 @@ function showCitation(p) {
     `<h4>《${esc(p.title || '')}》<span class="note-n">出处摘录</span></h4>` +
     `<p class="cite-text">${esc(excerpt)}</p>` +
     (p.aid ? `<button class="sheet-goto" data-id="${esc(p.aid)}" data-p="${p.pIndex ?? ''}" data-url="${esc(url)}">阅读原文 ›</button>` : '');
-  $('#sheet').hidden = false;
-  $('#sheet-backdrop').hidden = false;
+  sheetShow();
   const g = $('#sheet-body .sheet-goto');
   if (g) g.onclick = () => {
-    $('#sheet').hidden = true; $('#sheet-backdrop').hidden = true;
+    closeSheet(true);   // 跳转在即，立即收卡不走退场
     if (g.dataset.url) {
       const u = new URL(g.dataset.url, location.origin);
       history.pushState(null, '', u.pathname + u.search);
@@ -1699,6 +1894,7 @@ aiInit();
 /* ---------- 启动 ---------- */
 async function boot() {
   applyPrefs();
+  buildTabbar();   // APP（standalone）形态：底部四键；浏览器形态不出现
   const syncWide = () => {
     if (isWide()) { document.body.dataset.wide = '1'; closeDrawers(); ensureTree(); }
     else delete document.body.dataset.wide;

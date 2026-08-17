@@ -1,0 +1,42 @@
+{
+  "packageId": "org.foyue.wenchao",
+  "host": "wenchao.foyue.org",
+  "name": "印光法师文钞",
+  "launcherName": "印光文钞",
+  "display": "standalone",
+  "themeColor": "#f6f1e6",
+  "themeColorDark": "#171310",
+  "navigationColor": "#f6f1e6",
+  "navigationColorDark": "#171310",
+  "navigationDividerColor": "#d9cdb2",
+  "navigationDividerColorDark": "#383021",
+  "backgroundColor": "#f6f1e6",
+  "enableNotifications": false,
+  "startUrl": "/",
+  "iconUrl": "https://wenchao.foyue.org/img/icons/icon-512.png",
+  "maskableIconUrl": "https://wenchao.foyue.org/img/icons/maskable-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./keystore/wenchao-upload.keystore",
+    "alias": "wenchao"
+  },
+  "appVersion": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://wenchao.foyue.org/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://wenchao.foyue.org/",
+  "minSdkVersion": 21,
+  "orientation": "default",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": []
+}

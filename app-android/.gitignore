@@ -1,0 +1,14 @@
+# 签名密钥与密码：绝不进仓库（丢失=永远无法更新 APP，泄露=可被冒名发版）
+keystore/
+
+# 构建产物
+build/
+app/build/
+.gradle/
+*.apk
+*.aab
+*.idsig
+
+# 本机环境
+local.properties
+.DS_Store

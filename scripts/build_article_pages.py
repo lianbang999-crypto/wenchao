@@ -129,6 +129,22 @@ def notes_for(art: dict) -> str:
   return '<section class="notes-sec"><h3>注 释</h3>' + "\n".join(items) + "</section>"
 
 
+def source_line_html(art: dict) -> str:
+  """篇末「本篇出自 · 某分册」一行。
+
+  篇首那行位置信息已按设计隐去（所在分册在左侧目录可见，标题上方再挂一行是噪音），
+  但它同时是通往分册枢纽的站内链，而隐藏元素的链接权重会被搜索引擎打折。
+  故在篇末留一处可见的同等链接：读者读完正好承接「回到本册」，权重也不丢。
+  """
+  vid, vname = art.get("volume", ""), art.get("volumeName", "")
+  if not (vid and vname):
+    return ""
+  juan = short_juan(art.get("juan", ""))
+  tail = f' · {h(juan)}' if juan and juan != vname else ""
+  return (f'<p class="art-source">本篇出自 '
+          f'<a href="{vol_path(vid)}">{h(vname)}</a>{tail}</p>')
+
+
 def artnav_html(prev: dict | None, nxt: dict | None) -> str:
   """篇间导航（上一篇/下一篇），用真链接供爬虫顺序爬行、传递权重。"""
   def cell(rec: dict | None, label: str) -> str:
@@ -212,7 +228,8 @@ def prerender_main(art: dict, prev: dict | None = None, nxt: dict | None = None)
     '    </article>',
   ])
   # 顺序与 app.js renderArticle 一致：正文 → 选读 → 注释 → 反链 → 篇间导航
-  for extra in (xuandu_html(art), notes_for(art), backrefs_html(art), artnav_html(prev, nxt)):
+  for extra in (xuandu_html(art), notes_for(art), backrefs_html(art),
+                source_line_html(art), artnav_html(prev, nxt)):
     if extra:
       lines.append(f'    {extra}')
   lines.extend([
@@ -298,12 +315,53 @@ def page_html(index_html: str, art: dict, url: str,
     f'\n<meta name="twitter:description" content="{h(desc)}">'
     f'\n{jsonld_for(art, full_title, desc, url)}'
     f'\n{article_breadcrumb_ld(art, url)}'
+    f'{faq_ld(art)}'
   )
   doc = doc.replace(desc_meta, desc_meta + seo, 1)
   marker = '<main class="reader" id="reader"></main>'
   if marker not in doc:
     raise RuntimeError("site/index.html reader placeholder not found")
   return doc.replace(marker, prerender_main(art, prev, nxt), 1)
+
+
+def faq_ld(art: dict) -> str:
+  """《答念佛600问》每篇本身就是一问一答，补 FAQPage 结构化数据，
+  搜索结果可展开问答富摘要；AI 引擎也更容易据此直接取答。
+
+  只认篇名以题号开头的（如「1、…」），卷首传记之类跳过。
+  答案优先取白话，无白话则取原文，截到 ANS_MAX 字。
+
+  注：本站曾有独立的 build_faq_schema.py 事后往 HTML 里补注，但本脚本每次
+  会清空重建 site/a/，那份补注一重建就没了——故直接在此随页面一起生成。
+  """
+  title = art.get("title", "")
+  if not QNUM_RE.match(title):
+    return ""
+  ANS_MAX = 800
+  parts: list[str] = []
+  if art.get("summary"):
+    parts.append(clean_text(art["summary"]))
+  for seg in art.get("segments", []):
+    for p in (seg.get("trans") or seg.get("orig") or []):
+      t = clean_text(p)
+      if t:
+        parts.append(t)
+    if sum(len(x) for x in parts) >= ANS_MAX:
+      break
+  answer = " ".join(parts)[:ANS_MAX].rstrip()
+  if not answer:
+    return ""
+  data = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": title,
+      "acceptedAnswer": {"@type": "Answer", "text": answer},
+    }],
+  }
+  raw = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
+  return f'\n<script type="application/ld+json">{raw}</script>'
 
 
 def short_juan(name: str) -> str:

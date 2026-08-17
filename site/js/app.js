@@ -829,6 +829,12 @@ async function renderArticle(id) {
   const idx = flat.findIndex((it) => it.id === id);
   const prev = idx > 0 ? flat[idx - 1] : null;
   const next = idx >= 0 && idx < flat.length - 1 ? flat[idx + 1] : null;
+  // 篇末「本篇出自 · 某分册」：篇首那行位置信息已隐去，此处留一处可见的分册入口
+  const srcLine = (art.volume && art.volumeName)
+    ? `<p class="art-source">本篇出自 <a href="/v/${encodeURIComponent(art.volume)}/">${esc(art.volumeName)}</a>${
+        (() => { const j = shortJuan(art.juan || ''); return j && j !== art.volumeName ? ' · ' + esc(j) : ''; })()
+      }</p>`
+    : '';
   const navHtml = `<nav class="art-nav">
       ${prev ? `<button data-id="${prev.id}"><small>上一篇</small>${esc(prev.title)}</button>` : '<span></span>'}
       ${next ? `<button data-id="${next.id}"><small>下一篇</small>${esc(next.title)}</button>` : '<span></span>'}
@@ -879,6 +885,7 @@ async function renderArticle(id) {
       ${xuanduHtml}
       ${notesHtml}
       ${backHtml}
+      ${srcLine}
       ${navHtml}
     </div>`;
 

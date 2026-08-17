@@ -673,6 +673,17 @@ sup.note-ref:active { background: var(--cinnabar-soft); border-radius: 3px; }
 .note-item .note-n { color: var(--cinnabar); font-weight: 600; margin-right: 6px; }
 .note-item .note-term { font-weight: 600; color: var(--ink); }
 
+/* 篇末出处：读完正好承接「回到本册」，也替篇首隐去的那行担起分册内链 */
+.art-source {
+  margin: 2.4em 0 0; padding-top: 1.2em; border-top: 1px solid var(--line);
+  font-family: var(--kai); font-size: calc(var(--fs) - 3px);
+  color: var(--ink-3); letter-spacing: .04em; text-align: center;
+}
+.art-source a { color: var(--ink-2); text-decoration: none; border-bottom: 1px dotted var(--line); }
+.art-source a:hover { color: var(--cinnabar); border-bottom-color: var(--cinnabar); }
+/* 与其后的篇间导航相邻时，只留一条分隔线 */
+.art-source + .art-nav { margin-top: 1.4em; padding-top: 0; border-top: 0; }
+
 /* 篇间导航 */
 .art-nav {
   display: flex; justify-content: space-between; gap: 12px;

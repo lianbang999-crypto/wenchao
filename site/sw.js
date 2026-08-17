@@ -5,13 +5,13 @@
      文字勘误下次打开即见（stale-while-revalidate）。
    - HTML / books.json：网络优先、写穿缓存，离线回退——目录与页面壳始终最新。
    - config.js：恒取网络（no-store），离线才回缓存。 */
-const VER = 'wc-v60';   // v43 曾被已回滚的 07-12 重设计短暂占用，跳过避免缓存名撞车
+const VER = 'wc-v61';   // v43 曾被已回滚的 07-12 重设计短暂占用，跳过避免缓存名撞车
 // 用户主动"下载整册"的离线缓存：与外壳版本解耦，升版时不清除（见 activate）。
 // 取数失败时 caches.match 会自动跨 cache 命中这里。
 const DL = 'wc-dl';
 // 注：opencc.js(1.1MB)/qrcode.js(55KB) 是懒加载件，不进首装清单——运行时缓存优先会在首次使用后自动离线可用；
 // 塞进 SHELL 会让每个新访客装 SW 时白下 1.2MB，且 addAll 原子安装在弱网下更易整体失败。
-const SHELL = ['./', 'index.html', 'css/app.css?v=20260817-app12', 'js/app.js?v=20260817-app12', 'js/ai-core.js', 'js/share.js?v=20260817-app12', 'js/pwa.js?v=20260817-app12', 'js/offline.js?v=20260817-app12', 'config.js?v=20260817-app12', 'icon.svg', 'manifest.webmanifest', 'img/icons/icon-192.png', 'img/icons/maskable-192.png', 'apple-touch-icon.png', 'data/books.json'];
+const SHELL = ['./', 'index.html', 'css/app.css?v=20260817-app13', 'js/app.js?v=20260817-app13', 'js/ai-core.js', 'js/share.js?v=20260817-app13', 'js/pwa.js?v=20260817-app13', 'js/offline.js?v=20260817-app13', 'config.js?v=20260817-app13', 'icon.svg', 'manifest.webmanifest', 'img/icons/icon-192.png', 'img/icons/maskable-192.png', 'apple-touch-icon.png', 'data/books.json'];
 
 /* 装好即等待，不抢先接管。
    原先 install 就 skipWaiting：用户正读着，新版本一到便强行换人并清掉旧缓存，

@@ -79,3 +79,10 @@
 /.well-known/assetlinks.json
   Cache-Control: no-cache
   Content-Type: application/json
+
+# 安卓安装包：文件名带版本号即内容标识，可长缓存；显式声明 MIME 与下载文件名，
+# 免得个别浏览器把它当未知类型在页内打开或存成 .zip
+/app/*.apk
+  Content-Type: application/vnd.android.package-archive
+  Content-Disposition: attachment
+  Cache-Control: public, max-age=31536000, immutable

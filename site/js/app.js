@@ -596,7 +596,7 @@ function installSectionHtml() {
   const I = window.__wcInstall;
   if (!I) return '';                    // pwa.js 未加载（极少）：不画空壳
   const apk = CFG.apkUrl || '';
-  let row;
+  let row, apkShown = false;   // 主分支是否已给出 APK 行，避免下方补充行重复
   if (I.standalone) {
     // 已在 APP 窗口内运行：只作一行确认，不喧宾夺主
     row = `<div class="set-row"><span class="set-k">已安装到主屏</span>
@@ -621,12 +621,13 @@ function installSectionHtml() {
     row = `<div class="set-row"><span class="set-k">安卓安装包</span><span class="set-c">
              <a class="chip-btn" href="${esc(apk)}" download>下载 APK</a></span></div>
            <div class="set-note">若浏览器未提示安装，可下载安装包直接安装。</div>`;
+    apkShown = true;
   } else {
     row = `<div class="set-row"><span class="set-k">装到手机主屏</span></div>
            <div class="set-note">在 Chrome 等浏览器中打开本站，浏览器菜单里选「安装应用」或「添加到主屏幕」。</div>`;
   }
   // 可直接安装时，APK 作为备选补一行（国产 ROM 拦 PWA 时的兜底）
-  const apkExtra = (apk && !I.standalone && (I.canPrompt() || I.isAndroid))
+  const apkExtra = (apk && !apkShown && !I.standalone && (I.canPrompt() || I.isAndroid))
     ? `<div class="set-row"><span class="set-k">安卓安装包</span><span class="set-c">
          <a class="chip-btn" href="${esc(apk)}" download>下载 APK</a></span></div>` : '';
   return `<section class="home-mine mine-set">

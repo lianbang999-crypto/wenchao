@@ -21,3 +21,6 @@ __pycache__/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# 待上传 R2 的分发产物（APK 等）：走对象存储，不进仓库
+dist/

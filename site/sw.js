@@ -5,13 +5,13 @@
      文字勘误下次打开即见（stale-while-revalidate）。
    - HTML / books.json：网络优先、写穿缓存，离线回退——目录与页面壳始终最新。
    - config.js：恒取网络（no-store），离线才回缓存。 */
-const VER = 'wc-v51';   // v43 曾被已回滚的 07-12 重设计短暂占用，跳过避免缓存名撞车
+const VER = 'wc-v52';   // v43 曾被已回滚的 07-12 重设计短暂占用，跳过避免缓存名撞车
 // 用户主动"下载整册"的离线缓存：与外壳版本解耦，升版时不清除（见 activate）。
 // 取数失败时 caches.match 会自动跨 cache 命中这里。
 const DL = 'wc-dl';
 // 注：opencc.js(1.1MB)/qrcode.js(55KB) 是懒加载件，不进首装清单——运行时缓存优先会在首次使用后自动离线可用；
 // 塞进 SHELL 会让每个新访客装 SW 时白下 1.2MB，且 addAll 原子安装在弱网下更易整体失败。
-const SHELL = ['./', 'index.html', 'css/app.css?v=20260817-app3', 'js/app.js?v=20260817-app3', 'js/ai-core.js', 'js/share.js?v=20260817-app3', 'js/pwa.js?v=20260817-app3', 'js/offline.js?v=20260817-app3', 'config.js?v=20260817-app3', 'icon.svg', 'manifest.webmanifest', 'img/icons/icon-192.png', 'img/icons/maskable-192.png', 'apple-touch-icon.png', 'data/books.json'];
+const SHELL = ['./', 'index.html', 'css/app.css?v=20260817-app4', 'js/app.js?v=20260817-app4', 'js/ai-core.js', 'js/share.js?v=20260817-app4', 'js/pwa.js?v=20260817-app4', 'js/offline.js?v=20260817-app4', 'config.js?v=20260817-app4', 'icon.svg', 'manifest.webmanifest', 'img/icons/icon-192.png', 'img/icons/maskable-192.png', 'apple-touch-icon.png', 'data/books.json'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(VER).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -59,6 +59,8 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   if (url.origin !== location.origin || e.request.method !== 'GET') return;
   const p = url.pathname;
+  // 安装包等分发大件：直连网络，绝不进离线缓存（一个 APK 就 1.4MB，挤占的是正文与字体的额度）
+  if (p.startsWith('/app/')) return;
   if (p.endsWith('/config.js')) {
     e.respondWith(fetch(e.request, { cache: 'no-store' }).catch(() => caches.match(e.request)));
     return;

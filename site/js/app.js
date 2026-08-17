@@ -572,10 +572,10 @@ function installSectionHtml() {
         </div>
       </section>`;
   }
-  // 安卓安装包只对安卓有意义：iPhone 装不了，电脑更装不了
+  // 安卓安装包只对安卓有意义：iPhone 装不了，电脑更装不了。安卓上它就是唯一主行动
   const apkRow = (apk && I.isAndroid)
-    ? `<div class="set-row"><span class="set-k">安卓安装包</span><span class="set-c">
-         <a class="chip-btn${I.canPrompt() ? '' : ' ins-primary'}" href="${esc(apk)}" download>下载 APK</a></span></div>` : '';
+    ? `<div class="set-row"><span class="set-k">安卓应用</span><span class="set-c">
+         <a class="chip-btn ins-primary" href="${esc(apk)}" download>下载安装</a></span></div>` : '';
   let title, rows;
 
   if (I.isIOS) {
@@ -591,22 +591,20 @@ function installSectionHtml() {
            <button class="chip-btn" id="ins-copy">复制网址</button></span></div>
          <div class="set-note">请改用 Safari 打开本站，再从「分享 → 添加到主屏幕」添加。</div>`;
   } else if (I.isAndroid) {
-    title = '安卓 · 安装应用';
-    if (I.canPrompt()) {
-      rows = `<div class="set-row"><span class="set-k">安装到手机</span><span class="set-c">
-                <button class="chip-btn ins-primary" id="ins-go">安装</button></span></div>
-              <div class="set-note">启动更快、可离线阅读，不占多少空间。装不上时可用下方安装包。</div>`
-             + apkRow;
-    } else if (I.inAppBrowser) {
-      rows = `<div class="set-row"><span class="set-k">安装到手机</span><span class="set-c">
-                <button class="chip-btn" id="ins-copy">复制网址</button></span></div>
-              <div class="set-note">当前是应用内置浏览器，装不了。可复制网址到 Chrome 等浏览器打开，或直接下载安装包。</div>`
-             + apkRow;
+    // 安卓有正式安装包，就只给这一条路——再摆一个「安装」按钮只会让人问「到底装哪个」。
+    // 浏览器自带的安装能力仍在（菜单里），写进说明作退路：国产 ROM 拦未知来源时用得上。
+    title = '安卓 · 下载应用';
+    if (I.inAppBrowser) {
+      rows = `<div class="set-row"><span class="set-k">获取应用</span><span class="set-c">
+                <button class="chip-btn ins-primary" id="ins-copy">复制网址</button></span></div>
+              <div class="set-note">当前是应用内置浏览器，无法直接下载。请复制网址到 Chrome 等浏览器打开本页再下载。</div>`;
+    } else if (apk) {
+      rows = apkRow
+        + `<div class="set-note">下载后按提示安装即可全屏离线阅读。若系统拦截安装，
+             在弹窗里允许「安装未知应用」；也可在浏览器菜单选「安装应用」。</div>`;
     } else {
-      rows = apkRow + (apk
-        ? `<div class="set-note">下载后按提示安装；也可在 Chrome 菜单里选「安装应用」。</div>`
-        : `<div class="set-row"><span class="set-k">安装到手机</span></div>
-           <div class="set-note">在 Chrome 菜单里选「安装应用」或「添加到主屏幕」。</div>`);
+      rows = `<div class="set-row"><span class="set-k">安装到手机</span></div>
+              <div class="set-note">在浏览器菜单里选「安装应用」或「添加到主屏幕」。</div>`;
     }
   } else {
     // 电脑端：Chrome/Edge 可装成独立窗口，不给安卓包

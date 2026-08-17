@@ -50,6 +50,9 @@
     e.preventDefault();
     deferredPrompt = e;
     notify();
+    // 安卓已有正式安装包（「我的」页给 APK），再自动弹一条 PWA 安装横幅只会与之打架，
+    // 让人分不清装哪个——故安卓不弹，能力仍留着供浏览器菜单与桌面端使用。
+    if (isAndroid) return;
     if (!bannerAllowed()) return;              // 不显示横幅，但安装能力已存下
     setTimeout(showInstallBanner, 2500);
   });

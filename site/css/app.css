@@ -939,6 +939,28 @@ a.vol-card { color: inherit; text-decoration: none; }   /* 首页预渲染书架
 }
 .rb-chip:hover { border-color: var(--ink-3); }
 .rb-chip.on { background: var(--cinnabar); border-color: var(--cinnabar); color: #f8f3e8; }
+/* 联系我们 · 公众号二维码卡：居中、留白足，只有名号与一行说明。
+   码本身恒白底黑码——纸色或墨夜底都会压低对比、影响识别，故单独给白卡衬托。 */
+.qr-card { text-align: center; padding: 6px 0 2px; }
+.qr-card .qr-name {
+  margin: 0; font-size: 18px; font-weight: 600; letter-spacing: .1em; color: var(--ink);
+}
+.qr-card .qr-sub {
+  margin: 5px 0 16px; font-size: 12.5px; color: var(--ink-3);
+  letter-spacing: .06em; font-family: var(--kai);
+}
+.qr-card .qr-img {
+  display: block; width: 220px; height: 220px; margin: 0 auto;
+  background: #fff; padding: 10px; border-radius: 10px;
+  border: 1px solid var(--line);
+  /* 长按可存图/识别：别让浏览器把它当普通图禁掉长按菜单 */
+  -webkit-touch-callout: default; user-select: auto;
+}
+.qr-card .qr-tip {
+  margin: 14px 0 0; font-size: 12.5px; line-height: 1.85;
+  color: var(--ink-3); font-family: var(--kai);
+}
+
 /* 更新提示条：新版本就绪时浮出，不夺焦、可忽略。位置避开底部朗读/选段条 */
 .wc-update {
   position: fixed; left: 50%; bottom: 0; z-index: 55;

@@ -540,6 +540,9 @@ function renderMine() {
           <div class="set-row"><span class="set-k">整册离线</span><span class="set-c">
             <button class="chip-btn" id="offline-open">下载整册</button></span></div>
           ${updateRowHtml()}
+          <button class="set-line" id="mine-contact">
+            <span class="set-k">联系我们</span>
+            <span class="set-v">公众号 · 净业助手</span></button>
         </div>
       </section>
       ${installSectionHtml()}`;
@@ -553,8 +556,23 @@ function renderMine() {
   wireMineItems($('#reader'), renderMine);
   { const aa = $('#mine-aa'); if (aa) aa.onclick = openAaSheet; }
   { const u = $('#chk-update'); if (u) u.onclick = () => checkUpdate(u); }
+  { const c = $('#mine-contact'); if (c) c.onclick = openContact; }
   wireInstall($('#reader'));
   if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
+}
+
+/* 联系我们：公众号二维码。复用注释弹卡那张 sheet（拖拽关闭、Esc、焦点归还都现成）。
+   在微信内可长按直接识别；在浏览器/APP 内则需存图再扫，故两条路都写明。 */
+function openContact() {
+  $('#sheet-body').innerHTML =
+    `<div class="qr-card">
+       <h4 class="qr-name">净业助手</h4>
+       <p class="qr-sub">印光法师文钞 · 官方公众号</p>
+       <img class="qr-img" src="/img/qr-gzh.png?v=1" width="220" height="220"
+            alt="净业助手公众号二维码" decoding="async">
+       <p class="qr-tip">微信内长按可直接识别<br>其他应用中请先保存图片，再用微信扫一扫</p>
+     </div>`;
+  sheetShow();
 }
 
 /* 「我的」页 · 更新行：站点更新点一下即可查；装了 APP 且外壳落后于最新包时，

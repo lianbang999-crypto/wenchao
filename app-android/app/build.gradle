@@ -23,7 +23,7 @@ plugins {
 def twaManifest = [
     applicationId: 'org.foyue.wenchao',
     hostName: 'wenchao.foyue.org', // The domain being opened in the TWA.
-    launchUrl: '/?app=1.0.3', // The start path for the TWA. Must be relative to the domain.
+    launchUrl: '/?app=1.0.4', // The start path for the TWA. Must be relative to the domain.
     name: '印光法师文钞', // The application name.
     launcherName: '印祖文钞', // The name shown on the Android Launcher.
     themeColor: '#F6F1E6', // The color used for the status bar.
@@ -45,7 +45,7 @@ def twaManifest = [
     generatorApp: 'bubblewrap-cli', // Application that generated the Android Project
     // The fallback strategy for when Trusted Web Activity is not available. Possible values are
     // 'customtabs' and 'webview'.
-    fallbackType: 'customtabs',
+    fallbackType: 'webview',
     enableSiteSettingsShortcut: 'true',
     orientation: 'default',
 ]
@@ -57,8 +57,8 @@ android {
         applicationId "org.foyue.wenchao"
         minSdkVersion 21
         targetSdkVersion 36
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.4"
 
         // The name for the application
         resValue "string", "appName", twaManifest.name

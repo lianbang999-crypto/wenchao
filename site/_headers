@@ -13,7 +13,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'
 
 /config.js
   Cache-Control: no-store
@@ -79,6 +79,11 @@
 /.well-known/assetlinks.json
   Cache-Control: no-cache
   Content-Type: application/json
+
+# 启动计数像素：恒不缓存，每次启动都要真的落到服务器日志里才数得到
+/i/*
+  Cache-Control: no-store, no-cache, must-revalidate
+  Content-Type: image/gif
 
 # 安卓安装包：文件名带版本号即内容标识，可长缓存；显式声明 MIME 与下载文件名，
 # 免得个别浏览器把它当未知类型在页内打开或存成 .zip

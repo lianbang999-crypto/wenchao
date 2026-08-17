@@ -200,6 +200,16 @@ document.addEventListener('keydown', (e) => {
    而阅读应用的导航频率低，多一条常驻栏只是吃掉正文高度。顶栏沉浸隐现已够用。 */
 const isApp = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 if (isApp) document.body.dataset.app = '1';
+/* APP 启动计数：请求一张同源 1×1 图，让服务器访问日志留下一条可计数的记录。
+   不设 cookie、不存标识、不发第三方——与加载任何一张站内图片无异，故不涉及个人信息。
+   之所以另做这一路：网页分析的 beacon 会被拦截器挡掉一部分，服务端计数挡不掉。
+   带时间戳是为了绕开缓存，否则第二次启动就不会真的发出请求。 */
+if (isApp) {
+  try {
+    const v = new URLSearchParams(location.search).get('app') || 'na';
+    new Image().src = '/i/open.gif?v=' + encodeURIComponent(v) + '&t=' + Date.now();
+  } catch (e) { /* 计数失败不影响阅读 */ }
+}
 
 /* ---------- 全文检索：篇名本地过滤 + 正文查后端 D1 全文索引 ----------
    不再下载整站语料（曾是 15MB 的 search.json，全量拉取+客户端线性扫描）；

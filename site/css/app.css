@@ -201,29 +201,34 @@ body.nav-hidden .read-progress { top: 0; }
 
 /* ---------- 分享：底部操作条 + 卡片弹层 ---------- */
 /* 极简高级：磨砂纸感悬浮条、单行、统一细线图标按钮，朱砂只在点按时点睛 */
+/* 选中文字才出现，是"刚发生了什么"的即时反馈——底色与描边都取朱砂柔调，
+   与四周纸面拉开一档，不必盯着也能察觉它出来了。入场再带一次轻微上浮。 */
 .share-bar {
   position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 50;
   display: flex; align-items: center; gap: 2px; max-width: 94vw;
   margin-bottom: calc(18px + env(safe-area-inset-bottom));
   padding: 5px 6px;
-  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  background: color-mix(in srgb, var(--cinnabar) 12%, var(--paper));
   backdrop-filter: blur(14px) saturate(1.15); -webkit-backdrop-filter: blur(14px) saturate(1.15);
-  border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cinnabar) 38%, transparent);
   border-radius: 999px;
-  box-shadow: 0 10px 34px rgba(40, 28, 12, .16);
+  box-shadow: 0 10px 30px rgba(40, 28, 12, .2),
+              0 0 0 4px color-mix(in srgb, var(--cinnabar) 7%, transparent);
   transition: margin-bottom .22s ease;   /* 朗读条在场时上移堆叠的过渡 */
+  animation: sb-in .2s ease-out;
 }
+@keyframes sb-in { from { opacity: 0; transform: translate(-50%, 8px); } }
 .share-bar[hidden] { display: none; }
 .sb-btn {
   display: inline-flex; align-items: center; gap: 6px;
-  border: 0; background: none; color: var(--ink-2); cursor: pointer;
+  border: 0; background: none; color: var(--ink); cursor: pointer;
   font-size: 14px; padding: 8px 14px; border-radius: 999px; white-space: nowrap;
   transition: background .18s ease, color .18s ease;
 }
-.sb-btn svg { opacity: .85; }
-.sb-btn:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); color: var(--ink); }
+.sb-btn svg { opacity: .9; }
+.sb-btn:hover { background: color-mix(in srgb, var(--cinnabar) 14%, transparent); color: var(--cinnabar); }
 .sb-btn:active { color: var(--cinnabar); }
-.sb-sep { width: 1px; height: 22px; background: var(--line); margin: 0 3px; flex: none; }
+.sb-sep { width: 1px; height: 22px; background: color-mix(in srgb, var(--cinnabar) 26%, transparent); margin: 0 3px; flex: none; }
 .sb-x {
   width: 40px; height: 40px; border: 0; background: none; color: var(--ink-3);
   display: grid; place-items: center; cursor: pointer; border-radius: 50%;
@@ -502,18 +507,17 @@ a.chip-btn { text-decoration: none; }
 
 /* 篇内工具行（吸顶）：中＝原文/对照/白话切换，右＝收藏·朗读（本篇功能不占顶栏）。
    三列网格让切换段钮保持光学居中，无白话篇只剩右侧两键 */
-/* 工具行单行：左＝分层（看哪层），右＝收藏·朗读·Aa（本篇动作+阅读设置）。
-   原为两行 84px，占掉近一屏的十分之一；并作一行后省出的高度直接归了正文。 */
+/* 工具行两行居中：上＝分层（选中带底色，一眼看出在读哪层），下＝收藏·朗读·Aa */
 .mode-bar {
   position: sticky; top: calc(var(--topbar-h) + env(safe-area-inset-top)); z-index: 20;
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
-  padding: 2px 22px 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 4px 22px 6px;
   background: linear-gradient(var(--paper) 86%, transparent);
 }
-.mb-segs { display: flex; align-items: center; }
+.mb-segs { display: flex; align-items: center; gap: 2px; }
 /* 三键：收藏 · 朗读 · Aa，单行右置。全部细线图标、同等份量——
    页面顶部不该有第二个抢眼的色块（朱砂留给分层选中与朗读进行态）。 */
-.mb-acts { display: flex; align-items: center; gap: 2px; margin-right: -8px; }
+.mb-acts { display: flex; align-items: center; gap: 10px; }
 .mb-act {
   display: inline-flex; align-items: center; justify-content: center;
   border: 0; background: none; color: var(--ink-3); cursor: pointer;
@@ -529,30 +533,30 @@ a.chip-btn { text-decoration: none; }
 .seg-off { opacity: .38; cursor: default; }
 /* 已收藏：书签实心点亮 */
 .mb-bookmark.on svg { fill: var(--cinnabar); }
-/* 分层：文字式，不用胶囊实心块——选中只以朱砂+短下划线示意，页面顶部安静得多 */
+/* 分层：选中项加朱砂柔底 + 朱砂字，未选纯文字。
+   底色比实心朱砂块轻，但"在读哪层"仍一望即知 */
 .mode-bar .seg {
-  position: relative;
   border: 0; background: none; cursor: pointer;
-  font-size: 14px; letter-spacing: .06em; padding: 15px 10px; line-height: 1;   /* 15+14+15=44px 触控 */
-  color: var(--ink-3); font-family: inherit;
+  font-size: 14px; letter-spacing: .08em; padding: 8px 16px; line-height: 1.4;
+  border-radius: 999px; color: var(--ink-3); font-family: inherit;
   white-space: nowrap;   /* 微信等 WebView 放大字体时禁止「原文」竖折成两行 */
-  transition: color .18s ease;
+  transition: color .18s ease, background .18s ease;
 }
-.mode-bar .seg:first-child { padding-left: 0; }
 .mode-bar .seg:hover { color: var(--ink-2); }
-.mode-bar .seg.on { color: var(--cinnabar); font-weight: 600; }
-.mode-bar .seg.on::after {
-  content: ''; position: absolute; left: 9px; right: 9px; bottom: 6px;
-  height: 1.5px; background: var(--cinnabar); border-radius: 1px;
+.mode-bar .seg.on {
+  color: var(--cinnabar); font-weight: 600;
+  background: var(--cinnabar-soft);
 }
-.mode-bar .seg:first-child.on::after { left: 0; }
 /* 模式栏随顶栏一起隐现：下滑收起、上滑或近顶唤出（沉浸阅读） */
 .mode-bar { transition: transform .28s ease; }
 body.nav-hidden .mode-bar { transform: translateY(calc(-100% - var(--topbar-h) - env(safe-area-inset-top))); }
 
 /* 文章头 */
-.art-head { text-align: center; padding: 26px 0 8px; }
-.art-crumb { font-size: 12.5px; color: var(--ink-3); letter-spacing: .25em; }
+.art-head { text-align: center; padding: 20px 0 8px; }
+/* 篇内不再显示「文钞 · 续编上册 · 卷上 · 书」这行位置信息：
+   所在分册与卷在左侧目录里看得到，标题上方再挂一行只是噪音。
+   仍留在 DOM 中不删——它是文章页通往分册/专题枢纽的站内链，爬虫靠它串联。 */
+.art-crumb { display: none; }
 .art-crumb a { color: var(--ink-2); text-decoration: none; border-bottom: 1px dotted var(--line); }
 .art-crumb a:hover { color: var(--cinnabar); }
 .art-title {

@@ -387,7 +387,7 @@ def volume_page_html(vol: dict, css_link: str, all_vols: list[tuple]) -> str:
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="印光文钞">
+<meta name="apple-mobile-web-app-title" content="印祖文钞">
 <!-- 字体走同源自托管（与首页/文章页同一套 css/fonts.css）。原先此处是 Google Fonts +
      jsdelivr 双外链：大陆常被阻断、render-blocking，且开了 Cloudflare Fonts 后会被改写成
      每页 277KB 的内联 @font-face 表。字族名（Noto Serif SC / LXGW WenKai GB Screen）一致。 -->
@@ -532,7 +532,7 @@ def _hub_head(title_full: str, desc: str, url: str, css_link: str, *ld_blocks: s
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="印光文钞">
+<meta name="apple-mobile-web-app-title" content="印祖文钞">
 <!-- 字体走同源自托管（与首页/文章页同一套 css/fonts.css）。原先此处是 Google Fonts +
      jsdelivr 双外链：大陆常被阻断、render-blocking，且开了 Cloudflare Fonts 后会被改写成
      每页 277KB 的内联 @font-face 表。字族名（Noto Serif SC / LXGW WenKai GB Screen）一致。 -->

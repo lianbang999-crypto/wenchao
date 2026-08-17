@@ -1,92 +1,88 @@
 #!/usr/bin/env python3
-"""生成 PWA / 安装到主屏所需的全套 PNG 图标。
+"""从品牌原图生成全套 APP / PWA 图标。
 
-来源是站点的"文钞"印章图标（site/icon.svg）：红底圆角、米色边框、竖排"文 / 钞"。
-本机无 SVG 渲染器（cairosvg / rsvg / magick 均缺），故直接用 PIL 重绘，
-以便精确控制 maskable 安全区与 iOS 专用图的留白。
+来源：brand/logo-source.png（莲台火焰宝珠，方图）。
+早前是用 PIL 重绘"文钞"印章，2026-08 换为品牌原图后改走本流程。
 
-产物：
-  site/img/icons/icon-192.png        普通图标（圆角、透明底）
-  site/img/icons/icon-512.png
-  site/img/icons/maskable-192.png     maskable（满版红底，内容居中安全区内）
-  site/img/icons/maskable-512.png
-  site/apple-touch-icon.png           iOS 主屏（180、不透明、方形，系统自行切圆角）
+原图四周留白极大——内容仅占画布约 29% 宽、54% 高，直接缩放会得到一个
+"缩在中间的小图标"。故先按实际内容外接框重新构图：
 
-改图标后重跑本脚本即可。颜色取自 manifest 的 background/theme color。
+  · 常规图标（purpose=any）：内容占边长 ~76%，四周留呼吸
+  · 可遮罩图标（purpose=maskable）：系统会裁成圆/方圆/水滴，安全区仅中心 80%，
+    故内容再收到 ~56%，保证任何裁切形状下都不切到莲台
+  · 底色统一取原图背景色，与 manifest 的 background_color 同值——开机屏上
+    图标与背景浑然一体，看不出图标的方形边界
+
+浏览器标签页的 favicon 仍用 site/icon.svg（印章）：16–32px 下莲台细节会糊成
+一团，而印章的"文钞"二字在极小尺寸仍可辨。
+
+重跑：python3 scripts/build_app_icons.py
 """
-import os
-from PIL import Image, ImageDraw, ImageFont
+from pathlib import Path
+from PIL import Image
 
-BG = (176, 58, 38)    # #b03a26 朱红
-FG = (246, 241, 230)  # #f6f1e6 米色
-FONT_PATH = "/System/Library/Fonts/Supplemental/Songti.ttc"
-CHARS = ["文", "钞"]
-SS = 4  # 超采样倍数，先大图渲染再缩小，边缘更干净
-
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ICON_DIR = os.path.join(ROOT, "site", "img", "icons")
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "brand" / "logo-source.png"
+SITE = ROOT / "site"
+ICONS = SITE / "img" / "icons"
+BG = (252, 250, 246)          # #fcfaf6 —— 原图背景，同时用作开机屏底色
 
 
-def load_font(px):
-    # Songti.ttc 内含多个字重，优先粗体(索引1)，失败回退
-    for idx in (1, 0):
-        try:
-            return ImageFont.truetype(FONT_PATH, px, index=idx)
-        except Exception:
-            continue
-    return ImageFont.truetype(FONT_PATH, px)
+def content_box(im, bg, tol=90, step=2):
+  """内容外接框：与背景色差超过 tol 的像素范围。"""
+  w, h = im.size
+  px = im.load()
+  xs, ys = [], []
+  for y in range(0, h, step):
+    for x in range(0, w, step):
+      p = px[x, y]
+      if abs(p[0] - bg[0]) + abs(p[1] - bg[1]) + abs(p[2] - bg[2]) > tol:
+        xs.append(x)
+        ys.append(y)
+  return min(xs), min(ys), max(xs), max(ys)
 
 
-def draw_chars(d, box, font_ratio):
-    """在 box 内竖排居中绘制"文 / 钞"。"""
-    x0, y0, x1, y1 = box
-    cw, ch = x1 - x0, y1 - y0
-    font = load_font(int(cw * font_ratio))
-    cxc = x0 + cw / 2
-    for char, yc_ratio in zip(CHARS, (0.30, 0.70)):
-        yc = y0 + ch * yc_ratio
-        bx = d.textbbox((0, 0), char, font=font)
-        tw, th = bx[2] - bx[0], bx[3] - bx[1]
-        d.text((cxc - tw / 2 - bx[0], yc - th / 2 - bx[1]), char, font=font, fill=FG)
-
-
-def make_tile(size, rounded=True, opaque=False):
-    """普通图标 / iOS 图标：红底（圆角或方形）+ 边框 + 文钞。"""
-    s = size * SS
-    img = Image.new("RGB" if opaque else "RGBA", (s, s),
-                    BG if opaque else (0, 0, 0, 0))
-    d = ImageDraw.Draw(img)
-    if rounded and not opaque:
-        d.rounded_rectangle([0, 0, s - 1, s - 1], radius=int(s * 0.18), fill=BG)
-    inset = int(s * 0.07)
-    d.rounded_rectangle([inset, inset, s - inset, s - inset],
-                        radius=int(s * 0.11), outline=FG, width=max(2, int(s * 0.03)))
-    draw_chars(d, (inset, inset, s - inset, s - inset), 0.50)
-    return img.resize((size, size), Image.LANCZOS)
-
-
-def make_maskable(size):
-    """maskable：满版红底，边框与文字收进中心安全区(约74%)，被裁成任意形状都不缺角。"""
-    s = size * SS
-    img = Image.new("RGB", (s, s), BG)
-    d = ImageDraw.Draw(img)
-    inset = int(s * 0.13)
-    d.rounded_rectangle([inset, inset, s - inset, s - inset],
-                        radius=int(s * 0.06), outline=FG, width=max(2, int(s * 0.018)))
-    draw_chars(d, (inset, inset, s - inset, s - inset), 0.46)
-    return img.resize((size, size), Image.LANCZOS)
+def compose(im, box, ratio, size):
+  """把内容按占比 ratio 居中放进 size×size 的底色画布。"""
+  x0, y0, x1, y1 = box
+  cw, ch = x1 - x0, y1 - y0
+  side = int(max(cw, ch) / ratio)                 # 目标方形在原图坐标系下的边长
+  cx, cy = (x0 + x1) // 2, (y0 + y1) // 2
+  left, top = cx - side // 2, cy - side // 2
+  canvas = Image.new("RGB", (side, side), BG)
+  # 只取与原图的交集再按偏移贴入：PIL 的 crop 越界会填黑，直接贴会在边缘留黑边，
+  # 而 maskable 恰好裁得比画布大，那道黑边会被当成内容、误判安全区。
+  w, h = im.size
+  l, t = max(0, left), max(0, top)
+  r, b = min(w, left + side), min(h, top + side)
+  canvas.paste(im.crop((l, t, r, b)), (l - left, t - top))
+  return canvas.resize((size, size), Image.LANCZOS)
 
 
 def main():
-    os.makedirs(ICON_DIR, exist_ok=True)
-    make_tile(192).save(os.path.join(ICON_DIR, "icon-192.png"))
-    make_tile(512).save(os.path.join(ICON_DIR, "icon-512.png"))
-    make_maskable(192).save(os.path.join(ICON_DIR, "maskable-192.png"))
-    make_maskable(512).save(os.path.join(ICON_DIR, "maskable-512.png"))
-    make_tile(180, rounded=False, opaque=True).save(
-        os.path.join(ROOT, "site", "apple-touch-icon.png"))
-    print("图标已生成：site/img/icons/ 与 site/apple-touch-icon.png")
+  im = Image.open(SRC).convert("RGB")
+  box = content_box(im, BG)
+  print(f"内容外接框: {box}  (原图 {im.size[0]}×{im.size[1]})")
+  ICONS.mkdir(parents=True, exist_ok=True)
+
+  jobs = [
+    # (输出路径, 内容占比, 边长)
+    (ICONS / "icon-192.png", 0.76, 192),
+    (ICONS / "icon-512.png", 0.76, 512),
+    (ICONS / "maskable-192.png", 0.56, 192),      # 安全区 80%：内容再收，裁圆也不切
+    (ICONS / "maskable-512.png", 0.56, 512),
+    (SITE / "apple-touch-icon.png", 0.76, 180),   # iOS 不支持透明，恒带底色
+    (ROOT / "app-android" / "store_icon.png", 0.76, 512),   # Play 商店列表用
+  ]
+  for path, ratio, size in jobs:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    compose(im, box, ratio, size).save(path, "PNG", optimize=True)
+    print(f"  {path.relative_to(ROOT)}  {size}×{size}  内容 {int(ratio * 100)}%")
+
+  compose(im, box, 0.76, 1024).save(ROOT / "brand" / "logo-square.png", "PNG", optimize=True)
+  print("  brand/logo-square.png  1024×1024  （留档 / 上架素材）")
+  print(f"\n底色 #{BG[0]:02x}{BG[1]:02x}{BG[2]:02x} —— 须与 manifest 的 background_color 一致")
 
 
 if __name__ == "__main__":
-    main()
+  main()

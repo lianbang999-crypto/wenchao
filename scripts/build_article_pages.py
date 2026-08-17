@@ -623,9 +623,12 @@ def topic_index_html(meta: dict, css_link: str) -> str:
   cards: list[str] = []
   for t in TOPICS:
     name, cnt, _lm = meta[t["slug"]]
+    # 极简条目：题名与篇数一行对齐，导语单行截断（长描述堆三行会把八个专题拉成长页）
     cards.append(
-      f'<a class="vi-link" href="/t/{quote(t["slug"], safe="")}/">'
-      f'{h(name)}（{cnt} 篇）<br><span class="art-crumb">{h(t["blurb"])}</span></a>'
+      f'<a class="topic-row" href="/t/{quote(t["slug"], safe="")}/">'
+      f'<span class="tr-head"><span class="tr-name">{h(name)}</span>'
+      f'<span class="tr-n">{cnt} 篇</span></span>'
+      f'<span class="tr-blurb">{h(t["blurb"])}</span></a>'
     )
   index_body = "\n      ".join(cards)
   breadcrumb = _ld({

@@ -19,7 +19,9 @@ const prefs = {
   // 底色：auto=跟随系统深浅色（新默认——夜里打开不刺眼）。
   // 老用户手选过的 paper/plain/night 原样保留；没选过的自然落到 auto。
   theme: store.get('theme', 'auto'),
-  font: store.get('font', 'song'),     // 正文字体：song 宋（原文宋/白话楷）| kai 全楷
+  // 原文 / 白话 各自的字体：song 宋 | kai 楷 | hei 黑。默认原文宋、白话楷（文白一眼分得开）
+  fontOrig: store.get('fontOrig', 'song'),
+  fontTrans: store.get('fontTrans', 'kai'),
   mode: store.get('mode', 'both'),     // orig | trans | both
   trad: store.get('trad', false),      // 繁体显示（OpenCC 简→繁，仅显示层）
 };
@@ -83,9 +85,11 @@ sysDark.addEventListener('change', () => { if (prefs.theme === 'auto') applyPref
 function applyPrefs() {
   document.documentElement.style.setProperty('--fs', prefs.fs + 'px');
   const t = THEMES[resolveTheme()] || THEMES.paper;
-  document.documentElement.dataset.theme = t.attr;
-  if (prefs.font === 'kai') document.documentElement.dataset.font = 'kai';
-  else delete document.documentElement.dataset.font;
+  const de = document.documentElement;
+  de.dataset.theme = t.attr;
+  // 默认值不写属性，让 :root 的默认变量生效（少一层覆盖，也便于排查）
+  if (prefs.fontOrig !== 'song') de.dataset.fo = prefs.fontOrig; else delete de.dataset.fo;
+  if (prefs.fontTrans !== 'kai') de.dataset.ft = prefs.fontTrans; else delete de.dataset.ft;
   document.querySelector('meta[name=theme-color]').setAttribute('content', t.color);
   syncSettings();   // 同步所有已渲染设置组（Aa 面板 /「我的」页）的选中态
 }
@@ -108,7 +112,7 @@ function openDrawer(side) {
   if (!d.hasAttribute('tabindex')) d.tabIndex = -1;
   drawerLastFocus = document.activeElement;
   d.focus({ preventScroll: true });
-  syncInert(); syncTabs();
+  syncInert();
 }
 function closeDrawers() {
   const wasOpen = drawerL.classList.contains('open') || drawerR.classList.contains('open');
@@ -119,7 +123,7 @@ function closeDrawers() {
   overlay.classList.remove('show');
   setTimeout(() => { overlay.hidden = true; }, 280);
   aiSpeakStop();   // 关面板即停 AI 回答朗读（高清音频 + 本机合成）
-  syncInert(); syncTabs();
+  syncInert();
   if (wasOpen && drawerLastFocus && drawerLastFocus.isConnected) {
     try { drawerLastFocus.focus({ preventScroll: true }); } catch {}
   }
@@ -173,7 +177,6 @@ function syncInert() {
   const set = (el, on) => { if (el && el.inert !== on) el.inert = on; };
   set($('#topbar'), !!top);
   set($('#reader'), !!top);
-  set($('#tabbar'), !!top);
   // 宽屏常驻左栏平时可用；有弹层时同样锁住（遮罩本就盖着它）
   set(drawerL, !!top && top !== 'L');
   set(drawerR, !!top && top !== 'R');
@@ -192,46 +195,11 @@ document.addEventListener('keydown', (e) => {
   if (drawerL.classList.contains('open') || drawerR.classList.contains('open')) closeDrawers();
 });
 
-/* ---------- APP 形态：底部四键 tab（安装到主屏后出现） ----------
-   TWA / A2HS 的 standalone 窗口里顶栏四键拇指够不到——下放一份到底部。
-   浏览器形态不注入，网页气质不变；宽屏由 CSS 隐藏。 */
+/* APP 形态标记：供样式按需微调（安全区等）。
+   曾在此注入底部四键 tab，后撤除——它与顶栏「目录·问文钞·我的」完全重复，
+   而阅读应用的导航频率低，多一条常驻栏只是吃掉正文高度。顶栏沉浸隐现已够用。 */
 const isApp = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-function buildTabbar() {
-  if (!isApp) return;
-  document.body.dataset.app = '1';
-  const icon = {
-    home: '<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 5.6C10.2 4.2 7.7 3.6 4.5 3.6v14.2c3.2 0 5.7.6 7.5 2 1.8-1.4 4.3-2 7.5-2V3.6c-3.2 0-5.7.6-7.5 2Z"/><path d="M12 5.6v14.2" stroke-linecap="round"/></svg>',
-    nav: '<svg viewBox="0 0 24 24" width="21" height="21"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>',
-    ai: '<svg viewBox="0 0 24 24" width="21" height="21"><path d="M12 3.5c4.7 0 8.5 3.2 8.5 7.1 0 3.9-3.8 7.1-8.5 7.1-.9 0-1.8-.1-2.6-.35L5.2 19l1-2.9C4.4 14.7 3.5 12.7 3.5 10.6c0-3.9 3.8-7.1 8.5-7.1Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/></svg>',
-    mine: '<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3.4"/><path d="M5.8 19.6a6.2 6.2 0 0 1 12.4 0"/></svg>',
-  };
-  const bar = document.createElement('nav');
-  bar.className = 'tabbar'; bar.id = 'tabbar';
-  bar.setAttribute('aria-label', '主导航');
-  bar.innerHTML =
-    `<button class="tab-btn" type="button" data-tab="home">${icon.home}<span>书斋</span></button>` +
-    `<button class="tab-btn" type="button" data-tab="nav">${icon.nav}<span>目录</span></button>` +
-    `<button class="tab-btn" type="button" data-tab="ai">${icon.ai}<span>问文钞</span></button>` +
-    `<button class="tab-btn" type="button" data-tab="mine">${icon.mine}<span>我的</span></button>`;
-  document.body.appendChild(bar);
-  const act = {
-    home: () => { closeDrawers(); goHome(); },
-    nav: () => openDrawer('L'),
-    ai: () => openDrawer('R'),
-    mine: () => { closeDrawers(); goMine(); },
-  };
-  bar.querySelectorAll('.tab-btn').forEach((b) => { b.onclick = act[b.dataset.tab]; });
-  syncTabs();
-}
-function syncTabs() {
-  const bar = document.getElementById('tabbar');
-  if (!bar) return;
-  const cur = drawerR.classList.contains('open') ? 'ai'
-    : drawerL.classList.contains('open') ? 'nav'
-    : (location.hash === '#me' && !/^\/a\//.test(location.pathname)) ? 'mine'
-    : (location.pathname === '/' ? 'home' : null);   // 读文章时不点亮：阅读不属于任何 tab
-  bar.querySelectorAll('.tab-btn').forEach((b) => b.classList.toggle('on', b.dataset.tab === cur));
-}
+if (isApp) document.body.dataset.app = '1';
 
 /* ---------- 全文检索：篇名本地过滤 + 正文查后端 D1 全文索引 ----------
    不再下载整站语料（曾是 15MB 的 search.json，全量拉取+客户端线性扫描）；
@@ -561,14 +529,13 @@ function renderMine() {
   const empty = (!bks.length && !hls.length && !resume)
     ? `<p class="mine-empty">阅读时点篇首的「收藏」、或选中文字「划线」，都会收进这里；上次读到的位置也会出现在「继续阅读」。</p>`
     : '';
+  // 设置不在此页平铺：点开与文章页同一个弹窗调，改动即时可见，本页只留一行入口
   const settings = `
       <section class="home-mine mine-set">
-        <h2 class="mine-h">阅读设置</h2>
-        <div class="set-card">${settingsRowsHtml()}</div>
-      </section>
-      <section class="home-mine mine-set">
-        <h2 class="mine-h">离线</h2>
         <div class="set-card">
+          <button class="set-line" id="mine-aa">
+            <span class="set-k">阅读设置</span>
+            <span class="set-v">字号 · 字体 · 底色 · 简繁</span></button>
           <div class="set-row"><span class="set-k">整册离线</span><span class="set-c">
             <button class="chip-btn" id="offline-open">下载整册</button></span></div>
         </div>
@@ -582,8 +549,7 @@ function renderMine() {
     </div>`;
   paintProgress();
   wireMineItems($('#reader'), renderMine);
-  wireSettings($('#reader'));
-  syncSettings();
+  { const aa = $('#mine-aa'); if (aa) aa.onclick = openAaSheet; }
   wireInstall($('#reader'));
   if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
 }
@@ -835,15 +801,14 @@ async function renderArticle(id) {
         <button class="seg${segOff}" data-m="both">对照</button>
         <button class="seg${segOff}" data-m="trans">白话</button>
       </div>`;
-  // 三键：收藏 · 朗读 · Aa——朗读居中作主键（细线圆圈，播放器 play 的位次直觉）；
-  // 收藏/设置分居两侧。留白分组，不用中点；热区 44px（负 margin 溢进行距，不撑高吸顶条）
+  // 单行工具条：左＝分层（文字式），右＝收藏·朗读·Aa（等份量细线图标，44px 热区）
   const modeBar = `<div class="mode-bar">
       ${segsHtml}
       <div class="mb-acts">
         <button class="mb-act mb-bookmark" aria-label="收藏本篇" aria-pressed="false">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></button>
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></button>
         <button class="mb-act mb-speak" aria-label="朗读本篇">
-          <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/></svg></button>
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/></svg></button>
         <button class="mb-act mb-aa" aria-label="阅读设置"><span class="mb-aa-g">Aa</span></button>
       </div>
     </div>`;
@@ -1570,8 +1535,10 @@ function settingsRowsHtml() {
       chip('fs', '-', 'A−', ' aria-label="减小字号"') +
       `<span class="aa-fs" aria-live="polite"></span>` +
       chip('fs', '+', 'A＋', ' aria-label="增大字号"') + `</span></div>` +
-    `<div class="rb-set"><span class="rb-set-k">字体</span><span class="rb-chips">` +
-      chip('font', 'song', '宋体') + chip('font', 'kai', '楷体') + `</span></div>` +
+    `<div class="rb-set"><span class="rb-set-k">原文</span><span class="rb-chips">` +
+      chip('fo', 'song', '宋') + chip('fo', 'kai', '楷') + chip('fo', 'hei', '黑') + `</span></div>` +
+    `<div class="rb-set"><span class="rb-set-k">白话</span><span class="rb-chips">` +
+      chip('ft', 'song', '宋') + chip('ft', 'kai', '楷') + chip('ft', 'hei', '黑') + `</span></div>` +
     `<div class="rb-set"><span class="rb-set-k">底色</span><span class="rb-chips">` +
       chip('theme', 'auto', '自动', ' aria-label="底色跟随系统"') +
       chip('theme', 'paper', '纸色') + chip('theme', 'plain', '素白') + chip('theme', 'night', '墨夜') + `</span></div>` +
@@ -1581,7 +1548,8 @@ function settingsRowsHtml() {
 }
 function applySetting(k, v) {
   if (k === 'fs') { (v === '+' ? incFont : decFont)(); return; }   // afterFontChange → applyPrefs → syncSettings
-  if (k === 'font') { prefs.font = v; store.set('font', v); afterFontChange(); return; }
+  if (k === 'fo') { prefs.fontOrig = v; store.set('fontOrig', v); afterFontChange(); return; }
+  if (k === 'ft') { prefs.fontTrans = v; store.set('fontTrans', v); afterFontChange(); return; }
   if (k === 'theme') { prefs.theme = v; store.set('theme', v); applyPrefs(); return; }
   if (k === 'trad') { setTrad(v === '1'); }                        // setTrad 内部 applyPrefs
 }
@@ -1592,7 +1560,7 @@ function wireSettings(root) {
 }
 // 所有已渲染设置组一起同步选中态（applyPrefs 每次调用；不在页的组安全跳过）
 function syncSettings() {
-  const on = { font: prefs.font, theme: prefs.theme, trad: prefs.trad ? '1' : '0' };
+  const on = { fo: prefs.fontOrig, ft: prefs.fontTrans, theme: prefs.theme, trad: prefs.trad ? '1' : '0' };
   document.querySelectorAll('[data-set]').forEach((b) => {
     const k = b.dataset.set;
     if (k !== 'fs') b.classList.toggle('on', on[k] === b.dataset.v);
@@ -1995,7 +1963,6 @@ aiInit();
 /* ---------- 启动 ---------- */
 async function boot() {
   applyPrefs();
-  buildTabbar();   // APP（standalone）形态：底部四键；浏览器形态不出现
   const syncWide = () => {
     if (isWide()) { document.body.dataset.wide = '1'; closeDrawers(); ensureTree(); }
     else delete document.body.dataset.wide;

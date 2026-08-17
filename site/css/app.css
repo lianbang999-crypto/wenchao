@@ -15,14 +15,20 @@
   --cinnabar-soft: rgba(176, 58, 38, .12);
   --serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
   --kai:   "Kaiti SC", "STKaiti", "KaiTi", "LXGW WenKai GB Screen", "Noto Serif SC", serif;
-  --body-font: var(--serif);   /* 正文主字体（Aa 面板可切楷体；白话恒楷不受其影响） */
+  /* 黑体走系统字体栈：各端本就自带高质量中文黑体，无需自托管，零下载成本 */
+  --hei:   -apple-system, "PingFang SC", "HarmonyOS Sans SC", "Source Han Sans SC",
+           "Noto Sans CJK SC", "Microsoft YaHei", system-ui, sans-serif;
+  /* 原文与白话各自可选字体（阅读设置分两行）。默认原文宋、白话楷——文白一眼分得开 */
+  --font-orig:  var(--serif);
+  --font-trans: var(--kai);
   --fs: 17px;            /* 阅读基准字号，JS 可调 */
   --topbar-h: 52px;
   --reader-w: 44rem;
-  --tabbar-h: 54px;      /* APP 形态底部 tab 高（不含安全区） */
 }
-/* 楷体模式：整篇（含标题）换楷——近手写经卷；文白区分改由墨色深浅与字号承担 */
-html[data-font="kai"] { --body-font: var(--kai); }
+html[data-fo="kai"]  { --font-orig: var(--kai); }
+html[data-fo="hei"]  { --font-orig: var(--hei); }
+html[data-ft="song"] { --font-trans: var(--serif); }
+html[data-ft="hei"]  { --font-trans: var(--hei); }
 html[data-theme="night"] {
   --paper:    #171310;
   --paper-2:  #1f1a14;
@@ -415,6 +421,19 @@ body.nav-hidden .read-progress { top: 0; }
 .set-card .rb-set + .rb-set { border-top: 1px solid var(--paper-3); }
 .set-card .rb-set-k { font-size: 14px; color: var(--ink-2); }
 .set-card .rb-chips { margin-left: auto; justify-content: flex-end; }
+/* 可点整行（「我的」页的设置入口）：右侧摘要 + 角标，点开与正文页同一个弹窗 */
+.set-line {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 13px 16px; border: 0; background: none; cursor: pointer;
+  font-family: inherit; text-align: left;
+}
+.set-line + .set-row, .set-row + .set-line { border-top: 1px solid var(--paper-3); }
+.set-line .set-v {
+  margin-left: auto; font-size: 12.5px; color: var(--ink-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.set-line::after { content: '›'; flex: none; color: var(--ink-3); font-size: 17px; line-height: 1; }
+.set-line:active { background: var(--paper-2); }
 /* 卡内说明行：贴在所属操作行下方，故取消上边框、上移收紧 */
 .set-note {
   padding: 0 16px 12px; margin-top: -4px;
@@ -440,11 +459,37 @@ a.chip-btn { text-decoration: none; }
 .chip-btn:active, .chip-btn.on { color: var(--cinnabar); border-color: var(--cinnabar); }
 
 /* 抽屉内「专题」直达入口（主题聚合页 /t/）：按需求找法的第一入口，
-   APP 形态下没有搜索引擎带路，站内导航是唯一路径——常显 */
-.nav-topics { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 4px 14px 10px; border-bottom: 1px solid var(--line); }
-.nav-topics-label { font-size: 12px; color: var(--ink-3); margin-right: 2px; }
-.nav-topics a.chip-btn { text-decoration: none; }
-.nav-topics a.nav-topics-all { border-style: dashed; }
+   APP 形态下没有搜索引擎带路，站内导航是唯一路径——常显。
+   极简：横向一行可滑，纯文字不加边框——九个胶囊铺三行比目录树本身还抢眼 */
+.nav-topics {
+  display: flex; align-items: center; gap: 14px;
+  padding: 8px 14px 10px; border-bottom: 1px solid var(--line);
+  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.nav-topics::-webkit-scrollbar { display: none; }
+.nav-topics-label { flex: none; font-size: 11.5px; color: var(--ink-3); letter-spacing: .18em; }
+.nav-topics a {
+  flex: none; font-size: 13.5px; color: var(--ink-2); text-decoration: none;
+  white-space: nowrap; padding: 3px 0; border: 0; background: none; border-radius: 0;
+  transition: color .16s ease;
+}
+.nav-topics a:hover, .nav-topics a:active { color: var(--cinnabar); }
+.nav-topics a.nav-topics-all { color: var(--ink-3); }
+
+/* /t/ 专题总览：题名与篇数一行、导语单行——八条一屏可尽览 */
+.topic-row {
+  display: block; padding: 13px 2px; text-decoration: none; color: inherit;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
+}
+.topic-row .tr-head { display: flex; align-items: baseline; gap: 10px; }
+.topic-row .tr-name { font-size: 16px; font-weight: 600; letter-spacing: .04em; color: var(--ink); }
+.topic-row .tr-n { margin-left: auto; flex: none; font-size: 12.5px; color: var(--ink-3); }
+.topic-row .tr-blurb {
+  display: block; margin-top: 3px; font-family: var(--kai);
+  font-size: 13px; line-height: 1.7; color: var(--ink-3);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.topic-row:hover .tr-name { color: var(--cinnabar); }
 
 /* ---------------- 阅读主区 ---------------- */
 .reader {
@@ -457,52 +502,50 @@ a.chip-btn { text-decoration: none; }
 
 /* 篇内工具行（吸顶）：中＝原文/对照/白话切换，右＝收藏·朗读（本篇功能不占顶栏）。
    三列网格让切换段钮保持光学居中，无白话篇只剩右侧两键 */
-/* 工具行两行居中：上=分层条（看哪层），下=朗读·收藏·Aa（本篇动作+阅读设置） */
+/* 工具行单行：左＝分层（看哪层），右＝收藏·朗读·Aa（本篇动作+阅读设置）。
+   原为两行 84px，占掉近一屏的十分之一；并作一行后省出的高度直接归了正文。 */
 .mode-bar {
   position: sticky; top: calc(var(--topbar-h) + env(safe-area-inset-top)); z-index: 20;
-  display: flex; flex-direction: column; align-items: center; gap: 5px;
-  padding: 7px 0 8px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 2px 22px 4px;
   background: linear-gradient(var(--paper) 86%, transparent);
 }
-.mb-segs { display: flex; justify-content: center; }
-/* 三键：收藏 · 朗读(主键) · Aa。留白分组不用中点；44px 热区负 margin 溢进行距，行高不变 */
-.mb-acts { display: flex; align-items: center; gap: 18px; }
+.mb-segs { display: flex; align-items: center; }
+/* 三键：收藏 · 朗读 · Aa，单行右置。全部细线图标、同等份量——
+   页面顶部不该有第二个抢眼的色块（朱砂留给分层选中与朗读进行态）。 */
+.mb-acts { display: flex; align-items: center; gap: 2px; margin-right: -8px; }
 .mb-act {
   display: inline-flex; align-items: center; justify-content: center;
-  border: 0; background: none; color: var(--ink-2); cursor: pointer;
-  min-width: 44px; min-height: 44px; padding: 0; margin: -6px 0; border-radius: 999px;
+  border: 0; background: none; color: var(--ink-3); cursor: pointer;
+  width: 44px; height: 44px; padding: 0; border-radius: 50%;
   white-space: nowrap;   /* 微信等 WebView 放大字体时不竖折 */
-  transition: color .18s ease, border-color .18s ease;
+  transition: color .18s ease;
 }
-.mb-act:hover { color: var(--ink); }
+.mb-act:hover { color: var(--ink-2); }
 .mb-act:active, .mb-act.on { color: var(--cinnabar); }
-.mb-act svg { opacity: .85; }
-/* 朗读=主键：40px 细线圆圈（与 AI 反馈圆钮同一形制），播放中圈随图标转朱砂 */
-.mb-speak {
-  width: 44px; height: 44px; position: relative;
-}
-.mb-speak::before {
-  content: ''; position: absolute; inset: 2px;
-  border: 1px solid var(--line); border-radius: 50%;
-  transition: border-color .18s ease;
-}
-.mb-speak:hover::before { border-color: var(--ink-3); }
-.mb-speak:active::before, .mb-speak.on::before { border-color: var(--cinnabar); }
-.mb-aa-g { font-size: 14px; font-weight: 600; letter-spacing: .03em; }
+.mb-act svg { opacity: .9; }
+.mb-aa-g { font-size: 14.5px; font-weight: 600; letter-spacing: .02em; }
 /* 无白话篇：对照/白话 置灰不可选（分层条恒显，统一全站风格） */
 .seg-off { opacity: .38; cursor: default; }
 /* 已收藏：书签实心点亮 */
 .mb-bookmark.on svg { fill: var(--cinnabar); }
+/* 分层：文字式，不用胶囊实心块——选中只以朱砂+短下划线示意，页面顶部安静得多 */
 .mode-bar .seg {
-  border: 1px solid var(--line); background: var(--paper-2);
-  font-size: 13.5px; letter-spacing: .1em; padding: 5px 18px; cursor: pointer;
-  color: var(--ink-2);
+  position: relative;
+  border: 0; background: none; cursor: pointer;
+  font-size: 14px; letter-spacing: .06em; padding: 15px 10px; line-height: 1;   /* 15+14+15=44px 触控 */
+  color: var(--ink-3); font-family: inherit;
   white-space: nowrap;   /* 微信等 WebView 放大字体时禁止「原文」竖折成两行 */
+  transition: color .18s ease;
 }
-.mode-bar .seg:first-child { border-radius: 999px 0 0 999px; }
-.mode-bar .seg:last-child { border-radius: 0 999px 999px 0; }
-.mode-bar .seg + .seg { border-left: 0; }
-.mode-bar .seg.on { background: var(--cinnabar); border-color: var(--cinnabar); color: #f8f3e8; }
+.mode-bar .seg:first-child { padding-left: 0; }
+.mode-bar .seg:hover { color: var(--ink-2); }
+.mode-bar .seg.on { color: var(--cinnabar); font-weight: 600; }
+.mode-bar .seg.on::after {
+  content: ''; position: absolute; left: 9px; right: 9px; bottom: 6px;
+  height: 1.5px; background: var(--cinnabar); border-radius: 1px;
+}
+.mode-bar .seg:first-child.on::after { left: 0; }
 /* 模式栏随顶栏一起隐现：下滑收起、上滑或近顶唤出（沉浸阅读） */
 .mode-bar { transition: transform .28s ease; }
 body.nav-hidden .mode-bar { transform: translateY(calc(-100% - var(--topbar-h) - env(safe-area-inset-top))); }
@@ -521,9 +564,9 @@ body.nav-hidden .mode-bar { transform: translateY(calc(-100% - var(--topbar-h) -
   background: var(--cinnabar); border-radius: 2px;
 }
 
-/* 正文 */
-.art-body { font-size: var(--fs); font-family: var(--body-font); }
-.art-title { font-family: var(--body-font); }
+/* 正文：原文层用 --font-orig，白话层用 --font-trans（标题随原文） */
+.art-body { font-size: var(--fs); font-family: var(--font-orig); }
+.art-title { font-family: var(--font-orig); }
 .para-pair { margin: 0 0 4px; }
 .p-orig {
   margin: 1.1em 0 .4em; text-align: justify; text-indent: 2em;
@@ -533,7 +576,7 @@ body.nav-hidden .mode-bar { transform: translateY(calc(-100% - var(--topbar-h) -
    区分交给传统书籍的做法：楷体、墨色淡一度、字号小一号，与单读形态一致 */
 .p-trans {
   margin: 0 0 1.35em;
-  font-family: var(--kai);
+  font-family: var(--font-trans);
   font-size: calc(var(--fs) - 1px);
   color: var(--ink-2); line-height: 1.95; text-align: justify; text-indent: 2em;
 }
@@ -909,38 +952,6 @@ a.vol-card { color: inherit; text-decoration: none; }   /* 首页预渲染书架
   border-radius: 50%; animation: rb-spin .7s linear infinite;
 }
 @keyframes rb-spin { to { transform: rotate(360deg); } }
-
-/* ---------------- APP 形态：底部四键 tab ----------------
-   仅安装到主屏（standalone / TWA）后由 JS 注入；浏览器里维持网页形态不出现。
-   单手可达：读·目录·问·我的四个高频入口从顶栏下放到拇指区；
-   阅读时随顶栏一起沉浸隐现。宽屏有常驻侧栏，不需要它。 */
-.tabbar {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 35;
-  display: flex; align-items: stretch;
-  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
-  padding: 0 6px env(safe-area-inset-bottom);
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid var(--line);
-  transition: transform .28s ease;
-}
-.tab-btn {
-  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-  border: 0; background: none; cursor: pointer; color: var(--ink-2);
-  font-size: 10.5px; letter-spacing: .12em; font-family: inherit;
-}
-.tab-btn svg { opacity: .9; }
-.tab-btn.on { color: var(--cinnabar); }
-body.nav-hidden .tabbar { transform: translateY(100%); }
-@media (max-width: 1179.98px) {
-  /* tab 在场：正文与首页让出底部；悬浮条与 toast 上移避让 */
-  body[data-app] .reader-inner,
-  body[data-app] .home { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
-  body[data-app] .share-bar,
-  body[data-app] .read-bar { margin-bottom: calc(var(--tabbar-h) + 12px + env(safe-area-inset-bottom)); }
-  body[data-app] .wc-toast { bottom: calc(var(--tabbar-h) + 68px + env(safe-area-inset-bottom)); }
-}
-@media (min-width: 1180px) { .tabbar { display: none; } }
 
 /* ===================================================================
    交互与动效

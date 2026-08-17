@@ -20,8 +20,8 @@
     "path": "./keystore/wenchao-upload.keystore",
     "alias": "wenchao"
   },
-  "appVersion": "1.0.0",
-  "appVersionCode": 1,
+  "appVersion": "1.0.1",
+  "appVersionCode": 2,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://wenchao.foyue.org/manifest.webmanifest",

@@ -596,43 +596,65 @@ function installSectionHtml() {
   const I = window.__wcInstall;
   if (!I) return '';                    // pwa.js 未加载（极少）：不画空壳
   const apk = CFG.apkUrl || '';
-  let row, apkShown = false;   // 主分支是否已给出 APK 行，避免下方补充行重复
+  // 已在 APP / 主屏窗口内：一行确认即可，不再劝装
   if (I.standalone) {
-    // 已在 APP 窗口内运行：只作一行确认，不喧宾夺主
-    row = `<div class="set-row"><span class="set-k">已安装到主屏</span>
-             <span class="set-c ins-done">✓ 正以应用方式运行</span></div>`;
-  } else if (I.canPrompt()) {
-    row = `<div class="set-row"><span class="set-k">装到手机主屏</span><span class="set-c">
-             <button class="chip-btn ins-primary" id="ins-go">安装</button></span></div>
-           <div class="set-note">启动更快、可离线阅读，不占多少空间。</div>`;
-  } else if (I.isIOS) {
-    row = I.isSafari
-      ? `<div class="set-row"><span class="set-k">装到手机主屏</span><span class="set-c">
-           <button class="chip-btn" id="ins-how">如何安装</button></span></div>
-         <div class="set-note" id="ins-tip" hidden>在 Safari 底部点「分享」<span aria-hidden="true">⎙</span>，
-           下拉选择「添加到主屏幕」，即可像应用一样打开。</div>`
-      : `<div class="set-row"><span class="set-k">装到手机主屏</span></div>
-         <div class="set-note">请用 Safari 打开本站，再从「分享 → 添加到主屏幕」安装。</div>`;
-  } else if (I.inAppBrowser) {
-    row = `<div class="set-row"><span class="set-k">装到手机主屏</span><span class="set-c">
-             <button class="chip-btn" id="ins-copy">复制网址</button></span></div>
-           <div class="set-note">当前是内置浏览器，无法直接安装。请在浏览器（如 Chrome）中打开本站再装。</div>`;
-  } else if (apk) {
-    row = `<div class="set-row"><span class="set-k">安卓安装包</span><span class="set-c">
-             <a class="chip-btn" href="${esc(apk)}" download>下载 APK</a></span></div>
-           <div class="set-note">若浏览器未提示安装，可下载安装包直接安装。</div>`;
-    apkShown = true;
-  } else {
-    row = `<div class="set-row"><span class="set-k">装到手机主屏</span></div>
-           <div class="set-note">在 Chrome 等浏览器中打开本站，浏览器菜单里选「安装应用」或「添加到主屏幕」。</div>`;
+    return `<section class="home-mine mine-set">
+        <h2 class="mine-h">应用</h2>
+        <div class="set-card">
+          <div class="set-row"><span class="set-k">已安装</span>
+            <span class="set-c ins-done">✓ 正以应用方式运行</span></div>
+        </div>
+      </section>`;
   }
-  // 可直接安装时，APK 作为备选补一行（国产 ROM 拦 PWA 时的兜底）
-  const apkExtra = (apk && !apkShown && !I.standalone && (I.canPrompt() || I.isAndroid))
+  // 安卓安装包只对安卓有意义：iPhone 装不了，电脑更装不了
+  const apkRow = (apk && I.isAndroid)
     ? `<div class="set-row"><span class="set-k">安卓安装包</span><span class="set-c">
-         <a class="chip-btn" href="${esc(apk)}" download>下载 APK</a></span></div>` : '';
+         <a class="chip-btn${I.canPrompt() ? '' : ' ins-primary'}" href="${esc(apk)}" download>下载 APK</a></span></div>` : '';
+  let title, rows;
+
+  if (I.isIOS) {
+    // iPhone / iPad：没有 iOS 版应用，添加到主屏是唯一的全屏离线途径——如实说明，别让人干等
+    title = 'iPhone · 添加到主屏';
+    rows = I.isSafari
+      ? `<div class="set-row"><span class="set-k">添加到主屏</span><span class="set-c">
+           <button class="chip-btn ins-primary" id="ins-how">怎么装</button></span></div>
+         <div class="set-note" id="ins-tip" hidden>在 Safari 底部点「分享」<span aria-hidden="true">⎙</span>，
+           下拉选择「添加到主屏幕」→「添加」。之后从桌面图标打开，即可全屏离线阅读。</div>
+         <div class="set-note">暂无 iPhone 版应用；添加到主屏后的体验与应用一致。</div>`
+      : `<div class="set-row"><span class="set-k">添加到主屏</span><span class="set-c">
+           <button class="chip-btn" id="ins-copy">复制网址</button></span></div>
+         <div class="set-note">请改用 Safari 打开本站，再从「分享 → 添加到主屏幕」添加。</div>`;
+  } else if (I.isAndroid) {
+    title = '安卓 · 安装应用';
+    if (I.canPrompt()) {
+      rows = `<div class="set-row"><span class="set-k">安装到手机</span><span class="set-c">
+                <button class="chip-btn ins-primary" id="ins-go">安装</button></span></div>
+              <div class="set-note">启动更快、可离线阅读，不占多少空间。装不上时可用下方安装包。</div>`
+             + apkRow;
+    } else if (I.inAppBrowser) {
+      rows = `<div class="set-row"><span class="set-k">安装到手机</span><span class="set-c">
+                <button class="chip-btn" id="ins-copy">复制网址</button></span></div>
+              <div class="set-note">当前是应用内置浏览器，装不了。可复制网址到 Chrome 等浏览器打开，或直接下载安装包。</div>`
+             + apkRow;
+    } else {
+      rows = apkRow + (apk
+        ? `<div class="set-note">下载后按提示安装；也可在 Chrome 菜单里选「安装应用」。</div>`
+        : `<div class="set-row"><span class="set-k">安装到手机</span></div>
+           <div class="set-note">在 Chrome 菜单里选「安装应用」或「添加到主屏幕」。</div>`);
+    }
+  } else {
+    // 电脑端：Chrome/Edge 可装成独立窗口，不给安卓包
+    title = '电脑 · 安装应用';
+    rows = I.canPrompt()
+      ? `<div class="set-row"><span class="set-k">安装到电脑</span><span class="set-c">
+           <button class="chip-btn ins-primary" id="ins-go">安装</button></span></div>
+         <div class="set-note">装成独立窗口，无地址栏，可离线阅读。</div>`
+      : `<div class="set-row"><span class="set-k">安装到电脑</span></div>
+         <div class="set-note">在 Chrome / Edge 地址栏右侧点安装图标，或从浏览器菜单选「安装应用」。</div>`;
+  }
   return `<section class="home-mine mine-set">
-      <h2 class="mine-h">安装</h2>
-      <div class="set-card">${row}${apkExtra}</div>
+      <h2 class="mine-h">${title}</h2>
+      <div class="set-card">${rows}</div>
     </section>`;
 }
 function wireInstall(root) {
@@ -650,7 +672,7 @@ function wireInstall(root) {
   const how = root.querySelector('#ins-how');
   if (how) how.onclick = () => {
     const t = root.querySelector('#ins-tip');
-    if (t) { t.hidden = !t.hidden; how.textContent = t.hidden ? '如何安装' : '收起'; }
+    if (t) { t.hidden = !t.hidden; how.textContent = t.hidden ? '怎么装' : '收起'; }
   };
   const cp = root.querySelector('#ins-copy');
   if (cp) cp.onclick = () => {

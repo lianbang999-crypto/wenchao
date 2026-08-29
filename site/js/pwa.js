@@ -13,7 +13,12 @@
   var isAndroid = /android/i.test(ua);
   // 微信/QQ/微博/UC 等内置 WebView：无 A2HS 能力，只能引导到系统浏览器打开
   var inAppBrowser = /micromessenger|qq\/|qqbrowser|weibo|baiduboxapp|ucbrowser|quark/i.test(ua);
-  var standalone = window.matchMedia('(display-mode: standalone)').matches ||
+  /* 离线 APP 的 WebView 不是从 manifest 启动的 PWA，display-mode 那两个判据都不成立，
+     可它显然已经是「装好的应用」了。漏掉这一条，「我的」页会对着已装用户继续劝装。
+     __wcNative 由原生在载入页面前注入，此处必定已可见。 */
+  var inNativeApp = typeof window.__wcNative === 'object' && window.__wcNative !== null;
+  var standalone = inNativeApp ||
+                   window.matchMedia('(display-mode: standalone)').matches ||
                    window.navigator.standalone === true;
 
   var HIDE_KEY = 'pwa-a2hs-hide';
@@ -129,7 +134,10 @@
       'background:var(--cinnabar,#b03a26);color:var(--paper,#f6f1e6);' +
       'font-family:inherit;font-size:14px;font-weight:600;padding:.42rem .9rem;cursor:pointer';
     btn.onclick = function () {
-      window.__wcInstall.prompt().finally(function () { dismiss(); });
+      // 不用 .finally()：它要 Chrome 63+，比本站的兼容下限还高一档。
+      // 两个回调都收口到 dismiss，等价于 finally。
+      var done = function () { dismiss(); };
+      window.__wcInstall.prompt().then(done, done);
     };
     bar.insertBefore(btn, bar.lastChild); // 放在关闭按钮之前
   }

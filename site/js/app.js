@@ -11,8 +11,10 @@ const CFG = window.WENCHAO_CONFIG || {};
 
 /* ---------- 持久化偏好 ---------- */
 const store = {
-  get(k, d) { try { return JSON.parse(localStorage.getItem('wc.' + k)) ?? d; } catch { return d; } },
-  set(k, v) { try { localStorage.setItem('wc.' + k, JSON.stringify(v)); } catch {} },
+  // 不用 ??：它要 Chrome 80+ 才认，旧安卓的系统 WebView 会整份解析失败、阅读器全哑。
+  // 判 null/undefined 而非 falsy，是为了让存下的 false / 0 不被默认值顶掉。
+  get(k, d) { try { const v = JSON.parse(localStorage.getItem('wc.' + k)); return v === null || v === undefined ? d : v; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('wc.' + k, JSON.stringify(v)); } catch (e) {} },
 };
 const prefs = {
   fs: store.get('fs', 17),
@@ -125,7 +127,7 @@ function closeDrawers() {
   aiSpeakStop();   // 关面板即停 AI 回答朗读（高清音频 + 本机合成）
   syncInert();
   if (wasOpen && drawerLastFocus && drawerLastFocus.isConnected) {
-    try { drawerLastFocus.focus({ preventScroll: true }); } catch {}
+    try { drawerLastFocus.focus({ preventScroll: true }); } catch (e) {}
   }
   drawerLastFocus = null;
 }
@@ -225,6 +227,16 @@ function buildSnip(raw, kw) {
   return esc(raw.slice(0, idx)) + '<mark>' + esc(kw) + '</mark>' + esc(raw.slice(idx + kw.length));
 }
 
+/* 是否处于「离线 APP 且当前无网」。不直接引用下面的 NATIVE/isOfflineApp 常量：
+   它们是 const，声明在本文件靠后处，从这里访问会撞上暂时性死区。
+   判断不出来时一律当作在线，宁可少提示也不误报离线。 */
+function nativeOffline() {
+  try {
+    const n = window.__wcNative;
+    return !!n && typeof n.isOnline === 'function' && !n.isOnline();
+  } catch (e) { return false; }
+}
+
 async function fullSearch(kw) {
   const tree = $('#nav-tree');
   tree.innerHTML = '<p class="nav-empty">正在搜索…</p>';
@@ -254,14 +266,18 @@ async function fullSearch(kw) {
           seen.add(h.i);
           hits.push({ id: h.i, t: h.t, v: h.v, snip: buildSnip(h.snip, kw) });
         }
-      } catch { bodyFailed = true; }   // 网络/服务异常：仍展示篇名匹配结果
+      } catch (e) { bodyFailed = true; }   // 网络/服务异常：仍展示篇名匹配结果
     }
   }
-  // 空结果文案据实：索引未就绪 / 网络异常 / 确实没有，三者分开，不把"检索未开"说成"没找到"
+  /* 空结果文案据实：索引未就绪 / 离线 / 网络异常 / 确实没有，分开说，
+     不把"检索未开"说成"没找到"。离线 APP 里断网是常态而非故障，
+     此时说"请检查网络"是误导——正文明明就在本机，只是全文索引在服务端。 */
   const empty = indexEmpty
     ? '正文全文检索尚未就绪，目前仅按篇名搜索。<br>想按义理找内容，可用右上角「问文钞」。'
     : bodyFailed
-      ? '正文全文搜索暂不可用，请检查网络（也可只按篇名搜）'
+      ? (nativeOffline()
+          ? '当前没有网络，正文检索用不了，只能按篇名搜。<br>正文已在本机，照常翻阅不受影响。'
+          : '正文全文搜索暂不可用，请检查网络（也可只按篇名搜）')
       : '没有找到「' + esc(kw) + '」';
   tree.innerHTML = hits.length
     ? `<p class="search-count">共找到 ${hits.length}${hits.length >= 100 ? '+' : ''} 篇</p>` +
@@ -566,6 +582,7 @@ function renderMine() {
   wireMineItems($('#reader'), renderMine);
   { const aa = $('#mine-aa'); if (aa) aa.onclick = openAaSheet; }
   { const u = $('#chk-update'); if (u) u.onclick = () => checkUpdate(u); }
+  { const s = $('#upd-shell-row'); if (s) s.onclick = () => runShellUpdate(s, null); }
   { const c = $('#mine-contact'); if (c) c.onclick = openContact; }
   wireInstall($('#reader'));
   if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
@@ -585,19 +602,33 @@ function openContact() {
   sheetShow();
 }
 
-/* 「我的」页 · 更新行：站点更新点一下即可查；装了 APP 且外壳落后于最新包时，
-   另给一行下载新版（外壳只在图标/名称/启动屏这类改动时才需要换，故通常不出现）。 */
+/* 当前这一包内容是哪一版（仅离线 APP 有；取不到就当没有，不影响其余显示）。 */
+function nativeContentVersion() {
+  try { return NATIVE && NATIVE.contentVersion ? NATIVE.contentVersion() : ''; }
+  catch (e) { return ''; }
+}
+
+/* 「我的」页 · 更新行。
+   离线 APP 里要分开报两个版本：「应用版本」是阅读器外壳，「文本版本」是经文内容。
+   两者各走各的更新线——只报一个，会让人以为已是最新，其实还差着一批勘误。 */
 function updateRowHtml() {
   const I = window.__wcInstall || {};
   const latest = CFG.apkVersion || '';
   const apk = CFG.apkUrl || '';
   const stale = I.standalone && I.isAndroid && APP_VER && latest && verLt(APP_VER, latest) && apk;
   const ver = APP_VER ? `<span class="set-v">当前 ${esc(APP_VER)}</span>` : '';
-  return `<div class="set-row"><span class="set-k">检查更新</span>${ver}<span class="set-c">
+  const cver = isOfflineApp ? nativeContentVersion() : '';
+  return (cver ? `<div class="set-row"><span class="set-k">文本版本</span>
+                    <span class="set-v">${esc(cver)}</span></div>` : '')
+    + `<div class="set-row"><span class="set-k">检查更新</span>${ver}<span class="set-c">
             <button class="chip-btn" id="chk-update">检查更新</button></span></div>`
     + (stale ? `<div class="set-row"><span class="set-k">应用新版本</span>
-         <span class="set-v">${esc(latest)}</span><span class="set-c">
-         <a class="chip-btn ins-primary" href="${esc(apk)}" download>下载新版</a></span></div>` : '');
+         <span class="set-v">${esc(latest)}</span><span class="set-c">`
+         // APP 内点链接下载不会自动装，得交给原生下好再唤起安装器
+         + (isOfflineApp
+             ? `<button class="chip-btn ins-primary" id="upd-shell-row">下载安装</button>`
+             : `<a class="chip-btn ins-primary" href="${esc(apk)}" download>下载新版</a>`)
+         + `</span></div>` : '');
 }
 
 /* ---------- 「我的」页 · 安装到手机 ----------
@@ -744,7 +775,7 @@ async function renderArticle(id) {
   if (!prerendered) reader.innerHTML = '<p class="loading">展 卷 …</p>';
   let art;
   try { art = await loadArticle(id); }
-  catch {
+  catch (e) {
     // 预渲染正文可读，别为了报错把它抹掉——降级成「能读不能玩」比白屏强
     if (prerendered) { toast('交互功能载入失败，正文仍可阅读'); return; }
     reader.innerHTML = '<p class="loading">此篇载入失败，请检查网络后重试</p>';
@@ -1039,7 +1070,7 @@ function closeSheet(instant) {
   if (sheet.hidden) return;
   sheetDismiss(sheet, sheet, sheetBd, instant, () => {
     syncInert();
-    if (sheetLastFocus && sheetLastFocus.isConnected) { try { sheetLastFocus.focus({ preventScroll: true }); } catch {} }
+    if (sheetLastFocus && sheetLastFocus.isConnected) { try { sheetLastFocus.focus({ preventScroll: true }); } catch (e) {} }
     sheetLastFocus = null;
   });
 }
@@ -1091,7 +1122,7 @@ function charPointInEl(el, target) {
 // 选区边界 (node,off) 在段落 el 内的字符偏移
 function offsetIn(el, node, off) {
   const r = document.createRange(); r.selectNodeContents(el);
-  try { r.setEnd(node, off); } catch { return 0; }
+  try { r.setEnd(node, off); } catch (e) { return 0; }
   return r.toString().length;
 }
 // 同段重叠划线合并
@@ -1119,7 +1150,7 @@ function applyMarks() {
     const a = charPointInEl(el, h.s), b = charPointInEl(el, h.e);
     if (!a || !b) continue;
     const r = document.createRange();
-    try { r.setStart(a[0], a[1]); r.setEnd(b[0], b[1]); MARK.add(r); } catch {}
+    try { r.setStart(a[0], a[1]); r.setEnd(b[0], b[1]); MARK.add(r); } catch (e) {}
   }
 }
 // 把选区存为划线（供 share.js 选区操作条调用）。range 可传入（点按钮时活动选区可能已被收起，故 share.js 传选段时克隆的 Range）；返回是否成功
@@ -1139,7 +1170,7 @@ function addHighlightFromSelection(range) {
   if (!add.length) return false;
   setHls(current.id, mergeHls([...getHls(current.id), ...add]));
   applyMarks();
-  try { sel.removeAllRanges(); } catch {}
+  try { sel.removeAllRanges(); } catch (e) {}
   toast('已划线 · 在「我的」页可回看');
   return true;
 }
@@ -1156,7 +1187,7 @@ function allHighlights() {
     const k = localStorage.key(i);
     if (!k || !k.startsWith('wc.hl.')) continue;
     const id = k.slice(6);
-    let arr; try { arr = JSON.parse(localStorage.getItem(k)) || []; } catch { continue; }
+    let arr; try { arr = JSON.parse(localStorage.getItem(k)) || []; } catch (e) { continue; }
     if (!arr.length) continue;
     const fi = flat.find((x) => x.id === id);
     const title = (bookmarks[id] && bookmarks[id].t) || (fi && fi.title) || id;
@@ -1169,7 +1200,7 @@ window.__wcHighlight = addHighlightFromSelection;
 // 供 share.js 选段条「朗读」键调用：先还原克隆的选区（点按钮时活动选区可能已收起），
 // 起点定位/清选区/「从选中处开始朗读」提示全部复用 startRead 现成逻辑
 window.__wcReadFrom = (range) => {
-  if (range) { try { const s = getSelection(); s.removeAllRanges(); s.addRange(range); } catch {} }
+  if (range) { try { const s = getSelection(); s.removeAllRanges(); s.addRange(range); } catch (e) {} }
   startRead();
 };
 
@@ -1223,7 +1254,7 @@ function fetchUnitAudio(i) {
   _pf.set(i, p);
   return p;
 }
-function revokePf(p) { Promise.resolve(p).then((u) => { try { URL.revokeObjectURL(u); } catch {} }, () => {}); }
+function revokePf(p) { Promise.resolve(p).then((u) => { try { URL.revokeObjectURL(u); } catch (e) {} }, () => {}); }
 function clearPrefetch() { for (const p of _pf.values()) revokePf(p); _pf.clear(); }
 function prunePrefetch(keep) { for (const [i, p] of [..._pf]) if (!keep.includes(i)) { revokePf(p); _pf.delete(i); } }
 function setLoading(on) { if (READ.bar) READ.bar[on ? 'setAttribute' : 'removeAttribute']('data-loading', ''); }
@@ -1424,7 +1455,7 @@ function playLocal(u, token) {
   const v = pickVoice(); if (v) utt.voice = v;
   utt.onend = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
   utt.onerror = () => { if (isCurrent(token)) speakIdx(READ.idx + 1); };
-  try { window.speechSynthesis.speak(utt); } catch {}
+  try { window.speechSynthesis.speak(utt); } catch (e) {}
 }
 // 高清引擎：优先用预取好的音频 → <audio> 播放，同时预取下一句以消除句间停顿；失败自动降级本机
 async function playCloud(i, token) {
@@ -1514,11 +1545,11 @@ function setupMediaSession() {
     navigator.mediaSession.setActionHandler('stop', () => stopRead());
     navigator.mediaSession.setActionHandler('previoustrack', () => jumpRead(-1));
     navigator.mediaSession.setActionHandler('nexttrack', () => jumpRead(1));
-  } catch {}
+  } catch (e) {}
 }
 function syncMediaState() {
   if (!('mediaSession' in navigator)) return;
-  try { navigator.mediaSession.playbackState = READ.on ? (READ.paused ? 'paused' : 'playing') : 'none'; } catch {}
+  try { navigator.mediaSession.playbackState = READ.on ? (READ.paused ? 'paused' : 'playing') : 'none'; } catch (e) {}
 }
 function togglePause() {
   if (!READ.on) return;
@@ -1641,7 +1672,7 @@ function attachSheetDrag(grip, panel, close) {
   grip.addEventListener('pointerdown', (e) => {
     on = true; y0 = e.clientY; dy = 0; t0 = Date.now();
     panel.classList.add('dragging');
-    try { grip.setPointerCapture(e.pointerId); } catch {}
+    try { grip.setPointerCapture(e.pointerId); } catch (e) {}
   });
   grip.addEventListener('pointermove', (e) => {
     if (!on) return;
@@ -1696,7 +1727,7 @@ function closeAaSheet(instant) {
   if (!aaSheet || aaSheet.hidden) return;
   sheetDismiss(aaSheet, aaSheet.querySelector('.aa-panel'), aaSheet.querySelector('.aa-mask'), instant, () => {
     syncInert();
-    if (aaLastFocus && aaLastFocus.isConnected) { try { aaLastFocus.focus({ preventScroll: true }); } catch {} }
+    if (aaLastFocus && aaLastFocus.isConnected) { try { aaLastFocus.focus({ preventScroll: true }); } catch (e) {} }
     aaLastFocus = null;
   });
 }
@@ -1776,7 +1807,7 @@ function showCitation(p) {
   $('#sheet-body').innerHTML =
     `<h4>《${esc(p.title || '')}》<span class="note-n">出处摘录</span></h4>` +
     `<p class="cite-text">${esc(excerpt)}</p>` +
-    (p.aid ? `<button class="sheet-goto" data-id="${esc(p.aid)}" data-p="${p.pIndex ?? ''}" data-url="${esc(url)}">阅读原文 ›</button>` : '');
+    (p.aid ? `<button class="sheet-goto" data-id="${esc(p.aid)}" data-p="${p.pIndex === null || p.pIndex === undefined ? '' : p.pIndex}" data-url="${esc(url)}">阅读原文 ›</button>` : '');
   sheetShow();
   const g = $('#sheet-body .sheet-goto');
   if (g) g.onclick = () => {
@@ -1805,7 +1836,7 @@ function aiWelcome() {
   aiLog.appendChild(div);
 }
 // 会话留存：刷新/重开不丢最近问答（最多 30 条记录，约 15 轮）
-function saveSession() { try { store.set('aiSession', aiSession.slice(-30)); } catch {} }
+function saveSession() { try { store.set('aiSession', aiSession.slice(-30)); } catch (e) {} }
 // 静态渲染一条已存的回答（含可点出处与操作条），供恢复会话复用
 function renderBot(rec) {
   const div = document.createElement('div');
@@ -1897,12 +1928,12 @@ async function aiAsk(q) {
         let nl;
         while ((nl = buf.indexOf('\n')) >= 0) {
           const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
-          if (line) try { onMsg(JSON.parse(line)); } catch { /* 半行 */ }
+          if (line) try { onMsg(JSON.parse(line)); } catch (e) { /* 半行 */ }
         }
       }
-      if (buf.trim()) { try { onMsg(JSON.parse(buf.trim())); } catch { /* 末行：无换行的 {reply} 错误体也要收尾解析 */ } }
+      if (buf.trim()) { try { onMsg(JSON.parse(buf.trim())); } catch (e) { /* 末行：无换行的 {reply} 错误体也要收尾解析 */ } }
     } else {                                        // 不支持流式：整体读取
-      (await res.text()).split('\n').forEach((l) => { if (l.trim()) try { onMsg(JSON.parse(l)); } catch {} });
+      (await res.text()).split('\n').forEach((l) => { if (l.trim()) try { onMsg(JSON.parse(l)); } catch (e) {} });
     }
   } catch (err) {
     if (!(err && err.name === 'AbortError')) {     // 非"停止"才算失败
@@ -2011,10 +2042,43 @@ if (aiNewBtn) aiNewBtn.onclick = () => {     // 新对话：清空重来（含�
 };
 aiInit();
 
+/* ---------- 离线 APP 的原生接口 ----------
+   安卓 APP 里全部内容随安装包出厂、断网也能读，所以不再有「站点更新了就自动是新的」
+   这回事。查更新、下增量、装新包这些浏览器做不到的事，下沉到原生（见 app-android
+   的 NativeBridge.java）。在普通浏览器里 __wcNative 不存在，isOfflineApp 为 false，
+   下面这些一律不生效，仍走原有的 Service Worker 那一套。 */
+const NATIVE = (typeof window.__wcNative === 'object' && window.__wcNative) || null;
+const isOfflineApp = !!NATIVE;
+
+/* 原生那边是异步干活的，结果经 window.__wcCB(回调号, 结果) 送回来。
+   这里按回调号认领，包成 Promise，调用处就能照常用 await 写。 */
+let _nSeq = 0;
+const _nPending = {};
+window.__wcCB = (id, result) => {
+  const fn = _nPending[id];
+  if (fn) { delete _nPending[id]; fn(result || {}); }
+};
+function nativeCall(method, ...args) {
+  return new Promise((resolve) => {
+    if (!NATIVE || typeof NATIVE[method] !== 'function') {
+      resolve({ ok: false, error: '当前环境不支持' });
+      return;
+    }
+    const id = 'cb' + (++_nSeq);
+    _nPending[id] = resolve;
+    try {
+      NATIVE[method](...args, id);       // 约定：回调号固定是最后一个参数
+    } catch (e) {
+      delete _nPending[id];
+      resolve({ ok: false, error: '调用失败' });
+    }
+  });
+}
+
 /* ---------- 版本与更新 ----------
-   站点更新（改文字、改功能）不需要重装 APP——TWA 打开的就是本站，冷启动即最新。
+   浏览器/PWA 形态：站点改了文字或功能，冷启动即最新，无需重装。
    仅当已开着页面时才需要这条：新版本就绪 → 浮出一条提示 → 用户点了才切换并刷新，
-   不打断正读到一半的人。APP 外壳版本另计，见 appVersion / 「我的」页的检查更新。 */
+   不打断正读到一半的人。APP 形态见上面的原生接口与 checkContentUpdate。 */
 let swReg = null;
 function watchUpdate(reg) {
   if (!reg) return;
@@ -2059,6 +2123,7 @@ function showUpdateBar() {
 }
 // 手动检查（「我的」页）：向服务器要一次 sw.js，有新版就会触发 updatefound
 function checkUpdate(btn) {
+  if (isOfflineApp) { checkContentUpdate(btn); return; }   // APP 形态另走原生，见下
   if (!swReg) { toast('当前环境不支持更新检查'); return; }
   if (btn) { btn.disabled = true; btn.textContent = '检查中…'; }
   const done = (msg) => {
@@ -2072,7 +2137,82 @@ function checkUpdate(btn) {
     }, 900))
     .catch(() => done('检查失败，请稍后再试'));
 }
-// APP 外壳版本：TWA 的 startUrl 带 ?app=x.y.z，首次进入记下，供「我的」页比对
+/* ---------- APP 形态的更新：内容与外壳两条线 ----------
+   内容（经文勘误、白话修订）走增量：只下有改动的篇目，几十 KB，当场生效，不必重装。
+   外壳（阅读器本身改版）只能换安装包，二十来 MB，所以只在确有新版时才提。
+   分开的理由很实在——不该为了改几个字，让人重下一整包。 */
+async function checkContentUpdate(btn) {
+  const reset = () => { if (btn) { btn.disabled = false; btn.textContent = '检查更新'; } };
+  if (btn) { btn.disabled = true; btn.textContent = '检查中…'; }
+  if (!NATIVE.isOnline()) { reset(); toast('当前没有网络，联网后再试'); return; }
+  const r = await nativeCall('checkUpdate');
+  reset();
+  if (!r.ok) { toast(r.error || '检查失败，请稍后再试'); return; }
+  const shellNew = !!(CFG.apkVersion && APP_VER && verLt(APP_VER, CFG.apkVersion) && CFG.apkUrl);
+  if (!r.count && !shellNew) { toast('已是最新'); return; }
+  showUpdateSheet(r.count || 0, shellNew);
+}
+
+function showUpdateSheet(count, shellNew) {
+  const rows = [];
+  if (count) {
+    rows.push(`<div class="set-row"><span class="set-k">内容更新</span>
+        <span class="set-v">${count} 篇</span><span class="set-c">
+        <button class="chip-btn ins-primary" id="up-content">立即更新</button></span></div>`);
+  }
+  if (shellNew) {
+    rows.push(`<div class="set-row"><span class="set-k">应用新版本</span>
+        <span class="set-v">${esc(CFG.apkVersion)}</span><span class="set-c">
+        <button class="chip-btn${count ? '' : ' ins-primary'}" id="up-shell">下载安装</button></span></div>`);
+  }
+  $('#sheet-body').innerHTML =
+    `<div class="qr-card"><h4 class="qr-name">发现更新</h4>
+       <div class="set-card">${rows.join('')}</div>
+       <p class="qr-tip" id="up-tip">内容更新只下有改动的篇目，通常几十 KB；应用新版本约二十余 MB。</p>
+     </div>`;
+  sheetShow();
+  const tip = $('#up-tip');
+  const c = $('#up-content'); if (c) c.onclick = () => runContentUpdate(c, tip);
+  const s = $('#up-shell'); if (s) s.onclick = () => runShellUpdate(s, tip);
+}
+
+async function runContentUpdate(btn, tip) {
+  btn.disabled = true; btn.textContent = '更新中…';
+  window.__wcProgress = (done, total) => {
+    if (tip) tip.textContent = `正在下载 ${done} / ${total} 篇…`;
+  };
+  const r = await nativeCall('applyUpdate');
+  window.__wcProgress = null;
+  if (!r.ok) {
+    btn.disabled = false; btn.textContent = '重试';
+    if (tip) tip.textContent = r.error || '更新失败，请稍后再试';
+    return;
+  }
+  btn.textContent = '已完成';
+  // 重载一次，让已在内存里的目录与正文换成新版
+  if (tip) tip.textContent = '更新完成，正在重新载入…';
+  setTimeout(() => location.reload(), 800);
+}
+
+async function runShellUpdate(btn, tip) {
+  btn.disabled = true; btn.textContent = '下载中…';
+  window.__wcProgress = (got, total) => {
+    if (tip && total > 0) {
+      tip.textContent = `正在下载安装包 ${(got / 1048576).toFixed(1)} / ${(total / 1048576).toFixed(1)} MB`;
+    }
+  };
+  const r = await nativeCall('installApk', CFG.apkUrl);
+  window.__wcProgress = null;
+  if (!r.ok) {
+    btn.disabled = false; btn.textContent = '重试';
+    if (tip) tip.textContent = r.error || '下载失败，请稍后再试';
+    return;
+  }
+  btn.textContent = '已下载';
+  if (tip) tip.textContent = '请在系统弹出的安装界面继续。';
+}
+
+// APP 外壳版本：启动地址带 ?app=x.y.z，首次进入记下，供「我的」页比对
 const APP_VER = (() => {
   const q = new URLSearchParams(location.search).get('app');
   if (q) { store.set('appVer', q); return q; }
@@ -2111,7 +2251,10 @@ async function boot() {
     .catch(() => { books = []; flat = []; $('#nav-stats').textContent = '目录载入失败'; });
   await route();
   if (prefs.trad) loadOpenCC().then(() => { tradify($('#reader')); tradify($('#nav-tree')); tradify($('#ai-log')); });
-  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost'))
+  /* 离线 APP 里内容已随包出厂、由原生按「覆盖层→出厂内容」取，再套一层 Service Worker
+     只会和它抢着应答同一批请求，还可能把增量更新前的旧内容缓存住。故 APP 内不注册。 */
+  if (!isOfflineApp && 'serviceWorker' in navigator
+      && (location.protocol === 'https:' || location.hostname === 'localhost'))
     navigator.serviceWorker.register('/sw.js').then(watchUpdate).catch(() => {});
 }
 boot();

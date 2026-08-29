@@ -104,7 +104,7 @@ function aiFeedback(el, question, reply, passages) {
 /* 引用核验徽标落地（appendVerify）已移至共享内核 ai-core.js。 */
 
 /* ---------- 会话恢复 ---------- */
-function saveSession() { try { lstore.set('aiSession', aiSession.slice(-30)); } catch {} }
+function saveSession() { try { lstore.set('aiSession', aiSession.slice(-30)); } catch (e) {} }
 function renderBot(rec) {
   const div = document.createElement('div');
   div.className = 'ai-msg bot';
@@ -139,6 +139,16 @@ async function aiAsk(q) {
     aiAppend('bot', 'AI 服务尚未接入（config.js 的 aiEndpoint 未配置）。');
     return;
   }
+  /* 离线 APP 里断网是常态：正文都在本机，唯独问答要连服务器。
+     先在这儿说清楚，免得让人对着「正在查阅文钞」白等一场超时。 */
+  try {
+    const n = window.__wcNative;
+    if (n && typeof n.isOnline === 'function' && !n.isOnline()) {
+      // 这里走 aiFormat，它会 esc 掉 HTML；换行用 \n，由它自己分段
+      aiAppend('bot', '「问文钞」需要联网才能用。\n文钞正文已存在本机，断网也可照常翻阅、检索篇名。');
+      return;
+    }
+  } catch (e) { /* 判断不了就照常发问，让它自己去撞网络错误 */ }
   const placeholder = document.createElement('div');
   placeholder.className = 'ai-msg bot ai-loading';
   placeholder.innerHTML = '<i>正在查阅文钞</i><span></span><span></span><span></span>';

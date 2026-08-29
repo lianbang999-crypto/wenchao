@@ -9,8 +9,10 @@ export const esc = (s) => String(s == null ? '' : s)
 /* 本地存储：与 app.js 的 store 同前缀(wc.)、同键(aiSession)，
  * 因而同一设备同一浏览器下，抽屉与独立页的会话历史天然互通。 */
 export const lstore = {
-  get(k, d) { try { return JSON.parse(localStorage.getItem('wc.' + k)) ?? d; } catch { return d; } },
-  set(k, v) { try { localStorage.setItem('wc.' + k, JSON.stringify(v)); } catch {} },
+  // 不用 ??：它要 Chrome 80+ 才认，旧安卓的系统 WebView 会整份解析失败、阅读器全哑。
+  // 判 null/undefined 而非 falsy，是为了让存下的 false / 0 不被默认值顶掉。
+  get(k, d) { try { const v = JSON.parse(localStorage.getItem('wc.' + k)); return v === null || v === undefined ? d : v; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('wc.' + k, JSON.stringify(v)); } catch (e) {} },
 };
 
 /* 轻量 Markdown（小标题 / 粗体 / 有序·无序列表 / 一级子项 / 段落）+ 行内角标 [n]。
@@ -86,12 +88,12 @@ export async function streamAsk(endpoint, payload, handlers, signal) {
       let nl;
       while ((nl = buf.indexOf('\n')) >= 0) {
         const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
-        if (line) try { onMsg(JSON.parse(line)); } catch { /* 半行 */ }
+        if (line) try { onMsg(JSON.parse(line)); } catch (e) { /* 半行 */ }
       }
     }
-    if (buf.trim()) try { onMsg(JSON.parse(buf.trim())); } catch { /* 末行无换行的 {reply} 错误体 */ }
+    if (buf.trim()) try { onMsg(JSON.parse(buf.trim())); } catch (e) { /* 末行无换行的 {reply} 错误体 */ }
   } else {                                              // 不支持流式：整体读取
-    (await res.text()).split('\n').forEach((l) => { if (l.trim()) try { onMsg(JSON.parse(l)); } catch {} });
+    (await res.text()).split('\n').forEach((l) => { if (l.trim()) try { onMsg(JSON.parse(l)); } catch (e) {} });
   }
   return full;
 }
@@ -126,8 +128,8 @@ function aiAudioEl() { if (!_aiAudio) { _aiAudio = new Audio(); _aiAudio.preload
 /* 立即停止任何 AI 朗读（高清音频 + 本机合成）。新对话/关面板/再点按钮时调用。 */
 export function aiSpeakStop() {
   _aiToken++;
-  if (_aiAudio) { try { _aiAudio.pause(); } catch {} _aiAudio.onended = _aiAudio.onerror = null; }
-  if (typeof speechSynthesis !== 'undefined') { try { speechSynthesis.cancel(); } catch {} }
+  if (_aiAudio) { try { _aiAudio.pause(); } catch (e) {} _aiAudio.onended = _aiAudio.onerror = null; }
+  if (typeof speechSynthesis !== 'undefined') { try { speechSynthesis.cancel(); } catch (e) {} }
 }
 
 // 本机降级：speechSynthesis 合成（免费·离线可用）
@@ -140,7 +142,7 @@ function speakLocal(reply, token, onIdle) {
   const v = (synth.getVoices() || []).find((x) => /zh|chinese|中文|普通话|han/i.test((x.lang || '') + (x.name || '')));
   if (v) u.voice = v;
   u.onend = u.onerror = () => { if (token === _aiToken) onIdle(); };
-  try { synth.speak(u); } catch { onIdle(); return false; }
+  try { synth.speak(u); } catch (e) { onIdle(); return false; }
   return true;
 }
 
@@ -164,12 +166,12 @@ export async function aiSpeakReply(endpoint, reply, cbs, voice) {
     blobUrl = URL.createObjectURL(blob);
     const a = aiAudioEl();
     a.src = blobUrl; a.playbackRate = 1;
-    a.onended = () => { try { URL.revokeObjectURL(blobUrl); } catch {} if (isCur()) onIdle(); };
-    a.onerror = () => { try { URL.revokeObjectURL(blobUrl); } catch {} if (isCur() && !speakLocal(reply, token, onIdle)) onIdle(); };
+    a.onended = () => { try { URL.revokeObjectURL(blobUrl); } catch (e) {} if (isCur()) onIdle(); };
+    a.onerror = () => { try { URL.revokeObjectURL(blobUrl); } catch (e) {} if (isCur() && !speakLocal(reply, token, onIdle)) onIdle(); };
     onPlaying();
     await a.play().catch(() => {});
-  } catch {
-    if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch {} }
+  } catch (e) {
+    if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch (e) {} }
     if (!isCur()) return;
     onPlaying();                                // 高清失败 → 本机续读（本机 onend 会复位为 idle）
     if (!speakLocal(reply, token, onIdle)) onIdle();

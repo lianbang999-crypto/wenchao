@@ -62,11 +62,16 @@
 # 线上照旧返回 immutable）。而 ai-core.js 是被 app.js 以裸 import './ai-core.js'
 # 引入的、没有版本串——一旦按不可变缓存一年，往后改它就送不到已装用户手上，
 # 得等一年缓存过期。新增 js 文件时记得在这里补一行。
-# 这里必须写足 max-age=0, must-revalidate，光写 no-cache 不管用：
-# 对 .js 这类 Cloudflare 默认就缓存的类型，单独的 no-cache 会被忽略、
-# 落回面板的 Browser Cache TTL（实测 31 天）。/sw.js 也是加了完整指令才生效的。
+# ai-core.js 只能用 no-store，这是试出来的，别改回 no-cache 或 max-age=0：
+# 对 .js 这类 Cloudflare 默认就缓存的类型，面板的 Browser Cache TTL（实测 31 天）
+# 会顶掉源站的 max-age——写 no-cache 被忽略，写 max-age=0 被改写成 2678400，
+# 只有 no-store 它才照办。文件 16KB，且 Service Worker 里仍有一份缓存兜底
+# （网络取不到会回退，见 sw.js 的超时逻辑），代价可以接受。
+#
+# 根治办法在仓库外：Cloudflare → Caching → Configuration，
+# 把 Browser Cache TTL 改成「Respect Existing Headers」，之后本文件才真正说了算。
 /js/ai-core.js
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: no-store
 
 /js/qrcode.js
   Cache-Control: public, max-age=2592000

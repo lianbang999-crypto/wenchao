@@ -582,7 +582,6 @@ function renderMine() {
   wireMineItems($('#reader'), renderMine);
   { const aa = $('#mine-aa'); if (aa) aa.onclick = openAaSheet; }
   { const u = $('#chk-update'); if (u) u.onclick = () => checkUpdate(u); }
-  { const s = $('#upd-shell-row'); if (s) s.onclick = () => runShellUpdate(s, null); }
   { const c = $('#mine-contact'); if (c) c.onclick = openContact; }
   wireInstall($('#reader'));
   if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
@@ -615,20 +614,21 @@ function updateRowHtml() {
   const I = window.__wcInstall || {};
   const latest = CFG.apkVersion || '';
   const apk = CFG.apkUrl || '';
-  const stale = I.standalone && I.isAndroid && APP_VER && latest && verLt(APP_VER, latest) && apk;
+  /* 这一行只在浏览器/PWA 形态下给。离线 APP 里的 CFG 来自随包出厂的 config.js，
+     写着的正是自己的版本号，据此判断「有没有新版」永远是否；APP 内改由
+     「检查更新」向服务端问（见 checkContentUpdate），那边拿的才是线上的版本。 */
+  const stale = !isOfflineApp && I.standalone && I.isAndroid && APP_VER && latest
+                && verLt(APP_VER, latest) && apk;
   const ver = APP_VER ? `<span class="set-v">当前 ${esc(APP_VER)}</span>` : '';
   const cver = isOfflineApp ? nativeContentVersion() : '';
   return (cver ? `<div class="set-row"><span class="set-k">文本版本</span>
                     <span class="set-v">${esc(cver)}</span></div>` : '')
     + `<div class="set-row"><span class="set-k">检查更新</span>${ver}<span class="set-c">
             <button class="chip-btn" id="chk-update">检查更新</button></span></div>`
+    // stale 已排除 APP 形态，故这里只会是浏览器/PWA，直接给下载链接即可
     + (stale ? `<div class="set-row"><span class="set-k">应用新版本</span>
-         <span class="set-v">${esc(latest)}</span><span class="set-c">`
-         // APP 内点链接下载不会自动装，得交给原生下好再唤起安装器
-         + (isOfflineApp
-             ? `<button class="chip-btn ins-primary" id="upd-shell-row">下载安装</button>`
-             : `<a class="chip-btn ins-primary" href="${esc(apk)}" download>下载新版</a>`)
-         + `</span></div>` : '');
+         <span class="set-v">${esc(latest)}</span><span class="set-c">
+         <a class="chip-btn ins-primary" href="${esc(apk)}" download>下载新版</a></span></div>` : '');
 }
 
 /* ---------- 「我的」页 · 安装到手机 ----------
@@ -2177,32 +2177,38 @@ async function checkContentUpdate(btn) {
   const r = await nativeCall('checkUpdate');
   reset();
   if (!r.ok) { toast(r.error || '检查失败，请稍后再试'); return; }
-  const shellNew = !!(CFG.apkVersion && APP_VER && verLt(APP_VER, CFG.apkVersion) && CFG.apkUrl);
+  /* 外壳版本一律以服务端下发的为准（r.appVersion），不能用 CFG.apkVersion——
+     APP 里那份 config.js 是随安装包出厂的，写着的正是自己的版本号，
+     拿自己比自己 verLt 永远为假，「检查更新」于是永远说已是最新。
+     1.1.2 及更早就是栽在这里，用户发了新版也提示不出来。 */
+  const latest = r.appVersion || '';
+  const url = r.appUrl || '';
+  const shellNew = !!(latest && APP_VER && verLt(APP_VER, latest) && url);
   if (!r.count && !shellNew) { toast('已是最新'); return; }
-  showUpdateSheet(r.count || 0, shellNew);
+  showUpdateSheet(r.count || 0, shellNew, latest, url);
 }
 
-function showUpdateSheet(count, shellNew) {
+function showUpdateSheet(count, shellNew, latest, url) {
   const rows = [];
   if (count) {
     rows.push(`<div class="set-row"><span class="set-k">内容更新</span>
-        <span class="set-v">${count} 篇</span><span class="set-c">
+        <span class="set-v">${count} 项</span><span class="set-c">
         <button class="chip-btn ins-primary" id="up-content">立即更新</button></span></div>`);
   }
   if (shellNew) {
     rows.push(`<div class="set-row"><span class="set-k">应用新版本</span>
-        <span class="set-v">${esc(CFG.apkVersion)}</span><span class="set-c">
+        <span class="set-v">${esc(latest)}</span><span class="set-c">
         <button class="chip-btn${count ? '' : ' ins-primary'}" id="up-shell">下载安装</button></span></div>`);
   }
   $('#sheet-body').innerHTML =
     `<div class="qr-card"><h4 class="qr-name">发现更新</h4>
        <div class="set-card">${rows.join('')}</div>
-       <p class="qr-tip" id="up-tip">内容更新只下有改动的篇目，通常几十 KB；应用新版本约二十余 MB。</p>
+       <p class="qr-tip" id="up-tip">内容更新只下有改动的部分，通常几十 KB；应用新版本约二十余 MB。</p>
      </div>`;
   sheetShow();
   const tip = $('#up-tip');
   const c = $('#up-content'); if (c) c.onclick = () => runContentUpdate(c, tip);
-  const s = $('#up-shell'); if (s) s.onclick = () => runShellUpdate(s, tip);
+  const s = $('#up-shell'); if (s) s.onclick = () => runShellUpdate(s, tip, url);
 }
 
 async function runContentUpdate(btn, tip) {
@@ -2223,14 +2229,17 @@ async function runContentUpdate(btn, tip) {
   setTimeout(() => location.reload(), 800);
 }
 
-async function runShellUpdate(btn, tip) {
+async function runShellUpdate(btn, tip, url) {
+  // 地址同样以服务端下发的为准；退回 CFG 只是兜底（浏览器形态才可能用到）
+  const apk = url || CFG.apkUrl;
+  if (!apk) { toast('暂无可用的安装包地址'); return; }
   btn.disabled = true; btn.textContent = '下载中…';
   window.__wcProgress = (got, total) => {
     if (tip && total > 0) {
       tip.textContent = `正在下载安装包 ${(got / 1048576).toFixed(1)} / ${(total / 1048576).toFixed(1)} MB`;
     }
   };
-  const r = await nativeCall('installApk', CFG.apkUrl);
+  const r = await nativeCall('installApk', apk);
   window.__wcProgress = null;
   if (!r.ok) {
     btn.disabled = false; btn.textContent = '重试';

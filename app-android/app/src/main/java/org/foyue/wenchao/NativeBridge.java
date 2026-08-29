@@ -264,6 +264,12 @@ class NativeBridge {
         return out;
     }
 
+    /** 清单里的安装包地址可能是站内相对路径，补成绝对地址再交给页面。 */
+    private static String absUrl(String u) {
+        if (u == null || u.isEmpty()) return "";
+        return u.startsWith("http") ? u : "https://wenchao.foyue.org" + u;
+    }
+
     /** 文件名消毒：分享卡名字取自篇题，可能带路径分隔符等非法字符。 */
     private static String safeName(String name) {
         String s = (name == null || name.trim().isEmpty()) ? "文钞分享卡" : name.trim();
@@ -291,11 +297,20 @@ class NativeBridge {
                     JSONObject local = updater.localManifest();
                     JSONObject remote = updater.remoteManifest();
                     List<String> ids = updater.diff(local, remote);
+                    List<String> assets = updater.diffAssets(local, remote);
                     boolean books = updater.booksChanged(local, remote);
                     r.put("ok", true);
-                    r.put("count", ids.size() + (books ? 1 : 0));
+                    r.put("count", ids.size() + assets.size() + (books ? 1 : 0));
                     r.put("version", remote.optString("version", ""));
                     r.put("current", local.optString("version", ""));
+                    /* 外壳版本必须由服务端下发，不能让页面读本地 config.js——
+                       那份是随安装包出厂的，写着的正是自己的版本号，拿自己比自己
+                       永远为假，「检查更新」于是永远说已是最新（1.1.2 之前就是这个毛病）。 */
+                    JSONObject app = remote.optJSONObject("app");
+                    if (app != null) {
+                        r.put("appVersion", app.optString("version", ""));
+                        r.put("appUrl", absUrl(app.optString("url", "")));
+                    }
                 } catch (Exception e) {
                     put(r, "ok", false);
                     put(r, "error", friendly(e));
@@ -318,19 +333,20 @@ class NativeBridge {
                     JSONObject local = updater.localManifest();
                     JSONObject remote = updater.remoteManifest();
                     List<String> ids = updater.diff(local, remote);
+                    List<String> assets = updater.diffAssets(local, remote);
                     boolean books = updater.booksChanged(local, remote);
-                    if (ids.isEmpty() && !books) {
+                    if (ids.isEmpty() && assets.isEmpty() && !books) {
                         put(r, "ok", true);
                         put(r, "count", 0);
                     } else {
-                        updater.apply(ids, books, remote, new ContentUpdater.Progress() {
+                        updater.apply(ids, books, assets, remote, new ContentUpdater.Progress() {
                             @Override public void onProgress(int done, int total) {
                                 evalJs("window.__wcProgress&&window.__wcProgress("
                                         + done + "," + total + ")");
                             }
                         });
                         put(r, "ok", true);
-                        put(r, "count", ids.size() + (books ? 1 : 0));
+                        put(r, "count", ids.size() + assets.size() + (books ? 1 : 0));
                         put(r, "version", remote.optString("version", ""));
                     }
                 } catch (Exception e) {

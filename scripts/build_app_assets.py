@@ -30,6 +30,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import shutil
 import sys
 from datetime import datetime, timezone
@@ -103,8 +104,31 @@ def copy_tree(src, dst):
     return cnt, size
 
 
+# 前端资源：这几样也纳入增量更新，改了 JS 就不必发新安装包。
+# 之所以可行：APP 的取件台忽略查询串，覆盖层放一份 js/app.js 就会盖住随包出厂的那份，
+# 页面里 ?v=xxx 写的是什么都不影响命中。
+ASSET_DIRS = ["js", "css"]
+
+
+def read_app_release():
+    """从 site/config.js 取当前发布的外壳版本与安装包地址。
+
+    为什么必须写进这份线上清单：APP 里的 config.js 是随安装包出厂的那一份，
+    1.1.2 的包里写着 apkVersion 1.1.2，跟它自己的版本一模一样——拿自己比自己，
+    verLt 永远为假，于是「检查更新」永远说已是最新。TWA 时代 config.js 从线上取，
+    这条链是通的；改成离线应用后就断了。故外壳版本改由此处下发。
+    """
+    src = io.open(os.path.join(SITE, "config.js"), encoding="utf-8").read()
+    ver = re.search(r"apkVersion:\s*'([^']+)'", src)
+    url = re.search(r"apkUrl:\s*'([^']+)'", src)
+    return {
+        "version": ver.group(1) if ver else "",
+        "url": url.group(1) if url else "",
+    }
+
+
 def build_manifest():
-    """扫描篇 JSON 与目录，生成内容清单。版本号取内容聚合摘要，内容没变则版本号不变。"""
+    """扫描篇 JSON、目录与前端资源，生成清单。版本号取内容聚合摘要，内容没变则版本号不变。"""
     arts_dir = os.path.join(SITE, "data", "articles")
     articles = {}
     for name in sorted(os.listdir(arts_dir)):
@@ -113,10 +137,22 @@ def build_manifest():
         articles[name[:-5]] = sha(os.path.join(arts_dir, name))
     books = sha(os.path.join(SITE, "data", "books.json"))
 
+    assets = {}
+    for d in ASSET_DIRS:
+        base = os.path.join(SITE, d)
+        if not os.path.isdir(base):
+            continue
+        for name in sorted(os.listdir(base)):
+            p = os.path.join(base, name)
+            if os.path.isfile(p):
+                assets[d + "/" + name] = sha(p)
+
     agg = hashlib.sha1()
     agg.update(books.encode())
     for k in sorted(articles):
         agg.update((k + articles[k]).encode())
+    for k in sorted(assets):
+        agg.update((k + assets[k]).encode())
     version = datetime.now(timezone.utc).strftime("%Y%m%d") + "-" + agg.hexdigest()[:8]
 
     return {
@@ -125,6 +161,8 @@ def build_manifest():
         "count": len(articles),
         "books": books,
         "articles": articles,
+        "assets": assets,
+        "app": read_app_release(),
     }
 
 

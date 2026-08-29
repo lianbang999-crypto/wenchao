@@ -32,8 +32,8 @@ import java.util.List;
  */
 class ContentUpdater {
 
-    private static final String REMOTE_MANIFEST =
-            "https://wenchao.foyue.org/app/content-manifest.json";
+    private static final String SITE = "https://wenchao.foyue.org";
+    private static final String REMOTE_MANIFEST = SITE + "/app/content-manifest.json";
     private static final String ASSET_MANIFEST = "content-version.json";
     private static final String STATE_FILE = "content-state.json";
 
@@ -90,30 +90,73 @@ class ContentUpdater {
     }
 
     /**
+     * 比出哪些前端资源（js/css）要更新。
+     *
+     * <p>把这些也纳进来，是为了让阅读器本身的修补也能增量下发——否则改一行 JS 就得
+     * 让所有人重下二十多兆的安装包，「内容增量、外壳换包」这个分工就名存实亡了。
+     * 只有原生那部分（Java）改动才是真正非换包不可的。
+     *
+     * <p>可行的前提是取件台按路径找、忽略查询串：覆盖层放一份 js/app.js 就会盖住
+     * 随包出厂的那份，页面里 ?v=xxx 写的是什么都不影响命中。
+     */
+    List<String> diffAssets(JSONObject local, JSONObject remote) {
+        JSONObject la = local.optJSONObject("assets");
+        JSONObject ra = remote.optJSONObject("assets");
+        List<String> out = new ArrayList<>();
+        if (ra == null) return out;
+        for (Iterator<String> it = ra.keys(); it.hasNext(); ) {
+            String path = it.next();
+            String rh = ra.optString(path, "");
+            String lh = la == null ? "" : la.optString(path, "");
+            if (!rh.isEmpty() && !rh.equals(lh)) out.add(path);
+            if (out.size() >= MAX_FILES) break;
+        }
+        return out;
+    }
+
+    /**
      * 下载并落盘。全部成功后才写状态文件——中途失败就当这次更新没发生，
      * 已下好的那部分留在覆盖层里也无妨（它们本就是更新的目标内容）。
      */
-    void apply(List<String> ids, boolean books, JSONObject remote, Progress cb)
+    void apply(List<String> ids, boolean books, List<String> assets, JSONObject remote, Progress cb)
             throws IOException, org.json.JSONException {
         File artDir = new File(overlayDir, "data/articles");
         if (!artDir.isDirectory() && !artDir.mkdirs()) {
             throw new IOException("建不了覆盖层目录：" + artDir);
         }
-        int done = 0, total = ids.size() + (books ? 1 : 0);
+        int nAssets = assets == null ? 0 : assets.size();
+        int done = 0, total = ids.size() + (books ? 1 : 0) + nAssets;
 
         if (books) {
-            byte[] b = httpGetBytes("https://wenchao.foyue.org/data/books.json");
+            byte[] b = httpGetBytes(SITE + "/data/books.json");
             writeAtomic(new File(overlayDir, "data/books.json"), b);
             if (cb != null) cb.onProgress(++done, total);
         }
         for (String id : ids) {
-            byte[] b = httpGetBytes("https://wenchao.foyue.org/data/articles/" + id + ".json");
+            byte[] b = httpGetBytes(SITE + "/data/articles/" + id + ".json");
             writeAtomic(new File(artDir, id + ".json"), b);
+            if (cb != null) cb.onProgress(++done, total);
+        }
+        JSONObject ra = remote.optJSONObject("assets");
+        for (int i = 0; i < nAssets; i++) {
+            String path = assets.get(i);
+            if (!safeRelPath(path)) continue;      // 清单来自网络，不能拿它随便往哪写
+            // js/css 在站点上是 immutable 长缓存，直连会拿到 CDN 里的旧版；
+            // 带上内容摘要当查询串，URL 一变即绕开缓存，取到的必是这一版。
+            String h = ra == null ? "" : ra.optString(path, "");
+            byte[] b = httpGetBytes(SITE + "/" + path + (h.isEmpty() ? "" : "?h=" + h));
+            writeAtomic(new File(overlayDir, path), b);
             if (cb != null) cb.onProgress(++done, total);
         }
         // 全下完了才认账：状态文件一写，本地清单就等同远端
         writeAtomic(new File(ctx.getFilesDir(), STATE_FILE),
                 remote.toString().getBytes("UTF-8"));
+    }
+
+    /** 只收 js/ css/ 下的普通相对路径，挡住 ../ 之类越界写入。 */
+    private static boolean safeRelPath(String p) {
+        if (p == null || p.isEmpty() || p.contains("..") || p.startsWith("/")) return false;
+        return p.startsWith("js/") || p.startsWith("css/");
     }
 
     interface Progress {

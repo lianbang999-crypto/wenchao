@@ -49,6 +49,18 @@
 
 # css/js 全部经 ?v= 版本串引用（构建脚本统一注入），内容变则版本变，可放心长缓存。
 # 字体切片文件名即内容标识（Google/字体包切片命名稳定），同样不可变。
+#
+# ⚠️ 例外必须写在 /js/* 之前。Cloudflare Pages 的 _headers 是「先匹配先生效」，
+# 具体路径写在通配之后不会覆盖它，只会被通配抢先、规则形同虚设。
+# 此前 ai-core.js 的 no-cache 就写在 /js/* 后面，线上实际返回的是
+# max-age=31536000, immutable——而它恰恰是无版本串直引的文件，
+# 等于「改了也送不到老用户手上，要等一年」。2026-08-29 实测发现并调序。
+/js/ai-core.js
+  Cache-Control: no-cache
+
+/js/qrcode.js
+  Cache-Control: public, max-age=2592000
+
 /css/*
   Cache-Control: public, max-age=31536000, immutable
 
@@ -58,16 +70,17 @@
 /font/*
   Cache-Control: public, max-age=31536000, immutable
 
-# 例外：无版本串直引的文件不能 immutable——
-# ai-core.js 被 app.js 以裸 import './ai-core.js' 引入；sw.js 是 SW 脚本本体。
-/js/ai-core.js
-  Cache-Control: no-cache
-
-/js/qrcode.js
-  Cache-Control: public, max-age=2592000
-
+# SW 脚本本体：绝不能被长缓存，否则修好的版本送不到已装用户手上。
+# ⚠️ 2026-08-29 实测：线上这条没生效，/sw.js 实际返回 max-age=2678400（31 天），
+# 而这个值并不在本文件任何一条规则里——应是 Cloudflare 面板的
+# 「Browser Cache TTL」（默认 1 个月）覆盖了它。若要根治，去
+# Cloudflare → Caching → Configuration，把 Browser Cache TTL 改为
+# 「Respect Existing Headers」。
+# 影响有限但不为零：按 Service Worker 规范，浏览器检查 SW 主脚本更新时会绕过
+# HTTP 缓存（updateViaCache 默认 imports），所以更新照常能发现；
+# 这里收紧只是不把安全绳系在「各家 WebView 都严格守规范」这个假设上。
 /sw.js
-  Cache-Control: no-cache
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
 
 /sitemap.xml
   Cache-Control: no-cache

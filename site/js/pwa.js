@@ -55,8 +55,9 @@
     e.preventDefault();
     deferredPrompt = e;
     notify();
-    // 安卓已有正式安装包（「我的」页给 APK），再自动弹一条 PWA 安装横幅只会与之打架，
-    // 让人分不清装哪个——故安卓不弹，能力仍留着供浏览器菜单与桌面端使用。
+    // 安卓有正式安装包，且它是离线的、比 PWA 强得多；再弹一条 PWA 横幅只会
+    // 让人分不清装哪个。故安卓这边由下面的 showApkBanner 统一引导，
+    // PWA 安装能力仍留着，供浏览器菜单与桌面端使用。
     if (isAndroid) return;
     if (!bannerAllowed()) return;              // 不显示横幅，但安装能力已存下
     setTimeout(showInstallBanner, 2500);
@@ -140,6 +141,50 @@
       window.__wcInstall.prompt().then(done, done);
     };
     bar.insertBefore(btn, bar.lastChild); // 放在关闭按钮之前
+  }
+
+  /* —— 安卓：引导下载离线应用 ——
+     网页版每翻一篇都要联网，而应用装完即可离线读全部 2565 篇。这个差别对
+     网络不稳的用户是决定性的（此前「打不开」的投诉多半就出在这儿），
+     值得主动说一句，而不是藏在「我的」页里等人自己找。
+     节流沿用同一套：关掉之后 14 天不再打扰；已装的（standalone）根本不显示。 */
+  function apkHref() {
+    try {
+      var c = window.WENCHAO_CONFIG || {};
+      return c.apkUrl || '';
+    } catch (e) { return ''; }
+  }
+
+  function showApkBanner() {
+    var url = apkHref();
+    if (!url) return;                       // 没配安装包地址就别提，免得给个死链
+    var bar;
+    if (inAppBrowser) {
+      // 微信/QQ 等内置浏览器会拦下 apk 下载，直接给按钮只会让人点了没反应，
+      // 故这里只讲怎么绕出去，不放下载键。
+      bar = banner('<b>装上离线版，断网也能读</b><br>' +
+        '<span style="opacity:.75">请点右上角「⋯」→ 在浏览器中打开，再下载</span>');
+      return;
+    }
+    bar = banner('<b>装上离线版，断网也能读</b><br>' +
+      '<span style="opacity:.75">全部 2565 篇随包带走，约 20MB</span>');
+    if (!bar) return;
+    var a = document.createElement('a');
+    a.href = url;
+    a.setAttribute('download', '');
+    a.textContent = '下载';
+    a.style.cssText = 'flex:0 0 auto;margin-left:.5rem;border:0;border-radius:8px;' +
+      'background:var(--cinnabar,#b03a26);color:var(--paper,#f6f1e6);text-decoration:none;' +
+      'font-family:inherit;font-size:14px;font-weight:600;padding:.42rem .9rem;cursor:pointer';
+    a.onclick = function () { setTimeout(dismiss, 400); };   // 点了就别再纠缠
+    bar.insertBefore(a, bar.lastChild);     // 放在关闭按钮之前
+  }
+
+  if (isAndroid && bannerAllowed()) {
+    window.addEventListener('load', function () {
+      // 比 PWA 那条晚一点：让人先看到正文，别一进门就被弹窗迎面挡住
+      setTimeout(showApkBanner, 4000);
+    });
   }
 
   // —— iOS Safari：无 beforeinstallprompt，只能引导手动添加 ——

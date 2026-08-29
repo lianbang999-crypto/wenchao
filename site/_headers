@@ -47,27 +47,43 @@
 /data/*
   Cache-Control: no-cache
 
-# css/js 全部经 ?v= 版本串引用（构建脚本统一注入），内容变则版本变，可放心长缓存。
-# 字体切片文件名即内容标识（Google/字体包切片命名稳定），同样不可变。
+# css/字体全部经 ?v= 版本串引用（构建脚本统一注入），内容变则版本变，可放心长缓存。
+# 字体切片文件名即内容标识（切片命名稳定），同样不可变。
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/font/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# js 逐个声明，不用 /js/* 通配——这是踩过坑之后的写法，别图省事改回通配。
 #
-# ⚠️ 例外必须写在 /js/* 之前。Cloudflare Pages 的 _headers 是「先匹配先生效」，
-# 具体路径写在通配之后不会覆盖它，只会被通配抢先、规则形同虚设。
-# 此前 ai-core.js 的 no-cache 就写在 /js/* 后面，线上实际返回的是
-# max-age=31536000, immutable——而它恰恰是无版本串直引的文件，
-# 等于「改了也送不到老用户手上，要等一年」。2026-08-29 实测发现并调序。
+# 2026-08-29 实测：Cloudflare Pages 的 _headers 里，通配规则会盖过同目录下的
+# 精确路径规则，且与书写顺序无关（把 /js/ai-core.js 挪到 /js/* 前面同样无效，
+# 线上照旧返回 immutable）。而 ai-core.js 是被 app.js 以裸 import './ai-core.js'
+# 引入的、没有版本串——一旦按不可变缓存一年，往后改它就送不到已装用户手上，
+# 得等一年缓存过期。新增 js 文件时记得在这里补一行。
 /js/ai-core.js
   Cache-Control: no-cache
 
 /js/qrcode.js
   Cache-Control: public, max-age=2592000
 
-/css/*
+/js/opencc.js
+  Cache-Control: public, max-age=2592000
+
+/js/app.js
   Cache-Control: public, max-age=31536000, immutable
 
-/js/*
+/js/ask.js
   Cache-Control: public, max-age=31536000, immutable
 
-/font/*
+/js/pwa.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/share.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/offline.js
   Cache-Control: public, max-age=31536000, immutable
 
 # SW 脚本本体：绝不能被长缓存，否则修好的版本送不到已装用户手上。

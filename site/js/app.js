@@ -1209,7 +1209,18 @@ window.__wcReadFrom = (range) => {
    当前句以 Custom Highlight API 高亮（不改 DOM，保留名相·角标可点），并自动滚动跟随。
    暂停=取消当前句、恢复=从本句重读（比 pause/resume 在安卓上更稳）。 */
 let speakBtn = null;   // 篇内工具行里的朗读键，每次 renderArticle 重挂
-const synthOK = () => 'speechSynthesis' in window;
+/* 系统朗读引擎（仅安卓 APP 有）。初始化是异步的，每次都要现问，不能缓存。 */
+function nativeTts() {
+  try {
+    const n = window.__wcNative;
+    return !!(n && typeof n.ttsAvailable === 'function' && n.ttsAvailable());
+  } catch (e) { return false; }
+}
+/* 本机朗读是否可用——APP 与浏览器的判据不一样，这点很容易踩：
+   Android WebView 里 'speechSynthesis' in window 同样为真，但那是个空壳，
+   getVoices() 返回空、speak() 无声、onend 永不回调，表现就是点了朗读毫无反应，
+   而且高清朗读失败降级到本机之后一样没声。所以 APP 内只认原生 TTS，不信这个字段。 */
+const synthOK = () => (window.__wcNative ? nativeTts() : ('speechSynthesis' in window));
 const READ = {
   units: [], idx: 0, on: false, paused: false, cur: null, bar: null, seq: 0,
   rate: store.get('ttsRate', 0.95),
@@ -1236,7 +1247,9 @@ function ensureAudio() { if (!_audio) { _audio = new Audio(); _audio.preload = '
 function isCurrent(token) { return READ.on && !READ.paused && READ.cur === token; }
 function stopCur() {
   READ.cur = null; setLoading(false);
-  if (synthOK()) window.speechSynthesis.cancel();
+  // 两套引擎各停各的：APP 用系统 TTS，浏览器用 speechSynthesis
+  if (nativeTts()) { try { window.__wcNative.ttsStop(); } catch (e) { } }
+  else if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   if (_audio) { _audio.pause(); _audio.onended = _audio.onerror = null; }
 }
 // 句间预取：播当前句时顺手取下一句，命中 R2 秒回 → 消除句间空档
@@ -1287,7 +1300,12 @@ function pickVoice() {
   if (vs.length) _voiceTried = true;
   return _voice;
 }
-if (synthOK()) window.speechSynthesis.onvoiceschanged = () => { _voice = null; _voiceTried = false; pickVoice(); };
+/* 判据用 'speechSynthesis' in window 而非 synthOK()：在 APP 里 synthOK() 为真
+   （原生 TTS 可用），但 speechSynthesis 本身可能压根不存在，这行又是模块顶层代码，
+   一旦取属性抛错，整份 app.js 都不会执行——阅读器直接全哑。 */
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => { _voice = null; _voiceTried = false; pickVoice(); };
+}
 
 // 把当前可见正文切成「句」单元，并为每句留一个可高亮的 DOM Range（跨行内子节点安全）
 function buildUnits(layer) {
@@ -1450,6 +1468,12 @@ async function autoNext(next) {
 // 本机引擎：speechSynthesis 逐句合成（免费·离线可用）
 function playLocal(u, token) {
   if (!synthOK()) { toast('本设备不支持本机朗读'); stopRead(); return; }
+  // APP 内交给系统 TTS。读完与出错都往下接一句，行为对齐下面 onend/onerror 那两条。
+  if (nativeTts()) {
+    nativeCall('ttsSpeak', localPron(u.text), READ.rate)
+      .then(() => { if (isCurrent(token)) speakIdx(READ.idx + 1); });
+    return;
+  }
   const utt = new SpeechSynthesisUtterance(localPron(u.text));
   utt.lang = 'zh-CN'; utt.rate = READ.rate;
   const v = pickVoice(); if (v) utt.voice = v;
@@ -1562,7 +1586,8 @@ function togglePause() {
   } else {
     READ.paused = true;
     if (useCloud()) { if (_audio) _audio.pause(); }
-    else if (synthOK()) window.speechSynthesis.cancel();
+    else if (nativeTts()) { try { window.__wcNative.ttsStop(); } catch (e) { } }
+    else if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     syncBar(); syncMediaState();
   }
 }
@@ -2074,6 +2099,8 @@ function nativeCall(method, ...args) {
     }
   });
 }
+// ai-core.js 是独立模块，拿不到这里的闭包；朗读要用同一套回调机制，故挂到 window 上
+window.__wcCall = nativeCall;
 
 /* ---------- 版本与更新 ----------
    浏览器/PWA 形态：站点改了文字或功能，冷启动即最新，无需重装。

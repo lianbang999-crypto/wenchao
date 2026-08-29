@@ -7,7 +7,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
@@ -18,6 +21,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -44,10 +48,58 @@ class NativeBridge {
     private final ContentUpdater updater;
     private final ExecutorService pool = Executors.newSingleThreadExecutor();
 
+    /** 系统朗读引擎。初始化是异步的，就绪前 ttsAvailable() 一律回 false。 */
+    private TextToSpeech tts;
+    private volatile boolean ttsReady = false;
+
     NativeBridge(Activity act, WebView web) {
         this.act = act;
         this.web = web;
         this.updater = new ContentUpdater(act);
+        initTts();
+    }
+
+    /**
+     * 接上系统的 TextToSpeech。
+     *
+     * <p>为什么非做不可：Android WebView 并不实现 Web Speech API 的语音合成部分——
+     * 坑在于 {@code 'speechSynthesis' in window} 仍然为真，getVoices() 却是空的、
+     * speak() 静默失败、onend 永不触发。页面那边看不出区别，表现就是「点了朗读没反应」，
+     * 而且高清朗读失败后降级到本机也一样没声。原先是 TWA、由 Chrome 渲染才没这问题，
+     * 换成自建 WebView 后就露出来了。所以本机朗读必须走系统 TTS。
+     */
+    private void initTts() {
+        try {
+            tts = new TextToSpeech(act.getApplicationContext(), new TextToSpeech.OnInitListener() {
+                @Override public void onInit(int status) {
+                    if (status != TextToSpeech.SUCCESS || tts == null) return;
+                    int r;
+                    try {
+                        r = tts.setLanguage(Locale.CHINA);
+                    } catch (Exception e) {
+                        return;
+                    }
+                    // 没装中文语音包的机器就别硬读了，让页面走高清（联网）那条路
+                    if (r == TextToSpeech.LANG_MISSING_DATA || r == TextToSpeech.LANG_NOT_SUPPORTED) return;
+                    tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                        @Override public void onStart(String id) { }
+                        @Override public void onDone(String id) { ttsCallback(id, true, null); }
+                        @Override public void onError(String id) { ttsCallback(id, false, "朗读失败"); }
+                        @Override public void onError(String id, int code) { ttsCallback(id, false, "朗读失败"); }
+                    });
+                    ttsReady = true;
+                }
+            });
+        } catch (Exception ignored) {
+            // 取不到引擎就当没有，页面会据此隐藏/降级，不影响阅读
+        }
+    }
+
+    private void ttsCallback(String id, boolean ok, String err) {
+        JSONObject r = new JSONObject();
+        put(r, "ok", ok);
+        if (err != null) put(r, "error", err);
+        callback(id, r);
     }
 
     // —— 同步的小查询 ——
@@ -79,6 +131,42 @@ class NativeBridge {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    // —— 本机朗读（替代 WebView 里形同虚设的 speechSynthesis）——
+
+    /** 系统朗读是否可用。初始化异步，页面每次朗读前都该问一次，不要缓存结果。 */
+    @JavascriptInterface
+    public boolean ttsAvailable() {
+        return ttsReady && tts != null;
+    }
+
+    /**
+     * 读一段话。读完（或出错）经回调通知页面，页面据此接着读下一句。
+     * 用 QUEUE_FLUSH：页面是逐句送过来的，上一句没读完就来新的，说明用户已经跳走了。
+     */
+    @JavascriptInterface
+    public void ttsSpeak(String text, float rate, String cbId) {
+        if (!ttsAvailable() || text == null || text.isEmpty()) {
+            ttsCallback(cbId, false, "本机朗读不可用");
+            return;
+        }
+        try {
+            tts.setSpeechRate(rate > 0 ? rate : 1.0f);
+            Bundle params = new Bundle();
+            // utteranceId 直接用回调号，读完就能对上是哪一句
+            int r = tts.speak(text, TextToSpeech.QUEUE_FLUSH, params, cbId);
+            if (r != TextToSpeech.SUCCESS) ttsCallback(cbId, false, "朗读启动失败");
+        } catch (Exception e) {
+            ttsCallback(cbId, false, "朗读失败");
+        }
+    }
+
+    @JavascriptInterface
+    public void ttsStop() {
+        try {
+            if (tts != null) tts.stop();
+        } catch (Exception ignored) { }
     }
 
     // —— 异步的重活 ——
@@ -217,6 +305,16 @@ class NativeBridge {
         } finally {
             c.disconnect();
         }
+    }
+
+    /** Activity 销毁时释放，交给 MainActivity.onDestroy 调用。 */
+    void shutdown() {
+        ttsReady = false;
+        try {
+            if (tts != null) { tts.stop(); tts.shutdown(); }
+        } catch (Exception ignored) { }
+        tts = null;
+        pool.shutdownNow();
     }
 
     // —— 回页面 ——

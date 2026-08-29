@@ -17,7 +17,7 @@ window.WENCHAO_CONFIG = {
      留空则不显示该行，只引导浏览器原生安装（PWA / 添加到主屏）。
      文件名带版本号，更新时换新文件并改此处，不会撞长缓存。
      日后若迁到对象存储，把这里换成完整 URL 即可，其余不动。 */
-  apkUrl: '/app/wenchao-1.1.0.apk',
+  apkUrl: '/app/wenchao-1.1.1.apk',
 
   /* 最新安装包版本号，与 app-android/app/build.gradle 的 versionName 保持一致。
      APP 内会拿自己的版本（启动地址带的 ?app=x.y.z）与此比对，
@@ -26,5 +26,5 @@ window.WENCHAO_CONFIG = {
      注意：1.1.0 起 APP 改为离线应用，内容随安装包出厂。经文勘误这类内容改动
      走 APP 内的增量更新（比对 /app/content-manifest.json），不必换包；
      只有阅读器本身改版才需要发新 APK、才靠这里的版本号提示。 */
-  apkVersion: '1.1.0',
+  apkVersion: '1.1.1',
 };

@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
 
     private WebView web;
     private View splash;
+    private NativeBridge bridge;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -126,7 +127,8 @@ public class MainActivity extends Activity {
             }
         });
 
-        web.addJavascriptInterface(new NativeBridge(this, web), NativeBridge.NAME);
+        bridge = new NativeBridge(this, web);
+        web.addJavascriptInterface(bridge, NativeBridge.NAME);
     }
 
     /**
@@ -206,6 +208,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        if (bridge != null) { bridge.shutdown(); bridge = null; }   // 释放朗读引擎与后台线程
         if (web != null) {
             web.removeJavascriptInterface(NativeBridge.NAME);
             ViewGroup parent = (ViewGroup) web.getParent();

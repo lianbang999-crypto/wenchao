@@ -125,15 +125,33 @@ export function localPron(t) { let s = speakableText(t); SPEAK_PRON.forEach(([a,
 let _aiAudio = null, _aiToken = 0;
 function aiAudioEl() { if (!_aiAudio) { _aiAudio = new Audio(); _aiAudio.preload = 'auto'; } return _aiAudio; }
 
+/* 安卓 APP 的系统朗读。Android WebView 不实现 Web Speech API 的合成部分——
+   'speechSynthesis' 在也白在：getVoices() 空、speak() 无声、onend 不回调。
+   故 APP 内改走原生（NativeBridge.ttsSpeak），由 app.js 挂在 window.__wcCall 上。 */
+function nativeTtsOK() {
+  try {
+    const n = window.__wcNative;
+    return !!(n && typeof n.ttsAvailable === 'function' && n.ttsAvailable());
+  } catch (e) { return false; }
+}
+
 /* 立即停止任何 AI 朗读（高清音频 + 本机合成）。新对话/关面板/再点按钮时调用。 */
 export function aiSpeakStop() {
   _aiToken++;
   if (_aiAudio) { try { _aiAudio.pause(); } catch (e) {} _aiAudio.onended = _aiAudio.onerror = null; }
+  if (nativeTtsOK()) { try { window.__wcNative.ttsStop(); } catch (e) {} }
   if (typeof speechSynthesis !== 'undefined') { try { speechSynthesis.cancel(); } catch (e) {} }
 }
 
-// 本机降级：speechSynthesis 合成（免费·离线可用）
+// 本机降级：APP 走系统 TTS，浏览器走 speechSynthesis（都免费·离线可用）
 function speakLocal(reply, token, onIdle) {
+  if (nativeTtsOK()) {
+    const call = window.__wcCall;
+    if (!call) { onIdle(); return false; }
+    call('ttsSpeak', localPron(reply), 0.95)
+      .then(() => { if (token === _aiToken) onIdle(); });
+    return true;
+  }
   const synth = typeof speechSynthesis !== 'undefined' ? speechSynthesis : null;
   if (!synth) { onIdle(); return false; }
   synth.cancel();

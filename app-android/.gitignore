@@ -9,6 +9,10 @@ app/build/
 *.aab
 *.idsig
 
+# 站点内容副本：由 scripts/build_app_assets.py 从 site/ 生成（27MB、2600+ 文件）。
+# 源头在 site/，这里只是打包中转，进仓库既冗余又会把每次勘误变成上万行 diff。
+app/src/main/assets/
+
 # 本机环境
 local.properties
 .DS_Store

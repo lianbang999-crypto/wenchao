@@ -20,7 +20,7 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()   // jcenter 已停止服务，androidx 等依赖走 google/mavenCentral
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.9.1'
@@ -33,7 +33,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()   // jcenter 已停止服务，androidx 等依赖走 google/mavenCentral
     }
 }
 

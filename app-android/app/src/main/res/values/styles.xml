@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        原 TWA 外壳用的是 Theme.Translucent（透明），那是它把画面交给 Chrome 的需要。
+        自建 WebView 自己画界面，用普通不透明主题即可。
+
+        windowBackground 设成与启动屏同色：冷启动时系统先画这层背景，
+        设成白色以外的纸色，才不会在打开的一瞬间闪一下白。
+    -->
+    <style name="AppTheme" parent="@android:style/Theme.NoTitleBar">
+        <item name="android:windowBackground">@color/backgroundColor</item>
+        <item name="android:statusBarColor">@color/backgroundColor</item>
+        <item name="android:navigationBarColor">@color/backgroundColor</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+</resources>

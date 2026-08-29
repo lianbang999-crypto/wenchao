@@ -6,4 +6,6 @@
 -->
 <paths>
     <cache-path path="apk/" name="apk" />
+    <!-- 分享卡图片：先落到 cacheDir/share/，再经 FileProvider 交给微信等接收方 -->
+    <cache-path path="share/" name="share" />
 </paths>

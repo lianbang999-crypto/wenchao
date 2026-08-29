@@ -20,8 +20,8 @@ android {
         // 由 MainActivity 检出后给一页说明，而不是让人对着白屏猜。
         minSdk 21
         targetSdk 36
-        versionCode 7
-        versionName "1.1.1"
+        versionCode 8
+        versionName "1.1.2"
 
         resValue "string", "appName", "印光法师文钞"
         resValue "string", "launcherName", "印祖文钞"

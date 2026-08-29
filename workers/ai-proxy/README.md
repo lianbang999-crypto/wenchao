@@ -42,8 +42,11 @@ npx wrangler d1 create wenchao-kb-fts
 npx wrangler secret put DEEPSEEK_API_KEY
 npx wrangler secret put INDEX_SECRET
 
-npx wrangler deploy
+npx wrangler deploy --config ./wrangler.toml
 ```
+
+> `--config` 不能省。仓库根目录有个给 Cloudflare Pages 用的 `wrangler.jsonc`，
+> 直接跑 `wrangler deploy` 会向上命中它，报「找不到 main 入口」。
 
 `wrangler.toml` 里已经绑定：
 

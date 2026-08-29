@@ -1,6 +1,8 @@
 package org.foyue.wenchao;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -8,7 +10,10 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Base64;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.webkit.JavascriptInterface;
@@ -20,6 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
@@ -167,6 +174,106 @@ class NativeBridge {
         try {
             if (tts != null) tts.stop();
         } catch (Exception ignored) { }
+    }
+
+    // —— 分享卡：存相册 / 发给其它应用 ——
+    //
+    // 页面那套做法在 WebView 里都不成立：<a download> 不会触发下载（WebView 默认不处理
+    // 下载，除非另装 DownloadListener），navigator.share 压根不存在，长按图片也没有
+    // Chrome 那个「保存图片/分享」上下文菜单。所以这两件事只能落到原生来做。
+
+    /** 存进系统相册。data 是 canvas.toDataURL() 的结果。 */
+    @JavascriptInterface
+    public void saveImage(final String dataUrl, final String name, final String cbId) {
+        pool.execute(new Runnable() {
+            @Override public void run() {
+                JSONObject r = new JSONObject();
+                try {
+                    byte[] png = decodeDataUrl(dataUrl);
+                    String file = safeName(name) + ".png";
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        // Android 10 起走 MediaStore，落在「图片/印祖文钞」下，不需要任何权限
+                        ContentValues cv = new ContentValues();
+                        cv.put(MediaStore.Images.Media.DISPLAY_NAME, file);
+                        cv.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+                        cv.put(MediaStore.Images.Media.RELATIVE_PATH,
+                                Environment.DIRECTORY_PICTURES + "/印祖文钞");
+                        ContentResolver cr = act.getContentResolver();
+                        Uri uri = cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv);
+                        if (uri == null) throw new Exception("相册不可写");
+                        OutputStream out = cr.openOutputStream(uri);
+                        if (out == null) throw new Exception("相册不可写");
+                        try { out.write(png); out.flush(); } finally { out.close(); }
+                        put(r, "ok", true);
+                    } else {
+                        // Android 9 及以下写公共目录要 WRITE_EXTERNAL_STORAGE 运行时权限。
+                        // 不在这里拉权限弹窗打断用户——直说存不了，让他改用「分享」，
+                        // 分享走 FileProvider，任何版本都不需要权限。
+                        put(r, "ok", false);
+                        put(r, "error", "本系统版本无法直接存相册，请改用「分享」发给微信或相册");
+                    }
+                } catch (Exception e) {
+                    put(r, "ok", false);
+                    put(r, "error", "保存失败：" + shortMsg(e));
+                }
+                callback(cbId, r);
+            }
+        });
+    }
+
+    /** 交给系统分享面板（微信、QQ、相册……）。全版本可用，不需要存储权限。 */
+    @JavascriptInterface
+    public void shareImage(final String dataUrl, final String name, final String cbId) {
+        pool.execute(new Runnable() {
+            @Override public void run() {
+                JSONObject r = new JSONObject();
+                try {
+                    byte[] png = decodeDataUrl(dataUrl);
+                    File dir = new File(act.getCacheDir(), "share");
+                    if (!dir.isDirectory() && !dir.mkdirs()) throw new Exception("建不了缓存目录");
+                    File f = new File(dir, safeName(name) + ".png");
+                    FileOutputStream out = new FileOutputStream(f);
+                    try { out.write(png); out.flush(); } finally { out.close(); }
+
+                    Uri uri = FileProvider.getUriForFile(
+                            act, act.getPackageName() + ".fileprovider", f);
+                    Intent send = new Intent(Intent.ACTION_SEND);
+                    send.setType("image/png");
+                    send.putExtra(Intent.EXTRA_STREAM, uri);
+                    send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    Intent chooser = Intent.createChooser(send, "分享法布施卡");
+                    chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    act.startActivity(chooser);
+                    put(r, "ok", true);
+                } catch (Exception e) {
+                    put(r, "ok", false);
+                    put(r, "error", "分享失败：" + shortMsg(e));
+                }
+                callback(cbId, r);
+            }
+        });
+    }
+
+    /** 把 data:image/png;base64,xxx 还原成字节。 */
+    private static byte[] decodeDataUrl(String dataUrl) throws Exception {
+        if (dataUrl == null) throw new Exception("没有图片数据");
+        int comma = dataUrl.indexOf(',');
+        String b64 = comma >= 0 ? dataUrl.substring(comma + 1) : dataUrl;
+        byte[] out = Base64.decode(b64, Base64.DEFAULT);
+        if (out == null || out.length == 0) throw new Exception("图片数据为空");
+        return out;
+    }
+
+    /** 文件名消毒：分享卡名字取自篇题，可能带路径分隔符等非法字符。 */
+    private static String safeName(String name) {
+        String s = (name == null || name.trim().isEmpty()) ? "文钞分享卡" : name.trim();
+        s = s.replaceAll("[\\\\/:*?\"<>|\\r\\n]", "");
+        return s.length() > 40 ? s.substring(0, 40) : s;
+    }
+
+    private static String shortMsg(Exception e) {
+        String m = e.getMessage();
+        return (m == null || m.isEmpty()) ? e.getClass().getSimpleName() : m;
     }
 
     // —— 异步的重活 ——

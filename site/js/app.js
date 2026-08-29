@@ -2101,6 +2101,8 @@ function nativeCall(method, ...args) {
 }
 // ai-core.js 是独立模块，拿不到这里的闭包；朗读要用同一套回调机制，故挂到 window 上
 window.__wcCall = nativeCall;
+// share.js 同理：它是独立 IIFE，出错时要给用户一句话，但 APP 里 alert 未必显示
+window.__wcToast = toast;
 
 /* ---------- 版本与更新 ----------
    浏览器/PWA 形态：站点改了文字或功能，冷启动即最新，无需重装。

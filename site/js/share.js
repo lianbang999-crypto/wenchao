@@ -158,12 +158,24 @@
     showBar();
   }
 
+  /* 安卓 APP（1.1.1 起）。WebView 里 <a download> 不触发下载、navigator.share 不存在、
+     长按图片也没有 Chrome 那个「保存/分享」上下文菜单——三条路全断，
+     故 APP 内的保存与分享都下沉到原生（见 NativeBridge 的 saveImage / shareImage）。 */
+  function nativeShareOK() {
+    try {
+      var n = window.__wcNative;
+      return !!(n && typeof n.shareImage === 'function' && window.__wcCall);
+    } catch (e) { return false; }
+  }
+
   /* ---------- 卡片弹层 ----------
      极简：一行提示 + 图 + 三键（保存图片·复制文字·复制链接）；关闭＝点蒙层或右上角 ✕。
-     不做「系统分享」键——微信内置浏览器不支持 navigator.share，支持处又与长按/保存重复。 */
+     浏览器里不做「系统分享」键——微信内置浏览器不支持 navigator.share，
+     支持处又与长按/保存重复；但 APP 里长按无效，故补一个「分享」键。 */
   var modal, modalImg;
   function ensureModal() {
     if (modal) return;
+    var app = nativeShareOK();
     modal = document.createElement('div');
     modal.className = 'share-modal';
     modal.hidden = true;
@@ -172,10 +184,12 @@
       '<div class="sm-panel">' +
       '  <button class="sm-close" type="button" aria-label="关闭">' +
       '    <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>' +
-      '  <div class="sm-tip">长按图片可直接转发</div>' +
+      '  <div class="sm-tip">' + (app ? '可存入相册，或直接分享给好友' : '长按图片可直接转发') + '</div>' +
       '  <div class="sm-imgwrap"><img class="sm-img" alt="法布施卡"></div>' +
       '  <div class="sm-acts">' +
-      '    <button class="sm-save sm-primary" type="button">保存图片</button>' +
+      (app ? '    <button class="sm-share sm-primary" type="button">分享</button>' +
+             '    <button class="sm-save" type="button">保存图片</button>'
+           : '    <button class="sm-save sm-primary" type="button">保存图片</button>') +
       '    <button class="sm-copy" type="button">复制文字</button>' +
       '    <button class="sm-link" type="button">复制链接</button>' +
       '  </div>' +
@@ -184,7 +198,9 @@
     modalImg = $('.sm-img', modal);
     $('.sm-mask', modal).addEventListener('click', closeModal);
     $('.sm-close', modal).addEventListener('click', closeModal);
-    $('.sm-save', modal).addEventListener('click', function () { saveImg(); });
+    $('.sm-save', modal).addEventListener('click', function () { saveImg(this); });
+    var sh = $('.sm-share', modal);
+    if (sh) sh.addEventListener('click', function () { shareImgNative(this); });
     $('.sm-copy', modal).addEventListener('click', function () { copyText(lastText, this); });
     $('.sm-link', modal).addEventListener('click', function () { copyText(lastUrl, this); });
   }
@@ -533,12 +549,43 @@
     try { document.execCommand('copy'); ok(); } catch (e) {}
     document.body.removeChild(ta);
   }
-  function saveImg() {
+  function cardName() {
+    return '法布施·' + ((picked && picked.title) || '文钞').replace(/[\\/:*?"<>|]/g, '');
+  }
+  function saveImg(btn) {
     var url = modalImg && modalImg.src; if (!url) return;
+    // APP 内交给原生存相册：<a download> 在 WebView 里点了没反应
+    if (nativeShareOK()) {
+      if (btn) { btn.disabled = true; btn.textContent = '保存中…'; }
+      window.__wcCall('saveImage', url, cardName()).then(function (r) {
+        // 先把按钮文字复位再 flash——flash 记的是当下的文字，
+        // 不复位它 1.3 秒后会把「保存中…」当成原文再写回去
+        if (btn) { btn.disabled = false; btn.textContent = '保存图片'; }
+        if (r && r.ok) flash(btn, '已存入相册');
+        else say((r && r.error) || '保存失败');
+      });
+      return;
+    }
     var a = document.createElement('a');
     a.href = url;
-    a.download = '法布施·' + ((picked && picked.title) || '文钞').replace(/[\\/:*?"<>|]/g, '') + '.png';
+    a.download = cardName() + '.png';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+  // APP 专用：交给系统分享面板（微信、QQ、相册……）
+  function shareImgNative(btn) {
+    var url = modalImg && modalImg.src; if (!url || !nativeShareOK()) return;
+    if (btn) { btn.disabled = true; btn.textContent = '准备中…'; }
+    window.__wcCall('shareImage', url, cardName()).then(function (r) {
+      if (btn) { btn.disabled = false; btn.textContent = '分享'; }
+      if (!(r && r.ok)) say((r && r.error) || '分享失败');
+    });
+  }
+  /* 出错时给用户一句话。不用 alert：WebView 没装 WebChromeClient 时它是不显示的，
+     而这里的失败恰恰只在 APP 内发生——那正是最容易踩空的场合。优先借 app.js 的
+     浮条，取不到再退回 alert（浏览器里一定有效）。 */
+  function say(msg) {
+    if (typeof window.__wcToast === 'function') { window.__wcToast(msg); return; }
+    try { alert(msg); } catch (e) { }
   }
   function flash(btn, label) {
     if (!btn) return;

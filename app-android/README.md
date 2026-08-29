@@ -85,6 +85,23 @@ APP 在「我的」页比对出落后就提示下载安装。
 
 指纹：`E6:09:86:0C:AE:98:35:78:4E:B4:93:38:00:15:E8:5B:1E:90:C4:43:9E:C2:3C:2E:23:65:37:2F:C1:AF:2A:97`
 
+## WebView 缺失的 Web 能力（踩过的坑，别再当浏览器写）
+
+自建 WebView 与 Chrome 不是一回事，下面这些在 TWA 时代能用、换过来就断了。
+新增功能前先对照一遍，别等用户报上来：
+
+| 能力 | WebView 里的实情 | 本项目的做法 |
+|---|---|---|
+| `speechSynthesis` | **API 在但是空壳**：`in window` 为真，getVoices() 空、speak() 无声、onend 不回调 | 走原生 `TextToSpeech`（NativeBridge.ttsSpeak） |
+| `<a download>` | 不触发下载（除非另装 DownloadListener） | 走原生存相册（NativeBridge.saveImage） |
+| `navigator.share` | 不存在 | 走原生 `ACTION_SEND`（NativeBridge.shareImage） |
+| 长按图片菜单 | 没有「保存/分享」上下文菜单 | 同上，界面上补显式按钮 |
+| `alert/confirm` | **不装 WebChromeClient 就静默丢弃**，不报错也不显示 | MainActivity 已装默认 WebChromeClient |
+| 跨域请求 | 页面 origin 是 `appassets.androidplatform.net`，打后端即跨域 | Worker 的 ALLOW_ORIGINS 已加该域 |
+
+判断「我在 APP 里吗」统一用 `window.__wcNative` 是否存在，不要靠 UA 或 display-mode
+（WebView 的 `display-mode: standalone` 并不成立）。
+
 ## 关于旧 WebView
 
 阅读器入口是 `<script type="module">`，要 Chrome 61 起才认。

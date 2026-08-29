@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -126,6 +127,10 @@ public class MainActivity extends Activity {
                 hideSplash();
             }
         });
+
+        /* 不装 WebChromeClient 的话，页面里的 alert / confirm / prompt 会被默默丢弃——
+           不报错、不显示，代码看着执行了却什么也没发生。用默认实现即可让它们正常弹出。 */
+        web.setWebChromeClient(new WebChromeClient());
 
         bridge = new NativeBridge(this, web);
         web.addJavascriptInterface(bridge, NativeBridge.NAME);

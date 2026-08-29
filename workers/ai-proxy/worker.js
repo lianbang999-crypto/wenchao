@@ -18,6 +18,15 @@ const ALLOW_ORIGINS = [
   'https://wenchao.foyue.org',
   'https://www.wenchao.foyue.org',
   'https://wenchao.pages.dev',
+  // 安卓离线 APP（1.1.0 起）。它的页面由 WebViewAssetLoader 挂在这个本地虚拟域下，
+  // 不走网络；但对 Worker 而言，它发来的请求就成了跨域，故必须列进来——
+  // 漏了这条的表现是：APP 里问答与朗读全部接不上（预检拿到的 allow-origin 是
+  // 列表首项，与请求 origin 对不上，被 WebView 拦下），2026-08-29 实测确认。
+  //
+  // 关于安全：这个域名是 androidx 的固定值，任何安卓应用都能用，不构成身份凭据。
+  // 但 isFirstParty 本就是 Origin/Referer 级别的弱防护（两者都可伪造），
+  // 真正的额度控制在 authenticate 与 KV 限流那一层，故加入它不改变安全模型。
+  'https://appassets.androidplatform.net',
   'http://localhost:4188',
   'http://127.0.0.1:4188',
 ];

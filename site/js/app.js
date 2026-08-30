@@ -16,11 +16,19 @@ const store = {
   get(k, d) { try { const v = JSON.parse(localStorage.getItem('wc.' + k)); return v === null || v === undefined ? d : v; } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem('wc.' + k, JSON.stringify(v)); } catch (e) {} },
 };
+/* 底色的出厂默认，两种形态不同：
+   · 网页：auto，跟随系统深浅色——夜里顺手打开一篇不至于被白光晃到。
+   · APP：paper，纸色。装了应用的人是奔着读经来的，纸色是这本书该有的样子；
+     跟随系统会让同一本书白天一个脸、夜里另一个脸，反倒不安定。
+   判据不用 isOfflineApp：那是 const 且声明在本文件靠后处，这里会撞上暂时性死区。
+   注意这只是「没选过时给什么」——手选过的会存进 localStorage，下面 store.get
+   读到的就是用户自己的选择，不受此处影响。 */
+function defaultTheme() {
+  return window.__wcNative ? 'paper' : 'auto';
+}
 const prefs = {
   fs: store.get('fs', 17),
-  // 底色：auto=跟随系统深浅色（新默认——夜里打开不刺眼）。
-  // 老用户手选过的 paper/plain/night 原样保留；没选过的自然落到 auto。
-  theme: store.get('theme', 'auto'),
+  theme: store.get('theme', defaultTheme()),
   // 原文 / 白话 各自的字体：song 宋 | kai 楷 | hei 黑。默认原文宋、白话楷（文白一眼分得开）
   fontOrig: store.get('fontOrig', 'song'),
   fontTrans: store.get('fontTrans', 'kai'),

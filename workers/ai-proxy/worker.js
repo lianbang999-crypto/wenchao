@@ -71,6 +71,47 @@ const TTS_GEN_DAILY = 300;                          // 每 IP 每日「生成」
 const TTS_MAX_CHARS = 2000;                         // 单次合成文本上限（段级足够；超长截断保护）
 const TTS_VER = 't1';                               // 版本号并入缓存键：换模型/换读音词典时整体失效
 
+/* ---------- 外语翻译（DharmaMitra + R2 懒缓存）----------
+   上游是伯克利/维也纳的佛典翻译公益项目，模型专为汉/藏/巴利/梵佛典训练，
+   接口公开免密钥（2026-08-30 实测：7.5 秒返回，信愿念佛、求生西方均译准）。
+
+   为什么中转而不让前端直连（人家 CORS 是 * ，本可直连）：那等于把我们全部读者的
+   流量直接砸到一个免费公益服务上，且每人读同一篇都要人家重算一遍。中转后一篇译过
+   人人受益，限流也压在我们这边——不让公益项目替我们扛流量。 */
+const TR_ENDPOINT = 'https://dharmamitra.org/api-search/cat-translate/v1/translate';
+const TR_VER = 'r1';            // 并入缓存键：换上游或改术语约定时整体失效
+const TR_GEN_DAILY = 400;       // 每 IP 每日「生成」上限；只计 cache-miss，命中不受限
+const TR_MAX_CHARS = 3000;      // 单段上限（段级足够；超长截断保护）
+const TR_TIMEOUT_MS = 75000;    // 上游自述长文最多 ~60s，留出余量
+
+// 目标语言白名单：值是给上游的自由文本标签。不在表内一律回落英文，
+// 既防注入，也避免小语种佛教术语无参照译法可依而译歪。
+const TR_LANGS = {
+  en: 'english', ja: 'japanese', ko: 'korean', vi: 'vietnamese',
+  de: 'german', fr: 'french', es: 'spanish', ru: 'russian',
+};
+
+/* 术语约定。实测表明上游本身就译得准，这段不是用来救错的，
+   是用来「统一」的——同一术语跨篇跨段必须是同一个词，读者才不会以为在讲两回事。 */
+const TR_STYLE = [
+  'This is Pure Land Buddhist writing by Master Yinguang (印光大师, 1861-1940),',
+  'Thirteenth Patriarch of the Chinese Pure Land school. Most pieces are letters of instruction to lay disciples.',
+  '',
+  'Use these renderings consistently:',
+  '念佛 = mindfulness of the Buddha (or reciting the Buddha\'s name)',
+  '信願行 = faith, vows, and practice',
+  '往生 = rebirth in the Pure Land — never "death" or "passing away"',
+  '帶業往生 = rebirth carrying one\'s remaining karma',
+  '西方 / 極樂世界 = the Western Pure Land / Land of Ultimate Bliss',
+  '了生死 = liberation from birth-and-death',
+  '阿彌陀佛 = Amitābha Buddha; 觀世音 = Avalokiteśvara',
+  '敦倫盡分 = fulfilling one\'s duties in human relationships',
+  '因果 = cause and effect; 業障 = karmic obstructions; 迴向 = dedication of merit',
+  '',
+  'Keep the plain, direct tone of a letter. Do not add commentary or explanation absent from the source.',
+  'Do not omit or summarise. Translate what is there.',
+].join('\n');
+
 /* 佛门读音归一：通用 TTS 按现代普通话注音，会读错佛经专名与多音字。
    仅替换「喂给 TTS 的文本」为正确读音的同音字，屏显原文分毫不动（遵「经典原文不可篡改」）。
    保守起见只放高置信、高频易错词；拿不准的读音宁可不加，靠 /tts/report 反馈核实后再补。
@@ -917,6 +958,77 @@ async function handleAdminData(req, env, headers) {
   return json({ stats: { up, down, total: up + down }, items, kb }, 200, headers);
 }
 
+/* ---------- 统一控制台接口（foyue.org/admin 跨站调用） ----------
+   与播经台、须弥山、自知录同一枚 ADMIN_TOKEN；仅放行 foyue.org 来源。 */
+const ADMIN_ORIGINS = ['https://foyue.org', 'https://www.foyue.org'];
+function adminCors(origin) {
+  return {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': ADMIN_ORIGINS.includes(origin) ? origin : ADMIN_ORIGINS[0],
+    'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Max-Age': '86400',
+    Vary: 'Origin',
+  };
+}
+async function handleUnifiedAdmin(req, env, pathname, origin) {
+  const h = adminCors(origin);
+  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: h });
+  if (!env.ADMIN_TOKEN) return json({ error: '未配置 ADMIN_TOKEN' }, 503, h);
+  if (req.headers.get('Authorization') !== `Bearer ${env.ADMIN_TOKEN}`) return json({ error: '口令错误' }, 401, h);
+
+  // 概览：反馈计数 + 知识库规模 + 今日问答量
+  if (pathname === '/api/admin/stat') {
+    let up = 0, down = 0, total = 0, pending = 0;
+    if (env.RL) {
+      const list = await env.RL.list({ prefix: 'fb:', limit: 1000 });
+      for (const k of list.keys.slice(-300)) {
+        const v = await env.RL.get(k.name);
+        if (!v) continue;
+        let o; try { o = JSON.parse(v); } catch { continue; }
+        total++;
+        if (o.vote === 'up') up++;
+        else if (o.vote === 'down') { down++; if (!o.handled) pending++; }
+      }
+    }
+    let kb = null;
+    try { const d = await env.VEC.describe(); kb = d.vectorsCount ?? d.vectorCount ?? null; } catch { /* 可选 */ }
+    return json({ up, down, total, pendingCorrections: pending, kb }, 200, h);
+  }
+
+  // 反馈明细（需更正的排前，供集中处理）
+  if (pathname === '/api/admin/feedback') {
+    if (!env.RL) return json({ items: [] }, 200, h);
+    const list = await env.RL.list({ prefix: 'fb:', limit: 1000 });
+    const keys = list.keys.map(k => k.name).sort().slice(-150).reverse();
+    const items = [];
+    for (const k of keys) {
+      const v = await env.RL.get(k);
+      if (!v) continue;
+      let o; try { o = JSON.parse(v); } catch { continue; }
+      items.push({ key: k, ...o });
+    }
+    items.sort((a, b) => (a.vote === 'down' && !a.handled ? -1 : 1) - (b.vote === 'down' && !b.handled ? -1 : 1));
+    return json({ items }, 200, h);
+  }
+
+  // 标记某条反馈已处理
+  if (pathname === '/api/admin/feedback-handled' && req.method === 'POST') {
+    if (!env.RL) return json({ error: 'KV 未绑定' }, 503, h);
+    let body = {}; try { body = await req.json(); } catch { /* 空 */ }
+    const key = String(body.key || '');
+    if (!key.startsWith('fb:')) return json({ error: '参数不合法' }, 400, h);
+    const v = await env.RL.get(key);
+    if (!v) return json({ error: '记录不存在' }, 404, h);
+    let o; try { o = JSON.parse(v); } catch { return json({ error: '数据损坏' }, 500, h); }
+    o.handled = body.handled !== false;
+    await env.RL.put(key, JSON.stringify(o));
+    return json({ ok: true }, 200, h);
+  }
+
+  return json({ error: '接口不存在' }, 404, h);
+}
+
 async function handleHealth(env, headers) {
   let kb = null;
   try {
@@ -1074,6 +1186,92 @@ async function handleTts(req, env, ctx, origin) {
 }
 
 /* 读音报错：用户听到读错的字词，一键上报，攒起来供管理端核实、扩充 READ_DICT。 */
+/* 段落翻译：先查 R2，未命中才向 DharmaMitra 要，要到了后台落桶。
+   与 handleTts 同一套骨架，差别只在上游与载荷格式。 */
+async function handleTranslate(req, env, ctx, origin) {
+  const aCors = cors(origin);
+  const jerr = (obj, status) => json(obj, status, { 'Content-Type': 'application/json', ...aCors });
+  if (!env.TTS) return jerr({ error: '译文存储未配置。' }, 500);
+
+  const auth = await authenticate(req, env);
+  if (auth.error) return jerr({ error: auth.message }, auth.status);
+
+  let body;
+  try { body = await req.json(); } catch { body = null; }
+  const rawText = body && typeof body.text === 'string' ? body.text.trim() : '';
+  if (!rawText) return jerr({ error: '缺少文本。' }, 400);
+
+  const langKey = body && typeof body.lang === 'string' ? body.lang.toLowerCase().slice(0, 8) : 'en';
+  const target = TR_LANGS[langKey] || TR_LANGS.en;
+  const lang = TR_LANGS[langKey] ? langKey : 'en';
+  const text = rawText.slice(0, TR_MAX_CHARS);
+  // 上下文只是给上游做连贯性参考，长度掐住即可
+  const context = body && typeof body.context === 'string' ? body.context.slice(0, 3000) : '';
+
+  /* 缓存键刻意「不含 context」。若把前文并进键，每篇的前文都不同，命中率立刻归零，
+     缓存就白做了；而同一段落在不同上下文下的译文差异很小，不值得为此放弃复用。
+     代价是：首次翻译时的上下文会被固化进这一段的译文，后来者拿到的是那一版。 */
+  const digest = await sha256(TR_VER + '|' + target + '|' + text);
+  const key = `tr/${TR_VER}/${lang}/${digest}.json`;
+  const hdrs = { 'Content-Type': 'application/json; charset=utf-8', ...aCors };
+
+  // ① 命中：直接回，不计配额、不惊动上游
+  const hit = await env.TTS.get(key);
+  if (hit) {
+    return new Response(hit.body, { headers: { ...hdrs, 'X-Tr-Cache': 'hit' } });
+  }
+
+  // ② 未命中：先受配额约束，再去要
+  const quota = await trGenQuota(req, env);
+  if (quota.limited) return jerr({ error: quota.message }, 429);
+
+  let r;
+  try {
+    const opts = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        input_chinese: text,
+        focus: 'chinese',
+        target_language: target,
+        context,
+        style_instruction: TR_STYLE,
+      }),
+    };
+    if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opts.signal = AbortSignal.timeout(TR_TIMEOUT_MS);
+    r = await fetch(TR_ENDPOINT, opts);
+  } catch (e) {
+    return jerr({ error: '翻译服务暂时不可达，请稍后再试。' }, 502);
+  }
+  if (!r.ok) return jerr({ error: '翻译上游错误 ' + r.status }, 502);
+
+  let up;
+  try { up = await r.json(); } catch { up = null; }
+  const translation = up && typeof up.translation === 'string' ? up.translation.trim() : '';
+  if (!translation) return jerr({ error: '翻译返回为空。' }, 502);
+
+  const payload = JSON.stringify({ translation, lang });
+  const put = env.TTS.put(key, payload, {
+    httpMetadata: { contentType: 'application/json; charset=utf-8' },
+    customMetadata: { lang, ver: TR_VER, len: String(text.length) },
+  });
+  if (ctx && ctx.waitUntil) ctx.waitUntil(put); else await put;   // 后台落桶，不阻塞返回
+  return new Response(payload, { headers: { ...hdrs, 'X-Tr-Cache': 'miss' } });
+}
+
+async function trGenQuota(req, env) {
+  // 与问答、朗读各自独立；只对生成(cache-miss)计数，命中不消耗。
+  // 这道闸主要不是防我们自己的用户，是防我们把免费公益服务用垮。
+  if (!env.RL) return { limited: false };
+  const today = new Date().toISOString().slice(0, 10);
+  const ip = req.headers.get('CF-Connecting-IP') || 'anon';
+  const k = `trgen:${today}:${ip}`;
+  const c = parseInt((await env.RL.get(k)) || '0', 10);
+  if (c >= TR_GEN_DAILY) return { limited: true, message: '今日翻译已达上限，请明日再来。阿弥陀佛。' };
+  await env.RL.put(k, String(c + 1), { expirationTtl: 90000 });
+  return { limited: false };
+}
+
 async function handleTtsReport(req, env, headers) {
   const auth = await authenticate(req, env);
   if (auth.error) return json({ error: auth.message }, auth.status, headers);
@@ -1115,9 +1313,12 @@ export default {
     const headers = { 'Content-Type': 'application/json', ...cors(origin) };
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors(origin) });
     if (req.method === 'GET' && (pathname === '/' || pathname === '/health')) return handleHealth(env, headers);
+    // 统一控制台（foyue.org/admin）跨站取用：Bearer ADMIN_TOKEN，与各站同一枚口令
+    if (pathname.startsWith('/api/admin/')) return handleUnifiedAdmin(req, env, pathname, origin);
     if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers });
     if (pathname === '/index') return handleIndex(req, env, url, headers);
     if (pathname === '/tts') return handleTts(req, env, ctx, origin);
+    if (pathname === '/translate') return handleTranslate(req, env, ctx, origin);
     if (pathname === '/tts/report') return handleTtsReport(req, env, headers);
     if (pathname === '/feedback') return handleFeedback(req, env, headers);
     if (pathname === '/search') return handleSearch(req, env, headers);

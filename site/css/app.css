@@ -586,6 +586,34 @@ body.nav-hidden .mode-bar { transform: translateY(calc(-100% - var(--topbar-h) -
      文白之别交给字体与字号，不再用墨色深浅表示主次。 */
   color: var(--ink); line-height: 1.95; text-align: justify; text-indent: 2em;
 }
+/* 外语译文层：叠加在对应原文之下，不参与原文/白话/对照三档模式。
+   用无衬线 + 略淡的墨色与汉文正文拉开身份——它是辅助读物，不是底本。
+   左侧留一道细线，视觉上明确「这一段挂在上面那段之下」。 */
+.p-lang {
+  margin: .2em 0 1.35em;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: calc(var(--fs) - 2px);
+  color: var(--ink-2); line-height: 1.75; text-align: left; text-indent: 0;
+  padding-left: .85em; border-left: 2px solid var(--line);
+}
+/* 单读原文模式下，译文跟着原文走；只读白话时把译文一并隐去，免得白话与外语挤在一起 */
+.art-body[data-mode="trans"] .p-lang { display: none; }
+.p-lang.tr-loading { color: var(--ink-3); letter-spacing: .3em; }
+.tr-fail {
+  margin: .2em 0 1.35em; padding-left: .85em;
+  border-left: 2px solid var(--cinnabar);
+  font-size: calc(var(--fs) - 3px); color: var(--ink-3); text-indent: 0;
+}
+/* 机器翻译声明：读者有权知道自己读的不是人工译本 */
+.tr-note {
+  margin: 0 0 1.2em; padding: .5em .8em;
+  background: var(--paper-3);
+  border-radius: 6px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12.5px; line-height: 1.5; color: var(--ink-3);
+  text-indent: 0; text-align: left;
+}
+
 /* 单读模式：原文连排向书页靠拢——段距收窄，靠首行缩进分段 */
 .art-body[data-mode="orig"] .p-trans { display: none; }
 .art-body[data-mode="orig"] .p-orig { margin: 0 0 .4em; }

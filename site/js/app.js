@@ -9,6 +9,34 @@ import { aiFormat, citationExcerpt, aiSpeakToggle, aiSpeakStop, verifyBadgeHTML,
 const $ = (s) => document.querySelector(s);
 const CFG = window.WENCHAO_CONFIG || {};
 
+/* ---------- 外语翻译：先决定这台机器要不要这枚键 ----------
+   依据系统语言而非 IP：在美华人常是中文系统配美国 IP，按 IP 会把他们
+   误当外语读者，平白多出一枚用不上的按钮。
+   中文读者一律不显示（本来就读得懂，给了反而是干扰）；
+   表内语言直接对应；其余回落英文——上游对小语种佛教术语的把握不如英文可靠，
+   与其给一份可能译歪的，不如给一份稳的。 */
+const TR_SUPPORTED = ['en', 'ja', 'ko', 'vi', 'de', 'fr', 'es', 'ru'];
+const TR_LANG = (function () {
+  try {
+    const l = String(navigator.language || '').toLowerCase();
+    if (!l || l.indexOf('zh') === 0) return '';
+    const base = l.split('-')[0];
+    return TR_SUPPORTED.indexOf(base) >= 0 ? base : 'en';
+  } catch (e) { return ''; }
+})();
+const TR_ENDPOINT = (CFG.aiEndpoint || '/api/ai').replace(/\/$/, '') + '/translate';
+// 说明行按目标语言给，读者要看得懂这句提醒才有意义
+const TR_NOTE = {
+  en: 'Machine translation for reference only — the Chinese original is authoritative.',
+  ja: '機械翻訳です。参考程度にご覧ください。正文は漢文原文に依ります。',
+  ko: '기계 번역입니다. 참고용이며, 원문을 기준으로 하십시오.',
+  vi: 'Bản dịch máy, chỉ để tham khảo — xin lấy nguyên văn chữ Hán làm chuẩn.',
+  de: 'Maschinelle Übersetzung, nur zur Orientierung — maßgeblich ist der chinesische Originaltext.',
+  fr: 'Traduction automatique, à titre indicatif — le texte chinois original fait foi.',
+  es: 'Traducción automática, solo como referencia — el texto original chino es el que rige.',
+  ru: 'Машинный перевод, только для справки — оригинал на китайском языке имеет преимущественную силу.',
+};
+
 /* ---------- 持久化偏好 ---------- */
 const store = {
   // 不用 ??：它要 Chrome 80+ 才认，旧安卓的系统 WebView 会整份解析失败、阅读器全哑。
@@ -898,6 +926,8 @@ async function renderArticle(id) {
           <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></button>
         <button class="mb-act mb-speak" aria-label="朗读本篇">
           <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a4.5 4.5 0 0 1 0 7"/></svg></button>
+        ${TR_LANG ? `<button class="mb-act mb-translate" aria-label="翻译本篇" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h9M8.5 5v2.2c0 3.4-1.9 6.4-4.5 7.8"/><path d="M6 10.5c1.2 2.4 3.4 4.2 6 4.8"/><path d="m12.5 20 4-9 4 9M14 17.4h5"/></svg></button>` : ''}
         <button class="mb-act mb-aa" aria-label="阅读设置"><span class="mb-aa-g">Aa</span></button>
       </div>
     </div>`;
@@ -1019,6 +1049,9 @@ async function renderArticle(id) {
   if (bookmarkBtn) bookmarkBtn.onclick = toggleBookmark;
   if (speakBtn) speakBtn.onclick = () => { READ.on ? stopRead() : startRead(); };
   { const aa = reader.querySelector('.mb-aa'); if (aa) aa.onclick = openAaSheet; }
+  // 译文不跨篇留存：切篇即作废未完的请求，按钮回到未展开态
+  trToken++; trOn = false; trBusy = false;
+  { const tb = reader.querySelector('.mb-translate'); if (tb) tb.onclick = () => toggleTranslate(tb); }
   syncBookmarkBtn();      // 反映本篇收藏态
   applyMarks();           // 铺本篇已存的划线
 }
@@ -1631,6 +1664,125 @@ function setSleep(v) {
   toast(v === 'off' ? '定时已关'
     : v === 'chapter' ? '读完本篇自动停止'
     : v + ' 分钟后自动停止');
+}
+
+/* ---------- 外语翻译（DharmaMitra，经自家 Worker 中转）----------
+   逐段译、逐段显示：单段约七秒，整篇干等没人受得了；先出来的先读。
+   译过的写进 localStorage，收起再展开、乃至下次离线打开都不必重求。
+   译文是叠加层，不占用原文/白话/对照那套模式——那三档是「读哪一层」，
+   这里是「要不要再挂一层」，混进去只会让设置面板多一档说不清的选择。 */
+let trOn = false;        // 当前篇是否已展开译文
+let trBusy = false;      // 正在译；防重入，也用于切篇时中断
+let trToken = 0;         // 切篇/收起即自增，旧回调据此作废
+
+function trHash(s) {     // 只作本地缓存键，不需要密码学强度
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return (h >>> 0).toString(36);
+}
+function trCacheGet(text) {
+  try { return localStorage.getItem('wc.tr.' + TR_LANG + '.' + trHash(text)) || ''; } catch (e) { return ''; }
+}
+function trCacheSet(text, tr) {
+  // 配额满了就算了，不影响本次阅读
+  try { localStorage.setItem('wc.tr.' + TR_LANG + '.' + trHash(text), tr); } catch (e) {}
+}
+
+/** 向自家 Worker 要一段译文。失败返回空串，由调用方决定怎么提示。 */
+async function trFetchOne(text, context) {
+  const res = await fetch(TR_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text, lang: TR_LANG, context }),
+  });
+  if (!res.ok) {
+    let msg = '';
+    try { msg = (await res.json()).error || ''; } catch (e) {}
+    throw new Error(msg || ('翻译失败 ' + res.status));
+  }
+  const d = await res.json();
+  return (d && d.translation) || '';
+}
+
+function trRemoveAll() {
+  const ab = $('#reader .art-body');
+  if (!ab) return;
+  [...ab.querySelectorAll('.p-lang, .tr-note, .tr-fail')].forEach((el) => el.remove());
+}
+
+function trSyncBtn(btn, on) {
+  if (!btn) return;
+  btn.classList.toggle('on', on);
+  btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+}
+
+async function toggleTranslate(btn) {
+  if (trBusy) return;
+  if (trOn) {                       // 收起：留着 localStorage，下次展开是秒开
+    trToken++; trOn = false; trRemoveAll(); trSyncBtn(btn, false);
+    return;
+  }
+  const ab = $('#reader .art-body');
+  if (!ab) return;
+  const paras = [...ab.querySelectorAll('.p-orig')];
+  if (!paras.length) { toast('本篇没有可翻译的正文'); return; }
+
+  // 断网时先说清楚，别让人对着转圈等一场空。本机已缓存过的仍照常展开。
+  const anyCached = paras.some((p) => trCacheGet((p.textContent || '').trim()));
+  if (!anyCached && !nativeIsOnline()) { toast('翻译需要联网'); return; }
+
+  trOn = true; trBusy = true;
+  const token = ++trToken;
+  trSyncBtn(btn, true);
+
+  // 说明行：读者有权知道自己读的不是人工译本
+  const note = document.createElement('p');
+  note.className = 'tr-note';
+  note.textContent = TR_NOTE[TR_LANG] || TR_NOTE.en;
+  ab.insertBefore(note, ab.firstChild);
+
+  let ctx = '';           // 前文已译，交给上游保持术语与语气连贯
+  let failed = 0;
+  for (let i = 0; i < paras.length; i++) {
+    if (token !== trToken) return;                 // 已被收起或切篇
+    const src = (paras[i].textContent || '').trim();
+    if (!src) continue;
+
+    let tr = trCacheGet(src);
+    if (!tr) {
+      paras[i].insertAdjacentHTML('afterend', `<p class="p-lang tr-loading" data-i="${i}">…</p>`);
+      try {
+        tr = await trFetchOne(src, ctx.slice(-1200));
+        if (tr) trCacheSet(src, tr);
+      } catch (e) {
+        if (token !== trToken) return;
+        const ph = ab.querySelector(`.p-lang[data-i="${i}"]`);
+        if (ph) { ph.className = 'tr-fail'; ph.textContent = (e && e.message) || '这一段没能译出'; }
+        failed++;
+        if (failed >= 3) { toast('翻译服务暂时不可用，请稍后再试'); break; }
+        continue;
+      }
+      if (token !== trToken) return;
+      const ph = ab.querySelector(`.p-lang[data-i="${i}"]`);
+      if (ph) { ph.className = 'p-lang'; ph.textContent = tr; ph.removeAttribute('data-i'); }
+    } else {
+      paras[i].insertAdjacentElement('afterend', Object.assign(
+        document.createElement('p'), { className: 'p-lang', textContent: tr }));
+    }
+    ctx += tr + '\n';
+  }
+  if (token === trToken) trBusy = false;
+}
+
+/* APP 内查一次真实网络态。浏览器里没有这座桥，一律当在线——
+   那边本就没有可靠的联网判据（navigator.onLine 只说明连着网卡），
+   与其误判拦下，不如让请求自己去失败、由错误提示说话。 */
+function nativeIsOnline() {
+  try {
+    const n = window.__wcNative;
+    if (!n || typeof n.isOnline !== 'function') return true;
+    return !!n.isOnline();
+  } catch (e) { return true; }
 }
 
 /* ---------- 偏好控件 ---------- */

@@ -3,7 +3,9 @@ main = "worker.js"
 compatibility_date = "2026-06-14"
 workers_dev = true
 routes = [
-  { pattern = "wenchao.foyue.org/api/ai*", zone_name = "foyue.org" }
+  { pattern = "wenchao.foyue.org/api/ai*", zone_name = "foyue.org" },
+  # 统一控制台（foyue.org/admin）跨站取用；认 Bearer ADMIN_TOKEN，仅放行 foyue.org 来源
+  { pattern = "wenchao.foyue.org/api/admin*", zone_name = "foyue.org" }
 ]
 
 # 密钥务必用 Secret 设置，切勿写在此文件或任何仓库文件里：

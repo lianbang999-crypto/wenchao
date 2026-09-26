@@ -18,7 +18,7 @@
 - 生成层（提升「智能/可信」）：
   1. **多轮追问改写（condense）**：多轮时先把含指代/省略的末句改写成可独立检索的完整问题（`USE_CONDENSE`、`condenseQuestion`），失败退回原启发式拼接。
   2. **接地 prompt + 编号范围约束**：系统提示告知「资料共 N 条，编号 1–N，不得越界引用」，逼模型据文作答、逐字直引。
-  3. **引用逐字自检**：回答流完后纯字符串校验 `[n]` 是否越界、直引是否能在「模型实际看到的父段落」里逐字找到，结果随 `done` 事件以 `verify`（`{cited,invalid,quoteChecked,quoteOk,faithful}`）返回，作接地忠实度遥测（不改写已输出内容）。`scripts/eval_rag.py` 会汇总成「忠实率/直引逐字命中率」。
+  3. **引用逐字自检**：回答流完后纯字符串校验 `[n]` 是否越界、直引是否能在「模型实际看到的父段落」里逐字找到，结果随 `done` 事件以 `verify`（`{cited,invalid,quoteChecked,quoteOk,faithful}`）返回，只核对引用编号和直引文字（忽略标点空白），不证明辅助解释或义理正确。直引只与原文比对，白话不能冒充原文；未引用、校验失败或生成中断均不写答案缓存。缓存保存父段落证据，命中后重新执行相同校验。`scripts/eval_rag.py` 会汇总成「忠实率/直引逐字命中率」。
   4. **难题路由（默认关）**：`USE_REASONER_FOR_HARD=true` 时，比较/辨析类长问改用 `deepseek-reasoner`（更强综合，更慢更贵；推理 token 不外显）。
 - 返回格式：ndjson 流（`meta` 携带 `passages`/`sources`/`cite`，`delta` 逐字，`done` 收尾并带 `verify`）。
 - KV `RL` 同时用于每日限流和相同问题的短期答案缓存。改动检索逻辑后请同步抬高 `RETRIEVAL_VERSION`，让旧缓存失效、不遮蔽新结果。
@@ -77,11 +77,20 @@ curl -X POST "https://<worker>/index?cursor=0" \
 
 ## 网站全文搜索（`POST /search`）
 
-左抽屉「全文搜索」调用此接口，请求 `{ q: "关键词" }`，返回 `{ hits: [{i,t,v,snip}], total }`
-（`i`=篇号、`t`=标题、`v`=分册名、`snip`=命中处前后一小段纯文本，高亮由前端做）。复用问答检索同一份
-D1 `chunks_fts` 全文索引，**不需要单独建库**；查询走 bigram 短语 `MATCH`，单字等短语命中不到时退化为
-`LIKE` 扫描兜底。只搜正文（原文+白话切块），注释/提要/《文钞》选读标题不在此索引内——这是有意的范围
-取舍，避免为了搜索功能牵动 `chunksOf`（RAG 检索语料，已用 `eval_rag.py` 调优过）。
+左抽屉支持简繁输入、篇名、原文、白话四种范围。前端用本地 OpenCC 将查询转为简体；篇名在本地目录检索，离线仍可用。正文请求 `{q, scope: "all"|"title"|"orig"|"trans", limit?, offset?}`。
+
+返回 `{hits: [{i,t,v,snip,layer}], total, totalExact, hasMore, nextOffset, ready}`。`total` 是去重后的篇数，分页前计数；`hasMore` 表示本页并非全部结果。独立的 `search_fts` 保存原文、白话、篇名，不从混合 RAG 文本猜测层级。旧库仅保留 `all` 搜索，分层索引未建成时 `ready:false`，前端明确提示。注释、提要仍不属于正文搜索范围。
+
+更新 Worker 后需要从 `cursor=0` 顺序重建到 `done:true`。每批须 `searchIndexOk:true`，最后须 `searchReady:true`；漏批、漏篇、目录变动、D1 写入失败均不能标记完整。
+
+```bash
+# 仅新增分层搜索、正文未改动：不消耗嵌入额度
+INDEX_SECRET=... LEX_ONLY=1 bash scripts/reindex.sh
+# 本次同时勘误 sbu-145，发布新文章后需完整重建，使向量与正文同步
+INDEX_SECRET=... bash scripts/reindex.sh
+```
+
+`GET /health` 的 `searchStatus` / `searchReady` 用于确认分层搜索状态。重建期间分层搜索显示维护提示；避免同时运行多个建库任务。
 
 ## 对外开放：API key 鉴权 + 按 key 配额
 
@@ -124,7 +133,20 @@ curl -X POST https://wenchao.foyue.org/api/ai \
 `scripts/eval_rag.py` 会对线上端点逐题发问，统计**召回率**（命中应引用的篇目）、**引用率**、**拒答率**，以及**接地忠实度**（读 `done.verify`：忠实率、直引逐字命中率、是否出现越界编号），把「准确性 + 可信度」变成可量化的数字：
 
 ```bash
+# 设置 WENCHAO_API_KEY 环境变量（不写入仓库或评测输出）后运行
 python3 scripts/eval_rag.py --endpoint https://wenchao.foyue.org/api/ai --out scripts/eval_result.json
 ```
 
 题集在 `scripts/eval_questions.json`，请按义理补全各题的 `expectArticles`（应被引用的篇目 id，见 `site/data/books.json`），标注越全，召回率越可信。每次调整 `worker.js` 检索参数后重跑对比升降即可。注意线上每 IP 每日限流，题量大时分次跑或本地 `wrangler dev` 评测。
+
+## 本地回归验证
+
+```bash
+node --test workers/ai-proxy/*.test.mjs scripts/*.test.mjs
+python3 scripts/check_content.py
+python3 -m unittest discover -s scripts -p 'test_numbered_parallel.py'
+# 需 python-docx，对照本地 Word 底本逐字校验
+python3 scripts/repair_numbered_content.py
+```
+
+测试使用固定的模型响应和 SQLite FTS5，不调用付费模型，不代表真实模型的义理质量评测。发布后需使用上述带鉴权的评测脚本另行核验。

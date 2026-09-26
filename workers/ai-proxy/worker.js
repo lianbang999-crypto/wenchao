@@ -32,6 +32,7 @@ const ALLOW_ORIGINS = [
 ];
 const SITE_BASE = 'https://wenchao.foyue.org';
 const SF_BASE = 'https://api.siliconflow.cn/v1';   // 硅基流动：统一入口（嵌入 + 重排序 + 问答生成 + TTS）
+const DEEPSEEK_BASE = 'https://api.deepseek.com';  // 生成备用通道；仍只依据检索到的文钞原文
 const EMBED_MODEL = 'BAAI/bge-m3';       // 多语种向量(含古今汉语)，1024 维（硅基流动；与原 Cloudflare bge-m3 同模型，向量兼容，无需重建库）
 const CHAT_MODEL = 'deepseek-ai/DeepSeek-V4-Flash';  // 非思考模式（硅基流动；原 deepseek-v4-flash，迁移至硅基统一管理）
 const REASONER_MODEL = 'deepseek-ai/DeepSeek-V4-Pro'; // 难题路由用更强模型 + 思考模式（USE_REASONER_FOR_HARD 默认关；硅基流动）
@@ -46,10 +47,13 @@ const USE_QUERY_REWRITE = true;            // 多查询：原问 + DeepSeek 文�
 const USE_HYBRID = true;                   // 混合检索：向量召回 + D1 全文(关键词)召回 → RRF 融合；缺 D1 或异常自动退回纯向量
 const LEX_TOPK = 30;                       // 关键词(全文)召回上限
 const RRF_K = 60;                          // RRF 融合常数(越大越平滑，弱化各路头部的绝对名次)
-const RETRIEVAL_VERSION = 'r8';            // 检索/生成版本号，并入答案缓存键，避免旧缓存遮蔽新逻辑(r8: 检索故障/零命中护栏——据实告知不诬为"未见开示"、零段直接拒答不调用生成)
+const RETRIEVAL_VERSION = 'r12';           // r12: 引用校验后才缓存；淘汰缺少核验证据的旧回答
+const ANSWER_CACHE_VERSION = 1;
 const ANSWER_CHARS = 500;                 // 回复字数上限(软引导)
 const MAX_TOKENS = 700;                   // 回复 token 硬上限(约 500 汉字)
 const CACHE_TTL = 7 * 86400;              // 答案缓存 7 天
+const SF_BILLING_BREAKER = 'upstream:sf:402';
+const SF_BILLING_BREAKER_TTL = 300;        // 付款故障期间 5 分钟内跳过硅基流动，避免每问都等上游超时
 const DAILY_LIMIT = 60;                   // 每 IP 每日提问上限（自家网页/匿名路径）
 const REQUIRE_KEY_FOR_API = true;         // 非自家网页(无白名单 Origin/Referer)的请求必须带有效 API key；置 false 则匿名 curl 也可用(仅受每 IP 日限额)
 const KEY_DAILY_LIMIT = 2000;             // API key 默认每日额度；可在 API_KEYS 里给某个 key 加 "limit" 字段单独覆盖
@@ -58,7 +62,6 @@ const INDEX_EMBED_BATCH = 50;             // 每次 Workers AI embedding 文本�
 const CHUNK_CHARS = 720;                  // 单个向量块目标字数，避免长段被截断
 const CHUNK_OVERLAP = 80;                 // 长段切块重叠，保留上下文
 const PARENT_CHARS = 1100;               // 小块检索、大块喂入：命中后喂给模型的「父段落」字数上限（引用卡片仍用精确小块）
-const SEARCH_ROWS = 400;                  // 网站全文搜索：扫描的原始切块行数上限
 const SEARCH_LIMIT = 80;                  // 网站全文搜索：去重后返回的文章数上限
 
 /* ---------- 朗读 TTS（硅基流动 CosyVoice2 + R2 懒缓存）----------
@@ -153,10 +156,18 @@ async function embed(env, texts) {
   };
   if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) opts.signal = AbortSignal.timeout(20000);
   const r = await fetch(`${SF_BASE}/embeddings`, opts);
-  if (!r.ok) throw new Error('embed ' + r.status + ' ' + (await r.text()).slice(0, 200));
+  if (!r.ok) {
+    console.warn('wenchao embeddings HTTP', r.status, r.headers.get('x-siliconcloud-trace-id') || '');
+    throw new Error('embed_http_' + r.status);
+  }
   const j = await r.json();
   // 按 index 还原输入顺序，返回 [[...1024], …]
-  return (j.data || []).slice().sort((a, b) => (a.index || 0) - (b.index || 0)).map((d) => d.embedding);
+  const data = Array.isArray(j.data) ? j.data.slice().sort((a, b) => a.index - b.index) : [];
+  if (data.length !== texts.length || data.some((d, i) =>
+    d.index !== i || !Array.isArray(d.embedding) || d.embedding.length !== 1024)) {
+    throw new Error('embed_invalid_response');
+  }
+  return data.map((d) => d.embedding);
 }
 
 function articlePath(id, pIndex) {
@@ -334,33 +345,98 @@ async function writeD1(env, chunks) {
   return n;
 }
 
+/* 阅读搜索独立保存原文、白话、篇名，避免从 RAG 的混合切块猜测文本层。
+ * 原索引照常服务问答；/index?lexOnly=1 可免费重建这两套词法索引。 */
+async function ensureSearchFts(env, reset) {
+  if (!env.DB) return false;
+  try {
+    await env.DB.exec('CREATE TABLE IF NOT EXISTS search_state (id TEXT PRIMARY KEY, value TEXT NOT NULL)');
+    if (reset) {
+      await env.DB.prepare("INSERT OR REPLACE INTO search_state(id,value) VALUES ('status','building')").run();
+      await env.DB.exec('DROP TABLE IF EXISTS search_fts');
+    }
+    await env.DB.exec('CREATE VIRTUAL TABLE IF NOT EXISTS search_fts USING fts5(' +
+      'bigrams, aid UNINDEXED, title UNINDEXED, volName UNINDEXED, layer UNINDEXED, text UNINDEXED)');
+    return true;
+  } catch { return false; }
+}
+function searchChunksOf(art) {
+  const rows = [];
+  const push = (layer, text) => splitLongText(text).forEach((part) => rows.push({
+    aid: art.id, title: art.title || '', volName: art.volumeName || art.volume || '', layer, text: part,
+  }));
+  push('title', art.title || '');
+  for (const seg of art.segments || []) {
+    for (const text of seg.orig || (seg.o ? [seg.o] : [])) push('orig', text);
+    for (const text of seg.trans || []) push('trans', text);
+  }
+  return rows;
+}
+async function writeSearchD1(env, rows) {
+  const stmt = env.DB.prepare('INSERT INTO search_fts(bigrams,aid,title,volName,layer,text) VALUES (?,?,?,?,?,?)');
+  for (let i = 0; i < rows.length; i += 50) {
+    await env.DB.batch(rows.slice(i, i + 50).map((r) => stmt.bind(
+      cjkBigrams(r.text).join(' '), r.aid, r.title, r.volName, r.layer, r.text)));
+  }
+  return rows.length;
+}
+
 async function handleIndex(req, env, url, headers) {
   const indexSecret = req.headers.get('X-Index-Secret') ||
     (req.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
   if (!env.INDEX_SECRET || indexSecret !== env.INDEX_SECRET) {
     return json({ error: 'forbidden' }, 403, headers);
   }
-  const cursor = parseInt(url.searchParams.get('cursor') || '0', 10);
+  const cursor = Number(url.searchParams.get('cursor') || '0');
+  if (!Number.isInteger(cursor) || cursor < 0) return json({ error: 'invalid cursor' }, 400, headers);
   const reqLimit = parseInt(url.searchParams.get('limit') || String(INDEX_BATCH), 10);
   const limit = Math.max(1, Math.min(INDEX_BATCH, Number.isFinite(reqLimit) ? reqLimit : INDEX_BATCH));
-  const books = await (await fetch(`${SITE_BASE}/data/books.json`)).json();
+  const catalog = await fetch(`${SITE_BASE}/data/books.json`, { cache: 'no-store' });
+  if (!catalog.ok) return json({ error: 'catalog unavailable' }, 503, headers);
+  const books = await catalog.json();
   const ids = [];
   for (const b of books)
     for (const j of b.juans)
       for (const c of j.cats)
         for (const it of c.items) ids.push(it.id);
+  if (!ids.length || new Set(ids).size !== ids.length || cursor >= ids.length) {
+    return json({ error: 'invalid catalog or cursor' }, 400, headers);
+  }
+  const catalogKey = await sha256(JSON.stringify(ids));
 
   // 只建 D1 词法索引、不重嵌入：向量库已就绪时用它补建全文索引，零嵌入调用（省额度，不动 Vectorize）
   const lexOnly = url.searchParams.get('lexOnly') === '1' || url.searchParams.get('mode') === 'lex';
   const batch = ids.slice(cursor, cursor + limit);
   // 全文索引：cursor===0 时整库重建（先 DROP 再 CREATE），故重建务必从 cursor=0 开始顺序跑到 done
+  const searchOk = await ensureSearchFts(env, cursor === 0);
+  if (!searchOk) return json({ ok: false, error: 'search index unavailable' }, 503, headers);
+  if (cursor === 0) {
+    await env.DB.batch([
+      env.DB.prepare("INSERT OR REPLACE INTO search_state(id,value) VALUES ('cursor','0')"),
+      env.DB.prepare("INSERT OR REPLACE INTO search_state(id,value) VALUES ('catalog',?)").bind(catalogKey),
+    ]);
+  } else {
+    const state = await env.DB.prepare('SELECT id,value FROM search_state').all();
+    const values = Object.fromEntries(state.results.map(r => [r.id, r.value]));
+    if (values.status !== 'building' || Number(values.cursor) !== cursor || values.catalog !== catalogKey) {
+      return json({ ok: false, error: 'index sequence mismatch; restart at cursor=0' }, 409, headers);
+    }
+  }
   const d1ok = await ensureFts(env, cursor === 0);
-  let chunks = [];
+  let chunks = [], searchRows = [], searchFailed = !searchOk;
   for (const id of batch) {
     try {
-      const a = await (await fetch(`${SITE_BASE}/data/articles/${id}.json`)).json();
+      const response = await fetch(`${SITE_BASE}/data/articles/${id}.json`, { cache: 'no-store' });
+      if (!response.ok) throw new Error('article unavailable');
+      const a = await response.json();
+      if (a.id !== id || !Array.isArray(a.segments) || !a.segments.length) throw new Error('invalid article');
       chunks = chunks.concat(chunksOf(a));
-    } catch { /* 跳过取不到的篇 */ }
+      searchRows = searchRows.concat(searchChunksOf(a));
+    } catch { searchFailed = true; /* 完整搜索索引不能把漏篇当作建成 */ }
+  }
+  if (searchFailed || !d1ok) {
+    await env.DB.prepare("UPDATE search_state SET value='failed' WHERE id='status'").run();
+    return json({ ok: false, error: 'incomplete source batch; restart at cursor=0' }, 503, headers);
   }
   // 分小批向量化并写入(bge-m3 单次建议 ≤ ~100 条)；lexOnly 时跳过，只建下方 D1 词法索引
   let n = 0;
@@ -376,9 +452,21 @@ async function handleIndex(req, env, url, headers) {
   }
   // 同一批切块写入 D1 全文索引（关键词召回用）
   const lex = d1ok ? await writeD1(env, chunks) : 0;
-  const next = cursor + limit;
-  return json({ ok: true, indexedArticles: batch.length, chunks: n, lexIndexed: lex, d1: d1ok,
-    cursor: next, done: next >= ids.length, total: ids.length, limit, namespace: KB_NAMESPACE }, 200, headers);
+  const next = Math.min(cursor + limit, ids.length);
+  let searchIndexed = 0;
+  if (searchOk) {
+    try { searchIndexed = await writeSearchD1(env, searchRows); } catch { searchFailed = true; }
+    if (lex !== chunks.length) searchFailed = true;
+    if (searchFailed) await env.DB.prepare(
+      "INSERT OR REPLACE INTO search_state(id,value) VALUES ('status','failed')").run();
+    else await env.DB.batch([
+      env.DB.prepare("UPDATE search_state SET value=? WHERE id='cursor'").bind(String(next)),
+      env.DB.prepare("UPDATE search_state SET value=? WHERE id='status'").bind(next >= ids.length ? 'ready' : 'building'),
+    ]);
+  }
+  return json({ ok: !searchFailed, indexedArticles: batch.length, chunks: n, lexIndexed: lex, d1: d1ok,
+    searchIndexed, searchIndexOk: !searchFailed, searchReady: !searchFailed && next >= ids.length,
+    cursor: next, done: !searchFailed && next >= ids.length, total: ids.length, limit, namespace: KB_NAMESPACE }, searchFailed ? 503 : 200, headers);
 }
 
 /* ---------- 提问：检索 + DeepSeek ---------- */
@@ -392,12 +480,16 @@ async function queryKnowledgeBase(env, qv, filter) {
     { topK, returnMetadata: 'all', namespace: KB_NAMESPACE },
     { topK, returnMetadata: 'all' }, // 回退旧默认 namespace，避免 v2 未建完时线上不可用
   ];
+  let answered = false, lastError = null;
   for (const opts of attempts) {
     try {
       const res = await env.VEC.query(qv, opts);
-      if (res && res.matches && res.matches.length) return res.matches;
-    } catch { /* 尝试下一种查询策略 */ }
+      if (!res || !Array.isArray(res.matches)) throw new Error('vector_invalid_response');
+      answered = true;
+      if (res.matches.length) return res.matches;
+    } catch (e) { lastError = e; /* 尝试下一种查询策略 */ }
   }
+  if (!answered) throw lastError || new Error('vector_unavailable');
   return [];
 }
 function dedupeMatches(matches) {
@@ -419,7 +511,7 @@ function dedupeMatches(matches) {
 
 /* 不靠 LLM 的关键词兜底：去掉疑问/虚词与标点，留下 2 字以上的内容片段作关键词。
  * LLM 抽词失败时仍能给全文检索喂上名相，best-effort。 */
-const STOP_RE = /如何|怎[么麼样樣办辦]|为什[么麼]|為什[麼么]|什[么麼]|哪[些个個]|是否|可以|应该|應該|需要|这样|這樣|那样|那樣|时候|時候|意思|請問|请问|我们|我們|关于|關於|以及|还有|還有|或者|的话|的話|一下|呢|吗|嗎|了|啊|呀|吧|和|与|與|及|在|对|對|把|被|给|給|让|讓|向|往|从|從|по/g;
+const STOP_RE = /印光(?:法师|法師|大师|大師)|印祖|文钞|文鈔|法师|法師|大师|大師|看待|认为|認為|开示|開示|如何|怎[么麼样樣办辦]|为什[么麼]|為什[麼么]|什[么麼]|哪[些个個]|是否|可以|应该|應該|需要|这样|這樣|那样|那樣|时候|時候|意思|請問|请问|我们|我們|关于|關於|以及|还有|還有|或者|的话|的話|一下|呢|吗|嗎|了|啊|呀|吧|和|与|與|及|在|对|對|把|被|给|給|让|讓|向|往|从|從|по/g;
 function naiveTerms(q) {
   const segs = String(q || '')
     .replace(/[^\p{Script=Han}\p{L}\p{N}]+/gu, ' ')
@@ -492,7 +584,7 @@ async function lexicalSearch(env, terms, filter) {
     binds.push(LEX_TOPK);
     const rs = await env.DB.prepare(sql).bind(...binds).all();
     const rows = (rs && rs.results) || [];
-    return rows.map((row) => ({
+    return rows.filter((row) => row.text && row.aid && row.title).map((row) => ({
       id: row.cid,
       metadata: {
         text: row.text || '', ctx: row.ctx || '', aid: row.aid || '', title: row.title || '',
@@ -501,7 +593,7 @@ async function lexicalSearch(env, terms, filter) {
         url: row.url || '', origKey: row.origKey || '',
       },
     }));
-  } catch { return []; }   // FTS 语法/连接异常：退回纯向量
+  } catch { throw new Error('lexical_search_failed'); }   // 由调用方独立结算，向量召回仍可继续
 }
 
 /* 截取关键词前后一小段窗口，供前端高亮渲染（返回纯文本，HTML 转义交给前端）。
@@ -514,51 +606,79 @@ function snippetAround(full, q) {
   return (from > 0 ? '…' : '') + full.slice(from, to).trim() + (to < full.length ? '…' : '');
 }
 
-/* ---------- 网站「全文搜索」：供左抽屉直接调用，复用 D1 全文索引，取代前端下载整站语料 ----------
- * 只搜正文（segments 的原文+白话切块，与 RAG 检索同一份索引）；注释/提要/选读标题不在此索引内，
- * 属有意的范围取舍——不动 chunksOf/RAG 语料，避免牵动已调优的问答检索与召回率评测。
- * 篇名匹配由前端用已加载的 books.json 就地过滤，此接口只管「正文内容」这一路。 */
+/* ---------- 阅读搜索：独立分层索引 + 旧版全文索引兼容 ----------
+ * q 是前端 OpenCC 统一后的简体字；原文仍按库中文字返回。
+ * 先按篇号去重计数，再分页取篇目，不能把切块数或本页条数冒充全库总数。 */
 async function handleSearch(req, env, headers) {
-  if (!env.DB) return json({ hits: [], total: 0 }, 200, headers);
+  const auth = await authenticate(req, env);
+  if (auth.error) return json({ error: auth.message }, auth.status, headers);
   let b; try { b = await req.json(); } catch { b = null; }
   const q = String((b && b.q) || '').trim().slice(0, 40);
-  if (!q) return json({ hits: [], total: 0 }, 200, headers);
-  const cols = 'aid,title,vol,volName,text,ctx';
-  const collect = (rows) => {
-    const seen = new Set(); const hits = [];
-    for (const row of rows) {
-      if (seen.has(row.aid)) continue;
-      seen.add(row.aid);
-      const full = lexText(row.ctx || row.text || '');
-      hits.push({ i: row.aid, t: row.title || '', v: row.volName || row.vol || '', snip: snippetAround(full, q) });
-      if (hits.length >= SEARCH_LIMIT) break;
-    }
-    return hits;
-  };
+  const scope = b?.scope || 'all';
+  if (!['all', 'title', 'orig', 'trans'].includes(scope)) {
+    return json({ error: '搜索范围不合法。' }, 400, headers);
+  }
+  const requestedLimit = Number(b?.limit);
+  const limit = Number.isInteger(requestedLimit) && requestedLimit > 0
+    ? Math.min(requestedLimit, SEARCH_LIMIT) : SEARCH_LIMIT;
+  const offset = Number.isInteger(b?.offset) && b.offset >= 0 ? Math.min(b.offset, 10000) : 0;
+  const empty = { hits: [], total: 0, totalExact: true, hasMore: false, scope, limit, offset, nextOffset: null };
+  if (!q) return json({ ...empty, ready: true }, 200, headers);
+  if (!env.DB) return json({ ...empty, ready: false, reason: 'index_unavailable' }, 200, headers);
+  let layered = false;
+  try {
+    const status = await env.DB.prepare("SELECT value FROM search_state WHERE id = 'status'").first();
+    layered = status?.value === 'ready';
+  } catch { /* 老部署没有分层索引，全文仍可继续检索。 */ }
+  if (!layered && scope !== 'all') {
+    return json({ ...empty, ready: false, reason: 'scoped_index_pending' }, 200, headers);
+  }
+  const table = layered ? 'search_fts' : 'chunks_fts';
+  const cols = layered ? 'aid,title,volName,text,layer' : 'aid,title,vol,volName,text,ctx';
+  const scopeWhere = layered && scope !== 'all' ? ' AND layer = ?' : '';
+  const scopeBinds = scopeWhere ? [scope] : [];
   try {
     const bg = cjkBigrams(q);
-    let hits = [];
-    if (bg.length) {
-      const rs = await env.DB.prepare(
-        `SELECT ${cols} FROM chunks_fts WHERE chunks_fts MATCH ? ORDER BY rank LIMIT ?`
-      ).bind('"' + bg.join(' ') + '"', SEARCH_ROWS).all();
-      hits = collect((rs && rs.results) || []);
+    const literal = '%' + q.replace(/[%_\\]/g, '\\$&') + '%';
+    let where = `text LIKE ? ESCAPE '\\'${scopeWhere}`;
+    let binds = [literal, ...scopeBinds];
+    let total = 0;
+    // 单字不在相邻二元词 token 中，直接 LIKE；其余查询先用 FTS 缩小范围。
+    if (/^\p{Script=Han}{2,}$/u.test(q) && bg.length) {
+      where = `${table} MATCH ? AND ${where}`;
+      binds.unshift('"' + bg.join(' ') + '"');
+      const count = await env.DB.prepare(
+        `SELECT COUNT(DISTINCT aid) AS total FROM ${table} WHERE ${where}`
+      ).bind(...binds).first();
+      total = Number(count?.total || 0);
     }
-    // 兜底：单字查询等 bigram 短语匹配不到时，退化为字面 LIKE 扫描（次数少、语料不大，接受较慢）
-    if (!hits.length) {
-      const rs = await env.DB.prepare(
-        `SELECT ${cols} FROM chunks_fts WHERE text LIKE ? ESCAPE '\\' LIMIT ?`
-      ).bind('%' + q.replace(/[%_\\]/g, '\\$&') + '%', SEARCH_ROWS).all();
-      hits = collect((rs && rs.results) || []);
+    if (!total) {
+      where = `text LIKE ? ESCAPE '\\'${scopeWhere}`;
+      binds = [literal, ...scopeBinds];
+      const count = await env.DB.prepare(
+        `SELECT COUNT(DISTINCT aid) AS total FROM ${table} WHERE ${where}`
+      ).bind(...binds).first();
+      total = Number(count?.total || 0);
     }
-    // 无命中时探一下索引是否为空（未建索引 lexRows=0）；ready:false 让前端如实说"检索未就绪"而非"没找到"
+    // 搜索结果一篇一条，先去重再截页；同篇任取一个确实命中的文本段作为摘要。
+    const rs = total ? await env.DB.prepare(
+      `SELECT ${cols} FROM ${table} WHERE ${where} GROUP BY aid ORDER BY aid LIMIT ? OFFSET ?`
+    ).bind(...binds, limit, offset).all() : { results: [] };
+    const hits = (rs?.results || []).map((row) => ({
+      i: row.aid, t: row.title || '', v: row.volName || row.vol || '',
+      snip: snippetAround(layered ? String(row.text || '') : lexText(row.text || row.ctx || ''), q),
+      ...(layered ? { layer: row.layer } : {}),
+    }));
     let ready = true;
-    if (!hits.length) {
-      try { const probe = await env.DB.prepare('SELECT 1 FROM chunks_fts LIMIT 1').all(); ready = !!(probe && probe.results && probe.results.length); }
-      catch { ready = false; }
+    if (!layered && !total) {
+      const probe = await env.DB.prepare(`SELECT 1 FROM ${table} LIMIT 1`).all();
+      ready = !!probe?.results?.length;
     }
-    return json({ hits, total: hits.length, ready }, 200, headers);
-  } catch { return json({ hits: [], total: 0, ready: false }, 200, headers); }   // 异常：前端仍展示篇名匹配结果
+    const hasMore = offset + hits.length < total;
+    return json({ ...empty, hits, total, hasMore, nextOffset: hasMore ? offset + hits.length : null,
+      ready, index: layered ? 'layered' : 'legacy' }, 200, headers);
+  } catch { return json({ ...empty, ready: false, reason: 'index_unavailable' }, 200, headers); }
+
 }
 
 /* RRF（倒数排名融合）：把多路召回按各自名次融合成一个排序，弱化「分数尺度不可比」问题。
@@ -667,28 +787,87 @@ function isHardQuestion(q) {
     /区别|不同|对比|對比|比较|比較|异同|異同|关系|關係|为何|為何|界限|混滥|混濫|双修|雙修|与.{0,8}[的之]?(区别|不同|关系)/.test(s);
 }
 
-/* 引用逐字自检：纯字符串校验回答里的 [n]——编号是否在资料范围内、「直引原文」是否能在所标资料中逐字找到。
- * 不改写已流式输出的内容，仅作遥测/评测信号（接地忠实度），契合「不妄语·可核验优先」。 */
+/* 引用检查只证明编号有效和直引文字匹配，不证明解释在义理上正确。
+ * 失败或没有引用的答案仍显示提示，但不会成为可重复复用的缓存。 */
 function normForMatch(s) {
   return String(s || '').replace(/[\s，。、；：！？「」『』“”"'‘’（）()【】\[\]．·—\-…\n]/g, '');
+}
+function originalContext(text) {
+  const s = String(text || '');
+  return s.startsWith('（白话）') ? '' : s.split('\n（白话）')[0];
 }
 function validateCitations(reply, passages, ctxTexts) {
   const text = String(reply || '');
   const N = passages.length;
-  const nums = [...text.matchAll(/\[(\d{1,2})\]/g)].map((m) => +m[1]);
+  const nums = [...text.matchAll(/\[(\d+)\]/g)].map((m) => Number(m[1]));
   const invalid = nums.filter((n) => n < 1 || n > N).length;
-  let quoteChecked = 0, quoteOk = 0;
-  const qre = /[「“"]([^」”"\n]{2,40})[」”"]\s*\[(\d{1,2})\]/g;
+  let quoteChecked = 0, quoteOk = 0, quoteUncited = 0;
+  const qre = /[「『“"]([^」』”"]+)[」』”"]\s*((?:\[\d+\]\s*)*)/g;
   let mm;
   while ((mm = qre.exec(text))) {
     quoteChecked++;
-    const n = +mm[2];
-    if (n < 1 || n > N) continue;
-    const src = (ctxTexts && ctxTexts[n - 1]) || (passages[n - 1] && passages[n - 1].text) || '';
-    if (normForMatch(src).includes(normForMatch(mm[1]))) quoteOk++;
+    const refs = [...mm[2].matchAll(/\[(\d+)\]/g)].map((m) => Number(m[1]));
+    if (!refs.length) quoteUncited++;
+    const quote = normForMatch(mm[1]);
+    if (quote && refs.some((n) => {
+      if (n < 1 || n > N) return false;
+      const src = (ctxTexts && ctxTexts[n - 1]) || passages[n - 1]?.text || '';
+      return normForMatch(originalContext(src)).includes(quote);
+    })) quoteOk++;
   }
-  const faithful = invalid === 0 && (quoteChecked === 0 || quoteOk === quoteChecked);
-  return { cited: nums.length, invalid, quoteChecked, quoteOk, faithful };
+  const faithful = nums.length > 0 && invalid === 0 && quoteOk === quoteChecked;
+  const status = invalid || quoteOk !== quoteChecked ? 'failed' : nums.length ? 'passed' : 'unverified';
+  return { cited: nums.length, invalid, quoteChecked, quoteOk, quoteUncited, faithful, status,
+    scope: 'citation-markers-and-direct-quotes' };
+}
+function cachedVerification(cached) {
+  if (!cached || cached.cacheVersion !== ANSWER_CACHE_VERSION || typeof cached.reply !== 'string' ||
+      !cached.reply || !Array.isArray(cached.passages) || !cached.passages.length ||
+      !Array.isArray(cached.ctxTexts) || cached.ctxTexts.length !== cached.passages.length ||
+      cached.ctxTexts.some((s) => typeof s !== 'string' || !s) || !Array.isArray(cached.sources)) return null;
+  const verify = validateCitations(cached.reply, cached.passages, cached.ctxTexts);
+  return verify.faithful ? verify : null;
+}
+
+// 两个生成通道都不可用时，只展示实际检索到的原文，不让模型在无出处的情况下猜答。
+function sourcePreview(passages) {
+  const lines = passages.slice(0, 3).map((p, i) => {
+    const raw = String(p.text || '').trim();
+    const original = originalContext(raw).trim();
+    const excerpt = original || raw.replace(/^（白话）/, '');
+    return `${i + 1}.《${p.title}》${original ? '原文' : '白话参考'}：${excerpt.slice(0, 90)}${excerpt.length > 90 ? '…' : ''} [${i + 1}]`;
+  });
+  return '暂时无法生成归纳。先列出检索资料，请点出处核对：\n' + lines.join('\n');
+}
+
+async function openAnswerStream(env, model, thinking, messages, skipSiliconFlow = false) {
+  const providers = [
+    {
+      name: 'siliconflow', url: `${SF_BASE}/chat/completions`, key: env.SILICONFLOW_API_KEY,
+      body: { model, messages, temperature: 0.3, max_tokens: MAX_TOKENS, stream: true, thinking },
+    },
+    {
+      name: 'deepseek', url: `${DEEPSEEK_BASE}/chat/completions`, key: env.DEEPSEEK_API_KEY,
+      body: { model: model === REASONER_MODEL ? 'deepseek-v4-pro' : 'deepseek-flash',
+        messages, temperature: 0.3, max_tokens: Math.max(MAX_TOKENS, 1200), stream: true, thinking },
+    },
+  ];
+  for (const p of providers) {
+    if (!p.key || (skipSiliconFlow && p.name === 'siliconflow')) continue;
+    try {
+      const res = await fetch(p.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${p.key}` },
+        body: JSON.stringify(p.body),
+      });
+      if (res.ok && res.body && (res.headers.get('Content-Type') || '').includes('text/event-stream')) return res;
+      console.warn('wenchao chat HTTP', p.name, res.status,
+        res.headers.get('x-siliconcloud-trace-id') || '');
+    } catch (e) {
+      console.warn('wenchao chat connection failed', p.name, e?.name || 'Error');
+    }
+  }
+  return null;
 }
 
 /* ---------- API key 鉴权 + 按 key 配额 ----------
@@ -745,7 +924,7 @@ async function enforceQuota(req, env, auth) {
   return { limited: false };
 }
 
-async function handleAsk(req, env, headers) {
+async function handleAsk(req, env, headers, ctx) {
   if (!env.SILICONFLOW_API_KEY) return json({ reply: '服务未配置密钥。' }, 500, headers);
 
   // 鉴权（API key / 自家网页 / 匿名）+ 对应配额
@@ -774,7 +953,12 @@ async function handleAsk(req, env, headers) {
     const hit = await env.RL.get(ckey);
     if (hit) { try { cached = JSON.parse(hit); } catch {} }
   }
-  const useCache = !!(cached && cached.reply && Array.isArray(cached.passages));
+  const cacheVerify = cachedVerification(cached);
+  const useCache = !!cacheVerify;
+  let sfBillingBlocked = false;
+  if (!useCache && env.RL) {
+    try { sfBillingBlocked = (await env.RL.get(SF_BILLING_BREAKER)) === '1'; } catch {}
+  }
 
   // 检索（缓存命中则复用其 passages/sources）
   let passages = [], sources = [], system = '';
@@ -782,25 +966,56 @@ async function handleAsk(req, env, headers) {
   let retrievalErrored = false;   // 检索是否真的报错（多为嵌入/重排上游繁忙或额度耗尽）；据实告知，不误判"未见相关开示"
   let earlyReply = '';            // 护栏短路：命中则直接回该句，不调用生成模型、不写缓存
   if (useCache) {
-    passages = cached.passages; sources = cached.sources || [];
+    passages = cached.passages; sources = cached.sources; ctxTexts = cached.ctxTexts;
   } else {
-    let matches = [];
+    let matches = [], vectorFailed = false;
     try {
       const filter = articleScoped ? { aid: articleId } : null;
-      const { queries, terms } = await buildRetrieval(env, retrievalQ);  // 多查询(原问+文言改写) + 关键词
-      const [qvs, lex] = await Promise.all([
-        embed(env, queries),
+      const { queries, terms } = sfBillingBlocked
+        ? { queries: [retrievalQ], terms: naiveTerms(retrievalQ) }
+        : await buildRetrieval(env, retrievalQ);  // 付款故障期间不再等上游改写
+      const [embedding, lexical] = await Promise.allSettled([
+        sfBillingBlocked ? Promise.reject(new Error('embed_http_402')) : embed(env, queries),
         lexicalSearch(env, terms, filter),                              // D1 全文(关键词)召回，与向量化并行
       ]);
-      const pools = await Promise.all(qvs.map((qv) => queryKnowledgeBase(env, qv, filter)));
+      const lex = lexical.status === 'fulfilled' ? lexical.value : [];
+      let pools = [];
+      if (embedding.status === 'fulfilled') {
+        const queried = await Promise.allSettled(
+          embedding.value.map((qv) => queryKnowledgeBase(env, qv, filter))
+        );
+        pools = queried.filter((r) => r.status === 'fulfilled').map((r) => r.value);
+        vectorFailed = !pools.length;
+      } else {
+        vectorFailed = true;
+        if (embedding.reason?.message === 'embed_http_402') {
+          if (!sfBillingBlocked && env.RL) {
+            const remember = env.RL.put(SF_BILLING_BREAKER, '1',
+              { expirationTtl: SF_BILLING_BREAKER_TTL }).catch(() => {});
+            if (ctx?.waitUntil) ctx.waitUntil(remember);
+          }
+          sfBillingBlocked = true;
+        }
+        if (!sfBillingBlocked || embedding.reason?.message !== 'embed_http_402')
+          console.warn('wenchao embedding failed', embedding.reason?.name || 'Error',
+            embedding.reason?.message || '');
+      }
       const vecMerged = mergeMatchPools(pools);                          // 多路向量并集(各保留最高分)
       // 向量 + 关键词两路 RRF 融合；未开混合或关键词无命中时退回纯向量序
       matches = (USE_HYBRID && lex.length) ? fuseRRF([vecMerged, lex]) : vecMerged;
-    } catch { retrievalErrored = true; /* 检索失败：常因 Workers AI 神经元日额度用尽（embed/rerank 调不动）*/ }
+      // 某一路失败但另一路有真实段落，仍可据文作答；全部无命中时不能把服务故障说成文钞没有开示。
+      retrievalErrored = !matches.length &&
+        (vectorFailed || lexical.status === 'rejected');
+      if (vectorFailed && embedding.status === 'fulfilled') console.warn('wenchao vector query failed');
+      if (lexical.status === 'rejected') console.warn('wenchao lexical search failed');
+    } catch (e) {
+      retrievalErrored = true;
+      console.warn('wenchao retrieval failed', e?.name || 'Error');
+    }
     // ① 去重：原文近似相同的（如精选读本与文钞重出）只保留一条，得到候选池
     matches = dedupeMatches(matches);
     // ② 交叉编码器重排序：把真正最相关的段排到前面，再取 TOP_K 喂给 DeepSeek
-    matches = await rerankMatches(env, retrievalQ, matches);
+    if (!vectorFailed) matches = await rerankMatches(env, retrievalQ, matches);
     matches = matches.slice(0, TOP_K);
     const ctxBlocks = [], srcMap = new Map();
     matches.forEach((m, i) => {
@@ -835,7 +1050,7 @@ async function handleAsk(req, env, headers) {
 1. 严格接地：只依据【资料】中的内容回答，绝不掺入资料之外的常识、教理或自己的发挥，凡资料未支持的一律不说。问题若超出资料范围，或与文钞、净土无关，直接答「文钞中未见相关开示」，可建议换个问法，绝不臆测编造。
 2. 逐点引用：每一处论断之后都用方括号标出所依据的资料编号，如 [1] 或 [2][5]，做到句句可点开核对原文；优先直接引用大师原文并加引号，引文须与所标编号的资料严格一致、能逐字对上，不可张冠李戴。【资料】共 ${passages.length} 条，编号 1–${passages.length}，**不得引用此范围外的编号**。
 3. 综合而非罗列：把多段资料融会成连贯回答，不要逐段复述；资料之间说法有出入时如实并列，不强行调和。
-4. 条理清晰：当内容涉及多个方面时，用简短小标题（如「一、…」）配合分点（1. 2. …）、必要时子项来组织，便于阅读；问题简单则直接作答，不强行套格式。
+4. 区分原文与解释：回答使用「原文引述」与「辅助解释」两个简短小标题。原文引述只摘录【资料】中不带（白话）标记的原文，逐字引用并紧接 [n]；若只有白话资料，明确说明未检索到可直引原文，不把白话冒充大师原话。辅助解释只作资料支持的转述，每点附 [n]，不要用引号把解释包装成原话。
 5. 恭敬平实：不扮演佛菩萨或祖师口吻、不预言吉凶、不轻下因果定论；直接作答，不写「根据资料」「综上所述」之类的套话。
 6. 紧扣问题、简明，控制在约 ${ANSWER_CHARS} 字以内。
 
@@ -859,7 +1074,13 @@ ${context}`;
       send({ type: 'meta', passages, sources, cite });
       if (useCache) {
         send({ type: 'delta', text: cached.reply });
-        send({ type: 'done', verify: validateCitations(cached.reply, passages, ctxTexts) });
+        const v = cacheVerify;
+        send({ type: 'done', verify: v });
+        keepLog(ctx, logQuestion(env, req, {
+          q: lastU, retrievalQ, hits: passages.length,
+          topScore: passages[0] && passages[0].score, cited: v ? v.cited : sources.length,
+          verifyOk: v ? !!v.faithful : null, cached: true, early: false, articleId,
+        }));
         controller.close();
         return;
       }
@@ -867,6 +1088,12 @@ ${context}`;
       if (earlyReply) {
         send({ type: 'delta', text: earlyReply });
         send({ type: 'done', verify: null });
+        // 这一支正是「问了但答不上来」——痛点分析里最该看的一类，必须记
+        keepLog(ctx, logQuestion(env, req, {
+          q: lastU, retrievalQ, hits: passages.length,
+          topScore: passages[0] && passages[0].score, cited: 0,
+          verifyOk: null, cached: false, early: true, articleId,
+        }));
         controller.close();
         return;
       }
@@ -874,19 +1101,12 @@ ${context}`;
       const hard = USE_REASONER_FOR_HARD && isHardQuestion(retrievalQ);
       const model = hard ? REASONER_MODEL : CHAT_MODEL;
       const thinking = hard ? { type: 'enabled' } : { type: 'disabled' };  // 默认非思考(等价旧 deepseek-chat)；仅难题路由开思考
-      let full = '';
+      let full = '', sawDone = false, finishReason = null;
       try {
-        const ds = await fetch(`${SF_BASE}/chat/completions`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.SILICONFLOW_API_KEY}` },
-          body: JSON.stringify({
-            model,
-            messages: [{ role: 'system', content: system }, ...msgs],
-            temperature: 0.3, max_tokens: MAX_TOKENS, stream: true, thinking,
-          }),
-        });
-        if (!ds.ok || !ds.body) {
-          send({ type: 'delta', text: '上游服务繁忙，请稍后重试。' });
+        const ds = await openAnswerStream(env, model, thinking,
+          [{ role: 'system', content: system }, ...msgs], sfBillingBlocked);
+        if (!ds) {
+          send({ type: 'delta', text: sourcePreview(passages) });
           send({ type: 'done' }); controller.close(); return;
         }
         const reader = ds.body.getReader(), dec = new TextDecoder();
@@ -900,24 +1120,129 @@ ${context}`;
             const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1);
             if (!line.startsWith('data:')) continue;
             const d = line.slice(5).trim();
-            if (d === '[DONE]') continue;
+            if (d === '[DONE]') { sawDone = true; continue; }
             try {
               const j = JSON.parse(d);
-              const t = (j.choices && j.choices[0] && j.choices[0].delta && j.choices[0].delta.content) || '';
+              const choice = j.choices && j.choices[0];
+              if (choice?.finish_reason) finishReason = choice.finish_reason;
+              const t = (choice && choice.delta && choice.delta.content) || '';
               if (t) { full += t; send({ type: 'delta', text: t }); }
             } catch { /* 跳过半行 */ }
           }
         }
-      } catch { if (!full) send({ type: 'delta', text: '上游服务连接失败，请稍后重试。' }); }
-      if (cacheable && env.RL && full) {
-        await env.RL.put(ckey, JSON.stringify({ reply: full, cite, sources, passages }), { expirationTtl: CACHE_TTL });
+      } catch (e) {
+        console.warn('wenchao chat stream failed', e?.name || 'Error');
       }
-      // 引用逐字自检：以模型实际看到的父段落为准，校验 [n] 是否越界、直引是否能逐字对上（遥测信号，不改写已输出内容）
-      send({ type: 'done', verify: full ? validateCitations(full, passages, ctxTexts) : null });
+      const completed = sawDone && (!finishReason || finishReason === 'stop');
+      if (!full) send({ type: 'delta', text: sourcePreview(passages) });
+      else if (!completed) send({ type: 'delta', text: '\n\n回答未完整生成，以上内容不完整，请重试。' });
+      // 先核验再决定是否缓存。保留模型真正看到的公开资料，缓存命中用同一证据复核。
+      const vf = full && completed ? validateCitations(full, passages, ctxTexts) : null;
+      if (cacheable && env.RL && vf?.faithful) {
+        try {
+          await env.RL.put(ckey, JSON.stringify({ cacheVersion: ANSWER_CACHE_VERSION,
+            reply: full, cite, sources, passages, ctxTexts, verify: vf }), { expirationTtl: CACHE_TTL });
+        } catch { console.warn('wenchao answer cache write failed'); }
+      }
+      send({ type: 'done', verify: vf });
+      keepLog(ctx, logQuestion(env, req, {
+        q: lastU, retrievalQ, hits: passages.length,
+        topScore: passages[0] && passages[0].score, cited: vf ? vf.cited : sources.length,
+        verifyOk: vf ? !!vf.faithful : null, cached: false, early: false, articleId,
+      }));
       controller.close();
     },
   });
   return new Response(stream, { headers: { ...headers, 'Content-Type': 'application/x-ndjson; charset=utf-8' } });
+}
+
+/* ---------- 提问留存（2026-09-09）：把用户真实问的问题落库，作为痛点分析的一手来源 ----------
+ * 为什么要存：站点流量只能回答「有多少人来、点了哪页」，回答不了「用户到底想知道什么、
+ * 哪些问题我们答不好」。后者才是内容选题与检索调优的依据，此前一直丢弃。
+ *
+ * 🔒 隐私口径（与 foyue.org/admin 后台既有红线一致：不留可认人之物）：
+ *   · 只存问题文本与检索质量指标，**不存答案全文**（答案可由问题+知识库复现，存了徒增泄露面）
+ *   · 不存 IP、不存 User-Agent、不存 cookie；客户端只留一个每日轮换盐的哈希前缀，
+ *     用于粗略区分「同一天里的同一人问了几个问题」，跨天即失联，无法反查到人
+ *   · 表独立于知识库表，可随时整表 DROP 而不影响问答功能
+ */
+const QLOG_RETAIN_DAYS = 180;   // 超过此天数的提问自动清理（按需回看痛点，不做长期留存）
+
+/** 让落库任务在响应结束后仍能跑完。
+ *
+ * ⚠️ 这是 2026-09-10 修复的一个真实故障：三处 logQuestion 都是「调用但不 await」的
+ * fire-and-forget 写法，而 Workers 运行时在响应流 close 之后会立即回收执行上下文，
+ * D1 写入还没发出就被杀掉——表结构完好，却永远 0 条记录。
+ * 凡是响应返回后才需要完成的副作用（落库、上报、清理），都必须交给 ctx.waitUntil。
+ * 本文件的 TTS 落桶（见 handleTts）早就是这个写法，此处属于遗漏。
+ */
+function keepLog(ctx, promise) {
+  if (ctx && ctx.waitUntil) ctx.waitUntil(promise);
+  return promise;
+}
+
+async function ensureQlog(env) {
+  if (!env.DB) return false;
+  try {
+    // 必须用 prepare().run() 而非 exec()：D1 的 exec() 对 DDL 支持有限，
+    // 建表会失败并使本函数返回 false，导致调用方直接 return、INSERT 永不执行
+    //（2026-09-10 线上实证：手工 SQL 能建表能插入，但 Worker 里走 exec() 就是不落库）。
+    await env.DB.prepare(
+      'CREATE TABLE IF NOT EXISTS ask_qlog (' +
+      'id INTEGER PRIMARY KEY AUTOINCREMENT, ts INTEGER NOT NULL, day TEXT NOT NULL, ' +
+      'q TEXT NOT NULL, qlen INTEGER, retrieval_q TEXT, ' +
+      'hits INTEGER, top_score REAL, cited INTEGER, verify_ok INTEGER, ' +
+      'cached INTEGER, early INTEGER, article_id TEXT, client TEXT)').run();
+    await env.DB.prepare('CREATE INDEX IF NOT EXISTS ask_qlog_day ON ask_qlog(day)').run();
+    await env.DB.prepare('CREATE INDEX IF NOT EXISTS ask_qlog_ts ON ask_qlog(ts DESC)').run();
+    return true;
+  } catch (e) {
+    // 建表失败必须留痕，否则下次排查又要从零复现（上次就因静默 catch 误判了根因）
+    console.error('[qlog] ensure failed:', e && e.message);
+    return false;
+  }
+}
+
+/** 每日轮换盐的客户端指纹：同一天内可区分不同人，跨天即断，无法反查身份。 */
+async function dayClient(req) {
+  try {
+    const raw = req.headers.get('cf-connecting-ip') || '';
+    if (!raw) return '';
+    const day = new Date(Date.now() + 8 * 3600_000).toISOString().slice(0, 10);
+    return (await sha256(day + '|' + raw)).slice(0, 12);
+  } catch { return ''; }
+}
+
+/** best-effort 落库：任何异常都吞掉，绝不影响问答本身。 */
+async function logQuestion(env, req, rec) {
+  if (!env.DB) return;
+  try {
+    if (!await ensureQlog(env)) return;
+    const now = Date.now();
+    const day = new Date(now + 8 * 3600_000).toISOString().slice(0, 10);
+    const q = String(rec.q || '').slice(0, 500);      // 截断：过长多为粘贴的整段文字，无分析价值
+    if (!q.trim()) return;
+    await env.DB.prepare(
+      'INSERT INTO ask_qlog (ts, day, q, qlen, retrieval_q, hits, top_score, cited, verify_ok, ' +
+      'cached, early, article_id, client) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13)'
+    ).bind(
+      now, day, q, q.length,
+      String(rec.retrievalQ || '').slice(0, 500),
+      rec.hits | 0, rec.topScore == null ? null : Number(rec.topScore),
+      rec.cited | 0, rec.verifyOk == null ? null : (rec.verifyOk ? 1 : 0),
+      rec.cached ? 1 : 0, rec.early ? 1 : 0,
+      String(rec.articleId || '').slice(0, 64),
+      await dayClient(req),
+    ).run();
+    // 顺手清理过期记录（低频，失败无碍）
+    if (Math.random() < 0.02) {
+      await env.DB.prepare('DELETE FROM ask_qlog WHERE ts < ?1')
+        .bind(now - QLOG_RETAIN_DAYS * 86400_000).run();
+    }
+  } catch (e) {
+    // 落库失败绝不拖累问答，但要留痕便于排查
+    console.error('[qlog] insert failed:', e && e.message);
+  }
 }
 
 /* ---------- 反馈闭环：有帮助 / 需更正 → 存 KV，供日后人工审核沉淀 ---------- */
@@ -996,6 +1321,44 @@ async function handleUnifiedAdmin(req, env, pathname, origin) {
     return json({ up, down, total, pendingCorrections: pending, kb }, 200, h);
   }
 
+  // 提问留存：热门问题 / 答不上来的问题（痛点分析用；只出问题文本与检索指标，无身份信息）
+  if (pathname === '/api/admin/questions') {
+    if (!env.DB) return json({ items: [], note: '未绑定 D1，提问留存未启用' }, 200, h);
+    try {
+      const u = new URL(req.url);
+      const days = Math.min(Number(u.searchParams.get('days') || 7), 90);
+      const kind = u.searchParams.get('kind') || 'recent';   // recent | unanswered | top
+      const since = Date.now() - days * 86400_000;
+      let sql;
+      if (kind === 'unanswered') {
+        // 答不上来的：护栏短路(零命中/检索故障)，或有答案但一条都没引用到原文
+        sql = 'SELECT q, ts, hits, top_score, cited, early FROM ask_qlog ' +
+              'WHERE ts > ?1 AND (early = 1 OR hits = 0 OR cited = 0) ORDER BY ts DESC LIMIT 200';
+      } else if (kind === 'top') {
+        // 热门：同一问题被不同人反复问 —— 最该补内容的方向
+        sql = 'SELECT q, COUNT(*) n, MAX(ts) ts, AVG(hits) hits, SUM(early) early ' +
+              'FROM ask_qlog WHERE ts > ?1 GROUP BY q ORDER BY n DESC, ts DESC LIMIT 100';
+      } else {
+        sql = 'SELECT q, ts, hits, top_score, cited, early, verify_ok FROM ask_qlog ' +
+              'WHERE ts > ?1 ORDER BY ts DESC LIMIT 200';
+      }
+      const { results } = await env.DB.prepare(sql).bind(since).all();
+      const tot = await env.DB.prepare('SELECT COUNT(*) n FROM ask_qlog WHERE ts > ?1').bind(since).first();
+      const bad = await env.DB.prepare(
+        'SELECT COUNT(*) n FROM ask_qlog WHERE ts > ?1 AND (early = 1 OR hits = 0 OR cited = 0)'
+      ).bind(since).first();
+      const askers = await env.DB.prepare(
+        "SELECT COUNT(DISTINCT client) n FROM ask_qlog WHERE ts > ?1 AND client != ''"
+      ).bind(since).first();
+      return json({
+        items: results || [], kind, days,
+        total: tot?.n || 0, unanswered: bad?.n || 0, askers: askers?.n || 0,
+      }, 200, h);
+    } catch (e) {
+      return json({ items: [], note: '提问表尚未建立（需有人问过至少一次）' }, 200, h);
+    }
+  }
+
   // 反馈明细（需更正的排前，供集中处理）
   if (pathname === '/api/admin/feedback') {
     if (!env.RL) return json({ items: [] }, 200, h);
@@ -1044,9 +1407,16 @@ async function handleHealth(env, headers) {
       hybridReady = USE_HYBRID && lexRows > 0;
     } catch { /* 表未建或查询失败 */ }
   }
+  let searchStatus = 'unavailable';
+  if (env.DB) {
+    try { searchStatus = (await env.DB.prepare("SELECT value FROM search_state WHERE id='status'").first())?.value || 'pending'; }
+    catch { /* 尚未建分层搜索索引。 */ }
+  }
   return json({
     ok: true,
     service: 'wenchao-ai',
+    searchStatus,
+    searchReady: searchStatus === 'ready',
     namespace: KB_NAMESPACE,
     embedModel: EMBED_MODEL,
     chatModel: CHAT_MODEL,
@@ -1323,7 +1693,7 @@ export default {
     if (pathname === '/feedback') return handleFeedback(req, env, headers);
     if (pathname === '/search') return handleSearch(req, env, headers);
     if (pathname === '/admin/data') return handleAdminData(req, env, headers);
-    return handleAsk(req, env, headers);
+    return handleAsk(req, env, headers, ctx);
     } catch (e) {
       return new Response(JSON.stringify({ error: e.message, stack: e.stack }), {
         status: 500,

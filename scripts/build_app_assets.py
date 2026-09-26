@@ -188,6 +188,13 @@ def main():
         print("合计约 %s（未压缩）；a/ 已排除" % human(total))
         return
 
+    if "--manifest-only" in sys.argv:
+        os.makedirs(os.path.dirname(MANIFEST_OUT), exist_ok=True)
+        with io.open(MANIFEST_OUT, "w", encoding="utf-8") as f:
+            json.dump(manifest, f, ensure_ascii=False, separators=(",", ":"))
+        print("线上比对清单：%s" % os.path.relpath(MANIFEST_OUT, ROOT))
+        return
+
     # 全量重建：assets 是纯构建产物，直接清掉重来，避免删过的文件残留在包里
     if os.path.isdir(ASSETS):
         shutil.rmtree(ASSETS)

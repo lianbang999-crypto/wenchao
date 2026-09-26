@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <base href="/">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5SVG2S4X');</script>
+<!-- End Google Tag Manager -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>复陈飞青居士书一 · 印光法师文钞</title>
 <meta name="description" content="前由张伯岸居士，言及阁下志切利人，欲开道场于滨江，命光作疏，并商酌办法，及住持等。">
@@ -30,12 +37,16 @@
 <!-- 字体自托管（scripts/fetch_fonts.py 抓取切片到 /font/）：宋体 Noto Serif SC + 楷体兜底霞鹜文楷GB；
      安卓无楷体时白话退化宋体会失去文白区分，靠霞鹜文楷兜底，苹果命中本地楷体不产生下载。
      原 Google Fonts / jsdelivr 双外链在大陆常被阻断，render-blocking 挂起首屏；同源后无此患。 -->
-<link rel="stylesheet" href="css/fonts.css?v=20260831-app21">
-<link rel="stylesheet" href="css/app.css?v=20260831-app21">
+<link rel="stylesheet" href="css/fonts.css?v=20260926-app24">
+<link rel="stylesheet" href="css/app.css?v=20260926-app24">
   <meta name="msvalidate.01" content="2E887F8A75C595EF89E235E27D2816E0" />
   <meta name="baidu-site-verification" content="codeva-345JAH4iJi" />
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SVG2S4X"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <!-- 顶栏（全站恒定四键）：左目录 · 中标题 · 右问文钞+我的；朗读/收藏是本篇功能，在文章工具行内 -->
 <header class="topbar" id="topbar">
@@ -61,9 +72,17 @@
       <small id="nav-stats"></small>
     </div>
   </div>
-  <div class="nav-search">
-    <input type="search" id="nav-search" placeholder="在文钞中搜索……" autocomplete="off">
-  </div>
+  <form class="nav-search" id="search-form" role="search">
+    <input type="search" id="nav-search" aria-label="搜索文钞" placeholder="在文钞中搜索……" autocomplete="off">
+    <div class="search-controls">
+      <label for="search-scope">范围</label>
+      <select id="search-scope" aria-label="搜索范围">
+        <option value="all">全部</option><option value="title">篇名</option>
+        <option value="orig">原文</option><option value="trans">白话</option>
+      </select>
+      <button type="submit" class="chip-btn">搜索</button>
+    </div>
+  </form>
   <nav class="nav-topics" aria-label="专题">
     <span class="nav-topics-label">专题</span>
     <a class="chip-btn" href="/t/nianfo/">念佛法门</a>
@@ -142,10 +161,10 @@
   <div class="sheet-body" id="sheet-body"></div>
 </section>
 
-<script src="config.js?v=20260831-app21"></script>
-<script src="js/pwa.js?v=20260831-app21" defer></script>
-<script src="js/offline.js?v=20260831-app21" defer></script>
-<script type="module" src="js/app.js?v=20260831-app21"></script>
-<script src="js/share.js?v=20260831-app21" defer></script>
+<script src="config.js?v=20260926-app24"></script>
+<script src="js/pwa.js?v=20260926-app24" defer></script>
+<script src="js/offline.js?v=20260926-app24" defer></script>
+<script type="module" src="js/app.js?v=20260926-app24"></script>
+<script src="js/share.js?v=20260926-app24" defer></script>
 </body>
 </html>

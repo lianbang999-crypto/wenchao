@@ -213,18 +213,21 @@ export function aiSpeakToggle(endpoint, reply, btn, icons, voice) {
  *   · 有直引且逐字对上 → 绿「引文已核验」
  *   · 仅有出处编号(无直引) → 中性「已附 N 处出处」
  *   · 有越界编号或直引对不上 → 琥珀「部分引用请核对」
- * 无任何引用则不显示（避免噪声，页底免责声明已兜底）。返回 HTML 字符串或 ''。 */
+ * 未附引用单独提示；编号有效不等于解释正确。返回 HTML 字符串或 ''。 */
 export function verifyBadgeHTML(verify) {
-  if (!verify || !verify.cited) return '';
+  if (!verify) return '';
   const ICON_OK = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
   const ICON_WARN = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>';
-  if (!verify.faithful) {
+  if (!verify.cited && verify.status !== 'failed') {
+    return `<div class="ai-verify warn">${ICON_WARN}未附可核对的引用，请以原文为准</div>`;
+  }
+  if (!verify.faithful || verify.status === 'failed') {
     return `<div class="ai-verify warn" title="回答中的方括号引用存在越界编号，或直引原文未能与所标出处逐字对上，请点开出处核对">${ICON_WARN}部分引用请核对原文</div>`;
   }
   if (verify.quoteChecked > 0) {
-    return `<div class="ai-verify ok" title="回答中 ${verify.quoteChecked} 处直引已与所标出处逐字比对一致">${ICON_OK}引文已核验 · 与出处逐字一致</div>`;
+    return `<div class="ai-verify ok" title="${verify.quoteChecked} 处直引文字与出处相符（忽略空白及标点）；辅助解释仍请结合上下文核对">${ICON_OK}引文文字已比对 · 解释请核对原文</div>`;
   }
-  return `<div class="ai-verify ok" title="回答已标注 ${verify.cited} 处出处编号，均在检索资料范围内，可点开逐条核对">${ICON_OK}已附 ${verify.cited} 处出处 · 可点开核对</div>`;
+  return `<div class="ai-verify" title="只检查出处编号有效，尚未核验解释与原文的含义是否一致">已附 ${verify.cited} 处出处 · 请点开核对</div>`;
 }
 
 /* ---------- 出处角标 / 反馈条 公用件（抽屉 app.js 与独立页 ask.js 逐字相同，故集中于此） ---------- */

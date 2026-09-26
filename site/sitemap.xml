@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://wenchao.foyue.org/</loc><lastmod>2026-08-09</lastmod><priority>1.0</priority></url>
-  <url><loc>https://wenchao.foyue.org/ying/</loc><lastmod>2026-08-09</lastmod><priority>0.6</priority></url>
-  <url><loc>https://wenchao.foyue.org/ask/</loc><lastmod>2026-08-09</lastmod><priority>0.9</priority></url>
+  <url><loc>https://wenchao.foyue.org/</loc><lastmod>2026-09-26</lastmod><priority>1.0</priority></url>
+  <url><loc>https://wenchao.foyue.org/ying/</loc><lastmod>2026-09-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://wenchao.foyue.org/ask/</loc><lastmod>2026-09-26</lastmod><priority>0.9</priority></url>
   <url><loc>https://wenchao.foyue.org/v/jy/</loc><lastmod>2026-08-09</lastmod><priority>0.9</priority></url>
   <url><loc>https://wenchao.foyue.org/v/jx/</loc><lastmod>2026-08-09</lastmod><priority>0.9</priority></url>
   <url><loc>https://wenchao.foyue.org/v/zg1/</loc><lastmod>2026-08-09</lastmod><priority>0.9</priority></url>
@@ -11,17 +11,17 @@
   <url><loc>https://wenchao.foyue.org/v/xb2/</loc><lastmod>2026-08-09</lastmod><priority>0.9</priority></url>
   <url><loc>https://wenchao.foyue.org/v/sb1/</loc><lastmod>2026-08-09</lastmod><priority>0.9</priority></url>
   <url><loc>https://wenchao.foyue.org/v/sb2/</loc><lastmod>2026-08-09</lastmod><priority>0.9</priority></url>
-  <url><loc>https://wenchao.foyue.org/v/sbu/</loc><lastmod>2026-08-09</lastmod><priority>0.9</priority></url>
+  <url><loc>https://wenchao.foyue.org/v/sbu/</loc><lastmod>2026-09-26</lastmod><priority>0.9</priority></url>
   <url><loc>https://wenchao.foyue.org/v/q600/</loc><lastmod>2026-08-09</lastmod><priority>0.9</priority></url>
-  <url><loc>https://wenchao.foyue.org/t/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
-  <url><loc>https://wenchao.foyue.org/t/nianfo/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
+  <url><loc>https://wenchao.foyue.org/t/</loc><lastmod>2026-09-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://wenchao.foyue.org/t/nianfo/</loc><lastmod>2026-09-26</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/t/xinyuan/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/t/linzhong/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/t/yinguo/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/t/jiesha/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/t/dunlun/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
-  <url><loc>https://wenchao.foyue.org/t/chengjing/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
-  <url><loc>https://wenchao.foyue.org/t/guanyin/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
+  <url><loc>https://wenchao.foyue.org/t/chengjing/</loc><lastmod>2026-09-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://wenchao.foyue.org/t/guanyin/</loc><lastmod>2026-09-26</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/a/jy-001/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/a/jy-002/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/a/jy-003/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
@@ -1920,7 +1920,7 @@
   <url><loc>https://wenchao.foyue.org/a/sbu-142/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/a/sbu-143/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/a/sbu-144/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
-  <url><loc>https://wenchao.foyue.org/a/sbu-145/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
+  <url><loc>https://wenchao.foyue.org/a/sbu-145/</loc><lastmod>2026-09-26</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/a/sbu-146/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/a/sbu-147/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>
   <url><loc>https://wenchao.foyue.org/a/sbu-148/</loc><lastmod>2026-08-09</lastmod><priority>0.8</priority></url>

@@ -11,6 +11,14 @@
   var isIOS = /iphone|ipad|ipod/i.test(ua) && !window.MSStream;
   var isSafari = isIOS && /safari/i.test(ua) && !/crios|fxios|edgios/i.test(ua);
   var isAndroid = /android/i.test(ua);
+  // 部分应用内浏览器会隐藏系统名称；结合触屏和窄屏判断是否为手机，
+  // 但不能据此认定是安卓并直接推荐 APK。
+  var touchPhone = navigator.maxTouchPoints > 0 &&
+                   window.matchMedia('(pointer: coarse)').matches &&
+                   (window.screen ? window.screen.width : window.innerWidth) <= 900;
+  var isMobile = isIOS || isAndroid ||
+                 !!(navigator.userAgentData && navigator.userAgentData.mobile) ||
+                 /mobile|phone|baiduboxapp/i.test(ua) || touchPhone;
   // 微信/QQ/微博/UC 等内置 WebView：无 A2HS 能力，只能引导到系统浏览器打开
   var inAppBrowser = /micromessenger|qq\/|qqbrowser|weibo|baiduboxapp|ucbrowser|quark/i.test(ua);
   /* 离线 APP 的 WebView 不是从 manifest 启动的 PWA，display-mode 那两个判据都不成立，
@@ -31,6 +39,7 @@
     isIOS: isIOS,
     isSafari: isSafari,
     isAndroid: isAndroid,
+    isMobile: isMobile,
     inAppBrowser: inAppBrowser,
     canPrompt: function () { return !!deferredPrompt; },
     // 唤起系统安装弹窗；返回 Promise<'accepted'|'dismissed'|'unavailable'>

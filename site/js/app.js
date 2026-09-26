@@ -874,6 +874,22 @@ function installSectionHtml() {
       rows = `<div class="set-row"><span class="set-k">安装到手机</span></div>
               <div class="set-note">在浏览器菜单里选「安装应用」或「添加到主屏幕」。</div>`;
     }
+  } else if (I.isMobile) {
+    // 应用内浏览器可能隐去系统名；只确认“这是手机”，不猜安卓或 iPhone。
+    title = '手机 · 安装应用';
+    if (I.inAppBrowser) {
+      rows = `<div class="set-row"><span class="set-k">在手机上打开</span><span class="set-c">
+                <button class="chip-btn ins-primary" id="ins-copy">复制网址</button></span></div>
+              <div class="set-note">请用手机的系统浏览器打开本站，再按浏览器提示安装或添加到主屏幕。</div>`;
+    } else {
+      rows = (I.canPrompt()
+        ? `<div class="set-row"><span class="set-k">添加到手机</span><span class="set-c">
+             <button class="chip-btn ins-primary" id="ins-go">安装</button></span></div>`
+        : `<div class="set-row"><span class="set-k">添加到手机</span></div>`)
+        + `<div class="set-note">可从浏览器菜单选择「安装应用」或「添加到主屏幕」。</div>`
+        + (apk ? `<div class="set-row"><span class="set-k">仅限安卓</span><span class="set-c">
+             <a class="chip-btn" href="${esc(apk)}" download>下载安卓应用</a></span></div>` : '');
+    }
   } else {
     // 电脑端：Chrome/Edge 可装成独立窗口，不给安卓包
     title = '电脑 · 安装应用';

@@ -184,7 +184,7 @@
       '<div class="sm-panel">' +
       '  <button class="sm-close" type="button" aria-label="关闭">' +
       '    <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>' +
-      '  <div class="sm-tip">' + (app ? '可存入相册，或直接分享给好友' : '长按图片可直接转发') + '</div>' +
+      '  <div class="sm-tip">' + (app ? '可保存图片，或直接分享给好友' : '长按图片可直接转发') + '</div>' +
       '  <div class="sm-imgwrap"><img class="sm-img" alt="法布施卡"></div>' +
       '  <div class="sm-acts">' +
       (app ? '    <button class="sm-share sm-primary" type="button">分享</button>' +
@@ -554,15 +554,15 @@
   }
   function saveImg(btn) {
     var url = modalImg && modalImg.src; if (!url) return;
-    // APP 内交给原生存相册：<a download> 在 WebView 里点了没反应
+    // APP 内交给原生保存：Android 10+ 存相册，较旧系统可自选位置。
     if (nativeShareOK()) {
       if (btn) { btn.disabled = true; btn.textContent = '保存中…'; }
       window.__wcCall('saveImage', url, cardName()).then(function (r) {
         // 先把按钮文字复位再 flash——flash 记的是当下的文字，
         // 不复位它 1.3 秒后会把「保存中…」当成原文再写回去
         if (btn) { btn.disabled = false; btn.textContent = '保存图片'; }
-        if (r && r.ok) flash(btn, '已存入相册');
-        else say((r && r.error) || '保存失败');
+        if (r && r.ok) flash(btn, r.destination === 'chosen' ? '已保存到所选位置' : '已存入相册');
+        else if (!(r && r.canceled)) say((r && r.error) || '保存失败');
       });
       return;
     }

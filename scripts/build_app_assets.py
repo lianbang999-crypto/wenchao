@@ -24,6 +24,7 @@
 
 用法：
   python3 scripts/build_app_assets.py          # 打包
+  python3 scripts/build_app_assets.py --assets-only  # 仅准备本地 APK，不更新线上清单
   python3 scripts/build_app_assets.py --check   # 只看会打包什么，不写文件
 """
 import hashlib
@@ -46,10 +47,28 @@ SITE_ORIGIN = "https://wenchao.foyue.org"
 # 整目录拷贝
 DIRS = ["data", "font", "img", "css", "js", "v", "t", "ask", "ying"]
 # 根目录下的单文件
-FILES = ["index.html", "config.js", "manifest.webmanifest",
+FILES = ["index.html", "legacy.html", "config.js", "manifest.webmanifest",
          "icon.svg", "apple-touch-icon.png", "favicon.ico", "404.html"]
 # 即便在上述目录里也要剔除的
 SKIP_NAMES = {".DS_Store", "sw.js"}
+
+
+def app_index_without_remote_analytics(html):
+    """The APK's JavaScript bridge must never be callable by remote analytics code."""
+    blocks = (
+        ("<!-- Google Tag Manager -->", "<!-- End Google Tag Manager -->"),
+        ("<!-- Google Tag Manager (noscript) -->",
+         "<!-- End Google Tag Manager (noscript) -->"),
+    )
+    for opening, closing in blocks:
+        start = html.find(opening)
+        end = html.find(closing)
+        if start < 0 or end < start:
+            raise ValueError("APK index analytics markers missing or malformed")
+        html = html[:start] + html[end + len(closing):]
+    if re.search(r'<script\b[^>]*\bsrc\s*=\s*["\']https?://', html, re.I):
+        raise ValueError("APK index must not load remote executable scripts")
+    return html
 
 # 追加到 config.js 末尾：把相对的接口地址改成绝对，并留下环境标记。
 # 用追加而非改写原有行——原文怎么写都不影响这里，升级站点配置不会打架。
@@ -220,6 +239,14 @@ def main():
         total_files += 1
         total_size += os.path.getsize(src)
 
+    # The web site may load analytics; the Android WebView exposes __wcNative.
+    # Preserve the public site but remove remote executable code from the APK.
+    app_index = os.path.join(ASSETS, "index.html")
+    with io.open(app_index, encoding="utf-8") as f:
+        index_html = f.read()
+    with io.open(app_index, "w", encoding="utf-8") as f:
+        f.write(app_index_without_remote_analytics(index_html))
+
     # config.js 追加 APP 专用覆盖段
     cfg = os.path.join(ASSETS, "config.js")
     with io.open(cfg, "a", encoding="utf-8") as f:
@@ -229,15 +256,17 @@ def main():
     with io.open(os.path.join(ASSETS, "content-version.json"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, separators=(",", ":"))
 
-    # 线上清单（供 APP 比对；与出厂清单同构，发布站点时一并上传）
-    os.makedirs(os.path.dirname(MANIFEST_OUT), exist_ok=True)
-    with io.open(MANIFEST_OUT, "w", encoding="utf-8") as f:
-        json.dump(manifest, f, ensure_ascii=False, separators=(",", ":"))
+    # 测试 APK 时不改动线上发布清单。
+    if "--assets-only" not in sys.argv:
+        os.makedirs(os.path.dirname(MANIFEST_OUT), exist_ok=True)
+        with io.open(MANIFEST_OUT, "w", encoding="utf-8") as f:
+            json.dump(manifest, f, ensure_ascii=False, separators=(",", ":"))
 
     print("—" * 46)
     print("assets 就绪：%d 个文件，%s（未压缩）" % (total_files, human(total_size)))
     print("  %s" % ASSETS)
-    print("线上比对清单：%s" % os.path.relpath(MANIFEST_OUT, ROOT))
+    if "--assets-only" not in sys.argv:
+        print("线上比对清单：%s" % os.path.relpath(MANIFEST_OUT, ROOT))
     print("提示：APK 会对 assets 再压缩一轮，实际增量约 %s" % human(total_size * 0.56))
 
 

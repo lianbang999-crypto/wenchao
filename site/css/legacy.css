@@ -1,0 +1,153 @@
+/* Android 4.4 WebView 兼容样式：不使用 CSS 变量、网格、滤镜或现代颜色函数。 */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #f7f1e5;
+  color: #332b20;
+  font-family: Georgia, "Noto Serif SC", "Songti SC", "STSong", SimSun, serif;
+  line-height: 1.8;
+}
+* { box-sizing: border-box; }
+body { font-size: 16px; }
+button, select { min-height: 44px; }
+button:focus, input:focus, select:focus { outline: 2px solid #ad4a36; outline-offset: 2px; }
+button:disabled { color: #998f81; cursor: default; }
+button, input, select { font: inherit; }
+button { color: #332b20; }
+.legacy-topbar {
+  position: relative;
+  min-height: 48px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #d8cbb4;
+  background: #f1e8d8;
+}
+.legacy-title {
+  display: inline-block;
+  padding: 5px 8px;
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.legacy-mark {
+  float: right;
+  margin: 8px 4px 0 0;
+  color: #8b604d;
+  font-size: 12px;
+}
+.legacy-reader {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 18px 14px 48px;
+}
+.legacy-loading, .legacy-error {
+  padding: 28px 12px;
+  color: #765f4d;
+  text-align: center;
+}
+.legacy-hero {
+  margin: 6px 0 20px;
+  padding: 18px 14px;
+  border: 1px solid #d8cbb4;
+  background: #fbf8f1;
+  text-align: center;
+}
+.legacy-hero h1 { margin: 0 0 6px; font-size: 25px; }
+.legacy-hero p { margin: 4px 0; color: #765f4d; font-size: 13px; }
+.legacy-note {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-left: 3px solid #ad4a36;
+  background: #efe4d0;
+  color: #765f4d;
+  font-size: 13px;
+}
+.legacy-section { margin: 18px 0; }
+.legacy-section h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  border-bottom: 1px solid #d8cbb4;
+}
+.legacy-tools { margin: 10px 0; }
+.legacy-tools input {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #cbbda6;
+  background: #fffdf8;
+  color: #332b20;
+}
+.legacy-tools select {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 7px;
+  border: 1px solid #cbbda6;
+  background: #fffdf8;
+  color: #332b20;
+}
+.legacy-list { margin: 0; padding: 0; list-style: none; }
+.legacy-list li { border-bottom: 1px solid #e1d7c6; }
+.legacy-list button, .legacy-volume {
+  display: block;
+  width: 100%;
+  padding: 9px 6px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.legacy-list button:active, .legacy-volume:active { background: #eadcc6; }
+.legacy-volume {
+  margin: 5px 0;
+  border: 1px solid #d8cbb4;
+  background: #fbf8f1;
+}
+.legacy-volume strong { display: block; font-size: 16px; }
+.legacy-volume small { color: #8a7662; }
+.legacy-home-actions { margin: 18px 0; }
+.legacy-action, .legacy-mode button {
+  display: inline-block;
+  margin: 3px 4px 3px 0;
+  padding: 6px 10px;
+  border: 1px solid #cbbda6;
+  border-radius: 3px;
+  background: #fffdf8;
+  cursor: pointer;
+}
+.legacy-mode { margin: 12px 0 18px; }
+.legacy-mode button.active { border-color: #ad4a36; background: #ead6c5; color: #7c3023; }
+.legacy-crumb { margin-bottom: 6px; color: #8a7662; font-size: 12px; }
+.legacy-article h1 { margin: 0 0 3px; font-size: 25px; line-height: 1.4; }
+.legacy-summary { margin: 10px 0 18px; color: #765f4d; font-size: 14px; }
+.legacy-summary b { margin-right: 6px; color: #ad4a36; }
+.legacy-block { margin: 0 0 18px; }
+.legacy-block h3 { margin: 0 0 4px; color: #8c3c2d; font-size: 15px; }
+.legacy-block p { margin: 0 0 13px; white-space: pre-wrap; word-wrap: break-word; }
+.legacy-translation { color: #584936; font-family: "Kaiti SC", "STKaiti", KaiTi, Georgia, serif; }
+.legacy-nopair { color: #8a7662; font-size: 13px; }
+.legacy-pager { margin-top: 24px; padding-top: 12px; border-top: 1px solid #d8cbb4; }
+.legacy-footer {
+  padding: 14px;
+  border-top: 1px solid #d8cbb4;
+  color: #8a7662;
+  font-size: 12px;
+  text-align: center;
+}
+@media (min-width: 620px) {
+  .legacy-reader { padding-left: 28px; padding-right: 28px; }
+}
+
+.legacy-tools label { display: block; margin-top: 8px; color: #765f4d; font-size: 14px; }
+.legacy-list small, .legacy-result-count, .legacy-credits { color: #765f4d; font-size: 13px; }
+.legacy-pagination { margin: 16px 0; text-align: center; }
+.legacy-pagination select { border: 1px solid #cbbda6; padding: 4px; background: #fffdf8; color: #332b20; }
+.legacy-segment { margin: 22px 0; }
+.legacy-pair { padding-bottom: 8px; border-bottom: 1px solid #e1d7c6; }
+.legacy-notes { padding: 10px 12px; border-left: 2px solid #c4a78c; background: #eee5d6; font-size: 0.88em; }
+.legacy-notes h3 { margin: 0 0 8px; font-size: 1em; color: #765f4d; }
+.legacy-notes ul { list-style: none; margin: 0; padding: 0; }
+.legacy-notes li { margin-bottom: 12px; }
+.legacy-notes li:last-child { margin-bottom: 0; }
+.legacy-notes p { white-space: pre-wrap; word-wrap: break-word; margin: 2px 0 0; }
+.legacy-pager .legacy-action { display: block; width: 100%; text-align: left; }
+.legacy-storage-warning { margin: 0; padding: 0 14px; color: #8c3c2d; background: #f2dfcf; font-size: 13px; }

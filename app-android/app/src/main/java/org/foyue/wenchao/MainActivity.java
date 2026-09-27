@@ -4,11 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import androidx.webkit.WebViewAssetLoader;
 import androidx.webkit.WebViewCompat;
@@ -42,36 +42,26 @@ public class MainActivity extends Activity {
     /** androidx 约定的本地域名，不会真的走网络 */
     private static final String DOMAIN = "appassets.androidplatform.net";
 
-    /** app.js 会读 ?app= 记下外壳版本，供「我的」页比对是否有新版 */
-    private static final String START_URL =
-            "https://" + DOMAIN + "/index.html?app=" + BuildConfig.VERSION_NAME;
-
-    /**
-     * 阅读器入口是 &lt;script type="module"&gt;，模块脚本要 Chrome 61 才支持。
-     * 低于此版本的内核解析不了，页面会静静地什么都不做——与其让人对着白屏，
-     * 不如直说是系统组件太旧、该去哪儿更新。
-     */
+    /** 完整阅读器的模块脚本要求 Chrome 61；旧内核使用 ES5 基础阅读器。 */
     private static final int MIN_WEBVIEW = 61;
 
     private WebView web;
     private View splash;
     private NativeBridge bridge;
+    private boolean basicReader;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int wv = webViewMajorVersion();
-        if (wv > 0 && wv < MIN_WEBVIEW) {
-            setContentView(unsupportedView(wv));
-            return;
-        }
-
         FrameLayout root = new FrameLayout(this);
         root.setBackgroundColor(0xFFFCFAF6);      // 与启动屏同色，避免加载瞬间闪白
 
         web = new WebView(this);
+        int wv = webViewMajorVersion();
+        // KitKat 的 WebView 不可通过组件更新；查不到内核时也先确保可读。
+        basicReader = Build.VERSION.SDK_INT < 21 || wv < MIN_WEBVIEW;
         root.addView(web, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -81,7 +71,8 @@ public class MainActivity extends Activity {
 
         setContentView(root);
         configureWebView();
-        web.loadUrl(START_URL);
+        String page = basicReader ? "legacy.html" : "index.html";
+        web.loadUrl("https://" + DOMAIN + "/" + page + "?app=" + BuildConfig.VERSION_NAME);
     }
 
     private void configureWebView() {
@@ -102,18 +93,56 @@ public class MainActivity extends Activity {
 
         final WebViewAssetLoader loader = new WebViewAssetLoader.Builder()
                 .setDomain(DOMAIN)
-                .addPathHandler("/", new AppContentHandler(this))
+                .addPathHandler("/", new AppContentHandler(this, basicReader))
                 .build();
 
-        web.setWebViewClient(new WebViewClient() {
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest req) {
-                return loader.shouldInterceptRequest(req.getUrl());
-            }
+        // WebResourceRequest was added in API 21. Keep the override in a client
+        // instance that is only constructed on API 21+, otherwise Dalvik on
+        // KitKat can try to resolve the missing framework class while loading
+        // the activity. The legacy client deliberately uses the String callback
+        // that WebView 4.4 actually invokes.
+        web.setWebViewClient(createWebViewClient(loader));
 
+        /* 不装 WebChromeClient 的话，页面里的 alert / confirm / prompt 会被默默丢弃——
+           不报错、不显示，代码看着执行了却什么也没发生。用默认实现即可让它们正常弹出。 */
+        web.setWebChromeClient(new WebChromeClient());
+
+        bridge = new NativeBridge(this, web);
+        web.addJavascriptInterface(bridge, NativeBridge.NAME);
+    }
+
+    private WebViewClient createWebViewClient(final WebViewAssetLoader loader) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return new WebViewClient() {
+                @Override
+                public WebResourceResponse shouldInterceptRequest(
+                        WebView view, WebResourceRequest req) {
+                    return loader.shouldInterceptRequest(req.getUrl());
+                }
+
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest req) {
+                    return handleExternal(req.getUrl());
+                }
+
+                @SuppressWarnings("deprecation")
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    return handleExternal(Uri.parse(url));
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    hideSplash();
+                }
+            };
+        }
+
+        return new WebViewClient() {
+            @SuppressWarnings("deprecation")
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest req) {
-                return handleExternal(req.getUrl());
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                return loader.shouldInterceptRequest(Uri.parse(url));
             }
 
             @SuppressWarnings("deprecation")
@@ -126,14 +155,7 @@ public class MainActivity extends Activity {
             public void onPageFinished(WebView view, String url) {
                 hideSplash();
             }
-        });
-
-        /* 不装 WebChromeClient 的话，页面里的 alert / confirm / prompt 会被默默丢弃——
-           不报错、不显示，代码看着执行了却什么也没发生。用默认实现即可让它们正常弹出。 */
-        web.setWebChromeClient(new WebChromeClient());
-
-        bridge = new NativeBridge(this, web);
-        web.addJavascriptInterface(bridge, NativeBridge.NAME);
+        };
     }
 
     /**
@@ -142,7 +164,8 @@ public class MainActivity extends Activity {
      */
     private boolean handleExternal(Uri uri) {
         if (uri == null) return false;
-        if (DOMAIN.equals(uri.getHost())) return false;     // 自家地址，照常在 WebView 里走
+        if ("https".equals(uri.getScheme()) && DOMAIN.equals(uri.getHost())
+                && (uri.getPort() == -1 || uri.getPort() == 443)) return false;
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, uri));
         } catch (Exception ignored) {
@@ -175,9 +198,12 @@ public class MainActivity extends Activity {
         return f;
     }
 
-    /** 系统 WebView 主版本号；取不到返回 -1（取不到时不拦，让它试着跑）。 */
+    /** 优先看正在运行的内核 UA；API 19 无独立 WebView 包可查询。 */
     private int webViewMajorVersion() {
         try {
+            Matcher chrome = Pattern.compile("(?:Chrome|Chromium)/(\\d+)")
+                    .matcher(web.getSettings().getUserAgentString());
+            if (chrome.find()) return Integer.parseInt(chrome.group(1));
             PackageInfo info = WebViewCompat.getCurrentWebViewPackage(this);
             if (info == null || info.versionName == null) return -1;
             String major = info.versionName.split("\\.")[0];
@@ -187,28 +213,16 @@ public class MainActivity extends Activity {
         }
     }
 
-    /** 内核过旧时的说明页。用原生控件而非 HTML——这种时候 WebView 本身就不可信。 */
-    private View unsupportedView(int ver) {
-        TextView t = new TextView(this);
-        t.setText("很抱歉，本机的「Android System WebView」系统组件版本过旧（"
-                + ver + " 版），无法运行阅读器。\n\n"
-                + "请到手机的应用商店搜索「Android System WebView」或「Chrome」并更新，"
-                + "之后重新打开本应用即可。\n\n"
-                + "也可以直接用手机浏览器访问：\nwenchao.foyue.org");
-        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        t.setLineSpacing(0f, 1.5f);
-        t.setTextColor(Color.parseColor("#171310"));
-        t.setBackgroundColor(Color.parseColor("#FCFAF6"));
-        int pad = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics());
-        t.setPadding(pad, pad * 3, pad, pad);
-        return t;
-    }
-
     @Override
     public void onBackPressed() {
         if (web != null && web.canGoBack()) web.goBack();
         else super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (bridge != null) bridge.onSaveImageResult(requestCode, resultCode, data);
     }
 
     @Override

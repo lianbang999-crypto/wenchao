@@ -1,10 +1,14 @@
 package org.foyue.wenchao;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -26,11 +30,18 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * 页面与原生之间的桥。
@@ -49,6 +60,10 @@ class NativeBridge {
 
     /** 页面侧的对象名：window.__wcNative */
     static final String NAME = "__wcNative";
+    static final int REQUEST_SAVE_IMAGE = 0x517;
+    private static final String UPDATE_HOST = "wenchao.foyue.org";
+    private static final long MAX_APK_BYTES = 80L * 1024L * 1024L;
+    private static final long MIN_APK_BYTES = 64L * 1024L;
 
     private final Activity act;
     private final WebView web;
@@ -58,6 +73,10 @@ class NativeBridge {
     /** 系统朗读引擎。初始化是异步的，就绪前 ttsAvailable() 一律回 false。 */
     private TextToSpeech tts;
     private volatile boolean ttsReady = false;
+    /** Accessed only on the Activity main thread while the document picker is open. */
+    private byte[] pendingImage;
+    private String pendingImageCallback;
+    private volatile boolean destroyed = false;
 
     NativeBridge(Activity act, WebView web) {
         this.act = act;
@@ -160,12 +179,31 @@ class NativeBridge {
         }
         try {
             tts.setSpeechRate(rate > 0 ? rate : 1.0f);
-            Bundle params = new Bundle();
-            // utteranceId 直接用回调号，读完就能对上是哪一句
-            int r = tts.speak(text, TextToSpeech.QUEUE_FLUSH, params, cbId);
+            // The Bundle/String overload was added in API 21. Keep the old
+            // HashMap overload for KitKat and isolate the newer invocation in
+            // an API-specific class so Dalvik never resolves it on API 19.
+            int r = speakCompat(tts, text, cbId);
             if (r != TextToSpeech.SUCCESS) ttsCallback(cbId, false, "朗读启动失败");
         } catch (Exception e) {
             ttsCallback(cbId, false, "朗读失败");
+        }
+    }
+
+    private static int speakCompat(TextToSpeech engine, String text, String utteranceId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return Api21.speak(engine, text, utteranceId);
+        }
+        HashMap<String, String> params = new HashMap<>();
+        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
+        return engine.speak(text, TextToSpeech.QUEUE_FLUSH, params);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static final class Api21 {
+        private static int speak(TextToSpeech engine, String text, String utteranceId) {
+            Bundle params = new Bundle();
+            // utteranceId 直接用回调号，读完就能对上是哪一句
+            return engine.speak(text, TextToSpeech.QUEUE_FLUSH, params, utteranceId);
         }
     }
 
@@ -182,7 +220,7 @@ class NativeBridge {
     // 下载，除非另装 DownloadListener），navigator.share 压根不存在，长按图片也没有
     // Chrome 那个「保存图片/分享」上下文菜单。所以这两件事只能落到原生来做。
 
-    /** 存进系统相册。data 是 canvas.toDataURL() 的结果。 */
+    /** Android 10+ 存相册；旧系统由用户选择图片保存位置。data 是 canvas.toDataURL()。 */
     @JavascriptInterface
     public void saveImage(final String dataUrl, final String name, final String cbId) {
         pool.execute(new Runnable() {
@@ -206,11 +244,10 @@ class NativeBridge {
                         try { out.write(png); out.flush(); } finally { out.close(); }
                         put(r, "ok", true);
                     } else {
-                        // Android 9 及以下写公共目录要 WRITE_EXTERNAL_STORAGE 运行时权限。
-                        // 不在这里拉权限弹窗打断用户——直说存不了，让他改用「分享」，
-                        // 分享走 FileProvider，任何版本都不需要权限。
-                        put(r, "ok", false);
-                        put(r, "error", "本系统版本无法直接存相册，请改用「分享」发给微信或相册");
+                        // ACTION_CREATE_DOCUMENT 从 API 19 起可用。系统将所选 URI
+                        // 的临时写入权限授给本应用，无须申请公共存储权限。
+                        requestDocumentSave(png, file, cbId);
+                        return; // 选择器返回后才回调页面，不能提前报告保存成功。
                     }
                 } catch (Exception e) {
                     put(r, "ok", false);
@@ -219,6 +256,78 @@ class NativeBridge {
                 callback(cbId, r);
             }
         });
+    }
+
+    private void requestDocumentSave(final byte[] png, final String file, final String cbId) {
+        act.runOnUiThread(new Runnable() {
+            @Override public void run() {
+                if (destroyed || act.isFinishing() || act.isDestroyed()) return;
+                if (pendingImageCallback != null) {
+                    saveImageError(cbId, "请先完成上一张图片的保存");
+                    return;
+                }
+                pendingImage = png;
+                pendingImageCallback = cbId;
+                try {
+                    Intent pick = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    pick.addCategory(Intent.CATEGORY_OPENABLE);
+                    pick.setType("image/png");
+                    pick.putExtra(Intent.EXTRA_TITLE, file);
+                    act.startActivityForResult(pick, REQUEST_SAVE_IMAGE);
+                } catch (Exception e) {
+                    pendingImage = null;
+                    pendingImageCallback = null;
+                    saveImageError(cbId, "无法打开保存位置：" + shortMsg(e));
+                }
+            }
+        });
+    }
+
+    /** MainActivity forwards the document picker result here on the UI thread. */
+    boolean onSaveImageResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != REQUEST_SAVE_IMAGE) return false;
+        final byte[] png = pendingImage;
+        final String cbId = pendingImageCallback;
+        pendingImage = null;
+        pendingImageCallback = null;
+        if (destroyed || cbId == null) return true;
+        if (resultCode != Activity.RESULT_OK) {
+            JSONObject canceled = new JSONObject();
+            put(canceled, "ok", false);
+            put(canceled, "canceled", true);
+            callback(cbId, canceled);
+            return true;
+        }
+        final Uri uri = data == null ? null : data.getData();
+        if (uri == null || !"content".equals(uri.getScheme()) || png == null) {
+            saveImageError(cbId, "系统没有提供可写的保存位置");
+            return true;
+        }
+        pool.execute(new Runnable() {
+            @Override public void run() {
+                try {
+                    // CREATE_DOCUMENT may return an existing name. "wt" requests
+                    // truncation, while plain "w" may leave trailing old bytes.
+                    OutputStream out = act.getContentResolver().openOutputStream(uri, "wt");
+                    if (out == null) throw new Exception("保存位置不可写");
+                    try { out.write(png); out.flush(); } finally { out.close(); }
+                    JSONObject success = new JSONObject();
+                    put(success, "ok", true);
+                    put(success, "destination", "chosen");
+                    callback(cbId, success);
+                } catch (Exception e) {
+                    saveImageError(cbId, "保存失败：" + shortMsg(e));
+                }
+            }
+        });
+        return true;
+    }
+
+    private void saveImageError(String cbId, String message) {
+        JSONObject result = new JSONObject();
+        put(result, "ok", false);
+        put(result, "error", message);
+        callback(cbId, result);
     }
 
     /** 交给系统分享面板（微信、QQ、相册……）。全版本可用，不需要存储权限。 */
@@ -296,11 +405,15 @@ class NativeBridge {
                 try {
                     JSONObject local = updater.localManifest();
                     JSONObject remote = updater.remoteManifest();
-                    List<String> ids = updater.diff(local, remote);
-                    List<String> assets = updater.diffAssets(local, remote);
-                    boolean books = updater.booksChanged(local, remote);
+                    boolean older = ContentUpdater.remoteOlder(local, remote);
+                    List<String> ids = older ? java.util.Collections.<String>emptyList()
+                            : updater.diff(local, remote);
+                    List<String> assets = older ? java.util.Collections.<String>emptyList()
+                            : updater.diffAssets(local, remote);
+                    boolean books = !older && updater.booksChanged(local, remote);
                     r.put("ok", true);
                     r.put("count", ids.size() + assets.size() + (books ? 1 : 0));
+                    r.put("remoteOlder", older);
                     r.put("version", remote.optString("version", ""));
                     r.put("current", local.optString("version", ""));
                     /* 外壳版本必须由服务端下发，不能让页面读本地 config.js——
@@ -332,6 +445,9 @@ class NativeBridge {
                 try {
                     JSONObject local = updater.localManifest();
                     JSONObject remote = updater.remoteManifest();
+                    if (ContentUpdater.remoteOlder(local, remote)) {
+                        throw new java.io.IOException("线上内容版本早于本机，暂不覆盖");
+                    }
                     List<String> ids = updater.diff(local, remote);
                     List<String> assets = updater.diffAssets(local, remote);
                     boolean books = updater.booksChanged(local, remote);
@@ -339,7 +455,7 @@ class NativeBridge {
                         put(r, "ok", true);
                         put(r, "count", 0);
                     } else {
-                        updater.apply(ids, books, assets, remote, new ContentUpdater.Progress() {
+                        updater.apply(remote, new ContentUpdater.Progress() {
                             @Override public void onProgress(int done, int total) {
                                 evalJs("window.__wcProgress&&window.__wcProgress("
                                         + done + "," + total + ")");
@@ -367,7 +483,10 @@ class NativeBridge {
         pool.execute(new Runnable() {
             @Override public void run() {
                 JSONObject r = new JSONObject();
+                File apk = null;
+                boolean launched = false;
                 try {
+                    URL checkedUrl = checkedApkUrl(url);
                     // Android 8 起装包要用户单独授权「安装未知应用」，先把人送到那一页
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                             && !act.getPackageManager().canRequestPackageInstalls()) {
@@ -381,8 +500,12 @@ class NativeBridge {
                     }
                     File dir = new File(act.getCacheDir(), "apk");
                     if (!dir.isDirectory() && !dir.mkdirs()) throw new Exception("建不了下载目录");
-                    File apk = new File(dir, "update.apk");
-                    downloadTo(url, apk);
+                    pruneExpiredApks(dir);
+                    // Unique file prevents a second download from replacing an APK
+                    // after validation while the system installer is still reading it.
+                    apk = File.createTempFile("update-", ".apk", dir);
+                    downloadTo(checkedUrl, apk);
+                    verifyUpdateApk(act, apk);
 
                     Uri uri = FileProvider.getUriForFile(
                             act, act.getPackageName() + ".fileprovider", apk);
@@ -390,37 +513,68 @@ class NativeBridge {
                     i.setDataAndType(uri, "application/vnd.android.package-archive");
                     i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
                     act.startActivity(i);
+                    launched = true;
                     put(r, "ok", true);
                 } catch (Exception e) {
                     put(r, "ok", false);
-                    put(r, "error", friendly(e));
+                    put(r, "error", e instanceof IOException ? "安装包下载失败：" + shortMsg(e)
+                            : "安装包校验失败：" + shortMsg(e));
+                } finally {
+                    if (!launched && apk != null) apk.delete();
                 }
                 callback(cbId, r);
             }
         });
     }
 
-    private void downloadTo(String url, File target) throws Exception {
-        java.net.HttpURLConnection c =
-                (java.net.HttpURLConnection) new java.net.URL(url).openConnection();
+    /** Accept only the official HTTPS APK path; a page or manifest value is not authority. */
+    static URL checkedApkUrl(String raw) throws Exception {
+        if (raw == null || raw.isEmpty()) throw new Exception("缺少安装包地址");
+        String absolute = raw.startsWith("/app/") ? "https://" + UPDATE_HOST + raw : raw;
+        URI rawUri = new URI(absolute);
+        URL parsed = new URL(absolute);
+        if (!"https".equalsIgnoreCase(parsed.getProtocol())
+                || !UPDATE_HOST.equalsIgnoreCase(parsed.getHost())
+                || !(parsed.getPort() == -1 || parsed.getPort() == 443)
+                || !(UPDATE_HOST.equalsIgnoreCase(parsed.getAuthority())
+                        || (UPDATE_HOST + ":443").equalsIgnoreCase(parsed.getAuthority()))
+                // URL.getPath() can normalize /../ on older Android. Check the
+                // original URI path so a disguised path never passes validation.
+                || rawUri.getRawPath() == null
+                || !rawUri.getRawPath().matches("/app/wenchao-[0-9]+(?:\\.[0-9]+){2}\\.apk")
+                || parsed.getQuery() != null || parsed.getRef() != null) {
+            throw new Exception("只允许从文钞官方网站下载安装包");
+        }
+        return parsed;
+    }
+
+    private void downloadTo(URL url, File target) throws IOException {
+        HttpsURLConnection c = (HttpsURLConnection) url.openConnection();
+        c.setInstanceFollowRedirects(false);
         c.setConnectTimeout(15000);
         c.setReadTimeout(60000);      // 安装包 20MB 上下，读超时给宽些
         try {
             int code = c.getResponseCode();
-            if (code != 200) throw new Exception("下载失败 HTTP " + code);
-            int total = c.getContentLength();
+            if (code != HttpURLConnection.HTTP_OK) throw new IOException("HTTP " + code);
+            long total = c.getContentLength();
+            if (total > MAX_APK_BYTES) throw new IOException("安装包超过 80 MB 上限");
             java.io.InputStream in = c.getInputStream();
             java.io.FileOutputStream out = new java.io.FileOutputStream(target);
             try {
                 byte[] buf = new byte[16384];
-                int n, got = 0;
+                int n;
+                long got = 0;
                 while ((n = in.read(buf)) > 0) {
+                    if (got + n > MAX_APK_BYTES) throw new IOException("安装包超过 80 MB 上限");
                     out.write(buf, 0, n);
                     got += n;
                     if (total > 0) evalJs("window.__wcProgress&&window.__wcProgress("
                             + got + "," + total + ")");
                 }
+                if (got < MIN_APK_BYTES) throw new IOException("安装包内容不完整");
+                if (total >= 0 && got != total) throw new IOException("安装包大小与服务器声明不符");
                 out.flush();
+                out.getFD().sync();
             } finally {
                 try { out.close(); } catch (Exception ignored) { }
                 try { in.close(); } catch (Exception ignored) { }
@@ -430,8 +584,68 @@ class NativeBridge {
         }
     }
 
+    private static void pruneExpiredApks(File dir) {
+        File[] old = dir.listFiles();
+        if (old == null) return;
+        long now = System.currentTimeMillis();
+        for (File item : old) {
+            String name = item.getName();
+            if (item.isFile() && name.startsWith("update-") && name.endsWith(".apk")
+                    && item.lastModified() > 0 && now - item.lastModified() > 86400000L) {
+                item.delete();
+            }
+        }
+    }
+
+    /** Fail closed if the archive cannot be parsed or signed like this installed app. */
+    static void verifyUpdateApk(Context context, File apk) throws Exception {
+        PackageManager pm = context.getPackageManager();
+        int flags = Build.VERSION.SDK_INT >= 28
+                ? PackageManager.GET_SIGNING_CERTIFICATES : PackageManager.GET_SIGNATURES;
+        PackageInfo candidate = pm.getPackageArchiveInfo(apk.getAbsolutePath(), flags);
+        if (candidate == null) throw new Exception("无法识别安装包");
+        if (!context.getPackageName().equals(candidate.packageName)) throw new Exception("应用包名不符");
+        PackageInfo installed = pm.getPackageInfo(context.getPackageName(), flags);
+        Signature[] nextSigners = Build.VERSION.SDK_INT >= 28
+                ? Api28.signers(candidate) : candidate.signatures;
+        Signature[] currentSigners = Build.VERSION.SDK_INT >= 28
+                ? Api28.signers(installed) : installed.signatures;
+        if (!sameSigners(currentSigners, nextSigners)) throw new Exception("安装包签名与已安装应用不一致");
+        long next = Build.VERSION.SDK_INT >= 28
+                ? Api28.versionCode(candidate) : candidate.versionCode;
+        long current = Build.VERSION.SDK_INT >= 28
+                ? Api28.versionCode(installed) : installed.versionCode;
+        if (next <= current) throw new Exception("安装包版本没有高于当前版本");
+    }
+
+    static boolean sameSigners(Signature[] a, Signature[] b) {
+        if (a == null || b == null || a.length == 0 || a.length != b.length) return false;
+        boolean[] matched = new boolean[b.length];
+        for (Signature signer : a) {
+            boolean found = false;
+            for (int i = 0; i < b.length; i++) {
+                if (!matched[i] && signer != null && signer.equals(b[i])) {
+                    matched[i] = true; found = true; break;
+                }
+            }
+            if (!found) return false;
+        }
+        return true;
+    }
+
+    @TargetApi(28)
+    private static final class Api28 {
+        static long versionCode(PackageInfo info) { return info.getLongVersionCode(); }
+        static Signature[] signers(PackageInfo info) {
+            return info.signingInfo == null ? null : info.signingInfo.getApkContentsSigners();
+        }
+    }
+
     /** Activity 销毁时释放，交给 MainActivity.onDestroy 调用。 */
     void shutdown() {
+        destroyed = true;
+        pendingImage = null;
+        pendingImageCallback = null;
         ttsReady = false;
         try {
             if (tts != null) { tts.stop(); tts.shutdown(); }
@@ -443,7 +657,7 @@ class NativeBridge {
     // —— 回页面 ——
 
     private void callback(String cbId, JSONObject result) {
-        if (cbId == null || cbId.isEmpty()) return;
+        if (destroyed || cbId == null || cbId.isEmpty()) return;
         // cbId 由页面生成，仍按字面量转义后再拼，避免奇怪的值破坏这段脚本
         evalJs("window.__wcCB&&window.__wcCB(" + JSONObject.quote(cbId)
                 + "," + result.toString() + ")");

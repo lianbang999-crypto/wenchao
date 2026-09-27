@@ -1,7 +1,9 @@
 package org.foyue.wenchao;
 
 import android.content.Context;
+import android.util.AtomicFile;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -11,9 +13,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 内容的增量更新。
@@ -23,8 +27,8 @@ import java.util.List;
  * 内容变了就在 APP 内悄悄补上，只有阅读器本身改版才提示换新包。
  *
  * <p>做法是「出厂内容 + 覆盖层」：APK 里的 assets 只读、永远是出厂那一版；
- * 下载到的新版篇目写进 filesDir/content/，由 {@link AppContentHandler} 优先取用。
- * 这样更新是可叠加的，也永远有一份完好的出厂内容垫底，更新写坏了删掉覆盖层即可复原。
+ * 下载到的新版篇目先写进一个不可变的暂存目录，全部校验通过后再用
+ * content-state.json 一次性切换生效目录。APK 始终保留完好的出厂内容。
  *
  * <p>所有网络调用都设了超时。这是有教训的：站点的 Service Worker 曾因为
  * fetch 没有超时，遇上「连得上但不回包」的网络就一直挂着，缓存明明有也用不上，
@@ -33,34 +37,78 @@ import java.util.List;
 class ContentUpdater {
 
     private static final String SITE = "https://wenchao.foyue.org";
-    private static final String REMOTE_MANIFEST = SITE + "/app/content-manifest.json";
     private static final String ASSET_MANIFEST = "content-version.json";
-    private static final String STATE_FILE = "content-state.json";
+    static final String STATE_FILE = "content-state.json";
+    private static final String GENERATION_FIELD = "_overlayGeneration";
+    private static final String GENERATIONS_DIR = "content-generations";
 
     private static final int CONNECT_TIMEOUT = 10000;
     private static final int READ_TIMEOUT = 15000;
     /** 一次更新最多下这么多篇，防止清单异常时无节制地拉 */
     private static final int MAX_FILES = 3000;
+    private static final int MAX_MANIFEST_BYTES = 2 * 1024 * 1024;
+    private static final int MAX_CONTENT_BYTES = 5 * 1024 * 1024;
 
     private final Context ctx;
-    private final File overlayDir;
+    private final String site;
+    private final File dataRoot;
 
     ContentUpdater(Context ctx) {
+        this(ctx, SITE, ctx.getFilesDir());
+    }
+
+    /** Package-private override keeps transaction tests entirely on localhost. */
+    ContentUpdater(Context ctx, String site, File dataRoot) {
         this.ctx = ctx.getApplicationContext();
-        this.overlayDir = new File(this.ctx.getFilesDir(), "content");
+        this.site = site;
+        this.dataRoot = dataRoot;
     }
 
     /** 当前生效的内容清单：更新过就用状态文件，否则用随包出厂的那份。 */
     JSONObject localManifest() throws IOException, org.json.JSONException {
-        File state = new File(ctx.getFilesDir(), STATE_FILE);
-        if (state.isFile()) {
-            return new JSONObject(readAll(new java.io.FileInputStream(state)));
+        File state = new File(dataRoot, STATE_FILE);
+        try {
+            JSONObject saved = new JSONObject(readAll(new AtomicFile(state).openRead()));
+            validateManifest(saved);
+            return saved;
+        } catch (IOException | org.json.JSONException ignored) {
+            // AtomicFile may recover a valid backup even if the base file is
+            // absent. Otherwise the immutable APK is the safe fallback.
         }
         return new JSONObject(readAll(ctx.getAssets().open(ASSET_MANIFEST)));
     }
 
     JSONObject remoteManifest() throws IOException, org.json.JSONException {
-        return new JSONObject(httpGet(REMOTE_MANIFEST));
+        JSONObject remote = new JSONObject(httpGet(site + "/app/content-manifest.json"));
+        validateManifest(remote);
+        return remote;
+    }
+
+    /** Generated timestamps are fixed-width UTC values; older manifests must not undo bundled fixes. */
+    static boolean remoteOlder(JSONObject local, JSONObject remote) {
+        String current = local.optString("generated", "");
+        String incoming = remote.optString("generated", "");
+        return validGenerated(current) && validGenerated(incoming)
+                && incoming.compareTo(current) < 0;
+    }
+
+    /** The state file is the only publication pointer; incomplete generations are invisible. */
+    static File activeOverlayDir(File root) {
+        File state = new File(root, STATE_FILE);
+        try {
+            JSONObject manifest = new JSONObject(readAll(new AtomicFile(state).openRead()));
+            String generation = manifest.optString(GENERATION_FIELD, "");
+            if (generation.isEmpty()) {
+                // Migration path for installations updated by releases before 1.1.4.
+                File legacy = new File(root, "content");
+                return legacy.isDirectory() ? legacy : null;
+            }
+            if (!generation.matches("[A-Za-z0-9_-]{1,80}")) return null;
+            File current = new File(new File(root, GENERATIONS_DIR), generation);
+            return current.isDirectory() ? current : null;
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     /**
@@ -115,48 +163,147 @@ class ContentUpdater {
     }
 
     /**
-     * 下载并落盘。全部成功后才写状态文件——中途失败就当这次更新没发生，
-     * 已下好的那部分留在覆盖层里也无妨（它们本就是更新的目标内容）。
+     * Build an immutable, verified overlay generation before publishing its
+     * pointer. A failed download, bad 200 response or process death can leave
+     * an unused staging directory, but cannot change any active article/script.
      */
-    void apply(List<String> ids, boolean books, List<String> assets, JSONObject remote, Progress cb)
-            throws IOException, org.json.JSONException {
-        File artDir = new File(overlayDir, "data/articles");
-        if (!artDir.isDirectory() && !artDir.mkdirs()) {
-            throw new IOException("建不了覆盖层目录：" + artDir);
+    int apply(JSONObject remote, Progress cb) throws IOException, org.json.JSONException {
+        validateManifest(remote);
+        if (remoteOlder(localManifest(), remote)) {
+            throw new IOException("线上内容版本早于本机，暂不覆盖");
         }
-        int nAssets = assets == null ? 0 : assets.size();
-        int done = 0, total = ids.size() + (books ? 1 : 0) + nAssets;
+        JSONObject bundled = new JSONObject(readAll(ctx.getAssets().open(ASSET_MANIFEST)));
+        List<Target> targets = targetsNotInBundle(remote, bundled);
+        String generation = "g-" + UUID.randomUUID().toString();
+        File generations = new File(dataRoot, GENERATIONS_DIR);
+        File stage = new File(generations, generation);
+        if (!stage.mkdirs()) throw new IOException("建不了更新暂存目录");
+        File previous = activeOverlayDir(dataRoot);
+        boolean published = false;
+        int downloaded = 0;
+        try {
+            for (int i = 0; i < targets.size(); i++) {
+                Target target = targets.get(i);
+                byte[] data = null;
+                if (previous != null) {
+                    File old = new File(previous, target.path);
+                    if (inside(previous, old) && old.isFile() && old.length() <= MAX_CONTENT_BYTES) {
+                        data = readAllBytes(new java.io.FileInputStream(old), MAX_CONTENT_BYTES);
+                        if (!digestMatches(data, target.hash) || !validDocument(target.path, data)) {
+                            data = null;
+                        }
+                    }
+                }
+                if (data == null) {
+                    String cacheBuster = target.path.startsWith("js/") || target.path.startsWith("css/")
+                            ? "?h=" + target.hash : "";
+                    data = httpGetBytes(site + "/" + target.path + cacheBuster, MAX_CONTENT_BYTES);
+                    if (!digestMatches(data, target.hash) || !validDocument(target.path, data)) {
+                        throw new IOException("下载内容校验失败：" + target.path);
+                    }
+                    downloaded++;
+                }
+                writeFile(new File(stage, target.path), data);
+                if (cb != null) cb.onProgress(i + 1, targets.size());
+            }
+            JSONObject state = new JSONObject(remote.toString());
+            state.put(GENERATION_FIELD, generation);
+            writeAtomic(new File(dataRoot, STATE_FILE), state.toString().getBytes("UTF-8"));
+            published = true;
+            return downloaded;
+        } finally {
+            if (!published) deleteTree(stage);
+        }
+    }
 
-        if (books) {
-            byte[] b = httpGetBytes(SITE + "/data/books.json");
-            writeAtomic(new File(overlayDir, "data/books.json"), b);
-            if (cb != null) cb.onProgress(++done, total);
+    private static final class Target {
+        final String path;
+        final String hash;
+        Target(String path, String hash) { this.path = path; this.hash = hash; }
+    }
+
+    private static List<Target> targetsNotInBundle(JSONObject remote, JSONObject bundled) {
+        List<Target> targets = new ArrayList<>();
+        if (!remote.optString("books", "").equals(bundled.optString("books", ""))) {
+            targets.add(new Target("data/books.json", remote.optString("books")));
         }
-        for (String id : ids) {
-            byte[] b = httpGetBytes(SITE + "/data/articles/" + id + ".json");
-            writeAtomic(new File(artDir, id + ".json"), b);
-            if (cb != null) cb.onProgress(++done, total);
+        addTargets(targets, remote.optJSONObject("articles"), bundled.optJSONObject("articles"),
+                "data/articles/", ".json");
+        addTargets(targets, remote.optJSONObject("assets"), bundled.optJSONObject("assets"), "", "");
+        return targets;
+    }
+
+    private static void addTargets(List<Target> out, JSONObject remote, JSONObject bundled,
+                                   String prefix, String suffix) {
+        if (remote == null) return;
+        for (Iterator<String> it = remote.keys(); it.hasNext(); ) {
+            String name = it.next();
+            String hash = remote.optString(name, "");
+            if (bundled == null || !hash.equals(bundled.optString(name, ""))) {
+                out.add(new Target(prefix + name + suffix, hash));
+            }
         }
-        JSONObject ra = remote.optJSONObject("assets");
-        for (int i = 0; i < nAssets; i++) {
-            String path = assets.get(i);
-            if (!safeRelPath(path)) continue;      // 清单来自网络，不能拿它随便往哪写
-            // js/css 在站点上是 immutable 长缓存，直连会拿到 CDN 里的旧版；
-            // 带上内容摘要当查询串，URL 一变即绕开缓存，取到的必是这一版。
-            String h = ra == null ? "" : ra.optString(path, "");
-            byte[] b = httpGetBytes(SITE + "/" + path + (h.isEmpty() ? "" : "?h=" + h));
-            writeAtomic(new File(overlayDir, path), b);
-            if (cb != null) cb.onProgress(++done, total);
+    }
+
+    private static void validateManifest(JSONObject remote) throws IOException {
+        JSONObject articles = remote.optJSONObject("articles");
+        JSONObject assets = remote.optJSONObject("assets");
+        if (articles == null || assets == null || articles.length() > MAX_FILES
+                || assets.length() > MAX_FILES || !validHash(remote.optString("books", ""))
+                || !validGenerated(remote.optString("generated", ""))) {
+            throw new IOException("更新清单格式错误");
         }
-        // 全下完了才认账：状态文件一写，本地清单就等同远端
-        writeAtomic(new File(ctx.getFilesDir(), STATE_FILE),
-                remote.toString().getBytes("UTF-8"));
+        for (Iterator<String> it = articles.keys(); it.hasNext(); ) {
+            String id = it.next();
+            if (!id.matches("[A-Za-z0-9-]{1,80}") || !validHash(articles.optString(id, ""))) {
+                throw new IOException("更新清单篇目无效");
+            }
+        }
+        for (Iterator<String> it = assets.keys(); it.hasNext(); ) {
+            String path = it.next();
+            if (!safeRelPath(path) || !validHash(assets.optString(path, ""))) {
+                throw new IOException("更新清单资源无效");
+            }
+        }
+    }
+
+    private static boolean validHash(String hash) { return hash.matches("[0-9a-f]{12}"); }
+
+    private static boolean validGenerated(String value) {
+        return value.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z");
+    }
+
+    private static boolean digestMatches(byte[] data, String expected) throws IOException {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] digest = md.digest(data);
+            StringBuilder hex = new StringBuilder();
+            for (int i = 0; i < 6; i++) hex.append(String.format(java.util.Locale.ROOT, "%02x", digest[i] & 0xff));
+            return hex.toString().equals(expected);
+        } catch (java.security.NoSuchAlgorithmException e) {
+            throw new IOException("缺少内容校验算法", e);
+        }
+    }
+
+    private static boolean validDocument(String path, byte[] data) {
+        if (!path.startsWith("data/") || !path.endsWith(".json")) return true;
+        try {
+            String json = new String(data, "UTF-8");
+            if ("data/books.json".equals(path)) return new JSONArray(json).length() > 0;
+            JSONObject article = new JSONObject(json);
+            String id = path.substring("data/articles/".length(), path.length() - 5);
+            return id.equals(article.optString("id")) && article.optJSONArray("segments") != null;
+        } catch (Exception ignored) { return false; }
+    }
+
+    private static boolean inside(File root, File child) throws IOException {
+        return child.getCanonicalPath().startsWith(root.getCanonicalPath() + File.separator);
     }
 
     /** 只收 js/ css/ 下的普通相对路径，挡住 ../ 之类越界写入。 */
     private static boolean safeRelPath(String p) {
         if (p == null || p.isEmpty() || p.contains("..") || p.startsWith("/")) return false;
-        return p.startsWith("js/") || p.startsWith("css/");
+        return p.matches("(?:js|css)/[A-Za-z0-9_.-]{1,120}") && !p.contains("..");
     }
 
     interface Progress {
@@ -166,14 +313,15 @@ class ContentUpdater {
     // —— 底层工具 ——
 
     private static String httpGet(String url) throws IOException {
-        return new String(httpGetBytes(url), "UTF-8");
+        return new String(httpGetBytes(url, MAX_MANIFEST_BYTES), "UTF-8");
     }
 
-    private static byte[] httpGetBytes(String url) throws IOException {
+    private static byte[] httpGetBytes(String url, int limit) throws IOException {
         HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
         c.setConnectTimeout(CONNECT_TIMEOUT);
         c.setReadTimeout(READ_TIMEOUT);
         c.setRequestProperty("Accept-Encoding", "gzip");
+        c.setInstanceFollowRedirects(false);
         try {
             int code = c.getResponseCode();
             if (code != 200) throw new IOException("HTTP " + code + " " + url);
@@ -181,50 +329,69 @@ class ContentUpdater {
             if ("gzip".equalsIgnoreCase(c.getContentEncoding())) {
                 in = new java.util.zip.GZIPInputStream(in);
             }
-            return readAllBytes(in);
+            return readAllBytes(in, limit);
         } finally {
             c.disconnect();
         }
     }
 
     private static String readAll(InputStream in) throws IOException {
-        return new String(readAllBytes(in), "UTF-8");
+        return new String(readAllBytes(in, MAX_MANIFEST_BYTES), "UTF-8");
     }
 
     private static byte[] readAllBytes(InputStream in) throws IOException {
+        return readAllBytes(in, MAX_CONTENT_BYTES);
+    }
+
+    private static byte[] readAllBytes(InputStream in, int limit) throws IOException {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             byte[] buf = new byte[8192];
             int n;
-            while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+            while ((n = in.read(buf)) > 0) {
+                if (out.size() > limit - n) throw new IOException("下载内容过大");
+                out.write(buf, 0, n);
+            }
             return out.toByteArray();
         } finally {
             try { in.close(); } catch (IOException ignored) { }
         }
     }
 
-    /** 先写临时文件再改名：中途断电断网也不会留下半截文件被当成正文读走。 */
+    /** State pointer commit uses Android's AtomicFile backup/restore protocol. */
     private static void writeAtomic(File target, byte[] data) throws IOException {
         File parent = target.getParentFile();
         if (parent != null && !parent.isDirectory() && !parent.mkdirs()) {
             throw new IOException("建不了目录：" + parent);
         }
-        File tmp = new File(target.getAbsolutePath() + ".tmp");
-        FileOutputStream out = new FileOutputStream(tmp);
+        AtomicFile atomic = new AtomicFile(target);
+        FileOutputStream out = atomic.startWrite();
         try {
             out.write(data);
-            out.flush();
+            atomic.finishWrite(out);
+        } catch (IOException e) {
+            atomic.failWrite(out);
+            throw e;
+        }
+    }
+
+    private static void writeFile(File target, byte[] data) throws IOException {
+        File parent = target.getParentFile();
+        if (!parent.isDirectory() && !parent.mkdirs()) throw new IOException("建不了暂存目录");
+        FileOutputStream out = new FileOutputStream(target);
+        try {
+            out.write(data);
             out.getFD().sync();
         } finally {
             out.close();
         }
-        if (target.exists() && !target.delete()) {
-            tmp.delete();
-            throw new IOException("旧文件删不掉：" + target);
+    }
+
+    private static void deleteTree(File path) {
+        if (path.isDirectory()) {
+            File[] children = path.listFiles();
+            if (children != null) for (File child : children) deleteTree(child);
         }
-        if (!tmp.renameTo(target)) {
-            tmp.delete();
-            throw new IOException("改名失败：" + target);
-        }
+        path.delete();
     }
 }

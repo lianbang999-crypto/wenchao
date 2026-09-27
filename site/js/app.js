@@ -1693,10 +1693,21 @@ async function autoNext(next) {
 // 本机引擎：speechSynthesis 逐句合成（免费·离线可用）
 function playLocal(u, token) {
   if (!synthOK()) { toast('本设备不支持本机朗读'); stopRead(); return; }
-  // APP 内交给系统 TTS。读完与出错都往下接一句，行为对齐下面 onend/onerror 那两条。
+  // APP 内交给系统 TTS。某些设备声称支持中文，却在合成时失败；
+  // 这时要停下并说明原因，不能无声地把整篇逐句跳过。
   if (nativeTts()) {
-    nativeCall('ttsSpeak', localPron(u.text), READ.rate)
-      .then(() => { if (isCurrent(token)) speakIdx(READ.idx + 1); });
+    const words = localPron(u.text);
+    const timeout = Math.min(90000, Math.max(15000, words.length * 600));
+    nativeCallTimed(timeout, 'ttsSpeak', words, READ.rate)
+      .then((r) => {
+        if (!isCurrent(token)) return;
+        if (!r || !r.ok) {
+          stopRead();
+          toast('本机朗读失败，请检查中文语音包或切换高清朗读');
+          return;
+        }
+        speakIdx(READ.idx + 1);
+      });
     return;
   }
   const utt = new SpeechSynthesisUtterance(localPron(u.text));
@@ -2433,22 +2444,29 @@ window.__wcCB = (id, result) => {
   const fn = _nPending[id];
   if (fn) { delete _nPending[id]; fn(result || {}); }
 };
-function nativeCall(method, ...args) {
+function nativeCallTimed(timeoutMs, method, ...args) {
   return new Promise((resolve) => {
     if (!NATIVE || typeof NATIVE[method] !== 'function') {
       resolve({ ok: false, error: '当前环境不支持' });
       return;
     }
     const id = 'cb' + (++_nSeq);
-    _nPending[id] = resolve;
+    const timer = timeoutMs > 0 ? setTimeout(() => {
+      if (!_nPending[id]) return;
+      delete _nPending[id];
+      resolve({ ok: false, error: '本机朗读无响应' });
+    }, timeoutMs) : null;
+    _nPending[id] = (result) => { if (timer) clearTimeout(timer); resolve(result || {}); };
     try {
       NATIVE[method](...args, id);       // 约定：回调号固定是最后一个参数
     } catch (e) {
+      if (timer) clearTimeout(timer);
       delete _nPending[id];
       resolve({ ok: false, error: '调用失败' });
     }
   });
 }
+function nativeCall(method, ...args) { return nativeCallTimed(0, method, ...args); }
 // ai-core.js 是独立模块，拿不到这里的闭包；朗读要用同一套回调机制，故挂到 window 上
 window.__wcCall = nativeCall;
 // share.js 同理：它是独立 IIFE，出错时要给用户一句话，但 APP 里 alert 未必显示

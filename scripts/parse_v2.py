@@ -21,10 +21,9 @@ import re
 import sys
 
 import docx
-from numbered_parallel import parse_numbered_parallel
 
+BASE = "/Users/bincai/Downloads/印光法师文钞word"
 PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE = os.environ.get('WENCHAO_SOURCE_DIR', os.path.join(PROJ, '印祖文钞'))
 
 NOTE_RE = re.compile(r'^\[(\d+)\]\s*(.+)$', re.S)
 TRANSLATOR_RE = re.compile(r'^[一-鿿、，·\s]{2,28}(译|谨记|记|校审)$')
@@ -99,11 +98,6 @@ VOLUMES = {
         "skip_titles": set(),
         "marks_after_title": None,   # 无目次 H1，普通行标记从首个类别 H1 之后生效
         "plain_skip_titles": {"印光法师文钞三编补目次"},
-        # This article has bold styling only in subsections 16–18. Its source
-        # consistently pairs blocks by blank lines, not by article-wide bold.
-        "numbered_parallel": {
-            "上堂法语（居普陀山时代友作，六十七篇，出自原三编手抄本）": 67,
-        },
     },
 }
 
@@ -252,24 +246,6 @@ def parse_volume(vol):
                 translator = extra
             else:
                 anomalies.append(f"[{title}] 标题内嵌未识别行: {extra}")
-
-        expected_sections = cfg.get('numbered_parallel', {}).get(title)
-        if expected_sections:
-            segments = parse_numbered_parallel(
-                [paras[i].text for i in range(s + 1, e)
-                 if not in_skip(i) and not marker_kind(cfg, paras[i].text.strip())],
-                expected_sections,
-            )
-            part = cfg['front_part']
-            for mi, mt in body_marks:
-                if mi < s:
-                    part = mt
-            articles.append({
-                'id': f'{art_no:03d}', 'title': title, 'translator': translator,
-                'summary': '', 'part': part, 'segments': segments, '_range': (s, e),
-            })
-            anomalies.append(f'[{title}] 按底本分则及空行配对: {expected_sections} 则')
-            continue
 
         # 无粗体文章（如三编补"序跋疏"以后、续编个别序）：底本以
         # 空行分组、组内前半原文后半白话。偶数组对半切分，并以"的"字
@@ -480,7 +456,7 @@ def parse_volume(vol):
             json_stream.append("【提要】" + a["summary"])
         for g in a["segments"]:
             if "n" in g:
-                json_stream.append(('' if g.get('unnumbered') else f"[{g['n']}]") + g["note"])
+                json_stream.append(f"[{g['n']}]" + g["note"])
             elif "os" in g:
                 json_stream.extend(g["os"])
                 json_stream.extend(g["ts"])

@@ -35,13 +35,9 @@ def ask(endpoint, question, timeout=60):
     以「模型实际看到的父段落」为准，无则为 None。
     """
     payload = json.dumps({"messages": [{"role": "user", "content": question}]}).encode("utf-8")
-    headers = {"Content-Type": "application/json"}
-    api_key = os.environ.get("WENCHAO_API_KEY", "").strip()
-    if api_key:
-        headers["Authorization"] = "Bearer " + api_key
     req = urllib.request.Request(
         endpoint, data=payload,
-        headers=headers, method="POST",
+        headers={"Content-Type": "application/json"}, method="POST",
     )
     reply, source_ids, passage_aids, verify = "", [], [], None
     try:

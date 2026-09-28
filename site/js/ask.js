@@ -3,7 +3,7 @@
  * 打同一个 /api/ai；会话键 wc.aiSession 与抽屉互通（同设备）。 */
 import { aiFormat, citationExcerpt, streamAsk, postFeedback, lstore, esc,
   aiSpeakToggle, aiSpeakStop, verifyBadgeHTML,
-  FB_ICON, citeHover, copyText, appendVerify } from './ai-core.js?v=20260926-app24';
+  FB_ICON, citeHover, copyText, appendVerify } from './ai-core.js';
 
 const $ = (s) => document.querySelector(s);
 const CFG = window.WENCHAO_CONFIG || {};

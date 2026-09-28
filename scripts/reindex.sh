@@ -43,20 +43,15 @@ print(o.get("ok", False),
       o.get("cursor", 0), str(o.get("done", True)).lower(),
       o.get("total", 0), o.get("indexedArticles", 0),
       o.get("chunks", 0), o.get("lexIndexed", 0),
-      str(o.get("d1", False)).lower(),
-      str(o.get("searchIndexOk", False)).lower(),
-      str(o.get("searchReady", False)).lower())
+      str(o.get("d1", False)).lower())
 PY
 )"
-  read -r ok cursor fin total arts chunks lex d1 search_ok search_ready <<< "$fields"
-  if [ "$ok" != "True" ] || [ "$search_ok" != "true" ]; then
+  read -r ok cursor fin total arts chunks lex d1 <<< "$fields"
+  if [ "$ok" != "True" ]; then
     echo "!! 第 cursor 处失败，响应：$resp"
     exit 1
   fi
   echo "   cursor→$cursor / $total   本批：文章 $arts · 向量 $chunks · 全文 $lex · D1=$d1"
-  if [ "$fin" = "true" ]; then
-    [ "$search_ready" = "true" ] || { echo "!! 分层搜索索引尚未完整建成，请从 0 重试。"; exit 1; }
-    break
-  fi
+  [ "$fin" = "true" ] && break
 done
-echo "==> 重建完成。自检： curl -s $ENDPOINT/health  （应见 hybridReady:true · lexRows>0 · searchReady:true · retrievalVersion:r12）"
+echo "==> 重建完成。自检： curl -s $ENDPOINT/health  （应见 hybridReady:true · lexRows>0 · retrievalVersion:r4）"

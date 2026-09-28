@@ -109,8 +109,6 @@ def convert_segments(src_segs, report, title):
         if 'os' in g:
             flush()
             seg = {'orig': list(g['os']), 'trans': list(g['ts']), 'notes': []}
-            if 'section' in g:
-                seg['_section'] = g['section']
             if g.get('src'):
                 seg['src'] = g['src']  # 条目出处（嘉言录：所引文钞篇目）
             out.append(seg)
@@ -132,22 +130,6 @@ def convert_segments(src_segs, report, title):
             cur['trans'].append(g['t'])
             kind = 'trans'
     flush()
-
-    # A verified numbered collection keeps the entire subsection in one note
-    # scope. Original and translated verse/prose blocks remain in source order
-    # within each reading column; headings stay separate and are not invented
-    # a second time as translations.
-    merged = []
-    for seg in out:
-        if (merged and '_section' in seg
-                and merged[-1].get('_section') == seg['_section']):
-            for field in ('orig', 'trans', 'notes'):
-                merged[-1][field].extend(seg[field])
-        else:
-            merged.append(seg)
-    out = merged
-    for seg in out:
-        seg.pop('_section', None)
 
     # 注释编号查重（同篇多组注释会重号，前端按先到先得解析角标）
     ns = [n['n'] for s in out for n in s['notes']]
@@ -196,8 +178,6 @@ def migrate(vol):
             }
             if src.get('xuandu'):     # 《文钞》选读篇目（结构化清单，待 link_src 补链接）
                 art['xuandu'] = src['xuandu']
-            if any('section' in s for s in src['segments']):
-                art['noteScope'] = 'segment'
             with open(os.path.join(OUT, 'articles', new_id + '.json'), 'w', encoding='utf-8') as f:
                 json.dump(art, f, ensure_ascii=False)
 

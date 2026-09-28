@@ -4,9 +4,7 @@
    =================================================================== */
 
 import { aiFormat, citationExcerpt, aiSpeakToggle, aiSpeakStop, verifyBadgeHTML,
-  FB_ICON, citeHover, copyText, appendVerify, localPron } from './ai-core.js?v=20260926-app24';
-import { collectReadingData, makeReadingBackup, parseReadingBackup,
-  mergeReadingData, applyReadingData, locateHighlight } from './reading-data.js?v=20260926-app24';
+  FB_ICON, citeHover, copyText, appendVerify, localPron } from './ai-core.js';
 
 const $ = (s) => document.querySelector(s);
 const CFG = window.WENCHAO_CONFIG || {};
@@ -44,20 +42,8 @@ const store = {
   // 不用 ??：它要 Chrome 80+ 才认，旧安卓的系统 WebView 会整份解析失败、阅读器全哑。
   // 判 null/undefined 而非 falsy，是为了让存下的 false / 0 不被默认值顶掉。
   get(k, d) { try { const v = JSON.parse(localStorage.getItem('wc.' + k)); return v === null || v === undefined ? d : v; } catch (e) { return d; } },
-  set(k, v) {
-    try { localStorage.setItem('wc.' + k, JSON.stringify(v)); return true; }
-    catch (e) { storageWarning(); return false; }
-  },
+  set(k, v) { try { localStorage.setItem('wc.' + k, JSON.stringify(v)); } catch (e) {} },
 };
-function storageWarning() {
-  let warning = document.getElementById('storage-warning');
-  if (!warning) {
-    warning = document.createElement('div'); warning.id = 'storage-warning';
-    warning.className = 'storage-warning'; warning.setAttribute('role', 'alert');
-    warning.textContent = '阅读记录未能保存。请在「我的」中导出备份，并检查设备存储空间。';
-    document.body.appendChild(warning);
-  }
-}
 /* 底色的出厂默认，两种形态不同：
    · 网页：auto，跟随系统深浅色——夜里顺手打开一篇不至于被白光晃到。
    · APP：paper，纸色。装了应用的人是奔着读经来的，纸色是这本书该有的样子；
@@ -91,10 +77,6 @@ let flat = [];           // 扁平篇目序（上一篇/下一篇用）
 let booksReady = null;   // books.json 的在途 Promise：与篇 JSON 并发取，谁也不等谁
 let current = null;      // 当前文章 JSON
 const articleCache = new Map();
-window.addEventListener('wc-content-updated', (event) => {
-  const ids = event.detail && event.detail.ids || [];
-  ids.forEach((id) => articleCache.delete(id));
-});
 
 /* ---------- 工具 ---------- */
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -291,79 +273,63 @@ function nativeOffline() {
   } catch (e) { return false; }
 }
 
-let searchRevision = 0;
-const SEARCH_LABELS = { all: '全部', title: '篇名', orig: '原文', trans: '白话' };
-const searchScope = () => { const el = $('#search-scope'); return el ? el.value : 'all'; };
-async function normalizeSearch(kw) {
-  await loadOpenCC();
-  if (!_searchConv) return { query: kw.trim(), normalized: false };
-  return { query: _searchConv(kw.trim()).replace(/唸/g, '念'), normalized: true };
-}
-async function fullSearch(input) {
-  const revision = ++searchRevision;
-  const tree = $('#nav-tree'), scope = searchScope();
-  const original = input.trim();
-  if (!original) { renderTree(); return; }
-  tree.innerHTML = '<p class="nav-empty" role="status">正在搜索…</p>';
-  const normalized = await normalizeSearch(original), kw = normalized.query;
-  if (revision !== searchRevision) return;
-  const hits = [], seen = new Set();
-  let hasMore = false, bodyFailed = false, indexEmpty = false;
-  if (scope === 'all' || scope === 'title') {
-    for (const it of flat) {
-      if (!it.title.includes(kw)) continue;
-      if (hits.length >= 100) { hasMore = true; break; }
-      seen.add(it.id);
-      hits.push({ id: it.id, t: it.title, v: it.volName || '', snip: '' });
-    }
+async function fullSearch(kw) {
+  const tree = $('#nav-tree');
+  tree.innerHTML = '<p class="nav-empty">正在搜索…</p>';
+  const hits = [];
+  const seen = new Set();
+  for (const it of flat) {                 // 篇名匹配：本地过滤已加载目录，无需请求
+    if (!it.title.includes(kw)) continue;
+    seen.add(it.id);
+    hits.push({ id: it.id, t: it.title, v: it.volName || '', snip: '' });
+    if (hits.length >= 100) break;
   }
-  if (scope !== 'title' && hits.length < 100) {
-    if (!CFG.aiEndpoint) bodyFailed = true;
-    else {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 12000);
+  let bodyFailed = false, indexEmpty = false;
+  if (hits.length < 100) {                 // 正文匹配：查后端全文索引
+    if (!CFG.aiEndpoint) {
+      bodyFailed = true;
+    } else {
       try {
         const res = await fetch(CFG.aiEndpoint.replace(/\/$/, '') + '/search', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ q: kw, scope }), signal: controller.signal,
+          body: JSON.stringify({ q: kw }),
         });
         if (!res.ok) throw new Error('search ' + res.status);
         const data = await res.json();
-        indexEmpty = data.ready === false;
-        hasMore = hasMore || !!data.hasMore;
+        if (data.ready === false) indexEmpty = true;   // 后端正文索引未建（lexRows=0）
         for (const h of (data.hits || [])) {
-          if (seen.has(h.i)) continue;
-          if (hits.length >= 100) { hasMore = true; break; }
+          if (seen.has(h.i) || hits.length >= 100) continue;
           seen.add(h.i);
           hits.push({ id: h.i, t: h.t, v: h.v, snip: buildSnip(h.snip, kw) });
         }
-      } catch (e) { bodyFailed = true; }
-      finally { clearTimeout(timeout); }
+      } catch (e) { bodyFailed = true; }   // 网络/服务异常：仍展示篇名匹配结果
     }
   }
-  if (revision !== searchRevision) return;
-  let notice = '';
-  if (!normalized.normalized) notice = '简繁转换暂不可用，本次按输入文字搜索。';
-  if (indexEmpty) notice += scope === 'all'
-    ? '正文索引尚未就绪，当前仅展示篇名结果。'
-    : SEARCH_LABELS[scope] + '索引尚未就绪，请稍后重试，或切换到篇名搜索。';
-  else if (bodyFailed) notice += (nativeOffline() || navigator.onLine === false)
-    ? '当前离线，正文检索不可用；已下载的文章仍可阅读，篇名可离线搜索。'
-    : '正文检索暂不可用，请重试或切换到篇名搜索。';
-  const count = hits.length ? `<p class="search-count" role="status">${SEARCH_LABELS[scope]} · ${hasMore ? '已显示前' : '找到'} ${hits.length} 篇${hasMore ? '，可增加关键词缩小范围' : ''}</p>` : '';
-  tree.innerHTML = (notice ? `<p class="nav-empty" role="status">${esc(notice)}</p>` : '') + count +
-    (hits.length ? hits.map((h) => `<button class="search-hit" data-id="${h.id}">
-      <span class="sh-title">${esc(h.t)}</span><span class="sh-vol">${esc(h.v)}</span>
-      ${h.snip ? `<span class="sh-snip">${h.snip}</span>` : ''}</button>`).join('')
-      : (!notice ? `<p class="nav-empty" role="status">没有找到「${esc(original)}」</p>` : ''));
-  tree.querySelectorAll('.search-hit').forEach((button) => {
-    button.onclick = () => {
+  /* 空结果文案据实：索引未就绪 / 离线 / 网络异常 / 确实没有，分开说，
+     不把"检索未开"说成"没找到"。离线 APP 里断网是常态而非故障，
+     此时说"请检查网络"是误导——正文明明就在本机，只是全文索引在服务端。 */
+  const empty = indexEmpty
+    ? '正文全文检索尚未就绪，目前仅按篇名搜索。<br>想按义理找内容，可用右上角「问文钞」。'
+    : bodyFailed
+      ? (nativeOffline()
+          ? '当前没有网络，正文检索用不了，只能按篇名搜。<br>正文已在本机，照常翻阅不受影响。'
+          : '正文全文搜索暂不可用，请检查网络（也可只按篇名搜）')
+      : '没有找到「' + esc(kw) + '」';
+  tree.innerHTML = hits.length
+    ? `<p class="search-count">共找到 ${hits.length}${hits.length >= 100 ? '+' : ''} 篇</p>` +
+      hits.map((h) => `
+      <button class="search-hit" data-id="${h.id}">
+        <span class="sh-title">${esc(h.t)}</span><span class="sh-vol">${esc(h.v)}</span>
+        ${h.snip ? `<span class="sh-snip">${h.snip}</span>` : ''}
+      </button>`).join('')
+    : `<p class="nav-empty">${empty}</p>`;
+  tree.querySelectorAll('.search-hit').forEach((b) => {
+    b.onclick = () => {
       pendingFind = kw;
-      if (scope === 'orig' || scope === 'trans') { prefs.mode = scope; store.set('mode', scope); }
-      goArticle(button.dataset.id); closeDrawers();
+      goArticle(b.dataset.id);
+      closeDrawers();
     };
   });
-  maybeTradify(tree);
 }
 
 /* 文章内定位高亮：把段落文本节点中的命中词包上 <mark> */
@@ -406,20 +372,17 @@ function ensureTree() {
 }
 function renderTree(filter) {
   const tree = $('#nav-tree');
-  const revision = ++searchRevision;
-  if (filter && filter.trim()) {
-    const input = filter.trim(), scope = searchScope();
-    tree.innerHTML = '<p class="nav-empty" role="status">正在匹配篇名…</p>';
-    normalizeSearch(input).then(({ query: kw, normalized }) => {
-      if (revision !== searchRevision) return;
-      const hits = (scope === 'all' || scope === 'title') ? flat.filter((it) => it.title.includes(kw)).slice(0, 80) : [];
-      tree.innerHTML = `<button class="ft-btn" id="ft-go">搜索${SEARCH_LABELS[scope]}「${esc(input)}」</button>` +
-        (!normalized ? '<p class="nav-empty">简繁转换暂不可用，按输入文字匹配。</p>' : '') +
-        (hits.length ? hits.map((it) => navItemHtml(it, true)).join('')
-          : `<p class="nav-empty">${scope === 'orig' || scope === 'trans' ? '点搜索或按回车查找' + SEARCH_LABELS[scope] : '未匹配到篇名，可选择全部范围搜索正文'}</p>`);
-      bindNavItems(tree); maybeTradify(tree);
-      $('#ft-go').onclick = () => fullSearch(input);
-    });
+  if (filter) {
+    const kw = filter.trim();
+    const hits = flat.filter((it) => it.title.includes(kw)).slice(0, 80);
+    tree.innerHTML =
+      `<button class="ft-btn" id="ft-go">全文搜索「${esc(kw)}」</button>` +
+      (hits.length
+        ? hits.map((it) => navItemHtml(it, true)).join('')
+        : '<p class="nav-empty">无此篇名，可试全文搜索</p>');
+    bindNavItems(tree);
+    maybeTradify(tree);
+    $("#ft-go").onclick = () => fullSearch(kw);
     return;
   }
   tree.innerHTML = books.map((vol) => {
@@ -464,19 +427,7 @@ function highlightNav() {
   const volEl = $(`.nav-vol[data-vol="${current.volume}"]`);
   if (volEl) volEl.open = true;
 }
-// 安卓增量更新只覆盖 JS/CSS；给旧版 HTML 外壳补齐相同的搜索控件。
-if (!$('#search-scope')) {
-  const input = $('#nav-search'), shell = input.parentElement;
-  input.setAttribute('aria-label', '搜索文钞');
-  const controls = document.createElement('div'); controls.className = 'search-controls';
-  controls.innerHTML = '<label for="search-scope">范围</label><select id="search-scope" aria-label="搜索范围"><option value="all">全部</option><option value="title">篇名</option><option value="orig">原文</option><option value="trans">白话</option></select><button type="button" class="chip-btn">搜索</button>';
-  controls.querySelector('button').onclick = () => fullSearch(input.value);
-  shell.appendChild(controls);
-}
 $('#nav-search').addEventListener('input', (e) => renderTree(e.target.value));
-$('#nav-search').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); fullSearch(e.target.value); } });
-{ const form = $('#search-form'); if (form) form.onsubmit = (e) => { e.preventDefault(); fullSearch($('#nav-search').value); }; }
-{ const scope = $('#search-scope'); if (scope) scope.onchange = () => renderTree($('#nav-search').value); }
 
 /* ---------- 路由 ---------- */
 window.addEventListener('popstate', route);
@@ -496,7 +447,6 @@ function articleRoute() {
   return { id: decodeURIComponent(m[1]), p };
 }
 async function route() {
-  saveReadingProgress();
   stopRead();        // 切篇/回首页：停掉正在进行的朗读，避免高亮/进度错位
   closeDrawers();
   closeAaSheet(true);   // 弹层不跨页残留（切页即时收，不走退场）
@@ -542,8 +492,8 @@ function scrollToPara(n) {
 
 /* ---------- 首页 ---------- */
 // 分册标签位：如需给某册挂一句短提示，在此登记 { 分册id: '标签' }。
-// 提示读本的编排方式，读者仍可自行选择分册。
-const STARTER_VOLS = { jx: '文白入门', jy: '分类选读' };
+// 曾给嘉言录/白话精选挂过「入门」，后撤除——是否初机所宜由读者自择，不由站方标定。
+const STARTER_VOLS = {};
 // 继续阅读卡（首页与「我的」页共用）
 function resumeCardHtml() {
   return lastRead && progress[lastRead.id]
@@ -584,21 +534,6 @@ function wireMineItems(root, delRerender) {
   });
 }
 
-// 导读只说明阅读顺序；义理仍以所链接篇目的原文与白话为准。
-const READING_GUIDE = [
-  { id: 'jx-051', title: '一函遍复', note: '先看全貌：念佛修持与日常处世。' },
-  { id: 'jx-010', title: '与陈锡周居士书', note: '再读信愿行：念佛功课与发愿回向。' },
-  { id: 'jx-005', title: '复邓伯诚居士书二', note: '回到用功：惭愧忏悔与专心念佛。' },
-];
-function readingGuideHtml() {
-  return `<section class="reading-guide" aria-labelledby="guide-title">
-    <h2 id="guide-title">初读文钞</h2>
-    <p class="guide-intro">可从这三篇依次读起，随时切换原文与白话。</p>
-    <ol class="guide-list">${READING_GUIDE.map((it) => `<li><a href="${articleHref(it.id)}" data-guide="${it.id}"><strong>${it.title}</strong><span>${it.note}</span></a></li>`).join('')}</ol>
-    <nav class="guide-topics" aria-label="按主题阅读"><a href="/t/nianfo/">念佛用功</a><a href="/t/xinyuan/">信愿往生</a><a href="/t/dunlun/">家庭处世</a><a href="/t/">全部专题 ›</a></nav>
-  </section>`;
-}
-
 function renderHome() {
   current = null;
   document.body.classList.remove('nav-hidden');   // 回首页顶栏必现
@@ -624,7 +559,6 @@ function renderHome() {
         <span class="seal" aria-hidden="true">文钞</span>
       </div>
       ${resumeCardHtml()}
-      ${readingGuideHtml()}
       <h2>${books.length} 部 · 共 ${total} 篇</h2>
       ${vols}
       <div class="home-extra">
@@ -635,7 +569,6 @@ function renderHome() {
     </div>`;
   paintProgress();
   { const rc = $('#reader .resume-card'); if (rc) rc.onclick = () => goArticle(rc.dataset.id); }
-  document.querySelectorAll('[data-guide]').forEach((a) => { a.onclick = (e) => { e.preventDefault(); goArticle(a.dataset.guide); }; });
   document.querySelectorAll('.vol-card').forEach((b) => {
     b.onclick = () => {
       openDrawer('L');
@@ -679,103 +612,15 @@ function renderMine() {
     <div class="home mine-page">
       ${resumeSec}
       ${bkHtml}${hlHtml}${empty}
-      ${readingBackupHtml()}
       ${settings}
     </div>`;
   paintProgress();
   wireMineItems($('#reader'), renderMine);
-  wireReadingBackup();
   { const aa = $('#mine-aa'); if (aa) aa.onclick = openAaSheet; }
   { const u = $('#chk-update'); if (u) u.onclick = () => checkUpdate(u); }
   { const c = $('#mine-contact'); if (c) c.onclick = openContact; }
   wireInstall($('#reader'));
   if (window.__wcOfflineWire) window.__wcOfflineWire();   // 离线「下载整册」由 offline.js 挂载
-}
-
-function readingBackupHtml() {
-  return `<section class="home-mine reading-backup" aria-labelledby="backup-title">
-    <h2 class="mine-h" id="backup-title">阅读记录备份</h2>
-    <p class="backup-note">收藏、划线和阅读进度保存在当前设备。导出一份备份，换设备时可导入；导入会合并已有记录。</p>
-    <div class="backup-actions"><button class="chip-btn" id="backup-export">导出备份</button><button class="chip-btn" id="backup-import">导入备份</button></div>
-    <input id="backup-file" type="file" accept=".json,application/json" hidden>
-    <details id="backup-text-panel" class="backup-text-panel"><summary>使用备份文字</summary>
-      <p class="backup-note">无法使用文件时，可复制保存备份文字，或粘贴已有备份进行恢复。</p>
-      <textarea id="backup-text" aria-label="备份文字" placeholder="在这里粘贴完整备份文字" spellcheck="false"></textarea>
-      <div class="backup-actions"><button class="chip-btn" id="backup-copy">复制备份文字</button><button class="chip-btn" id="backup-restore-text">从文字恢复</button></div>
-    </details>
-    <p class="backup-status" id="backup-status" role="status" aria-live="polite"></p>
-  </section>`;
-}
-function wireReadingBackup() {
-  const status = $('#backup-status'), file = $('#backup-file'), area = $('#backup-text');
-  function payload() {
-    saveReadingProgress();
-    const data = collectReadingData(localStorage);
-    data.bookmarks = bookmarks; data.progress = progress; data.lastRead = lastRead;
-    const raw = makeReadingBackup(data);
-    parseReadingBackup(raw);
-    return raw;
-  }
-  function importRaw(raw) {
-    if (!flat.length) throw new Error('目录尚未载入，请联网重试后再导入。');
-    const parsed = parseReadingBackup(raw, new Set(flat.map((it) => it.id)));
-    const merged = mergeReadingData(collectReadingData(localStorage), parsed.data);
-    applyReadingData(localStorage, merged);
-    bookmarks = merged.bookmarks; lastRead = merged.lastRead;
-    Object.keys(progress).forEach((id) => delete progress[id]); Object.assign(progress, merged.progress);
-    renderMine(); maybeTradify($('#reader'));
-    $('#backup-status').textContent = '导入完成，已合并收藏、划线与阅读进度。' + (parsed.skipped ? `已跳过 ${parsed.skipped} 篇当前目录中不存在的文章。` : '');
-  }
-  function showText(raw) {
-    $('#backup-text-panel').open = true;
-    area.value = raw; area.focus();
-    if (raw) area.select();
-  }
-  $('#backup-export').onclick = () => {
-    try {
-      const raw = payload();
-      if (window.__wcNative) {
-        showText(raw); status.textContent = '备份文字已生成，请点击「复制备份文字」并保存到您自己的备忘录或文件中。'; return;
-      }
-      const url = URL.createObjectURL(new Blob([raw], { type: 'application/json' }));
-      const a = document.createElement('a'); a.href = url;
-      a.download = '文钞阅读记录-' + new Date().toISOString().slice(0, 10) + '.json';
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 60000);
-      status.textContent = '已生成备份文件，请保存在设备或您自己的备份位置。';
-    } catch (e) { status.textContent = '备份未能导出：' + (e.message || '无法读取设备存储，请重试。'); }
-  };
-  $('#backup-import').onclick = () => {
-    if (window.__wcNative) { showText(''); status.textContent = '请粘贴之前保存的完整备份文字，再点击「从文字恢复」。'; }
-    else file.click();
-  };
-  $('#backup-copy').onclick = async () => {
-    try {
-      const raw = payload(); showText(raw);
-      let copied = false;
-      if (navigator.clipboard && window.isSecureContext) {
-        try { await navigator.clipboard.writeText(raw); copied = true; } catch (e) { /* 使用选区复制兜底 */ }
-      }
-      if (!copied) { area.focus(); area.select(); copied = document.execCommand('copy'); }
-      status.textContent = copied ? '备份文字已复制，请粘贴到您自己的备忘录或文件中保存。' : '请长按备份文字，选择全选、复制，并保存到您自己的备份位置。';
-    } catch (e) { status.textContent = e.message || '备份文字未能生成。'; }
-  };
-  $('#backup-restore-text').onclick = () => {
-    try { importRaw(area.value); } catch (e) { status.textContent = e.message || '备份文字无效。'; }
-  };
-  file.onchange = async () => {
-    const selected = file.files && file.files[0];
-    if (!selected) return;
-    try {
-      if (selected.size > 10 * 1024 * 1024) throw new Error('备份文件过大，请选择文钞导出的备份。');
-      const raw = await new Promise((resolve, reject) => {
-        const reader = new FileReader(); reader.onload = () => resolve(reader.result);
-        reader.onerror = () => reject(new Error('无法读取所选文件。')); reader.readAsText(selected);
-      });
-      importRaw(raw);
-    } catch (e) { status.textContent = e.message || '导入失败，请选择文钞导出的备份文件。'; }
-    file.value = '';
-  };
 }
 
 /* 联系我们：公众号二维码。复用注释弹卡那张 sheet（拖拽关闭、Esc、焦点归还都现成）。
@@ -874,22 +719,6 @@ function installSectionHtml() {
       rows = `<div class="set-row"><span class="set-k">安装到手机</span></div>
               <div class="set-note">在浏览器菜单里选「安装应用」或「添加到主屏幕」。</div>`;
     }
-  } else if (I.isMobile) {
-    // 应用内浏览器可能隐去系统名；只确认“这是手机”，不猜安卓或 iPhone。
-    title = '手机 · 安装应用';
-    if (I.inAppBrowser) {
-      rows = `<div class="set-row"><span class="set-k">在手机上打开</span><span class="set-c">
-                <button class="chip-btn ins-primary" id="ins-copy">复制网址</button></span></div>
-              <div class="set-note">请用手机的系统浏览器打开本站，再按浏览器提示安装或添加到主屏幕。</div>`;
-    } else {
-      rows = (I.canPrompt()
-        ? `<div class="set-row"><span class="set-k">添加到手机</span><span class="set-c">
-             <button class="chip-btn ins-primary" id="ins-go">安装</button></span></div>`
-        : `<div class="set-row"><span class="set-k">添加到手机</span></div>`)
-        + `<div class="set-note">可从浏览器菜单选择「安装应用」或「添加到主屏幕」。</div>`
-        + (apk ? `<div class="set-row"><span class="set-k">仅限安卓</span><span class="set-c">
-             <a class="chip-btn" href="${esc(apk)}" download>下载安卓应用</a></span></div>` : '');
-    }
   } else {
     // 电脑端：Chrome/Edge 可装成独立窗口，不给安卓包
     title = '电脑 · 安装应用';
@@ -961,11 +790,9 @@ function markTerms(text, terms, seen) {
 }
 
 /* 行内注释角标：白话版底本正文自带 [n] 标记 → 可点上标 */
-function addRefs(html, notes) {
-  return html.replace(/\[(\d{1,3})\]/g, (raw, num) => {
-    const note = notes.find((n) => n.n === Number(num));
-    return note ? `<sup class="note-ref" data-note="${note.key}">${num}</sup>` : raw;
-  });
+function addRefs(html, hasNotes) {
+  if (!hasNotes) return html;
+  return html.replace(/\[(\d{1,3})\]/g, '<sup class="note-ref" data-n="$1">$1</sup>');
 }
 
 /* 条目出处行：已链接的（嘉言录→文钞）可点跳转 */
@@ -1002,8 +829,9 @@ async function renderArticle(id) {
   }));
   const termNotes = allNotes.filter((n) => n.term)
     .sort((a, b) => b.term.length - a.term.length);
-  let seen = new Set();
+  const seen = new Set();
 
+  const hasNotes = allNotes.length > 0;
   // 面包屑：首页 › 分册聚合页 › 本篇（前两级为链接，与预渲染同口径，点击走原生导航到静态聚合页）
   const crumbRest = [shortJuan(art.juan || ''), art.category, art.translator]
     .filter(Boolean).map(esc).join(' · ');
@@ -1016,10 +844,7 @@ async function renderArticle(id) {
     + (crumbRest ? ' · ' + crumbRest : '');
 
   let body = '';
-  for (const [si, seg] of art.segments.entries()) {
-    const notes = art.noteScope === 'segment' ? allNotes.filter((n) => n.key.startsWith(si + '-')) : allNotes;
-    const terms = art.noteScope === 'segment' ? notes.filter((n) => n.term).sort((a, b) => b.term.length - a.term.length) : termNotes;
-    if (art.noteScope === 'segment') seen = new Set();
+  for (const seg of art.segments) {
     const paired = !art.plain && seg.trans.length === seg.orig.length && seg.orig.length > 0;
     if (art.plain) {
       body += seg.orig.map((p) => `<p class="p-orig" style="text-indent:0">${esc(p)}</p>`).join('');
@@ -1028,8 +853,8 @@ async function renderArticle(id) {
     if (paired) {
       for (let i = 0; i < seg.orig.length; i++) {
         body += `<div class="para-pair">
-          <p class="p-orig">${addRefs(markTerms(seg.orig[i], terms, seen), notes)}</p>
-          <p class="p-trans">${addRefs(esc(seg.trans[i]), notes)}</p>
+          <p class="p-orig">${addRefs(markTerms(seg.orig[i], termNotes, seen), hasNotes)}</p>
+          <p class="p-trans">${addRefs(esc(seg.trans[i]), hasNotes)}</p>
         </div>`;
       }
       if (seg.src) body += segSrcHtml(seg);
@@ -1039,11 +864,11 @@ async function renderArticle(id) {
       const both = seg.orig.length && seg.trans.length;
       if (seg.orig.length) {
         if (both) body += '<div class="block-label">原 文</div>';
-        body += seg.orig.map((p) => `<p class="p-orig">${addRefs(markTerms(p, terms, seen), notes)}</p>`).join('');
+        body += seg.orig.map((p) => `<p class="p-orig">${addRefs(markTerms(p, termNotes, seen), hasNotes)}</p>`).join('');
       }
       if (seg.trans.length) {
         if (both) body += '<div class="block-label">白 话</div>';
-        body += seg.trans.map((p) => `<p class="p-trans">${addRefs(esc(p), notes)}</p>`).join('');
+        body += seg.trans.map((p) => `<p class="p-trans">${addRefs(esc(p), hasNotes)}</p>`).join('');
       }
       if (seg.src) body += segSrcHtml(seg);
     }
@@ -1172,10 +997,10 @@ async function renderArticle(id) {
       if (n) openSheet(n);
     };
   });
-  // 行内角标按生成时已确定的注释键定位，不跨分则误取重号注释。
+  // 行内角标弹卡（按编号取首个匹配）
   reader.querySelectorAll('sup.note-ref').forEach((s) => {
     s.onclick = () => {
-      const n = allNotes.find((x) => x.key === s.dataset.note);
+      const n = allNotes.find((x) => x.n === parseInt(s.dataset.n, 10));
       if (n) openSheet(n);
     };
   });
@@ -1253,21 +1078,17 @@ function paintProgress() {
   else if (y < lastNavY - 8) document.body.classList.remove('nav-hidden');
   lastNavY = y;
 }
-function saveReadingProgress() {
-  if (scrollTimer) { clearTimeout(scrollTimer); scrollTimer = null; }
-  if (!current) return;
-  measureMax();
-  if (maxScroll > 200) {
-    progress[current.id] = { pct: Math.max(0, Math.min(1, scrollY / maxScroll)), t: Date.now() };
-    store.set('progress', progress);
-  }
-}
-addEventListener('pagehide', saveReadingProgress);
-document.addEventListener('visibilitychange', () => { if (document.hidden) saveReadingProgress(); });
 addEventListener('scroll', () => {
   if (!rafPending) { rafPending = true; requestAnimationFrame(paintProgress); }
   if (!current || scrollTimer) return;
-  scrollTimer = setTimeout(saveReadingProgress, 600);
+  scrollTimer = setTimeout(() => {
+    scrollTimer = null;
+    measureMax();   // 顺带刷新高度缓存（含晚到的字体换入、图片等引起的高度变化）
+    if (maxScroll > 200) {
+      progress[current.id] = { pct: Math.min(1, scrollY / maxScroll), t: Date.now() };
+      store.set('progress', progress);
+    }
+  }, 600);
 }, { passive: true });
 
 /* ---------- 注释弹卡（注释词条与 AI 出处共用同一张） ---------- */
@@ -1311,12 +1132,10 @@ function syncBookmarkBtn() {
 function toggleBookmark() {
   if (!current) return;
   const id = current.id;
-  const next = { ...bookmarks }, removing = !!next[id];
-  if (removing) delete next[id];
-  else next[id] = { t: current.title, v: current.volumeName || '', ts: Date.now() };
-  if (!store.set('bookmarks', next)) return;
-  bookmarks = next; syncBookmarkBtn();
-  toast(removing ? '已取消收藏' : '已收藏 · 在「我的」页可查看');
+  if (bookmarks[id]) { delete bookmarks[id]; toast('已取消收藏'); }
+  else { bookmarks[id] = { t: current.title, v: current.volumeName || '', ts: Date.now() }; toast('已收藏 · 在「我的」页可查看'); }
+  store.set('bookmarks', bookmarks);
+  syncBookmarkBtn();
 }
 // 收藏列表（按收藏时间倒序），「我的」页用
 function bookmarkList() {
@@ -1367,10 +1186,7 @@ function applyMarks() {
   if (!MARK || !current) return;
   MARK.clear();
   const paras = readableParas();
-  const texts = Array.from(paras, (el) => el.textContent);
-  for (const saved of getHls(current.id)) {
-    const h = locateHighlight(saved, texts, _searchConv || ((s) => s));
-    if (!h) continue;
+  for (const h of getHls(current.id)) {
     const el = paras[h.p]; if (!el) continue;
     const a = charPointInEl(el, h.s), b = charPointInEl(el, h.e);
     if (!a || !b) continue;
@@ -1393,7 +1209,7 @@ function addHighlightFromSelection(range) {
     if (e > s) add.push({ p, s, e, t: el.textContent.slice(s, Math.min(e, s + 40)) });
   });
   if (!add.length) return false;
-  if (!setHls(current.id, mergeHls([...getHls(current.id), ...add]))) return false;
+  setHls(current.id, mergeHls([...getHls(current.id), ...add]));
   applyMarks();
   try { sel.removeAllRanges(); } catch (e) {}
   toast('已划线 · 在「我的」页可回看');
@@ -1402,7 +1218,7 @@ function addHighlightFromSelection(range) {
 // 清除本篇某条划线（据段序+起点定位），供「我的划线」列表删除用
 function removeHighlight(id, p, s) {
   const arr = getHls(id).filter((h) => !(h.p === p && h.s === s));
-  if (!setHls(id, arr)) return;
+  setHls(id, arr);
   if (current && current.id === id) applyMarks();
 }
 // 全部划线（跨篇，扫 wc.hl.* 键），首页「我的划线」用
@@ -1693,21 +1509,10 @@ async function autoNext(next) {
 // 本机引擎：speechSynthesis 逐句合成（免费·离线可用）
 function playLocal(u, token) {
   if (!synthOK()) { toast('本设备不支持本机朗读'); stopRead(); return; }
-  // APP 内交给系统 TTS。某些设备声称支持中文，却在合成时失败；
-  // 这时要停下并说明原因，不能无声地把整篇逐句跳过。
+  // APP 内交给系统 TTS。读完与出错都往下接一句，行为对齐下面 onend/onerror 那两条。
   if (nativeTts()) {
-    const words = localPron(u.text);
-    const timeout = Math.min(90000, Math.max(15000, words.length * 600));
-    nativeCallTimed(timeout, 'ttsSpeak', words, READ.rate)
-      .then((r) => {
-        if (!isCurrent(token)) return;
-        if (!r || !r.ok) {
-          stopRead();
-          toast('本机朗读失败，请检查中文语音包或切换高清朗读');
-          return;
-        }
-        speakIdx(READ.idx + 1);
-      });
+    nativeCall('ttsSpeak', localPron(u.text), READ.rate)
+      .then(() => { if (isCurrent(token)) speakIdx(READ.idx + 1); });
     return;
   }
   const utt = new SpeechSynthesisUtterance(localPron(u.text));
@@ -2113,28 +1918,22 @@ function closeAaSheet(instant) {
 }
 
 /* ---------- 简繁转换（OpenCC 自托管，懒加载；仅显示层，不改底本数据）---------- */
-let _conv = null, _searchConv = null, _openccLoading = null;
+let _conv = null;
 function loadOpenCC() {
-  if (_conv && _searchConv) return Promise.resolve(_conv);
-  if (_openccLoading) return _openccLoading;
-  _openccLoading = new Promise((resolve) => {
+  if (_conv) return Promise.resolve(_conv);
+  return new Promise((resolve) => {
     const s = document.createElement('script');
-    const failed = () => { clearTimeout(timer); _openccLoading = null; s.remove(); resolve(null); };
-    const timer = setTimeout(failed, 8000);
     s.src = '/js/opencc.js?v=20260616-ai-v2';
     s.onload = () => {
-      clearTimeout(timer);
       try {
         const c = OpenCC.Converter({ from: 'cn', to: 'tw' });
-        _conv = (t) => c(t).replace(/唸/g, '念');
-        _searchConv = OpenCC.Converter({ from: 'tw', to: 'cn' });
-      } catch (e) { /* 保留未就绪状态，下一次允许重试 */ }
-      _openccLoading = null; resolve(_conv);
+        _conv = (t) => c(t).replace(/唸/g, '念');   // 佛教保留"念佛"，不作"唸"
+      } catch (e) { _conv = (t) => t; }
+      resolve(_conv);
     };
-    s.onerror = failed;
+    s.onerror = () => { _conv = (t) => t; resolve(_conv); };
     document.head.appendChild(s);
   });
-  return _openccLoading;
 }
 function tradify(root) {                 // 把元素内文本节点 简→繁（不碰标签/属性）
   if (!_conv || !root) return;
@@ -2444,29 +2243,22 @@ window.__wcCB = (id, result) => {
   const fn = _nPending[id];
   if (fn) { delete _nPending[id]; fn(result || {}); }
 };
-function nativeCallTimed(timeoutMs, method, ...args) {
+function nativeCall(method, ...args) {
   return new Promise((resolve) => {
     if (!NATIVE || typeof NATIVE[method] !== 'function') {
       resolve({ ok: false, error: '当前环境不支持' });
       return;
     }
     const id = 'cb' + (++_nSeq);
-    const timer = timeoutMs > 0 ? setTimeout(() => {
-      if (!_nPending[id]) return;
-      delete _nPending[id];
-      resolve({ ok: false, error: '本机朗读无响应' });
-    }, timeoutMs) : null;
-    _nPending[id] = (result) => { if (timer) clearTimeout(timer); resolve(result || {}); };
+    _nPending[id] = resolve;
     try {
       NATIVE[method](...args, id);       // 约定：回调号固定是最后一个参数
     } catch (e) {
-      if (timer) clearTimeout(timer);
       delete _nPending[id];
       resolve({ ok: false, error: '调用失败' });
     }
   });
 }
-function nativeCall(method, ...args) { return nativeCallTimed(0, method, ...args); }
 // ai-core.js 是独立模块，拿不到这里的闭包；朗读要用同一套回调机制，故挂到 window 上
 window.__wcCall = nativeCall;
 // share.js 同理：它是独立 IIFE，出错时要给用户一句话，但 APP 里 alert 未必显示

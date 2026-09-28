@@ -26,18 +26,6 @@ jobs:
           test -f site/index.html
           test -f site/data/books.json
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Verify reading, offline, AI and content regressions
-        run: |
-          python3 -m pip install --disable-pip-version-check --quiet python-docx
-          node --test workers/ai-proxy/*.test.mjs scripts/*.test.mjs
-          python3 scripts/check_content.py
-          python3 -m unittest discover -s scripts -p 'test_numbered_parallel.py'
-          node tools/verify.js
-
       - name: Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

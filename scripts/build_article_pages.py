@@ -852,24 +852,13 @@ HOME_NOTE = (
 )
 
 
-HOME_GUIDE = (
-  '<section class="reading-guide" aria-labelledby="guide-title"><h2 id="guide-title">初读文钞</h2>'
-  '<p class="guide-intro">可从这三篇依次读起，随时切换原文与白话。</p><ol class="guide-list">'
-  '<li><a href="/a/jx-051/"><strong>一函遍复</strong><span>先看全貌：念佛修持与日常处世。</span></a></li>'
-  '<li><a href="/a/jx-010/"><strong>与陈锡周居士书</strong><span>再读信愿行：念佛功课与发愿回向。</span></a></li>'
-  '<li><a href="/a/jx-005/"><strong>复邓伯诚居士书二</strong><span>回到用功：惭愧忏悔与专心念佛。</span></a></li></ol>'
-  '<nav class="guide-topics" aria-label="按主题阅读"><a href="/t/nianfo/">念佛用功</a>'
-  '<a href="/t/xinyuan/">信愿往生</a><a href="/t/dunlun/">家庭处世</a><a href="/t/">全部专题 ›</a></nav></section>'
-)
-
-
 def prerender_home(index_html: str, books: list) -> str:
   """把首页书架预渲染进 index.html 的 #reader：百度等不执行 JS 的爬虫也能收录首页内容，
   分册卡用 <a href="/v/…/">（可循链）；运行时 app.js renderHome 以同样式重绘并接管交互。"""
   total = 0
   cards = []
   # 分册标签位：与 app.js 的 STARTER_VOLS 同口径，留空即不挂标签
-  starter: dict[str, str] = {'jx': '文白入门', 'jy': '分类选读'}
+  starter: dict[str, str] = {}
   for vol in books:
     count = sum(len(c["items"]) for j in vol["juans"] for c in j["cats"])
     total += count
@@ -881,7 +870,7 @@ def prerender_home(index_html: str, books: list) -> str:
       f'<span class="vol-count">{count} 篇</span></a>'
     )
   inner = (
-    '<div class="home">' + HOME_HERO + HOME_GUIDE +
+    '<div class="home">' + HOME_HERO +
     f'<h2>{len(books)} 部 · 共 {total} 篇</h2>' + "".join(cards) +
     '<div class="home-extra"><a class="home-cta" href="/ying/">瞻礼 · 印祖法相与传印长老题词 →</a>'
     '<a class="home-cta" href="https://foyue.org/">佛乐 · 返回净土法音主站 →</a></div>' +

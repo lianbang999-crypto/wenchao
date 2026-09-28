@@ -2,8 +2,6 @@ package org.foyue.wenchao;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.Build;
-import android.annotation.TargetApi;
 import android.webkit.WebResourceResponse;
 
 import androidx.annotation.Nullable;
@@ -39,8 +37,8 @@ import java.util.Map;
 class AppContentHandler implements WebViewAssetLoader.PathHandler {
 
     private final AssetManager assets;
-    private final File dataRoot;
-    private final String homePage;
+    /** 增量更新落盘处；出厂时不存在，下过更新才有 */
+    private final File overlayDir;
 
     private static final Map<String, String> MIME;
     static {
@@ -65,10 +63,9 @@ class AppContentHandler implements WebViewAssetLoader.PathHandler {
         MIME = Collections.unmodifiableMap(m);
     }
 
-    AppContentHandler(Context ctx, boolean basicReader) {
+    AppContentHandler(Context ctx) {
         this.assets = ctx.getAssets();
-        this.dataRoot = ctx.getFilesDir();
-        this.homePage = basicReader ? "legacy.html" : "index.html";
+        this.overlayDir = new File(ctx.getFilesDir(), "content");
     }
 
     @Nullable
@@ -77,9 +74,8 @@ class AppContentHandler implements WebViewAssetLoader.PathHandler {
         String p = normalize(path);
 
         // 一、覆盖层：增量更新下来的新版内容优先
-        File overlayDir = ContentUpdater.activeOverlayDir(dataRoot);
-        File local = overlayDir == null ? null : new File(overlayDir, p);
-        if (local != null && isInside(overlayDir, local) && local.isFile()) {
+        File local = new File(overlayDir, p);
+        if (isInside(overlayDir, local) && local.isFile()) {
             try {
                 return respond(p, new FileInputStream(local));
             } catch (IOException ignored) {
@@ -95,8 +91,8 @@ class AppContentHandler implements WebViewAssetLoader.PathHandler {
         //    静态资源（.json/.css/.woff2…）取不到就该老实报 404，
         //    否则 fetch 会拿到一份 HTML，反而把错误藏起来、更难查。
         if (looksLikePage(p)) {
-            InputStream home = openAsset(homePage);
-            if (home != null) return respond(homePage, home);
+            InputStream home = openAsset("index.html");
+            if (home != null) return respond("index.html", home);
         }
         return null;   // 交回 WebView，按常规 404 处理
     }
@@ -136,21 +132,8 @@ class AppContentHandler implements WebViewAssetLoader.PathHandler {
         Map<String, String> headers = new HashMap<>();
         headers.put("Access-Control-Allow-Origin", "*");
         headers.put("Cache-Control", "no-cache");
-        // setResponseHeaders() was added in API 21. Keep the invocation in an
-        // API-specific helper so KitKat never has to resolve that method while
-        // loading the handler class.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Api21.setResponseHeaders(r, headers);
-        }
+        r.setResponseHeaders(headers);
         return r;
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static final class Api21 {
-        private static void setResponseHeaders(WebResourceResponse response,
-                                                Map<String, String> headers) {
-            response.setResponseHeaders(headers);
-        }
     }
 
     private static String mimeOf(String path) {

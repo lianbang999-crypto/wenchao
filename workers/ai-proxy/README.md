@@ -81,7 +81,7 @@ curl -X POST "https://<worker>/index?cursor=0" \
 
 返回 `{hits: [{i,t,v,snip,layer}], total, totalExact, hasMore, nextOffset, ready}`。`total` 是去重后的篇数，分页前计数；`hasMore` 表示本页并非全部结果。独立的 `search_fts` 保存原文、白话、篇名，不从混合 RAG 文本猜测层级。旧库仅保留 `all` 搜索，分层索引未建成时 `ready:false`，前端明确提示。注释、提要仍不属于正文搜索范围。
 
-更新 Worker 后需要从 `cursor=0` 顺序重建到 `done:true`。每批须 `searchIndexOk:true`，最后须 `searchReady:true`；漏批、漏篇、目录变动、D1 写入失败均不能标记完整。
+更新 Worker 后需要从 `cursor=0` 顺序重建到 `done:true`。每批须 `searchIndexOk:true`，最后须 `searchReady:true`；漏批、漏篇、目录变动、D1 写入失败均不能标记完整。当前 `/index` 在 `cursor=0` 会同时重建旧 `chunks_fts` 与新 `search_fts`；生产环境直接运行时，“全部”搜索也可能暂时退化，应安排维护时段或采用保留旧表的分阶段补建。
 
 ```bash
 # 仅新增分层搜索、正文未改动：不消耗嵌入额度
@@ -91,6 +91,8 @@ INDEX_SECRET=... bash scripts/reindex.sh
 ```
 
 `GET /health` 的 `searchStatus` / `searchReady` 用于确认分层搜索状态。重建期间分层搜索显示维护提示；避免同时运行多个建库任务。
+
+2026-09-28 生产补建记录：先核对公开清单与本地 2565 篇文章摘要一致，再只创建新表并将 `search_state.status` 保持为 `building`；逐批写入并核对 `search_fts` 共 47,707 行（篇名 2,565、原文 23,072、白话 22,070）及 2,565 个不同篇号后切换为 `ready`。原有 `chunks_fts` 的 26,667 行未删除。公开接口四个范围均返回 `ready:true`，原文搜索的相邻分页无重复篇号；Android 15 安装包的 WebView 中，四种范围也实际渲染了搜索结果。
 
 ## 对外开放：API key 鉴权 + 按 key 配额
 

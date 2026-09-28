@@ -46,10 +46,14 @@ public final class CompatibilitySmokeTest extends Instrumentation {
     private WebView web;
     private String step = "launch";
     private String updateMode = "";
+    private String searchMode = "";
 
     @Override public void onCreate(Bundle arguments) {
         super.onCreate(arguments);
-        if (arguments != null) updateMode = arguments.getString("update", "");
+        if (arguments != null) {
+            updateMode = arguments.getString("update", "");
+            searchMode = arguments.getString("search", "");
+        }
         start();
     }
 
@@ -76,11 +80,15 @@ public final class CompatibilitySmokeTest extends Instrumentation {
             if (Build.VERSION.SDK_INT < 21) {
                 check(url.contains("/legacy.html"), "API 19 must automatically select legacy.html");
             }
-            if (url.contains("/legacy.html")) {
+            if (!searchMode.isEmpty()) {
+                check("online".equals(searchMode) && !url.contains("/legacy.html"),
+                        "Optional online search needs the modern reader");
+                testOnlineScopedSearch();
+            } else if (url.contains("/legacy.html")) {
                 check(updateMode.isEmpty(), "Optional update checks require the modern reader UI");
                 runLegacy();
             } else runModern();
-            if (updateMode.isEmpty()) {
+            if (updateMode.isEmpty() && searchMode.isEmpty()) {
                 // Internal Java classes are obfuscated in the signed release.
                 // UI checks run against that actual release; the white-box
                 // transaction and signature guards run against debug builds.
@@ -292,6 +300,28 @@ public final class CompatibilitySmokeTest extends Instrumentation {
                     && expected.getMessage().contains("版本没有高于当前版本");
         }
         check(versionRejected, "Installed APK archive did not pass signing and fail the version guard");
+        pass();
+    }
+
+    private void testOnlineScopedSearch() throws Exception {
+        step = "live scoped search rendered in the modern reader";
+        await("!!document.querySelector('#search-scope') && !!document.querySelector('#nav-search') && " +
+                "!!document.querySelector('#nav-tree') && !!document.querySelector('[data-guide=\"" + ARTICLE + "\"]')", 20000);
+        for (String scope : new String[]{"all", "title", "orig", "trans"}) {
+            final String label = "all".equals(scope) ? "全部" : "title".equals(scope) ? "篇名" :
+                    "orig".equals(scope) ? "原文" : "白话";
+            js("(function(){var s=document.querySelector('#search-scope'),i=document.querySelector('#nav-search')," +
+                    "f=document.querySelector('#search-form'),e=document.createEvent('Event');" +
+                    "s.value=" + JSONObject.quote(scope) + ";i.value='念佛';" +
+                    "e.initEvent('submit',true,true);f.dispatchEvent(e);return true;}())");
+            await("document.querySelector('.search-count') && " +
+                    "document.querySelector('.search-count').textContent.indexOf(" + JSONObject.quote(label) +
+                    ") === 0 && document.querySelectorAll('#nav-tree .search-hit').length > 0", 25000);
+            check(Boolean.TRUE.equals(js("!document.querySelector('#nav-tree').textContent.includes('索引尚未就绪') && " +
+                    "!document.querySelector('#nav-tree').textContent.includes('正文检索暂不可用')")),
+                    "Search results include an unavailable-index warning for " + scope);
+            steps.add("PASS live search scope " + scope);
+        }
         pass();
     }
 

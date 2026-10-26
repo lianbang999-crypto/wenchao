@@ -310,6 +310,9 @@ def page_html(index_html: str, art: dict, url: str,
     f'\n<meta property="og:url" content="{h(url)}">'
     f'\n<meta property="og:site_name" content="{h(SITE_NAME)}">'
     f'\n<meta property="og:locale" content="zh_CN">'
+    f'\n<meta property="og:image" content="https://wenchao.foyue.org/img/fx/13.webp">'
+    f'\n<meta property="og:image:alt" content="印光法师德相">'
+    f'\n<meta name="twitter:image" content="https://wenchao.foyue.org/img/fx/13.webp">'
     f'\n<meta name="twitter:card" content="summary">'
     f'\n<meta name="twitter:title" content="{h(full_title)}">'
     f'\n<meta name="twitter:description" content="{h(desc)}">'
@@ -435,6 +438,9 @@ def volume_page_html(vol: dict, css_link: str, all_vols: list[tuple]) -> str:
 <meta property="og:url" content="{h(url)}">
 <meta property="og:site_name" content="印光法师文钞">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wenchao.foyue.org/img/fx/13.webp">
+<meta property="og:image:alt" content="印光法师德相">
+<meta name="twitter:image" content="https://wenchao.foyue.org/img/fx/13.webp">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="{h(name)} · 印光法师文钞">
 <meta name="twitter:description" content="{h(desc)}">
@@ -580,6 +586,9 @@ def _hub_head(title_full: str, desc: str, url: str, css_link: str, *ld_blocks: s
 <meta property="og:url" content="{h(url)}">
 <meta property="og:site_name" content="印光法师文钞">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wenchao.foyue.org/img/fx/13.webp">
+<meta property="og:image:alt" content="印光法师德相">
+<meta name="twitter:image" content="https://wenchao.foyue.org/img/fx/13.webp">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="{h(title_full)}">
 <meta name="twitter:description" content="{h(desc)}">

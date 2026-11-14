@@ -151,7 +151,7 @@
   function apkHref() {
     try {
       var c = window.WENCHAO_CONFIG || {};
-      return c.apkUrl || '';
+      return c.lotusUrl || '';
     } catch (e) { return ''; }
   }
 
@@ -162,17 +162,16 @@
     if (inAppBrowser) {
       // 微信/QQ 等内置浏览器会拦下 apk 下载，直接给按钮只会让人点了没反应，
       // 故这里只讲怎么绕出去，不放下载键。
-      bar = banner('<b>装上离线版，断网也能读</b><br>' +
-        '<span style="opacity:.75">请点右上角「⋯」→ 在浏览器中打开，再下载</span>');
+      bar = banner('<b>莲宝：佛乐的新安卓应用</b><br>' +
+        '<span style="opacity:.75">请点右上角「⋯」→ 在浏览器中打开 lotus.foyue.org</span>');
       return;
     }
-    bar = banner('<b>装上离线版，断网也能读</b><br>' +
-      '<span style="opacity:.75">全部 2565 篇随包带走，约 20MB</span>');
+    bar = banner('<b>莲宝：佛乐的新安卓应用</b><br>' +
+      '<span style="opacity:.75">念佛、读文钞、听经、记手账 · 免费</span>');
     if (!bar) return;
     var a = document.createElement('a');
     a.href = url;
-    a.setAttribute('download', '');
-    a.textContent = '下载';
+    a.textContent = '看看';
     a.style.cssText = 'flex:0 0 auto;margin-left:.5rem;border:0;border-radius:8px;' +
       'background:var(--cinnabar,#b03a26);color:var(--paper,#f6f1e6);text-decoration:none;' +
       'font-family:inherit;font-size:14px;font-weight:600;padding:.42rem .9rem;cursor:pointer';

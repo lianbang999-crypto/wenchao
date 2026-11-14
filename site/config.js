@@ -26,5 +26,8 @@ window.WENCHAO_CONFIG = {
      注意：1.1.0 起 APP 改为离线应用，内容随安装包出厂。经文勘误这类内容改动
      走 APP 内的增量更新（比对 /app/content-manifest.json），不必换包；
      只有阅读器本身改版才需要发新 APK、才靠这里的版本号提示。 */
+  /* 莲宝：佛乐的新安卓应用。文钞旧安卓应用不再更新，网页上的「安卓应用」改荐莲宝。 */
+  lotusUrl: 'https://lotus.foyue.org',
+
   apkVersion: '1.1.5',
 };

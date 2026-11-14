@@ -686,9 +686,11 @@ function installSectionHtml() {
       </section>`;
   }
   // 安卓安装包只对安卓有意义：iPhone 装不了，电脑更装不了。安卓上它就是唯一主行动
-  const apkRow = (apk && I.isAndroid)
-    ? `<div class="set-row"><span class="set-k">安卓应用</span><span class="set-c">
-         <a class="chip-btn ins-primary" href="${esc(apk)}" download>下载安装</a></span></div>` : '';
+  // 文钞旧安卓应用不再更新：安卓上改荐莲宝（佛乐的新应用，文钞也在其中）
+  const lotus = CFG.lotusUrl || '';
+  const apkRow = (lotus && I.isAndroid)
+    ? `<div class="set-row"><span class="set-k">莲宝 · 新的安卓应用</span><span class="set-c">
+         <a class="chip-btn ins-primary" href="${esc(lotus)}">看看</a></span></div>` : '';
   let title, rows;
 
   if (I.isIOS) {
@@ -711,10 +713,10 @@ function installSectionHtml() {
       rows = `<div class="set-row"><span class="set-k">获取应用</span><span class="set-c">
                 <button class="chip-btn ins-primary" id="ins-copy">复制网址</button></span></div>
               <div class="set-note">当前是应用内置浏览器，无法直接下载。请复制网址到 Chrome 等浏览器打开本页再下载。</div>`;
-    } else if (apk) {
+    } else if (apkRow) {
       rows = apkRow
-        + `<div class="set-note">下载后按提示安装即可全屏离线阅读。若系统拦截安装，
-             在弹窗里允许「安装未知应用」；也可在浏览器菜单选「安装应用」。</div>`;
+        + `<div class="set-note">莲宝是佛乐的新安卓应用，念佛、读文钞、听经、记手账都在其中；文钞旧安卓应用不再更新。
+             也可在浏览器菜单选「安装应用」，把本站装到主屏。</div>`;
     } else {
       rows = `<div class="set-row"><span class="set-k">安装到手机</span></div>
               <div class="set-note">在浏览器菜单里选「安装应用」或「添加到主屏幕」。</div>`;
